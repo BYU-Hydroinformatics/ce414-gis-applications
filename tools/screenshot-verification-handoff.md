@@ -38,6 +38,46 @@ stopped at the Citrix door, for a reason that will recur unless it is handled up
 Whichever route: start each new session by launching the desktop **from inside the session's own
 group tab**, never by reusing a tab another session opened.
 
+## Update, later the same morning: the pass started, then the session was lost
+
+Dan signed in, the desktop was relaunched inside this session's group tab, ArcGIS Pro was
+launched (Pro 3.x, "Start without a template"), and Lab 3 was walked through as far as the
+control points. **Five Lab 3 figures were re-shot from the live session and are in the repo**
+(`lab03-random-location`, `lab03-georeference-button`, `lab03-fit-to-display`,
+`lab03-georeference-tab`, `lab03-control-point-example`). Then three things went wrong in a row:
+
+1. The Mac screen locked (Dan stepped away), so `screencapture` returned the wallpaper — the
+   Mac-side route only works while the Mac is unlocked.
+2. A stray `F5` sent to the Citrix tab was interpreted by Claude in Chrome as a page reload. The
+   HTML5 client disconnected, the tab closed itself, and BYU's VDI **logged the session off**:
+   ArcGIS Pro, the data copied into Documents, and one in-session snip were gone. Relaunching from
+   the store gives a *fresh* Windows logon (Box pop-up, ArcGIS sign-in again).
+3. ArcGIS Pro cannot read the client-mapped F: drive directly ("Network Error"), so data has to
+   be copied into the session's Documents with Explorer first (~7 min for 562 MB), and the F:
+   permission itself is per Chrome tab — every new session tab needs Dan to click Chrome's
+   "Allow this site to edit files?" bubble.
+
+What was learned that makes the next attempt faster:
+
+- **Fallback capture that works with the Mac locked:** launch the *classic* Snipping Tool from
+  Start ▸ All apps (keyboard Down ×~200 reaches the S section; Windows Search is dead), click
+  `New`, drag a rectangle over the whole screen (`left_click_drag` does release), `Ctrl+S`, type
+  a name, Enter. That saves a native 2940×1420 PNG into Pictures (its Save dialog refuses typed
+  paths and cannot see F:). Set Delay = 5 s to capture context menus. Copy Pictures ▸ F: with
+  Explorer afterwards — single PNGs copy fine; a folder paste threw an I/O error.
+- The Windows desktop is exactly 2× the 1470×710 CSS frame, so viewport coordinates ×2 are
+  snip-pixel coordinates; crop on the Mac with Pillow.
+- `PrintScreen` is the key name that reaches the session (opens the Win11 snip overlay, clipboard
+  only). `Meta`, `Print`, mouse-wheel scrolling and slider drags do not work; use keyboard
+  navigation (Down/Up, Right ×N on sliders — the transparency slider steps 0.1 % per press).
+- Typed paths work inside ArcGIS Pro's own dialogs (Add Data ▸ Name box), just not in Explorer.
+- Dead ends, do not retry: canvas `toDataURL` + fetch/beacon/WebSocket to localhost (CSP and
+  Chrome's Local Network Access prompt block it); the extension's `zoom` images cannot be saved.
+- Data prepared on the Mac for the next attempt, in the course folder's `_lab_data_2026/`:
+  `lab-03/Escondido_1893_historic_map.jpg` (USGS 1893 Escondido sheet rendered from the GeoPDF),
+  `lab-02/` Landsat 8 path 38 row 32, 2020-07-30, bands 4 and 5 plus MTL, and `dem-utah/` the
+  four USGS 1 arc-second tiles n40w112, n40w113, n41w112, n41w113.
+
 ## Capture workflow (proven in earlier sessions, scripted here)
 
 Nothing can be saved *out* of Citrix (Snipping Tool drag never releases, PowerPoint Save is inert,
