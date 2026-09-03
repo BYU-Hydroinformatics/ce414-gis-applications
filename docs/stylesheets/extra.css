@@ -1,0 +1,18 @@
+/* BYU navy as the primary color, in both schemes. */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #002e5d;
+  --md-primary-fg-color--light: #1a4a7a;
+  --md-primary-fg-color--dark: #001f3f;
+  --md-accent-fg-color: #0062b8;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #002e5d;
+  --md-accent-fg-color: #5a9bd8;
+}
+
+/* Lab figures: keep screenshots from towering over the text. */
+.md-typeset img {
+  max-height: 34rem;
+  width: auto;
+}

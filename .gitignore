@@ -1,0 +1,10 @@
+site/
+_site/
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+# built slide decks - the workflow builds these
+slides/**/*.html

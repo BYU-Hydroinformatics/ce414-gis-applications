@@ -1,0 +1,68 @@
+site_name: CE 414 — Engineering Applications of GIS
+site_description: Course materials for Civil Engineering 414 (Engineering Applications of GIS) at BYU
+site_url: https://byu-hydroinformatics.github.io/ce414-gis-applications/
+repo_url: https://github.com/BYU-Hydroinformatics/ce414-gis-applications
+repo_name: BYU-Hydroinformatics/ce414-gis-applications
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.integrate
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    logo: material/layers-triple
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - gh-admonitions
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.tilde
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Course Overview: course.md
+  - Schedule: schedule.md
+  - Assignments:
+      - Overview: assignments/README.md
+      - Lab 1 — Walmart Site Selection: assignments/lab-01/README.md
+      - Lab 2 — NDVI: assignments/lab-02/README.md
+      - Lab 3 — Georectifying and Digitizing Images: assignments/lab-03/README.md
+      - Lab 4 — Cell Phone Tower Placement: assignments/lab-04/README.md
+      - Lab 5 — Watershed Delineation: assignments/lab-05/README.md
+      - Lab 6 — Avalanche Hazard: assignments/lab-06/README.md
+      - Lab 7 — Big Southern Butte: assignments/lab-07/README.md
+      - Lab 8 — Practicing with Interpolation: assignments/lab-08/README.md
+      - Lab 9 — Wind Farm Site Selection: assignments/lab-09/README.md
+      - Lab 10 — Least Cost Path Power Line Analysis: assignments/lab-10/README.md
+      - Final Project: assignments/final-project.md
+  - Lectures:
+      - Overview: lectures/README.md
+  - Policies:
+      - Grading: policies/grading.md
+      - AI Use Policy: policies/ai-policy.md
+      - University Policies: policies/university.md

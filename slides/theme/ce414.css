@@ -1,0 +1,44 @@
+/* @theme ce414 */
+@import 'default';
+
+:root {
+  --byu-navy: #002e5d;
+  --byu-blue: #0062b8;
+  --ink: #22262e;
+  --paper: #ffffff;
+}
+
+section {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 27px;
+  line-height: 1.45;
+  padding: 56px 70px;
+}
+
+h1 { color: var(--byu-navy); font-size: 1.5em; }
+h2 { color: var(--byu-navy); font-size: 1.15em; }
+a  { color: var(--byu-blue); }
+strong { color: var(--byu-navy); }
+
+section.lead {
+  background: var(--byu-navy);
+  color: #f2f5f9;
+  text-align: center;
+}
+section.lead h1 { color: #ffffff; font-size: 1.8em; }
+section.lead h2, section.lead p { color: #c9d8ea; }
+section.lead a { color: #9ec5ee; }
+
+section.quiz h1::before { content: "❓ "; }
+section.activity { background: #eef3f9; }
+
+img { background: transparent; }
+img[alt~="center"] { display: block; margin: 0 auto; }
+
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; align-items: center; }
+.imggrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5em; align-items: center; }
+.imggrid img { width: 100%; height: auto; }
+
+footer { color: #8a94a3; font-size: 0.55em; }
