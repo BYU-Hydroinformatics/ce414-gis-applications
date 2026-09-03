@@ -4,8 +4,9 @@
 **Learning Suite course id:** `cid-ahk3xMzyr311`
 **Target site:** <https://byu-hydroinformatics.github.io/ce414-gis-applications/>
 **Written:** September 3, 2026
-**Status:** labs done (September 3, 2026) — all ten lab handout links now point at the course
-site. Lecture decks are still pending; they are blocked on the decks themselves landing.
+**Status:** done (September 3, 2026) — all ten lab handouts and all fifteen lecture decks now
+link to the course site, plus the two plain-text lab mentions. What remains is optional: the
+lecture pages of work item 3, and a decision on the example-project files.
 
 The job: every Learning Suite link that currently downloads a lecture `.pptx` or a lab `.docx`
 becomes a link to the live page on the course site instead. Data files stay as downloads.
@@ -84,26 +85,35 @@ MkDocs serves `docs/assignments/lab-01/README.md` at `/assignments/lab-01/`; the
 
 ## Work item 1 — lecture decks in the Schedule
 
-Fifteen `.pptx` download links, one per source deck. Week numbers agree with
-`docs/lectures/README.md`, so no renumbering is needed.
+**Done September 3, 2026.** Fifteen `.pptx` download links, one per source deck, all replaced.
+Week numbers agreed with `docs/lectures/README.md`, so no renumbering was needed. The slugs below
+are the ones the decks actually shipped with, which differ from this plan's original proposals —
+the deck files won, as the plan said they should.
+
+The edit was surgical, as with the labs: only the `.pptx` span was swapped, so every data `.zip`,
+`.xlsx` and external link in those cells survived. Verified from Student View — seventeen site
+links present, every URL 200, and the only `.pptx` left on the schedule is `engineering
+stamps.pptx`, which is an in-class example rather than a deck. Recorded in
+[`learning-suite-snapshots/schedule-lectures.md`](learning-suite-snapshots/schedule-lectures.md),
+including a **gap**: the removed `fileId` GUIDs were captured for only two of the fifteen cells.
 
 | LS date | Schedule item | Current attachment | Target URL (`…/ce414-gis-applications/`) | Blocked by |
 | --- | --- | --- | --- | --- |
-| Thu Sep 3 | Spatial Data Models - Refresher | `414 - Data Models.pptx` | `slides/week-01/data-models.html` | — |
+| Thu Sep 3 | Spatial Data Models - Refresher | `414 - Data Models.pptx` | `slides/week-01/data-models-refresher.html` | — |
 | Tue Sep 8 | Graphical Modeling and Model Builder Part 1 | `414 - ModelBuilder A.pptx` | `slides/week-02/modelbuilder-a.html` | slides 12, 17–21 still need Pro captures |
 | Thu Sep 10 | Graphical Modeling and Model Builder Part 2 | `414 - ModelBuilder B.pptx` | `slides/week-02/modelbuilder-b.html` | — |
-| Tue Sep 15 | NDVI Model | `414 - ModelBuilder C.pptx` | `slides/week-03/ndvi-model.html` | **deck identity unresolved** — it is NDVI content under a ModelBuilder name |
-| Tue Sep 15 | Raster Analysis and Map Algebra - Part 1 | `414 - Raster Analysis and Map Algebra.pptx` | `slides/week-03/raster-analysis-and-map-algebra.html` | verify the "more heat (NIR)" claim |
+| Tue Sep 15 | NDVI Model | `414 - ModelBuilder C.pptx` | `slides/week-03/modelbuilder-c.html` | **deck identity unresolved** — it is NDVI content under a ModelBuilder name |
+| Tue Sep 15 | Raster Analysis and Map Algebra - Part 1 | `414 - Raster Analysis and Map Algebra.pptx` | `slides/week-03/raster-analysis-map-algebra.html` | verify the "more heat (NIR)" claim |
 | Tue Sep 22 | Image Georeferencing and Georectification | `414 - Georectifying Images.pptx` | `slides/week-04/georectifying-images.html` | deck contains no ArcGIS UI; needs new Pro captures |
-| Thu Sep 24 | Satellite and Imagery Data | `414 - Remote Sensing and 3D Imaging.pptx` | `slides/week-04/remote-sensing-and-3d-imaging.html` | one broken external image link |
+| Thu Sep 24 | Satellite and Imagery Data | `414 - Remote Sensing and 3D Imaging.pptx` | `slides/week-04/remote-sensing-3d-imaging.html` | one broken external image link |
 | Tue Sep 29 | Terrain Analysis Part 1 | `Terrain Analysis.pptx` | `slides/week-05/terrain-analysis.html` | — |
 | Tue Oct 6 | Hydrologic Analysis - Part 1 | `414 - Watershed Delineation.pptx` | `slides/week-06/watershed-delineation.html` | — |
 | Tue Oct 20 | Sampling and Interpolation Part 1 | `414 - Interpolation.pptx` | `slides/week-08/interpolation.html` | — |
 | Thu Oct 29 | Data Services and Data Quality | `Overview_of_OGC_Web_Services.pptx` | `slides/week-09/ogc-web-services.html` | — |
-| Tue Nov 3 | Raster-Based Site Suitability - Part 1 | `414 - Raster Based Spatial Analysis.pptx` | `slides/week-10/raster-based-spatial-analysis.html` | conceptual diagrams only |
-| Tue Nov 10 | Least Cost Path - Part 1 | `414 - Least Cost Path Analysis.pptx` | `slides/week-11/least-cost-path-analysis.html` | **teaches deprecated `CostDistance`/`Backlink`** — fix tool choice first |
-| Thu Nov 12 | Projections & Coordinate Systems review | `Coordinate Systems and Projections.pptx` | `slides/week-11/coordinate-systems-and-projections.html` | — |
-| Thu Nov 19 | Differential GPS | `8 - GPS and Triangulation.pptx` | `slides/week-12/gps-and-triangulation.html` | — |
+| Tue Nov 3 | Raster-Based Site Suitability - Part 1 | `414 - Raster Based Spatial Analysis.pptx` | `slides/week-10/raster-spatial-analysis.html` | conceptual diagrams only |
+| Tue Nov 10 | Least Cost Path - Part 1 | `414 - Least Cost Path Analysis.pptx` | `slides/week-11/least-cost-path.html` | **teaches deprecated `CostDistance`/`Backlink`** — fix tool choice first |
+| Thu Nov 12 | Projections & Coordinate Systems review | `Coordinate Systems and Projections.pptx` | `slides/week-11/coordinate-systems-projections.html` | — |
+| Thu Nov 19 | Differential GPS | `8 - GPS and Triangulation.pptx` | `slides/week-12/gps-triangulation.html` | — |
 
 Slugs above are proposals; whatever the deck file is actually named in `slides/` wins, and this
 table gets corrected rather than the file renamed after the fact.
@@ -159,7 +169,7 @@ files.
 
 ### Two plain-text lab mentions in the Schedule
 
-The Schedule also names labs without linking them. Once the lab pages exist, make these links:
+**Done September 3, 2026.** Both now link:
 
 - Tue Sep 8 — "Lab: Walmart Site Selection Model" → `assignments/lab-01/`
 - Tue Sep 22 — "Lab: Georectifying and Digitizing Images" → `assignments/lab-03/`
@@ -271,5 +281,9 @@ edits total (15 decks + 10 labs + 2 plain-text mentions), plus 15 more if option
 3. **`414 - ModelBuilder C.pptx`** is NDVI content, not ModelBuilder. Its schedule item is already
    titled "NDVI Model", so the schedule is right and the file name is wrong. Decide the deck's
    identity before it converts; that decision sets its slug.
-4. **Deck slugs.** The table above proposes them. Confirm or override before the first deck lands,
-   because the Learning Suite link is written once and should not need a second edit.
+4. ~~**Deck slugs.**~~ Settled — the decks shipped with their own slugs and the table above now
+   records those.
+5. **A sixteenth deck exists with nowhere to link from.**
+   `slides/week-12/final-project-introduction.html` ("The Final Project") was converted, but the
+   Nov 17 "Discussion about Final Projects" schedule item carries no `.pptx` — it links to a
+   Learning Suite content page. Adding a link to the deck there is a small, separate decision.
