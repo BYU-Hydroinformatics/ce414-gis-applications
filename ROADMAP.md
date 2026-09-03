@@ -163,6 +163,11 @@ constraints below were all found the hard way in September 2026:
 
 Existing captures and the shot list live in the course folder under `_screenshots_2026/`.
 
+**Lab screenshot verification pass (Sept 3, 2026):** the per-lab image plan, the reasons the
+first attempt stalled at the Citrix door, and the Mac-side capture helper are in
+[`tools/screenshot-verification-handoff.md`](tools/screenshot-verification-handoff.md) and
+`tools/capture_citrix.py`. Read the handoff before starting any screenshot session.
+
 ## Conventions
 
 - One folder per lab: `docs/assignments/lab-NN/README.md` + `images/`. Nothing references an image
