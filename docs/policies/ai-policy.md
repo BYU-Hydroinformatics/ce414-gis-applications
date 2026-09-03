@@ -3,7 +3,7 @@
 > [!NOTE]
 > Placeholder. Adapt from the CCE 114 policy at
 > <https://byu-hydroinformatics.github.io/cce114-geomatics/policies/ai-policy/>, then adjust for
-> the fact that CE 414 assessment centres on *models and reasoning* rather than on following
+> the fact that CE 414 assessment centers on *models and reasoning* rather than on following
 > click-by-click instructions.
 
 Short version, pending the full text: use AI to learn, always disclose how you used it, and own

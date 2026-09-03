@@ -44,6 +44,16 @@ A lab that was wrong in Word should not be wrong in Markdown.
    source slide contains them. Keep the reference, describe it in a line.
 6. **Preserve originals.** The Word and PowerPoint sources live outside this repo. If you edit them,
    archive the original first (see the `Old/` folders in the course directory).
+7. **Never name an instructor when referring to another class session.** Instructors change between
+   semesters. The title-slide byline is the one place names belong.
+8. **American English throughout** — meters, kilometers, center, color, catalog, gray. Journal and
+   product names keep their own spelling.
+9. **Nearly every slide carries a graphic**, section-divider (`lead`) slides excepted. If a slide
+   has none, generate one with the OpenAI image skill and save it in the deck's `images/` folder.
+   Do not add decoration for its own sake.
+
+Rules 7 to 9 are shared with the sibling repo and are recorded in
+`tools/slide-conversion-guide.md`, which is the authority when writing or converting a deck.
 
 ## Where the source material lives
 

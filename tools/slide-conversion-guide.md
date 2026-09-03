@@ -1,8 +1,8 @@
 # Converting a CE 414 PowerPoint into a Marp web slide deck
 
 This is the recipe inherited from the CCE 114 course site. Follow it exactly so every deck looks
-and behaves the same. Once the first CE 414 deck is converted, read it first as the reference for structure, tone, and
-formatting. Until then, use CCE 114's `slides/day-02/gis-data-models.md` as the model.
+and behaves the same. Once the first CE 414 deck is converted, read it first as the reference for
+structure, tone, and formatting; until then use CCE 114's `slides/day-02/gis-data-models.md`.
 
 ## Where things go
 
@@ -39,29 +39,43 @@ python3 tools/pptx_extract.py "/path/to/deck.pptx" /path/to/scratch/dayNN --hire
 
 ## Step 2: plan the deck
 
-Write the deck for the CE 414 rhythm: Dr. Ames teaches all sessions, and most weeks pair a
-concepts lecture with a lab that applies it the same week. Keep the source deck's content,
-order, and voice;
-tighten wording where the original was rough. Specifically:
+Write the deck as a **Tuesday concepts lecture** (or, when told, a Thursday hands-on session)
+for the CE 414 rhythm: Dr. Ames teaches all sessions, and most weeks pair a concepts lecture with
+the lab that applies it. Keep the source deck's content, order, and voice; tighten wording where
+the original was rough.
+
+Three standing rules (set 2026-09-03) apply to every deck:
+
+1. **Never name a professor when pointing to the other class day.** Instructors change between
+   semesters. Write "Thursday, we will do exactly this with the points you collect" or "on Tuesday
+   we saw...", never "Thursday with Dr. X." The title-slide byline is the one place names belong.
+2. **American English**: meters, kilometers, center, color, catalog, gray. Not metres, centre,
+   colour. Journal and product names keep their own spelling.
+3. **Nearly every slide carries a graphic.** Section-divider (`lead`) slides are the exception. If
+   a slide has none, generate one with the OpenAI image skill (gpt-image-1, a shared style suffix
+   across the deck, no text in the image) and save it in the deck's `images/` folder. Quiz and
+   table slides get a supporting illustration; do not add decoration for its own sake.
+
+Specifically:
 
 - Start with a title slide (class `lead`, background image on the right) and a **Today's Goals**
   slide: "By the end of class you should be able to:" plus 3 to 5 outcomes.
 - End with a **Before Next Class** slide: the textbook reading, the open-book quiz on Learning
   Suite, the current lab (link to the assignments page), and office hours
-  (`https://calendly.com/dan-ames/office-hours`). Where a deck leads directly into a lab, add a
-  short preview slide naming the lab and what the deck gives them for it.
+  (`https://calendly.com/dan-ames/office-hours`). Where a concept deck leads into a Thursday
+  session, add a short preview slide naming the lab and what the deck gives them for it.
 - Keep every speaker note from the source as an HTML comment at the bottom of its slide
   (`<!-- ... -->`). Marp shows these in presenter view. Add a note where a slide would otherwise
   be a bare image so the presenter knows what to say.
 - Mark question slides with `<!-- _class: quiz -->` and in-class activities with
   `<!-- _class: activity -->`. Multiple-choice options use `<ol type="A">`.
 - Section-break slides use `<!-- _class: lead -->`.
-- **Software wording:** CE 414 uses **ArcGIS Pro**, not QGIS — this is the opposite of CCE 114,
-  so do not copy that course's software substitutions. What must change is *version* language:
-  replace ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording with current ArcGIS Pro equivalents
-  (Catalog pane, Geoprocessing pane, `.atbx` toolboxes, the contextual ModelBuilder ribbon tab).
-  Leave concepts alone. If a slide shows an ArcMap-era screenshot, keep it for now and flag it
-  (see Step 5); **never fabricate an ArcGIS Pro screenshot** — captures come from a real session.
+- **Software wording:** CE 414 uses **ArcGIS Pro**, not QGIS — the opposite of CCE 114, so do not
+  copy that course's software substitutions. What must change here is *version* language: replace
+  ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording with current ArcGIS Pro equivalents (Catalog
+  pane, Geoprocessing pane, `.atbx` toolboxes, the contextual ModelBuilder ribbon tab). Leave
+  concepts alone. If a slide shows an ArcMap-era screenshot, keep it for now and flag it (see
+  Step 5); **never fabricate an ArcGIS Pro screenshot**.
 - Drop hidden slides unless they are obviously useful backups (Day 2 kept demo backups).
 - Video slides become a thumbnail image wrapped in `<a href="..." target="_blank">` plus the URL
   underneath in small text.

@@ -16,7 +16,7 @@ An introductory GIS course (CCE 114 Geomatics or equivalent), or instructor appr
 
 ## Software
 
-**ArcGIS Pro** (Advanced licence, with the Spatial Analyst extension) is used throughout.
+**ArcGIS Pro** (Advanced license, with the Spatial Analyst extension) is used throughout.
 It is available in the department computer lab and through BYU's Citrix virtual desktop.
 
 > [!IMPORTANT]
@@ -29,7 +29,7 @@ It is available in the department computer lab and through BYU's Citrix virtual 
 By the end of the course students should be able to:
 
 1. Frame an engineering question as a spatial analysis with explicit criteria and thresholds.
-2. Locate authoritative geographic data and document its provenance, vintage, and licence.
+2. Locate authoritative geographic data and document its provenance, vintage, and license.
 3. Choose and justify a coordinate system appropriate to the measurement being made.
 4. Build a parameterised, reproducible ModelBuilder workflow and rerun it on a new study area.
 5. Apply raster and vector analysis — overlay, proximity, terrain, interpolation, least-cost path.

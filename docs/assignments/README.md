@@ -25,7 +25,7 @@ Regardless of the topic, each lab is graded on the same underlying things:
   repairing paths, field names, SQL, or units.
 - **Correct fields, units, and coordinate system.** Set a projected coordinate system before any
   tool that measures distance or area.
-- **Data provenance.** Where the data came from, when, and under what licence.
+- **Data provenance.** Where the data came from, when, and under what license.
 - **Validation.** Evidence that the answer is plausible — counts, comparisons, or a sensitivity test.
 - **Cartography.** A map a client could read: legible type, sensible symbology, scale, north arrow,
   and enough context to locate the study area.

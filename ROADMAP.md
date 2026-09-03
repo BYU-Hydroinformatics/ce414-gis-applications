@@ -177,7 +177,7 @@ Existing captures and the shot list live in the course folder under `_screenshot
 - [ ] Text converted, headings correct, tables render
 - [ ] Images renamed descriptively and displaying
 - [ ] Every field name, SQL expression, unit, CRS, and coded value verified in ArcGIS Pro
-- [ ] All data links tested; provenance, vintage, and licence recorded
+- [ ] All data links tested; provenance, vintage, and license recorded
 - [ ] Rubric matches the stated deliverables and the points total is correct
 - [ ] ArcGIS Pro version the lab was tested against is recorded
 - [ ] Page rendered and read end to end before it is linked for students

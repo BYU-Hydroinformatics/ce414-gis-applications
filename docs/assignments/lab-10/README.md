@@ -24,6 +24,6 @@ Distance Accumulation, Optimal Path As Line, Reclassify
 - [ ] Move figures into `images/` and give them descriptive names
 - [ ] Re-shoot any screenshot that shows a stale interface or a stale workflow
 - [ ] Verify every field name, SQL expression, unit, coordinate system, and coded value in ArcGIS Pro
-- [ ] Test every data link and record provenance, vintage, and licence
+- [ ] Test every data link and record provenance, vintage, and license
 - [ ] Align the rubric with the stated deliverables and confirm the point total
 - [ ] Record the ArcGIS Pro version the lab was tested against
