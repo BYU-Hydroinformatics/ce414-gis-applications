@@ -78,6 +78,15 @@ What was learned that makes the next attempt faster:
   `lab-02/` Landsat 8 path 38 row 32, 2020-07-30, bands 4 and 5 plus MTL, and `dem-utah/` the
   four USGS 1 arc-second tiles n40w112, n40w113, n41w112, n41w113.
 
+## If the work moves to a local Windows machine instead of Citrix
+
+Everything above that is Citrix-specific stops mattering. What carries over: the per-lab image
+plan below, the prepared data in the course folder's `_lab_data_2026/`, and the capture
+standards (100 % scale, crop tight to the pane, keep the tool title bar, PNG for anything with
+text). On a local machine ArcGIS Pro reads the course folder directly, `Win+Shift+S` snips
+straight to a file, and there is no drive bridge or sign-in dance. Record the exact Pro version
+(Project > About) in each lab's migration-notes comment.
+
 ## Capture workflow (proven in earlier sessions, scripted here)
 
 Nothing can be saved *out* of Citrix (Snipping Tool drag never releases, PowerPoint Save is inert,
