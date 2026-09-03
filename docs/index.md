@@ -42,7 +42,7 @@ Being converted from the PowerPoints as the semester goes.
 - [University Policies](policies/university.md)
 
 > [!NOTE]
-> This site is being built out during the Fall 2026 semester. Material still living in Word,
-> PowerPoint, and Learning Suite is being migrated here lab by lab and deck by deck. See the
+> This site is being built out during the Fall 2026 semester. The lab handouts are here; the
+> lecture slides are still being converted from PowerPoint. See the
 > [roadmap](https://github.com/BYU-Hydroinformatics/ce414-gis-applications/blob/main/ROADMAP.md)
 > for what has moved and what has not.

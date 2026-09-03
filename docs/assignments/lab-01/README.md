@@ -4,26 +4,257 @@
 
 Fall 2026 · Dr. Dan Ames
 
+## Background
+
+GIS is used by major corporations around the world to help manage shipping, inventory, sales, marketing, facilities, and expansion. Specifically, with respect to expansion, GIS is used extensively to help determine the most appropriate placement of new store locations.
+
+This exercise assumes that the Walmart Corporation is interested in building a new store in TWO counties in Utah. They want to build in Utah County for sure. They ALSO want to build in another county in Utah. To conduct this analysis, you will need to create and acquire many data layers that correspond to different spatial considerations and criteria for both counties of interest. Once you have acquired the data needed, you will use spatial analysis to identify the most suitable locations for the new store. You will use multiple geoprocessing tools to conduct this analysis. At the end of the lab, you will generate a map that shows potential locations for new Walmart sites in Utah County and make a recommendation for a specific site. Then you will create a second map that gives recommendations for a second county of your own choosing.
+
+## Problem Statement
+
+There are over 4,700 Walmart stores in the United States. About 90% of Americans live within 15 miles of a Walmart. <!-- VERIFY: store count and the "90% within 15 miles" figure are carried over from the Word handout with no source cited; confirm against a current Walmart corporate fact sheet before the semester starts. --> Walmart has stated that its goal is to provide inexpensive products to its customers. They provide a large variety of goods, allowing customers to save money without having to price shop (Fishman, 2006). Walmart is likely to continue to expand as population increases and the demand for inexpensive products increases.
+
+Assume that you work for Walmart and have been assigned to select a new location for a store in two counties in Utah. As you might suspect, there are many factors that govern the placement of a new store in a community. Some factors are based on physical requirements, others on political and economic issues. For example, see this article on siting a bicycle and ski equipment sales and rental shop in Wisconsin: <https://community.esri.com/community/education/blog/2012/08/10/siting-a-bicycle-and-ski-equipment-sales-and-rental-shop-in-wisconsin>
+<!-- TODO(instructor): this Esri Community link returns 404 (it redirects to .../en/community/... and 404s there). The post appears to have been removed or moved in an Esri Community migration. Left verbatim rather than replaced with a guess — please supply a replacement URL or drop the example. -->
+
+Suitable development areas can be determined by creating layers based on limiting criteria and combining those layers to find the places that meet all the criteria. For this lab, you are tasked with identifying the most suitable locations in each of the two counties for the placement of the new Walmart store.
+
+## Spatial Considerations
+
+For the purposes of this exercise, the spatial considerations will be limited to the following:
+
+- **Proximity to other locations:** Find locations at least 2 miles away from any existing Walmart.
+- **Proximity to major roads:** Find locations within 2 miles of I-15 or another major highway. Your second county must therefore contain at least one major highway; it does not have to contain I-15.
+- **Population density:** Located in a high-density population area with over 5,000 people per square mile, using the 2020 Census tract data listed below.
+- **Adequate space:** Walmart stores range from 51,000 ft² to 224,000 ft², averaging about 102,000 ft². <!-- VERIFY: store-footprint range and average are carried over from the Word handout with no source cited. --> The datasets in this lab do not include buildings, parcels, or land use, so your model cannot prove that a site is vacant. Treat this as a judgment step: screen your candidate zones visually against imagery, and state in your report what you were not able to verify from the data.
+
+## Data
+
+The following datasets will be needed for this project. You can either download the data from the suggested sources or create the data you need to complete this exercise. When you download the data, unzip it, and save it to a folder created for this lab.
+
+- **Utah Counties Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/about>
+    - This shapefile represents all the counties in Utah, from which you will select the specific counties that you need. In the Download Options window, download the zipped Shapefile.
+- **UDOT Highways:** <https://opendata.gis.utah.gov/datasets/utah-roads/about>
+    - This shapefile represents all the major roads and highways in Utah. In the Download Options window, download the zipped Shapefile.
+- **2020 Census Tracts Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-census-tracts-2020/about>
+    - This shapefile represents the 2020 Census tract data for Utah. In the Download Options window, download the zipped Shapefile.
+- **Current Walmart locations:** You have two options for Walmart locations in Utah County and in your selected county. 1) You can create your own point feature class containing all Walmart locations within the counties. Or 2) you can download data from Walmart here: <https://walmart-open-data-walmarttech.opendata.arcgis.com/> using the "Walmart store status public data" link. In the Download Options window, download the zipped Shapefile.
+
+## Analysis Tools
+
+You will use the following new tools in this exercise:
+
+- **Select:** Used to find and select features from your data layers based on attributes from the attribute table. You will first use it to select Utah County (and later your chosen county) in the counties shapefile. You will also use it in this laboratory to select population districts (represented with polygons) that have a density greater than 5000 people per square mile.
+- **Intersect:** An overlay operation (Bolstad, pp. 357–358) that keeps only the area where the input layers overlap, and carries the attributes of both inputs into the result. Intersect is not the same as Clip: Clip keeps only the first layer's attributes, while Intersect keeps attributes from every input.
+- **Buffer:** A proximity operation which creates an area equal to a distance, specified by the user, from a feature (Bolstad, p. 343). A buffer operation applied to a point feature layer returns a polygon feature layer with a series of circles of a specified distance around each point. A buffer operation applied to a polyline feature set returns a new polygon feature set with a single polygon surrounding each line segment at a specified distance.
+- **Erase:** An overlay operation where the target features are "cut out" or removed at the locations of the input features.
+- **Add Field:** Adds a blank new field to a table of a feature class, layer, or raster that has already been created and has an attribute table.
+- **Calculate Field:** Calculates the values of a field for all objects within a feature class, layer, or raster.
+
+## Example Model
+
+Your ModelBuilder model might look like the following when it is finished. Note that you are encouraged to make your model "your own" by customizing the layout, the labels on the tools and datasets, etc. Make sure your labels are descriptive so that others can understand what each dataset represents and what each tool is actually doing. Do you see any ways that the following model can be improved? For example, a tool labeled as "Buffer" is much less informative than a tool labeled "Buffer (2 Miles)". Also, in GIS, there are always many ways to accomplish the same thing. For example, you might buffer your data before selection if you think that would work better (though that's a bad example, because it is better to select some data first and only buffer the selected data). Regardless, you might find other ways to improve your model over this example in terms of both the organization and tools you use, as well as the presentation, layout, and labeling.
+
+![Overview of the finished ModelBuilder model: the Counties layer feeds a Select for Utah County, which is intersected with the census and UDOT roads layers; the census branch runs Add Field and Calculate Field to build DENSITY and selects the high-density polygons, the roads branch selects major roads and buffers them 2 miles, the two branches are intersected, and an Erase removes a 2-mile buffer around existing Walmarts to produce the target-population layer.](images/lab01-full-model-overview.png)
+
+<!-- TODO(instructor): this full-model overview is a zoomed-out ModelBuilder canvas grab and the node labels are close to illegible at web width. It needs re-export from ModelBuilder at a readable scale (this is one of the six illegible ModelBuilder images noted in ROADMAP.md), not a re-screenshot. -->
+<!-- Stale: this image shows the OLD workflow (CensusBlocks2010, DENSITY > 5000 on blocks). Kept per the screenshot gate in ROADMAP.md. -->
+
+## Complete the Lab
+
+For an advanced GIS student, the information up to this point is all you need to complete the assignment and create an output map from the results. Feel free to try conducting the analysis using only the information provided above. If you complete the lab only using the information provided above (without using the step-by-step instructions below) make sure to indicate this in your lab report to be considered for extra credit.
+
+<!-- TODO(instructor): this paragraph offers extra credit, but the rubric below has no extra-credit row and no stated value for it. Decide how many points it is worth (or remove the offer) — not changed here because point values are an instructor decision. -->
+
+## Step by Step Solution
+
 > [!WARNING]
-> **Not yet migrated.** This lab still lives in Word at
-> `Labs/Lab 1 - Walmart Site Selection.docx` in the course folder. This page is a placeholder so the
-> site navigation is complete; do not send students here until the migration is done.
-> See the [roadmap](https://github.com/BYU-Hydroinformatics/ce414-gis-applications/blob/main/ROADMAP.md).
+> **The screenshots below predate the current data and workflow.** They were captured from an
+> earlier version of this lab and still show `CensusBlocks2010`, the old density expression
+> `!POP100! / !SqMiles!`, and a `CARTO` road-class expression. The current lab uses **2020 Census
+> tracts** and the density expression given in Step 3, and Step 5 asks you to derive the road field
+> and values from your own download. **Where a screenshot and the text disagree, the text wins.**
+> Use the images for the shape of each dialog, not for field names or values.
 
-## What this lab covers
+> [!NOTE]
+> **Important Note #1:** The following step-by-step solution is specifically for the analysis of
+> Utah County. You will repeat these steps for your own selected county.
 
-Suitability overlay: population density, road proximity, and competitor exclusion, built as a parameterised ModelBuilder workflow and transferred to a second county.
+> [!NOTE]
+> **Important Note #2:** My example screenshots in this and future assignments may or may not match
+> your data exactly. So don't just rely on the screenshots. GIS data files, fields, and content
+> names change all the time as data are updated or new data are released. Use my screenshots as a
+> reference but use deductive logic as needed to modify your model based on the actual data you have
+> downloaded.
 
-## Tools introduced
+### Step 0
 
-Select, Intersect, Buffer, Erase, Add Field, Calculate Field
+Start ArcGIS Pro. Remember to use your local hard drive (not a network drive) as the save location for your project and your data. Open the Catalog View and find the Toolboxes icon. Expand the Toolboxes icon to find the specific toolbox for your project. This is where you create new models and tools for your project. Right-click your project toolbox and choose "New Model". This will create a new model in your toolbox and will open the ModelBuilder view in ArcGIS. Here you can drag data from your map and tools from the main ArcGIS toolbox to build a model. If you need a tutorial or refresher on using ArcGIS ModelBuilder, watch this training video from Esri (the company that makes ArcGIS): <https://www.youtube.com/watch?v=fxcAb-xw_zU>
 
-## Migration checklist
+Before you run any tool that measures distance or area, set a projected coordinate system for your analysis. In the model's Properties ▸ Environments, set the Output Coordinate System to NAD 1983 UTM Zone 12N. Buffers and area calculations made in geographic (latitude/longitude) coordinates are not measured in miles and will give wrong answers.
 
-- [ ] Convert the Word document to Markdown with `tools/docx2md.py`
-- [ ] Move figures into `images/` and give them descriptive names
-- [ ] Re-shoot any screenshot that shows a stale interface or a stale workflow
-- [ ] Verify every field name, SQL expression, unit, coordinate system, and coded value in ArcGIS Pro
-- [ ] Test every data link and record provenance, vintage, and license
-- [ ] Align the rubric with the stated deliverables and confirm the point total
-- [ ] Record the ArcGIS Pro version the lab was tested against
+### Step 1
+
+Add the Select tool to your ModelBuilder layout. Use the Select tool to select Utah County from the other counties in the Counties shapefile. Create an SQL expression to select Utah County. This can be done using the expression boxes or by toggling the Switch to Edit SQL Mode button and inputting `NAME is Equal to UTAH`. (see Figure 1)
+
+![The ArcGIS Pro Select tool dialog: Input Features set to Counties, Output Feature Class Counties_Select, and the clause "NAME is Equal to UTAH" with a green check reading "The SQL expression is valid."](images/lab01-select-utah-county-dialog.png)
+
+![ModelBuilder detail: a blue Counties input oval feeding a yellow "Select [Utah County]" tool, which outputs a green Utah_County oval.](images/lab01-select-utah-county-model.png)
+
+**Figure 1.** Select tool window and ModelBuilder example.
+
+### Step 2
+
+Use the Intersect tool to restrict both the Roads layer and the Census tract layer to Utah County. This reduces the amount of data being processed and makes the analysis run faster. Intersect keeps only the area where the inputs overlap and carries the attributes of both, so choose the order of the input features deliberately. (see Figure 2)
+
+![ModelBuilder detail: the census layer and Utah_County feed an "Intersect [Census and Utah County]" tool, and UDOTRoutes_LRS and Utah_County feed an "Intersect [UDOTRoutes and Utah County]" tool, producing county-restricted census and main-roads outputs.](images/lab01-intersect-county-model.png)
+
+![The ArcGIS Pro Intersect tool dialog with UDOTRoutes_LRS and Utah_County as Input Features, Output Feature Class UtahCountyMainRoadsI15, Attributes To Join set to All attributes, and Output Type Same as input.](images/lab01-intersect-roads-county-dialog.png)
+
+**Figure 2.** Intersect tool window and ModelBuilder example.
+
+### Step 3
+
+Use the Add Field tool to create a new attribute table column called DENSITY in the census tract layer. Use the Calculate Field tool to calculate the DENSITY attribute as the population density. To calculate the density, use this statement to compute the number of people per square mile:
+
+```text
+!POP100! / (!ALAND20! / 2589988.110336)
+```
+
+(see Figure 3)
+
+`ALAND20` is the tract's land area in square meters, so dividing by 2,589,988.110336 converts it to square miles and gives people per square mile. Before you trust the result, open the attribute table and confirm the field names and their units in the data you actually downloaded — Census field names change between vintages.
+
+![ModelBuilder detail: the county census layer feeds an "Add Field [DENSITY]" tool, whose output feeds a "Calculate Field [DENSITY]" tool, producing the calculated-density layer.](images/lab01-density-field-model.png)
+
+![The ArcGIS Pro Add Field tool dialog: Field Name DENSITY, Field Type Double (double precision), Field IsNullable checked.](images/lab01-add-field-density-dialog.png)
+
+![The ArcGIS Pro Calculate Field tool dialog: Field Name DENSITY, Expression Type Python 3, and the expression box showing the older !POP100! / !SqMiles! expression.](images/lab01-calculate-field-density-dialog.png)
+
+**Figure 3.** Top: ModelBuilder example. Bottom: Add Field tool window and Calculate Field tool window.
+
+<!-- Stale: the Calculate Field screenshot still shows the old !POP100! / !SqMiles! expression against CensusBlocks2010. The expression in the text above is the current one. Gated on the Lab 1 data validation; do not re-shoot yet. -->
+
+### Step 4
+
+Use the Select tool to select the areas where the population density is greater than 5,000, using the expression `DENSITY > 5000`. Later in the lab you will want to keep the areas inside these polygons. In an SQL expression the field name must match the data exactly, and comparisons against text values are case sensitive.
+
+![The ArcGIS Pro Select tool dialog with the expression DENSITY > 5000 and a note that the expression cannot be edited in Clause mode, followed by a green check that the SQL expression is valid.](images/lab01-select-density-dialog.png)
+
+![ModelBuilder detail: the calculated-density layer feeds a "Select [DENSITY > 5000]" tool, producing the high-density output layer.](images/lab01-select-density-model.png)
+
+**Figure 4.** The Select tool window and ModelBuilder example for DENSITY.
+
+<!-- Stale: this Select screenshot runs against "Utah County CensusBlocks Calculated Density Field" (2010 blocks), not the 2020 tracts the current lab uses. -->
+
+### Step 5
+
+Use the Select tool to keep only I-15 and the other major highways in Utah County. Open the roads attribute table first, find the field that classifies road type, and build your SQL expression from the values that are actually present in your download. Do not copy a field name or code list from an older version of this handout — the UDOT roads schema changes. State in your report which field and which values you used.
+
+![The ArcGIS Pro Select tool dialog for major roads, showing four OR'd clauses on an older CARTO field. This screenshot is illustrative only; derive the field and values from your own data.](images/lab01-select-major-roads-dialog.png)
+
+![ModelBuilder detail: the county main-roads layer feeds a "Select [Major Roads/I15]" tool, producing the major-roads output layer.](images/lab01-select-major-roads-model.png)
+
+**Figure 5.** The Select tool window and ModelBuilder example for major roads.
+
+> [!IMPORTANT]
+> The screenshot above shows a `CARTO is Equal to 1 / 2 / 3 / 6` expression from an older UDOT
+> roads schema. Do not copy it. Derive the classification field and its values from the attribute
+> table of the file you downloaded, as the step text instructs.
+
+<!-- Stale: CARTO = 1,2,3,6 screenshot retained deliberately; the step text no longer asserts that expression. -->
+
+### Step 6
+
+Use the Buffer tool to create a 2-mile buffer around the major roads polyline. Later in the lab you will keep the areas inside this buffer.
+
+![The ArcGIS Pro Buffer tool dialog: Distance 2 Miles, Side Type Full, End Type Round, Method Planar, Dissolve Type "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
+
+![ModelBuilder detail: the major-roads layer feeds a Buffer tool, producing a "MajorRoads_I15 2 Mile Buffer" output layer.](images/lab01-buffer-roads-model.png)
+
+**Figure 6.** The Buffer tool window and ModelBuilder example for major roads buffer.
+
+### Step 7
+
+Use the Intersect tool to intersect the I-15/major roads buffer layer with the high-density census district layer to find the areas that contain both.
+
+![The ArcGIS Pro Intersect tool dialog with the high-density census layer and the 2-mile roads buffer as Input Features, output Roads_Census_Intersect, and XY Tolerance left as Unknown.](images/lab01-intersect-density-roads-dialog.png)
+
+![ModelBuilder detail: the high-density census output and the 2-mile roads buffer both feed an "Intersect [Density and Roads]" tool, producing a "Roads Intersect Density" layer.](images/lab01-intersect-density-roads-model.png)
+
+**Figure 7.** The Intersect tool window and ModelBuilder example of the density and roads intersect.
+
+<!-- Stale: the XY Tolerance in this dialog reads "Unknown". With the projected output coordinate system set in Step 0 the units shown will differ. Screenshot retained; gated on the data validation. -->
+
+### Step 8
+
+Use the Buffer tool to create a 2-mile buffer around the existing Walmarts. Later in this lab you will want to keep the areas outside of this buffer.
+
+![ModelBuilder detail: the Existing_Walmarts point layer feeds a "Buffer [2 Miles]" tool, producing a Walmart_Buffer polygon layer.](images/lab01-buffer-walmart-model.png)
+
+**Figure 8.** The Buffer tool around the current Walmart locations.
+
+### Step 9
+
+Use the Erase tool to erase the buffered Walmart layer from the intersected population density with major roads buffer layer. This result will give you the target population that is not served by a Walmart. This is shown in Figure 9.
+
+![ModelBuilder detail: "Roads Intersect Density" and Walmart_Buffer feed an "Erase [Walmart from Density]" tool, producing the "Walmart Target Population" output layer.](images/lab01-erase-walmart-model.png)
+
+**Figure 9.** The Erase tool in ModelBuilder.
+
+### Step 10
+
+Right-click on the last output layer you created and check Parameter and Add To Display. This will make it so that the output will be automatically added to the map.
+
+![The ModelBuilder right-click context menu on the Walmart_Target output oval, with Parameter and Add To Display both check-marked; a "P" marks the oval as a model parameter.](images/lab01-parameter-add-to-display-menu.png)
+
+**Figure 10.** Parameter and Add To Display options.
+
+### Step 11
+
+Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point shapefile to mark these points on your final map.
+
+### Step 12 — Rinse and Repeat
+
+Now that you know how to do this… make a copy of your model, and revise it to analyze another county in Utah. Make a new map for these results!
+
+## Deliverables
+
+Make TWO professional map layouts that represent the target zones for building a new Walmart, based on the criteria given. In each case, include close-up data frames and an inset map of the specific spots you selected for a new Walmart. Write a brief report (1–2 pages) that describes the project requirements, your approach to solving it, and a screen capture of the model you used to solve it (only one ModelBuilder screen capture since it should be the same for both counties). Include your specific recommendation on the site for the new Walmart. Also include the resulting maps (two maps, one for each county) with a justification for why you chose your specific locations. Make sure to review the rubric at the end of this lab for the full requirements of this laboratory exercise.
+
+## References
+
+Bolstad, P. (2008) *GIS Fundamentals: A First Text on Geographic Information Systems.* 3rd Edition. Esri Publishing.
+
+Fishman, C. (2006) *The Walmart Effect: How the World's Most Powerful Company Really Works – and How It's Transforming the American Economy.* Penguin Books.
+
+## Example Map
+
+Note that this map is just an example. Your map will/must look different than this because it will be based on your own analysis, your own unique use of visual graphical cartographic elements and your own layout design choices. Also, your map must include your name.
+
+![Example finished layout titled "Possible Walmart Locations in Utah County": a dark basemap of Utah County with suitable areas symbolized yellow through red by population density, current Walmart locations and candidate sites marked with symbols, two inset detail maps for North Lehi and South East Provo, a legend, north arrow, and scale bar in miles.](images/lab01-example-map-utah-county.jpg)
+
+<!-- Stale: the example map's legend reads "Suitble Areas" (misspelled in the graphic) and its density classes come from the old 2010 block analysis. The image cannot be corrected without re-making the layout. -->
+
+## Rubric for Walmart Site Selection Project Report
+
+| Item | Points |
+| --- | --- |
+| Assignment Title, Name, Date, Course | /1 |
+| Summary of the requirements of the project | /4 |
+| Describe your model:<br>• List each of the tools used<br>• List tool settings applied for the analysis<br>• List all input, intermediate, and output datasets<br>• Describe each input dataset including type (point, line, polygon, raster) and the source of the data<br>• Describe each output dataset (point, line, polygon, raster) | /5 |
+| One or more full pages (8.5 x 11) showing your model:<br>• All text is readable (10 pt. font minimum)<br>• All tools and data sets are shown and labels are informative | /5 |
+| Answer the following questions:<br>• Where are the best locations for a new Walmart?<br>• Which one site do you recommend and why did you select this location? | /5 |
+| Make TWO full page (8.5 x 11) maps showing the identified location(s) for the optimal Walmart sites (one for each county):<br>• Show current Walmarts and optimal locations for a new one<br>• Map Title: Neat Line, North Arrow, Scale Bar<br>• All features (existing & future Walmart locations) are labeled<br>• Text box with author name, date, map projection<br>• Current Walmart locations marked with an appropriate graphical symbol<br>• **Important:** Show the final suitability layer that shows the effect of your intersection and erasing — this is the best way to show that you truly solved this correctly. E.g. see the yellow and orange areas in the example map.<br>• Base map is visible<br>• Zoomed to an appropriate scale for viewing all features<br>• All text is legible on printed map | /30<br>(15 per map) |
+| My self-assessment — score yourself against the 50 points above. This row adds no points to the total. | (no points) |
+
+**Total: 50 points.**
+
+<!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 1 - Walmart Site Selection.docx (the Sept 3, 2026 corrected version — census vintage, density units, projected CRS, Intersect-vs-Clip, road criterion, judgment step and rubric total all migrated as-is, nothing reverted).
+ArcGIS Pro version verified against: NOT VERIFIED in this migration — no ArcGIS Pro session was run. Every tool name, dialog layout, field name, expression and coordinate system on this page is carried over from the Word handout, not re-verified.
+images renamed from fig-NN: fig-01.png -> lab01-full-model-overview.png; fig-02.png -> lab01-select-utah-county-dialog.png; fig-03.png -> lab01-select-utah-county-model.png; fig-04.png -> lab01-intersect-county-model.png; fig-05.png -> lab01-intersect-roads-county-dialog.png; fig-06.png -> lab01-density-field-model.png; fig-07.png -> lab01-add-field-density-dialog.png; fig-08.png -> lab01-calculate-field-density-dialog.png; fig-09.png -> lab01-select-density-dialog.png; fig-10.png -> lab01-select-density-model.png; fig-11.png -> lab01-select-major-roads-dialog.png; fig-12.png -> lab01-select-major-roads-model.png; fig-13.png -> lab01-buffer-roads-dialog.png; fig-14.png -> lab01-buffer-roads-model.png; fig-15.png -> lab01-intersect-density-roads-dialog.png; fig-16.png -> lab01-intersect-density-roads-model.png; fig-17.png -> lab01-buffer-walmart-model.png; fig-18.png -> lab01-erase-walmart-model.png; fig-19.png -> lab01-parameter-add-to-display-menu.png; fig-20.jpg -> lab01-example-map-utah-county.jpg. No image was deleted; all 20 are referenced.
+stale/unverified screenshots (all retained deliberately; re-shoot is gated on Labs/Lab 1 Data/2026-09-02/ARCGIS_PRO_VALIDATION_CHECKLIST.md per ROADMAP.md): lab01-full-model-overview.png (old CensusBlocks2010 workflow AND illegible at web width — needs re-export from ModelBuilder, not a re-screenshot); lab01-intersect-county-model.png and lab01-intersect-roads-county-dialog.png (CensusBlocks2010, UDOTRoutes_LRS); lab01-density-field-model.png, lab01-add-field-density-dialog.png (CensusBlocks2010 input table); lab01-calculate-field-density-dialog.png (old expression !POP100! / !SqMiles!, 2010 block field list); lab01-select-density-dialog.png, lab01-select-density-model.png (2010 blocks); lab01-select-major-roads-dialog.png (CARTO is Equal to 1/2/3/6 — the step text deliberately no longer asserts this); lab01-intersect-density-roads-dialog.png (XY Tolerance "Unknown"); lab01-example-map-utah-county.jpg (legend misspells "Suitable" and density classes come from the 2010 block analysis).
+TODO(instructor): (1) the Esri Community bicycle/ski-shop link 404s — supply a replacement or drop the example; (2) the "Complete the Lab" section offers extra credit but the rubric has no extra-credit row or point value; (3) lab01-full-model-overview.png needs re-export from ModelBuilder at a legible scale.
+VERIFY: "over 4,700 Walmart stores" and "about 90% of Americans live within 15 miles of a Walmart" (uncited, unchanged); Walmart store footprint range 51,000–224,000 ft², average ~102,000 ft² (uncited, unchanged). Also unverified but left verbatim: NAD 1983 UTM Zone 12N, the !POP100! / (!ALAND20! / 2589988.110336) expression and its field names, the Bolstad page numbers, and the ArcGIS Pro dialog/pane names.
+dead/redirected links: DEAD — https://community.esri.com/community/education/blog/2012/08/10/siting-a-bicycle-and-ski-equipment-sales-and-rental-shop-in-wisconsin (redirects to https://community.esri.com/en/community/... then 404). OK (200, no redirect): the three opendata.gis.utah.gov dataset pages, https://walmart-open-data-walmarttech.opendata.arcgis.com/, and https://www.youtube.com/watch?v=fxcAb-xw_zU.
+figure numbering: Word's caption fields lost their numbers. Restored as Figures 1–10 matching the ten step captions in document order; the "Example Model" overview image had no caption field in Word and is intentionally left unnumbered so that the in-text references "(see Figure 1)", "(see Figure 2)", "(see Figure 3)" and "This is shown in Figure 9" continue to resolve correctly. -->

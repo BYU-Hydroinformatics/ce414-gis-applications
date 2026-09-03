@@ -43,9 +43,12 @@ before doing anything substantial. They record an audit of all 797 embedded imag
 
 ## Current state
 
-The scaffold is complete and the site builds, but **no content has been migrated**. Every lab page
-is a placeholder with a migration checklist; the lectures page lists the source decks and what is
-known to be wrong with each.
+All ten lab handouts are migrated (Sept 3, 2026). Each page was converted with `tools/docx2md.py`,
+hand-cleaned, checked for source coverage, and flagged rather than "fixed" wherever a claim could
+not be verified without ArcGIS Pro. **Read the migration-notes comment at the foot of each lab
+page** — it lists that lab's stale screenshots, unverified expressions, dead links, and instructor
+decisions. Three images were redacted for student privacy (Lab 5 Figure 17, Lab 9 Figures 22 and
+28); the notes record exactly what was covered. No lecture deck has been converted yet.
 
 | Piece | State |
 | --- | --- |
@@ -55,7 +58,7 @@ known to be wrong with each.
 | `tools/docx2md.py` | Done and tested against Lab 1 |
 | `tools/pptx_extract.py` | Copied from CCE 114, unchanged |
 | `tools/slide-conversion-guide.md` | Adapted for ArcGIS Pro and CE 414's rhythm |
-| Lab pages 1–10 | Placeholders only |
+| Lab pages 1–10 | **Migrated Sept 3, 2026** from the Word handouts — text and images complete, every page carries `TODO(instructor)` / `VERIFY` comments and a migration-notes block; nothing yet verified in ArcGIS Pro |
 | Lecture pages and decks | None converted |
 | Policies, schedule, course overview | Stubs with TODOs |
 
