@@ -60,7 +60,7 @@ Rules 7 to 9 are shared with the sibling repo and are recorded in
 Not in this repo:
 
 ```
-/Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
+/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
 ├── Labs/                        Lab 1–10 .docx
 ├── Lectures/2026/               the 15 current .pptx decks
 ├── _screenshots_2026/           new ArcGIS Pro captures + README

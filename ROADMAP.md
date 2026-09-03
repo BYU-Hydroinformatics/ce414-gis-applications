@@ -26,7 +26,7 @@ This mirrors what was done for CCE 114 Geomatics. Where the two courses differ, 
 Everything originates in Dr. Ames's course folder, which is **not** in this repo:
 
 ```
-/Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
+/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
 ├── Labs/                    Lab 1–10 .docx  (Lab 1 was corrected Sept 3, 2026)
 │   └── Old/2026_pre_refresh/   archived originals
 ├── Lectures/2026/           the 15 current .pptx decks
@@ -89,7 +89,7 @@ units, projected CRS, Intersect-vs-Clip, rubric total), so the text is in good s
 
 ```bash
 python3 tools/docx2md.py \
-  "/Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 1 - Walmart Site Selection.docx" \
+  "/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 1 - Walmart Site Selection.docx" \
   docs/assignments/lab-01
 ```
 
