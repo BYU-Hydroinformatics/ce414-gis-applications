@@ -21,7 +21,8 @@ CE 414 is the applications course and uses **ArcGIS Pro**.
 | [docs/policies/](docs/policies/) | Grading, AI use, and university policies |
 | [slides/](slides/) | Marp source for the web slide decks |
 | [tools/](tools/) | Word → Markdown and PowerPoint → Marp conversion pipeline |
-| [ROADMAP.md](ROADMAP.md) | **Start here** — migration plan, current state, and session handoff |
+| [CLAUDE.md](CLAUDE.md) | **Start here** — what we are doing, the hard rules, how to build and check |
+| [ROADMAP.md](ROADMAP.md) | Migration order, known content problems, and per-item definition of done |
 
 ## Status
 

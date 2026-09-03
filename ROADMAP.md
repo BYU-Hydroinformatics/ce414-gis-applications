@@ -5,6 +5,11 @@
 **Site:** https://byu-hydroinformatics.github.io/ce414-gis-applications/
 **Sibling repo (the pattern to copy):** https://github.com/BYU-Hydroinformatics/cce114-geomatics
 
+> [!IMPORTANT]
+> **New session? Read [`CLAUDE.md`](CLAUDE.md) first**, then this file. `CLAUDE.md` has the hard
+> rules (ArcGIS Pro not QGIS; never fabricate a screenshot or a field name; verify before
+> asserting). This file has the plan and the order of work.
+
 ## The goal
 
 Move CE 414 out of Word, PowerPoint, and Learning Suite attachments and onto a public course site:
@@ -53,6 +58,22 @@ known to be wrong with each.
 | Lab pages 1–10 | Placeholders only |
 | Lecture pages and decks | None converted |
 | Policies, schedule, course overview | Stubs with TODOs |
+
+## If you are picking this up cold, do this first
+
+A single, self-contained first task that exercises the whole pipeline:
+
+**Migrate Lab 1 to `docs/assignments/lab-01/`.**
+
+1. Read `CLAUDE.md`, then the "Known problems" section below.
+2. Run the converter (command in step 1 of the migration order).
+3. Rename `images/fig-NN.png` to descriptive names and fix the references.
+4. Read the rendered page end to end (`mkdocs serve`) against the Word original side by side.
+5. Do **not** re-shoot the screenshots — Lab 1's are gated, see the warning below.
+6. Report: what converted cleanly, what needed hand-fixing, and every item you flagged.
+
+It is small enough to finish, and it tells you whether `docx2md.py` needs work before the other
+nine labs go through it.
 
 ## Migration order
 
@@ -160,3 +181,22 @@ Existing captures and the shot list live in the course folder under `_screenshot
 - [ ] Rubric matches the stated deliverables and the points total is correct
 - [ ] ArcGIS Pro version the lab was tested against is recorded
 - [ ] Page rendered and read end to end before it is linked for students
+
+## Definition of done, per lecture deck
+
+- [ ] Converted per `tools/slide-conversion-guide.md`, which is the authority on structure and tone
+- [ ] Title slide, a **Today's Goals** slide, and a **Before Next Class** slide
+- [ ] Every speaker note from the source carried across as an HTML comment
+- [ ] All ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording updated to ArcGIS Pro equivalents
+- [ ] Any remaining ArcMap-era screenshot explicitly flagged, not silently kept
+- [ ] Images in the deck's own `images/` folder, nothing wider than 2000 px, folder under ~15 MB
+- [ ] Deck rendered to PNGs and **every slide looked at** — no overflow, no unreadable image
+- [ ] A conversion-notes HTML comment at the end of the deck: source, slides dropped, TODOs
+- [ ] A matching page under `docs/lectures/` linking to the published deck URL
+
+## Reporting back
+
+Whatever you finish, say plainly: what you changed, what you verified versus what you assumed,
+what you flagged and why, and what you deliberately did not do. Anything you could not verify
+should be named, not smoothed over — the whole point of this migration is that the site is more
+trustworthy than the Word documents it replaces.
