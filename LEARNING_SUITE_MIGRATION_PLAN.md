@@ -4,7 +4,8 @@
 **Learning Suite course id:** `cid-ahk3xMzyr311`
 **Target site:** <https://byu-hydroinformatics.github.io/ce414-gis-applications/>
 **Written:** September 3, 2026
-**Status:** planning only — no Learning Suite content has been changed.
+**Status:** labs done (September 3, 2026) — all ten lab handout links now point at the course
+site. Lecture decks are still pending; they are blocked on the decks themselves landing.
 
 The job: every Learning Suite link that currently downloads a lecture `.pptx` or a lab `.docx`
 becomes a link to the live page on the course site instead. Data files stay as downloads.
@@ -135,9 +136,21 @@ Ten `.docx` links, one per lab, all in assignment descriptions.
 | Lab 9: Wind Farm Site Selection | 11/07 | `assignments/lab-09/` |
 | Lab 10: Least Cost Path Power Lines | 11/14 | `assignments/lab-10/` |
 
-Only Lab 1's description has been read in full. Labs 2–10 are assumed to follow the same
-`ck_embededFile` shape and **must be opened and confirmed individually** at execution time — some
-carry an extra note (Lab 1 has "(2025 updated)") that should be preserved or deliberately dropped.
+**Done September 3, 2026.** All ten were opened, read, and edited individually; the descriptions
+turned out to vary more than the plan assumed, so the edit was made **surgical** — only the
+`ck_embededFile` span for the `.docx` was swapped for the site link, leaving everything else in
+place. That preserved Lab 2's three Landsat `.zip` attachments and Google Drive and USGS links,
+Lab 5's Rock Canyon DEM `.zip`, and Lab 10's `ElectricalLines_shp.zip`.
+
+Stale "(updated …)" notes were dropped along with the file they described — they referred to the
+Word document's revision date and would have read as claims about the linked page. Lab 1 was the
+one full replacement: its description contained nothing but the attachment, a `(2025 updated)`
+note, and empty `<br />`s, so it now carries the CCE 114 sentence. The other nine carry the link
+alone, matching whatever prose was already around it.
+
+Verified from **Student View**: every lab shows its `Lab N Assignment` link, no `.docx` remains in
+any description, and all five data attachments survived. Removed markup is recorded in
+[`learning-suite-snapshots/`](learning-suite-snapshots/).
 
 **Lab 11: Choose Your Own Adventure has no attachment.** Its description tells students to pick one
 of the prior-year example projects listed on the Nov 17 schedule page. Nothing to replace, but it
