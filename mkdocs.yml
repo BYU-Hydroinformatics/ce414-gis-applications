@@ -62,6 +62,17 @@ nav:
       - Final Project: assignments/final-project.md
   - Lectures:
       - Overview: lectures/README.md
+      - "Week 1 — Data Models Refresher": lectures/week-01.md
+      - "Week 2 — ModelBuilder": lectures/week-02.md
+      - "Week 3 — ModelBuilder and Raster Analysis": lectures/week-03.md
+      - "Week 4 — Imagery": lectures/week-04.md
+      - "Week 5 — Terrain Analysis": lectures/week-05.md
+      - "Week 6 — Watershed Delineation": lectures/week-06.md
+      - "Week 8 — Interpolation": lectures/week-08.md
+      - "Week 9 — Web Services": lectures/week-09.md
+      - "Week 10 — Raster-Based Spatial Analysis": lectures/week-10.md
+      - "Week 11 — Least Cost Path and Coordinate Systems": lectures/week-11.md
+      - "Week 12 — GPS and the Final Project": lectures/week-12.md
   - Policies:
       - Grading: policies/grading.md
       - AI Use Policy: policies/ai-policy.md

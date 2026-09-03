@@ -14,7 +14,7 @@ Writes into OUTDIR:
                      for slides built from PowerPoint shapes that should be kept as images
 
 No python-pptx or markitdown needed; only the stdlib, Pillow, LibreOffice and poppler
-(`/opt/homebrew/bin/soffice`, `pdftoppm`).
+(`/opt/homebrew/bin/soffice`, and `pdftoppm` or the `pymupdf` Python package).
 """
 import argparse
 import html
@@ -34,6 +34,25 @@ def texts(xml: str) -> list[str]:
         if t.strip():
             out.append(html.unescape(t))
     return out
+
+
+def render_pages(pdf: Path, out: Path, hires: list[int]) -> None:
+    """Rasterize deck.pdf: page-NN.jpg at 50 dpi, plus hires-NN-N.png at 200 dpi for --hires pages.
+    Uses pdftoppm when installed, otherwise PyMuPDF (pip install pymupdf)."""
+    import shutil
+    if shutil.which("pdftoppm"):
+        subprocess.run(["pdftoppm", "-jpeg", "-r", "50", str(pdf), str(out / "page")], check=True)
+        for p in hires:
+            subprocess.run(["pdftoppm", "-png", "-r", "200", "-f", str(p), "-l", str(p), str(pdf),
+                            str(out / f"hires-{p:02d}")], check=True)
+        return
+    import pymupdf
+    doc = pymupdf.open(pdf)
+    width = max(2, len(str(doc.page_count)))
+    for i, page in enumerate(doc, 1):
+        page.get_pixmap(dpi=50).save(str(out / f"page-{i:0{width}d}.jpg"))
+    for p in hires:
+        doc[p - 1].get_pixmap(dpi=200).save(str(out / f"hires-{p:02d}-{p}.png"))
 
 
 def main() -> None:
@@ -103,10 +122,7 @@ def main() -> None:
                    check=True, capture_output=True)
     pdf = next(out.glob("*.pdf"))
     pdf.rename(out / "deck.pdf")
-    subprocess.run(["pdftoppm", "-jpeg", "-r", "50", str(out / "deck.pdf"), str(out / "page")], check=True)
-    for p in a.hires:
-        subprocess.run(["pdftoppm", "-png", "-r", "200", "-f", str(p), "-l", str(p), str(out / "deck.pdf"),
-                        str(out / f"hires-{p:02d}")], check=True)
+    render_pages(out / "deck.pdf", out, a.hires)
 
     from PIL import Image, ImageDraw
     pages = sorted(out.glob("page-*.jpg"))

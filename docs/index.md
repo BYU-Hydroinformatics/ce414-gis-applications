@@ -32,8 +32,8 @@ the backbone — every lab is a reproducible model, not a sequence of clicks.
 
 ## Lectures
 
-Interactive web slide decks, one page per topic under [Lectures](lectures/README.md).
-Being converted from the PowerPoints as the semester goes.
+Interactive web slide decks for every lecture week, indexed under [Lectures](lectures/README.md).
+Navigate with the arrow keys; press <kbd>P</kbd> for presenter view with speaker notes.
 
 ## Policies
 
@@ -42,7 +42,7 @@ Being converted from the PowerPoints as the semester goes.
 - [University Policies](policies/university.md)
 
 > [!NOTE]
-> This site is being built out during the Fall 2026 semester. The lab handouts are here; the
-> lecture slides are still being converted from PowerPoint. See the
+> This site was built out in September 2026. The lab handouts and lecture decks are all here, each
+> still carrying instructor review notes from the conversion. See the
 > [roadmap](https://github.com/BYU-Hydroinformatics/ce414-gis-applications/blob/main/ROADMAP.md)
 > for what has moved and what has not.

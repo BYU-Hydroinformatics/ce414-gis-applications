@@ -44,6 +44,10 @@ A lab that was wrong in Word should not be wrong in Markdown.
    source slide contains them. Keep the reference, describe it in a line.
 6. **Preserve originals.** The Word and PowerPoint sources live outside this repo. If you edit them,
    archive the original first (see the `Old/` folders in the course directory).
+6a. **`docs/lectures/` is generated.** `tools/build_lectures.py` rewrites every `docs/lectures/week-NN.md`,
+   `docs/lectures/README.md`, and the Lectures section of `mkdocs.yml` from its `DECKS` table. Edit the
+   table and re-run the script; hand edits to those files are overwritten (notes survive only below a
+   `<!-- notes -->` marker in a week page).
 7. **Never name an instructor when referring to another class session.** Instructors change between
    semesters. The title-slide byline is the one place names belong.
 8. **American English throughout** — meters, kilometers, center, color, catalog, gray. Journal and
