@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # DRAFT — Lab 1: Walmart Site Selection
 
 **Civil Engineering 414 — Engineering Applications of GIS**

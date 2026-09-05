@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # DRAFT — ArcGIS Tips, Tricks, and Important Reminders
 
 > [!WARNING]
