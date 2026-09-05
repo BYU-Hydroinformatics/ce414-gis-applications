@@ -60,8 +60,17 @@ In ModelBuilder, click **Environments** on the **ModelBuilder** ribbon tab (in t
 and set **Output Coordinate System**. For anywhere in Utah, use **NAD 1983 UTM zone 12N** — search
 for it in the picker; note Pro spells "zone" with a lowercase z. All of Utah falls in UTM zone 12.
 
-Sanity check: after you run a tool, Utah County should come out to about **2,141 square miles**. If
-your county area is a number like 0.6, you are still in degrees.
+Sanity check: after you run a tool, Utah County should come out to about **2,141 square miles**.
+Two ways it goes wrong, and they look different:
+
+- **About 0.59** — your data is still in geographic coordinates and that is square *degrees*.
+  Obviously wrong, easy to spot.
+- **About 3,668** — your data is in **Web Mercator**, which is what several web downloads hand you
+  by default. This is the dangerous one: it is in real units, it looks like a plausible county
+  area, and it is 71% too big. Web Mercator distorts badly at Utah's latitude and must never be
+  used for measurement.
+
+If you get either number, the Output Coordinate System is not set. Do not carry on.
 
 ## Four ways to get a confidently wrong answer
 
@@ -72,7 +81,10 @@ of a lab that "ran fine" and still earns a poor grade.
 
 The Buffer tool's Distance row has **two** boxes: a number and a unit. The unit reads *Unknown*
 until you type a number, and then it silently sets itself to **Meters**. Type `2`, click OK, and
-you have made a **two-metre** buffer instead of a two-mile one — wrong by a factor of 3,219.
+you have made a **two-metre** buffer instead of a two-mile one. Your radius is **1,609 times too
+small** — that is just the number of metres in a mile. For a circular buffer the area comes out
+about 2.6 million times too small; for a buffer around a long road it is nearer 1,600 times, since
+a thin ribbon's area scales with the radius rather than its square.
 
 Always set the unit box yourself. There is no plain "Miles" option in Pro 3.7; choose
 **Statute Miles**.
@@ -81,7 +93,8 @@ Always set the unit box yourself. There is no plain "Miles" option in Pro 3.7; c
 
 If you are creating a field that will hold a calculated value with a decimal part — a density, a
 ratio, an average — set **Field Type** to **Double (64-bit floating point)**. The default is Long,
-which silently throws away everything after the decimal point.
+which silently **rounds every value to a whole number** — a density of 8,539.51 is stored as 8,540.
+(It rounds rather than truncating, so the loss is easy to miss when you skim the table.)
 
 If you let Calculate Field create the field instead of using Add Field first, you get a **Text**
 field, and every later comparison against it breaks.

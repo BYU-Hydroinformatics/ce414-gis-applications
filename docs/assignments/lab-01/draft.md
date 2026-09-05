@@ -197,8 +197,12 @@ Never save the project to the C: drive, the desktop, or a network drive.
 
 > [!TIP]
 > **Sanity check.** With this environment set, your selected Utah County polygon should come out to
-> about **2,141 square miles**. If you get a number like 0.6, your output is still in degrees and
-> every distance and area downstream will be wrong.
+> about **2,141 square miles**. Two failure modes to watch for: about **0.59** means you are still
+> in geographic coordinates and measuring square degrees; about **3,668** means your data is in
+> **Web Mercator**, which several web downloads hand you by default. The second one is the
+> dangerous one — it is in real units and looks like a believable county area, but it is 71% too
+> big, because Web Mercator distorts badly at Utah's latitude. Either way, the Output Coordinate
+> System is not doing its job. Fix it before you go on.
 
 ### Step 1
 
@@ -370,7 +374,8 @@ Use the **Buffer** tool to create a 2-mile buffer around the major roads you sel
 > **The Distance row has two boxes, and the second one will betray you.** The unit box reads
 > *Unknown* until you type a number — and the moment you type one it quietly sets itself to
 > **Meters**. Type `2`, click OK, and you have built a **two-metre** buffer instead of a two-mile
-> one: wrong by a factor of 3,219, with no error and a perfectly normal green check mark.
+> one — a radius **1,609 times too small**, which is simply the number of metres in a mile. No
+> error, and a perfectly normal green check mark.
 >
 > Set the unit yourself. There is no plain "Miles" option in ArcGIS Pro 3.7 — choose
 > **Statute Miles** — which is what Figure 6 below shows.
