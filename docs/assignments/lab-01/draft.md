@@ -17,19 +17,32 @@ Fall 2026 · Dr. Dan Ames
 > the data students actually download. It is deliberately **not linked from the site navigation** —
 > it is reachable only by its URL, so students following the course site will not find it.
 >
-> The unchanged parts of the lab are reproduced here in full so the page reads end to end. The
-> substantive revisions are:
+> The unchanged parts of the lab are reproduced here in full so the page reads end to end.
 >
-> - **Data section** — the Walmart download is gone. That open-data site is dead (it returns
->   HTTP 200 but renders nothing), so students now build the point layer themselves.
-> - **Step 0** — where to put the project, and how to set the coordinate system in Pro 3.7.
+> **Changes to what the lab asks students to do:**
+>
+> - **Data** — restructured around four ways of getting data: a prepared extract we host, an
+>   official state download, data students create themselves, and a live service they never
+>   download. The dead Walmart open-data link is gone; students build that layer by hand.
+> - **Roads** — students now download a **6 MB Utah County extract** from this site instead of the
+>   135 MB statewide file. It ships as a file geodatabase so the `CARTOCODE` domain survives, which
+>   it does not in the official shapefile download.
+> - **Step 10** — model parameters are kept, but repurposed: expose the two buffer *distances*, so
+>   Step 12 is a dialog box rather than hand-editing tools.
+> - **Step 12** — the second county is **removed**. In its place, students vary the three criteria,
+>   tabulate how the answer moves, and report on which assumptions actually drive the result.
+> - **Deliverables and rubric** — two maps (baseline plus one scenario) rather than one per county,
+>   and a new 10-point sensitivity row. Point reallocation is a proposal, not a decision.
+>
+> **Corrections to things that were wrong:**
+>
 > - **Step 1** — clause mode vs. SQL mode, which the old text conflated.
 > - **Step 2** — why the Intersect returns 173 features from 156 tracts.
 > - **Step 3** — Add Field must be set to Double; the default silently truncates.
-> - **Step 5** — the field is `CARTOCODE`, not `CARTO`, and the old `1,2,3,6` code list was wrong.
-> - **Step 6** — the buffer distance unit defaults to Meters, which is the single most damaging
->   default in this lab.
-> - **Steps 7 and 9** — expected values to check against, and a new reporting requirement.
+> - **Step 5** — the field is `CARTOCODE`, not `CARTO`, and the old `1,2,3,6` code list omitted the
+>   major state highways.
+> - **Step 6** — the buffer distance unit defaults to Meters, the single most damaging default here.
+> - **Steps 0, 3, 6, 7, 8, 9** — expected values to check results against.
 >
 > Several boxes reference an **ArcGIS Tips and Reminders** page, also unlinked, at
 > [`../../arcgis-tips.md`](../../arcgis-tips.md). The figures are unchanged and still show the old
@@ -39,23 +52,25 @@ Fall 2026 · Dr. Dan Ames
 
 GIS is used by major corporations around the world to help manage shipping, inventory, sales, marketing, facilities, and expansion. Specifically, with respect to expansion, GIS is used extensively to help determine the most appropriate placement of new store locations.
 
-This exercise assumes that the Walmart Corporation is interested in building a new store in TWO counties in Utah. They want to build in Utah County for sure. They ALSO want to build in another county in Utah. To conduct this analysis, you will need to create and acquire many data layers that correspond to different spatial considerations and criteria for both counties of interest. Once you have acquired the data needed, you will use spatial analysis to identify the most suitable locations for the new store. You will use multiple geoprocessing tools to conduct this analysis. At the end of the lab, you will generate a map that shows potential locations for new Walmart sites in Utah County and make a recommendation for a specific site. Then you will create a second map that gives recommendations for a second county of your own choosing.
+This exercise assumes that the Walmart Corporation is interested in building a new store in Utah County. To conduct this analysis you will acquire and create several data layers corresponding to different spatial considerations and criteria. Once you have the data, you will use spatial analysis — several geoprocessing tools, assembled into a single model — to identify the most suitable locations for the new store, and you will recommend a specific site.
+
+You will then do something a real analyst always has to do: find out how much your recommendation depends on the assumptions you were handed. The density threshold and the two distances in this lab are choices, not facts. In the last step you will vary them, see how far your answer moves, and report on it.
 
 ## Problem Statement
 
 There are over 4,700 Walmart stores in the United States. About 90% of Americans live within 15 miles of a Walmart. <!-- VERIFY: store count and the "90% within 15 miles" figure are carried over from the Word handout with no source cited; confirm against a current Walmart corporate fact sheet before the semester starts. --> Walmart has stated that its goal is to provide inexpensive products to its customers. They provide a large variety of goods, allowing customers to save money without having to price shop (Fishman, 2006). Walmart is likely to continue to expand as population increases and the demand for inexpensive products increases.
 
-Assume that you work for Walmart and have been assigned to select a new location for a store in two counties in Utah. As you might suspect, there are many factors that govern the placement of a new store in a community. Some factors are based on physical requirements, others on political and economic issues. For example, see this article on siting a bicycle and ski equipment sales and rental shop in Wisconsin: <https://community.esri.com/community/education/blog/2012/08/10/siting-a-bicycle-and-ski-equipment-sales-and-rental-shop-in-wisconsin>
+Assume that you work for Walmart and have been assigned to select a new location for a store in Utah County. As you might suspect, there are many factors that govern the placement of a new store in a community. Some factors are based on physical requirements, others on political and economic issues. For example, see this article on siting a bicycle and ski equipment sales and rental shop in Wisconsin: <https://community.esri.com/community/education/blog/2012/08/10/siting-a-bicycle-and-ski-equipment-sales-and-rental-shop-in-wisconsin>
 <!-- TODO(instructor): this Esri Community link returns 404 (it redirects to .../en/community/... and 404s there). The post appears to have been removed or moved in an Esri Community migration. Left verbatim rather than replaced with a guess — please supply a replacement URL or drop the example. -->
 
-Suitable development areas can be determined by creating layers based on limiting criteria and combining those layers to find the places that meet all the criteria. For this lab, you are tasked with identifying the most suitable locations in each of the two counties for the placement of the new Walmart store.
+Suitable development areas can be determined by creating layers based on limiting criteria and combining those layers to find the places that meet all the criteria. For this lab, you are tasked with identifying the most suitable locations in Utah County for the placement of the new Walmart store.
 
 ## Spatial Considerations
 
 For the purposes of this exercise, the spatial considerations will be limited to the following:
 
 - **Proximity to other locations:** Find locations at least 2 miles away from any existing Walmart.
-- **Proximity to major roads:** Find locations within 2 miles of I-15 or another major highway. Your second county must therefore contain at least one major highway; it does not have to contain I-15.
+- **Proximity to major roads:** Find locations within 2 miles of I-15 or another major highway.
 - **Population density:** Located in a high-density population area with over 5,000 people per square mile, using the 2020 Census tract data listed below.
 - **Adequate space:** Walmart stores range from 51,000 ft² to 224,000 ft², averaging about 102,000 ft². <!-- VERIFY: store-footprint range and average are carried over from the Word handout with no source cited. --> The datasets in this lab do not include buildings, parcels, or land use, so your model cannot prove that a site is vacant. Treat this as a judgment step: screen your candidate zones visually against imagery, and state in your report what you were not able to verify from the data.
 
@@ -76,18 +91,25 @@ For the purposes of this exercise, the spatial considerations will be limited to
 > without an error message, are on the [ArcGIS Tips and Reminders](../../arcgis-tips.md) page.
 > Read it before you start.
 
-The following datasets will be needed for this project. You can either download the data from the suggested sources or create the data you need to complete this exercise. When you download the data, unzip it, and save it to the folder you created for this lab.
+You need four layers for this project, and — deliberately — you will obtain them in four different ways. Getting data is most of the work in real GIS, and it almost never comes from one place:
 
-> [!NOTE]
-> **Plan for the roads download.** The Utah Roads layer is statewide: over 400,000 features, about
-> **140 MB zipped and 600 MB unzipped**. On a fast connection it takes several minutes, and slower
-> if the whole class starts at once. Download it once and keep it — several later labs use it.
-> The counties and census tract downloads are small (about 2 MB and 6 MB).
+| Layer | Where it comes from |
+| --- | --- |
+| Roads | A **prepared extract** we made for you and host on this site |
+| Counties, Census tracts | An **official download** from the state agency that publishes them |
+| Existing Walmarts | **Data you create yourself**, by finding the stores and placing points |
+| Basemap | A **live web service** you never download at all |
+
+That last one is easy to overlook. The imagery and topographic backdrop in your map are streamed from Esri's servers every time you pan. You are already using a data source you do not own, cannot edit, and did not download — worth noticing, because a lot of professional GIS works exactly that way.
+
+Unzip each download into the lab folder you created above.
 
 - **Utah Counties Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/about>
-    - This shapefile represents all the counties in Utah, from which you will select the specific counties that you need. In the Download Options window, download the zipped Shapefile.
-- **UDOT Highways:** <https://opendata.gis.utah.gov/datasets/utah-roads/about>
-    - This shapefile represents all the major roads and highways in Utah. In the Download Options window, download the zipped Shapefile.
+    - This shapefile represents all the counties in Utah, from which you will select the one you need. In the Download Options window, download the zipped Shapefile.
+- **Utah County Roads — prepared extract:** [`lab01-utah-county-roads.zip`](../../data/lab01-utah-county-roads.zip) (about 6 MB)
+    - Every road centerline inside Utah County: 38,817 features with all 90 attribute fields, as a file geodatabase. Read the `READ-ME-FIRST.txt` inside the zip — it records exactly where the data came from, what we did to it, and what we deliberately did *not* do.
+    - **Why we prepared this one for you.** The original is UGRC's statewide [Utah Roads](https://opendata.gis.utah.gov/datasets/utah-roads/about) layer: 413,311 features, about 135 MB zipped and 600 MB unzipped. Clipping it to one county takes it to 6 MB. More importantly, the statewide download comes as a **shapefile**, and a shapefile cannot store a coded-value domain — so the road classification codes arrive with no way to look up what they mean. We converted the clip to a file geodatabase and re-attached that domain, so in Step 5 you can read the codes straight from the data. The prepared extract is genuinely more useful than the raw download, not just smaller.
+    - We filtered nothing by road class. Interstates through driveways are all present; choosing which ones count is your job in Step 5.
 - **2020 Census Tracts Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-census-tracts-2020/about>
     - This shapefile represents the 2020 Census tract data for Utah. In the Download Options window, download the zipped Shapefile.
 - **Current Walmart locations:** You will build this layer yourself. There is no download for it. Walmart's public open-data site, which earlier versions of this handout linked to, has been taken down; the copies of it still floating around ArcGIS Online are unmaintained 2020 snapshots owned by strangers, and you should not build an analysis on them. Instead, create a point feature class in your project geodatabase and place one point on each Walmart store in your county — see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class). Locate the stores using Walmart's own store locator, a search in the map, or by recognising them in imagery. There are **ten** Walmart stores inside Utah County, so this is about a fifteen-minute job. **State in your report where you got each location and how you verified it.** Building and documenting your own dataset is part of the exercise.
@@ -132,8 +154,9 @@ For an advanced GIS student, the information up to this point is all you need to
 > steps below was run and checked in ArcGIS Pro 3.7; the images were not re-captured.
 
 > [!NOTE]
-> **Important Note #1:** The following step-by-step solution is specifically for the analysis of
-> Utah County. You will repeat these steps for your own selected county.
+> **Important Note #1:** The following step-by-step solution walks through the analysis of Utah
+> County at the default criteria. In Step 12 you will re-run the same model with different
+> parameter values — so build it once, and build it so it is easy to change.
 
 > [!NOTE]
 > **Important Note #2:** My example screenshots in this and future assignments may or may not match
@@ -155,7 +178,7 @@ Never save the project to the C: drive, the desktop, or a network drive.
 
 **Create the model.** The quickest route is the **Analysis** ribbon tab ▸ **ModelBuilder**, which creates a new model in your project toolbox and opens the ModelBuilder view. (You can also do it from the **Catalog** pane: expand **Toolboxes**, right-click your project toolbox — `Lab01.atbx` — and choose **New ▸ Model**.) In the ModelBuilder view you drag data in from the Contents pane, and you can add a tool either by dragging it from the Geoprocessing pane or by simply typing its name on the canvas, which opens an *Add Tools To Model* search box. If you need a tutorial or refresher on ModelBuilder, watch this training video from Esri (the company that makes ArcGIS): <https://www.youtube.com/watch?v=fxcAb-xw_zU>
 
-**Set the coordinate system before you measure anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group) and set **Output Coordinate System** to **NAD 1983 UTM zone 12N**. Search for it in the picker — note that Pro spells "zone" with a lowercase z. All of Utah falls in UTM zone 12, so this works for your second county too. Buffers and area calculations made in geographic (latitude/longitude) coordinates are not measured in miles and will give wrong answers.
+**Set the coordinate system before you measure anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group) and set **Output Coordinate System** to **NAD 1983 UTM zone 12N**. Search for it in the picker — note that Pro spells "zone" with a lowercase z. All of Utah falls in UTM zone 12. Buffers and area calculations made in geographic (latitude/longitude) coordinates are not measured in miles and will give wrong answers.
 
 > [!TIP]
 > **Sanity check.** With this environment set, your selected Utah County polygon should come out to
@@ -191,7 +214,14 @@ Text comparisons are case sensitive, and in SQL mode the value needs single quot
 
 ### Step 2
 
-Use the Intersect tool to restrict both the Roads layer and the Census tract layer to Utah County. This reduces the amount of data being processed and makes the analysis run faster. Intersect keeps only the area where the inputs overlap and carries the attributes of both, so choose the order of the input features deliberately. (see Figure 2)
+Use the Intersect tool to restrict the Census tract layer to Utah County. This reduces the amount of data being processed and makes the analysis run faster. Intersect keeps only the area where the inputs overlap and carries the attributes of both, so choose the order of the input features deliberately. (see Figure 2)
+
+> [!NOTE]
+> **The roads do not need this step.** The extract we gave you is already clipped to Utah County —
+> that is what took it from 413,311 features to 38,817. Figure 2 shows the roads being intersected
+> too, because it was captured when students downloaded the statewide layer themselves. You only
+> need to do the census tracts. If you had downloaded the statewide roads yourself, you would
+> intersect them here exactly the same way.
 
 Pro will show an information banner suggesting the **Pairwise Intersect** tool instead. Either works for this lab; Intersect is what the rest of these instructions describe.
 
@@ -267,7 +297,24 @@ Use the Select tool to keep only I-15 and the other major highways in Utah Count
 Open the roads attribute table first and find the field that classifies road type. In the current UGRC Utah Roads layer that field is **`CARTOCODE`** (alias *CartographicCode*). Two things about it matter:
 
 - It is a **text** field, even though every value looks like a number. `CARTOCODE = 1` fails; `CARTOCODE = '1'` works.
-- It has a **coded-value domain**, so each code has a documented meaning you can look up instead of guessing. Right-click the field in the attribute table, or open the layer's metadata, and read the domain for yourself:
+- It has a **coded-value domain**, so each code has a documented meaning you can look up instead of guessing. Because we shipped the extract as a file geodatabase, that domain travels with the data: open the attribute table and you will see each code's description rather than a bare number. The domain is named `CVDomain_CartoCode`, and you can inspect the full code list from the layer's **Fields** design view.
+
+<!-- VERIFY: the domain is confirmed attached and resolving (checked with arcpy on the packaged
+     geodatabase: '4' -> "4 Major State Highways, Separated"). The exact ArcGIS Pro 3.7 menu path to
+     the Fields/Domains design view was NOT re-checked in Pro - the workstation was locked at the
+     time of writing - so the wording above deliberately avoids naming a menu path. Confirm the
+     route and tighten this sentence before assigning the lab. -->
+
+
+> [!NOTE]
+> **This only works because of how the data was packaged.** If you download the statewide layer
+> from UGRC yourself you get a shapefile, and the shapefile format cannot store a coded-value
+> domain — you would see `1`, `2`, `3` with nothing to explain them, and the bundled metadata does
+> not list the meanings either. The codes would then have to come from UGRC's online documentation.
+> This is a real and common problem: **the file format you choose can silently throw away part of
+> your data.** It is one reason professionals prefer geodatabases to shapefiles.
+
+For reference, the full domain is:
 
 | Code | Meaning | Code | Meaning |
 | --- | --- | --- | --- |
@@ -287,19 +334,19 @@ Decide which of these count as "major highways" for siting a store, and justify 
 CARTOCODE IN ('1','2','3','4','5')
 ```
 
-In Utah County that keeps 1,543 of the county's 38,921 road segments.
+In the extract we gave you that keeps **1,532** of Utah County's 38,817 road segments.
 
 > [!WARNING]
 > **Do not copy the road expression from an older version of this handout.** Earlier versions used
 > the equivalent of codes 1, 2, 3 and 6. That selects *institutional* roads (code 6) while leaving
-> out codes 4 and 5, the major state highways — dropping 952 of the 1,543 qualifying segments in
-> Utah County, roughly sixty percent of the real network. The screenshot in Figure 5 below still
+> out codes 4 and 5, the major state highways. It returns **645** segments instead of 1,532 —
+> it misses roughly sixty percent of the real network. The screenshot in Figure 5 below still
 > shows that old expression against a field named `CARTO` that no longer exists.
 
 > [!NOTE]
 > Code 2 (US Highways, Separated) does not occur anywhere in Utah County. A code being absent from
-> your county is not an error — leave it in the expression so the same model still works for the
-> second county you choose in Step 12.
+> your county is not an error. Leaving it in the expression costs nothing and keeps the model
+> honest about what it is asking for.
 
 ![The ArcGIS Pro Select tool dialog for major roads, showing four OR'd clauses on an older CARTO field. This screenshot is illustrative only; derive the field and values from your own data.](images/lab01-select-major-roads-dialog.png)
 
@@ -396,7 +443,21 @@ Use the Erase tool to erase the buffered Walmart layer from the intersected popu
 
 ### Step 10
 
-Right-click on the last output layer you created and check Parameter and Add To Display. This will make it so that the output will be automatically added to the map.
+Right-click the last output layer you created and check **Add To Display**, so the result is added to your map automatically every time the model runs.
+
+Now do something similar to the two buffer distances, but check **Parameter** instead. Open each Buffer tool in the model, right-click the **Distance** row, and choose Parameter. A small `P` appears beside it on the canvas. When you run the model from the Catalog pane you now get a dialog with those two numbers in it.
+
+> [!NOTE]
+> **Why bother — and when this feature is not worth it.** Model parameters are often oversold.
+> Exposing whole datasets as parameters so that one model can be "reused" on any data sounds
+> appealing and rarely survives contact with a real analysis: the field names differ, the
+> projections differ, and you end up rebuilding the model anyway.
+>
+> Exposing a *number you intend to vary* is the case where they genuinely pay off. In Step 12 you
+> will run this model several times with different distances. With parameters that is: type two
+> numbers, click Run. Without them it is: open two tools, edit each one by hand, remember which you
+> already changed, and hope. That is the whole reason we are doing it here — not because parameters
+> are good practice in the abstract.
 
 ![The ModelBuilder right-click context menu on the Walmart_Target output oval, with Parameter and Add To Display both check-marked; a "P" marks the oval as a model parameter.](images/lab01-parameter-add-to-display-menu.png)
 
@@ -406,13 +467,56 @@ Right-click on the last output layer you created and check Parameter and Add To 
 
 Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point feature class to mark these points on your final map — the same technique you used for the Walmart locations in the Data section; see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class) if you need the steps again.
 
-### Step 12 — Rinse and Repeat
+### Step 12 — Test how much your answer depends on your assumptions
 
-Now that you know how to do this… make a copy of your model, and revise it to analyze another county in Utah. Make a new map for these results!
+Everything you have produced so far rests on three numbers that somebody simply chose: 5,000 people per square mile, 2 miles from a major road, 2 miles from an existing Walmart. None of them is a law of nature. A recommendation that collapses the moment one of them shifts is a weak recommendation — and you cannot know whether yours does until you test it.
+
+Run your model at least **three more times**, each with a different combination of those numbers, and record what happens. You decide which to vary and by how much, but decide deliberately and say why in your report. Some places to start:
+
+- **Tighten the Walmart exclusion** to 3 miles, or 5. How much candidate area survives?
+- **Change the road buffer** in either direction. Does that criterion change your answer at all?
+- **Raise the density threshold** to 8,000 or 10,000. Which neighborhoods drop out first, and does that match where you would actually put a store?
+
+For every run, record the run's parameter values, the number of candidate polygons, and their total area. Put it in a table — that table is a required deliverable.
+
+Then answer these three questions in your report:
+
+1. **Which parameter does your answer depend on most, and which barely matters?** Support it with the numbers from your table, not an impression.
+2. **Is there a setting at which no suitable site exists at all?** If so, what does that tell you about the criteria — or about Utah County?
+3. **Does your recommended site survive every scenario you ran, or only some?** If only some, is it still your recommendation? Defend your answer either way.
+
+> [!TIP]
+> Two things worth knowing before you start. One of these three criteria does almost nothing at its
+> default value in Utah County — applying it leaves the result unchanged. And one of them can wipe
+> out every candidate site completely if you push it far enough. Finding out which is which, and
+> being able to show it, is the whole point of this step.
+
+> [!NOTE]
+> **Why this replaced "now do it again in another county."** Repeating the analysis somewhere else
+> mostly repeats the data wrangling, which is the least interesting part of the work and which you
+> have already demonstrated. Varying the assumptions instead keeps you in the analysis, and it is
+> much closer to what site-selection work actually involves: the client rarely asks "what about
+> Sanpete County," they ask "what if we could live with being three miles from an existing store."
 
 ## Deliverables
 
-Make TWO professional map layouts that represent the target zones for building a new Walmart, based on the criteria given. In each case, include close-up data frames and an inset map of the specific spots you selected for a new Walmart. Write a brief report (1–2 pages) that describes the project requirements, your approach to solving it, and a screen capture of the model you used to solve it (only one ModelBuilder screen capture since it should be the same for both counties). Include your specific recommendation on the site for the new Walmart. Your report must also state **where your Walmart point data came from and how you verified it**, and **which of the three spatial criteria actually narrowed your result and which did not** — compare the feature count and area before and after each one, and say what that tells you. Also include the resulting maps (two maps, one for each county) with a justification for why you chose your specific locations. Make sure to review the rubric at the end of this lab for the full requirements of this laboratory exercise.
+Make **two** professional map layouts:
+
+1. **Your baseline result** — the target zones produced by the criteria as given (density over 5,000 per square mile, within 2 miles of a major road, more than 2 miles from an existing Walmart), with your recommended site or sites marked.
+2. **One scenario from Step 12** — whichever of your runs most changes the decision. Say why you chose that one to show.
+
+In each case include close-up data frames and an inset map of the specific spots you selected.
+
+Write a brief report (2–3 pages) covering:
+
+- the requirements of the project and your approach to solving it
+- **one** screen capture of your model — only one is needed, since it is the same model throughout
+- your **sensitivity table** from Step 12, and your answers to its three questions
+- your specific recommendation for the site of the new Walmart, and a justification for why you chose those locations
+- **where your Walmart point data came from and how you verified it**
+- **which of the three spatial criteria actually narrowed your result and which did not**, with the counts and areas that show it
+
+Make sure to review the rubric at the end of this lab for the full requirements of this laboratory exercise.
 
 ## References
 
@@ -437,7 +541,8 @@ Note that this map is just an example. Your map will/must look different than th
 | Describe your model:<br>• List each of the tools used<br>• List tool settings applied for the analysis<br>• List all input, intermediate, and output datasets<br>• Describe each input dataset including type (point, line, polygon, raster) and the source of the data<br>• Describe each output dataset (point, line, polygon, raster) | /5 |
 | One or more full pages (8.5 x 11) showing your model:<br>• All text is readable (10 pt. font minimum)<br>• All tools and data sets are shown and labels are informative | /5 |
 | Answer the following questions:<br>• Where are the best locations for a new Walmart?<br>• Which one site do you recommend and why did you select this location? | /5 |
-| Make TWO full page (8.5 x 11) maps showing the identified location(s) for the optimal Walmart sites (one for each county):<br>• Show current Walmarts and optimal locations for a new one<br>• Map Title: Neat Line, North Arrow, Scale Bar<br>• All features (existing & future Walmart locations) are labeled<br>• Text box with author name, date, map projection<br>• Current Walmart locations marked with an appropriate graphical symbol<br>• **Important:** Show the final suitability layer that shows the effect of your intersection and erasing — this is the best way to show that you truly solved this correctly. E.g. see the yellow and orange areas in the example map.<br>• Base map is visible<br>• Zoomed to an appropriate scale for viewing all features<br>• All text is legible on printed map | /30<br>(15 per map) |
+| Make TWO full page (8.5 x 11) maps — your baseline result, and one Step 12 scenario:<br>• Show current Walmarts and optimal locations for a new one<br>• Map Title: Neat Line, North Arrow, Scale Bar<br>• All features (existing & future Walmart locations) are labeled<br>• Text box with author name, date, map projection<br>• Current Walmart locations marked with an appropriate graphical symbol<br>• **Important:** Show the final suitability layer that shows the effect of your intersection and erasing — this is the best way to show that you truly solved this correctly. E.g. see the yellow and orange areas in the example map.<br>• Base map is visible<br>• Zoomed to an appropriate scale for viewing all features<br>• The scenario map states which parameters were changed and to what<br>• All text is legible on printed map | /20<br>(10 per map) |
+| Sensitivity analysis (Step 12):<br>• A table of at least three additional runs, giving the parameter values, the number of candidate polygons, and the total area for each<br>• Which parameter matters most and which barely matters, supported by those numbers<br>• Whether any setting eliminates every candidate site, and what that means<br>• Whether your recommended site survives every scenario, and whether it is still your recommendation | /10 |
 | My self-assessment — score yourself against the 50 points above. This row adds no points to the total. | (no points) |
 
 **Total: 50 points.**
@@ -449,7 +554,14 @@ CORRECTED: the road criterion. Field is CARTOCODE (text, coded-value domain CVDo
 ADDED because they silently produce wrong answers with no error: Buffer distance unit auto-sets to Meters (and Pro 3.7 offers "Statute Miles", not "Miles"); Add Field defaults to Long not Double; Buffer Dissolve defaults to No Dissolve; clicking Run with a tool dialog open uses uncommitted parameters (observed: Select returned all 29 counties, "success" in 1.24 s).
 ADDED as pedagogy: Step 2 Intersect yields 173 features from 156 tracts (17 slivers from 7 neighbouring counties; none pass the density filter in Utah County, verified). Steps 5-7 are a NO-OP in Utah County — 47 features / 26.42 sq mi before and after, under both the new and old road expressions — so the lab now asks students to report which criteria actually bound.
 Verified run totals (Utah County): tracts 156 -> intersect 173 -> density > 5000 = 47 (26.4 sq mi); roads 413,311 statewide -> 38,921 in county -> 1,543 major; roads buffer 975.6 sq mi; Walmart buffer 557.9 sq mi (10 stores in county); final Walmart_Target_Zones 31 polygons, 12.9 sq mi.
-NOT VERIFIED: Step 10 (right-click Parameter / Add To Display) — context menus did not render in the capture session. Steps 11-12 (map layouts, second county) were not performed. Figures 1-10 were NOT re-captured and remain stale.
+DATA PACKAGE (2026-09-04): docs/data/lab01-utah-county-roads.zip, 6.30 MB. Built by clipping the UGRC statewide Utah Roads shapefile to the Counties_Select Utah County polygon (38,817 features, all 90 fields), converting to a file geodatabase, and re-attaching the CVDomain_CartoCode coded-value domain copied from the UGRC feature service. Round-trip verified from the zip: opens, 38,817 features, domain resolves ('4' -> "4 Major State Highways, Separated"). Includes READ-ME-FIRST.txt recording source, licence (CC BY 4.0), retrieval date and processing.
+  KEY REASON for the package beyond size: shapefiles CANNOT store coded-value domains. The official UGRC download therefore arrives with no way to interpret CARTOCODE, and the bundled metadata XML does not list the code meanings either (checked). An earlier version of this page told students to "read the domain" from the download; that instruction was wrong and is now corrected.
+  NOTE: Clip (used for the package) and Intersect (used in the original run) differ slightly at the boundary: 38,817 vs 38,921 features, and 1,532 vs 1,543 major segments. All expected values on this page are now the PACKAGE numbers.
+Verified run totals with the package (Utah County): tracts 156 -> intersect 173 -> density > 5000 = 47 (26.42 sq mi); roads 38,817 -> 1,532 major; roads buffer 1 feature 975.6 sq mi; Walmart buffer 557.9 sq mi (10 stores); final 31 polygons, 12.86 sq mi.
+SENSITIVITY (measured, for setting expectations on Step 12; do NOT publish this table to students): road buffer 2/1/0.5/0.25 mi at density 5000, Walmart 2 mi -> final 12.86 / 12.15 / 9.02 / 5.35 sq mi. Walmart buffer 2/3/5 mi at density 5000, road 2 mi -> 12.86 / 2.39 / 0.00 sq mi (5 mi eliminates every site). Density 5000/8000/10000 at road 2, Walmart 2 -> 47/15/7 tracts and 12.86 / 2.61 / 0.63 sq mi. So the Walmart distance dominates, the road distance is near-inert until below ~0.5 mi, and there IS a setting with no solution - which is what Step 12's TIP alludes to without giving away.
+ALTERNATIVE CONSIDERED AND REJECTED: UDOT Routes ALRS (item 5eca80119fd349f3a435a751b86f1af8, UDOT_Admin, public) - 3,676 features statewide, 4.9 MB, reproduces the answer (975.8 sq mi buffer, 31 polygons, 12.86 sq mi). Rejected because it publishes no coded-value domain, uses a DIFFERENT code scheme from UGRC (1=Interstates, 2=US highways, 3=state routes, 5-8=ramps/connectors - inferred from route names, not documented), truncates ROUTE_ALIAS_COMMON to ROUTE_AL_1 in shapefile form, and duplicates divided highways by direction (I-15 appears twice). Server-side filtered downloads of the UGRC layer (?where=...) return 404/502 and are not a dependable student path.
+NOT VERIFIED: Step 10 (right-click Parameter / Add To Display, and right-click a tool's Distance row to make it a parameter) — context menus did not render in the capture session. The ArcGIS Pro 3.7 menu path to the Fields/Domains design view in Step 5 was not re-checked (workstation locked); the wording deliberately avoids naming a path. Steps 11-12 were not performed. Figures 1-10 were NOT re-captured and remain stale — Figure 2 in particular now shows a roads Intersect the lab no longer asks for, and Figure 10 shows only the output-variable context menu, not the distance-parameter step.
+RUBRIC: 30 points of "two maps, one per county" was re-split as 20 (two maps: baseline + one scenario) + 10 (sensitivity analysis), holding the total at 50. Point values are an instructor decision — this is a proposal.
 images renamed from fig-NN: fig-01.png -> lab01-full-model-overview.png; fig-02.png -> lab01-select-utah-county-dialog.png; fig-03.png -> lab01-select-utah-county-model.png; fig-04.png -> lab01-intersect-county-model.png; fig-05.png -> lab01-intersect-roads-county-dialog.png; fig-06.png -> lab01-density-field-model.png; fig-07.png -> lab01-add-field-density-dialog.png; fig-08.png -> lab01-calculate-field-density-dialog.png; fig-09.png -> lab01-select-density-dialog.png; fig-10.png -> lab01-select-density-model.png; fig-11.png -> lab01-select-major-roads-dialog.png; fig-12.png -> lab01-select-major-roads-model.png; fig-13.png -> lab01-buffer-roads-dialog.png; fig-14.png -> lab01-buffer-roads-model.png; fig-15.png -> lab01-intersect-density-roads-dialog.png; fig-16.png -> lab01-intersect-density-roads-model.png; fig-17.png -> lab01-buffer-walmart-model.png; fig-18.png -> lab01-erase-walmart-model.png; fig-19.png -> lab01-parameter-add-to-display-menu.png; fig-20.jpg -> lab01-example-map-utah-county.jpg. No image was deleted; all 20 are referenced.
 stale/unverified screenshots (all retained deliberately; re-shoot is gated on Labs/Lab 1 Data/2026-09-02/ARCGIS_PRO_VALIDATION_CHECKLIST.md per ROADMAP.md): lab01-full-model-overview.png (old CensusBlocks2010 workflow AND illegible at web width — needs re-export from ModelBuilder, not a re-screenshot); lab01-intersect-county-model.png and lab01-intersect-roads-county-dialog.png (CensusBlocks2010, UDOTRoutes_LRS); lab01-density-field-model.png, lab01-add-field-density-dialog.png (CensusBlocks2010 input table); lab01-calculate-field-density-dialog.png (old expression !POP100! / !SqMiles!, 2010 block field list); lab01-select-density-dialog.png, lab01-select-density-model.png (2010 blocks); lab01-select-major-roads-dialog.png (CARTO is Equal to 1/2/3/6 — the step text deliberately no longer asserts this); lab01-intersect-density-roads-dialog.png (XY Tolerance "Unknown"); lab01-example-map-utah-county.jpg (legend misspells "Suitable" and density classes come from the 2010 block analysis).
 TODO(instructor): (1) the Esri Community bicycle/ski-shop link 404s — supply a replacement or drop the example; (2) the "Complete the Lab" section offers extra credit but the rubric has no extra-credit row or point value; (3) lab01-full-model-overview.png needs re-export from ModelBuilder at a legible scale.
