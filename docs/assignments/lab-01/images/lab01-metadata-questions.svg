@@ -1,0 +1,52 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 516' width='960' height='516' role='img' aria-label='The six questions metadata answers, plus the license check'>
+<title>The six questions metadata should answer before you use a dataset</title>
+<rect width='960' height='516' rx='14' fill='white' stroke='#e6eaee'/>
+<text x='30' y='40' font-size='22' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Before you use a dataset, its metadata should answer six questions</text>
+<text x='30' y='62' font-size='13' fill='#555' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>The same six you met in CCE 114. If you cannot answer one of them, you do not yet know whether the data fits your project.</text>
+<rect x='30' y='82' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<rect x='46' y='105' width='36' height='28' rx='2' fill='#cfe3f7' stroke='#0062b8' stroke-width='2'/><rect x='46' y='105' width='36' height='8' fill='#0062b8'/><line x1='46' y1='120' x2='82' y2='120' stroke='#0062b8' stroke-width='1.2'/><line x1='46' y1='127' x2='82' y2='127' stroke='#0062b8' stroke-width='1.2'/><line x1='58' y1='113' x2='58' y2='133' stroke='#0062b8' stroke-width='1.2'/><line x1='70' y1='113' x2='70' y2='133' stroke='#0062b8' stroke-width='1.2'/>
+<text x='98' y='124' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What?</text>
+<text x='48' y='156' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What do the data represent, in what</text>
+<text x='48' y='172' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>format, and what does each attribute mean?</text>
+<text x='48' y='210' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>CARTOCODE = '4' means nothing until you find</text>
+<text x='48' y='226' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>its domain.</text>
+<rect x='345' y='82' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<circle cx='379' cy='118' r='17' fill='#cfe3f7' stroke='#0062b8' stroke-width='2'/><ellipse cx='379' cy='118' rx='7' ry='17' fill='none' stroke='#0062b8' stroke-width='1.5'/><line x1='362' y1='118' x2='396' y2='118' stroke='#0062b8' stroke-width='1.5'/><line x1='364' y1='110' x2='394' y2='110' stroke='#0062b8' stroke-width='1.5'/><line x1='364' y1='126' x2='394' y2='126' stroke='#0062b8' stroke-width='1.5'/>
+<text x='413' y='124' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Where?</text>
+<text x='363' y='156' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What area do they cover, and in which</text>
+<text x='363' y='172' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>coordinate system and units?</text>
+<text x='363' y='210' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Web Mercator looks fine and measures 71%</text>
+<text x='363' y='226' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>wrong in Utah.</text>
+<rect x='660' y='82' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<rect x='677' y='104' width='34' height='30' rx='3' fill='#cfe3f7' stroke='#0062b8' stroke-width='2'/><rect x='677' y='104' width='34' height='9' fill='#0062b8'/><rect x='682' y='117' width='5' height='5' fill='#0062b8'/><rect x='690' y='117' width='5' height='5' fill='#0062b8'/><rect x='698' y='117' width='5' height='5' fill='#0062b8'/><rect x='706' y='117' width='5' height='5' fill='#0062b8'/><rect x='682' y='125' width='5' height='5' fill='#0062b8'/><rect x='690' y='125' width='5' height='5' fill='#0062b8'/>
+<text x='728' y='124' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When?</text>
+<text x='678' y='156' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When were they collected, when last</text>
+<text x='678' y='172' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>updated, and how often are they revised?</text>
+<text x='678' y='210' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2010 census blocks are not 2020 census</text>
+<text x='678' y='226' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>tracts.</text>
+<rect x='30' y='261' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<circle cx='64' cy='297' r='17' fill='#cfe3f7' stroke='#0062b8' stroke-width='2'/><circle cx='64' cy='297' r='10' fill='none' stroke='#0062b8' stroke-width='2'/><circle cx='64' cy='297' r='3.5' fill='#e8862a'/>
+<text x='98' y='303' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Why?</text>
+<text x='48' y='335' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What was the dataset made for in the first</text>
+<text x='48' y='351' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>place?</text>
+<text x='48' y='389' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>A layer drawn for a road map is not an</text>
+<text x='48' y='405' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>engineering centerline.</text>
+<rect x='345' y='261' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<circle cx='373' cy='295' r='12' fill='#cfe3f7' stroke='#0062b8' stroke-width='2' stroke-dasharray='4 3'/><circle cx='373' cy='295' r='4' fill='#0062b8'/><circle cx='390' cy='307' r='8' fill='#cfe3f7' stroke='#e8862a' stroke-width='2' stroke-dasharray='3 2.5'/><circle cx='390' cy='307' r='2.5' fill='#e8862a'/>
+<text x='413' y='303' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How?</text>
+<text x='363' y='335' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How were they collected, and what</text>
+<text x='363' y='351' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>processing came after?</text>
+<text x='363' y='389' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Our roads extract was clipped and</text>
+<text x='363' y='405' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>repackaged; its README says exactly how.</text>
+<rect x='660' y='261' width='290' height='165' rx='10' fill='#f7f9fb' stroke='#e6eaee'/>
+<rect x='678' y='289' width='32' height='22' rx='2' fill='#cfe3f7' stroke='#0062b8' stroke-width='2'/><polygon points='674,289 694,277 714,289' fill='none' stroke='#0062b8' stroke-width='2' stroke-linejoin='round'/><rect x='690' y='299' width='8' height='12' fill='#0062b8'/>
+<text x='728' y='303' font-size='20' font-weight='700' fill='#002e5d' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Who?</text>
+<text x='678' y='335' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Which organization maintains them, and who</text>
+<text x='678' y='351' font-size='12.5' fill='#333' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>do you contact when something looks wrong?</text>
+<text x='678' y='389' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>UGRC maintains Utah Roads. A stranger's copy</text>
+<text x='678' y='405' font-size='12.5' font-style='italic' fill='#0062b8' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>on ArcGIS Online is not a source.</text>
+<rect x='30' y='444' width='920' height='68' rx='10' fill='#002e5d'/>
+<text x='48' y='468' font-size='14' font-weight='700' fill='white' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>And the one that decides whether you may use it at all: the license.</text>
+<text x='48' y='486' font-size='12.5' fill='#cfe3f7' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Public domain and CC BY (credit the source) are fine for this course. Anything that forbids redistribution, commercial use or</text>
+<text x='48' y='502' font-size='12.5' fill='#cfe3f7' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>derived products needs a second look before you build on it. If you cannot find a license at all, treat that as a no.</text>
+</svg>

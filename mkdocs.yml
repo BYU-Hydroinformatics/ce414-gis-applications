@@ -29,9 +29,21 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/external-links.js
+
 plugins:
   - search
   - gh-admonitions
+  - glightbox:
+      touchNavigation: true
+      effect: zoom
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
+      skip_classes:
+        - tool-icon
 
 markdown_extensions:
   - admonition

@@ -19,16 +19,31 @@ given.
 
 ## Set up your workspace before you start
 
-On the lab machines you only have write access to the **D: drive**, and anyone who logs into that
-computer can edit it. So:
+On the lab machines, work on the **D: drive**. Not the C: drive, not the desktop, not a network
+drive — and there are specific reasons for each:
+
+- **C: is locked.** The lab administrators block writes to it because it holds the software
+  installations and the system files. Anything you try to save there will fail, or vanish.
+- **Network drives make Pro hang.** Your CAEDM home directory and similar network shares are
+  writable, but ArcGIS Pro reads and writes very large files constantly, and doing that across a
+  network connection is slow and will sometimes hang or crash Pro outright. Use them for backups,
+  never as the place you work.
+- **D: is local, fast and writable** — but it is shared with everyone who logs into that machine,
+  and it may be wiped between semesters.
+
+So:
 
 1. **Make one folder for this class**, named after you, at the root of D:. For example
    `D:\Smith\`. Use your own name, not your instructor's.
 2. **Make one folder per lab inside it**: `D:\Smith\Lab01\`, `D:\Smith\Lab02\`, and so on.
    Put the ArcGIS Pro project *and* the downloaded data for that lab in it.
-3. **Back it up every time you leave the lab.** Copy your lab folder to a USB drive, your BYU
-   network drive, or cloud storage. These are public machines. Work that exists in only one place
-   on a shared computer is work you are choosing to risk.
+3. **Back it up every time you leave the lab.** Copy your lab folder to the network or cloud
+   storage of your choice — CAEDM, Google Drive, OneDrive or Box. Work that exists in only one
+   place on a shared computer is work you are choosing to risk.
+
+If you want your work to be portable between machines, a **high-speed USB 3.0 external drive** is
+a legitimate alternative to D:. You can work directly off it — it is local to the machine while it
+is plugged in — and take it with you. Still back it up.
 
 > [!WARNING]
 > **Never put a space in any folder or file name you create.** Use `D:\Smith\Lab01`, never
@@ -36,10 +51,6 @@ computer can edit it. So:
 > fail or behave strangely on paths containing spaces, and the error message rarely tells you that
 > the space is the problem. The same goes for the names you give output datasets: use
 > `HighDensity_Tracts`, not `High Density Tracts`.
-
-Do not save projects or data to the C: drive, the desktop, or a network drive. C: and the desktop
-may be wiped between sessions, and analysis run across a network connection is slow and prone to
-locking errors.
 
 ## Creating the project in the right place
 

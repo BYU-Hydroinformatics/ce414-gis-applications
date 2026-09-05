@@ -16,3 +16,17 @@
   max-height: 34rem;
   width: auto;
 }
+
+/* Lab tool icons: small, fixed size, never lightboxed (see skip_classes in mkdocs.yml). */
+.md-typeset img.tool-icon {
+  width: 6rem;
+  max-width: none;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.25rem;
+}
+.md-typeset table:not([class]) td:has(> img.tool-icon) {
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}

@@ -33,6 +33,13 @@ Fall 2026 · Dr. Dan Ames
 >   tabulate how the answer moves, and report on which assumptions actually drive the result.
 > - **Deliverables and rubric** — two maps (baseline plus one scenario) rather than one per county,
 >   and a new 10-point sensitivity row. Point reallocation is a proposal, not a decision.
+> - **Report** — students paste the rubric into their report with a self-assessment in every row,
+>   and must have the report peer reviewed, and act on the feedback, before they submit it.
+> - **Data section** — now opens with why sources have to be judged (metadata, currency, license),
+>   tied back to the CCE 114 metadata lecture, with two infographics; the tool list carries an icon
+>   per tool; the UGRC links point at the *Explore* pages, where the Download button actually works.
+> - **Workspace rules** — explain *why* C: and the network drives are out (locked; Pro hangs on
+>   remote I/O), and that a USB 3.0 external drive is a legitimate alternative to D:.
 >
 > **Corrections to things that were wrong:**
 >
@@ -45,7 +52,7 @@ Fall 2026 · Dr. Dan Ames
 > - **Steps 0, 3, 6, 7, 8, 9** — expected values to check results against.
 >
 > Several boxes reference an **ArcGIS Tips and Reminders** page, also unlinked, at
-> [ArcGIS Tips, Tricks, and Important Reminders](../../arcgis-tips.md).
+> [ArcGIS Tips, Tricks, and Important Reminders](../../arcgis-tips.md){ target="_blank" }.
 >
 > **Figures.** All the tool-dialog figures have been re-captured in ArcGIS Pro 3.7 against the
 > data students actually download, and the model overview has been re-exported from ModelBuilder
@@ -55,8 +62,13 @@ Fall 2026 · Dr. Dan Ames
 > Every per-step ModelBuilder snippet has been re-cut from that same vector export, so the
 > dialog and the model detail in each figure come from one consistent, current run.
 > 
-> **Still stale:** the example map at the very bottom. It comes from the old 2010 block analysis
-> and its legend misspells "Suitable". Remaking it means building a full cartographic layout.
+> The two **example maps** at the bottom are new too: both were laid out and exported from ArcGIS
+> Pro 3.7 against this run's results — one at the baseline criteria, one at a Step 12 scenario — so
+> the old 2010 example with the misspelled legend is gone, and nothing on this page is stale.
+>
+> **Site behavior:** external links on this page open in a new tab, so the lab stays put while a
+> download or reference page opens, and every figure opens in a pop-out viewer when clicked. Both
+> are site-wide settings, not draft-only.
 
 ## Background
 
@@ -87,21 +99,38 @@ For the purposes of this exercise, the spatial considerations will be limited to
 ## Data
 
 > [!IMPORTANT]
-> **Set up your folder before you download anything.** On the lab machines you can only write to
-> the **D: drive**. Make one folder for this class named after you — `D:\Smith\` — and one folder
-> per lab inside it — `D:\Smith\Lab01\`. Put the project and this lab's data there.
+> **Set up your folder before you download anything.** On the lab machines, work on the
+> **D: drive**. Make one folder for this class named after you — `D:\Smith\` — and one folder per
+> lab inside it — `D:\Smith\Lab01\`. Put the project and this lab's data there.
+>
+> **Why not somewhere else?** The **C: drive is locked** by the lab administrators: it holds the
+> software installations and the system files, and you cannot write to it. A **network drive** —
+> your CAEDM home directory, for example — is technically writable and a worse idea: ArcGIS Pro
+> reads and writes very large files constantly, and doing that across a network connection is
+> slow and will sometimes make Pro hang or crash outright. If you want your work to be portable, a
+> **high-speed USB 3.0 external drive** is fine, and you can work directly off it. Otherwise work on
+> D: and **back your lab folder up at the end of every session** to whichever network or cloud
+> storage you prefer — CAEDM, Google Drive, OneDrive or Box. These are public machines: anyone who
+> logs in can edit or delete what is on D:, and it may be wiped between semesters.
 >
 > **Never use a space in a folder or file name you create.** Some geoprocessing tools, the raster
 > tools especially, fail on paths containing spaces and do not tell you that the space is why.
 >
-> **Back your lab folder up to a USB or network drive every time you leave.** These are public
-> machines and anyone who logs in can edit the D: drive.
->
 > The full set of workspace conventions, and the settings that most often produce a wrong answer
-> without an error message, are on the [ArcGIS Tips and Reminders](../../arcgis-tips.md) page.
+> without an error message, are on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 > Read it before you start.
 
-You need four layers for this project, and — deliberately — you will obtain them in four different ways. Getting data is most of the work in real GIS, and it almost never comes from one place:
+You need four layers for this project, and — deliberately — you will obtain them in four different ways: one is an extract we prepared for you, two are official downloads from the state agency that maintains them, one you will create yourself, and one is a live web service you never download at all. That is not an accident of how the lab was written. Getting data is most of the work in real GIS, it almost never comes from one place, and every source has to be judged before it is used.
+
+Judging a source means reading its **metadata** — the data about the data — and asking the six questions you met in CCE 114 ([Metadata, Part 1](https://byu-hydroinformatics.github.io/cce114-geomatics/lectures/day-16/)): *what* the data represent and what each field means; *where* they cover and in which coordinate system; *when* they were made and last updated; *why* they were created; *how* they were collected and processed; and *who* maintains them and who to ask when something looks wrong. Then ask the one that decides whether you may use them at all: **what does the license allow?** UGRC publishes its data under a Creative Commons Attribution license, so you may use it freely as long as you credit the source — and your report will do exactly that. Not every dataset online is that generous. A dataset you are not permitted to use, or cannot date, or whose fields you cannot interpret, is not one you can build an engineering recommendation on, however good it looks on the map.
+
+Reputable sources — the agency that actually maintains the data, rather than someone's re-uploaded copy — make all of those questions easy to answer. That is why this lab sends you to UGRC and not to a search engine.
+
+![Infographic: the six questions metadata should answer before you use a dataset — What, Where, When, Why, How and Who — each with an example from this lab, plus a footer on license and use constraints.](images/lab01-metadata-questions.svg)
+
+**Figure A.** The six metadata questions from CCE 114, with a Lab 1 example under each, and the license question that decides whether you may use the data at all.
+
+Here is where this lab's data comes from:
 
 | Layer | Where it comes from |
 | --- | --- |
@@ -112,46 +141,53 @@ You need four layers for this project, and — deliberately — you will obtain 
 
 That last one is easy to overlook. The imagery and topographic backdrop in your map are streamed from Esri's servers every time you pan. You are already using a data source you do not own, cannot edit, and did not download — worth noticing, because a lot of professional GIS works exactly that way.
 
+![Infographic: six places GIS data comes from — open data portals, extracts prepared for you, data you create yourself, live web services, remote sensing, and commercial or licensed data — with the four used in this lab marked, all feeding into your project geodatabase.](images/lab01-data-sources.svg)
+
+**Figure B.** Where GIS data comes from. The four sources marked in orange are the ones this lab uses; the other two turn up in later labs and in practice.
+
 Unzip each download into the lab folder you created above.
 
 > [!TIP]
-> **The Download button looks broken. It isn't — it's slow.** On the UGRC pages, clicking **Download**
-> opens a *Download Options* panel that sits **blank for ten to fifteen seconds** before the format
-> cards (CSV, Shapefile, GeoJSON, KML, File Geodatabase, …) appear. Wait for it. You may also need
-> to click Download a second time. Pick **Shapefile**. (File Geodatabase would work just as well for
-> these two layers, and after reading about domains you may prefer it — either is fine.)
+> **Use the UGRC links exactly as given below.** They open each dataset's *Explore* page — the one
+> with the map — and the **Download** button there (the cloud icon) works right away. The same
+> button on the dataset's *About* page can sit blank for a long time, or never populate at all; if
+> you land on an *About* page, switch to *Explore*. In the *Download Options* panel pick
+> **Shapefile**. (File Geodatabase would work just as well for these two layers, and after reading
+> about domains you may prefer it — either is fine.)
 
-- **Utah Counties Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/about>
-    - This shapefile represents all the counties in Utah, from which you will select the one you need. In the Download Options window, download the zipped Shapefile.
+- **Utah Counties Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/explore>
+    - This shapefile represents all the counties in Utah, from which you will select the one you need. Click the **Download** button, then download the zipped Shapefile. While you are there, click **About** and read the metadata: who publishes it, when it was last updated, and under what license.
 - **Utah County Roads — prepared extract:** [`lab01-utah-county-roads.zip`](../../data/lab01-utah-county-roads.zip) (about 6 MB)
     - Every road centerline inside Utah County: 38,817 features with all 90 attribute fields, as a file geodatabase. Read the `READ-ME-FIRST.txt` inside the zip — it records exactly where the data came from, what we did to it, and what we deliberately did *not* do.
     - **Why we prepared this one for you.** The original is UGRC's statewide [Utah Roads](https://opendata.gis.utah.gov/datasets/utah-roads/about) layer: 413,311 features, about 135 MB zipped and 600 MB unzipped. Clipping it to one county takes it to 6 MB. More importantly, the statewide download comes as a **shapefile**, and a shapefile cannot store a coded-value domain — so the road classification codes arrive with no way to look up what they mean. We converted the clip to a file geodatabase and re-attached that domain, so in Step 5 you can read the codes straight from the data. The prepared extract is genuinely more useful than the raw download, not just smaller.
     - We filtered nothing by road class. Interstates through driveways are all present; choosing which ones count is your job in Step 5.
-- **2020 Census Tracts Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-census-tracts-2020/about>
-    - This shapefile represents the 2020 Census tract data for Utah. In the Download Options window, download the zipped Shapefile.
-- **Current Walmart locations:** You will build this layer yourself. There is no download for it. Walmart's public open-data site, which earlier versions of this handout linked to, has been taken down; the copies of it still floating around ArcGIS Online are unmaintained 2020 snapshots owned by strangers, and you should not build an analysis on them. Instead, create a point feature class in your project geodatabase and place one point on each Walmart store in your county — see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class). Locate the stores using Walmart's own store locator, a search in the map, or by recognising them in imagery. Expect to find somewhere around **a dozen** stores inside Utah County — the exact number is not fixed, and finding out what it is now is part of the job. Budget about fifteen minutes.
+- **2020 Census Tracts Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-census-tracts-2020/explore>
+    - This shapefile represents the 2020 Census tract data for Utah. Click the **Download** button, then download the zipped Shapefile. Read its metadata too, and note which Census fields it carries — you will need two of them in Step 3.
+- **Current Walmart locations:** You will build this layer yourself. There is no download for it. Walmart's public open-data site, which earlier versions of this handout linked to, has been taken down; the copies of it still floating around ArcGIS Online are unmaintained 2020 snapshots owned by strangers, and you should not build an analysis on them. Instead, create a point feature class in your project geodatabase and place one point on each Walmart store in your county — see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }. Locate the stores using Walmart's own store locator, a search in the map, or by recognising them in imagery. Expect to find somewhere around **a dozen** stores inside Utah County — the exact number is not fixed, and finding out what it is now is part of the job. Budget about fifteen minutes.
 
     - **Decide and state your inclusion rule.** Walmart operates more than one store format. Supercenters are the big-box stores this lab's square-footage figures describe; Neighborhood Markets are much smaller grocery-format stores. Whether a Neighborhood Market should count as "an existing Walmart" for a siting analysis is a judgement call, and it changes your answer. Make the call, apply it consistently, and defend it in your report.
-    - **State in your report where you got each location, how you verified it, how many you found, and which formats you included.** Two students with different but well-documented rules can both be right. A student who does not say which rule they used cannot be.
+    - **State in your report how you created this layer and why you trust it:** where each location came from (Walmart's store finder, a map search, imagery), how many stores you found, and which formats you included. Nobody expects you to drive to every store; "these are the locations Walmart's own store finder lists, and each one sits on a big-box footprint in the imagery" is a perfectly good reason to trust the layer, as long as you say it. Two students with different but well-documented rules can both be right. A student who does not say which rule they used cannot be.
 
 ## Analysis Tools
 
-You will use the following new tools in this exercise:
+You will use the following new tools in this exercise. The icon beside each one is a reminder of what it does to your data — the orange part is what comes out.
 
-- **Select:** Used to find and select features from your data layers based on attributes from the attribute table. You will first use it to select Utah County (and later your chosen county) in the counties shapefile. You will also use it in this laboratory to select population districts (represented with polygons) that have a density greater than 5000 people per square mile.
-- **Intersect:** An overlay operation (Bolstad, pp. 357–358) that keeps only the area where the input layers overlap, and carries the attributes of both inputs into the result. Intersect is not the same as Clip: Clip keeps only the first layer's attributes, while Intersect keeps attributes from every input.
-- **Buffer:** A proximity operation which creates an area equal to a distance, specified by the user, from a feature (Bolstad, p. 343). A buffer operation applied to a point feature layer returns a polygon feature layer with a series of circles of a specified distance around each point. A buffer operation applied to a polyline feature set returns a new polygon feature set with a single polygon surrounding each line segment at a specified distance.
-- **Erase:** An overlay operation where the target features are "cut out" or removed at the locations of the input features.
-- **Add Field:** Adds a blank new field to a table of a feature class, layer, or raster that has already been created and has an attribute table.
-- **Calculate Field:** Calculates the values of a field for all objects within a feature class, layer, or raster.
+| Tool | What it does |
+| --- | --- |
+| ![Select icon: several gray polygons, one picked out in orange with a selection outline](images/icon-select.svg){ .tool-icon }<br>**Select** | Finds and keeps the features whose attributes match an expression, and writes them to a new feature class. You will use it to pull Utah County out of the counties layer, to keep the census tracts whose density is over 5,000 people per square mile, and to keep the major roads. |
+| ![Intersect icon: two overlapping circles with only the overlap filled orange](images/icon-intersect.svg){ .tool-icon }<br>**Intersect** | An overlay operation (Bolstad, pp. 357–358) that keeps only the area where the input layers overlap, and carries the attributes of *both* inputs into the result. Intersect is not the same as Clip: Clip keeps only the first layer's attributes, while Intersect keeps attributes from every input. |
+| ![Buffer icon: a line and a point, each surrounded by a band of fixed width](images/icon-buffer.svg){ .tool-icon }<br>**Buffer** | A proximity operation that builds a polygon covering everything within a set distance of a feature (Bolstad, p. 343). Around points you get circles; around lines you get a ribbon of constant width. With *Dissolve* on, the overlapping pieces merge into one zone. |
+| ![Erase icon: a polygon with a circular bite removed where another shape lay](images/icon-erase.svg){ .tool-icon }<br>**Erase** | An overlay operation that removes from the input everything covered by the erase features — the target is "cut out" wherever the other layer lies. Order matters: the first input is what you keep, the second is what gets cut away. |
+| ![Add Field icon: an attribute table with a new, empty column appended](images/icon-add-field.svg){ .tool-icon }<br>**Add Field** | Adds a new, empty column to the attribute table of a feature class, layer, or raster. You choose the name and the data type — and the type matters, as Step 3 explains. |
+| ![Calculate Field icon: an attribute table whose last column has been filled from a formula](images/icon-calculate-field.svg){ .tool-icon }<br>**Calculate Field** | Fills a column for every row in the table from an expression you write, in Python or Arcade. It does the arithmetic once, for thousands of features, so you do not have to. |
 
 ## Example Model
 
 Your ModelBuilder model might look like the following when it is finished. Note that you are encouraged to make your model "your own" by customizing the layout, the labels on the tools and datasets, etc. Make sure your labels are descriptive so that others can understand what each dataset represents and what each tool is actually doing. Do you see any ways that the following model can be improved? For example, a tool labeled as "Buffer" is much less informative than a tool labeled "Buffer (2 Miles)". Also, in GIS, there are always many ways to accomplish the same thing. For example, you might buffer your data before selection if you think that would work better (though that's a bad example, because it is better to select some data first and only buffer the selected data). Regardless, you might find other ways to improve your model over this example in terms of both the organization and tools you use, as well as the presentation, layout, and labeling.
 
-[![The finished ModelBuilder model, exported as a vector diagram. Three branches feed a single result: the Counties layer runs through a Select for Utah County; the census branch intersects the tracts with that county, adds and calculates the DENSITY field, and selects tracts above 5,000 per square mile; the roads branch selects the major road classes from the prepared Utah County extract and buffers them two miles; those two branches meet at an Intersect, and an Erase removes a two-mile buffer around the existing Walmart points to produce Walmart_Target_Zones. Both Buffer distances are exposed as model parameters, marked P.](images/lab01-full-model-overview.svg)](images/lab01-full-model-overview.svg)
+![The finished ModelBuilder model, exported as a vector diagram. Three branches feed a single result: the Counties layer runs through a Select for Utah County; the census branch intersects the tracts with that county, adds and calculates the DENSITY field, and selects tracts above 5,000 per square mile; the roads branch selects the major road classes from the prepared Utah County extract and buffers them two miles; those two branches meet at an Intersect, and an Erase removes a two-mile buffer around the existing Walmart points to produce Walmart_Target_Zones. Both Buffer distances are exposed as model parameters, marked P.](images/lab01-full-model-overview.svg)
 
-**Figure A.** The finished model. This is a vector diagram — **click it to open it full size**, where every tool and dataset label is readable. Both Buffer distances carry a `P`, marking them as model parameters (Step 10).
+**Figure C.** The finished model. This is a vector diagram — **click it to open it full size**, where every tool and dataset label is readable. Both Buffer distances carry a `P`, marking them as model parameters (Step 10).
 
 <!-- RESOLVED 2026-09-05: re-exported from ModelBuilder via Export > Export To Graphic as SVG, so it is now vector and stays crisp at any zoom. This closes one of the six illegible ModelBuilder images noted in ROADMAP.md. The old raster lab01-full-model-overview.png is KEPT because the assigned lab (README.md) still references it. -->
 
@@ -162,12 +198,6 @@ For an advanced GIS student, the information up to this point is all you need to
 <!-- TODO(instructor): this paragraph offers extra credit, but the rubric below has no extra-credit row and no stated value for it. Decide how many points it is worth (or remove the offer) — not changed here because point values are an instructor decision. -->
 
 ## Step by Step Solution
-
-> [!WARNING]
-> **Every figure below was captured in ArcGIS Pro 3.7 against the extract you download**, and
-> every instruction was run and checked in the same session. The one exception is the example
-> map at the very end of the lab, which is still from an older version. If a figure and the text
-> ever disagree, tell your instructor — that means something has changed since this was written.
 
 > [!NOTE]
 > **Important Note #1:** The following step-by-step solution walks through the analysis of Utah
@@ -188,7 +218,7 @@ For an advanced GIS student, the information up to this point is all you need to
 - The **Location** box does not accept a typed path. Click the folder button beside it, and in the browse dialog that opens, type or paste `D:\Smith\Lab01` into the *Name* box at the bottom.
 - If you have already made that `Lab01` folder, **uncheck "Create a folder for this local project"**. Leaving it checked gives you `D:\Smith\Lab01\Lab01`.
 
-Never save the project to the C: drive, the desktop, or a network drive.
+Never save the project to the C: drive, the desktop, or a network drive — the note at the top of the **Data** section explains why.
 
 **Add your data to the map.** On the **Map** ribbon tab click **Add Data** and add the three layers you downloaded and unzipped. Two are shapefiles; the roads are a **feature class inside a geodatabase** — in the Add Data browser, open `UtahCountyRoads.gdb` like a folder and pick `UtahCountyRoads` from inside it. Do not go looking for a third `.shp`; there isn't one. You will drag them from the **Contents** pane onto the model canvas as you build the model, so they need to be in the map first.
 
@@ -256,8 +286,9 @@ Pro will show an information banner suggesting the **Pairwise Intersect** tool i
 > Each sliver carries its **parent tract's** total population and land area, so in the next step it
 > will be assigned that parent tract's density even though only a fragment of it is inside your
 > county. In Utah County this happens to do no harm, because those particular neighbours are rural
-> and none of the slivers pass the density test. It may not be harmless in the county you choose in
-> Step 12. Look at your results along the county line, and mention in your report what you found.
+> and none of the slivers pass the density test. It would not necessarily be harmless in another
+> county, or at a different density threshold. Look at your results along the county line, and
+> mention in your report what you found.
 
 ![The ArcGIS Pro Intersect tool dialog with UDOTRoutes_LRS and Utah_County as Input Features, Output Feature Class UtahCountyMainRoadsI15, Attributes To Join set to All attributes, and Output Type Same as input.](images/lab01-intersect-roads-county-dialog.png)
 
@@ -314,13 +345,10 @@ Use the Select tool to keep only I-15 and the other major highways in Utah Count
 Open the roads attribute table first and find the field that classifies road type. In the current UGRC Utah Roads layer that field is **`CARTOCODE`** (alias *CartographicCode*). Two things about it matter:
 
 - It is a **text** field, even though every value looks like a number. `CARTOCODE = 1` fails; `CARTOCODE = '1'` works.
-- It has a **coded-value domain**, so each code has a documented meaning you can look up instead of guessing. Because we shipped the extract as a file geodatabase, that domain travels with the data: open the attribute table and you will see each code's description rather than a bare number. The domain is named `CVDomain_CartoCode`, and you can inspect the full code list from the layer's **Fields** design view.
+- It has a **coded-value domain**, so each code has a documented meaning you can look up instead of guessing. Because we shipped the extract as a file geodatabase, that domain travels with the data: open the attribute table and you will see each code's description rather than a bare number. The domain is named `CVDomain_CartoCode`. To see the full code list, select the layer in the Contents pane and, on the **Data** ribbon tab, choose **Data Design ▸ Domains**.
 
-<!-- VERIFY: the domain is confirmed attached and resolving (checked with arcpy on the packaged
-     geodatabase: '4' -> "4 Major State Highways, Separated"). The exact ArcGIS Pro 3.7 menu path to
-     the Fields/Domains design view was NOT re-checked in Pro - the workstation was locked at the
-     time of writing - so the wording above deliberately avoids naming a menu path. Confirm the
-     route and tighten this sentence before assigning the lab. -->
+<!-- VERIFIED 2026-09-05 in Pro 3.7.1: domain attached and resolving ('4' -> "4 Major State Highways,
+     Separated"); the Data tab > Data Design > Fields / Domains route opens the design views. -->
 
 > [!NOTE]
 > **This only works because of how the data was packaged.** If you download the statewide layer
@@ -420,7 +448,8 @@ Use the Intersect tool to intersect the I-15/major roads buffer layer with the h
 >
 > That is a real analytical finding, not a mistake, and it is worth more in your report than a
 > number copied from the screen. **Report which of your criteria actually bound and which did not,
-> and how you know.** Check it again for the county you choose in Step 12 — the answer may differ.
+> and how you know.** Check it again in Step 12 as you change the road distance — at some point the
+> answer changes.
 
 ![The ArcGIS Pro Intersect tool dialog with the high-density census layer and the 2-mile roads buffer as Input Features, output Roads_Census_Intersect, and XY Tolerance left as Unknown.](images/lab01-intersect-density-roads-dialog.png)
 
@@ -432,7 +461,7 @@ Use the Intersect tool to intersect the I-15/major roads buffer layer with the h
 
 Use the Buffer tool to create a 2-mile buffer around the existing Walmarts. Later in this lab you will want to keep the areas outside of this buffer.
 
-This step needs the point layer you built yourself in the **Data** section — there is no Walmart download. If you have not made it yet, do that now: see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class). Use the same point layer and inclusion rule you documented in the Data section.
+This step needs the point layer you built yourself in the **Data** section — there is no Walmart download. If you have not made it yet, do that now: see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }. Use the same point layer and inclusion rule you documented in the Data section.
 
 As in Step 6, set the distance unit to **Statute Miles** rather than accepting Meters, and set **Dissolve Type** to *Dissolve all output features into a single feature*.
 
@@ -505,7 +534,7 @@ Repeat for the second Buffer. When you now run the model from the Catalog pane, 
 
 ### Step 11
 
-Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point feature class to mark these points on your final map — the same technique you used for the Walmart locations in the Data section; see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class) if you need the steps again.
+Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point feature class to mark these points on your final map — the same technique you used for the Walmart locations in the Data section; see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" } if you need the steps again.
 
 ### Step 12 — Test how much your answer depends on your assumptions
 
@@ -553,10 +582,17 @@ Write a brief report (2–3 pages) covering:
 - **one** screen capture of your model — only one is needed, since it is the same model throughout
 - your **sensitivity table** from Step 12, and your answers to its three questions
 - your specific recommendation for the site of the new Walmart, and a justification for why you chose those locations
-- **where your Walmart point data came from and how you verified it**
+- **how you created your Walmart point data and why you trust it** — which store finder or map you used, how many stores you found, and which formats you included
 - **which of the three spatial criteria actually narrowed your result and which did not**, with the counts and areas that show it
+- **a copy of the rubric below with your self-assessment filled in** — a score in every row, honestly arrived at. The grader will compare it with theirs.
 
 Make sure to review the rubric at the end of this lab for the full requirements of this laboratory exercise.
+
+> [!IMPORTANT]
+> **Peer review before you submit.** Have another student in the class read your report against
+> the rubric and give you feedback, then act on that feedback before the deadline. Name your
+> reviewer in the report and say in a sentence what you changed because of them. A report nobody
+> else has read is a draft, not a submission.
 
 ## References
 
@@ -564,13 +600,17 @@ Bolstad, P. (2008) *GIS Fundamentals: A First Text on Geographic Information Sys
 
 Fishman, C. (2006) *The Walmart Effect: How the World's Most Powerful Company Really Works – and How It's Transforming the American Economy.* Penguin Books.
 
-## Example Map
+## Example Maps
 
-Note that this map is just an example. Your map will/must look different than this because it will be based on your own analysis, your own unique use of visual graphical cartographic elements and your own layout design choices. Also, your map must include your name.
+Two example layouts follow, one for each map the Deliverables ask for. They are examples, not templates: your maps will and must look different, because they will be based on your own analysis, your own store points, your own cartographic choices and your own layout. Your maps must include your name.
 
-![Example finished layout titled "Possible Walmart Locations in Utah County": a dark basemap of Utah County with suitable areas symbolized yellow through red by population density, current Walmart locations and candidate sites marked with symbols, two inset detail maps for North Lehi and South East Provo, a legend, north arrow, and scale bar in miles.](images/lab01-example-map-utah-county.jpg)
+![Example baseline layout titled "Possible Walmart Locations in Utah County": a light gray basemap of Utah County with the areas meeting the density and road criteria in pale yellow, the final suitable areas in orange, gray 2-mile exclusion circles around ten labeled existing Walmart stores, a red star at the recommended site in north Lehi, an imagery inset of that site, a legend, north arrow, scale bar in miles, and a text box giving author, date, projection and data sources.](images/lab01-example-map-baseline.png)
 
-<!-- Stale: the example map's legend reads "Suitble Areas" (misspelled in the graphic) and its density classes come from the old 2010 block analysis. The image cannot be corrected without re-making the layout. -->
+**Figure 12.** The baseline map. Notice that it shows the layer *before* the Erase in yellow as well as the final result in orange, with the exclusion buffers drawn over the top — that is what lets a reader see that the intersection and the erase actually happened, which the rubric asks for.
+
+![Example scenario layout titled "Walmart Site Selection, Utah County: 3-Mile Exclusion Scenario": the same design as the baseline map, but the gray exclusion circles are 3 miles across and only a handful of small orange polygons remain, with the north Lehi site still marked; the subtitle and text box state which parameter changed and by how much.](images/lab01-example-map-scenario.png)
+
+**Figure 13.** One Step 12 scenario: the Walmart exclusion raised from 2 miles to 3, everything else unchanged. Twenty-two of the thirty-one candidate polygons vanish and the suitable area falls from about 12.9 to about 2.4 square miles, but the recommended site survives — which is part of the argument for recommending it. The map says in its subtitle and its text box exactly what was changed, as the rubric requires.
 
 ## Rubric for Walmart Site Selection Project Report
 
@@ -583,7 +623,7 @@ Note that this map is just an example. Your map will/must look different than th
 | Answer the following questions:<br>• Where are the best locations for a new Walmart?<br>• Which one site do you recommend and why did you select this location? | /5 |
 | Make TWO full page (8.5 x 11) maps — your baseline result, and one Step 12 scenario:<br>• Show current Walmarts and optimal locations for a new one<br>• Map Title: Neat Line, North Arrow, Scale Bar<br>• All features (existing & future Walmart locations) are labeled<br>• Text box with author name, date, map projection<br>• Current Walmart locations marked with an appropriate graphical symbol<br>• **Important:** Show the final suitability layer that shows the effect of your intersection and erasing — this is the best way to show that you truly solved this correctly. E.g. see the yellow and orange areas in the example map.<br>• Base map is visible<br>• Zoomed to an appropriate scale for viewing all features<br>• The scenario map states which parameters were changed and to what<br>• All text is legible on printed map | /20<br>(10 per map) |
 | Sensitivity analysis (Step 12):<br>• A table of at least three additional runs, giving the parameter values, the number of candidate polygons, and the total area for each<br>• Which parameter matters most and which barely matters, supported by those numbers<br>• Whether any setting eliminates every candidate site, and what that means<br>• Whether your recommended site survives every scenario, and whether it is still your recommendation | /10 |
-| My self-assessment — score yourself against the 50 points above. This row adds no points to the total. | (no points) |
+| My self-assessment — paste this rubric into your report with your own score in every row. Peer reviewer named, and their feedback acted on. This row adds no points to the total. | (no points) |
 
 **Total: 50 points.**
 
@@ -600,6 +640,7 @@ DATA PACKAGE (2026-09-04): docs/data/lab01-utah-county-roads.zip, 6.30 MB. Built
 Verified run totals with the package (Utah County): tracts 156 -> intersect 173 -> density > 5000 = 47 (26.42 sq mi); roads 38,817 -> 1,532 major; roads buffer 1 feature 975.6 sq mi; Walmart buffer 557.9 sq mi (10 stores); final 31 polygons, 12.86 sq mi.
 SENSITIVITY (measured, for setting expectations on Step 12; do NOT publish this table to students): road buffer 2/1/0.5/0.25 mi at density 5000, Walmart 2 mi -> final 12.86 / 12.15 / 9.02 / 5.35 sq mi. Walmart buffer 2/3/5 mi at density 5000, road 2 mi -> 12.86 / 2.39 / 0.00 sq mi (5 mi eliminates every site). Density 5000/8000/10000 at road 2, Walmart 2 -> 47/15/7 tracts and 12.86 / 2.61 / 0.63 sq mi. So the Walmart distance dominates, the road distance is near-inert until below ~0.5 mi, and there IS a setting with no solution - which is what Step 12's TIP alludes to without giving away.
 ALTERNATIVE CONSIDERED AND REJECTED: UDOT Routes ALRS (item 5eca80119fd349f3a435a751b86f1af8, UDOT_Admin, public) - 3,676 features statewide, 4.9 MB, reproduces the answer (975.8 sq mi buffer, 31 polygons, 12.86 sq mi). Rejected because it publishes no coded-value domain, uses a DIFFERENT code scheme from UGRC (1=Interstates, 2=US highways, 3=state routes, 5-8=ramps/connectors - inferred from route names, not documented), truncates ROUTE_ALIAS_COMMON to ROUTE_AL_1 in shapefile form, and duplicates divided highways by direction (I-15 appears twice). Server-side filtered downloads of the UGRC layer (?where=...) return 404/502 and are not a dependable student path.
+GRAPHICS (2026-09-05, round 4, instructor review): (a) six tool icons (images/icon-*.svg) and two infographics (lab01-metadata-questions.svg, lab01-data-sources.svg) are HAND-AUTHORED SVG with real text, generated by scratchpad/make_svgs.py - the OpenAI image skill was requested but no API key was available in the environment, and hand-drawn SVG renders labels exactly, which image models do not. The metadata infographic deliberately mirrors the CCE 114 Day 16 deck's six questions (What/Where/When/Why/How/Who) so the two courses agree. (b) The two example maps (lab01-example-map-baseline.png, -scenario.png) were built as real ArcGIS Pro layouts in C:\Ames\Lab01\Lab01_Layouts.aprx by scratchpad/build_layouts.py via arcpy.mp (createLayout / createMapFrame / createMapSurroundElement) and exported by Pro's own renderer at 150 dpi - nothing was drawn by hand. Scenario = Walmart exclusion 3 mi: 9 polygons, 2.39 sq mi vs baseline 31 / 12.86. The recommended site is the label point of the largest baseline polygon (north Lehi, 1.31 sq mi, UTM 427112 4475055), checked against imagery in the inset. The old lab01-example-map-utah-county.jpg is KEPT because the assigned README still references it. (c) UGRC links now point at /explore instead of /about: the instructor found the Download button never populated on the /about pages but worked immediately on /explore - which also explains what pilots 1-3 hit. (d) Site-wide: external links open in a new tab (docs/javascripts/external-links.js) and images open in a GLightbox pop-out (mkdocs-glightbox plugin, added to mkdocs.yml and the Pages workflow).
 FIGURES (2026-09-05): every tool dialog re-captured in Pro 3.7.1 against the packaged extract. Model overview exported from ModelBuilder via Export > Export To Graphic as SVG (vector), with nothing selected so no selection strokes. The nine per-step model snippets are CROPS OF THAT SAME SVG, rendered at 3x with headless Chrome (1 SVG unit = 4 px) and cut by the resolved text-label coordinates — so dialog, snippet and overview all come from one consistent run. Figures 6 and 8 are cropped to exclude the P parameter markers, which Step 10 has not introduced yet at that point. Step 10's procedure IS now verified (Create Variable > From Parameter > Distance, then Parameter / Ctrl+P); the earlier belief that context menus did not render was a capture artifact. Only the example map remains stale.
 RUBRIC: 30 points of "two maps, one per county" was re-split as 20 (two maps: baseline + one scenario) + 10 (sensitivity analysis), holding the total at 50. Point values are an instructor decision — this is a proposal.
 PILOT RUN (2026-09-04): an AI agent was asked to work this draft end to end as a first-time student and to log its confusion. Its notes and report are at C:\Ames\Student01\. It matched every published check value except one, and it caught a real error.
@@ -614,4 +655,4 @@ CLOSED 2026-09-04 by the Pro 3.7.1 run: NAD 1983 UTM zone 12N (note Pro spells "
 dead/redirected links: DEAD — https://community.esri.com/community/education/blog/2012/08/10/siting-a-bicycle-and-ski-equipment-sales-and-rental-shop-in-wisconsin (redirects to https://community.esri.com/en/community/... then 404).
 DEAD (2026-09-04), and this one defeats a status-code link check — https://walmart-open-data-walmarttech.opendata.arcgis.com/ returns HTTP 200 with an empty ArcGIS Hub shell but renders nothing: the browser console shows a 404 plus "An error occured initializing the HubSite instance". The Walmart-owned STORE_STATUS_PUBLIC_VIEW FeatureServer no longer answers public queries (no layers, no count). Only third-party COVID-era copies owned by unrelated ArcGIS Online users remain. The Data section no longer offers a download; students build the point layer themselves (10 stores in Utah County). NOTE for future link checks on this repo: a 200 from an ArcGIS Hub domain does not mean the site exists.
 OK (200, no redirect): the three opendata.gis.utah.gov dataset pages and https://www.youtube.com/watch?v=fxcAb-xw_zU. All three UGRC downloads were exercised: counties 1.8 MB, tracts 6.0 MB, roads 141 MB zipped / 606 MB unzipped (Roads.dbf alone is 502 MB), roads download 4m19s on a fast home connection.
-figure numbering: Word's caption fields lost their numbers. Restored as Figures 1–10 matching the ten step captions in document order; the "Example Model" overview image had no caption field in Word and is intentionally left unnumbered so that the in-text references "(see Figure 1)", "(see Figure 2)", "(see Figure 3)" and "This is shown in Figure 9" continue to resolve correctly. -->
+figure numbering: Word's caption fields lost their numbers. Restored as Figures 1–11 matching the step captions in document order; the three pre-step graphics are lettered A (metadata), B (data sources), C (model) so the in-text references "(see Figure 1)", "(see Figure 2)", "(see Figure 3)" and "This is shown in Figure 9" continue to resolve; the two example maps are Figures 12 and 13. -->
