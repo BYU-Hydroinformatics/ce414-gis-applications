@@ -47,12 +47,17 @@ Fall 2026 · Dr. Dan Ames
 > Several boxes reference an **ArcGIS Tips and Reminders** page, also unlinked, at
 > [`../../arcgis-tips.md`](../../arcgis-tips.md).
 >
-> **Figures.** Four have been re-captured in ArcGIS Pro 3.7 against the extract students actually
-> download — the `CARTOCODE` attribute table in Step 5, the Select dialog in Figure 5b, the Buffer
-> dialog in Figure 6, and the two new parameter menus at Figures 10 and 11. **The rest are still the
-> original 2010-era captures** and show `CensusBlocks2010`, older dialog labels, and in Figure 2 a
-> roads Intersect this version of the lab no longer asks for. Where a figure and the text disagree,
-> the text is correct.
+> **Figures.** All the tool-dialog figures have been re-captured in ArcGIS Pro 3.7 against the
+> data students actually download, and the model overview has been re-exported from ModelBuilder
+> as **SVG**, so it stays sharp at any zoom — that was one of the six illegible ModelBuilder
+> images on the roadmap.
+> 
+> The nine small per-step ModelBuilder snippets have been **removed** rather than re-shot. One
+> legible diagram of the whole model does the same job, and nine thumbnails would go stale again
+> the moment the model changes. That is an editorial call worth a second opinion.
+> 
+> **Still stale:** the example map at the very bottom. It comes from the old 2010 block analysis
+> and its legend misspells "Suitable". Remaking it means building a full cartographic layout.
 
 ## Background
 
@@ -138,10 +143,11 @@ You will use the following new tools in this exercise:
 
 Your ModelBuilder model might look like the following when it is finished. Note that you are encouraged to make your model "your own" by customizing the layout, the labels on the tools and datasets, etc. Make sure your labels are descriptive so that others can understand what each dataset represents and what each tool is actually doing. Do you see any ways that the following model can be improved? For example, a tool labeled as "Buffer" is much less informative than a tool labeled "Buffer (2 Miles)". Also, in GIS, there are always many ways to accomplish the same thing. For example, you might buffer your data before selection if you think that would work better (though that's a bad example, because it is better to select some data first and only buffer the selected data). Regardless, you might find other ways to improve your model over this example in terms of both the organization and tools you use, as well as the presentation, layout, and labeling.
 
-![Overview of the finished ModelBuilder model: the Counties layer feeds a Select for Utah County, which is intersected with the census and UDOT roads layers; the census branch runs Add Field and Calculate Field to build DENSITY and selects the high-density polygons, the roads branch selects major roads and buffers them 2 miles, the two branches are intersected, and an Erase removes a 2-mile buffer around existing Walmarts to produce the target-population layer.](images/lab01-full-model-overview.png)
+[![The finished ModelBuilder model, exported as a vector diagram. Three branches feed a single result: the Counties layer runs through a Select for Utah County; the census branch intersects the tracts with that county, adds and calculates the DENSITY field, and selects tracts above 5,000 per square mile; the roads branch selects the major road classes from the prepared Utah County extract and buffers them two miles; those two branches meet at an Intersect, and an Erase removes a two-mile buffer around the existing Walmart points to produce Walmart_Target_Zones. Both Buffer distances are exposed as model parameters, marked P.](images/lab01-full-model-overview.svg)](images/lab01-full-model-overview.svg)
 
-<!-- TODO(instructor): this full-model overview is a zoomed-out ModelBuilder canvas grab and the node labels are close to illegible at web width. It needs re-export from ModelBuilder at a readable scale (this is one of the six illegible ModelBuilder images noted in ROADMAP.md), not a re-screenshot. -->
-<!-- Stale: this image shows the OLD workflow (CensusBlocks2010, DENSITY > 5000 on blocks). Kept per the screenshot gate in ROADMAP.md. -->
+**Figure A.** The finished model. This is a vector diagram — **click it to open it full size**, where every tool and dataset label is readable. Both Buffer distances carry a `P`, marking them as model parameters (Step 10).
+
+<!-- RESOLVED 2026-09-05: re-exported from ModelBuilder via Export > Export To Graphic as SVG, so it is now vector and stays crisp at any zoom. This closes one of the six illegible ModelBuilder images noted in ROADMAP.md. The old raster lab01-full-model-overview.png is KEPT because the assigned lab (README.md) still references it. -->
 
 ## Complete the Lab
 
@@ -217,9 +223,7 @@ Text comparisons are case sensitive, and in SQL mode the value needs single quot
 
 ![The ArcGIS Pro Select tool dialog: Input Features set to Counties, Output Feature Class Counties_Select, and the clause "NAME is Equal to UTAH" with a green check reading "The SQL expression is valid."](images/lab01-select-utah-county-dialog.png)
 
-![ModelBuilder detail: a blue Counties input oval feeding a yellow "Select [Utah County]" tool, which outputs a green Utah_County oval.](images/lab01-select-utah-county-model.png)
-
-**Figure 1.** Select tool window and ModelBuilder example.
+**Figure 1.** The Select tool in clause mode. Note the green check confirming the expression is valid.
 
 ### Step 2
 
@@ -247,11 +251,9 @@ Pro will show an information banner suggesting the **Pairwise Intersect** tool i
 > and none of the slivers pass the density test. It may not be harmless in the county you choose in
 > Step 12. Look at your results along the county line, and mention in your report what you found.
 
-![ModelBuilder detail: the census layer and Utah_County feed an "Intersect [Census and Utah County]" tool, and UDOTRoutes_LRS and Utah_County feed an "Intersect [UDOTRoutes and Utah County]" tool, producing county-restricted census and main-roads outputs.](images/lab01-intersect-county-model.png)
-
 ![The ArcGIS Pro Intersect tool dialog with UDOTRoutes_LRS and Utah_County as Input Features, Output Feature Class UtahCountyMainRoadsI15, Attributes To Join set to All attributes, and Output Type Same as input.](images/lab01-intersect-roads-county-dialog.png)
 
-**Figure 2.** Intersect tool window and ModelBuilder example.
+**Figure 2.** The Intersect tool, restricting the census tracts to the selected county.
 
 ### Step 3
 
@@ -277,15 +279,11 @@ Then use the **Calculate Field** tool to fill it in. Set **Field Name** to `DENS
 > rather than a Double; if the column is empty or full of nulls, check that you typed the field
 > name into Calculate Field correctly.
 
-![ModelBuilder detail: the county census layer feeds an "Add Field [DENSITY]" tool, whose output feeds a "Calculate Field [DENSITY]" tool, producing the calculated-density layer.](images/lab01-density-field-model.png)
-
 ![The ArcGIS Pro Add Field tool dialog: Field Name DENSITY, Field Type Double (double precision), Field IsNullable checked.](images/lab01-add-field-density-dialog.png)
 
 ![The ArcGIS Pro Calculate Field tool dialog: Field Name DENSITY, Expression Type Python 3, and the expression box showing the older !POP100! / !SqMiles! expression.](images/lab01-calculate-field-density-dialog.png)
 
-**Figure 3.** Top: ModelBuilder example. Bottom: Add Field tool window and Calculate Field tool window.
-
-<!-- Stale: the Calculate Field screenshot still shows the old !POP100! / !SqMiles! expression against CensusBlocks2010. The expression in the text above is the current one. Gated on the Lab 1 data validation; do not re-shoot yet. -->
+**Figure 3.** Add Field (left) and Calculate Field (right). Note Field Type set to Double, and Expression Type reading Python.
 
 ### Step 4
 
@@ -293,11 +291,7 @@ Use the Select tool to select the areas where the population density is greater 
 
 ![The ArcGIS Pro Select tool dialog with the expression DENSITY > 5000 and a note that the expression cannot be edited in Clause mode, followed by a green check that the SQL expression is valid.](images/lab01-select-density-dialog.png)
 
-![ModelBuilder detail: the calculated-density layer feeds a "Select [DENSITY > 5000]" tool, producing the high-density output layer.](images/lab01-select-density-model.png)
-
-**Figure 4.** The Select tool window and ModelBuilder example for DENSITY.
-
-<!-- Stale: this Select screenshot runs against "Utah County CensusBlocks Calculated Density Field" (2010 blocks), not the 2020 tracts the current lab uses. -->
+**Figure 4.** The Select tool with the DENSITY expression in SQL Editor mode.
 
 ### Step 5
 
@@ -313,7 +307,6 @@ Open the roads attribute table first and find the field that classifies road typ
      the Fields/Domains design view was NOT re-checked in Pro - the workstation was locked at the
      time of writing - so the wording above deliberately avoids naming a menu path. Confirm the
      route and tighten this sentence before assigning the lab. -->
-
 
 > [!NOTE]
 > **This only works because of how the data was packaged.** If you download the statewide layer
@@ -363,15 +356,11 @@ In the extract we gave you that keeps **1,532** of Utah County's 38,817 road seg
 
 ![The ArcGIS Pro Select tool dialog in ModelBuilder: Input Features UtahCountyRoads, Output Feature Class MajorRoads_UtahCounty, the SQL Editor toggle switched on, and the expression CARTOCODE IN ('1','2','3','4','5') with a green check mark showing it is valid.](images/lab01-select-major-roads-dialog.png)
 
-![ModelBuilder detail: the county main-roads layer feeds a "Select [Major Roads/I15]" tool, producing the major-roads output layer.](images/lab01-select-major-roads-model.png)
-
-**Figure 5b.** The Select tool window and ModelBuilder example for major roads.
+**Figure 5b.** The Select tool with the CARTOCODE expression for major roads.
 
 > [!NOTE]
 > Figure 5b was captured in ArcGIS Pro 3.7 against the extract you downloaded, so the dialog, the
 > field name and the expression all match what you should see.
-
-<!-- Stale: CARTO = 1,2,3,6 screenshot retained deliberately; the step text no longer asserts that expression. -->
 
 ### Step 6
 
@@ -395,9 +384,7 @@ Also set **Dissolve Type** to *Dissolve all output features into a single featur
 
 ![The ArcGIS Pro Buffer tool dialog: Input Features MajorRoads_UtahCounty, Output MajorRoads_2mi_Buffer, Distance 2 with the unit set to Statute Miles, Side Type Full, End Type Round, Method Planar, and Dissolve Type set to "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
 
-![ModelBuilder detail: the major-roads layer feeds a Buffer tool, producing a "MajorRoads_I15 2 Mile Buffer" output layer.](images/lab01-buffer-roads-model.png)
-
-**Figure 6.** The Buffer tool window and ModelBuilder example for major roads buffer.
+**Figure 6.** The Buffer tool. Distance is 2 **Statute Miles**, and Dissolve Type is set to dissolve everything into one feature.
 
 ### Step 7
 
@@ -416,11 +403,7 @@ Use the Intersect tool to intersect the I-15/major roads buffer layer with the h
 
 ![The ArcGIS Pro Intersect tool dialog with the high-density census layer and the 2-mile roads buffer as Input Features, output Roads_Census_Intersect, and XY Tolerance left as Unknown.](images/lab01-intersect-density-roads-dialog.png)
 
-![ModelBuilder detail: the high-density census output and the 2-mile roads buffer both feed an "Intersect [Density and Roads]" tool, producing a "Roads Intersect Density" layer.](images/lab01-intersect-density-roads-model.png)
-
-**Figure 7.** The Intersect tool window and ModelBuilder example of the density and roads intersect.
-
-<!-- Stale: the XY Tolerance in this dialog reads "Unknown". With the projected output coordinate system set in Step 0 the units shown will differ. Screenshot retained; gated on the data validation. -->
+**Figure 7.** The Intersect tool combining the high-density tracts with the roads buffer.
 
 ### Step 8
 
@@ -441,9 +424,7 @@ As in Step 6, set the distance unit to **Statute Miles** rather than accepting M
 > distance unit on Meters. This ceiling check works for any buffer in any lab: it is worth
 > remembering.
 
-![ModelBuilder detail: the Existing_Walmarts point layer feeds a "Buffer [2 Miles]" tool, producing a Walmart_Buffer polygon layer.](images/lab01-buffer-walmart-model.png)
-
-**Figure 8.** The Buffer tool around the current Walmart locations.
+**Figure 8.** *(No separate figure — this Buffer is set up exactly like Figure 6, with your Walmart points as the input. See the model diagram at the top of the lab for how it connects.)*
 
 ### Step 9
 
@@ -456,9 +437,7 @@ Use the Erase tool to erase the buffered Walmart layer from the intersected popu
 > you digitized and which road codes you chose — that is expected. What matters is that you can
 > explain the change.
 
-![ModelBuilder detail: "Roads Intersect Density" and Walmart_Buffer feed an "Erase [Walmart from Density]" tool, producing the "Walmart Target Population" output layer.](images/lab01-erase-walmart-model.png)
-
-**Figure 9.** The Erase tool in ModelBuilder.
+**Figure 9.** *(No separate figure — see the model diagram at the top of the lab for how the Erase connects.)*
 
 ### Step 10
 
@@ -600,8 +579,6 @@ PILOT RUN (2026-09-04): an AI agent was asked to work this draft end to end as a
   STORE COUNT DE-FACTUALISED — the pilot found 12 stores in Utah County via Walmart's own store finder (9 Supercenters + 3 Neighborhood Markets); my OSM-based count found 10. Neither is wrong; the count moves and depends on whether Neighborhood Markets count. The lab no longer states a number as fact. It now asks students to state their count, their inclusion rule, and to defend it.
   ALSO REPORTED, NOT YET VERIFIED BY ME: the pilot could not find a format button under the Hub "Download Options" panel for the counties/tracts downloads and fell back to the Hub download API. Needs checking on the actual lab machines before the semester — if the panel behaves that way there, 30 students will hit it at once in Step 0.
   NOT EXERCISED BY THE PILOT: it never obtained working desktop control, so it did the analysis with arcpy and never opened ModelBuilder. Every GUI trap this lab warns about (Meters-not-Miles, Long-not-Double, Run-with-dialog-open, right-click-does-nothing) is therefore still untested by anyone but me.
-images renamed from fig-NN: fig-01.png -> lab01-full-model-overview.png; fig-02.png -> lab01-select-utah-county-dialog.png; fig-03.png -> lab01-select-utah-county-model.png; fig-04.png -> lab01-intersect-county-model.png; fig-05.png -> lab01-intersect-roads-county-dialog.png; fig-06.png -> lab01-density-field-model.png; fig-07.png -> lab01-add-field-density-dialog.png; fig-08.png -> lab01-calculate-field-density-dialog.png; fig-09.png -> lab01-select-density-dialog.png; fig-10.png -> lab01-select-density-model.png; fig-11.png -> lab01-select-major-roads-dialog.png; fig-12.png -> lab01-select-major-roads-model.png; fig-13.png -> lab01-buffer-roads-dialog.png; fig-14.png -> lab01-buffer-roads-model.png; fig-15.png -> lab01-intersect-density-roads-dialog.png; fig-16.png -> lab01-intersect-density-roads-model.png; fig-17.png -> lab01-buffer-walmart-model.png; fig-18.png -> lab01-erase-walmart-model.png; fig-19.png -> lab01-parameter-add-to-display-menu.png; fig-20.jpg -> lab01-example-map-utah-county.jpg. No image was deleted; all 20 are referenced.
-stale/unverified screenshots (all retained deliberately; re-shoot is gated on Labs/Lab 1 Data/2026-09-02/ARCGIS_PRO_VALIDATION_CHECKLIST.md per ROADMAP.md): lab01-full-model-overview.png (old CensusBlocks2010 workflow AND illegible at web width — needs re-export from ModelBuilder, not a re-screenshot); lab01-intersect-county-model.png and lab01-intersect-roads-county-dialog.png (CensusBlocks2010, UDOTRoutes_LRS); lab01-density-field-model.png, lab01-add-field-density-dialog.png (CensusBlocks2010 input table); lab01-calculate-field-density-dialog.png (old expression !POP100! / !SqMiles!, 2010 block field list); lab01-select-density-dialog.png, lab01-select-density-model.png (2010 blocks); lab01-select-major-roads-dialog.png (CARTO is Equal to 1/2/3/6 — the step text deliberately no longer asserts this); lab01-intersect-density-roads-dialog.png (XY Tolerance "Unknown"); lab01-example-map-utah-county.jpg (legend misspells "Suitable" and density classes come from the 2010 block analysis).
 TODO(instructor): (1) the Esri Community bicycle/ski-shop link 404s — supply a replacement or drop the example; (2) the "Complete the Lab" section offers extra credit but the rubric has no extra-credit row or point value; (3) lab01-full-model-overview.png needs re-export from ModelBuilder at a legible scale.
 VERIFY (still open): "over 4,700 Walmart stores" and "about 90% of Americans live within 15 miles of a Walmart" (uncited, unchanged); Walmart store footprint range 51,000–224,000 ft², average ~102,000 ft² (uncited, unchanged); the Bolstad page numbers.
 CLOSED 2026-09-04 by the Pro 3.7.1 run: NAD 1983 UTM zone 12N (note Pro spells "zone" lowercase), the !POP100! / (!ALAND20! / 2589988.110336) expression and both field names, and the ArcGIS Pro dialog and pane names throughout Steps 0-9.
