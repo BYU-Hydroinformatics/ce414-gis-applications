@@ -45,7 +45,7 @@ Fall 2026 · Dr. Dan Ames
 > - **Steps 0, 3, 6, 7, 8, 9** — expected values to check results against.
 >
 > Several boxes reference an **ArcGIS Tips and Reminders** page, also unlinked, at
-> [`../../arcgis-tips.md`](../../arcgis-tips.md).
+> [ArcGIS Tips, Tricks, and Important Reminders](../../arcgis-tips.md).
 >
 > **Figures.** All the tool-dialog figures have been re-captured in ArcGIS Pro 3.7 against the
 > data students actually download, and the model overview has been re-exported from ModelBuilder
@@ -114,6 +114,13 @@ That last one is easy to overlook. The imagery and topographic backdrop in your 
 
 Unzip each download into the lab folder you created above.
 
+> [!TIP]
+> **The Download button looks broken. It isn't — it's slow.** On the UGRC pages, clicking **Download**
+> opens a *Download Options* panel that sits **blank for ten to fifteen seconds** before the format
+> cards (CSV, Shapefile, GeoJSON, KML, File Geodatabase, …) appear. Wait for it. You may also need
+> to click Download a second time. Pick **Shapefile**. (File Geodatabase would work just as well for
+> these two layers, and after reading about domains you may prefer it — either is fine.)
+
 - **Utah Counties Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/about>
     - This shapefile represents all the counties in Utah, from which you will select the one you need. In the Download Options window, download the zipped Shapefile.
 - **Utah County Roads — prepared extract:** [`lab01-utah-county-roads.zip`](../../data/lab01-utah-county-roads.zip) (about 6 MB)
@@ -157,15 +164,10 @@ For an advanced GIS student, the information up to this point is all you need to
 ## Step by Step Solution
 
 > [!WARNING]
-> **The screenshots below predate the current data and workflow.** They were captured from an
-> earlier version of this lab and still show `CensusBlocks2010`, the old density expression
-> `!POP100! / !SqMiles!`, a `CARTO` road-class field that no longer exists, and dialog labels that
-> have since been renamed. The current lab uses **2020 Census tracts**, the density expression in
-> Step 3, and the `CARTOCODE` field described in Step 5.
->
-> **Where a screenshot and the text disagree, the text wins.** Use the images for the shape and
-> layout of each dialog, not for field names, values or button labels. Every instruction in the
-> steps below was run and checked in ArcGIS Pro 3.7; the images were not re-captured.
+> **Every figure below was captured in ArcGIS Pro 3.7 against the extract you download**, and
+> every instruction was run and checked in the same session. The one exception is the example
+> map at the very end of the lab, which is still from an older version. If a figure and the text
+> ever disagree, tell your instructor — that means something has changed since this was written.
 
 > [!NOTE]
 > **Important Note #1:** The following step-by-step solution walks through the analysis of Utah
@@ -188,7 +190,7 @@ For an advanced GIS student, the information up to this point is all you need to
 
 Never save the project to the C: drive, the desktop, or a network drive.
 
-**Add your data to the map.** On the **Map** ribbon tab click **Add Data** and add the three shapefiles you downloaded and unzipped. You will drag them from the **Contents** pane onto the model canvas as you build the model, so they need to be in the map first.
+**Add your data to the map.** On the **Map** ribbon tab click **Add Data** and add the three layers you downloaded and unzipped. Two are shapefiles; the roads are a **feature class inside a geodatabase** — in the Add Data browser, open `UtahCountyRoads.gdb` like a folder and pick `UtahCountyRoads` from inside it. Do not go looking for a third `.shp`; there isn't one. You will drag them from the **Contents** pane onto the model canvas as you build the model, so they need to be in the map first.
 
 **Create the model.** The quickest route is the **Analysis** ribbon tab ▸ **ModelBuilder**, which creates a new model in your project toolbox and opens the ModelBuilder view. (You can also do it from the **Catalog** pane: expand **Toolboxes**, right-click your project toolbox — `Lab01.atbx` — and choose **New ▸ Model**.) In the ModelBuilder view you drag data in from the Contents pane, and you can add a tool either by dragging it from the Geoprocessing pane or by simply typing its name on the canvas, which opens an *Add Tools To Model* search box. If you need a tutorial or refresher on ModelBuilder, watch this training video from Esri (the company that makes ArcGIS): <https://www.youtube.com/watch?v=fxcAb-xw_zU>
 
@@ -198,7 +200,8 @@ Never save the project to the C: drive, the desktop, or a network drive.
 > **Sanity check.** With this environment set, your selected Utah County polygon should come out to
 > about **2,141 square miles**. Two failure modes to watch for: about **0.59** means you are still
 > in geographic coordinates and measuring square degrees; about **3,668** means your data is in
-> **Web Mercator**, which several web downloads hand you by default. The second one is the
+> **Web Mercator** — and that is exactly what the UGRC shapefile downloads arrive in, so this is the
+> number you will get if you skip this step. The second one is the
 > dangerous one — it is in real units and looks like a believable county area, but it is 71% too
 > big, because Web Mercator distorts badly at Utah's latitude. Either way, the Output Coordinate
 > System is not doing its job. Fix it before you go on.
@@ -389,12 +392,14 @@ Use the **Buffer** tool to create a 2-mile buffer around the major roads you sel
 > Set the unit yourself. There is no plain "Miles" option in ArcGIS Pro 3.7 — choose
 > **Statute Miles** — which is what Figure 6 below shows.
 
-Also set **Dissolve Type** to *Dissolve all output features into a single feature*. The default, *No Dissolve*, leaves you with one buffer polygon per road segment — 1,543 overlapping polygons in Utah County — which turns the Step 7 Intersect into a mess of overlapping slivers. Dissolved, you get one clean zone.
+Also set **Dissolve Type** to *Dissolve all output features into a single feature*. The default, *No Dissolve*, leaves you with one buffer polygon per road segment — 1,532 overlapping polygons in Utah County — which turns the Step 7 Intersect into a mess of overlapping slivers. Dissolved, you get one clean zone.
 
 > [!TIP]
 > **Check the result.** The dissolved 2-mile buffer around Utah County's major roads should be a
-> single feature covering roughly **976 square miles**, a little under half the county. If your
-> buffer has an area near zero, the unit box was still set to meters.
+> single feature covering roughly **976 square miles**, a little under half the county. If you get
+> about **1 square mile** instead, the unit box was still set to meters — a two-metre ribbon along
+> 1,500 road segments still adds up to roughly a square mile, so it is not literally zero, but it
+> is obviously wrong next to 976.
 
 ![The ArcGIS Pro Buffer tool dialog: Input Features MajorRoads_UtahCounty, Output MajorRoads_2mi_Buffer, Distance 2 with the unit set to Statute Miles, Side Type Full, End Type Round, Method Planar, and Dissolve Type set to "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
 
@@ -435,8 +440,9 @@ As in Step 6, set the distance unit to **Statute Miles** rather than accepting M
 > **Check the result** — and check it with arithmetic, not just by comparing to a number we give you.
 > One circle of radius 2 miles has area π × 2² ≈ **12.6 sq mi**. So *n* stores can never dissolve to
 > more than 12.6 × *n* square miles, and overlap only ever pushes the total *lower*. For a dozen
-> stores strung along the I-15 corridor you should land somewhere around **115–130 sq mi** — close to
-> the ceiling, because the stores are far enough apart that their buffers barely overlap.
+> stores strung along the I-15 corridor you should land somewhere around **115–135 sq mi** — close to
+> the ceiling, because the stores are far enough apart that their buffers barely overlap. (Ten stores
+> gave us 116; twelve gave a pilot student 131.)
 >
 > If your figure is far outside that range, you have either miscounted your points or left the
 > distance unit on Meters. This ceiling check works for any buffer in any lab: it is worth
@@ -600,7 +606,8 @@ PILOT RUN (2026-09-04): an AI agent was asked to work this draft end to end as a
   ERROR FOUND AND FIXED — Step 8 previously said a dissolved 2-mile buffer around ten stores covers "roughly 558 sq mi". That is geometrically impossible: one 2-mile circle is 12.6 sq mi, so ten can never exceed 126. The 558 figure came from MY Existing_Walmarts layer, which held all 47 Walmart points STATEWIDE because it was never clipped to the county; 47 x 12.6 = 590, so 557.9 was right for that layer and wrong for the lab's instructions. Verified: buffering only the 10 in-county stores gives 115.7 sq mi. Step 8 now teaches the pi*r^2*n ceiling check instead of quoting a single number. The Step 9 final (31 polygons, 12.86 sq mi) is UNAFFECTED and was re-verified both ways — the 37 out-of-county stores are too far from the candidate zones to change it.
   STORE COUNT DE-FACTUALISED — the pilot found 12 stores in Utah County via Walmart's own store finder (9 Supercenters + 3 Neighborhood Markets); my OSM-based count found 10. Neither is wrong; the count moves and depends on whether Neighborhood Markets count. The lab no longer states a number as fact. It now asks students to state their count, their inclusion rule, and to defend it.
   ALSO REPORTED, NOT YET VERIFIED BY ME: the pilot could not find a format button under the Hub "Download Options" panel for the counties/tracts downloads and fell back to the Hub download API. Needs checking on the actual lab machines before the semester — if the panel behaves that way there, 30 students will hit it at once in Step 0.
-  NOT EXERCISED BY THE PILOT: it never obtained working desktop control, so it did the analysis with arcpy and never opened ModelBuilder. Every GUI trap this lab warns about (Meters-not-Miles, Long-not-Double, Run-with-dialog-open, right-click-does-nothing) is therefore still untested by anyone but me.
+  PILOTS 2 AND 3 (2026-09-04/05): two further agents ran the draft; both matched every check value and each caught text errors, all fixed. Pilot 3 resolved the 'Download Options panel is blank' mystery from pilots 1-2: the panel is not broken, it takes 10-15 s to populate. Pilot 3 also confirmed the UGRC shapefiles arrive in Web Mercator by default, making the 3,668 sq mi trap the DEFAULT outcome, not a hypothetical.
+  HARNESS LIMIT, SETTLED: none of the three pilot agents could obtain desktop control - 4, 15 and 27 attempts respectively, the last WITH the human present and having approved the screen-takeover consent card. Approval does not propagate to subagents. Consequence: every GUI trap this lab warns about (Meters-not-Miles, Long-not-Double, Run-with-dialog-open, the Step 10 parameter procedure) has been exercised only by the author in the main session. Testing them independently requires a human at the keyboard, not another agent.
 TODO(instructor): (1) the Esri Community bicycle/ski-shop link 404s — supply a replacement or drop the example; (2) the "Complete the Lab" section offers extra credit but the rubric has no extra-credit row or point value; (3) lab01-full-model-overview.png needs re-export from ModelBuilder at a legible scale.
 VERIFY (still open): "over 4,700 Walmart stores" and "about 90% of Americans live within 15 miles of a Walmart" (uncited, unchanged); Walmart store footprint range 51,000–224,000 ft², average ~102,000 ft² (uncited, unchanged); the Bolstad page numbers.
 CLOSED 2026-09-04 by the Pro 3.7.1 run: NAD 1983 UTM zone 12N (note Pro spells "zone" lowercase), the !POP100! / (!ALAND20! / 2589988.110336) expression and both field names, and the ArcGIS Pro dialog and pane names throughout Steps 0-9.
