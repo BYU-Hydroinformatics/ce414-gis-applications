@@ -45,8 +45,14 @@ Fall 2026 · Dr. Dan Ames
 > - **Steps 0, 3, 6, 7, 8, 9** — expected values to check results against.
 >
 > Several boxes reference an **ArcGIS Tips and Reminders** page, also unlinked, at
-> [`../../arcgis-tips.md`](../../arcgis-tips.md). The figures are unchanged and still show the old
-> 2010-era data and dialog labels; re-shooting them is the obvious next job.
+> [`../../arcgis-tips.md`](../../arcgis-tips.md).
+>
+> **Figures.** Four have been re-captured in ArcGIS Pro 3.7 against the extract students actually
+> download — the `CARTOCODE` attribute table in Step 5, the Select dialog in Figure 5b, the Buffer
+> dialog in Figure 6, and the two new parameter menus at Figures 10 and 11. **The rest are still the
+> original 2010-era captures** and show `CensusBlocks2010`, older dialog labels, and in Figure 2 a
+> roads Intersect this version of the lab no longer asks for. Where a figure and the text disagree,
+> the text is correct.
 
 ## Background
 
@@ -314,6 +320,10 @@ Open the roads attribute table first and find the field that classifies road typ
 > This is a real and common problem: **the file format you choose can silently throw away part of
 > your data.** It is one reason professionals prefer geodatabases to shapefiles.
 
+![The ArcGIS Pro attribute table for UtahCountyRoads. The CARTOCODE column shows full descriptions rather than bare numbers — rows read "11 Other Local, Neighborhood, Rural Roads", "3 US Highways, Unseparated" and "10 Other Federal Aid Eligible Local Roads" — alongside FULLNAME values such as PROVO CANYON RD and MAIN ST. The status bar reads "0 of 38,817 selected".](images/lab01-cartocode-domain-table.png)
+
+**Figure 5a.** The attribute table with the domain attached. Because the extract is a geodatabase, `CARTOCODE` reads as descriptions, not numbers.
+
 For reference, the full domain is:
 
 | Code | Meaning | Code | Meaning |
@@ -340,24 +350,23 @@ In the extract we gave you that keeps **1,532** of Utah County's 38,817 road seg
 > **Do not copy the road expression from an older version of this handout.** Earlier versions used
 > the equivalent of codes 1, 2, 3 and 6. That selects *institutional* roads (code 6) while leaving
 > out codes 4 and 5, the major state highways. It returns **645** segments instead of 1,532 —
-> it misses roughly sixty percent of the real network. The screenshot in Figure 5 below still
-> shows that old expression against a field named `CARTO` that no longer exists.
+> it misses roughly sixty percent of the real network. If you find `CARTO = 1 OR CARTO = 2 ...`
+> in an older copy of this handout, that field does not even exist in the current data.
 
 > [!NOTE]
 > Code 2 (US Highways, Separated) does not occur anywhere in Utah County. A code being absent from
 > your county is not an error. Leaving it in the expression costs nothing and keeps the model
 > honest about what it is asking for.
 
-![The ArcGIS Pro Select tool dialog for major roads, showing four OR'd clauses on an older CARTO field. This screenshot is illustrative only; derive the field and values from your own data.](images/lab01-select-major-roads-dialog.png)
+![The ArcGIS Pro Select tool dialog in ModelBuilder: Input Features UtahCountyRoads, Output Feature Class MajorRoads_UtahCounty, the SQL Editor toggle switched on, and the expression CARTOCODE IN ('1','2','3','4','5') with a green check mark showing it is valid.](images/lab01-select-major-roads-dialog.png)
 
 ![ModelBuilder detail: the county main-roads layer feeds a "Select [Major Roads/I15]" tool, producing the major-roads output layer.](images/lab01-select-major-roads-model.png)
 
-**Figure 5.** The Select tool window and ModelBuilder example for major roads.
+**Figure 5b.** The Select tool window and ModelBuilder example for major roads.
 
-> [!IMPORTANT]
-> The screenshot above shows `CARTO is Equal to 1 / 2 / 3 / 6` against a field that no longer
-> exists. Use it only for the shape of the dialog. The field and the expression to use are in the
-> step text above.
+> [!NOTE]
+> Figure 5b was captured in ArcGIS Pro 3.7 against the extract you downloaded, so the dialog, the
+> field name and the expression all match what you should see.
 
 <!-- Stale: CARTO = 1,2,3,6 screenshot retained deliberately; the step text no longer asserts that expression. -->
 
@@ -372,7 +381,7 @@ Use the **Buffer** tool to create a 2-mile buffer around the major roads you sel
 > one: wrong by a factor of 3,219, with no error and a perfectly normal green check mark.
 >
 > Set the unit yourself. There is no plain "Miles" option in ArcGIS Pro 3.7 — choose
-> **Statute Miles**. (The figure below says "2 Miles" because it was captured from an older version.)
+> **Statute Miles** — which is what Figure 6 below shows.
 
 Also set **Dissolve Type** to *Dissolve all output features into a single feature*. The default, *No Dissolve*, leaves you with one buffer polygon per road segment — 1,543 overlapping polygons in Utah County — which turns the Step 7 Intersect into a mess of overlapping slivers. Dissolved, you get one clean zone.
 
@@ -381,7 +390,7 @@ Also set **Dissolve Type** to *Dissolve all output features into a single featur
 > single feature covering roughly **976 square miles**, a little under half the county. If your
 > buffer has an area near zero, the unit box was still set to meters.
 
-![The ArcGIS Pro Buffer tool dialog: Distance 2 Miles, Side Type Full, End Type Round, Method Planar, Dissolve Type "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
+![The ArcGIS Pro Buffer tool dialog: Input Features MajorRoads_UtahCounty, Output MajorRoads_2mi_Buffer, Distance 2 with the unit set to Statute Miles, Side Type Full, End Type Round, Method Planar, and Dissolve Type set to "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
 
 ![ModelBuilder detail: the major-roads layer feeds a Buffer tool, producing a "MajorRoads_I15 2 Mile Buffer" output layer.](images/lab01-buffer-roads-model.png)
 
@@ -443,9 +452,27 @@ Use the Erase tool to erase the buffered Walmart layer from the intersected popu
 
 ### Step 10
 
-Right-click the last output layer you created and check **Add To Display**, so the result is added to your map automatically every time the model runs.
+Right-click the last output oval in your model and choose **Add To Display** (or select it and press `Ctrl+D`). The result is now added to your map automatically every time the model runs.
 
-Now do something similar to the two buffer distances, but check **Parameter** instead. Open each Buffer tool in the model, right-click the **Distance** row, and choose Parameter. A small `P` appears beside it on the canvas. When you run the model from the Catalog pane you now get a dialog with those two numbers in it.
+Now expose the two buffer distances so you can change them without opening the tools. A distance typed into a tool is not a variable yet, so this takes two moves:
+
+1. **Right-click the Buffer tool** on the canvas and choose **Create Variable ▸ From Parameter ▸ Distance [value or field]**. A new blue oval appears, connected to the tool. (see Figure 10)
+2. **Right-click that new oval** and choose **Parameter** — or select it and press `Ctrl+P`. A small `P` appears beside it.
+
+Repeat for the second Buffer. When you now run the model from the Catalog pane, you get a dialog with those two distances in it.
+
+![The ModelBuilder canvas context menu on a Buffer tool, opened to Create Variable, then From Parameter, showing the list of that tool's parameters: Distance [value or field], Side Type, End Type, Dissolve Type, Dissolve Field(s), and Method.](images/lab01-create-variable-parameter-menu.png)
+
+**Figure 10.** Right-click the tool ▸ Create Variable ▸ From Parameter ▸ Distance.
+
+![The context menu on the new Distance variable oval, showing Open, Add To Display (Ctrl+D), Parameter (Ctrl+P), Create Label, Rename, Group, Cut, Copy and Select All.](images/lab01-parameter-add-to-display-menu.png)
+
+**Figure 11.** Right-click the variable ▸ Parameter. The same menu carries Add To Display.
+
+> [!NOTE]
+> **Right-clicking the Distance row inside the tool dialog does nothing.** It looks like it ought to
+> work, and older instructions say to do exactly that. It does not open a menu in ArcGIS Pro 3.7 —
+> you have to create the variable from the canvas first, as above.
 
 > [!NOTE]
 > **Why bother — and when this feature is not worth it.** Model parameters are often oversold.
@@ -458,10 +485,6 @@ Now do something similar to the two buffer distances, but check **Parameter** in
 > numbers, click Run. Without them it is: open two tools, edit each one by hand, remember which you
 > already changed, and hope. That is the whole reason we are doing it here — not because parameters
 > are good practice in the abstract.
-
-![The ModelBuilder right-click context menu on the Walmart_Target output oval, with Parameter and Add To Display both check-marked; a "P" marks the oval as a model parameter.](images/lab01-parameter-add-to-display-menu.png)
-
-**Figure 10.** Parameter and Add To Display options.
 
 ### Step 11
 
