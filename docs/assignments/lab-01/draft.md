@@ -52,9 +52,8 @@ Fall 2026 · Dr. Dan Ames
 > as **SVG**, so it stays sharp at any zoom — that was one of the six illegible ModelBuilder
 > images on the roadmap.
 > 
-> The nine small per-step ModelBuilder snippets have been **removed** rather than re-shot. One
-> legible diagram of the whole model does the same job, and nine thumbnails would go stale again
-> the moment the model changes. That is an editorial call worth a second opinion.
+> Every per-step ModelBuilder snippet has been re-cut from that same vector export, so the
+> dialog and the model detail in each figure come from one consistent, current run.
 > 
 > **Still stale:** the example map at the very bottom. It comes from the old 2010 block analysis
 > and its legend misspells "Suitable". Remaking it means building a full cartographic layout.
@@ -227,7 +226,9 @@ Text comparisons are case sensitive, and in SQL mode the value needs single quot
 
 ![The ArcGIS Pro Select tool dialog: Input Features set to Counties, Output Feature Class Counties_Select, and the clause "NAME is Equal to UTAH" with a green check reading "The SQL expression is valid."](images/lab01-select-utah-county-dialog.png)
 
-**Figure 1.** The Select tool in clause mode. Note the green check confirming the expression is valid.
+![ModelBuilder detail: the blue Counties input oval feeds the yellow Select tool, which outputs a green Counties_Select oval.](images/lab01-select-utah-county-model.png)
+
+**Figure 1.** Top: the Select tool in clause mode, with the green check confirming the expression is valid. Bottom: how it sits in the model — input on the left, tool in the middle, output on the right.
 
 ### Step 2
 
@@ -257,7 +258,9 @@ Pro will show an information banner suggesting the **Pairwise Intersect** tool i
 
 ![The ArcGIS Pro Intersect tool dialog with UDOTRoutes_LRS and Utah_County as Input Features, Output Feature Class UtahCountyMainRoadsI15, Attributes To Join set to All attributes, and Output Type Same as input.](images/lab01-intersect-roads-county-dialog.png)
 
-**Figure 2.** The Intersect tool, restricting the census tracts to the selected county.
+![ModelBuilder detail: the CensusTracts2020 input oval and the Counties_Select output oval both feed the Intersect tool, which produces Tracts_UtahCounty.](images/lab01-intersect-county-model.png)
+
+**Figure 2.** Top: the Intersect tool. Bottom: in the model, two inputs converge on Intersect — the raw census tracts and the county you selected in Step 1.
 
 ### Step 3
 
@@ -287,7 +290,9 @@ Then use the **Calculate Field** tool to fill it in. Set **Field Name** to `DENS
 
 ![The ArcGIS Pro Calculate Field tool dialog: Field Name DENSITY, Expression Type Python 3, and the expression box showing the older !POP100! / !SqMiles! expression.](images/lab01-calculate-field-density-dialog.png)
 
-**Figure 3.** Add Field (left) and Calculate Field (right). Note Field Type set to Double, and Expression Type reading Python.
+![ModelBuilder detail: Tracts_UtahCounty feeds Add Field, whose output Tracts_UtahCounty (2) feeds Calculate Field, producing Tracts_UtahCounty (3).](images/lab01-density-field-model.png)
+
+**Figure 3.** Top: Add Field and Calculate Field. Note Field Type set to Double, and Expression Type reading Python. Bottom: in the model these two tools chain in series. Both modify the table in place, so each green oval is the same layer carried one step forward — ModelBuilder just numbers them (2) and (3).
 
 ### Step 4
 
@@ -295,7 +300,9 @@ Use the Select tool to select the areas where the population density is greater 
 
 ![The ArcGIS Pro Select tool dialog with the expression DENSITY > 5000 and a note that the expression cannot be edited in Clause mode, followed by a green check that the SQL expression is valid.](images/lab01-select-density-dialog.png)
 
-**Figure 4.** The Select tool with the DENSITY expression in SQL Editor mode.
+![ModelBuilder detail: Tracts_UtahCounty (3) feeds Select (3), producing HighDensity_Tracts.](images/lab01-select-density-model.png)
+
+**Figure 4.** Top: the Select tool with the DENSITY expression in SQL Editor mode. Bottom: it takes the calculated-density layer and produces HighDensity_Tracts.
 
 ### Step 5
 
@@ -360,7 +367,9 @@ In the extract we gave you that keeps **1,532** of Utah County's 38,817 road seg
 
 ![The ArcGIS Pro Select tool dialog in ModelBuilder: Input Features UtahCountyRoads, Output Feature Class MajorRoads_UtahCounty, the SQL Editor toggle switched on, and the expression CARTOCODE IN ('1','2','3','4','5') with a green check mark showing it is valid.](images/lab01-select-major-roads-dialog.png)
 
-**Figure 5b.** The Select tool with the CARTOCODE expression for major roads.
+![ModelBuilder detail: the UtahCountyRoads input oval feeds Select (2), producing MajorRoads_UtahCounty.](images/lab01-select-major-roads-model.png)
+
+**Figure 5b.** Top: the Select tool with the CARTOCODE expression. Bottom: the roads branch of the model starts here, from the prepared extract straight into Select — no Intersect needed, because the extract is already clipped to the county.
 
 > [!NOTE]
 > Figure 5b was captured in ArcGIS Pro 3.7 against the extract you downloaded, so the dialog, the
@@ -389,7 +398,9 @@ Also set **Dissolve Type** to *Dissolve all output features into a single featur
 
 ![The ArcGIS Pro Buffer tool dialog: Input Features MajorRoads_UtahCounty, Output MajorRoads_2mi_Buffer, Distance 2 with the unit set to Statute Miles, Side Type Full, End Type Round, Method Planar, and Dissolve Type set to "Dissolve all output features into a single feature".](images/lab01-buffer-roads-dialog.png)
 
-**Figure 6.** The Buffer tool. Distance is 2 **Statute Miles**, and Dissolve Type is set to dissolve everything into one feature.
+![ModelBuilder detail: MajorRoads_UtahCounty feeds the Buffer tool, producing MajorRoads_2mi_Buffer.](images/lab01-buffer-roads-model.png)
+
+**Figure 6.** Top: the Buffer tool. Distance is 2 **Statute Miles**, and Dissolve Type is set to dissolve everything into one feature. Bottom: the selected major roads feed Buffer, producing MajorRoads_2mi_Buffer.
 
 ### Step 7
 
@@ -408,7 +419,9 @@ Use the Intersect tool to intersect the I-15/major roads buffer layer with the h
 
 ![The ArcGIS Pro Intersect tool dialog with the high-density census layer and the 2-mile roads buffer as Input Features, output Roads_Census_Intersect, and XY Tolerance left as Unknown.](images/lab01-intersect-density-roads-dialog.png)
 
-**Figure 7.** The Intersect tool combining the high-density tracts with the roads buffer.
+![ModelBuilder detail: HighDensity_Tracts from the census branch and MajorRoads_2mi_Buffer from the roads branch both feed Intersect (2), producing Zones_Density_Roads.](images/lab01-intersect-density-roads-model.png)
+
+**Figure 7.** Top: the Intersect tool. Bottom: this is where the two branches of the model meet — the high-density tracts from Step 4 and the roads buffer from Step 6 both feed Intersect (2).
 
 ### Step 8
 
@@ -429,7 +442,9 @@ As in Step 6, set the distance unit to **Statute Miles** rather than accepting M
 > distance unit on Meters. This ceiling check works for any buffer in any lab: it is worth
 > remembering.
 
-**Figure 8.** *(No separate figure — this Buffer is set up exactly like Figure 6, with your Walmart points as the input. See the model diagram at the top of the lab for how it connects.)*
+![ModelBuilder detail: the Walmarts_UtahCounty point layer feeds Buffer (2), producing Walmart_2mi_Buffer.](images/lab01-buffer-walmart-model.png)
+
+**Figure 8.** The Walmart branch: your point layer feeds a second Buffer, set up exactly like Figure 6, producing Walmart_2mi_Buffer.
 
 ### Step 9
 
@@ -442,7 +457,9 @@ Use the Erase tool to erase the buffered Walmart layer from the intersected popu
 > you digitized and which road codes you chose — that is expected. What matters is that you can
 > explain the change.
 
-**Figure 9.** *(No separate figure — see the model diagram at the top of the lab for how the Erase connects.)*
+![ModelBuilder detail: Zones_Density_Roads is the input to the Erase tool and Walmart_2mi_Buffer is the erase feature; the output is Walmart_Target_Zones.](images/lab01-erase-walmart-model.png)
+
+**Figure 9.** The Erase tool. Order matters here: Zones_Density_Roads is the *input* (what you keep), and Walmart_2mi_Buffer is the *erase feature* (what gets cut away). The result is Walmart_Target_Zones.
 
 ### Step 10
 
@@ -577,7 +594,7 @@ DATA PACKAGE (2026-09-04): docs/data/lab01-utah-county-roads.zip, 6.30 MB. Built
 Verified run totals with the package (Utah County): tracts 156 -> intersect 173 -> density > 5000 = 47 (26.42 sq mi); roads 38,817 -> 1,532 major; roads buffer 1 feature 975.6 sq mi; Walmart buffer 557.9 sq mi (10 stores); final 31 polygons, 12.86 sq mi.
 SENSITIVITY (measured, for setting expectations on Step 12; do NOT publish this table to students): road buffer 2/1/0.5/0.25 mi at density 5000, Walmart 2 mi -> final 12.86 / 12.15 / 9.02 / 5.35 sq mi. Walmart buffer 2/3/5 mi at density 5000, road 2 mi -> 12.86 / 2.39 / 0.00 sq mi (5 mi eliminates every site). Density 5000/8000/10000 at road 2, Walmart 2 -> 47/15/7 tracts and 12.86 / 2.61 / 0.63 sq mi. So the Walmart distance dominates, the road distance is near-inert until below ~0.5 mi, and there IS a setting with no solution - which is what Step 12's TIP alludes to without giving away.
 ALTERNATIVE CONSIDERED AND REJECTED: UDOT Routes ALRS (item 5eca80119fd349f3a435a751b86f1af8, UDOT_Admin, public) - 3,676 features statewide, 4.9 MB, reproduces the answer (975.8 sq mi buffer, 31 polygons, 12.86 sq mi). Rejected because it publishes no coded-value domain, uses a DIFFERENT code scheme from UGRC (1=Interstates, 2=US highways, 3=state routes, 5-8=ramps/connectors - inferred from route names, not documented), truncates ROUTE_ALIAS_COMMON to ROUTE_AL_1 in shapefile form, and duplicates divided highways by direction (I-15 appears twice). Server-side filtered downloads of the UGRC layer (?where=...) return 404/502 and are not a dependable student path.
-NOT VERIFIED: Step 10 (right-click Parameter / Add To Display, and right-click a tool's Distance row to make it a parameter) — context menus did not render in the capture session. The ArcGIS Pro 3.7 menu path to the Fields/Domains design view in Step 5 was not re-checked (workstation locked); the wording deliberately avoids naming a path. Steps 11-12 were not performed. Figures 1-10 were NOT re-captured and remain stale — Figure 2 in particular now shows a roads Intersect the lab no longer asks for, and Figure 10 shows only the output-variable context menu, not the distance-parameter step.
+FIGURES (2026-09-05): every tool dialog re-captured in Pro 3.7.1 against the packaged extract. Model overview exported from ModelBuilder via Export > Export To Graphic as SVG (vector), with nothing selected so no selection strokes. The nine per-step model snippets are CROPS OF THAT SAME SVG, rendered at 3x with headless Chrome (1 SVG unit = 4 px) and cut by the resolved text-label coordinates — so dialog, snippet and overview all come from one consistent run. Figures 6 and 8 are cropped to exclude the P parameter markers, which Step 10 has not introduced yet at that point. Step 10's procedure IS now verified (Create Variable > From Parameter > Distance, then Parameter / Ctrl+P); the earlier belief that context menus did not render was a capture artifact. Only the example map remains stale.
 RUBRIC: 30 points of "two maps, one per county" was re-split as 20 (two maps: baseline + one scenario) + 10 (sensitivity analysis), holding the total at 50. Point values are an instructor decision — this is a proposal.
 PILOT RUN (2026-09-04): an AI agent was asked to work this draft end to end as a first-time student and to log its confusion. Its notes and report are at C:\Ames\Student01\. It matched every published check value except one, and it caught a real error.
   ERROR FOUND AND FIXED — Step 8 previously said a dissolved 2-mile buffer around ten stores covers "roughly 558 sq mi". That is geometrically impossible: one 2-mile circle is 12.6 sq mi, so ten can never exceed 126. The 558 figure came from MY Existing_Walmarts layer, which held all 47 Walmart points STATEWIDE because it was never clipped to the county; 47 x 12.6 = 590, so 557.9 was right for that layer and wrong for the lab's instructions. Verified: buffering only the 10 in-county stores gives 115.7 sq mi. Step 8 now teaches the pi*r^2*n ceiling check instead of quoting a single number. The Step 9 final (31 polygons, 12.86 sq mi) is UNAFFECTED and was re-verified both ways — the 37 out-of-county stores are too far from the candidate zones to change it.
