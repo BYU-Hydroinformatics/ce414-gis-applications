@@ -76,7 +76,7 @@ GIS is used by major corporations around the world to help manage shipping, inve
 
 This exercise assumes that the Walmart Corporation is interested in building a new store in Utah County. To conduct this analysis you will acquire and create several data layers corresponding to different spatial considerations and criteria. Once you have the data, you will use spatial analysis — several geoprocessing tools, assembled into a single model — to identify the most suitable locations for the new store, and you will recommend a specific site.
 
-You will then do something a real analyst always has to do: find out how much your recommendation depends on the assumptions you were handed. The density threshold and the two distances in this lab are choices, not facts. In the last step you will vary them, see how far your answer moves, and report on it.
+You will then do something a real analyst always has to do: find out how much your recommendation depends on the assumptions you were handed. The density threshold and the two distances in this lab are choices, not facts. In the last step you will vary them, see how far your answer moves, and use what moves to sharpen your recommendation rather than simply believe the first map.
 
 ## Problem Statement
 
@@ -538,7 +538,9 @@ Decide where you think the best locations for a new Walmart would be. After runn
 
 ### Step 12 — Test how much your answer depends on your assumptions
 
-Everything you have produced so far rests on three numbers that somebody simply chose: 5,000 people per square mile, 2 miles from a major road, 2 miles from an existing Walmart. None of them is a law of nature. A recommendation that collapses the moment one of them shifts is a weak recommendation — and you cannot know whether yours does until you test it.
+Everything you have produced so far rests on three numbers that somebody simply chose: 5,000 people per square mile, 2 miles from a major road, 2 miles from an existing Walmart. None of them is a law of nature, and the map the model drew at those values is *an* answer, not *the* answer. This step is about not simply believing it.
+
+Vary the numbers and two things happen. First, you find out how much of your result is real and how much is an artifact of the defaults: a recommendation that collapses the moment one of them shifts is a weak recommendation, and you cannot know whether yours does until you test it. Second, you get a tool for narrowing the result. With dozens of candidate polygons at the defaults, tightening a criterion a little is how you learn which candidates are robust and which were only just scraping in — and that is a far better basis for picking one site than eyeballing the map.
 
 Run your model at least **three more times**, each with a different combination of those numbers, and record what happens. You decide which to vary and by how much, but decide deliberately and say why in your report. Some places to start:
 
@@ -559,13 +561,6 @@ Then answer these three questions in your report:
 > default value in Utah County — applying it leaves the result unchanged. And one of them can wipe
 > out every candidate site completely if you push it far enough. Finding out which is which, and
 > being able to show it, is the whole point of this step.
-
-> [!NOTE]
-> **Why this replaced "now do it again in another county."** Repeating the analysis somewhere else
-> mostly repeats the data wrangling, which is the least interesting part of the work and which you
-> have already demonstrated. Varying the assumptions instead keeps you in the analysis, and it is
-> much closer to what site-selection work actually involves: the client rarely asks "what about
-> Sanpete County," they ask "what if we could live with being three miles from an existing store."
 
 ## Deliverables
 

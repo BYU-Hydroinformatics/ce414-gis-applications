@@ -194,11 +194,11 @@ are flagged as proposals in the draft.
 | Item | State |
 | --- | --- |
 | 1 Sensitivity step + exposed threshold | **Done.** Raster Calculator `Con()` branch with a Double `Threshold` parameter alongside Reclassify; Steps 5 and 6 written; run at 0.6 from the dialog and captured. |
-| 2 Second scene | **Done (middle option).** `docs/data/lab02-magic-valley-landsat.zip` (4 MB, Landsat 8, 2025-07-10, Twin Falls area) built by `fetch_second_scene.py` + `make_second_extract.py`; Step 7 written with check values. Own-scene download kept as optional. |
+| 2 Second scene | **Dropped as a requirement** (instructor decision, September 6, evening). Round 2 had built the middle option (`docs/data/lab02-magic-valley-landsat.zip`, Step 7); round 3 removed Step 7 and made the second deliverable map a Step 6 threshold scenario, matching Lab 1. The Magic Valley extract stays as an optional *going further* alongside the own-scene USGS route; delete it if unwanted. |
 | 3 Data section | **Done.** Figure A (MTL metadata infographic) and Figure B (measured red/NIR/NDVI at five sites), source table, water and area notes, Analysis Considerations section. |
 | 4 Step 0 environments + check value | **Done.** Environments dialog captured; 6,040,284 cells / 2,099 sq mi. |
-| 5 Expected numbers per step | **Done** for Steps 0, 1, 2, 3, 6, 7. |
-| 6 Figures | **Mostly.** Model exported as SVG (Figure C); scenario map built; infographics scripted in `make_svgs.py`. Per-step snippets still PNG crops; no Magic Valley example map; icon generator not in the repo. |
+| 5 Expected numbers per step | **Done** for Steps 0, 1, 2, 3 and 6. |
+| 6 Figures | **Mostly.** Model exported as SVG (Figure C); scenario map built; infographics scripted in `make_svgs.py`. Per-step snippets still PNG crops; icon generator not in the repo. (A Magic Valley example map is no longer needed.) |
 | 7 Deliverables and rubric | **Done** as a proposal: 20 (two maps) + 10 (sensitivity), total 50. |
 | 8 Tips page | **Done.** "Working with rasters" section on `docs/arcgis-tips.md`. |
 | 9 Pilot runs | Not started. |

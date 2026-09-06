@@ -24,10 +24,10 @@ Fall 2026 · Dr. Dan Ames
 > **Changes to what the lab asks students to do:**
 >
 > - **Data** — students download a **24 MB Utah County extract** of one Landsat 8 scene from this
->   site (red and near-infrared bands only, already scaled to surface reflectance), and a **4 MB
->   second extract** of the Magic Valley in Idaho from the same week, instead of files attached to
->   Learning Suite and a self-service USGS download. Downloading your own scene is now an optional
->   *going further*, with the one processing step that download needs before NDVI is valid.
+>   site (red and near-infrared bands only, already scaled to surface reflectance), instead of
+>   files attached to Learning Suite and a self-service USGS download. Downloading your own scene
+>   is now an optional *going further*, with the one processing step that download needs before
+>   NDVI is valid.
 > - **Band numbers** — the lab now says which band is red and which is near-infrared on **Landsat
 >   8 and 9** (Bands 4 and 5), not just on the retired TM and ETM+ sensors (Bands 3 and 4).
 > - **Data section** — opens with the six metadata questions from Lab 1 applied to a satellite
@@ -41,12 +41,14 @@ Fall 2026 · Dr. Dan Ames
 > - **Step 6 (new)** — a **sensitivity analysis**: run the model at three more thresholds,
 >   tabulate what happens, and answer three questions. This is the Lab 2 counterpart of Lab 1's
 >   Step 12.
-> - **Step 7** — the second study area is a prepared extract (Magic Valley, Idaho, Landsat 8,
->   July 10, 2025), so the second run is a two-minute parameter dialog and the lesson is whether a
->   threshold transfers, not how to download a scene.
-> - **Deliverables and rubric** — two maps (Utah County and Magic Valley), a sensitivity table, and
->   a self-assessment row. The rubric re-splits the old 30-point two-map row into 20 (maps) + 10
->   (sensitivity), holding the total at 50. **Point reallocation is a proposal, not a decision.**
+> - **The second study area is gone.** The old lab's "now find a scene somewhere else and do it
+>   again" is replaced by the sensitivity analysis, for the same reason Lab 1 dropped its second
+>   county: repeating the run elsewhere repeats the data wrangling, not the analysis. A second area
+>   remains available as an optional *going further*.
+> - **Deliverables and rubric** — two maps (the baseline and one threshold scenario from Step 6), a
+>   sensitivity table, and a self-assessment row. The rubric re-splits the old 30-point two-map row
+>   into 20 (maps) + 10 (sensitivity), holding the total at 50. **Point reallocation is a proposal,
+>   not a decision.**
 >
 > **Corrections to things that were wrong:**
 >
@@ -81,7 +83,7 @@ In 1972, NASA launched what is known today as the Landsat (Land + Satellite) pro
 
 Be clear from the start about what NDVI measures. It responds to green, photosynthesizing vegetation — its density and its vigor. It does **not** measure irrigation. In a dry July in Utah, irrigated fields are among the greenest things in the valley, which is why the index works here; but a forested mountainside, a golf course and a wetland are green too. Part of this lab is finding out where that distinction breaks down.
 
-You will then do what a real analyst always has to do: find out how much your map depends on the one number you chose. The classification threshold in this lab is a choice, not a fact. In Step 6 you will vary it, see how far the answer moves, and report on it.
+You will then do what a real analyst always has to do: find out how much your map depends on the one number you chose. The classification threshold in this lab is a choice, not a fact. In Step 6 you will vary it, see how far the answer moves, and use what moves to say what your map is really showing rather than simply believe the first one.
 
 ## Problem Statement
 
@@ -132,26 +134,26 @@ Because it is a normalized difference, NDVI always falls between −1 and +1. He
 
 **Figure B.** Red and NIR reflectance measured in the July 12, 2025 scene at five places in Utah County, and the NDVI that follows. Notice that the forest scores higher than the irrigated field, and that a downtown block and a dry bench are almost indistinguishable.
 
-NDVI is a reliable vegetative index that is used in many applications. NDVI has been used to detect grub feeding on turfgrass before damage becomes visible (Hamilton). The Idaho Department of Water Resources uses NDVI to determine evapotranspiration rates in the Eastern Snake Plain Aquifer and the Boise Valley Aquifer (Kramber) — the same landscape as this lab's second study area.
+NDVI is a reliable vegetative index that is used in many applications. NDVI has been used to detect grub feeding on turfgrass before damage becomes visible (Hamilton). The Idaho Department of Water Resources uses NDVI to determine evapotranspiration rates in the Eastern Snake Plain Aquifer and the Boise Valley Aquifer (Kramber).
 
 One of the practical applications of NDVI is to differentiate between irrigated cropland and non-irrigated land (Calera et al. 2001). In this exercise, you will use ArcGIS Pro ModelBuilder to calculate the NDVI, and you will use Landsat data for the Utah County area to identify irrigated cropland from non-irrigated land.
 
 <!-- VERIFY: "Calera et al. 2001" is cited here but does not appear in the References list. Left as in the source. -->
 
 > [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one model, run it on **two** study areas, test
-> how much the result depends on your threshold, and make a result map for each area.
+> **Your job — see the deliverables below.** Build one model, run it on Utah County, test how
+> much the result depends on your threshold, and make two maps: the baseline and one scenario.
 
 ## Analysis Considerations
 
 For the purposes of this exercise, the choices that shape the answer are these. Every one of them is a decision somebody made, and your report should treat them that way:
 
 - **The threshold.** The handout's value is **0.4**: an NDVI at or above it is called irrigated cropland, below it is not. It came from the mean NDVI of one known irrigated field in an earlier scene. It is where you start, not where you finish (Steps 3 and 6).
-- **The date.** Both scenes are from mid-July, when irrigated crops are at full canopy and everything unwatered has cured to brown. The same fields in April or October give a different map. Say the date on your map.
-- **Clouds and their shadows.** Both scenes are essentially cloud-free (0.02 % and 0.01 %). Your own scene may not be, and NDVI under a cloud or in its shadow is meaningless.
+- **The date.** The scene is from mid-July, when irrigated crops are at full canopy and everything unwatered has cured to brown. The same fields in April or October give a different map. Say the date on your map.
+- **Clouds and their shadows.** This scene is essentially cloud-free (0.02 %). A scene of your own may not be, and NDVI under a cloud or in its shadow is meaningless.
 - **Water.** Open water goes strongly negative. In the Utah County extract it reads exactly −1.0, for a reason explained in the Data section.
 - **Scaling.** Landsat Level-2 pixel values are integers that must be scaled to reflectance. The extracts have had this done; a raw download has not (see *Going further* in the Data section).
-- **Coordinate system and cell size.** Each scene arrives in its own UTM zone (12 for Utah, 11 for Idaho) at 30 m cells. What your outputs come out as is decided by the model's Environments (Step 0), not by luck.
+- **Coordinate system and cell size.** The scene arrives in UTM Zone 12N at 30 m cells; a scene from elsewhere arrives in its own zone. What your outputs come out as is decided by the model's Environments (Step 0), not by luck.
 
 ## Data
 
@@ -176,10 +178,9 @@ Here is where this lab's data comes from:
 | Layer | Where it comes from |
 | --- | --- |
 | Utah County red and NIR bands | A **prepared extract** we made for you and host on this site |
-| Magic Valley (Idaho) red and NIR bands | A second **prepared extract**, same satellite, same week |
 | County boundary and city points for your map | An **official download** from UGRC (you have the county from Lab 1) |
 | Basemap and imagery | A **live web service** you never download at all |
-| A scene of your own | Optional: a **USGS download** through EarthExplorer (see *Going further*) |
+| A second area | Optional: a second **prepared extract** on this site, or a **USGS download** through EarthExplorer (see *Going further*) |
 
 ### The Utah County extract (prepared for you)
 
@@ -204,18 +205,18 @@ Read `READ-ME-FIRST.txt`. In brief: the scene is Landsat 8, path 38 row 32, acqu
 
 The data are in the public domain. Credit them in your report as: *Landsat 8 image courtesy of the U.S. Geological Survey.*
 
-### The Magic Valley extract (your second study area)
+### Going further: a second area (optional)
 
-Download [`lab02-magic-valley-landsat.zip`](../../data/lab02-magic-valley-landsat.zip) (about 4 MB) and unzip it into the same folder. It is built exactly the same way from a Landsat 8 scene of the Magic Valley in southern Idaho — path 40 row 31, acquired **July 10, 2025**, two days before the Utah scene, 0.01 % cloud — clipped to a 41 km by 27 km box south of the Snake River around Twin Falls, Kimberly and Hansen, where center-pivot fields cover most of the ground. It has its own MTL file and READ-ME. Two differences matter: it is in **UTM Zone 11N**, not 12, and it contains almost no open water and no mountains. That is the point of it — a threshold that "works" in Utah County may or may not work here, and Step 7 asks you to find out.
+Nothing in this lab requires a second study area. But if you are curious whether a threshold that works in Utah County works anywhere else, there are two ways to find out, and either one is welcome in your report as an extra.
 
-### Going further: a scene of your own (optional)
+**The easy way.** Download [`lab02-magic-valley-landsat.zip`](../../data/lab02-magic-valley-landsat.zip) (about 4 MB). It is built exactly the same way as the Utah County extract, from a Landsat 8 scene of the Magic Valley in southern Idaho — path 40 row 31, acquired **July 10, 2025**, 0.01 % cloud — clipped to a 41 km by 27 km box south of the Snake River around Twin Falls, where center-pivot fields cover most of the ground. It has its own MTL file and READ-ME. It is in **UTM Zone 11N**, not 12, and it has almost no open water and no mountains. Running your model on it from the tool dialog takes about fifteen seconds.
 
-If you want a third area — anywhere in the world — get a Landsat 8 or 9 scene from the USGS. **EarthExplorer** (<https://earthexplorer.usgs.gov/>) is the standard tool; the USGS page on Landsat data access (<https://www.usgs.gov/landsat-missions/landsat-data-access>) lists the alternatives. You will need a free USGS account, confirmed by email. Choose the **Collection 2 Level-2** product and download only **Band 4 (red) and Band 5 (NIR)** for Landsat 8 or 9, from a cloud-free growing-season date.
+**The hard way.** Get a Landsat 8 or 9 scene of anywhere in the world from the USGS. **EarthExplorer** (<https://earthexplorer.usgs.gov/>) is the standard tool; the USGS page on Landsat data access (<https://www.usgs.gov/landsat-missions/landsat-data-access>) lists the alternatives. You will need a free USGS account, confirmed by email. Choose the **Collection 2 Level-2** product and download only **Band 4 (red) and Band 5 (NIR)** for Landsat 8 or 9, from a cloud-free growing-season date.
 
 > [!WARNING]
 > **A raw USGS Level-2 download is not yet reflectance.** The pixel values are stored as integers
 > that have to be scaled: *reflectance = DN × 0.0000275 − 0.2* (the `REFLECTANCE_MULT_BAND_n` and
-> `REFLECTANCE_ADD_BAND_n` values in the scene's MTL file). We did this to both extracts. **You
+> `REFLECTANCE_ADD_BAND_n` values in the scene's MTL file). We did this to the extract. **You
 > must do it to your own scene**, on both bands, before you compute NDVI. The multiplier would
 > cancel in the ratio, but the offset does not — skip it and every NDVI value is pushed toward
 > zero. Two Raster Calculator steps at the front of your model will do it; say in your report
@@ -252,8 +253,8 @@ For an advanced GIS student, the information up to this point is all you need to
 
 > [!NOTE]
 > **Important Note #1:** The steps below walk through Utah County at the handout's threshold. In
-> Step 6 you will re-run the same model at other thresholds, and in Step 7 on a second area — so
-> build it once, and build it so it is easy to change.
+> Step 6 you will re-run the same model at other thresholds — so build it once, and build it so it
+> is easy to change.
 
 > [!NOTE]
 > **Important Note #2:** My example screenshots in this and future assignments may or may not match
@@ -291,7 +292,7 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Look at the Environments before you build anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group). This dialog (Figure 0d) is the raster equivalent of Lab 1's coordinate-system step, and it has more knobs:
 
-- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. If you set it to a specific zone, Pro will silently *reproject* the Idaho scene in Step 7 from zone 11 into it. That works, but you should know it happened.
+- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. If you set it to a specific zone, Pro will silently *reproject* any scene from another zone into it — which is what would happen to a scene of your own from outside zone 12. That works, but you should know it happened.
 - **Cell Size, Snap Raster, Extent, Mask** (under *Raster Analysis* and *Processing Extent*). Every one has a default that will do something you did not ask for if your inputs disagree: Cell Size defaults to the coarsest input, Extent to the intersection of the inputs. Here both bands match exactly, so the defaults are right — but check them again the day you mix rasters from two sources.
 
 ![The ModelBuilder Environments dialog: Workspace (Current and Scratch Workspace set to Lab02.gdb), Output Coordinates (Output Coordinate System), Processing Extent, Parallel Processing and Raster Analysis (Cell Size) sections.](images/lab02-environments-dialog.png)
@@ -537,6 +538,8 @@ Now open **Properties ▸ Parameters** again, drag `Threshold` up under the two 
 
 ### Step 6 — How much depends on the threshold?
 
+The classified map from Step 3 is *an* answer, not *the* answer: it is what the county looks like if "irrigated cropland" means "NDVI at or above 0.4," and Figure 7b already showed that definition sweeping in the mountains. This step is about not simply believing that map. Every threshold is a different definition of "green enough," and what drops in or out as you move it tells you what the class actually contains — forest, town lawns, wetland edges, a pivot between cuttings. Small changes to that one number are the tool for finding out, and for saying with numbers rather than impressions how much of your map you trust.
+
 Run the model from its tool dialog at least **three more times**, each with a different threshold, and record what happens. Sensible choices are **0.3, 0.5 and 0.6**, but pick deliberately and say why. Each run: type the threshold, give both outputs a new name that carries the threshold in it (`NDVI_class_06`, and so on — the dialog warns you when a name already exists, and will overwrite it if you let it), and click Run. The whole model re-runs each time, about a minute for Utah County (Figure 18).
 
 ![The Geoprocessing pane after a run from the tool dialog: Threshold 0.6, outputs named NDVI_reclass_06 and NDVI_class_06, and a green "NDVI completed" banner at the bottom.](images/lab02-tool-run-complete.png)
@@ -551,48 +554,28 @@ Then answer these three questions in your report:
 2. **At what threshold does the forest drop out — and what else drops out with it?** Look at the pivots as you raise the threshold. Is there a threshold that keeps the fields and loses the mountains?
 3. **Is a single NDVI threshold enough to map irrigation in this county?** If not, what would you add — elevation, a land-use layer, a second date — and how would it help?
 
+Finally, **pick one of these runs for your second map** — whichever one most changes what a reader would conclude about where the irrigated land is. Say on the map, in its title and its text box, what the threshold was and why you chose that run to show. Figure 20 is an example.
+
 > [!TIP]
 > Two things worth knowing before you start. At 0.4 the "irrigated" class covers about half the
 > county, and it takes a much higher threshold to pull it below a third — at which point some of the
 > pivots in Figure 8 have gone too. And the forest never drops out before the fields do. Finding
 > out why, and being able to show it, is the point of this step.
 
-### Step 7 — The second study area
-
-Add the two Magic Valley bands to a **new map** (Insert ▸ New Map), say Yes to the statistics prompt, and run the model from its tool dialog: point the two input parameters at the Idaho bands, keep the threshold you settled on in Step 6, give the outputs new names, and click Run. The extract is small — about **451 square miles, 1.3 million cells** — so it takes about fifteen seconds.
-
-Then do for Idaho what you did for Utah: find a pivot you are sure is irrigated and a patch of ground you are sure is not, read their NDVI, and say whether your threshold still sits between them. Look at what is *not* here — no mountains, no lake — and at what is: the Snake River canyon, the towns, and pivots at every stage from bare to full canopy.
-
-> [!TIP]
-> **Check the result.** Over the Magic Valley extract NDVI runs from −1 to 1 with a mean of about
-> **0.42** and a median of **0.29**, and essentially nothing is below zero (the river is narrow).
-> At 0.4, class 1 covers about **177 square miles, 39 %** of the box. Notice that the mean is
-> higher than the median here and lower in Utah County — the two histograms have different shapes,
-> and that shape is what your threshold is cutting through.
-
-> [!NOTE]
-> **Coordinate systems.** This extract is in **UTM Zone 11N**. If you left the model's Output
-> Coordinate System empty in Step 0, your Idaho outputs come out in zone 11 and Pro projects them
-> on the fly in the map. If you set it to zone 12, they were reprojected — 30 m cells resampled
-> onto a grid rotated a couple of degrees from the original — which is fine for this map but is the
-> sort of thing to mention in a methods section. Your two maps will carry different projections in
-> their text boxes; that is correct, not an error.
-
 ## Deliverables
 
 Make **two** professional map layouts:
 
-1. **Utah County** — the classified NDVI at the threshold you chose and defended, with the center-pivot area shown in an inset.
-2. **Magic Valley** — the same model at the same threshold (or a different one, if Step 7 convinced you), with your reasoning on the map.
+1. **Your baseline result** — the classified NDVI for Utah County at the threshold you chose and defended, with the center-pivot area shown in an inset.
+2. **One scenario from Step 6** — the same model at a different threshold, whichever of your runs most changes the picture. Say on the map what changed and why you chose that run to show.
 
 Write a brief report (2–3 pages) covering:
 
 - the requirements of the project and your approach to solving it
 - **one** screen capture of your model, and **one** of its toolbox interface showing the threshold parameter
-- **the three MTL values** from Figure A for each scene — acquisition date, cloud cover, and the reflectance offset — and what each one means for your result
+- **the three MTL values** from Figure A — acquisition date, cloud cover, and the reflectance offset — and what each one means for your result
 - your **threshold table** from Step 6 and your answers to its three questions
-- **where the classification is wrong and why**, in each area, and what additional data would fix it
-- which of the two areas the method suits better, and how you know
+- **where the classification is wrong and why**, and what additional data would fix it
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row, honestly arrived at. The grader will compare it with theirs.
 
 Make sure to review the rubric at the end of this lab for the full requirements of this laboratory exercise.
@@ -617,7 +600,7 @@ Kramber, W.J., Morse, A., and Allen, R.G. (2010) "Mapping Evapotranspiration: A 
 
 Lillesand, T.M., Kiefer, R.W., and Chipman, J.W. (2008) *Remote Sensing and Image Interpretation.* John Wiley & Sons, Inc. 464.
 
-U.S. Geological Survey (2025). Landsat 8 OLI/TIRS Collection 2 Level-2 Surface Reflectance, scenes LC08_L2SP_038032_20250712_20250725_02_T1 and LC08_L2SP_040031_20250710_20250715_02_T1. Extracts prepared for BYU CE 414, 2026.
+U.S. Geological Survey (2025). Landsat 8 OLI/TIRS Collection 2 Level-2 Surface Reflectance, scene LC08_L2SP_038032_20250712_20250725_02_T1. Extract prepared for BYU CE 414, 2026.
 
 ## Example Maps
 
@@ -629,9 +612,9 @@ Two example layouts follow, both laid out and exported from ArcGIS Pro 3.7 again
 
 ![Example scenario layout titled "Utah County NDVI Classification: 0.6 Threshold Scenario": the same design, with far less green on the valley floor, the mountains still green, and a text box stating that 722 of 2,099 square miles (34 %) are at or above 0.6, that the forest is still in the class, and that the dry benches, town lawns and paler pivots drop out first.](images/lab02-example-map-utah-county-06.png)
 
-**Figure 20.** One Step 6 scenario: the threshold raised from 0.4 to 0.6, everything else unchanged. The irrigated class falls from 1,111 to 722 square miles, but the mountains stay green while several of the pivots in the inset turn tan — which is the argument that no single threshold does this job. The map says in its title and its text box exactly what was changed, as the rubric requires.
+**Figure 20.** The kind of second map Step 6 asks for: the threshold raised from 0.4 to 0.6, everything else unchanged. The irrigated class falls from 1,111 to 722 square miles, but the mountains stay green while several of the pivots in the inset turn tan — which is the argument that no single threshold does this job. The map says in its title and its text box exactly what was changed, as the rubric requires.
 
-<!-- Both maps built 2026-09-06 by tools/lab02/build_layout.py (arcpy.mp against C:\Ames\Lab02\Lab02_Layout.aprx, exported by Pro at 150 dpi): `build_layout.py` for the 0.4 map, `build_layout.py NDVI_class_06 0.6 lab02-example-map-utah-county-06` for the scenario. City points are the seven largest municipalities by 2020 Census population from the UGRC Utah Municipal Boundaries service (Draper excluded: it crosses the county line). No Magic Valley example map yet - see the migration notes. The old Word-era example, lab02-example-map-utah-county.jpg, is KEPT because the assigned README still references it. -->
+<!-- Both maps built 2026-09-06 by tools/lab02/build_layout.py (arcpy.mp against C:\Ames\Lab02\Lab02_Layout.aprx, exported by Pro at 150 dpi): `build_layout.py` for the 0.4 map, `build_layout.py NDVI_class_06 0.6 lab02-example-map-utah-county-06` for the scenario. City points are the seven largest municipalities by 2020 Census population from the UGRC Utah Municipal Boundaries service (Draper excluded: it crosses the county line). The old Word-era example, lab02-example-map-utah-county.jpg, is KEPT because the assigned README still references it. -->
 
 ## Rubric for Classifying Land Based on the NDVI
 
@@ -640,18 +623,19 @@ Two example layouts follow, both laid out and exported from ArcGIS Pro 3.7 again
 | Assignment title, name, date, course, and brief report on the requirements of the project. What locations within Utah County are most irrigated? Are your results as expected, or did you find anything interesting or different than expected? | /5 |
 | Describe your model:<br>• List each of the tools used<br>• List tool settings applied for the analysis (could someone repeat the lab using your report?)<br>• List all input, intermediate, and output datasets<br>• Describe each input dataset including type (point, line, polygon, raster), the satellite and bands, the acquisition date and cloud cover from the MTL file, and the source of the data<br>• Describe each output dataset (point, line, polygon, raster) | /5 |
 | One or more full pages (8.5 × 11) showing your model:<br>• All text is readable (10 pt. font minimum)<br>• All tools and datasets are shown and labels are informative | /5 |
-| Make a full page (8.5 × 11) map showing the results of your NDVI classification for Utah County, and one for the Magic Valley:<br>• Map title stating the threshold used<br>• Neat line<br>• North arrow<br>• Scale bar<br>• Text box with author name, date, map projection, and the satellite, scene and acquisition date<br>• NDVI classification image<br>• Irrigated land versus non-irrigated land clearly symbolized<br>• Polygon of the county or study area<br>• Labeled points indicating locations of a few large cities or towns<br>• Zoomed to an appropriate scale for viewing analysis results<br>• All text is legible on printed map | /20<br>(10 per map) |
+| Make TWO full page (8.5 × 11) maps showing the results of your NDVI classification for Utah County — your baseline, and one Step 6 scenario:<br>• Map title stating the threshold used<br>• Neat line<br>• North arrow<br>• Scale bar<br>• Text box with author name, date, map projection, and the satellite, scene and acquisition date<br>• NDVI classification image<br>• Irrigated land versus non-irrigated land clearly symbolized<br>• Polygon of the county<br>• Labeled points indicating locations of a few large cities or towns<br>• Zoomed to an appropriate scale for viewing analysis results<br>• The scenario map states what the threshold was changed to, and why that run was chosen<br>• All text is legible on printed map | /20<br>(10 per map) |
 | Create a toolbox interface for your model, with the threshold exposed as a parameter, and include a screen capture of it including input and output data parameters. | /5 |
 | Threshold sensitivity (Step 6):<br>• A table of at least three additional runs, giving the threshold, the cells in class 1, and the area for each<br>• Which threshold best matches fields you can verify, supported by NDVI values you read<br>• Where the forest drops out and what drops out with it<br>• Whether a single threshold is enough, and what you would add | /10 |
 | My self-assessment — paste this rubric into your report with your own score in every row. Peer reviewer named, and their feedback acted on. This row adds no points to the total. | (no points) |
 | **Total self evaluation** | **/50** |
 
 <!-- Migration notes (2026-09-06, draft, round 2): source: docs/assignments/lab-02/README.md (the 2026-09-03 migration of Lab 2 - NDVI.docx) plus a full run of the lab in ArcGIS Pro 3.7.1 on a local Windows machine (not Citrix), project C:\Ames\Lab02\Lab02.aprx, model NDVI in Lab02.atbx, outputs in Lab02.gdb. Round 2 works through tools/lab02/PARITY_PLAN.md, which compares this page with the Lab 1 draft.
-ArcGIS Pro version verified against: VERIFIED 2026-09-06 in ArcGIS Pro 3.7.1. Every step 0-6 was driven in the GUI; Step 7's Idaho run was verified with arcpy, not the GUI. Every dialog on this page is a capture of that session.
-DATA PACKAGES: (1) docs/data/lab02-utah-county-landsat.zip, 24.3 MB: LC08_L2SP_038032_20250712_20250725_02_T1 (2025-07-12, path 38 row 32, 0.02 % cloud), C2 L2 SR bands 4 and 5 clipped to the UGRC Utah County polygon, scale factor applied (DN*0.0000275-0.2), negatives floored at 0 (KEPT by instructor decision 2026-09-06 - it makes water read exactly -1.0, now explained on the page), stored S16 * 10000, LZW; MTL and READ-ME inside. Prepared by the instructor 2026-09-05. (2) docs/data/lab02-magic-valley-landsat.zip, 4.2 MB: LC08_L2SP_040031_20250710_20250715_02_T1 (2025-07-10, path 40 row 31, 0.01 % cloud, UTM zone 11), same processing, clipped to lon -114.75..-114.25 lat 42.33..42.57 (Twin Falls / Kimberly / Hansen), built by tools/lab02/fetch_second_scene.py (STAC search + signed download from the Planetary Computer mirror) and tools/lab02/make_second_extract.py. First attempt at a box further north (to 42.75) was a third NoData: the scene's data edge is at about 42.6 N here. 1,297,813 cells, 0 % NoData.
-VERIFIED NUMBERS (Utah County): 6,040,284 cells = 2,099 sq mi (county polygon 2,141; the 42 sq mi is boundary cells dropped by the clip - instructor decision 2026-09-06: not worth chasing); NDVI min -1 max 1 mean 0.399 median 0.431, 6.6 % below 0; class 1 at 0.2/0.3/0.4/0.5/0.6/0.7 = 1651/1327/1111/917/722/496 sq mi = 79/63/53/44/34/24 %; circle means (tools/lab02/samples.json): pivot field red 0.138 NIR 0.385 NDVI 0.47 (300 m circle); forest above Provo 0.048/0.344/0.75; Cedar Valley bench 0.156/0.255/0.24; Utah Lake 0.082/0.000/-0.99; Provo blocks 0.147/0.247/0.27 (1 km circles). Whole model 36 s inside ModelBuilder, about 66 s from the tool dialog (everything re-runs). Magic Valley: 1,297,813 cells = 451 sq mi, mean 0.424 median 0.288, 0.0 % below 0; class 1 at 0.3/0.4/0.5/0.6 = 218/177/147/120 sq mi = 48/39/33/27 %.
-PARITY ITEMS DONE THIS ROUND (numbers refer to PARITY_PLAN.md): 1 sensitivity step + threshold exposed via Raster Calculator Con() with a Double variable, alongside Reclassify (option a); 2 second scene = second prepared extract (middle option); 3 Data section: metadata questions for imagery + Figure A, source table, water and area notes, Figure B measured; 4 Step 0 Environments + cell-count check; 5 expected numbers in Steps 0-3, 6, 7; 6 SVG export of the model (Figure C) + second example map (0.6 scenario) + both infographics generated by tools/lab02/make_svgs.py; 7 deliverables itemized and rubric re-split 30 -> 20 + 10 (PROPOSAL); 8 raster section added to docs/arcgis-tips.md.
-NOT DONE: 6 (partly) - the per-step ModelBuilder snippets are still PNG crops of the earlier capture, not cuts of the SVG, and there is no Magic Valley example map (build_layout.py is Utah-specific: county polygon, UGRC cities, Elberta inset); 9 pilot runs - none yet. The three tool icons (icon-*.svg) were made before this session and have no generator in tools/lab02.
+ArcGIS Pro version verified against: VERIFIED 2026-09-06 in ArcGIS Pro 3.7.1. Every step 0-6 was driven in the GUI. Every dialog on this page is a capture of that session.
+ROUND 3 (2026-09-06, later): instructor decision - the second study area is NOT a requirement. The old "find another scene" step (and round 2's Step 7 on the Magic Valley extract) is dropped in favor of the Step 6 sensitivity analysis, exactly as Lab 1 dropped its second county; the second deliverable map is now a Step 6 threshold scenario (Figure 20 already is one). The Magic Valley extract is KEPT in docs/data as an optional going-further download because it was already built and costs a student nothing; delete the zip and the two fetch/make scripts in tools/lab02 if it is not wanted.
+DATA PACKAGES: (1) docs/data/lab02-utah-county-landsat.zip, 24.3 MB: LC08_L2SP_038032_20250712_20250725_02_T1 (2025-07-12, path 38 row 32, 0.02 % cloud), C2 L2 SR bands 4 and 5 clipped to the UGRC Utah County polygon, scale factor applied (DN*0.0000275-0.2), negatives floored at 0 (KEPT by instructor decision 2026-09-06 - it makes water read exactly -1.0, now explained on the page), stored S16 * 10000, LZW; MTL and READ-ME inside. Prepared by the instructor 2026-09-05. (2, OPTIONAL going-further only since round 3) docs/data/lab02-magic-valley-landsat.zip, 4.2 MB: LC08_L2SP_040031_20250710_20250715_02_T1 (2025-07-10, path 40 row 31, 0.01 % cloud, UTM zone 11), same processing, clipped to lon -114.75..-114.25 lat 42.33..42.57 (Twin Falls / Kimberly / Hansen), built by tools/lab02/fetch_second_scene.py (STAC search + signed download from the Planetary Computer mirror) and tools/lab02/make_second_extract.py. First attempt at a box further north (to 42.75) was a third NoData: the scene's data edge is at about 42.6 N here. 1,297,813 cells, 0 % NoData.
+VERIFIED NUMBERS (Utah County): 6,040,284 cells = 2,099 sq mi (county polygon 2,141; the 42 sq mi is boundary cells dropped by the clip - instructor decision 2026-09-06: not worth chasing); NDVI min -1 max 1 mean 0.399 median 0.431, 6.6 % below 0; class 1 at 0.2/0.3/0.4/0.5/0.6/0.7 = 1651/1327/1111/917/722/496 sq mi = 79/63/53/44/34/24 %; circle means (tools/lab02/samples.json): pivot field red 0.138 NIR 0.385 NDVI 0.47 (300 m circle); forest above Provo 0.048/0.344/0.75; Cedar Valley bench 0.156/0.255/0.24; Utah Lake 0.082/0.000/-0.99; Provo blocks 0.147/0.247/0.27 (1 km circles). Whole model 36 s inside ModelBuilder, about 66 s from the tool dialog (everything re-runs). Magic Valley (optional extract, measured with arcpy, not the GUI): 1,297,813 cells = 451 sq mi, mean 0.424 median 0.288, 0.0 % below 0; class 1 at 0.3/0.4/0.5/0.6 = 218/177/147/120 sq mi = 48/39/33/27 %.
+PARITY ITEMS DONE THIS ROUND (numbers refer to PARITY_PLAN.md): 1 sensitivity step + threshold exposed via Raster Calculator Con() with a Double variable, alongside Reclassify (option a); 2 second scene = second prepared extract (middle option) in round 2, then DROPPED as a requirement in round 3 (see above); 3 Data section: metadata questions for imagery + Figure A, source table, water and area notes, Figure B measured; 4 Step 0 Environments + cell-count check; 5 expected numbers in Steps 0-3 and 6; 6 SVG export of the model (Figure C) + second example map (0.6 scenario) + both infographics generated by tools/lab02/make_svgs.py; 7 deliverables itemized and rubric re-split 30 -> 20 + 10 (PROPOSAL); 8 raster section added to docs/arcgis-tips.md.
+NOT DONE: 6 (partly) - the per-step ModelBuilder snippets are still PNG crops of the earlier capture, not cuts of the SVG; 9 pilot runs - none yet. The three tool icons (icon-*.svg) were made before this session and have no generator in tools/lab02.
 GUI FACTS added this round: Create Variable dialog is "Variable Data Type" (Single value / Multiple values / Table of values, then a data-type list); the variable's value dialog is titled "<name>: Double"; typing on the canvas opens "Add Tools To Model"; the Geoprocessing-pane drag-drop stopped registering under desktop control mid-session while type-on-canvas kept working; %var% references in a Raster Calculator expression draw the connectors automatically; running from the tool dialog deleted NDVI, NIR_Float, Red_Float, NDVI_numerator and NDVI_denominator (intermediate data) and removed the NDVI layer from the map - now a WARNING in Step 4; the Environments dialog showed Output Coordinate System = NAD_1983_UTM_Zone_12N already set in this project (inherited), which is why the outputs are NAD 83 while the inputs are WGS 84 - Step 0 now tells students to leave it empty; Export > Export To Graphic writes SVG (Export Image dialog, type picker defaults to SVG); the Export button's main face sends the model to the Python window; the toolbox alias shows as "Lab01" in run details because Lab02.atbx was copied from Lab 1 - harmless, worth renaming in Toolbox Properties.
 CORRECTIONS carried from round 1: licensing checkbox does not exist under Named User; Reclassify has no Add/Delete Entries; band numbers for Landsat 8/9; NDVI description; Landsat history.
-TODO(instructor): (1) decide the rubric re-split (20 + 10) and the second-scene change; (2) Magic Valley example map; (3) cut per-step snippets from the SVG; (4) the extra-credit offer has no rubric row; (5) Calera et al. 2001 not in References; (6) Campbell initials; (7) check the Landsat band table and launch dates against the current USGS page; (8) rename the toolbox alias; (9) a pilot run by a first-time student before this is assigned. -->
+TODO(instructor): (1) decide the rubric re-split (20 + 10); (2) decide whether to keep the optional Magic Valley extract at all; (3) cut per-step snippets from the SVG; (4) the extra-credit offer has no rubric row; (5) Calera et al. 2001 not in References; (6) Campbell initials; (7) check the Landsat band table and launch dates against the current USGS page; (8) rename the toolbox alias; (9) a pilot run by a first-time student before this is assigned. -->
