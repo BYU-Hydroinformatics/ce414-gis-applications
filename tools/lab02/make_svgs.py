@@ -126,9 +126,70 @@ def ndvi_card():
     return "\n".join(s)
 
 
+# ---- The three tool icons for the ModelBuilder Tools table (same palette as tools/lab01/make_svgs.py)
+I_NAVY, I_BLUE, I_LBLUE, I_GRAY, I_LGRAY, I_ORANGE, I_LORANGE = "#002e5d", "#0062b8", "#cfe3f7", "#9aa5b1", "#e6eaee", "#e8862a", "#fdebd9"
+I_FONT = "font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'"
+
+
+def icon(title, body):
+    t = html.escape(title, quote=True)
+    return ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 90' width='120' height='90' role='img' aria-label='%s'>"
+            "<title>%s</title>%s</svg>" % (t, t, body))
+
+
+def grid(x0, y0, n, cell, fills, stroke, sw=1):
+    """n x n grid of cells; fills is a single color or a list of n*n colors, row-major."""
+    if isinstance(fills, str):
+        fills = [fills] * (n * n)
+    return "".join("<rect x='%d' y='%d' width='%d' height='%d' fill='%s' stroke='%s' stroke-width='%s'/>"
+                   % (x0 + c * cell, y0 + r * cell, cell, cell, fills[r * n + c], stroke, sw)
+                   for r in range(n) for c in range(n))
+
+
+def arrow(x1, x2, y):
+    return ("<polygon points='%d,%d %d,%d %d,%d' fill='%s'/><line x1='%d' y1='%d' x2='%d' y2='%d' stroke='%s' stroke-width='2'/>"
+            % (x2, y - 5, x2 + 10, y, x2, y + 5, I_NAVY, x1, y, x2, y, I_NAVY))
+
+
+def icon_float():
+    body = ("<rect x='10' y='25' width='40' height='40' rx='4' fill='%s' stroke='%s' stroke-width='1.5'/>" % (I_LGRAY, I_GRAY)
+            + "<text x='30' y='53' text-anchor='middle' font-size='20' font-weight='700' fill='%s' %s>7</text>" % (I_NAVY, I_FONT)
+            + arrow(52, 62, 45)
+            + "<rect x='72' y='25' width='42' height='40' rx='4' fill='%s' stroke='%s' stroke-width='1.5'/>" % (I_LBLUE, I_BLUE)
+            + "<text x='93' y='53' text-anchor='middle' font-size='20' font-weight='700' fill='%s' %s>7<tspan fill='%s'>.0</tspan></text>" % (I_NAVY, I_FONT, I_ORANGE)
+            + "<text x='30' y='80' text-anchor='middle' font-size='9' fill='#555' %s>integer</text>" % I_FONT
+            + "<text x='93' y='80' text-anchor='middle' font-size='9' fill='#555' %s>float</text>" % I_FONT)
+    return icon("Float: convert an integer raster to floating point so division keeps its decimals", body)
+
+
+def icon_raster_math():
+    checker = [I_LORANGE if (r + c) % 2 == 0 else I_ORANGE for r in range(3) for c in range(3)]
+    body = (grid(6, 30, 3, 10, I_LBLUE, I_BLUE)
+            + "<text x='44' y='51' text-anchor='middle' font-size='16' font-weight='700' fill='%s' %s>&#247;</text>" % (I_NAVY, I_FONT)
+            + grid(52, 30, 3, 10, I_LGRAY, I_GRAY)
+            + "<text x='90' y='51' text-anchor='middle' font-size='16' font-weight='700' fill='%s' %s>=</text>" % (I_NAVY, I_FONT)
+            + grid(96, 30, 3, 8, checker, I_ORANGE)
+            + "<text x='60' y='18' text-anchor='middle' font-size='10' font-weight='700' fill='%s' %s>+  &#8722;  &#215;  &#247;</text>" % (I_NAVY, I_FONT)
+            + "<text x='60' y='80' text-anchor='middle' font-size='9' fill='#555' %s>cell by cell, same location</text>" % I_FONT)
+    return icon("Plus, Minus, Times, Divide: arithmetic on two rasters, cell by cell", body)
+
+
+def icon_reclassify():
+    ramp = ["#e6f0fa", "#c3dbf2", "#9cc3e8", "#74aadd", "#4f92d1", "#2f7ac4", "#1d63a8", "#134b85", "#0b3563"]
+    classes = [I_LGRAY, I_LGRAY, I_LGRAY, I_LGRAY, I_ORANGE, I_ORANGE, I_ORANGE, I_ORANGE, I_ORANGE]
+    body = (grid(10, 24, 3, 13, ramp, "#ffffff")
+            + arrow(52, 62, 44)
+            + grid(72, 24, 3, 13, classes, "#ffffff")
+            + "<text x='30' y='78' text-anchor='middle' font-size='9' fill='#555' %s>-1 &#8230; 1</text>" % I_FONT
+            + "<text x='92' y='78' text-anchor='middle' font-size='9' fill='#555' %s>0 or 1</text>" % I_FONT)
+    return icon("Reclassify: replace ranges of values with class codes", body)
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
-    for name, fn in (("lab02-imagery-metadata.svg", metadata_card), ("lab02-what-ndvi-sees.svg", ndvi_card)):
+    for name, fn in (("lab02-imagery-metadata.svg", metadata_card), ("lab02-what-ndvi-sees.svg", ndvi_card),
+                     ("icon-float.svg", icon_float), ("icon-raster-math.svg", icon_raster_math),
+                     ("icon-reclassify.svg", icon_reclassify)):
         p = os.path.join(OUT, name)
         with open(p, "w", encoding="utf-8") as f:
             f.write(fn())
