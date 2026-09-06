@@ -201,4 +201,8 @@ are flagged as proposals in the draft.
 | 6 Figures | **Mostly.** Model exported as SVG (Figure C); scenario map built; infographics scripted in `make_svgs.py`. Per-step snippets still PNG crops; icon generator not in the repo. (A Magic Valley example map is no longer needed.) |
 | 7 Deliverables and rubric | **Done** as a proposal: 20 (two maps) + 10 (sensitivity), total 50. |
 | 8 Tips page | **Done.** "Working with rasters" section on `docs/arcgis-tips.md`. |
-| 9 Pilot runs | Not started. |
+| 9 Pilot runs | **One no-GUI pilot done** (September 6, evening): desktop control was not available to the session, so a fresh agent read the page as a first-time student and reproduced every published check value with arcpy against the hosted extracts (notes at `C:\Ames\Pilot02\PILOT_NOTES.md`). Every number matched; ten text findings were fixed before the draft was promoted. **Still owed:** a GUI pilot by a person on a lab machine, Steps 0 to 6. |
+
+## Outcome, September 6, 2026 (night)
+
+Both drafts were promoted to the assigned pages (`docs/assignments/lab-0N/README.md`), the tips page went into the nav, and the old Word-era pages and their leftover images were deleted. The instructor's rubric decision (10 write-up / 10 model / 10 map 1 / 10 map 2 / 10 sensitivity, plus up to 5 extra credit for the Magic Valley extract in Lab 2) replaced the 20 + 10 proposal above. The second scene is not required; the Magic Valley extract survives only as the extra-credit dataset.

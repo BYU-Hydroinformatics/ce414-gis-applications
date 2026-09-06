@@ -61,6 +61,7 @@ nav:
   - Schedule: schedule.md
   - Assignments:
       - Overview: assignments/README.md
+      - ArcGIS Tips and Reminders: arcgis-tips.md
       - Lab 1 — Walmart Site Selection: assignments/lab-01/README.md
       - Lab 2 — NDVI: assignments/lab-02/README.md
       - Lab 3 — Georectifying and Digitizing Images: assignments/lab-03/README.md

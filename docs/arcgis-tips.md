@@ -1,15 +1,4 @@
----
-search:
-  exclude: true
----
-
-# DRAFT — ArcGIS Tips, Tricks, and Important Reminders
-
-> [!WARNING]
-> **This is a draft for review, not yet part of the course site.** It is deliberately not linked
-> from the site navigation, and no assigned lab currently points at it. It exists to support the
-> [draft revision of Lab 1](assignments/lab-01/draft.md). If you want it live, it should go in the
-> nav and the short "before you start" reminder should be added to the top of each lab.
+# ArcGIS Tips, Tricks, and Important Reminders
 
 Read this before Lab 1, and come back to it whenever a tool "works" but the answer looks wrong.
 
