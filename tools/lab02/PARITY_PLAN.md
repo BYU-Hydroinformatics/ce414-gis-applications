@@ -184,3 +184,21 @@ the pilot tests the lab as it will be assigned. Budget one pilot per revision.
 - Whether the second scene is dropped, replaced by a second hosted extract, or kept (item 2).
 - Whether the threshold is exposed with Raster Calculator alongside Reclassify or instead of it
   (item 1).
+
+## Status, September 6, 2026 (evening)
+
+Instructor decisions: the 42 sq mi raster/polygon difference is edge precision, not worth chasing;
+the reflectance flooring stays. The other decisions were taken on the recommendations above and
+are flagged as proposals in the draft.
+
+| Item | State |
+| --- | --- |
+| 1 Sensitivity step + exposed threshold | **Done.** Raster Calculator `Con()` branch with a Double `Threshold` parameter alongside Reclassify; Steps 5 and 6 written; run at 0.6 from the dialog and captured. |
+| 2 Second scene | **Done (middle option).** `docs/data/lab02-magic-valley-landsat.zip` (4 MB, Landsat 8, 2025-07-10, Twin Falls area) built by `fetch_second_scene.py` + `make_second_extract.py`; Step 7 written with check values. Own-scene download kept as optional. |
+| 3 Data section | **Done.** Figure A (MTL metadata infographic) and Figure B (measured red/NIR/NDVI at five sites), source table, water and area notes, Analysis Considerations section. |
+| 4 Step 0 environments + check value | **Done.** Environments dialog captured; 6,040,284 cells / 2,099 sq mi. |
+| 5 Expected numbers per step | **Done** for Steps 0, 1, 2, 3, 6, 7. |
+| 6 Figures | **Mostly.** Model exported as SVG (Figure C); scenario map built; infographics scripted in `make_svgs.py`. Per-step snippets still PNG crops; no Magic Valley example map; icon generator not in the repo. |
+| 7 Deliverables and rubric | **Done** as a proposal: 20 (two maps) + 10 (sensitivity), total 50. |
+| 8 Tips page | **Done.** "Working with rasters" section on `docs/arcgis-tips.md`. |
+| 9 Pilot runs | Not started. |

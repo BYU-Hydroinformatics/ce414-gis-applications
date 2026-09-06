@@ -1,0 +1,65 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 420' width='1000' height='420' role='img' aria-label='Measured red and near-infrared reflectance and NDVI at five places in the Utah County scene'>
+<title>What NDVI sees: red and NIR reflectance at five places in the Utah County scene</title>
+<rect width='1000' height='420' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#0b2a4a' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>What NDVI sees: measured in the Utah County scene, July 12, 2025</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Mean surface reflectance of the red and NIR bands inside a circle at each site, and the NDVI that follows. NDVI = (NIR - Red) / (NIR + Red).</text>
+<rect x='20' y='75' width='178' height='300' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<text x='30' y='97' font-size='12.5' font-weight='bold' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Wasatch forest above Provo</text>
+<rect x='50' y='281.9' width='40' height='18.1' fill='#c0392b'/>
+<text x='70' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Red</text>
+<text x='70' y='276.8666666666667' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.05</text>
+<rect x='110' y='170.0' width='40' height='130.0' fill='#7f3f98'/>
+<text x='130' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR</text>
+<text x='130' y='165.04444444444445' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.34</text>
+<line x1='35' y1='300' x2='183' y2='300' stroke='#8a949e'/>
+<rect x='30' y='330' width='158' height='34' rx='6' fill='#2e7d32'/>
+<text x='109.0' y='353' font-size='15' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NDVI 0.75</text>
+<rect x='210' y='75' width='178' height='300' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<text x='220' y='97' font-size='12.5' font-weight='bold' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Center-pivot field</text>
+<text x='220' y='113' font-size='11' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>(Elberta)</text>
+<rect x='240' y='247.9' width='40' height='52.1' fill='#c0392b'/>
+<text x='260' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Red</text>
+<text x='260' y='242.86666666666667' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.14</text>
+<rect x='300' y='154.6' width='40' height='145.4' fill='#7f3f98'/>
+<text x='320' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR</text>
+<text x='320' y='149.55555555555557' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.39</text>
+<line x1='225' y1='300' x2='373' y2='300' stroke='#8a949e'/>
+<rect x='220' y='330' width='158' height='34' rx='6' fill='#2e7d32'/>
+<text x='299.0' y='353' font-size='15' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NDVI 0.47</text>
+<rect x='400' y='75' width='178' height='300' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<text x='410' y='97' font-size='12.5' font-weight='bold' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Provo, city blocks</text>
+<rect x='430' y='244.5' width='40' height='55.5' fill='#c0392b'/>
+<text x='450' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Red</text>
+<text x='450' y='239.46666666666667' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.15</text>
+<rect x='490' y='206.7' width='40' height='93.3' fill='#7f3f98'/>
+<text x='510' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR</text>
+<text x='510' y='201.6888888888889' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.25</text>
+<line x1='415' y1='300' x2='563' y2='300' stroke='#8a949e'/>
+<rect x='410' y='330' width='158' height='34' rx='6' fill='#b26a00'/>
+<text x='489.0' y='353' font-size='15' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NDVI 0.27</text>
+<rect x='590' y='75' width='178' height='300' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<text x='600' y='97' font-size='12.5' font-weight='bold' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Dry bench</text>
+<text x='600' y='113' font-size='11' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>(Cedar Valley)</text>
+<rect x='620' y='241.1' width='40' height='58.9' fill='#c0392b'/>
+<text x='640' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Red</text>
+<text x='640' y='236.06666666666666' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.16</text>
+<rect x='680' y='203.7' width='40' height='96.3' fill='#7f3f98'/>
+<text x='700' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR</text>
+<text x='700' y='198.66666666666669' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.26</text>
+<line x1='605' y1='300' x2='753' y2='300' stroke='#8a949e'/>
+<rect x='600' y='330' width='158' height='34' rx='6' fill='#b26a00'/>
+<text x='679.0' y='353' font-size='15' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NDVI 0.24</text>
+<rect x='780' y='75' width='178' height='300' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<text x='790' y='97' font-size='12.5' font-weight='bold' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Utah Lake</text>
+<text x='790' y='113' font-size='11' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>(open water)</text>
+<rect x='810' y='269.0' width='40' height='31.0' fill='#c0392b'/>
+<text x='830' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Red</text>
+<text x='830' y='264.02222222222224' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.08</text>
+<rect x='870' y='298.0' width='40' height='2.0' fill='#7f3f98'/>
+<text x='890' y='316' font-size='11' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR</text>
+<text x='890' y='293' font-size='11' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.00</text>
+<line x1='795' y1='300' x2='943' y2='300' stroke='#8a949e'/>
+<rect x='790' y='330' width='158' height='34' rx='6' fill='#1f4e79'/>
+<text x='869.0' y='353' font-size='15' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NDVI -0.99</text>
+<text x='20' y='398' font-size='11.5' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Green: at or above the 0.4 threshold. Forest scores higher than the irrigated field. Water reads -0.99 because the extract floors negative reflectance at 0 (real water is nearer -0.3).</text>
+</svg>

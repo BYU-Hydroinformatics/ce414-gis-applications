@@ -2,17 +2,22 @@
 # Lab02 project and export it. Everything is rendered by ArcGIS Pro's engine through arcpy.mp.
 # Run with the ArcGIS Pro Python while Pro is signed in (basemaps need the portal):
 #   "C:\Program Files\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe" tools\lab02\build_layout.py
-import arcpy, os, urllib.request, urllib.parse, datetime
+import arcpy, os, sys, urllib.request, urllib.parse, datetime
+
+# usage: build_layout.py [RASTER_NAME THRESHOLD OUT_BASENAME]  (defaults: NDVI_reclass 0.4 lab02-example-map-utah-county)
+RASTER_NAME = sys.argv[1] if len(sys.argv) > 1 else "NDVI_reclass"
+THRESH = sys.argv[2] if len(sys.argv) > 2 else "0.4"
+OUT_BASE = sys.argv[3] if len(sys.argv) > 3 else "lab02-example-map-utah-county"
 
 SRC = r"C:\Ames\Lab02\Lab02.aprx"
-DST = r"C:\Ames\Lab02\Lab02_Layout.aprx"
+DST = r"C:\Ames\Lab02\Lab02_Layout.aprx"  # overwritten on every run
 GDB = r"C:\Ames\Lab02\Lab02.gdb"
 LAB1 = r"C:\Ames\Lab01\Lab01.gdb"
 OUT = r"C:\Ames\Lab02\Exports"
 os.makedirs(OUT, exist_ok=True)
 arcpy.env.overwriteOutput = True
 SQMI = 2589988.110336
-RECLASS = os.path.join(GDB, "NDVI_reclass")
+RECLASS = os.path.join(GDB, RASTER_NAME)
 SR = arcpy.Describe(RECLASS).spatialReference
 print("raster CRS:", SR.name)
 
@@ -161,9 +166,9 @@ def style(cls, name):
 
 lyt = p.createLayout(8.5, 11, "INCH", "NDVI map")
 p.createPredefinedGraphicElement(lyt, poly(0.35, 0.35, 8.15, 10.65), "RECTANGLE", None, "Neatline")
-t = p.createTextElement(lyt, arcpy.Point(4.25, 10.28), "POINT", "Irrigated Cropland in Utah County from Landsat NDVI", 18, None, "Title")
+t = p.createTextElement(lyt, arcpy.Point(4.25, 10.28), "POINT", ("Irrigated Cropland in Utah County from Landsat NDVI" if THRESH == "0.4" else "Utah County NDVI Classification: %s Threshold Scenario" % THRESH), 18, None, "Title")
 st = p.createTextElement(lyt, arcpy.Point(4.25, 9.92), "POINT",
-                         "Landsat 8 OLI, path 38 row 32, acquired July 12, 2025. NDVI = (NIR - Red) / (NIR + Red), classified at 0.4.", 9.5, None, "Subtitle")
+                         "Landsat 8 OLI, path 38 row 32, acquired July 12, 2025. NDVI = (NIR - Red) / (NIR + Red), classified at %s." % THRESH, 9.5, None, "Subtitle")
 for el in (t, st):
     try:
         el.setAnchor("CENTER_POINT")
@@ -198,7 +203,7 @@ except Exception as e:
     print("extent indicator failed:", e)
 leg = lyt.createMapSurroundElement(poly(4.05, 1.75, 6.9, 3.55), "LEGEND", mf, style("LEGEND", "Title and Medium Text Legend"), "Legend")
 try:
-    leg.title = "NDVI classified at 0.4"
+    leg.title = "NDVI classified at %s" % THRESH
     for it in leg.items:
         if "Gray" in it.name:
             leg.removeItem(it)
@@ -224,14 +229,20 @@ try:
 except Exception as e:
     print("scale bar tweak:", e)
 p.createPredefinedGraphicElement(lyt, poly(4.05, 0.5, 8.0, 1.7), "RECTANGLE", None, "TextBoxFrame")
-notes = ("Result: {:,.0f} of {:,.0f} sq mi ({:.0f} %) classified above NDVI 0.4. ".format(irr_sqmi, tot_sqmi, 100 * irr_sqmi / tot_sqmi)
-         + "The forested Wasatch and Uinta slopes are included: NDVI measures greenness, not irrigation.\n"
+pct = 100 * irr_sqmi / tot_sqmi
+if THRESH == "0.4":
+    finding = "The forested Wasatch and Uinta slopes are included: NDVI measures greenness, not irrigation."
+else:
+    finding = ("Scenario: threshold raised from 0.4 (1,111 sq mi, 53 %%) to %s. Forest is still in the class; "
+               "the dry benches, the town lawns and the paler pivots drop out first." % THRESH)
+notes = ("Result: {:,.0f} of {:,.0f} sq mi ({:.0f} %) classified at or above NDVI {}. ".format(irr_sqmi, tot_sqmi, pct, THRESH)
+         + finding + "\n"
          + "Map by Dan Ames, CE 414, {:%B %Y}. Projection: {}. ".format(datetime.date.today(), SR.name.replace("_", " "))
          + "Data: Landsat 8 OLI/TIRS Collection 2 Level-2 surface reflectance, scene LC08_L2SP_038032_20250712_20250725_02_T1, "
          + "courtesy of the U.S. Geological Survey; county and municipal boundaries UGRC (CC BY 4.0); basemaps by Esri. "
-         + "Method: ModelBuilder - Float, Minus, Plus, Divide, Reclassify.")
+         + "Method: ModelBuilder - Float, Minus, Plus, Divide, then Reclassify (0.4) or Raster Calculator Con() with the threshold as a model parameter.")
 p.createTextElement(lyt, poly(4.12, 0.53, 7.95, 1.67), "POLYGON", notes, 6.5, None, "Notes")
-out = os.path.join(OUT, "lab02-example-map-utah-county.png")
+out = os.path.join(OUT, OUT_BASE + ".png")
 lyt.exportToPNG(out, resolution=150)
 print("exported", out)
 p.save()

@@ -1,0 +1,42 @@
+{
+ "Center-pivot field (Elberta)": {
+  "red": 0.138,
+  "nir": 0.385,
+  "ndvi": 0.47,
+  "radius_m": 300,
+  "lon": -111.952,
+  "lat": 39.992
+ },
+ "Wasatch forest above Provo": {
+  "red": 0.048,
+  "nir": 0.344,
+  "ndvi": 0.75,
+  "radius_m": 1000,
+  "lon": -111.6,
+  "lat": 40.38
+ },
+ "Dry bench (Cedar Valley)": {
+  "red": 0.156,
+  "nir": 0.255,
+  "ndvi": 0.24,
+  "radius_m": 1000,
+  "lon": -112.05,
+  "lat": 40.25
+ },
+ "Utah Lake (open water)": {
+  "red": 0.082,
+  "nir": 0.0,
+  "ndvi": -0.99,
+  "radius_m": 1000,
+  "lon": -111.8,
+  "lat": 40.2
+ },
+ "Provo, city blocks": {
+  "red": 0.147,
+  "nir": 0.247,
+  "ndvi": 0.27,
+  "radius_m": 1000,
+  "lon": -111.66,
+  "lat": 40.23
+ }
+}
