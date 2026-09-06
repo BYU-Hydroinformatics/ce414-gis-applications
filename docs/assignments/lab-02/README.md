@@ -92,9 +92,9 @@ You will use the following new tools in this exercise, along with tools from pre
 
 ## Example Model
 
-![Complete ModelBuilder diagram: NIR and RED input rasters each pass through a Float tool, then a Minus tool produces the NDVI numerator and a Plus tool the NDVI denominator, which a Divide tool combines into NDVI values, which a Reclassify tool turns into a reclassified NDVI raster](images/lab02-example-model-full.png)
+![Complete ModelBuilder diagram in ArcGIS Pro: the red and NIR band rasters each pass through a Float tool, then a Minus tool produces NDVI_numerator and a Plus tool NDVI_denominator, which a Divide tool combines into NDVI, which a Reclassify tool turns into NDVI_reclass](images/lab02-example-model-full.png)
 
-<!-- Stale/unverified screenshot: this diagram labels the inputs "NIR [Band 40]" and "RED [Band 30]", which reflect one particular scene's file naming. It has not been re-shot for this migration and its band designations were not verified. -->
+<!-- Re-shot 2026-09-06 in ArcGIS Pro 3.7.1 from a full run against docs/data/lab02-utah-county-landsat.zip; see draft.md for the run notes. -->
 
 ## Complete the Lab
 
@@ -118,7 +118,7 @@ Use the Float tool to change the data inside the raster from an integer type to 
 
 <!-- VERIFY: the source read "click the Configuring your licensing options button"; the exact ArcGIS Pro button label was not verified in this migration and has been left as written. The source also read "Check the box for Spatial Analysis"; corrected to "Spatial Analyst", the name of the extension named in the preceding sentence. -->
 
-![ModelBuilder diagram showing the NIR and RED input rasters each connected to a Float tool that produces NIRFloat and REDFloat outputs](images/lab02-float-tool-modelbuilder.png)
+![ModelBuilder diagram showing the NIR and red band rasters each connected to a Float tool that produces NIR_Float and Red_Float outputs](images/lab02-float-tool-modelbuilder.png)
 
 **Figure 1.** Using the Float tool in ModelBuilder.
 
@@ -130,15 +130,15 @@ Use the Minus, Plus, and Divide tools to model the NDVI equation. This method al
 NDVI = (NIR - RED) / (NIR + RED)
 ```
 
-![Minus tool dialog with NIRFloat as input raster 1, REDFloat as input raster 2, and Minus_Float_1 as the output raster](images/lab02-minus-tool-dialog.png)
+![Minus tool dialog with NIR_Float as input raster 1, Red_Float as input raster 2, and NDVI_numerator as the output raster](images/lab02-minus-tool-dialog.png)
 
-![Plus tool dialog with REDFloat as input raster 1, NIRFloat as input raster 2, and Plus_Float_T1 as the output raster](images/lab02-plus-tool-dialog.png)
+![Plus tool dialog with NIR_Float as input raster 1, Red_Float as input raster 2, and NDVI_denominator as the output raster](images/lab02-plus-tool-dialog.png)
 
-![Divide tool dialog with NDVI NUMERATOR as input raster 1, NDVI DENOMINATOR as input raster 2, and Divide_Minus1 as the output raster](images/lab02-divide-tool-dialog.png)
+![Divide tool dialog with NDVI_numerator as input raster 1, NDVI_denominator as input raster 2, and NDVI as the output raster](images/lab02-divide-tool-dialog.png)
 
 **Figure 2.** The Minus, Plus, and Divide tool windows.
 
-![ModelBuilder diagram showing NIRFloat and REDFloat feeding a Minus tool to make the NDVI numerator and a Plus tool to make the NDVI denominator, both feeding a Divide tool that outputs NDVI values](images/lab02-minus-plus-divide-modelbuilder.png)
+![ModelBuilder diagram showing NIR_Float and Red_Float feeding a Minus tool to make NDVI_numerator and a Plus tool to make NDVI_denominator, both feeding a Divide tool](images/lab02-minus-plus-divide-modelbuilder.png)
 
 **Figure 3.** Minus, Plus, and Divide tools in ModelBuilder.
 
@@ -151,11 +151,11 @@ Use the Reclassify tool to reclassify the raster based on a pre-determined value
 
 <!-- TODO(instructor): 0.4 is not a universal irrigation threshold. Consider presenting it as an illustrative starting point and requiring students to justify their own threshold using known sample locations (a field they can confirm is irrigated, and one they can confirm is not) in their own scene. Threshold value left unchanged at 0.4 per the source. -->
 
-In the Reclassification tool window, add or delete rows using the **Add Entry** and **Delete Entries** buttons (see Figure 4).
+In the Reclassification tool window, build the two rows of the table (see Figure 4). <!-- VERIFIED 2026-09-06 in Pro 3.7.1: there are no Add Entry / Delete Entries buttons; rows are added by typing into the empty last row, removed with the Delete key, or generated with the Classify button. The sentence was corrected; the procedure is written out in draft.md Step 3. -->
 
-![Reclassify tool dialog with NDVI Values as the input raster, VALUE as the reclass field, and a reclassification table mapping -1 to 0.4 to new value 0, 0.4 to 1 to new value 1, and NODATA to NODATA](images/lab02-reclassify-tool-dialog.png)
+![Reclassify tool dialog with NDVI as the input raster, VALUE as the reclass field, a reclassification table mapping -1 to 0.4 to new value 0, 0.4 to 1 to new value 1, and NODATA to NODATA, and NDVI_reclass as the output raster](images/lab02-reclassify-tool-dialog.png)
 
-![ModelBuilder diagram showing the NDVI Values raster passing through a Reclassify tool to produce a Reclass NDVI output](images/lab02-reclassify-modelbuilder.png)
+![ModelBuilder diagram showing the NDVI raster passing through a Reclassify tool to produce an NDVI_reclass output marked as a model parameter](images/lab02-reclassify-modelbuilder.png)
 
 **Figure 4.** The Reclassify tool window used as a parameter, and the ModelBuilder example.
 
@@ -200,4 +200,5 @@ This is an example of a Utah map result. Make sure to create two maps: one for U
 | Create a toolbox interface for your model and include a screen capture of it including input and output data parameters. | /5 |
 | **Total self evaluation** | **/50** |
 
+<!-- FIGURES (2026-09-06): all eight ModelBuilder and tool-dialog figures on this page were re-shot in ArcGIS Pro 3.7.1 from a full run of the lab against docs/data/lab02-utah-county-landsat.zip (Landsat 8, 2025-07-12); their captions were updated to the dataset names used in that run. The step text itself is still the migrated Word text; the corrected procedure, the licensing correction (no Spatial Analyst checkbox under Named User licensing) and fourteen additional captures are in draft.md. Only lab02-example-map-utah-county.jpg remains the old image. -->
 <!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 2 - NDVI.docx; ArcGIS Pro version verified against: NOT VERIFIED in this migration; images renamed from fig-NN: fig-01.png -> lab02-example-model-full.png, fig-02.png -> lab02-float-tool-modelbuilder.png, fig-03.png -> lab02-minus-tool-dialog.png, fig-04.png -> lab02-plus-tool-dialog.png, fig-05.png -> lab02-divide-tool-dialog.png, fig-06.png -> lab02-minus-plus-divide-modelbuilder.png, fig-07.png -> lab02-reclassify-tool-dialog.png, fig-08.png -> lab02-reclassify-modelbuilder.png, fig-09.jpg -> lab02-example-map-utah-county.jpg (no images deleted; all nine are referenced); stale/unverified screenshots: lab02-example-model-full.png (input labels "NIR [Band 40]" / "RED [Band 30]" are scene-specific and unverified), lab02-example-map-utah-county.jpg (layout text box still shows placeholder "NDVI Lab / Date / Projection"), all six ArcGIS Pro tool-dialog and ModelBuilder captures (not re-shot; Pro version they came from is unknown); TODO(instructor): NDVI measures greenness/vigor not irrigation; GLCF no longer distributes Landsat; Landsat history and sensor list predate Landsat 8/9; red/NIR band numbers are sensor-dependent (add Landsat 8/9 Band 4 red and Band 5 NIR); require students to identify sensor and bands from scene metadata; band table omits Landsat 8/9; "exclude any areas that contain red" mischaracterizes NDVI; whether a second complete scene is necessary; discuss acquisition date, crop stage, clouds, shadows, water, bare soil; treat 0.4 as an illustrative starting point and require threshold justification from known sample locations; VERIFY: "seven bands" but only six named; "Calera et al. 2001" cited in text but absent from References; the "Configuring your licensing options" button label; Campbell reference author initials; dead/redirected links: https://landsat.gsfc.nasa.gov/satellites/landsat-8/landsat-8-bands/ -> 200 but redirects to https://science.nasa.gov/mission/landsat/spectral-bands-and-applications/ (original URL kept, not replaced), https://www.usgs.gov/landsat-missions/landsat-data-access -> 403 to curl's default HEAD request but 200 with a browser user agent, so the page is live (USGS bot filtering, not a dead link). Corrections made: "Spatial Analysts tool" -> "Spatial Analyst tool"; "Check the box for Spatial Analysis" -> "Spatial Analyst"; "warmest spots in the NIR band" -> "areas of strongest reflected near-infrared"; in-text "(see Figure 5)" -> "(see Figure 4)" (the document has exactly four SEQ Figure fields); Figure 2 caption "Minus and Divide Tool Windows" -> "The Minus, Plus, and Divide tool windows" (three dialogs are shown); "central pivot irrigation" -> "center-pivot irrigation"; rubric toolbox-interface row "5" -> "/5" for consistency (point values unchanged; 5+5+5+30+5 = 50 matches the stated total). The "Example Model" and "Example Maps" images carry no figure number because the source document gave them no caption field. -->
