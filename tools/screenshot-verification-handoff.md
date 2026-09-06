@@ -152,6 +152,11 @@ Running the checklist is itself most of the lab, so this is a full session on it
 
 ### Lab 2 — NDVI (9)
 
+**DONE 2026-09-06 on the local machine (Pro 3.7.1):** every Lab 2 figure below was re-shot from a
+full run of the lab (`C:\Ames\Lab02\Lab02.aprx`, model `NDVI` in `Lab02.atbx`), plus fourteen new
+captures for `docs/assignments/lab-02/draft.md`. Capture scripts are in `tools/screenshots/`.
+Only `lab02-example-map-utah-county.jpg` is still the old image.
+
 Re-shoot 8: `lab02-float-tool-modelbuilder.png`, `lab02-minus-tool-dialog.png`,
 `lab02-plus-tool-dialog.png`, `lab02-divide-tool-dialog.png`,
 `lab02-minus-plus-divide-modelbuilder.png`, `lab02-reclassify-tool-dialog.png`,

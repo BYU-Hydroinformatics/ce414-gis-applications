@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "mkdocs", "serve", "-a", "127.0.0.1:8414"],
       "port": 8414
+    },
+    {
+      "name": "mkdocs-pro",
+      "runtimeExecutable": "C:/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe",
+      "runtimeArgs": ["-m", "mkdocs", "serve", "-a", "127.0.0.1:8414"],
+      "port": 8414
     }
   ]
 }
