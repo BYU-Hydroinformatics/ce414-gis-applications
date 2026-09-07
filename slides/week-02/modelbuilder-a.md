@@ -303,44 +303,46 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 ---
 
-# How to start a new model
+# Models live in a toolbox
 
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div>
+<div class="columns" style="grid-template-columns: 1.15fr 0.85fr; align-items: start;">
+<div style="font-size:0.88em;">
 
-- Open your project in ArcGIS Pro and show the **Catalog pane** (View ▸ Catalog Pane)
-- Right-click **Toolboxes ▸ New Toolbox (.atbx)**, or press **Ctrl+Shift+B**
-- Give it a meaningful name — it is saved as a `.atbx` file in your project folder
-- Every new project already has a default toolbox named after the project; Lab 1 uses that one
-
-</div>
-<div>
-
-![w:520](images/mba-catalog-new-toolbox.png)
+- A **toolbox** is a file (`.atbx`) that holds models, script tools, and other tools — one file you can copy, email, or hand to a reviewer
+- Every ArcGIS Pro project comes with a **default toolbox named after the project** (`Lab01.atbx` for a project called Lab01), listed in the **Catalog pane** under **Toolboxes**
+- **Usual way:** right-click the default toolbox ▸ **New ▸ Model**
+- **Also fine:** the **New** button on the ModelBuilder ribbon, or **ModelBuilder** on the Analysis ribbon — both create the model in that same default toolbox
+- You only need **New Toolbox** when you want tools that travel separately from a project
 
 </div>
+<div style="text-align:center;">
+
+![w:340](images/mba-catalog-default-toolbox.png)
+
+<p style="font-size:0.64em;color:#5a6472;margin:0.15em 0 0 0;">The default toolbox holding two models, one made from the Catalog pane, one from the ribbon's New button</p>
+
+</div>
 </div>
 
-<!-- You can do plenty of non-ModelBuilder work with a new toolbox, such as collecting the tools you use every week in one place. In the labs you do not even need a new toolbox: the project's default toolbox, Lab01.atbx, is where the Analysis ribbon's ModelBuilder button puts the model. -->
+<!-- Verified in ArcGIS Pro 3.7.1 on September 7: the default toolbox is CitiesRivers.atbx for the CitiesRivers project, and ModelBuilder ribbon > New created a model named Model inside that same toolbox (the capture shows it, highlighted). The Analysis ribbon's ModelBuilder button behaves the same way. -->
+
+<!-- The toolbox is the unit of sharing: one .atbx file carries the model and any script tools with it, which is how you will hand in a model or send one to a teammate. Students do not need to make a toolbox; the project already has one, and both the Catalog right-click and the ribbon's New button put the model there. Making a separate toolbox is for tools you want to move between projects. -->
 
 ---
 
-# Add a model to your toolbox
+# Name, label, and saving
 
 <div class="columns" style="grid-template-columns: 1fr 1fr;">
 <div style="font-size:0.9em;">
 
-- Right-click your toolbox ▸ **New ▸ Model**, or click **ModelBuilder** on the **Analysis** ribbon — the ModelBuilder view opens
 - A model has a **Name** and a **Label**. Renaming it in the Catalog pane changes only the *Label*; set the *Name* in **Properties ▸ General**
 - A model cannot be renamed while it is open in ModelBuilder: close the view first
-- Save with **Ctrl+S**, or ModelBuilder ▸ **Save**
+- Save with **Ctrl+S**, or ModelBuilder ▸ **Save** — the model is saved into its toolbox, not into the map
 
 </div>
 <div>
 
-![w:245](images/mba-new-model-menu.png)
-
-![w:470](images/mba-tool-properties-general-lab2.png)
+![w:560](images/mba-tool-properties-general-lab2.png)
 
 </div>
 </div>
