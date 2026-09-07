@@ -185,33 +185,111 @@ li[data-bespoke-marp-fragment="active"] .mb-call { animation: mb-fade 0.6s ease-
 
 # What is ModelBuilder?
 
-![w:1100 center](images/mba-lab2-model-overview.svg)
+<div class="columns" style="grid-template-columns: 0.85fr 1.35fr; gap: 24px; align-items: start;">
+<div style="font-size:0.88em;">
 
-A GIS-integrated system for:
+A GIS-integrated system, built into ArcGIS Pro, for:
 
-- **Automating workflow** by stringing processes together, saved so it can be run again
+- **Automating workflow** by stringing tools together, saved so it can be run again
 - **Designing** and **implementing** models, and **sharing** them with other people
 - **Showing the process** used to create an output, as a flow diagram — one analysis, written down
 
-<!-- The diagram is the Lab 2 model, exported straight from ModelBuilder: two satellite bands in, a vegetation classification out, nine steps in between. The share-and-document points are the ones students undervalue. A model is a picture of your analysis that a reviewer can read, which is worth as much as the automation. -->
+</div>
+<div style="text-align:center;">
+
+![w:690](images/mba-pro-window-modelbuilder.png)
+
+<p style="font-size:0.68em;color:#5a6472;margin:0.2em 0 0 0;">ModelBuilder is a view inside ArcGIS Pro 3.7, open here beside the map and the data it works on</p>
+
+</div>
+</div>
+
+<!-- The screenshot is the whole ArcGIS Pro window: the ModelBuilder ribbon tab along the top, the Contents pane with the map's layers on the left, the map in the middle, and the Cities Near Rivers model in its own view on the right. The point of showing all the chrome is that ModelBuilder is not a separate program: it lives in the same window as the maps you make and the data you look at, and the model runs on the layers listed in Contents. The share-and-document points are the ones students undervalue. A model is a picture of your analysis that a reviewer can read, which is worth as much as the automation. -->
 
 ---
 
-# Example geoprocessing tasks
+# What is geoprocessing?
 
-![h:450 center](images/mba-geoprocessing-tasks.png)
+<div style="background:#002e5d;color:#fff;border-radius:10px;padding:0.45em 1.2em;margin:0.1em 0 0.55em 0;font-size:0.95em;line-height:1.4;">
+<strong style="color:#ffd21f;">Geoprocessing</strong> = running a <strong style="color:#fff;">tool</strong> on geographic data to produce <strong style="color:#fff;">new</strong> data: a layer, a table, or a number that answers a spatial question
+</div>
 
-<p style="font-size:0.62em;color:#5a6472;">(Adapted from Brett Rose, Esri DC Technology Center)</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;">
+<div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;background:#eef3f9;border-radius:10px;padding:0.35em 0.9em;">
 
-<!-- Four familiar questions: site selection from weighted layers, least-cost route over terrain, nearest facility, and population inside a zone. Every one of them is several tools in a row, which is precisely when a model pays for itself. Site selection is Lab 1; least-cost path is its own lecture later in the semester. -->
+![w:140](images/mba-gp-site.svg)
+
+<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">Where is the best site for a new facility?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Buffer · Erase · Intersect — Lab 1</div></div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;background:#eef3f9;border-radius:10px;padding:0.35em 0.9em;">
+
+![w:140](images/mba-gp-near.svg)
+
+<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">Which fire hydrant is closest to each building?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Near</div></div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;background:#eef3f9;border-radius:10px;padding:0.35em 0.9em;">
+
+![w:140](images/mba-gp-route.svg)
+
+<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">What is the best route over rugged terrain?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Cost Distance · Cost Path — Lab 10</div></div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;background:#eef3f9;border-radius:10px;padding:0.35em 0.9em;">
+
+![w:140](images/mba-gp-zone.svg)
+
+<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">How many people live inside a contamination zone?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Buffer · Summarize Within</div></div>
+</div>
+</div>
+
+<p style="margin-top:0.55em;">Every answer is several tools in a row — <strong>ModelBuilder</strong> is where you string them together.</p>
+
+<!-- Questions adapted from Brett Rose, Esri DC Technology Center. -->
+
+<!-- Say the word out loud: geoprocessing. A tool takes data in and puts new data out; everything in the labs is geoprocessing. Four familiar questions: site selection from several criteria layers, nearest facility, least-cost route over terrain, and population inside a zone. Every one of them is several tools in a row, which is precisely when a model pays for itself. Site selection is Lab 1; least-cost path is Lab 10 and its own lecture later in the semester. The tool names on the cards are the ArcGIS Pro tools that answer each question. -->
 
 ---
 
-# Four ways to run the same tool
+# Four ways to run the same geoprocessing analysis
 
-![h:430 center](images/mba-four-ways-pro.png)
+<style scoped>
+.way p { margin: 0; }
+</style>
 
-One Buffer, four front ends. What changes between them is repeatability, not the result.
+<p style="margin:0 0 0.3em 0;font-size:0.72em;color:#5a6472;line-height:1.35;">The <strong>Buffer</strong> step of Cities Near Rivers in ArcGIS Pro 3.7: one tool, four front ends, one result — only the <strong>repeatability</strong> changes.</p>
+
+<div style="display:grid;grid-template-columns:330px 1fr;gap:14px;align-items:start;">
+<div class="way" style="border:2px solid #002e5d;border-radius:8px;overflow:hidden;background:#fff;">
+<div style="background:#002e5d;color:#fff;padding:0.1em 0.7em;font-size:0.68em;white-space:nowrap;overflow:hidden;"><strong style="color:#ffd21f;">1</strong> &nbsp;<strong style="color:#fff;">Tool dialog</strong> <span style="color:#c9d8ea;">— Geoprocessing pane</span></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:5px;">
+
+![h:404](images/mba-way-dialog.png)
+
+</div></div>
+<div style="display:grid;gap:12px;">
+<div class="way" style="border:2px solid #002e5d;border-radius:8px;overflow:hidden;background:#fff;">
+<div style="background:#002e5d;color:#fff;padding:0.1em 0.7em;font-size:0.68em;white-space:nowrap;overflow:hidden;"><strong style="color:#ffd21f;">2</strong> &nbsp;<strong style="color:#fff;">Python window</strong> <span style="color:#c9d8ea;">— one line, run now</span></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:5px;">
+
+![h:100](images/mba-way-python.png)
+
+</div></div>
+<div class="way" style="border:2px solid #002e5d;border-radius:8px;overflow:hidden;background:#fff;">
+<div style="background:#002e5d;color:#fff;padding:0.1em 0.7em;font-size:0.68em;white-space:nowrap;overflow:hidden;"><strong style="color:#ffd21f;">3</strong> &nbsp;<strong style="color:#fff;">Model</strong> <span style="color:#c9d8ea;">— ModelBuilder, a picture of the whole chain</span></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:5px;">
+
+![h:92](images/mba-way-model.png)
+
+</div></div>
+<div class="way" style="border:2px solid #002e5d;border-radius:8px;overflow:hidden;background:#fff;">
+<div style="background:#002e5d;color:#fff;padding:0.1em 0.7em;font-size:0.68em;white-space:nowrap;overflow:hidden;"><strong style="color:#ffd21f;">4</strong> &nbsp;<strong style="color:#fff;">Script</strong> <span style="color:#c9d8ea;">— notebook or .py file, the same chain as code</span></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:5px;">
+
+![h:152](images/mba-way-script.png)
+
+</div></div>
+</div>
+</div>
+
 
 <!-- All four panels are ArcGIS Pro 3.7, and all four run the same Buffer. The dialog is what you have used so far. The Python window runs one line at a time. The model is today's subject: a picture of the whole chain that can be run again. The script is the same chain as arcpy code, which you will meet later in the course. Every one of them calls the identical geoprocessing tool underneath. -->
 
