@@ -19,7 +19,7 @@ Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd>
 
 ## Data for the Part A exercise
 
-[week02-cities-rivers.zip](../data/week02-cities-rivers.zip) (5 MB): U.S. cities, major rivers and a country
+[week02-cities-rivers.zip](../data/week02-cities-rivers.zip) (under 1 MB): U.S. cities, major rivers and a country
 outline for the conterminous United States, from Natural Earth (1:10m, public domain), in WGS 1984. Used
 by the "You try it" exercise in Part A: project, buffer the rivers 10 miles, intersect, and count. The
 answer the slides quote is 256 of 678 cities.

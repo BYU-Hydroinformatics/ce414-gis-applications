@@ -23,16 +23,15 @@ Brigham Young University
 
 # Today's Goals
 
-![bg right:40% w:96%](images/mba-lab1-model-overview.svg)
-
 By the end of class you should be able to:
 
 - Say what a **model** is, and recognize models that are not computer programs
 - Explain what **ModelBuilder** is and when to reach for it instead of running tools one at a time
-- Create a **toolbox** and a **model** in ArcGIS Pro and set the model's environments
-- Read an element's **state** from its color, and connect elements on the canvas
+- Create a **toolbox** and a **model** in ArcGIS Pro, set its environments, and read the canvas
 - Follow the **Cities Near Rivers** model from problem to result
-- Recognize the **Lab 1 model** as the same pattern, longer
+- Recognize the **Lab 1 model** below as the same pattern, longer
+
+![w:1100 center](images/mba-lab1-model-overview.svg)
 
 <!-- The picture on the right is the Lab 1 model, finished. It looks like a lot; by the end of today it should look like a chain of things you have already seen. Part B picks up the same Cities Near Rivers example and turns it into a shareable tool with parameters. -->
 
@@ -185,9 +184,9 @@ A GIS-integrated system for:
 
 # Four ways to run the same tool
 
-![h:470 center](images/mba-four-ways-pro.png)
+![h:430 center](images/mba-four-ways-pro.png)
 
-The **tool dialog**, the **Python window**, a **model**, and a **script**: one Buffer, four front ends. What changes between them is repeatability, not the result.
+One Buffer, four front ends. What changes between them is repeatability, not the result.
 
 <!-- All four panels are ArcGIS Pro 3.7, and all four run the same Buffer. The dialog is what you have used so far. The Python window runs one line at a time. The model is today's subject: a picture of the whole chain that can be run again. The script is the same chain as arcpy code, which you will meet later in the course. Every one of them calls the identical geoprocessing tool underneath. -->
 
@@ -296,15 +295,15 @@ The **tool dialog**, the **Python window**, a **model**, and a **script**: one B
 
 **1) Not ready to run** — gray: a required parameter is still empty
 
-![h:120](images/mba-state-notready.png)
+![h:100](images/mba-state-notready.png)
 
 **2) Ready to run** — every element is colored: blue inputs, yellow tools, green outputs
 
-![w:1000](images/mba-state-ready.png)
+![w:880](images/mba-state-ready.png)
 
 **3) Already run** — colored, with a **green check** on everything that has executed
 
-![w:1000](images/mba-state-run.png)
+![w:880](images/mba-state-run.png)
 
 </div>
 
@@ -403,7 +402,7 @@ Find all **U.S. cities within 10 miles of a major river**.
 
 **What percentage of U.S. cities are within 10 miles of a major river?**
 
-- Download [week02-cities-rivers.zip](https://byu-hydroinformatics.github.io/ce414-gis-applications/data/week02-cities-rivers.zip) (5 MB) and add `us_cities` and `us_rivers` to a new map
+- Download [week02-cities-rivers.zip](https://byu-hydroinformatics.github.io/ce414-gis-applications/data/week02-cities-rivers.zip) (under 1 MB) and add `us_cities` and `us_rivers` to a new map
 - Build the model: **Project → Buffer → Intersect**
 - Project to **USA Contiguous Equidistant Conic** before you buffer, and accept the geographic transformation
 - Compare your count with **256 of 678**, and be ready to explain a difference

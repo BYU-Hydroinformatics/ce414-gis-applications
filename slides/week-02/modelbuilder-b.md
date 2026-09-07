@@ -25,13 +25,10 @@ Dr. Dan Ames
 
 ![bg right:34% w:92%](images/mbb-parameter-p-marker.png)
 
-In Part A we built the **Cities Near Rivers** model — Project, Buffer, Intersect — and ran it end to end.
-
-By the end of class you should be able to:
+Part A built the **Cities Near Rivers** model and ran it. By the end of class you should be able to:
 
 - Judge when a **smaller** model is the better model
-- Get model output onto the map, and debug a gray element
-- **Rename** elements so the canvas reads like a sentence
+- Get output onto the map, debug a gray element, **rename** elements
 - Turn a model variable into a **parameter** so the model runs as a tool
 - Write **metadata** so someone else can use your model
 - Read the **Lab 1 rubric** and know what each part rewards
@@ -456,23 +453,27 @@ The example map is not a template: yours will differ, because your stores and yo
 <div class="columns" style="grid-template-columns: 1fr 1fr;">
 <div style="text-align:center;">
 
-![h:330](images/mbb-lab1-example-map-baseline.png)
+![h:250](images/mbb-lab1-example-map-baseline.png)
 
-**Baseline** — 2 miles from an existing Walmart
+**Baseline** — 2 miles from a Walmart
 
 </div>
 <div style="text-align:center;">
 
-![h:330](images/mbb-lab1-example-map-scenario.png)
+![h:250](images/mbb-lab1-example-map-scenario.png)
 
-**Scenario** — 3 miles from an existing Walmart
+**Scenario** — 3 miles from a Walmart
 
 </div>
 </div>
 
-- **Check values.** 1,532 major-road segments, 47 dense tracts, about 12.9 square miles left after the erase. A different number means an environment, a unit, or a field type went wrong
-- **Did a criterion change anything?** In Utah County the road buffer removes nothing; the write-up asks you to say so with counts
-- **Vary the numbers** (Step 12). A recommendation that survives every scenario is worth more than one that appears in only one
+<div style="font-size:0.9em;">
+
+- **Check values:** 1,532 road segments, 47 dense tracts, about 12.9 square miles after the erase. A different number means a unit, an environment, or a field type went wrong
+- **Did each criterion change anything?** In Utah County the road buffer removes nothing; say so, with counts
+- **Vary the numbers** (Step 12): a recommendation that survives every scenario is worth more than one that appears in only one
+
+</div>
 
 <!-- The Learning Suite entry for today promised "how accurate are the results, how can we validate the model." The honest answer has three parts. Against the check values, which catch mechanical errors. Against your own criteria, which asks whether each one earned its place. And against the scenarios, which is the only real test of whether the recommendation is robust. The two maps are the lab's example pair: same model, one number changed. -->
 
