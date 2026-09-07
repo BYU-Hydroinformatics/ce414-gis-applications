@@ -174,12 +174,12 @@ li[data-bespoke-marp-fragment="active"] .mb-call { animation: mb-fade 0.6s ease-
 
 ![h:350 center](images/mba-pie-recipe.svg)
 
-- **Blue ovals are inputs, yellow boxes are tools, green ovals are derived data** — exactly ModelBuilder's vocabulary
+- **Blue is input data, yellow is a tool, green is derived data** — exactly ModelBuilder's color code, drawn here the way ArcGIS Pro draws it
 - "a pattern of something to be made" — *Merriam-Webster*
 
 <p style="font-size:0.62em;color:#5a6472;">(Adapted from Merrilee Torres, Burlington County, NJ, GIS Users Group)</p>
 
-<!-- Ovals are data, boxes are processes, and the arrows carry one into the next. That is exactly the vocabulary of ModelBuilder: data element, tool, derived data. If you can write a recipe you can build a model. On Thursday everyone brings a sketch of a cookie recipe drawn this way; say so now. -->
+<!-- Blue elements are input data, yellow ones are tools, green ones are derived data, and the arrows carry one into the next. That is exactly the vocabulary of ModelBuilder: data element, tool, derived data. The shapes match what ArcGIS Pro 3.7 draws: rounded rectangles for data with an icon panel, square boxes with a hammer for tools. If you can write a recipe you can build a model. On Thursday everyone brings a sketch of a cookie recipe drawn this way; say so now. -->
 
 ---
 
