@@ -63,7 +63,7 @@ build analyses in this course, can create a toolbox and model in ArcGIS Pro, rea
 canvas, and has watched one complete model built and run. They leave able to start Lab 1 Steps 0
 to 4 that evening.
 
-**Time budget** (assume a 75-minute session; adjust if the real slot differs):
+**Time budget** (sessions are 75 minutes; the instructor prefers more slides than the hour needs, used or skipped as the class flows, so treat these as a ceiling, not a script):
 
 | Minutes | Block | Slides (new numbering) |
 | --- | --- | --- |
