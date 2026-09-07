@@ -2,9 +2,19 @@
 bbox in 1456x819 screenshot coords (screen space); converted to window space using the window rect."""
 import sys, ctypes, ctypes.wintypes as w
 from PIL import Image
+ctypes.windll.shcore.SetProcessDpiAwareness(2)  # physical pixels under display scaling
 u = ctypes.windll.user32; g = ctypes.windll.gdi32
 title, out = sys.argv[1], sys.argv[2]
 hw = u.FindWindowW(None, title)
+if not hw:  # fall back to the first visible window whose title starts with TITLE
+    found = []
+    @ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.c_void_p)
+    def cb(h, l):
+        n = ctypes.create_unicode_buffer(512); u.GetWindowTextW(h, n, 512)
+        if u.IsWindowVisible(h) and n.value.startswith(title): found.append(h)
+        return True
+    u.EnumWindows(cb, 0)
+    if found: hw = found[0]
 if not hw: sys.exit("window not found: " + title)
 r = w.RECT(); u.GetWindowRect(hw, ctypes.byref(r))
 W, H = r.right - r.left, r.bottom - r.top

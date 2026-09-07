@@ -1,6 +1,7 @@
 """capwin2.py OUT -- PrintWindow capture of the (first) visible untitled ArcGIS Pro popup window (tool dialogs in ModelBuilder)."""
 import sys, ctypes, ctypes.wintypes as w
 from PIL import Image
+ctypes.windll.shcore.SetProcessDpiAwareness(2)  # physical pixels under display scaling
 u = ctypes.windll.user32; g = ctypes.windll.gdi32
 found = []
 @ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.c_void_p)

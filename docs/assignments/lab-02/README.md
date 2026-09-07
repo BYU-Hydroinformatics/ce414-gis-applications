@@ -61,11 +61,17 @@ The unchanged parts of the old handout were carried over in full.
   scene it is the county's *median* NDVI, and it classifies the forested Wasatch Front as
   irrigated cropland.
 
-**Figures.** Every figure on this page was captured in ArcGIS Pro 3.7.1 on September 6, 2026,
-from the run described above: the eight old ModelBuilder and tool-dialog figures re-shot, twenty-
-odd new captures, the model exported from ModelBuilder as **SVG** so it stays sharp at any zoom,
-two hand-authored infographics, and two example maps laid out and exported from Pro against this
-run's results. Nothing on this page is stale.
+**Figures.** Every figure on this page was re-captured on the evening of September 6, 2026, in a
+second, from-scratch pass through the lab in **ArcGIS Pro 3.7.1**, driven step by step as a student
+would (new project, the zip from this site, the model built tool by tool). Windows display scaling
+was set to 175 % for the session, so every dialog and pane is captured at 1.75x its earlier size and
+stays sharp on high-resolution screens. The model figures are cut from ModelBuilder's own SVG
+export at each step (tools/lab02/model-svg), so no snippet shows tools that do not exist yet at that
+step; the two example maps were rebuilt from this run's outputs in their native WGS 1984 UTM Zone
+12N. Findings from that pass that changed the text: the prompt on adding a band is *Build Pyramids
+and Calculate Statistics*, not a statistics-only prompt; a model cannot be renamed while it is open
+in ModelBuilder; the Catalog rename sets the model's Label, not its Name; and the Classify dialog
+does not switch its Method to Manual Interval when a break value is edited.
 
 **Site behavior:** external links open in a new tab and every figure opens in a pop-out viewer
 when clicked. Both are site-wide settings. -->
@@ -255,11 +261,11 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Create the project.** Start ArcGIS Pro, choose the **Map** template, name the project `Lab02`, and put it in your lab folder. As in Lab 1: the *Location* box does not take a typed path, so use the folder button beside it, and uncheck *Create a folder for this local project* if you already made the `Lab02` folder.
 
-**Add the two Utah County bands to the map.** On the **Map** ribbon tab click **Add Data** and add `UtahCounty_Red_B4_SR_x10000.tif` and `UtahCounty_NIR_B5_SR_x10000.tif`. Pro will ask, once per raster, whether to **calculate statistics** for it (Figure 0a). Click **Yes** — without statistics Pro cannot stretch the display, and the raster draws as a flat gray block. It takes a few seconds per band.
+**Add the two Utah County bands to the map.** On the **Map** ribbon tab click **Add Data** and add `UtahCounty_Red_B4_SR_x10000.tif` and `UtahCounty_NIR_B5_SR_x10000.tif`. Pro will ask, once per raster, whether to **build pyramids and calculate statistics** for it (Figure 0a). Leave both boxes checked and click **OK** — without statistics Pro cannot stretch the display, and the raster draws as a flat gray block; pyramids are what let it redraw quickly when you zoom. It takes a few seconds per band.
 
-![The ArcGIS Pro "Calculate statistics" dialog for UtahCounty_Red_B4_SR_x10000.tif, explaining that the raster has no statistics or histogram and asking whether to calculate them, with Yes, No and Cancel buttons and an "Always use this choice" checkbox.](images/lab02-calculate-statistics-prompt.png)
+![The ArcGIS Pro "Build Pyramids and Calculate Statistics" dialog for UtahCounty_Red_B4_SR_x10000.tif: the raster has insufficient pyramids and statistics; Build and Calculate are both checked, each with an "Always use this choice" box, and OK and Cancel buttons.](images/lab02-pyramids-statistics-prompt.png)
 
-**Figure 0a.** The statistics prompt. Say Yes.
+**Figure 0a.** The pyramids-and-statistics prompt. Leave both checked and click OK.
 
 > [!TIP]
 > **Check what you loaded.** In the Contents pane each band shows its value range. The red band
@@ -268,26 +274,30 @@ For an advanced GIS student, the information up to this point is all you need to
 > happens on bright playa and rooftops. If your ranges are 0 to 65,535 you have a raw download,
 > not the extract.
 
-**Check that you have Spatial Analyst.** Every tool in this lab is a Spatial Analyst tool. Click the **Project** tab, then **Licensing**, and scroll the *ArcGIS Pro Extensions* list to **Spatial Analyst** — it should read *Licensed: Yes* (Figure 0b). If it says *No*, tell your instructor: with the Named User license BYU uses, extensions are assigned to your account by the organization's administrator, and there is nothing on this page you can click to turn one on. (The *Configure your licensing options* button only changes which portal Pro signs in to. Older versions of this handout said to open it and check a box; the box does not exist.)
+![The Contents pane after both bands are added: UtahCounty_NIR_B5_SR_x10000.tif with a value range of 0 to 12982 and UtahCounty_Red_B4_SR_x10000.tif with 0 to 13276, above the World Topographic Map basemap.](images/lab02-contents-band-ranges.png)
+
+**Figure 0b.** The two bands in the Contents pane, with the value ranges to check against.
+
+**Check that you have Spatial Analyst.** Every tool in this lab is a Spatial Analyst tool. Click the **Project** tab, then **Licensing**, and scroll the *ArcGIS Pro Extensions* list to **Spatial Analyst** — it should read *Licensed: Yes* (Figure 0c). If it says *No*, tell your instructor: with the Named User license BYU uses, extensions are assigned to your account by the organization's administrator, and there is nothing on this page you can click to turn one on. (The *Configure your licensing options* button only changes which portal Pro signs in to. Older versions of this handout said to open it and check a box; the box does not exist.)
 
 ![The ArcGIS Pro Licensing page, ArcGIS Pro Extensions list scrolled to the bottom, with Spatial Analyst showing Licensed: Yes and an expiry date.](images/lab02-licensing-spatial-analyst.png)
 
-**Figure 0b.** Project ▸ Licensing. Spatial Analyst must show *Yes*.
+**Figure 0c.** Project ▸ Licensing. Spatial Analyst must show *Yes*.
 
-**Create the model.** On the **Analysis** ribbon tab click **ModelBuilder**. That creates a model called *Model* in your project toolbox (`Lab02.atbx`) and opens it. Give it a real name before you forget: in the **Catalog** pane expand **Toolboxes ▸ Lab02.atbx**, click the selected name a second time (or press F2) to rename it, and call it `NDVI` (Figure 0c). Right-click the model and choose **Edit** whenever you need to reopen it in ModelBuilder; **Open** runs it as a tool instead, which you will use in Step 4.
+**Create the model.** On the **Analysis** ribbon tab click **ModelBuilder**. That creates a model called *Model* in your project toolbox (`Lab02.atbx`) and opens it. Give it a real name before you forget — but first close the ModelBuilder view (the × on its tab): while a model is open in ModelBuilder, Pro will not rename it, and F2 silently does nothing. Then in the **Catalog** pane expand **Toolboxes ▸ Lab02.atbx**, click the selected name a second time (or press F2), and call it `NDVI` (Figure 0d). Right-click the model and choose **Edit** whenever you need to reopen it in ModelBuilder; **Open** runs it as a tool instead, which you will use in Step 4.
 
 ![The Catalog pane, Project tab, with Toolboxes expanded to show Lab02.atbx containing a model named NDVI, selected.](images/lab02-catalog-model.png)
 
-**Figure 0c.** The model in the project toolbox, renamed to NDVI.
+**Figure 0d.** The model in the project toolbox, renamed to NDVI.
 
-**Look at the Environments before you build anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group). This dialog (Figure 0d) is the raster equivalent of Lab 1's coordinate-system step, and it has more knobs:
+**Look at the Environments before you build anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group). This dialog (Figure 0e) is the raster equivalent of Lab 1's coordinate-system step, and it has more knobs:
 
-- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. (In Figure 0d it is filled in, because the project the figure was captured in had inherited a setting from the map, NAD 1983 UTM Zone 12N. That is why the example maps at the end of this page say NAD 1983 while the extract is WGS 1984 — an object lesson in why you check this box. Yours should be empty, and your maps should say what your outputs actually are.) If you set it to a specific zone, Pro will silently *reproject* any scene from another zone into it — which is what would happen to a scene of your own from outside zone 12. That works, but you should know it happened.
+- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. (Figure 0e shows it empty, which is what you want. If yours is filled in, the project inherited a coordinate system from the map: clear it, or every output will be silently reprojected and your maps will have to say so.) If you set it to a specific zone, Pro will silently *reproject* any scene from another zone into it — which is what would happen to a scene of your own from outside zone 12. That works, but you should know it happened.
 - **Cell Size, Snap Raster, Extent, Mask** (under *Raster Analysis* and *Processing Extent*). Every one has a default that will do something you did not ask for if your inputs disagree: Cell Size defaults to the coarsest input, Extent to the intersection of the inputs. Here both bands match exactly, so the defaults are right — but check them again the day you mix rasters from two sources.
 
-![The ModelBuilder Environments dialog: Workspace (Current and Scratch Workspace set to Lab02.gdb), Output Coordinates (Output Coordinate System, showing an inherited NAD 1983 UTM Zone 12N that should be cleared), Processing Extent, Parallel Processing and Raster Analysis (Cell Size) sections.](images/lab02-environments-dialog.png)
+![The ModelBuilder Environments dialog: Workspace (Current and Scratch Workspace set to Lab02.gdb), Output Coordinates (Output Coordinate System, empty), Processing Extent, Parallel Processing and Raster Analysis (Cell Size) sections.](images/lab02-environments-dialog.png)
 
-**Figure 0d.** ModelBuilder ▸ Environments. The settings that decide what your rasters come out as.
+**Figure 0e.** ModelBuilder ▸ Environments. The settings that decide what your rasters come out as.
 
 > [!TIP]
 > **Sanity check.** Every classified raster your model produces for Utah County should have **6,040,284
@@ -355,9 +365,9 @@ Then add **Divide (Spatial Analyst Tools)**, connect `NDVI_numerator` as value 1
 
 **Run it.** Right-click the `NDVI` output oval and choose **Add To Display**, so the result appears in the map, then click **Run** on the ModelBuilder ribbon. A progress dialog steps through the five tools (Figure 4) — about half a minute for Utah County. Every tool and output turns green with a check mark when it has run.
 
-![The model run dialog titled NDVI: "Processing 1 of 5, Executing Float...", a progress bar, start time, and a message log beginning "Executing (Float): Float UtahCounty_NIR_B5_SR_x10000.tif C:\Ames\Lab02\Lab02.gdb\NIR_Float".](images/lab02-model-run-progress.png)
+![The model run dialog titled NDVI: "Processing 5 of 7, Executing Divide...", a progress bar at 100 %, the start time, and a message log listing the outputs written so far, ending with C:\Ames\Lab02\Lab02.gdb\NDVI.](images/lab02-model-run-progress.png)
 
-**Figure 4.** The model running. Leave *Close on completion* unchecked the first time so you can read the messages.
+**Figure 4.** The model running. (This capture is from a later run, after Step 5 had added two more tools, so it counts to 7; yours will count to 5.) Leave *Close on completion* unchecked the first time so you can read the messages.
 
 > [!TIP]
 > **Check the result.** The NDVI layer's legend in the Contents pane should read **−1 to 1**. Over
@@ -383,12 +393,12 @@ Treat 0.4 as a starting point, not an answer — see the note after Figure 8.
 
 Add **Reclassify (Spatial Analyst Tools)** to the canvas. Connect `NDVI` to it as **Input raster**, then double-click the tool. **Reclass field** should already read `VALUE`. The reclassification table starts empty, and ArcGIS Pro has no *Add Entry* or *Delete Entries* buttons — there are two ways to fill it:
 
-- **Use Classify.** Click the **Classify** button, set **Classes** to `2` (use Tab, not Enter, to leave the box — Enter closes the dialog), then edit the first *Upper value* to `0.4`, which switches *Method* to *Manual Interval*, and click OK (Figure 6a). The table now has two rows; change their **New** values to `0` and `1`.
+- **Use Classify.** Click the **Classify** button, set **Classes** to `2` (use Tab, not Enter, to leave the box — Enter closes the dialog), then double-click the first *Upper value*, type `0.4`, press Tab, and click OK (Figure 6a). (The *Method* box may go on saying *Natural Breaks*; the break values in the list are what count.) The table now has two rows; change their **New** values to `0` and `1`.
 - **Or type the rows.** Typing into the empty last row adds a row: enter *Start*, *End* and *New* for each class. To remove a row, click it once to select it and press the **Delete** key (clicking a selected cell a second time edits it instead).
 
 Either way, finish with the two rows shown in Figure 6, plus the `NODATA → NODATA` row Pro adds for you. Name the **Output raster** `NDVI_reclass` and click **OK**.
 
-![The Classify dialog opened from the Reclassify tool: Field VALUE, Method Manual Interval, Classes 2, and an Upper value list reading 0.4 and 1.0.](images/lab02-classify-dialog.png)
+![The Classify dialog opened from the Reclassify tool: Field VALUE, Method Natural Breaks (Jenks), Classes 2, and an Upper value list reading 0.4 and 1.0.](images/lab02-classify-dialog.png)
 
 **Figure 6a.** The Classify dialog with two classes and a break at 0.4.
 
@@ -400,7 +410,7 @@ Either way, finish with the two rows shown in Figure 6, plus the `NODATA → NOD
 
 Right-click `NDVI_reclass` and choose **Add To Display**, then **Run** again. Only Reclassify runs this time — the tools that already ran are skipped (Figure 7a). The message log shows the remap table the tool used, `"-1 0.400000 0;0.400000 1 1"`, which is a good thing to paste into your report.
 
-![The completed run dialog for the NDVI model with a green check: the message log reads "Executing (Reclassify): Reclassify C:\Ames\Lab02\Lab02.gdb\NDVI VALUE "-1 0.400000 0;0.400000 1 1" C:\Ames\Lab02\Lab02.gdb\NDVI_reclass DATA" and "Succeeded ... (Elapsed Time: 5.15 seconds)".](images/lab02-reclassify-run-messages.png)
+![The completed run dialog for the NDVI model with a green check: the message log ends with the remap table "-1 0.400000 0;0.400000 1 1", the output C:\Ames\Lab02\Lab02.gdb\NDVI_reclass, and "Succeeded ... (Elapsed Time: 2.81 seconds)".](images/lab02-reclassify-run-messages.png)
 
 **Figure 7a.** Reclassify alone takes about five seconds.
 
@@ -445,13 +455,17 @@ Give your model a **toolbox interface**, so it can be run from a dialog like any
 
 Right-click each of the two input ovals and the final `NDVI_reclass` output, and choose **Parameter** (Figure 9). A `P` appears beside each one. Then click **Save** on the ModelBuilder ribbon.
 
-![The ModelBuilder right-click menu on the red band input oval, showing Open, Add To Display, Parameter (check-marked), Create Label, Rename, Group, Cut, Copy and Select All. The oval already carries a P.](images/lab02-parameter-menu.png)
+![The ModelBuilder right-click menu on the NDVI_reclass output oval: Open, Add To Display (check-marked), Parameter, Create Label, Rename, Group, Cut, Copy and Select All.](images/lab02-parameter-menu-output.png)
 
 **Figure 9.** Right-click an input or output ▸ Parameter.
 
-Parameters appear in the dialog in the order you created them. If your output ended up above your inputs, click **Properties** on the ModelBuilder ribbon, open the **Parameters** tab, and drag the rows by their row number into a sensible order — inputs first, output last (Figure 10). While you are there, the **General** tab is where the model's *Name* and *Label* live — and if the dialog's title still says *Model*, as it does in Figure 10, that is the *Label*, which renaming in the Catalog pane did not change. Fix it here.
+Parameters appear in the dialog in the order you created them. If your output ended up above your inputs, click **Properties** on the ModelBuilder ribbon, open the **Parameters** tab, and drag the rows by their row number into a sensible order — inputs first, output last (Figure 10). While you are there, look at the **General** tab (Figure 10a). A model has both a *Name* and a *Label*, and renaming it in the Catalog pane changed only the *Label* — the *Name* is still `Model`, which is why the dialog's title says so. Set the *Name* to `NDVI` as well.
 
-![The Tool Properties dialog, Parameters tab, listing the two band rasters as Required Inputs in rows 0 and 1 and NDVI_reclass as a Required Output in row 2, with a drag handle on the row being moved.](images/lab02-model-properties-parameters.png)
+![The Tool Properties dialog, General tab: Name reads Model, Label reads NDVI, and Toolbox reads C:\Ames\Lab02\Lab02.atbx.](images/lab02-model-properties-general.png)
+
+**Figure 10a.** Properties ▸ General. The Catalog rename changed the Label; the Name is set here.
+
+![The Tool Properties dialog, Parameters tab, listing the two band rasters as Required Inputs in rows 0 and 1 and NDVI_reclass as a Required Output in row 2.](images/lab02-model-properties-parameters.png)
 
 **Figure 10.** Properties ▸ Parameters. Drag a row by its number to reorder.
 
@@ -474,7 +488,7 @@ Now open the model as a tool: in the **Catalog** pane, right-click `NDVI` in `La
 
 Everything in this lab hangs on one number, and right now that number is buried inside the Reclassify table. Get it out where it can be changed from the tool dialog, exactly the way Lab 1 exposed the two buffer distances.
 
-1. On the **ModelBuilder** ribbon, in the *Insert* group, click **Create Variable**. In the *Variable Data Type* dialog leave *Single value* selected, choose **Double** from the data-type list (start typing "Dou" to jump to it), and click OK (Figure 12a). A new oval labeled *Double* appears.
+1. On the **ModelBuilder** ribbon, in the *Insert* group, click **Create Variable**. In the *Variable Data Type* dialog leave *Single value* selected, choose **Double** from the data-type list (it is long: open it and press the Down arrow, or type D repeatedly, until *Double* is highlighted, then press Enter), and click OK (Figure 12a). A new oval labeled *Double* appears.
 2. Right-click it ▸ **Rename**, and call it `Threshold`. Double-click it and type `0.4` as its value (Figure 12b). Right-click it again ▸ **Parameter**.
 3. Click an empty spot on the canvas and **type** `Raster` — the *Add Tools To Model* box opens (Figure 13). Double-click **Raster Calculator (Spatial Analyst Tools)**.
 4. Double-click the new tool. In the **Map Algebra expression** box type, exactly:
@@ -503,7 +517,7 @@ Everything in this lab hangs on one number, and right now that number is buried 
 
 **Figure 14.** The Raster Calculator with the threshold as an inline variable.
 
-![The completed run dialog: Reclassify ran in 6 seconds, then Raster Calculator with the expression Con("C:\Ames\Lab02\Lab02.gdb\NDVI" >= 0.4, 1, 0) producing NDVI_class in 5 seconds.](images/lab02-threshold-run-messages.png)
+![The completed run dialog: the message log shows the Raster Calculator expression with the threshold substituted, Con(Raster(r"C:\Ames\Lab02\Lab02.gdb\NDVI") >= 0.4, 1, 0), and Succeeded in 8.99 seconds.](images/lab02-threshold-run-messages.png)
 
 **Figure 15.** The run log. The substituted value, 0.4, is right there in the expression.
 
@@ -511,7 +525,11 @@ Everything in this lab hangs on one number, and right now that number is buried 
 
 **Figure 16.** The finished model: Reclassify and Raster Calculator side by side, both classifying the same NDVI surface. They give identical results at 0.4 — check that they do — and only one of them can be changed from the dialog.
 
-Now open **Properties ▸ Parameters** again, drag `Threshold` up under the two inputs, and reopen the model from the Catalog pane. The dialog now has a **Threshold** box (Figure 17). **Screen capture this dialog for your report** — it is one of the deliverables.
+Now open **Properties ▸ Parameters** again, drag `Threshold` up under the two inputs by its row number (Figure 16b), and reopen the model from the Catalog pane. The dialog now has a **Threshold** box (Figure 17). **Screen capture this dialog for your report** — it is one of the deliverables.
+
+![The Tool Properties Parameters tab with four rows: the red band, the NIR band, Threshold (Double, Required, Input) and NDVI_reclass (Output).](images/lab02-model-properties-parameters-threshold.png)
+
+**Figure 16b.** Properties ▸ Parameters after the drag: inputs first, then the threshold, then the outputs. Mark `NDVI_class` as a parameter too and it joins the list.
 
 ![The Geoprocessing pane showing the NDVI model as a tool with five parameters: the red band, the NIR band, Threshold = 0.4, NDVI_reclass and NDVI_class.](images/lab02-model-tool-interface-threshold.png)
 
@@ -601,7 +619,7 @@ Two example layouts follow, both laid out and exported from ArcGIS Pro 3.7.1 aga
 
 ![Example finished layout titled "Irrigated Cropland in Utah County from Landsat NDVI": the classified raster over a light gray basemap of Utah County, tan for non-irrigated land and green for irrigated cropland, with seven labeled city points, the county outline, a red extent box near Elberta, an imagery inset of the center-pivot fields there with the classification at 55 % opacity, a legend, north arrow, scale bar in miles, and a text box giving the result (1,111 of 2,099 square miles above 0.4), the author, date, projection, data sources and method.](images/lab02-example-map-utah-county-2025.png)
 
-**Figure 19.** The Utah County map at the handout's threshold. Two things to do better than this example: put the threshold in the title itself, not only the subtitle, and write the projection your outputs are actually in (this run's were reprojected to NAD 1983 by the environment setting discussed in Step 0). Notice what the text box admits: 53 % of the county is above 0.4 because the forested mountains are in the green class. A map that shows the classification honestly, and says in words where it is wrong, is worth more than one that hides it.
+**Figure 19.** The Utah County map at the handout's threshold. Two things to do better than this example: put the threshold in the title itself, not only the subtitle, and give the inset a scale bar of its own instead of a scale in its caption. Notice what the text box admits: 53 % of the county is above 0.4 because the forested mountains are in the green class. A map that shows the classification honestly, and says in words where it is wrong, is worth more than one that hides it.
 
 ![Example scenario layout titled "Utah County NDVI Classification: 0.6 Threshold Scenario": the same design, with far less green on the valley floor, the mountains still green, and a text box stating that 722 of 2,099 square miles (34 %) are at or above 0.6, that the forest is still in the class, and that the dry benches, town lawns and paler pivots drop out first.](images/lab02-example-map-utah-county-06.png)
 
@@ -627,7 +645,9 @@ Fifty points in five parts of ten, plus up to five points of extra credit. The b
 ArcGIS Pro version verified against: VERIFIED 2026-09-06 in ArcGIS Pro 3.7.1. Every step 0-6 was driven in the GUI. Every dialog on this page is a capture of that session.
 ROUND 3 (2026-09-06, later): instructor decision - the second study area is NOT a requirement. The old "find another scene" step (and round 2's Step 7 on the Magic Valley extract) is dropped in favor of the Step 6 sensitivity analysis, exactly as Lab 1 dropped its second county; the second deliverable map is now a Step 6 threshold scenario (Figure 20 already is one). The Magic Valley extract is KEPT in docs/data as an optional going-further download because it was already built and costs a student nothing; delete the zip and the two fetch/make scripts in tools/lab02 if it is not wanted.
 DATA PACKAGES: (1) docs/data/lab02-utah-county-landsat.zip, 21.8 MB (rebuilt after the round-2 note said 24.3): LC08_L2SP_038032_20250712_20250725_02_T1 (2025-07-12, path 38 row 32, 0.02 % cloud), C2 L2 SR bands 4 and 5 clipped to the UGRC Utah County polygon, scale factor applied (DN*0.0000275-0.2), negatives floored at 0 (KEPT by instructor decision 2026-09-06 - it makes water read exactly -1.0, now explained on the page), stored S16 * 10000, LZW; MTL and READ-ME inside. Prepared by the instructor 2026-09-05. (2, OPTIONAL going-further only since round 3) docs/data/lab02-magic-valley-landsat.zip, 4.8 MB: LC08_L2SP_040031_20250710_20250715_02_T1 (2025-07-10, path 40 row 31, 0.01 % cloud, UTM zone 11), same processing, clipped to lon -114.75..-114.25 lat 42.33..42.57 (Twin Falls / Kimberly / Hansen), built by tools/lab02/fetch_second_scene.py (STAC search + signed download from the Planetary Computer mirror) and tools/lab02/make_second_extract.py. First attempt at a box further north (to 42.75) was a third NoData: the scene's data edge is at about 42.6 N here. 1,297,813 cells, 0 % NoData.
-PILOT (2026-09-06, round 3): a fresh agent read the page as a first-time student and reproduced every published check value with arcpy (Spatial Analyst) against the hosted extracts; notes at C:\Ames\Pilot02\PILOT_NOTES.md. Every number matched (cells, area, NDVI stats, class-1 area at six thresholds, Magic Valley figures, MTL values). Text fixes made from its findings: Figure 0d shows an inherited Output Coordinate System and the example maps say NAD 1983 (now explained in Step 0 and Figure 19 rather than re-shot - no desktop control was available this round); Step 6 now says to count NDVI_class, not the fixed-at-0.4 reclass output; the rubric's check-value bullet applies to the 0.4 run; the MTL lists the reflectance scale factors twice; skipping Float gives -1/0/1 (396,438 / 5,643,798 / 48 cells), not 0/1; Figures A and B are now lettered in page order; Figure 1b/6b references fixed; the one-third crossing is at 0.611 so the Step 6 TIP was reworded; Float/Minus/Plus have 6,040,288 cells (4 cells with red = NIR = 0 become NoData in Divide); zip sizes corrected to 21.8 and 4.8 MB; the no-step-by-step extra-credit promise dropped (no rubric row); model description and title block added to Deliverables. Not fixed: the MSS column of Table 1 is now headed Landsat 1-3 but still not checked against the live USGS page. GUI pilot still owed: nobody has yet driven Steps 0-6 as a student on a lab machine.
+PILOT (2026-09-06, round 3): a fresh agent read the page as a first-time student and reproduced every published check value with arcpy (Spatial Analyst) against the hosted extracts; notes at C:\Ames\Pilot02\PILOT_NOTES.md. Every number matched (cells, area, NDVI stats, class-1 area at six thresholds, Magic Valley figures, MTL values). Text fixes made from its findings: Figure 0e shows an inherited Output Coordinate System and the example maps say NAD 1983 (now explained in Step 0 and Figure 19 rather than re-shot - no desktop control was available this round); Step 6 now says to count NDVI_class, not the fixed-at-0.4 reclass output; the rubric's check-value bullet applies to the 0.4 run; the MTL lists the reflectance scale factors twice; skipping Float gives -1/0/1 (396,438 / 5,643,798 / 48 cells), not 0/1; Figures A and B are now lettered in page order; Figure 1b/6b references fixed; the one-third crossing is at 0.611 so the Step 6 TIP was reworded; Float/Minus/Plus have 6,040,288 cells (4 cells with red = NIR = 0 become NoData in Divide); zip sizes corrected to 21.8 and 4.8 MB; the no-step-by-step extra-credit promise dropped (no rubric row); model description and title block added to Deliverables. Not fixed: the MSS column of Table 1 is now headed Landsat 1-3 but still not checked against the live USGS page. GUI pilot still owed: nobody has yet driven Steps 0-6 as a student on a lab machine.
+
+PILOT (2026-09-06, round 4, GUI): Steps 0-6 driven end to end through the ArcGIS Pro 3.7.1 interface by desktop control, from a new project and the hosted zip, at 175 % display scaling, with every figure re-captured from that session. Text corrections made: Figure 0a is the Build Pyramids and Calculate Statistics prompt; rename is blocked while the model is open in ModelBuilder (F2 does nothing); the Catalog rename changes the Label and the Name stays Model until set in Properties > General; the Classify dialog kept Method = Natural Breaks after the 0.4 break was typed; the Environments figure now shows an empty Output Coordinate System and the example maps say WGS 1984 UTM Zone 12N, so the Step 0 and Figure 19 apologies are gone. Check values reproduced from the GUI run: 1,111 of 2,099 sq mi (53 %) at 0.4 and 722 (34 %) at 0.6. Still owed on a lab machine: nobody has run this on a D:-drive student image.
 VERIFIED NUMBERS (Utah County): 6,040,284 cells = 2,099 sq mi (county polygon 2,141; the 42 sq mi is boundary cells dropped by the clip - instructor decision 2026-09-06: not worth chasing); NDVI min -1 max 1 mean 0.399 median 0.431, 6.6 % below 0; class 1 at 0.2/0.3/0.4/0.5/0.6/0.7 = 1651/1327/1111/917/722/496 sq mi = 79/63/53/44/34/24 %; circle means (tools/lab02/samples.json): pivot field red 0.138 NIR 0.385 NDVI 0.47 (300 m circle); forest above Provo 0.048/0.344/0.75; Cedar Valley bench 0.156/0.255/0.24; Utah Lake 0.082/0.000/-0.99; Provo blocks 0.147/0.247/0.27 (1 km circles). Whole model 36 s inside ModelBuilder, about 66 s from the tool dialog (everything re-runs). Magic Valley (optional extract, measured with arcpy, not the GUI): 1,297,813 cells = 451 sq mi, mean 0.424 median 0.288, 0.0 % below 0; class 1 at 0.3/0.4/0.5/0.6 = 218/177/147/120 sq mi = 48/39/33/27 %.
 PARITY ITEMS DONE THIS ROUND (numbers refer to PARITY_PLAN.md): 1 sensitivity step + threshold exposed via Raster Calculator Con() with a Double variable, alongside Reclassify (option a); 2 second scene = second prepared extract (middle option) in round 2, then DROPPED as a requirement in round 3 (see above); 3 Data section: metadata questions for imagery + Figure B, source table, water and area notes, Figure A measured; 4 Step 0 Environments + cell-count check; 5 expected numbers in Steps 0-3 and 6; 6 SVG export of the model (Figure C) + second example map (0.6 scenario) + both infographics generated by tools/lab02/make_svgs.py; 7 deliverables itemized and rubric re-split 30 -> 20 + 10 (proposal, superseded in round 3 by the instructor's 10/10/10/10/10 rubric with per-bullet values and +5 Magic Valley extra credit); 8 raster section added to docs/arcgis-tips.md.
 ROUND 3 FIGURES: the four per-step ModelBuilder snippets (Steps 1, 2, 3 and Figure 16) are now cut from the SVG export by tools/lab02/cut_model_snippets.py (headless Chrome at 3x, 1 SVG unit = 4 px), with the P markers removed for Steps 1-3 and the Threshold variable masked out of the Step 2 cut, since neither exists yet at those steps. The three tool icons are now generated by tools/lab02/make_svgs.py alongside the two infographics. NOT DONE: 9 pilot runs.
