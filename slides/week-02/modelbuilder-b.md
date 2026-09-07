@@ -453,14 +453,14 @@ The example map is not a template: yours will differ, because your stores and yo
 <div class="columns" style="grid-template-columns: 1fr 1fr;">
 <div style="text-align:center;">
 
-![h:250](images/mbb-lab1-example-map-baseline.png)
+![h:200](images/mbb-lab1-example-map-baseline.png)
 
 **Baseline** — 2 miles from a Walmart
 
 </div>
 <div style="text-align:center;">
 
-![h:250](images/mbb-lab1-example-map-scenario.png)
+![h:200](images/mbb-lab1-example-map-scenario.png)
 
 **Scenario** — 3 miles from a Walmart
 
