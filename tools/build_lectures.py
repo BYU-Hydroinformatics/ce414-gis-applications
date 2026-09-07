@@ -15,8 +15,8 @@ SITE = "https://byu-hydroinformatics.github.io/ce414-gis-applications"
 # week, slug, title, one-line description, lab due this week (or None)
 DECKS = [
     (1,  "data-models-refresher",          "Data Models Refresher",                      "What a model is, and the vector, raster, and TIN data models that every later week builds on.", None),
-    (2,  "modelbuilder-a",                 "ModelBuilder, Part A",                       "Why models, then ModelBuilder in ArcGIS Pro: toolboxes, a first model, properties and environments, and the Cities Near Rivers example.", 1),
-    (2,  "modelbuilder-b",                 "ModelBuilder, Part B",                       "Making a working model reusable: Add To Display, debugging gray nodes, renaming elements, exposing parameters so the model runs as a tool, and writing its metadata.", 1),
+    (2,  "modelbuilder-a",                 "ModelBuilder, Part A",                       "Why models, then ModelBuilder in ArcGIS Pro: toolboxes, a first model, environments, reading a canvas, the Cities Near Rivers example start to finish, and how Lab 1 is the same pattern.", 1),
+    (2,  "modelbuilder-b",                 "ModelBuilder, Part B",                       "The cookie model, then making a working model reusable: Add To Display, gray elements, renaming, parameters so the model runs as a tool, metadata; then a Lab 1 clinic on the rubric, a complete submission, checking your answer, and peer review.", 1),
     (3,  "modelbuilder-c",                 "ModelBuilder, Part C — NDVI",                "What counts as a model, the NDVI equation and why red and near-infrared carry the vegetation signal, and the same index read at continental, farm-plot, and multi-date scale.", None),
     (3,  "raster-analysis-map-algebra",    "Raster Analysis and Map Algebra",            "Rasters as grids of numbers: cell-by-cell operations, map algebra, and NDVI as a worked example.", None),
     (4,  "georectifying-images",           "Georectifying Images",                       "Giving a scanned map or photo real-world coordinates: control points, transformations, and what can go wrong.", 2),
@@ -69,11 +69,11 @@ def index_page(weeks):
     return "\n".join(lines)
 
 def update_nav(weeks):
-    yml = ROOT / "mkdocs.yml"; text = yml.read_text()
+    yml = ROOT / "mkdocs.yml"; text = yml.read_text(encoding="utf-8")
     nav = ["  - Lectures:", "      - Overview: lectures/README.md"]
     for w in sorted(weeks):
         nav.append(f'      - "Week {w} — {WEEK_TITLES[w]}": lectures/week-{w:02d}.md')
-    yml.write_text(re.sub(r"  - Lectures:\n(?:      .*\n)+", "\n".join(nav) + "\n", text))
+    yml.write_bytes(re.sub(r"  - Lectures:\n(?:      .*\n)+", "\n".join(nav) + "\n", text).encode("utf-8"))
 
 def main():
     weeks = {}
@@ -81,10 +81,10 @@ def main():
     (DOCS / "lectures").mkdir(exist_ok=True)
     for w, decks in weeks.items():
         p = DOCS / "lectures" / f"week-{w:02d}.md"; body = week_page(w, decks)
-        if p.exists() and "<!-- notes -->" in p.read_text():
-            body += "\n<!-- notes -->" + p.read_text().split("<!-- notes -->", 1)[1]
-        p.write_text(body)
-    (DOCS / "lectures" / "README.md").write_text(index_page(weeks))
+        if p.exists() and "<!-- notes -->" in p.read_text(encoding="utf-8"):
+            body += "\n<!-- notes -->" + p.read_text(encoding="utf-8").split("<!-- notes -->", 1)[1]
+        p.write_bytes(body.encode("utf-8"))
+    (DOCS / "lectures" / "README.md").write_bytes(index_page(weeks).encode("utf-8"))
     update_nav(weeks)
     print(f"wrote {len(weeks)} week pages, lectures/README.md, and the Lectures nav")
 
