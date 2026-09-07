@@ -106,9 +106,31 @@ By the end of class you should be able to:
 
 # A Digital Elevation Model is a model of the earth's terrain
 
-![h:400 center](images/mba-dem-terrain.jpg)
+<div class="columns" style="grid-template-columns: 0.9fr 1.15fr 1.25fr; gap: 20px; align-items: end;">
+<div style="text-align:center;">
 
-A DEM is two models at once: a **raster data model** (last week) holding one number per cell, and a **model of the terrain** built from those numbers.
+![h:270](images/mba-dem-grid.svg)
+
+<small>One number per cell</small>
+
+</div>
+<div style="text-align:center;">
+
+![h:270](images/mba-dem-columns.svg)
+
+<small>The same numbers as columns</small>
+
+</div>
+<div style="text-align:center;">
+
+![h:270](images/mba-dem-terrain.jpg)
+
+<small>The terrain they describe</small>
+
+</div>
+</div>
+
+A DEM is two models at once: a **raster data model** (a regularly spaced grid of numeric values — discussed last week) holding one number per cell, and a **model or representation of the terrain (elevations)** built from those numbers.
 
 <!-- This is the one-line bridge from last week's data models. The word "model" is in the name. A DEM is a raster, one elevation per cell, and it is also a simplified representation of the ground. Every raster analysis later in the course starts from this double meaning. -->
 
@@ -130,32 +152,29 @@ A model could be a <strong>theory</strong>, a <strong>law</strong>, a <strong>hy
 
 <p style="font-size:0.7em;color:#5a6472;">From Haggett and Chorley, 1967</p>
 
+<style scoped>
+section ul { list-style: none; margin: 0; padding: 0; }
+section li[data-marpit-fragment] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; pointer-events: none; }
+.mb-ring { position: absolute; left: 958px; top: 135px; width: 286px; height: 330px; overflow: visible; }
+.mb-ring ellipse { fill: none; stroke: #e8792b; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 900; stroke-dashoffset: 0; }
+li[data-bespoke-marp-fragment="active"] .mb-ring ellipse { animation: mb-draw 0.9s ease-out forwards; }
+@keyframes mb-draw { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }
+.mb-call { position: absolute; left: 780px; top: 88px; width: 430px; text-align: right; font-size: 0.74em; font-weight: 700; color: #e8792b; line-height: 1.25; }
+li[data-bespoke-marp-fragment="active"] .mb-call { animation: mb-fade 0.6s ease-out both; }
+@keyframes mb-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+
+* <svg class="mb-ring" viewBox="0 0 286 330"><ellipse cx="143" cy="165" rx="130" ry="152" transform="rotate(-7 143 165)"/></svg><span class="mb-call">Enabled by ModelBuilder — Core Modeling Environment for this Class</span>
+
 <!-- Nothing on this list is a computer program. Ask the class for an engineering example of each: Manning's equation, the rational method, a free-body diagram. The two orange tiles are the ones this course builds in ModelBuilder: equations (Lab 2's NDVI) and structured ideas (Lab 1's site-selection chain). We model constantly and only sometimes write code. -->
 
 ---
 
 # A recipe is a model
 
-<div class="columns" style="grid-template-columns: 3fr 1fr;">
-<div style="font-size:0.62em;line-height:1.9;">
+![h:350 center](images/mba-pie-recipe.svg)
 
-<span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">flour</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">salt</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">shortening</span> → <span style="background:#ffd21f;padding:.25em .8em;">cut</span> → <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pie dough</span> → <span style="background:#ffd21f;padding:.25em .8em;">roll out</span> → <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pie crust</span>
-
-<span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">eggs</span> → <span style="background:#ffd21f;padding:.25em .8em;">beat</span> → <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">beaten eggs</span>
-
-<span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pumpkin puree</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">evaporated milk</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">spices</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">beaten eggs</span> → <span style="background:#ffd21f;padding:.25em .8em;">mix</span> → <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pie filling</span>
-
-<span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pie crust</span> <span style="background:#3fc0c8;border-radius:999px;padding:.25em .8em;">pie filling</span> → <span style="background:#ffd21f;padding:.25em .8em;">fill pan &amp; bake</span> → <strong>Pumpkin Pie</strong>
-
-</div>
-<div style="text-align:center;">
-
-![w:200](images/mba-pumpkin-pie.jpg)
-
-</div>
-</div>
-
-- **Rounded shapes are data, yellow boxes are processes** — that is exactly ModelBuilder's vocabulary
+- **Blue ovals are inputs, yellow boxes are tools, green ovals are derived data** — exactly ModelBuilder's vocabulary
 - "a pattern of something to be made" — *Merriam-Webster*
 
 <p style="font-size:0.62em;color:#5a6472;">(Adapted from Merrilee Torres, Burlington County, NJ, GIS Users Group)</p>
