@@ -10,6 +10,8 @@ footer: "CE 414 · Week 2 — ModelBuilder, Part A"
 
 ![bg right:45% w:99%](images/mba-cities-rivers-map.png)
 
+![w:130](../theme/images/byu-medallion.svg)
+
 # Spatial Modeling and ArcGIS ModelBuilder — Part A
 
 CE 414 Engineering Applications of GIS
@@ -44,8 +46,8 @@ By the end of class you should be able to:
 <div style="margin-top:0.7em;font-size:1.05em;">Or&hellip; an <strong style="color:#fff;">"Abstraction of Reality"</strong></div>
 </div>
 
-- The word does a lot of work in engineering: it covers globes, maps, photographs, equations, and computer programs
-- What every one of them has in common: something is **left out on purpose**
+- The word, "model", does a lot of work in engineering: it covers globes, maps, photographs, equations, and computer programs
+- What every one of them has in common: they are an **intentional simplification of the real world**
 
 <!-- Start by asking the class for examples of models before showing the definition. The next five slides are all examples; keep them moving. -->
 
@@ -53,7 +55,9 @@ By the end of class you should be able to:
 
 # A globe is a model of the Earth
 
-![h:440 center](images/mba-globe.jpg)
+![h:440 center](images/mba-globe.gif)
+
+<!-- Image: an antique-styled desk globe rendered from Natural Earth 1:110m land polygons (public domain) by tools/make_antique_globe_gif.py; no openly licensed animation of a real physical globe was available. -->
 
 <!-- Round, rotates, shows continents and oceans. Leaves out everything smaller than a few hundred kilometers. Ask what a globe is good for that a flat map is not. -->
 
@@ -61,13 +65,15 @@ By the end of class you should be able to:
 
 # A map is a graphical model of the earth's surface
 
-![h:440 center](images/mba-map-graphic-model.jpg)
+![h:440 center](images/mba-old-paper-map.jpg)
+
+<!-- Photo: "maps lying on the floor" by Andrew Neel, https://unsplash.com/photos/1-29wyvvLJA, Unsplash License. -->
 
 <!-- A map is a graphical model. Every symbol on it is a decision about what matters. -->
 
 ---
 
-# A photo is a pictorial model of surface features
+# An aerial photo is a pictorial model of surface features
 
 ![h:430 center](images/mba-aerial-photo.jpg)
 
@@ -75,19 +81,19 @@ By the end of class you should be able to:
 
 ---
 
-# Weather forecasting model
+# A simple weather forecasting model
 
 <div class="columns">
 <div style="text-align:center;">
 
-![h:330](images/mba-weather-stations.jpg)
+![h:360](images/mba-weather-stations.svg)
 
 **Weather stations** — point measurements
 
 </div>
 <div style="text-align:center;">
 
-![h:330](images/mba-thiessen-polygons.jpg)
+![h:360](images/mba-thiessen-polygons.svg)
 
 **Predicted model** — Thiessen polygons
 

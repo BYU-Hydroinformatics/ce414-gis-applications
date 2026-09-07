@@ -10,6 +10,8 @@ footer: "CE 414 · Week 1 — Data Models Refresher"
 
 ![bg right:45% w:85%](images/dm-title-puzzle.jpg)
 
+![w:130](../theme/images/byu-medallion.svg)
+
 # Data Models
 
 ## Engineering Applications of GIS

@@ -10,6 +10,8 @@ footer: "CE 414 · Week 2 — ModelBuilder, Part B"
 
 ![bg right:42% w:95%](images/mbb-model-renamed-nodes.png)
 
+![w:130](../theme/images/byu-medallion.svg)
+
 # Spatial Modeling and ArcGIS ModelBuilder — Part B
 
 CE 414 Engineering Applications of GIS

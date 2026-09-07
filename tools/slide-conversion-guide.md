@@ -58,7 +58,10 @@ Three standing rules (set 2026-09-03) apply to every deck:
 
 Specifically:
 
-- Start with a title slide (class `lead`, background image on the right) and a **Today's Goals**
+- Start with a title slide (class `lead`, background image on the right, and the BYU medallion
+  `![w:130](../theme/images/byu-medallion.svg)` on its own line directly above the `# Title`;
+  `slides/theme/images/` is the one shared image folder, copied to the site by the same
+  `slides/*/images` step as the per-week folders) and a **Today's Goals**
   slide: "By the end of class you should be able to:" plus 3 to 5 outcomes.
 - End with a **Before Next Class** slide: the textbook reading, the open-book quiz on Learning
   Suite, the current lab (link to the assignments page), and office hours

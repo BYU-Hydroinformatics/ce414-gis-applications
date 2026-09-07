@@ -6,6 +6,7 @@ repo_name: BYU-Hydroinformatics/ce414-gis-applications
 
 theme:
   name: material
+  favicon: assets/favicon.png
   features:
     - navigation.sections
     - navigation.top
