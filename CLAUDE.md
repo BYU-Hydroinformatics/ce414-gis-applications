@@ -104,6 +104,13 @@ its figure, a table that lost a column.
 - GitHub-style admonitions (`> [!NOTE]`, `> [!WARNING]`) — the `gh-admonitions` plugin renders them.
 - Schedule in **week numbers, not calendar dates**, so the site survives re-offering.
 - Do not commit built output: `site/`, `_site/`, or deck `.html`.
+- **Write "ArcGIS Pro" in full** in anything a student reads; never shorten it to "Pro".
+- **Check every link** on a page whenever you touch it (curl the status, and open in a browser any
+  page that blocks scripts, such as usgs.gov). Remove or replace dead links; do not leave them.
+- **Every step heading carries a two- or three-word title**: `### Step 9 — Erase Served Areas`.
+- **Never refer to earlier versions of a handout** in student-facing text. Students have no access
+  to the old Word files, so a "do not copy the old expression" warning only confuses them; put
+  that history in an HTML comment instead.
 
 ## Git
 

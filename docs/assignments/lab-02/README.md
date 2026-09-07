@@ -158,7 +158,7 @@ For the purposes of this exercise, the choices that shape the answer are these. 
 > [!IMPORTANT]
 > **Set up your folder before you download anything.** On the lab machines, work on the
 > **D: drive**, in a folder named after you with one folder per lab inside it — `D:\Smith\Lab02\`.
-> Put the project and this lab's data there. The C: drive is locked, network drives make Pro hang
+> Put the project and this lab's data there. The C: drive is locked, network drives make ArcGIS Pro hang
 > on the large rasters this lab uses, and a USB 3.0 external drive is a legitimate alternative.
 > **Never use a space in a folder or file name**: the raster tools in particular fail on paths with
 > spaces and do not say that the space is why. The full set of workspace conventions is on the
@@ -236,7 +236,7 @@ You will use the following new tools in this exercise, along with tools from pre
 
 ![The finished ModelBuilder model exported as a vector diagram: the red and NIR band rasters each pass through a Float tool; the two float rasters feed a Minus tool (NDVI_numerator) and a Plus tool (NDVI_denominator); those feed a Divide tool that produces NDVI. NDVI feeds a Reclassify tool producing NDVI_reclass and a Raster Calculator producing NDVI_class; a Double variable named Threshold also feeds the Raster Calculator. The two inputs, Threshold, and both outputs carry a P, marking them as model parameters.](images/lab02-model-overview.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder as a vector diagram — **click it to open it full size**. Rename the intermediate datasets to something a reader can follow, as here, rather than leaving Pro's defaults such as `Minus_NIR_Fl1`. Everything marked `P` appears in the tool dialog you build in Steps 4 and 5.
+**Figure C.** The finished model, exported from ModelBuilder as a vector diagram — **click it to open it full size**. Rename the intermediate datasets to something a reader can follow, as here, rather than leaving ArcGIS Pro's defaults such as `Minus_NIR_Fl1`. Everything marked `P` appears in the tool dialog you build in Steps 4 and 5.
 
 ## Complete the Lab
 
@@ -257,11 +257,11 @@ For an advanced GIS student, the information up to this point is all you need to
 > your data exactly. They were captured in ArcGIS Pro 3.7.1 against the extract you downloaded.
 > Use them as a reference, but read what is actually on your screen. In particular, the paths in the figures start with `C:\Ames\` because they were captured on an instructor machine where C: is writable; yours will start with `D:\`.
 
-### Step 0
+### Step 0 — Set Up the Project
 
 **Create the project.** Start ArcGIS Pro, choose the **Map** template, name the project `Lab02`, and put it in your lab folder. As in Lab 1: the *Location* box does not take a typed path, so use the folder button beside it, and uncheck *Create a folder for this local project* if you already made the `Lab02` folder.
 
-**Add the two Utah County bands to the map.** On the **Map** ribbon tab click **Add Data** and add `UtahCounty_Red_B4_SR_x10000.tif` and `UtahCounty_NIR_B5_SR_x10000.tif`. Pro will ask, once per raster, whether to **build pyramids and calculate statistics** for it (Figure 0a). Leave both boxes checked and click **OK** — without statistics Pro cannot stretch the display, and the raster draws as a flat gray block; pyramids are what let it redraw quickly when you zoom. It takes a few seconds per band.
+**Add the two Utah County bands to the map.** On the **Map** ribbon tab click **Add Data** and add `UtahCounty_Red_B4_SR_x10000.tif` and `UtahCounty_NIR_B5_SR_x10000.tif`. ArcGIS Pro will ask, once per raster, whether to **build pyramids and calculate statistics** for it (Figure 0a). Leave both boxes checked and click **OK** — without statistics ArcGIS Pro cannot stretch the display, and the raster draws as a flat gray block; pyramids are what let it redraw quickly when you zoom. It takes a few seconds per band.
 
 ![The ArcGIS Pro "Build Pyramids and Calculate Statistics" dialog for UtahCounty_Red_B4_SR_x10000.tif: the raster has insufficient pyramids and statistics; Build and Calculate are both checked, each with an "Always use this choice" box, and OK and Cancel buttons.](images/lab02-pyramids-statistics-prompt.png)
 
@@ -278,13 +278,13 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Figure 0b.** The two bands in the Contents pane, with the value ranges to check against.
 
-**Check that you have Spatial Analyst.** Every tool in this lab is a Spatial Analyst tool. Click the **Project** tab, then **Licensing**, and scroll the *ArcGIS Pro Extensions* list to **Spatial Analyst** — it should read *Licensed: Yes* (Figure 0c). If it says *No*, tell your instructor: with the Named User license BYU uses, extensions are assigned to your account by the organization's administrator, and there is nothing on this page you can click to turn one on. (The *Configure your licensing options* button only changes which portal Pro signs in to. Older versions of this handout said to open it and check a box; the box does not exist.)
+**Check that you have Spatial Analyst.** Every tool in this lab is a Spatial Analyst tool. Click the **Project** tab, then **Licensing**, and scroll the *ArcGIS Pro Extensions* list to **Spatial Analyst** — it should read *Licensed: Yes* (Figure 0c). If it says *No*, tell your instructor: with the Named User license BYU uses, extensions are assigned to your account by the organization's administrator, and there is nothing on this page you can click to turn one on. (The *Configure your licensing options* button only changes which portal ArcGIS Pro signs in to.)
 
 ![The ArcGIS Pro Licensing page, ArcGIS Pro Extensions list scrolled to the bottom, with Spatial Analyst showing Licensed: Yes and an expiry date.](images/lab02-licensing-spatial-analyst.png)
 
 **Figure 0c.** Project ▸ Licensing. Spatial Analyst must show *Yes*.
 
-**Create the model.** On the **Analysis** ribbon tab click **ModelBuilder**. That creates a model called *Model* in your project toolbox (`Lab02.atbx`) and opens it. Give it a real name before you forget — but first close the ModelBuilder view (the × on its tab): while a model is open in ModelBuilder, Pro will not rename it, and F2 silently does nothing. Then in the **Catalog** pane expand **Toolboxes ▸ Lab02.atbx**, click the selected name a second time (or press F2), and call it `NDVI` (Figure 0d). Right-click the model and choose **Edit** whenever you need to reopen it in ModelBuilder; **Open** runs it as a tool instead, which you will use in Step 4.
+**Create the model.** On the **Analysis** ribbon tab click **ModelBuilder**. That creates a model called *Model* in your project toolbox (`Lab02.atbx`) and opens it. Give it a real name before you forget — but first close the ModelBuilder view (the × on its tab): while a model is open in ModelBuilder, ArcGIS Pro will not rename it, and F2 silently does nothing. Then in the **Catalog** pane expand **Toolboxes ▸ Lab02.atbx**, click the selected name a second time (or press F2), and call it `NDVI` (Figure 0d). Right-click the model and choose **Edit** whenever you need to reopen it in ModelBuilder; **Open** runs it as a tool instead, which you will use in Step 4.
 
 ![The Catalog pane, Project tab, with Toolboxes expanded to show Lab02.atbx containing a model named NDVI, selected.](images/lab02-catalog-model.png)
 
@@ -292,7 +292,7 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Look at the Environments before you build anything.** On the **ModelBuilder** ribbon tab click **Environments** (in the *Model* group). This dialog (Figure 0e) is the raster equivalent of Lab 1's coordinate-system step, and it has more knobs:
 
-- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. (Figure 0e shows it empty, which is what you want. If yours is filled in, the project inherited a coordinate system from the map: clear it, or every output will be silently reprojected and your maps will have to say so.) If you set it to a specific zone, Pro will silently *reproject* any scene from another zone into it — which is what would happen to a scene of your own from outside zone 12. That works, but you should know it happened.
+- **Output Coordinate System.** Leave it empty (*Same as Input*) for this lab, so every output comes out in the scene's own UTM zone. (Figure 0e shows it empty, which is what you want. If yours is filled in, the project inherited a coordinate system from the map: clear it, or every output will be silently reprojected and your maps will have to say so.) If you set it to a specific zone, ArcGIS Pro will silently *reproject* any scene from another zone into it — which is what would happen to a scene of your own from outside zone 12. That works, but you should know it happened.
 - **Cell Size, Snap Raster, Extent, Mask** (under *Raster Analysis* and *Processing Extent*). Every one has a default that will do something you did not ask for if your inputs disagree: Cell Size defaults to the coarsest input, Extent to the intersection of the inputs. Here both bands match exactly, so the defaults are right — but check them again the day you mix rasters from two sources.
 
 ![The ModelBuilder Environments dialog: Workspace (Current and Scratch Workspace set to Lab02.gdb), Output Coordinates (Output Coordinate System, empty), Processing Extent, Parallel Processing and Raster Analysis (Cell Size) sections.](images/lab02-environments-dialog.png)
@@ -305,7 +305,7 @@ For an advanced GIS student, the information up to this point is all you need to
 > attribute table of any classified output (add the two Count values). A different number means an
 > environment — extent, cell size or mask — changed something on the way through.
 
-### Step 1
+### Step 1 — Float the Bands
 
 Use the **Float** tool to change the data inside each raster from an integer type to a float type. Both bands need it, so you will use the tool twice.
 
@@ -333,7 +333,7 @@ Now double-click each Float tool and give its **Output raster** a name you will 
 > to 12,982); only the storage type changed. If your NDVI layer has only two or three distinct
 > values, this is what you skipped.
 
-### Step 2
+### Step 2 — Compute NDVI
 
 Use the **Minus**, **Plus** and **Divide** tools to model the NDVI equation: first the top and bottom of the fraction separately, then the division.
 
@@ -360,7 +360,7 @@ Then add **Divide (Spatial Analyst Tools)**, connect `NDVI_numerator` as value 1
 > [!WARNING]
 > **Click OK on every tool dialog before you click Run.** As in Lab 1, a model runs with the last
 > *committed* parameters. A dialog left open with an unsaved output name runs with the old one.
-> One more quirk seen in Pro 3.7: occasionally a tool dialog's OK button ignores clicks until you
+> One more quirk seen in ArcGIS Pro 3.7: occasionally a tool dialog's OK button ignores clicks until you
 > drag the dialog to a new spot on the screen. If OK does nothing, move the dialog and try again.
 
 **Run it.** Right-click the `NDVI` output oval and choose **Add To Display**, so the result appears in the map, then click **Run** on the ModelBuilder ribbon. A progress dialog steps through the five tools (Figure 4) — about half a minute for Utah County. Every tool and output turns green with a check mark when it has run.
@@ -382,7 +382,7 @@ Then add **Divide (Spatial Analyst Tools)**, connect `NDVI_numerator` as value 1
 
 **Figure 5.** The NDVI surface. Bright is green vegetation; dark is water.
 
-### Step 3
+### Step 3 — Reclassify NDVI
 
 Use the **Reclassify** tool to turn the NDVI surface into two classes at a threshold that separates irrigated cropland from everything else. The handout's threshold is **0.4**, which was found by drawing a polygon over a known irrigated field in an earlier scene and taking its mean NDVI:
 
@@ -396,7 +396,7 @@ Add **Reclassify (Spatial Analyst Tools)** to the canvas. Connect `NDVI` to it a
 - **Use Classify.** Click the **Classify** button, set **Classes** to `2` (use Tab, not Enter, to leave the box — Enter closes the dialog), then double-click the first *Upper value*, type `0.4`, press Tab, and click OK (Figure 6a). (The *Method* box may go on saying *Natural Breaks*; the break values in the list are what count.) The table now has two rows; change their **New** values to `0` and `1`.
 - **Or type the rows.** Typing into the empty last row adds a row: enter *Start*, *End* and *New* for each class. To remove a row, click it once to select it and press the **Delete** key (clicking a selected cell a second time edits it instead).
 
-Either way, finish with the two rows shown in Figure 6, plus the `NODATA → NODATA` row Pro adds for you. Name the **Output raster** `NDVI_reclass` and click **OK**.
+Either way, finish with the two rows shown in Figure 6, plus the `NODATA → NODATA` row ArcGIS Pro adds for you. Name the **Output raster** `NDVI_reclass` and click **OK**.
 
 ![The Classify dialog opened from the Reclassify tool: Field VALUE, Method Natural Breaks (Jenks), Classes 2, and an Upper value list reading 0.4 and 1.0.](images/lab02-classify-dialog.png)
 
@@ -419,7 +419,7 @@ Right-click `NDVI_reclass` and choose **Add To Display**, then **Run** again. On
 > about **3,197,000 cells** — **1,111 of 2,099 square miles, 53 %** of the county. That is not a
 > typo: the threshold puts half the county in the "irrigated" class. Keep reading.
 
-**Symbolize it.** Select the `NDVI_reclass` layer, and on the **Raster Layer** ribbon tab click **Symbology**. Pro has already chosen *Unique Values* on `Value`. Double-click each *Label* to rename the classes — `Non-irrigated land` and `Irrigated cropland` — and click each color patch to pick something sensible, such as tan and green (Figure 7b).
+**Symbolize it.** Select the `NDVI_reclass` layer, and on the **Raster Layer** ribbon tab click **Symbology**. ArcGIS Pro has already chosen *Unique Values* on `Value`. Double-click each *Label* to rename the classes — `Non-irrigated land` and `Irrigated cropland` — and click each color patch to pick something sensible, such as tan and green (Figure 7b).
 
 ![The map with the reclassified raster symbolized: tan for non-irrigated land and green for irrigated cropland over a topographic basemap of Utah County. The Contents pane legend reads Non-irrigated land and Irrigated cropland. Green covers the irrigated valley floor around Utah Lake and also the forested Wasatch and Uinta mountain slopes east of the valley.](images/lab02-reclass-result-map.jpg)
 
@@ -449,7 +449,7 @@ Now zoom in. Southwest of Utah Lake, around Elberta, the center-pivot sprinklers
 > second scene from another season — would let you fix it. Two students with different thresholds,
 > each justified from their own scene, can both be right. Step 6 turns this into numbers.
 
-### Step 4
+### Step 4 — Set Model Parameters
 
 Give your model a **toolbox interface**, so it can be run from a dialog like any other tool.
 
@@ -484,7 +484,7 @@ Now open the model as a tool: in the **Catalog** pane, right-click `NDVI` in `La
 > your report and for Step 6 — select the `NDVI` oval on the canvas and click **Intermediate** on
 > the ModelBuilder ribbon to switch that flag off, or make it a parameter too.
 
-### Step 5 — Expose the threshold
+### Step 5 — Expose the Threshold
 
 Everything in this lab hangs on one number, and right now that number is buried inside the Reclassify table. Get it out where it can be changed from the tool dialog, exactly the way Lab 1 exposed the two buffer distances.
 
@@ -544,7 +544,7 @@ Now open **Properties ▸ Parameters** again, drag `Threshold` up under the two 
 > both." That is the whole case for model parameters — not that they are good practice in the
 > abstract, but that they make the run you are about to repeat cheap.
 
-### Step 6 — How much depends on the threshold?
+### Step 6 — Test the Threshold
 
 The classified map from Step 3 is *an* answer, not *the* answer: it is what the county looks like if "irrigated cropland" means "NDVI at or above 0.4," and Figure 7b already showed that definition sweeping in the mountains. This step is about not simply believing that map. Every threshold is a different definition of "green enough," and what drops in or out as you move it tells you what the class actually contains — forest, town lawns, wetland edges, a pivot between cuttings. Small changes to that one number are the tool for finding out, and for saying with numbers rather than impressions how much of your map you trust.
 
