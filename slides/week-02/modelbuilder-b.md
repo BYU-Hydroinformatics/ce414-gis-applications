@@ -491,7 +491,7 @@ The example map is not a template: yours will differ, because your stores and yo
 
 <!-- The lab requires this: a named reviewer and a sentence on what changed. Pair people up now if there is time. Reviewing against the rubric is the point; "looks good" is not a review. A report nobody else has read is a draft. -->
 
-<!-- TODO(instructor): a one-slide look at an anonymized prior-year report page was planned here ("the analysis is the same, the deliverables are different"). No prior-year PDF is on this machine; supply an anonymized page and it can be added as a slide with a one-line caption. -->
+<!-- TODO(instructor): a one-slide look at an anonymized prior-year report page was planned here ("the analysis is the same, the deliverables are different"). No prior-year PDF is on this machine; supply an anonymized page and it can be added as a slide with a one-line caption. Fall 2026: the two named prior-year PDFs attached to the Learning Suite Thursday entry are shown live instead. -->
 
 ---
 
