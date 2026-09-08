@@ -84,7 +84,7 @@ authoritative dates live in the Learning Suite syllabus. Each week page lists wh
 
 ## Week 15: Final Project Presentations
 
-- Tuesday is the second day of presentations. Thursday is the last day of class. Friday, an exam-preparation day with no official class, is an optional third presentation day. The final exam is the following week.
+- Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the following week.
 - [Week 15 page](week-15.md)
 
 > [!NOTE]

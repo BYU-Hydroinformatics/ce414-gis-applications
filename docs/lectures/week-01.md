@@ -14,7 +14,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Reading | Chapters 1 and 2 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 1 | *Basic Concepts and Data Models* — open book, on Learning Suite, done independently — 20 points |
-| In-class activity: your professional stamp | in class Thursday; upload the image the same day — 5 points |
+| In-class activity: your professional stamp | done in class Thursday; upload the image the same day by 9:30 am, fifteen minutes after class — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

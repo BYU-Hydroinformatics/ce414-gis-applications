@@ -159,6 +159,51 @@ These came out of the September 2026 audit and are **not** cosmetic:
 - **The decks are 4:3.** The course standards call for 16:9. Marp decks are 16:9 by default, so
   this resolves itself during conversion — but expect images sized for 4:3 to need re-placing.
 
+## Syllabus decisions and open items (September 7, 2026)
+
+The Fall 2026 Learning Suite syllabus was transcribed into `tools/build_lectures.py` (the `DUE`
+table), `docs/schedule.md`, `docs/policies/grading.md`, and `docs/course.md`. Reviewing it with the
+instructor produced these decisions; the open ones need to be settled on Learning Suite and then
+mirrored here.
+
+Settled:
+
+- **Class is 8:00 to 9:15 am Tuesday and Thursday** (75 minutes). The 2:00 to 2:50 pm slot in the
+  Learning Suite section header is an **open lab period** with the computer lab reserved for this
+  class, for individual work on the lab assignment. The site says so on the course and schedule pages.
+- **In-class activities are due at 9:30 am** the day they happen, fifteen minutes after class. The
+  Learning Suite due times were already 9:30 am; the site now explains why.
+- **Chapter 10** of *GIS Fundamentals* is about half terrain analysis and half watersheds, which is
+  why Quiz 6 (Watershed Delineation) points back to it.
+- **Presentation day 3** (the Friday exam-preparation day of Week 15) is removed. The site no longer
+  mentions it; remove it from the Learning Suite schedule too.
+
+Open, in priority order:
+
+1. **Exam schedule.** Sort out as soon as possible: Midterm 1's close (assignment says Friday
+   October 16, 9 pm; schedule says Saturday), Midterm 2's 3:00 pm Saturday close, and the
+   final-exam wording. Then fix `DUE[7]` and `DUE[12]` and the exam paragraph on the schedule page.
+2. **The pre-Thanksgiving pile-up.** Week 12 currently has Midterm 2, Quiz 11, Lab 11, and the
+   final-project kickoff. Spread it out, then update the Week 12 page, the two Week 12 decks'
+   closing slides, and the schedule table.
+3. **Final project proposal date.** The proposal meeting is due Friday December 4, after
+   presentations begin on Thursday December 3. Move it earlier (Week 13 is the natural slot), then
+   update `DUE[14]`, the schedule page's milestone table, and `docs/assignments/final-project.md`.
+4. **Lab 11.** "Choose Your Own Adventure" is to be replaced by a new lab on **depth analysis of a
+   lake** (bathymetry); the instructor has a draft to provide. When it arrives: write
+   `docs/assignments/lab-11/README.md` to the lab definition of done, rename `LABS[11]`, add it to
+   `LAB_PAGE`, add it to the nav, index page, and assignments overview, and update the Week 11 and
+   12 closing slides that mention Lab 11.
+5. **Rethink the reading quizzes.** Open question: what is a "reading quiz" worth in the AI era? One
+   option under consideration is a short **pre-class quiz and a post-class quiz** per topic, with
+   AI and web search allowed instead of the book. Nothing is decided; until it is, the site describes
+   the quizzes as the syllabus does (open book, independent, Saturday 11:59 pm).
+6. **Grading points.** The September 7 assignments printout is cut off; exam and final-project
+   points are unknown (about 300 points by subtraction) and only Quizzes 1 to 4 show a value.
+7. **Quiz 1 timing** (due two days after the first class, covering two chapters) and the **cookie
+   activity** due date (September 24 for an activity done September 10) are still as Learning
+   Suite has them.
+
 ## How to capture new ArcGIS Pro screenshots
 
 ArcGIS Pro runs through BYU Citrix (`byuapps.cloud.com` → *2025 BYU Standard Desktop*). The

@@ -26,10 +26,9 @@ With your lab assignment, add three notes:
 
 ## Presentation days
 
-Presentations run on Thursday of Week 14 and Tuesday of Week 15, eight minutes each. The Friday
-exam-preparation day of Week 15 is an optional third day for teams that choose to postpone. The
-two work days before presentations (Tuesday of Weeks 13 and 14) are class time for your team to
-work together with the instructor available.
+Presentations run on Thursday of Week 14 and Tuesday of Week 15, eight minutes each. The two
+work days before presentations (Tuesday of Weeks 13 and 14) are class time for your team to work
+together with the instructor available.
 
 ## Past projects
 

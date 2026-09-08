@@ -2,7 +2,7 @@
 
 ## In class
 
-Tuesday is the second day of presentations. Thursday is the last day of class. Friday, an exam-preparation day with no official class, is an optional third presentation day. The final exam is the following week.
+Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the following week.
 
 ## Due this week
 

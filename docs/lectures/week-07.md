@@ -11,8 +11,8 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | What | Details |
 | --- | --- |
 | Lab 6 | [Lab 6 — Avalanche Hazard](../assignments/lab-06/README.md) — one PDF report on Learning Suite — 50 points |
-| In-class activity: Practicing Hydrology Tools | in class Tuesday; upload a screen capture — 5 points |
-| In-class activity: Where is my watershed? | in class Tuesday; upload a screen capture — 5 points |
+| In-class activity: Practicing Hydrology Tools | done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class — 5 points |
+| In-class activity: Where is my watershed? | done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class — 5 points |
 | **Midterm 1** — closed book, in the Testing Center | opens Thursday after class and closes Friday evening |
 
 > [!NOTE]

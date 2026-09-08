@@ -5,8 +5,10 @@ Civil and Construction Engineering, Brigham Young University
 Dr. Dan Ames · 430N EB · [dan.ames@byu.edu](mailto:dan.ames@byu.edu) · office hours by
 appointment at [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-Fall 2026, Section 001: Tuesdays and Thursdays in 234 CB. Your BYU ID card opens the lab door;
-if it does not, check with the CCE office.
+Fall 2026, Section 001: Tuesdays and Thursdays, 8:00 to 9:15 am, in 234 CB. The 2:00 to 2:50 pm
+period on those days is an open lab reserved for this class, where you work on your lab assignment
+individually at the lab computers. Your BYU ID card opens the lab door; if it does not, check with
+the CCE office.
 
 ## Description
 
@@ -55,8 +57,9 @@ recommendation through a professional map and a concise report.
 
 ## How the course runs
 
-- Two class meetings a week, mixing lecture, discussion, and short in-class activities that are
-  uploaded to Learning Suite the same day.
+- Two 75-minute class meetings a week, mixing lecture, discussion, and short in-class activities
+  that are uploaded to Learning Suite by 9:30 am the same day, plus an open lab period each
+  afternoon of class for individual lab work.
 - A **reading quiz** and a **lab** almost every week, both due **Saturday at 11:59 pm**.
 - Two closed-book **midterms** in the Testing Center, a hands-on **final exam** in ArcGIS Pro, and
   a team **final project** presented in the last two weeks.

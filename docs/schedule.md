@@ -3,9 +3,14 @@
 Weeks are numbered from the first class meeting so this page survives re-offering. In Fall 2026,
 Week 1 begins Sunday, August 30, and the final exam falls in Week 16.
 
+**Class meets** Tuesdays and Thursdays, 8:00 to 9:15 am, in 234 CB. The 2:00 to 2:50 pm period on
+those days is an open lab: the computer lab is reserved for this class so you can work on your lab
+assignment individually, with help available.
+
 **Standing deadlines.** Reading quizzes and lab reports are due **Saturday at 11:59 pm** of the week
 they are listed under. Quizzes are open book and done independently; labs are one PDF report on
-Learning Suite. In-class activities are uploaded to Learning Suite the day they happen.
+Learning Suite. In-class activities are uploaded to Learning Suite by **9:30 am** the day they
+happen, fifteen minutes after class ends.
 
 | Week | Tuesday and Thursday | Reading and quiz (due Saturday) | Lab due Saturday |
 | --- | --- | --- | --- |
@@ -20,10 +25,10 @@ Learning Suite. In-class activities are uploaded to Learning Suite the day they 
 | 9 | [Interpolation part 3 (kriging) · ArcGIS Online and OGC web services](lectures/week-09.md) | Chapter 14 · Quiz 8 | Lab 8 — Practicing with Interpolation |
 | 10 | [Raster-based site suitability, parts 1 and 2](lectures/week-10.md) | Chapter 9 · Quiz 9 | Lab 9 — Wind Farm Site Selection |
 | 11 | [Least cost path, parts 1 and 2 · Projections and coordinate systems review](lectures/week-11.md) | Chapter 3 · Quiz 10 | Lab 10 — Least Cost Path |
-| 12 | [Final projects introduced · GPS review](lectures/week-12.md) · **Midterm 2** opens Thursday | Chapter 5 · Quiz 11 | Lab 11 — Choose Your Own Adventure |
+| 12 | [Final projects introduced · GPS review](lectures/week-12.md) · **Midterm 2** opens Thursday | Chapter 5 · Quiz 11 | Lab 11 — Choose Your Own Adventure <!-- TODO(instructor): to be replaced by a lake depth-analysis lab; the Week 12 load is being reworked --> |
 | 13 | [Project work day · Thanksgiving, no class Thursday](lectures/week-13.md) | — | — |
 | 14 | [Project work day · Presentations, day 1](lectures/week-14.md) · proposal meeting by Friday | — | — |
-| 15 | [Presentations, day 2 · last day of class](lectures/week-15.md) · project deliverables Wednesday and Thursday | — | — |
+| 15 | [Presentations, day 2 · last day of class](lectures/week-15.md) · project deliverables Wednesday and Thursday · Friday is exam preparation, no class | — | — |
 | 16 | **Final exam**, Thursday morning, in the lab with ArcGIS Pro | — | — |
 
 ## Exams

@@ -8,7 +8,12 @@ is regenerated.
 
 The DUE table was transcribed from the Fall 2026 Learning Suite syllabus (printed September 7,
 2026). Standing rule from that syllabus: reading quizzes and labs are due Saturday at 11:59 pm of
-the week they are listed under."""
+the week they are listed under. In-class activities are due at 9:30 am the day they happen,
+fifteen minutes after the 8:00-9:15 class.
+
+Decisions still pending (Sept 7, 2026, see ROADMAP.md "Syllabus decisions"): the reading quizzes may be
+replaced by pre- and post-class quizzes; the exam schedule and the Week 12 pile-up are to be reworked; Lab 11
+is to be replaced by a lake depth-analysis lab. Update DUE when those land."""
 import re
 from pathlib import Path
 
@@ -56,31 +61,31 @@ NO_DECK = {
     13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
     14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
         "project presentations, eight minutes each. Sign up for a day on the class Google document.",
-    15: "Tuesday is the second day of presentations. Thursday is the last day of class. Friday, an exam-preparation "
-        "day with no official class, is an optional third presentation day. The final exam is the following week.",
+    15: "Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the "
+        "following week.",
 }
 
 # What is due in each week. Quizzes and labs are due Saturday 11:59 pm; everything else says when.
 # reading: chapters for the week's quiz; quiz: (number, title); lab: number; other: list of (what, when) rows.
 DUE = {
     1:  dict(reading="Chapters 1 and 2", quiz=(1, "Basic Concepts and Data Models"), lab=None,
-             other=[("In-class activity: your professional stamp", "in class Thursday; upload the image the same day")]),
+             other=[("In-class activity: your professional stamp", "done in class Thursday; upload the image the same day by 9:30 am, fifteen minutes after class")]),
     2:  dict(reading="Chapter 13", quiz=(2, "Cartographic Models and Modeling"), lab=1,
-             other=[("In-class activity: Model a Cookie", "in class Thursday; upload a screen capture of your result")]),
+             other=[("In-class activity: Model a Cookie", "done in class Thursday; upload a screen capture of your result by 9:30 am, fifteen minutes after class")]),
     3:  dict(reading="Chapter 10", quiz=(3, "Raster Analysis and Map Algebra"), lab=2,
-             other=[("In-class activity: Simple Map Algebra (Excel)", "in class Tuesday; upload the workbook")]),
+             other=[("In-class activity: Simple Map Algebra (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     4:  dict(reading="Chapter 6", quiz=(4, "Remote Sensing"), lab=3,
-             other=[("In-class activity: Georeference Your Home", "in class Tuesday; upload a screen capture")]),
+             other=[("In-class activity: Georeference Your Home", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class")]),
     5:  dict(reading="Chapter 11", quiz=(5, "Terrain Analysis"), lab=4,
-             other=[("In-class activity: Terrain Analysis, Slope (Excel)", "in class Tuesday; upload the workbook")]),
+             other=[("In-class activity: Terrain Analysis, Slope (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     6:  dict(reading="Chapter 10 review; some of this quiz needs a web search", quiz=(6, "Watershed Delineation"), lab=5,
-             other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "in class Tuesday; upload the workbook")]),
+             other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     7:  dict(reading=None, quiz=None, lab=6,
-             other=[("In-class activity: Practicing Hydrology Tools", "in class Tuesday; upload a screen capture"),
-                    ("In-class activity: Where is my watershed?", "in class Tuesday; upload a screen capture"),
+             other=[("In-class activity: Practicing Hydrology Tools", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
+                    ("In-class activity: Where is my watershed?", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
                     ("**Midterm 1** — closed book, in the Testing Center", "opens Thursday after class and closes Friday evening")]),
     8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=7,
-             other=[("In-class activity: Air Temperature Interpolation", "in class Tuesday; upload a screen capture or photo")]),
+             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
     9:  dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=8, other=[]),
     10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
     11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),

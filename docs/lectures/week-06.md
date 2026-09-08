@@ -15,7 +15,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Reading | Chapter 10 review; some of this quiz needs a web search of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 6 | *Watershed Delineation* — open book, on Learning Suite, done independently — 20 points |
 | Lab 5 | [Lab 5 — Watershed Delineation](../assignments/lab-05/README.md) — one PDF report on Learning Suite — 50 points |
-| In-class activity: Aspect and D8 Flow Direction (Excel) | in class Tuesday; upload the workbook — 5 points |
+| In-class activity: Aspect and D8 Flow Direction (Excel) | done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

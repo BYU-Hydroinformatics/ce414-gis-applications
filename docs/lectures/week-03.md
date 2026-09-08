@@ -16,7 +16,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Reading | Chapter 10 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 3 | *Raster Analysis and Map Algebra* — open book, on Learning Suite, done independently — 20 points |
 | Lab 2 | [Lab 2 — NDVI](../assignments/lab-02/README.md) — one PDF report on Learning Suite — 50 points |
-| In-class activity: Simple Map Algebra (Excel) | in class Tuesday; upload the workbook — 5 points |
+| In-class activity: Simple Map Algebra (Excel) | done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
