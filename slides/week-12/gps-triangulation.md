@@ -414,7 +414,7 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 - Read **Chapter 5** of *GIS Fundamentals* (GPS and GNSS Data)
 - Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Finish **Lab 11 — Choose Your Own Adventure** (on Learning Suite), due **Saturday 11:59 pm**
-- **Midterm 2** is in the Testing Center: it opens after class today and closes Saturday
+- **Midterm 2** is in the Testing Center the week after Thanksgiving: Tuesday 8:00 am to Thursday 9:00 pm
 - Start on the [Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) — the proposal is the next thing due
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 

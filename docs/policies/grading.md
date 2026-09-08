@@ -23,30 +23,25 @@ Below 60 % is an E.
 
 ## What is graded
 
-Point values are from the Learning Suite assignments view (September 7, 2026). The grade is
-points-based, so the percentages below are simply each component's share of the total and will
-shift a little if points are added or dropped during the semester.
+Point values are from the Learning Suite assignments view (September 8, 2026), 1,270 points in
+all. The grade is points-based, so the percentages below are simply each component's share of the
+total and will shift a little if points are added or dropped during the semester.
 
 | Component | Points | Notes |
 | --- | --- | --- |
-| Labs 1 to 11 | 50 each, 550 total (about 53 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
-| Reading quizzes | 20 each | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
+| Labs 1 to 11 | 50 each, 550 total (about 43 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
+| Reading quizzes (11) | 20 each, 220 total (about 17 %) | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
+| Midterms 1 and 2 | 100 each | Closed book, concept based, in the Testing Center. Open Tuesday 8:00 am to Thursday 9:00 pm of Weeks 8 and 14. |
+| Final exam | 100 | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
+| Final project | 100 total | Proposal meeting 10, presentation 40, lab-style write-up 50. See the [Final Project](../assignments/final-project.md) page. |
 | In-class activities (9) | 5 each, 45 total | Uploaded to Learning Suite the day they happen. Only presented in class. |
 | Attendance | 25 | Record your attendance on the class Google document; missed classes are subtracted. |
 | Peer review | 20 | Review and stamp at least ten classmates' lab reports, two points each, and turn in a memo at the end listing whom you reviewed. |
 | Final project presentation notes | 10 | Notes on at least ten classmates' presentations. |
-| Midterms 1 and 2 | see note | Closed book, concept based, in the Testing Center. Weeks 7 and 12. |
-| Final exam | see note | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
-| Final project | see note | Proposal meeting, presentation, and a lab-style write-up. See the [Final Project](../assignments/final-project.md) page. |
 
-Attendance, the in-class activities, peer review, and the presentation notes together are the
-**Attendance and Participation** category, about 10 % of the grade.
-
-<!-- TODO(instructor): the September 7 assignments printout is cut off after the Labs category, so
-the points for the two midterms, the final exam, and the final project deliverables are not shown
-here. By subtraction they total about 300 points, roughly 29 % of the grade. The same printout shows
-20-point values for Quizzes 1 to 4 only; if Quizzes 5 to 11 are also 20 points, the Quizzes
-category is about 220 points, not the 80 the printout currently reports. -->
+The three exams together are about 24 % of the grade and the final project about 8 %. Attendance,
+the in-class activities, peer review, and the presentation notes together are the **Attendance and
+Participation** category, about 8 %.
 
 ## Extra credit
 

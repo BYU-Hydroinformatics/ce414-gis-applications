@@ -313,7 +313,7 @@ That is the difference between a result and a recommendation.
 - **Finish** Lab 11 — Choose Your Own Adventure (on Learning Suite), due **Saturday 11:59 pm**
 - **Start** your data-feasibility table — one row per layer
 - **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
-- **Quiz 11** (Chapter 5, GPS and GNSS Data), open book, due **Saturday 11:59 pm**; **Midterm 2** opens in the Testing Center Thursday
+- **Quiz 11** (Chapter 5, GPS and GNSS Data), open book, due **Saturday 11:59 pm**
 
 <!-- Conversion notes (2026-09-03): built from the Learning Suite "Final Project" page (one page,
 exported to PDF Sept 2, 2026) and the peer scoresheet in Final Projects/scoresheet.docx. No slide

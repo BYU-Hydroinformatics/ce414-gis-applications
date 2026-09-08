@@ -1,4 +1,4 @@
-# Week 8: Interpolation
+# Week 8: Interpolation and Midterm 1
 
 ## Slides
 
@@ -16,6 +16,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Quiz 7 | *Sampling and Interpolation* — open book, on Learning Suite, done independently — 20 points |
 | Lab 7 | [Lab 7 — Big Southern Butte](../assignments/lab-07/README.md) — one PDF report on Learning Suite — 50 points |
 | In-class activity: Air Temperature Interpolation | done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class — 5 points |
+| **Midterm 1** — closed book, concept based, in the Testing Center | opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

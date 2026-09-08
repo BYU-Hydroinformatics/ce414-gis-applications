@@ -20,24 +20,25 @@ happen, fifteen minutes after class ends.
 | 4 | [Georectifying images · Remote sensing and 3D imaging](lectures/week-04.md) · in-class *Georeference Your Home* | Chapter 6 · Quiz 4 | Lab 3 — Georectifying and Digitizing |
 | 5 | [Terrain analysis, parts 1 and 2](lectures/week-05.md) · in-class *Slope* | Chapter 11 · Quiz 5 | Lab 4 — Cell Phone Tower Placement |
 | 6 | [Watershed delineation, parts 1 and 2](lectures/week-06.md) · in-class *Aspect and D8 Flow Direction* | Watershed delineation · Quiz 6 | Lab 5 — Watershed Delineation |
-| 7 | [Hydrology tools hands-on, StreamStats](lectures/week-07.md) · **Midterm 1** opens Thursday | — | Lab 6 — Avalanche Hazard |
-| 8 | [Interpolation, parts 1 and 2](lectures/week-08.md) · in-class *Air Temperature Interpolation* | Chapter 12 · Quiz 7 | Lab 7 — Big Southern Butte |
+| 7 | [Hydrology tools hands-on, StreamStats](lectures/week-07.md) | — | Lab 6 — Avalanche Hazard |
+| 8 | [Interpolation, parts 1 and 2](lectures/week-08.md) · in-class *Air Temperature Interpolation* · **Midterm 1** in the Testing Center, Tuesday to Thursday | Chapter 12 · Quiz 7 | Lab 7 — Big Southern Butte |
 | 9 | [Interpolation part 3 (kriging) · ArcGIS Online and OGC web services](lectures/week-09.md) | Chapter 14 · Quiz 8 | Lab 8 — Practicing with Interpolation |
 | 10 | [Raster-based site suitability, parts 1 and 2](lectures/week-10.md) | Chapter 9 · Quiz 9 | Lab 9 — Wind Farm Site Selection |
 | 11 | [Least cost path, parts 1 and 2 · Projections and coordinate systems review](lectures/week-11.md) | Chapter 3 · Quiz 10 | Lab 10 — Least Cost Path |
-| 12 | [Final projects introduced · GPS review](lectures/week-12.md) · **Midterm 2** opens Thursday | Chapter 5 · Quiz 11 | Lab 11 — Choose Your Own Adventure <!-- TODO(instructor): to be replaced by a lake depth-analysis lab; the Week 12 load is being reworked --> |
+| 12 | [Final projects introduced · GPS review](lectures/week-12.md) | Chapter 5 · Quiz 11 | Lab 11 — Choose Your Own Adventure <!-- TODO(instructor): to be replaced by a lake depth-analysis lab --> |
 | 13 | [Project work day · Thanksgiving, no class Thursday](lectures/week-13.md) | — | — |
-| 14 | [Project work day · Presentations, day 1](lectures/week-14.md) · proposal meeting by Friday | — | — |
+| 14 | [Project work day · Presentations, day 1](lectures/week-14.md) · **Midterm 2** in the Testing Center, Tuesday to Thursday · proposal meeting by Friday | — | — |
 | 15 | [Presentations, day 2 · last day of class](lectures/week-15.md) · project deliverables Wednesday and Thursday · Friday is exam preparation, no class | — | — |
 | 16 | **Final exam**, Thursday morning, in the lab with ArcGIS Pro | — | — |
 
 ## Exams
 
-- **Midterms 1 and 2** are closed-book, concept-based exams in the Testing Center. Each opens on
-  a Thursday after class (Weeks 7 and 12) and closes within two days. Study the readings and the
-  quizzes. Any exception to the schedule must be approved at least one week in advance.
-- **The final exam** is in class during finals week: one question, done in ArcGIS Pro at a lab
-  computer, open book and open computer, with a three-hour block and a single PDF to upload. It
+- **Midterms 1 and 2** are closed-book, concept-based exams in the Testing Center, 100 points each.
+  Each opens **Tuesday at 8:00 am** and closes **Thursday at 9:00 pm** (Weeks 8 and 14); the
+  Testing Center charges its late fee from 2:00 pm Thursday, so go earlier. Study the readings and
+  the quizzes. Any exception to the schedule must be approved at least one week in advance.
+- **The final exam** (100 points) is in class during finals week: one question, done in ArcGIS Pro
+  at a lab computer, open book and open computer, with a three-hour block and a single PDF to upload. It
   should take about 45 minutes; the block is long to allow for software trouble and accommodations.
 
 ## Final project milestones

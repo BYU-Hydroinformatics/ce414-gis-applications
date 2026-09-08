@@ -184,12 +184,15 @@ Settled:
 
 Open, in priority order:
 
-1. **Exam schedule.** Sort out as soon as possible: Midterm 1's close (assignment says Friday
-   October 16, 9 pm; schedule says Saturday), Midterm 2's 3:00 pm Saturday close, and the
-   final-exam wording. Then fix `DUE[7]` and `DUE[12]` and the exam paragraph on the schedule page.
-2. **The pre-Thanksgiving pile-up.** Week 12 currently has Midterm 2, Quiz 11, Lab 11, and the
-   final-project kickoff. Spread it out, then update the Week 12 page, the two Week 12 decks'
-   closing slides, and the schedule table.
+1. **Exam schedule: settled September 8, 2026.** Testing Center requests (pending approval) put
+   Midterm 1 at Tuesday October 20, 8:00 am, to Thursday October 22, 9:00 pm (Week 8) and Midterm 2
+   at Tuesday December 1 to Thursday December 3, same hours (Week 14); the late fee starts 2:00 pm
+   Thursday. The site reflects this (`DUE[8]`, `DUE[14]`, schedule and grading pages, Week 8 and
+   12 closing slides). Still to do: mirror it on Learning Suite (both exam assignments and the
+   schedule text entries), and decide what Thursday of Week 7 becomes now that it is not exam day.
+2. **The pre-Thanksgiving pile-up.** Moving Midterm 2 to Week 14 takes it out of Week 12, which
+   still has Quiz 11, Lab 11, and the final-project kickoff. Week 14 now carries Midterm 2 and the
+   first presentation day; judge after this offering whether that is too much.
 3. **Final project proposal date.** The proposal meeting is due Friday December 4, after
    presentations begin on Thursday December 3. Move it earlier (Week 13 is the natural slot), then
    update `DUE[14]`, the schedule page's milestone table, and `docs/assignments/final-project.md`.
@@ -202,11 +205,12 @@ Open, in priority order:
    option under consideration is a short **pre-class quiz and a post-class quiz** per topic, with
    AI and web search allowed instead of the book. Nothing is decided; until it is, the site describes
    the quizzes as the syllabus does (open book, independent, Saturday 11:59 pm).
-6. **Grading points.** The September 7 assignments printout is cut off; exam and final-project
-   points are unknown (about 300 points by subtraction) and only Quizzes 1 to 4 show a value.
-7. **Quiz 1 timing** (due two days after the first class, covering two chapters) and the **cookie
-   activity** due date (September 24 for an activity done September 10) are still as Learning
-   Suite has them.
+6. **Grading points: settled September 8, 2026** from the instructor assignments view: 1,270 points
+   (labs 550, quizzes 220, exams 300, final project 100, attendance and participation 100). The
+   student view shows only 1,030 because Quizzes 5 to 11 and the Final Exam are not yet visible to
+   students; publish them or the percentages students see stay off.
+7. **Quiz 1 timing** (due two days after the first class, covering two chapters) is still as
+   Learning Suite has it. The cookie activity due date was fixed on Learning Suite September 8.
 
 ## How to capture new ArcGIS Pro screenshots
 

@@ -48,19 +48,20 @@ LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Imag
         9:"Wind Farm Site Selection",10:"Least Cost Path Power Line Analysis",11:"Choose Your Own Adventure"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 11)}   # Lab 11 has no page yet
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"ModelBuilder and Raster Analysis",4:"Imagery",
-               5:"Terrain Analysis",6:"Watershed Delineation",7:"Watershed Delineation, Part 3, and Midterm 1",
-               8:"Interpolation",9:"Interpolation, Part 3, and Web Services",
+               5:"Terrain Analysis",6:"Watershed Delineation",7:"Watershed Delineation, Part 3",
+               8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
                10:"Raster-Based Spatial Analysis",11:"Least Cost Path and Coordinate Systems",12:"GPS and the Final Project",
-               13:"Final Project Work",14:"Final Project Work and Presentations",15:"Final Project Presentations"}
+               13:"Final Project Work",14:"Presentations and Midterm 2",15:"Final Project Presentations"}
 
 # Weeks with no new slide deck still get a page, with this description of what happens in class.
 NO_DECK = {
     7:  "No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, "
-        "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. "
-        "Thursday's class time is given to Midterm 1.",
+        "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity."
+        "<!-- TODO(instructor): Thursday of Week 7 is open now that Midterm 1 sits in Week 8; say what happens in class. -->",
     13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
     14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
-        "project presentations, eight minutes each. Sign up for a day on the class Google document.",
+        "project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is "
+        "open in the Testing Center from Tuesday morning to Thursday evening.",
     15: "Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the "
         "following week.",
 }
@@ -82,18 +83,18 @@ DUE = {
              other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     7:  dict(reading=None, quiz=None, lab=6,
              other=[("In-class activity: Practicing Hydrology Tools", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
-                    ("In-class activity: Where is my watershed?", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
-                    ("**Midterm 1** — closed book, in the Testing Center", "opens Thursday after class and closes Friday evening")]),
+                    ("In-class activity: Where is my watershed?", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class")]),
     8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=7,
-             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
+             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class"),
+                    ("**Midterm 1** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
     9:  dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=8, other=[]),
     10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
     11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),
-    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11,
-             other=[("**Midterm 2** — closed book, in the Testing Center", "opens Thursday after class and closes Saturday afternoon")]),
+    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11, other=[]),
     13: dict(reading=None, quiz=None, lab=None, other=[]),
     14: dict(reading=None, quiz=None, lab=None,
-             other=[("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
+             other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
+                    ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
     15: dict(reading=None, quiz=None, lab=None,
              other=[("Final project **presentation** (poster, slides, or video)", "Wednesday 11:59 pm"),
                     ("Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed", "Wednesday 11:59 pm"),

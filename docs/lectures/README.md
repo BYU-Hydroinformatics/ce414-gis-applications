@@ -40,12 +40,12 @@ authoritative dates live in the Learning Suite syllabus. Each week page lists wh
 - [Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html) — From a DEM to watersheds and streams: fill, flow direction, flow accumulation, thresholds, and pour points.
 - [Week 6 page](week-06.md)
 
-## Week 7: Watershed Delineation, Part 3, and Midterm 1
+## Week 7: Watershed Delineation, Part 3
 
-- No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. Thursday's class time is given to Midterm 1.
+- No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity.<!-- TODO(instructor): Thursday of Week 7 is open now that Midterm 1 sits in Week 8; say what happens in class. -->
 - [Week 7 page](week-07.md)
 
-## Week 8: Interpolation
+## Week 8: Interpolation and Midterm 1
 
 - [Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/interpolation.html) — Estimating a surface from points: Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.
 - [Week 8 page](week-08.md)
@@ -77,9 +77,9 @@ authoritative dates live in the Learning Suite syllabus. Each week page lists wh
 - Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.
 - [Week 13 page](week-13.md)
 
-## Week 14: Final Project Work and Presentations
+## Week 14: Presentations and Midterm 2
 
-- Tuesday is a final-project work day with the instructor available; Thursday is the first day of final project presentations, eight minutes each. Sign up for a day on the class Google document.
+- Tuesday is a final-project work day with the instructor available; Thursday is the first day of final project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.
 - [Week 14 page](week-14.md)
 
 ## Week 15: Final Project Presentations

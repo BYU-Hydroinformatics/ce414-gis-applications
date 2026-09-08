@@ -782,6 +782,8 @@ Is there a difference at the sample locations?
 
 **Quiz 7** — open book, on Learning Suite, due **Saturday 11:59 pm**
 
+**Midterm 1** — open in the Testing Center now through **Thursday 9:00 pm**; the late fee starts Thursday at 2:00 pm
+
 **Labs**
 
 - [Lab 7 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
