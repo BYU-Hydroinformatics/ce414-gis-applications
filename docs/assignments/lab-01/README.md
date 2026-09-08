@@ -397,8 +397,8 @@ Use the **Buffer** tool to create a 2-mile buffer around the major roads you sel
 > [!WARNING]
 > **The Distance row has two boxes, and the second one will betray you.** The unit box reads
 > *Unknown* until you type a number — and the moment you type one it quietly sets itself to
-> **Meters**. Type `2`, click OK, and you have built a **two-metre** buffer instead of a two-mile
-> one — a radius **1,609 times too small**, which is simply the number of metres in a mile. No
+> **Meters**. Type `2`, click OK, and you have built a **two-meter** buffer instead of a two-mile
+> one — a radius **1,609 times too small**, which is simply the number of meters in a mile. No
 > error, and a perfectly normal green check mark.
 >
 > Set the unit yourself. There is no plain "Miles" option in ArcGIS Pro 3.7 — choose
@@ -409,7 +409,7 @@ Also set **Dissolve Type** to *Dissolve all output features into a single featur
 > [!TIP]
 > **Check the result.** The dissolved 2-mile buffer around Utah County's major roads should be a
 > single feature covering roughly **976 square miles**, a little under half the county. If you get
-> about **1 square mile** instead, the unit box was still set to meters — a two-metre ribbon along
+> about **1 square mile** instead, the unit box was still set to meters — a two-meter ribbon along
 > 1,500 road segments still adds up to roughly a square mile, so it is not literally zero, but it
 > is obviously wrong next to 976.
 

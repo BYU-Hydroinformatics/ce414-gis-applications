@@ -81,8 +81,8 @@ of a lab that "ran fine" and still earns a poor grade.
 
 The Buffer tool's Distance row has **two** boxes: a number and a unit. The unit reads *Unknown*
 until you type a number, and then it silently sets itself to **Meters**. Type `2`, click OK, and
-you have made a **two-metre** buffer instead of a two-mile one. Your radius is **1,609 times too
-small** — that is just the number of metres in a mile. For a circular buffer the area comes out
+you have made a **two-meter** buffer instead of a two-mile one. Your radius is **1,609 times too
+small** — that is just the number of meters in a mile. For a circular buffer the area comes out
 about 2.6 million times too small; for a buffer around a long road it is nearer 1,600 times, since
 a thin ribbon's area scales with the radius rather than its square.
 
