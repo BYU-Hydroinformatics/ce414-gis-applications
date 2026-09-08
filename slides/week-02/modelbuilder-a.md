@@ -52,6 +52,7 @@ By the end of class you should be able to:
 
 - The word, "model", does a lot of work in engineering: it covers globes, maps, photographs, equations, and computer programs
 - What every one of them has in common: they are an **intentional simplification of the real world**
+- Bolstad calls a model a *description* of reality; we say *intentional simplification*. Both are true of a globe
 
 <!-- Start by asking the class for examples of models before showing the definition. The next five slides are all examples; keep them moving. -->
 
@@ -176,9 +177,10 @@ li[data-bespoke-marp-fragment="active"] .mb-call { animation: mb-fade 0.6s ease-
 
 # A recipe is a model
 
-![h:350 center](images/mba-pie-recipe.svg)
+![h:270 center](images/mba-pie-recipe.svg)
 
 - **Blue is input data, yellow is a tool, green is derived data** — exactly ModelBuilder's color code, drawn here the way ArcGIS Pro draws it
+- Bolstad draws it the other way: **rectangles are data, ellipses are operations** — same idea, opposite shapes
 - "a pattern of something to be made" — *Merriam-Webster*
 
 <p style="font-size:0.62em;color:#5a6472;">(Adapted from Merrilee Torres, Burlington County, NJ, GIS Users Group)</p>
@@ -663,7 +665,7 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 - **Think about what is involved in baking a cookie** — we will do an in-class activity on this!
 - Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/), due **Saturday 11:59 pm**: Steps 0 to 4 are within reach tonight
 - Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
-- Take **Quiz 2** (open book) on Learning Suite — due **Saturday 11:59 pm**
+- Take **Quiz 2** on Learning Suite — two sections, *from the reading* and *from class*; open book, open web — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->

@@ -666,7 +666,7 @@ The example map is not a template: yours will differ, because your stores and yo
 
 - Finish [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/) by **Saturday 11:59 pm** — get your peer review done before the deadline, not the night of it
 - Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
-- Take **Quiz 2** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Take **Quiz 2** on **Learning Suite** — two sections, *from the reading* and *from class*; open book, open web — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
