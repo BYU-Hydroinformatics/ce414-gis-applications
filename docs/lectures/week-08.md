@@ -13,9 +13,9 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | What | Details |
 | --- | --- |
 | Reading | Chapter 12 of *GIS Fundamentals*, 7th edition (Bolstad) |
-| Quiz 7 | *Sampling and Interpolation* — open book, on Learning Suite, done independently |
-| Lab 7 | [Lab 7 — Big Southern Butte](../assignments/lab-07/README.md) — one PDF report on Learning Suite |
-| In-class activity: Air Temperature Interpolation | in class Tuesday; upload a screen capture or photo |
+| Quiz 7 | *Sampling and Interpolation* — open book, on Learning Suite, done independently — 20 points |
+| Lab 7 | [Lab 7 — Big Southern Butte](../assignments/lab-07/README.md) — one PDF report on Learning Suite — 50 points |
+| In-class activity: Air Temperature Interpolation | in class Tuesday; upload a screen capture or photo — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 SITE = "https://byu-hydroinformatics.github.io/ce414-gis-applications"
 TEXT = "*GIS Fundamentals*, 7th edition (Bolstad)"
+# Point values from the Learning Suite assignments view (printed September 7, 2026)
+QUIZ_PTS, LAB_PTS, ACTIVITY_PTS = 20, 50, 5
 
 # week, slug, title, one-line description
 DECKS = [
@@ -112,11 +114,12 @@ def due_section(w, rel="../assignments"):
         lines.append(f"| Reading | {d['reading']} of {TEXT} |")
     if d["quiz"]:
         n, title = d["quiz"]
-        lines.append(f"| Quiz {n} | *{title}* — open book, on Learning Suite, done independently |")
+        lines.append(f"| Quiz {n} | *{title}* — open book, on Learning Suite, done independently — {QUIZ_PTS} points |")
     if d["lab"]:
-        lines.append(f"| Lab {d['lab']} | {lab_link(d['lab'], rel)} — one PDF report on Learning Suite |")
+        lines.append(f"| Lab {d['lab']} | {lab_link(d['lab'], rel)} — one PDF report on Learning Suite — {LAB_PTS} points |")
     for what, when in d["other"]:
-        lines.append(f"| {what} | {when} |")
+        pts = f" — {ACTIVITY_PTS} points" if what.startswith("In-class activity") else ""
+        lines.append(f"| {what} | {when}{pts} |")
     if not any([d["reading"], d["quiz"], d["lab"], d["other"]]):
         lines.append("| Nothing is due this week | Work on the final project |")
     lines.append("")

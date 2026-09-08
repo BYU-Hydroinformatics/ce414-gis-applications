@@ -14,9 +14,9 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | What | Details |
 | --- | --- |
 | Reading | Chapter 13 of *GIS Fundamentals*, 7th edition (Bolstad) |
-| Quiz 2 | *Cartographic Models and Modeling* — open book, on Learning Suite, done independently |
-| Lab 1 | [Lab 1 — Walmart Site Selection](../assignments/lab-01/README.md) — one PDF report on Learning Suite |
-| In-class activity: Model a Cookie | in class Thursday; upload a screen capture of your result |
+| Quiz 2 | *Cartographic Models and Modeling* — open book, on Learning Suite, done independently — 20 points |
+| Lab 1 | [Lab 1 — Walmart Site Selection](../assignments/lab-01/README.md) — one PDF report on Learning Suite — 50 points |
+| In-class activity: Model a Cookie | in class Thursday; upload a screen capture of your result — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
