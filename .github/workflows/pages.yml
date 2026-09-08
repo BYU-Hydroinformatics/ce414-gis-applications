@@ -35,6 +35,8 @@ jobs:
             out="_site/${md%.md}.html"
             mkdir -p "$(dirname "$out")"
             marp --theme slides/theme/ce414.css --html "$md" -o "$out"
+            # Marp has no favicon option; give every deck the site's icon.
+            sed -i 's#</head>#<link rel="icon" type="image/png" href="/ce414-gis-applications/assets/favicon.png"></head>#' "$out"
           done
           for d in slides/*/images; do
             mkdir -p "_site/$(dirname "$d")"

@@ -8,7 +8,7 @@ footer: "CE 414 · Week 2 — ModelBuilder, Part A"
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:45% w:99%](images/mba-cities-rivers-map.png)
+![bg right:45% w:96%](images/mba-pro-window-modelbuilder.png)
 
 ![w:130](../theme/images/byu-medallion.svg)
 
