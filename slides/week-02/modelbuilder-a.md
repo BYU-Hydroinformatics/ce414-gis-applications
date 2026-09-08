@@ -351,26 +351,26 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 ---
 
-# Set the model's environments
+# Environments: the settings every tool reads
 
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div style="font-size:0.9em;">
-
-- Set environments for the whole model with **Environments** on the ModelBuilder ribbon
-- **Current workspace** — the geodatabase used for inputs and outputs
-- **Output Coordinate System** — empty means *Same as Input*. Leave it empty on purpose, or set it on purpose; never inherit it by accident
-- **Scratch workspace** — where intermediate results you do not need to keep are written
-- These apply to every tool in the model unless a tool overrides them
-
-</div>
+<div class="columns" style="grid-template-columns: 1.6fr 0.75fr; align-items: start; gap: 18px;">
 <div>
 
-![w:430](images/mba-environments-dialog.png)
+![w:660](images/mba-environment-settings.svg)
+
+<p style="font-size:0.72em;margin:0.25em 0 0 0;line-height:1.35;">Set them once for the whole model: ModelBuilder ribbon ▸ <strong>Environments</strong>. A tool's own Environments tab can override any of them. <strong>Output Coordinate System</strong> left empty means <em>same as input</em>: leave it empty on purpose, or set it on purpose.</p>
+
+</div>
+<div style="text-align:center;">
+
+![w:300](images/mba-environments-dialog.png)
+
+<p style="font-size:0.6em;color:#5a6472;margin:0.1em 0 0 0;">The Environments dialog, ArcGIS Pro 3.7</p>
 
 </div>
 </div>
 
-<!-- The output coordinate system is the one that bites people. A buffer distance in miles means nothing until the data are in a projected coordinate system with sensible linear units. The Cities Near Rivers example later projects both inputs before buffering for exactly this reason. In Lab 2 the opposite lesson applies: an inherited coordinate system silently reprojects every output. -->
+<!-- "Environment" is the word students stumble on. It is nothing more than a set of background settings that every tool consults when it runs: where outputs go, where temporary files go, what projection results get, how much of the map to process, what cell size rasters get. You can set them on a single tool, on the whole model, or on the project; the model-level setting is the one that matters here. The output coordinate system is the one that bites people. A buffer distance in miles means nothing until the data are in a projected coordinate system with sensible linear units. The Cities Near Rivers example later projects both inputs before buffering for exactly this reason. In Lab 2 the opposite lesson applies: an inherited coordinate system silently reprojects every output. -->
 
 ---
 
@@ -440,7 +440,15 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 # The problem
 
-![bg right:52% w:96%](images/mba-cities-rivers-map.png)
+<style scoped>
+section li[data-marpit-fragment] { list-style: none; margin: 0.45em 0 0 -1.2em; }
+.prompt { display: block; border-radius: 10px; padding: 0.35em 0.9em; font-weight: 700; font-size: 0.95em; color: #fff; }
+li[data-bespoke-marp-fragment="active"] .prompt { animation: mb-pop 0.45s ease-out both; }
+@keyframes mb-pop { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+</style>
+
+<div class="columns" style="grid-template-columns: 0.95fr 1.05fr; align-items: start; gap: 22px;">
+<div style="font-size:0.9em;">
 
 Find all **U.S. cities within 10 miles of a major river**.
 
@@ -448,7 +456,31 @@ Find all **U.S. cities within 10 miles of a major river**.
 - One question that takes several tools in sequence
 - Exactly the kind of job you do not want to repeat by hand
 
-<!-- Ask the class how they would do it with tool dialogs before showing the model. They will get close: project, buffer, intersect. Then show them the model and point out that the model is the same answer, written down. -->
+* <span class="prompt" style="background:#e8792b;">How would you solve this in GIS?</span>
+* <span class="prompt" style="background:#002e5d;">What is the recipe (the model) for this analysis?</span>
+
+</div>
+<div style="text-align:center;">
+
+![w:600](images/mba-cities-rivers-problem.png)
+
+<p style="font-size:0.6em;color:#5a6472;margin:0.1em 0 0 0;">678 cities and the major rivers of the lower 48, USA Contiguous Equidistant Conic</p>
+
+<!-- TODO(photos): two Chicago River photos go here. Save them as images/mba-chicago-river-1.jpg
+(Trump Tower and the Wrigley-side towers from the river) and images/mba-chicago-river-2.jpg (the
+skyline from the tour boat), change the map above to w:520, and replace this comment with:
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;">
+<img src="images/mba-chicago-river-1.jpg" style="width:100%;height:190px;object-fit:cover;border-radius:6px;">
+<img src="images/mba-chicago-river-2.jpg" style="width:100%;height:190px;object-fit:cover;border-radius:6px;">
+</div>
+<p style="font-size:0.6em;color:#5a6472;margin:0.1em 0 0 0;">A city on its river: Chicago from the Chicago River, summer 2026</p>
+-->
+
+</div>
+</div>
+
+<!-- Two arrow presses, two discussions. First press: "How would you solve this in GIS?" Let them talk it through with tool names: measure distance, buffer, select by location, intersect. Second press: "What is the recipe?" Push them to say it as a sequence: project both layers, buffer the rivers, intersect the cities with the buffer, count. That sequence is the model on the next slide; the point is that they wrote it before seeing it. The photos are Chicago from the river: the case in point, a city that exists because of its river. -->
 
 ---
 
@@ -503,7 +535,11 @@ Find all **U.S. cities within 10 miles of a major river**.
 
 # You try it
 
-![bg right:45% w:96%](images/mba-you-try-it-start.png)
+<style scoped>
+section { font-size: 23px; }
+</style>
+
+![bg right:42% w:96%](images/mba-you-try-it-start.png)
 
 **What percentage of U.S. cities are within 10 miles of a major river?**
 
@@ -511,8 +547,9 @@ Find all **U.S. cities within 10 miles of a major river**.
 - Build the model: **Project → Buffer → Intersect**
 - Project to **USA Contiguous Equidistant Conic** before you buffer, and accept the geographic transformation
 - Compare your count with **256 of 678**, and be ready to explain a difference
+- Then change **one thing**: set the buffer to **5 miles** and run again. How many now? One parameter, one click, a new answer
 
-<!-- Use the hosted download; it is three shapefiles from Natural Earth, public domain, clipped to the lower 48. Buffer and Intersect are in the Analysis toolbox, Project is in Data Management. If someone gets 257 instead of 256, they probably used a geodesic distance instead of a projected one; that difference is a Thursday discussion. -->
+<!-- Five miles with the same projected workflow gives 214 of 678 (computed from the course data package with tools/week02_problem_map.py on September 7); keep that number for checking, do not put it on the slide. The point of the second run is the speed: nobody rebuilds anything, they edit one number in the Buffer element and press Run. Use the hosted download; it is three shapefiles from Natural Earth, public domain, clipped to the lower 48. Buffer and Intersect are in the Analysis toolbox, Project is in Data Management. If someone gets 257 instead of 256, they probably used a geodesic distance instead of a projected one; that difference is a Thursday discussion. -->
 
 ---
 

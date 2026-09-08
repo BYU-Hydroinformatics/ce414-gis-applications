@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#444"/></marker></defs>
+<rect x="14" y="44" width="732" height="372" rx="18" fill="#eef3f9" stroke="#002e5d" stroke-width="2" stroke-dasharray="9,6"/>
+<text x="380.0" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#002e5d">The model's environment: settings saved in the background</text>
+<text x="380.0" y="74" text-anchor="middle" font-size="13.5" fill="#5a6472">Every tool in the model reads these unless it overrides them</text>
+<line x1="209.0" y1="215" x2="239.0" y2="215" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+<line x1="359.0" y1="215" x2="389.0" y2="215" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+<line x1="509.0" y1="215" x2="539.0" y2="215" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+<clipPath id="c150"><rect x="91.0" y="195.0" width="118" height="40" rx="13"/></clipPath><rect x="91.0" y="195.0" width="118" height="40" rx="13" fill="#fff"/><rect x="91.0" y="195.0" width="30" height="40" fill="#bfe4fb" clip-path="url(#c150)"/><rect x="91.0" y="195.0" width="118" height="40" rx="13" fill="none" stroke="#1a7bd3" stroke-width="1.6"/><text x="165.0" y="220" text-anchor="middle" font-size="13" fill="#22262e">input data</text>
+<clipPath id="c300"><rect x="241.0" y="195.0" width="118" height="40" rx="3"/></clipPath><rect x="241.0" y="195.0" width="118" height="40" rx="3" fill="#fff"/><rect x="241.0" y="195.0" width="30" height="40" fill="#fff2b3" clip-path="url(#c300)"/><rect x="241.0" y="195.0" width="118" height="40" rx="3" fill="none" stroke="#e0c200" stroke-width="1.6"/><text x="315.0" y="220" text-anchor="middle" font-size="13" fill="#22262e">tool</text>
+<clipPath id="c450"><rect x="391.0" y="195.0" width="118" height="40" rx="13"/></clipPath><rect x="391.0" y="195.0" width="118" height="40" rx="13" fill="#fff"/><rect x="391.0" y="195.0" width="30" height="40" fill="#b9e8b9" clip-path="url(#c450)"/><rect x="391.0" y="195.0" width="118" height="40" rx="13" fill="none" stroke="#3aa63a" stroke-width="1.6"/><text x="465.0" y="220" text-anchor="middle" font-size="13" fill="#22262e">derived data</text>
+<clipPath id="c600"><rect x="541.0" y="195.0" width="118" height="40" rx="3"/></clipPath><rect x="541.0" y="195.0" width="118" height="40" rx="3" fill="#fff"/><rect x="541.0" y="195.0" width="30" height="40" fill="#fff2b3" clip-path="url(#c600)"/><rect x="541.0" y="195.0" width="118" height="40" rx="3" fill="none" stroke="#e0c200" stroke-width="1.6"/><text x="615.0" y="220" text-anchor="middle" font-size="13" fill="#22262e">tool</text>
+<rect x="40" y="100" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="40" y="100" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="60" y="119" font-size="13.5" font-weight="700" fill="#002e5d">Current workspace</text>
+<text x="60" y="137" font-size="12.5" fill="#5a6472">which geodatabase the outputs go to</text>
+<rect x="400" y="100" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="400" y="100" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="420" y="119" font-size="13.5" font-weight="700" fill="#002e5d">Scratch workspace</text>
+<text x="420" y="137" font-size="12.5" fill="#5a6472">where temporary files live</text>
+<rect x="40" y="290" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="40" y="290" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="60" y="309" font-size="13.5" font-weight="700" fill="#002e5d">Output coordinate system</text>
+<text x="60" y="327" font-size="12.5" fill="#5a6472">which projection every result gets</text>
+<rect x="400" y="290" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="400" y="290" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="420" y="309" font-size="13.5" font-weight="700" fill="#002e5d">Processing extent</text>
+<text x="420" y="327" font-size="12.5" fill="#5a6472">how much of the map the tools work on</text>
+<rect x="40" y="350" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="40" y="350" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="60" y="369" font-size="13.5" font-weight="700" fill="#002e5d">Cell size</text>
+<text x="60" y="387" font-size="12.5" fill="#5a6472">the resolution of raster outputs</text>
+<rect x="400" y="350" width="320" height="46" rx="8" fill="#fff" stroke="#002e5d" stroke-width="1.4"/>
+<rect x="400" y="350" width="8" height="46" rx="3" fill="#e8792b"/>
+<text x="420" y="369" font-size="13.5" font-weight="700" fill="#002e5d">…and many more</text>
+<text x="420" y="387" font-size="12.5" fill="#5a6472">most of them you will never touch</text>
+<line x1="300" y1="235.0" x2="300" y2="265.0" stroke="#e8792b" stroke-width="2" stroke-dasharray="4,4"/>
+<line x1="600" y1="235.0" x2="600" y2="265.0" stroke="#e8792b" stroke-width="2" stroke-dasharray="4,4"/>
+<line x1="300" y1="195.0" x2="300" y2="131.0" stroke="#e8792b" stroke-width="2" stroke-dasharray="4,4"/>
+<line x1="600" y1="195.0" x2="600" y2="131.0" stroke="#e8792b" stroke-width="2" stroke-dasharray="4,4"/>
+</svg>
