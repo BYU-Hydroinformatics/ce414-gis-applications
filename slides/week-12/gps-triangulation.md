@@ -411,13 +411,12 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 
 # Before Next Class
 
-- Read the assigned chapter <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on **Learning Suite**
-- Keep working on [Lab 10 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- Read **Chapter 5** of *GIS Fundamentals* (GPS and GNSS Data)
+- Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Finish **Lab 11 — Choose Your Own Adventure** (on Learning Suite), due **Saturday 11:59 pm**
+- **Midterm 2** is in the Testing Center: it opens after class today and closes Saturday
 - Start on the [Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) — the proposal is the next thing due
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- VERIFY: schedule reconstructed. The source deck ends without a wrap-up slide, so the Week 12 pairing of Lab 10 and the Final Project was inferred from the repository's assignment order, not from the deck. Confirm what is actually due this week, and fill in the quiz due date. -->
 
 <!-- TODO(graphic): a "what's due this week" visual, or a screenshot of the Final Project proposal template. -->
 

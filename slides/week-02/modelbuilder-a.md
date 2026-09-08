@@ -290,7 +290,6 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 </div>
 </div>
 
-
 <!-- All four panels are ArcGIS Pro 3.7, and all four run the same Buffer. The dialog is what you have used so far. The Python window runs one line at a time. The model is today's subject: a picture of the whole chain that can be run again. The script is the same chain as arcpy code, which you will meet later in the course. Every one of them calls the identical geoprocessing tool underneath. -->
 
 ---
@@ -658,12 +657,12 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 ![bg right:30% w:90%](images/mba-pumpkin-pie.jpg)
 
 - **Think about what is involved in baking a cookie** — we will do an in-class activity on this!
-- Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/): Steps 0 to 4 are within reach tonight
-- Read the assigned textbook chapter <!-- TODO(instructor): reading chapter -->
-- Take the **open-book quiz** on Learning Suite
+- Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/), due **Saturday 11:59 pm**: Steps 0 to 4 are within reach tonight
+- Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
+- Take **Quiz 2** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Fill in the reading chapter and the quiz due date before class. The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->
+<!-- The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->
 
 <!--
 Revision notes (2026-09-07): Part A revised against slides/week-02/LECTURE_PLAN.md. 28 slides -> 35.

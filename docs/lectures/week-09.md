@@ -1,4 +1,4 @@
-# Week 9: Web Services
+# Week 9: Interpolation, Part 3, and Web Services
 
 ## Slides
 
@@ -6,10 +6,16 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
-## Lab
+## Due this week
 
-[Lab 7 — Big Southern Butte](../assignments/lab-07/README.md)
+Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
+
+| What | Details |
+| --- | --- |
+| Reading | Chapter 14 of *GIS Fundamentals*, 7th edition (Bolstad) |
+| Quiz 8 | *Data Standards and Data Quality* — open book, on Learning Suite, done independently |
+| Lab 8 | [Lab 8 — Practicing with Interpolation](../assignments/lab-08/README.md) — one PDF report on Learning Suite |
 
 > [!NOTE]
-> Which lab is due in which week is reconstructed from the deck filenames and has not been
-> confirmed against the Learning Suite calendar.
+> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
+> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.

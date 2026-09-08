@@ -778,13 +778,13 @@ Is there a difference at the sample locations?
 <div class="columns" style="align-items:start">
 <div>
 
-**Reading** — the interpolation chapter in the course text
+**Reading** — Chapter 12 of *GIS Fundamentals* (Sampling and Interpolation)
 
-**Quiz** — open-book, on Learning Suite
+**Quiz 7** — open book, on Learning Suite, due **Saturday 11:59 pm**
 
 **Labs**
 
-- [Lab 6 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/) is due this week
+- [Lab 7 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
 - [Lab 8 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next and applies these methods in ArcGIS Pro
 
 </div>
@@ -800,10 +800,6 @@ Is there a difference at the sample locations?
 </div>
 
 <!-- Point them at Lab 8 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
-
-<!-- TODO(instructor): reading chapter — the figures in this deck are numbered 9-7 through 9-15, which suggests the interpolation chapter of the course text, but the assigned chapter number is not stated in the source deck. -->
-
-<!-- VERIFY: schedule reconstructed — the source deck has no "before next class" slide. Lab 6 is listed as due in Week 8 and Lab 8 follows; confirm against the semester schedule before publishing. -->
 
 <!-- TODO(instructor): consider adding a slide mapping each method in this deck to its ArcGIS Pro tool (Create Thiessen Polygons, IDW, Kriging, Spline, Trend, Natural Neighbor) once the tool names and toolbox locations have been checked in Pro. The source deck names no software at all. -->
 

@@ -234,13 +234,11 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 <!-- TODO(graphic): closing slide has no figure. Per this pass's rules no image was
      generated; add one when the deck's artwork is next revisited. -->
 
-- Reading: <!-- TODO(instructor): reading chapter --> see Learning Suite
-- Take the open-book quiz on **Learning Suite**
-- Finish [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/), due this week
-- Start [Lab 9 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+- Reading: **Chapter 9** of *GIS Fundamentals* (Spatial Analysis)
+- Take **Quiz 9** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Finish [Lab 9 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
+- Start [Lab 10 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- VERIFY: schedule reconstructed. Confirm that Lab 8 is due in Week 10 and Lab 9 is the next assignment before showing this slide. -->
 
 <!-- TODO(instructor): this deck is too short to carry the wind farm suitability lab on its own. It stops at "combine the layers" and never covers the decisions the lab requires. Missing, in the order a student needs them:
   1. Hard constraints versus soft preferences — which criteria are pass/fail masks and which are scored on a range.

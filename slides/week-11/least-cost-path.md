@@ -251,17 +251,11 @@ Brigham Young University
 
 # Before Next Class
 
-- **Lab 9 — Wind Farm Site Selection** is due this week: [assignments/lab-09](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
-- **Lab 10 — Least Cost Path Power Line Analysis** is next: [assignments/lab-10](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
-- Read the assigned chapter before the lab session
-- Take the open-book quiz on **Learning Suite**
+- **Lab 10 — Least Cost Path Power Line Analysis** is due **Saturday 11:59 pm**: [assignments/lab-10](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- **Lab 11 — Choose Your Own Adventure** is next: pick a prior-year final project on Learning Suite
+- Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
+- Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- Confirm the reading and the quiz due date before class. -->
-
-<!-- VERIFY: schedule reconstructed. docs/schedule.md puts Lab 9 (Wind Farm Site Selection) in Week 11 and Lab 10 (Least Cost Path) in Week 12; this slide assumes Lab 9 is due during Week 11 and Lab 10 is assigned next. -->
-
-<!-- TODO(instructor): reading chapter -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.
 No source slides were dropped; there were no hidden slides and no speaker notes in the original, so every

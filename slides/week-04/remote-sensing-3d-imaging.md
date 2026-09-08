@@ -595,13 +595,10 @@ No image was generated for it in this pass. -->
 
 # Before Next Class
 
-- Start **Lab 2 — NDVI**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/)
-- Reading: <!-- TODO(instructor): reading chapter --> see Learning Suite
-- Take the open-book **quiz** on Learning Suite
+- Finish **Lab 3 — Georectifying and Digitizing**, due **Saturday 11:59 pm**: [assignments/lab-03](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
+- Reading: **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
+- Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- TODO(instructor): fill in the textbook reading chapter for this week; the source deck did not
-name one. Confirm the quiz due date before class. -->
 
 <!-- Conversion notes (2026-09-03): converted from "CE 414 Week 4 - Remote Sensing and 3D
 Imaging.pptx" (38 slides) to 43 slides. DROPPED: source slide 11, a byte-identical duplicate of

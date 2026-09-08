@@ -539,12 +539,12 @@ Each pixel (raster cell) is represented by a hexadecimal number that indicates t
 
 # Before Next Class
 
-- Read *GIS Fundamentals* (Bolstad) <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on **Learning Suite**
+- Read **Chapters 1 and 2** of *GIS Fundamentals* (Bolstad)
+- Take **Quiz 1** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/) — it puts today's data models into ArcGIS Pro
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Fill in the quiz due date and the reading chapter before class. -->
+<!-- Quiz 1 covers Chapters 1 and 2 and is due Saturday 11:59 pm; Lab 1 is due Saturday of Week 2. -->
 
 <!-- TODO(graphic): a simple "what's due" visual, or an ArcGIS Pro screenshot of the Lab 1 starting project. -->
 

@@ -5,7 +5,7 @@ the arrow keys (or swipe); press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> fo
 speaker notes.
 
 Weeks are numbered from the first class meeting so the same site serves every offering; the
-authoritative dates live in the Learning Suite syllabus.
+authoritative dates live in the Learning Suite syllabus. Each week page lists what is due that week.
 
 ## Week 1: Data Models Refresher
 
@@ -40,12 +40,17 @@ authoritative dates live in the Learning Suite syllabus.
 - [Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html) — From a DEM to watersheds and streams: fill, flow direction, flow accumulation, thresholds, and pour points.
 - [Week 6 page](week-06.md)
 
+## Week 7: Watershed Delineation, Part 3, and Midterm 1
+
+- No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. Thursday's class time is given to Midterm 1.
+- [Week 7 page](week-07.md)
+
 ## Week 8: Interpolation
 
 - [Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/interpolation.html) — Estimating a surface from points: Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.
 - [Week 8 page](week-08.md)
 
-## Week 9: Web Services
+## Week 9: Interpolation, Part 3, and Web Services
 
 - [Overview of OGC Web Services](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/ogc-web-services.html) — Interoperability and open standards for sharing spatial data over the web: WMS, WFS, WCS, and their relatives.
 - [Week 9 page](week-09.md)
@@ -66,6 +71,21 @@ authoritative dates live in the Learning Suite syllabus.
 - [GPS and Positioning](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/gps-triangulation.html) — How satellite positioning works, what limits its accuracy, and what that means for field data.
 - [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/final-project-introduction.html) — What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.
 - [Week 12 page](week-12.md)
+
+## Week 13: Final Project Work
+
+- Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.
+- [Week 13 page](week-13.md)
+
+## Week 14: Final Project Work and Presentations
+
+- Tuesday is a final-project work day with the instructor available; Thursday is the first day of final project presentations, eight minutes each. Sign up for a day on the class Google document.
+- [Week 14 page](week-14.md)
+
+## Week 15: Final Project Presentations
+
+- Tuesday is the second day of presentations. Thursday is the last day of class. Friday, an exam-preparation day with no official class, is an optional third presentation day. The final exam is the following week.
+- [Week 15 page](week-15.md)
 
 > [!NOTE]
 > Every deck carries `TODO(instructor)` and `TODO(graphic)` comments from its September 2026

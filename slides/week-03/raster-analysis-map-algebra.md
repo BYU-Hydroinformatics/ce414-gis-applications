@@ -542,15 +542,13 @@ Reach all of it from the **Geoprocessing pane** search box, or from **Toolboxes*
 
 ![bg right:34% w:94%](images/ra-montana-tri-classified.jpg)
 
-- **Lab 2 — NDVI**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/)
+- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/)
   NDVI is a single **local** map-algebra expression on two raster bands. Everything in Part 1 of today applies directly
-- **Reading**: see the syllabus
-- **Open-book quiz** on Learning Suite
+- **Reading**: Chapter 10 of *GIS Fundamentals* (Raster Analysis and Map Algebra)
+- **Quiz 3**, open book, on Learning Suite — due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. -->
-
-<!-- TODO(instructor): reading chapter -->
 
 <!-- TODO(instructor): this deck never introduces NDVI, but the lab that follows it is entirely NDVI. Consider adding two or three slides that teach NDVI with sensor-specific band selection, including Landsat 8/9 examples. Band numbers differ by sensor, so none are asserted here. -->
 

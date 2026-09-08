@@ -283,12 +283,12 @@ Try to georectify your hand-drawn map of your home neighborhood…
 
 # Before Next Class
 
-- Lab 3: [Georectifying and Digitizing](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
-- Read the assigned chapter <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on Learning Suite
+- Lab 3, [Georectifying and Digitizing](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/), is due **Saturday 11:59 pm**
+- Read **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
+- Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Fill in the reading and the quiz due date before class. Lab 3 is the hands-on version of everything in this lecture. -->
+<!-- Lab 3 is the hands-on version of everything in this lecture. -->
 
 <!-- Conversion notes (2026-09-03): Source "CE 414 Week 4 - Georectifying Images.pptx", 19 slides → 19 slides here (no slide dropped; source slides 11+12 merged into one, 13+14 merged into one, and three slides added: Today's Goals, In ArcGIS Pro, Before Next Class).
 

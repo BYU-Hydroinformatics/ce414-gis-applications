@@ -7,6 +7,17 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Due this week
+
+Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
+
+| What | Details |
+| --- | --- |
+| Reading | Chapter 10 of *GIS Fundamentals*, 7th edition (Bolstad) |
+| Quiz 3 | *Raster Analysis and Map Algebra* — open book, on Learning Suite, done independently |
+| Lab 2 | [Lab 2 — NDVI](../assignments/lab-02/README.md) — one PDF report on Learning Suite |
+| In-class activity: Simple Map Algebra (Excel) | in class Tuesday; upload the workbook |
+
 > [!NOTE]
-> Which lab is due in which week is reconstructed from the deck filenames and has not been
-> confirmed against the Learning Suite calendar.
+> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
+> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.

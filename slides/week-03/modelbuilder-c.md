@@ -155,15 +155,13 @@ The **Normalized Difference Vegetation Index (NDVI)** models the abundance of li
 
 # Before Next Class
 
-- Reading: **chapter to be announced**
-- Take the open-book quiz on **Learning Suite**
-- **No lab is due this week.** Start [Lab 2 — NDVI](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/), which is due in Week 4
+- Read **Chapter 10** of *GIS Fundamentals* (Raster Analysis and Map Algebra)
+- Take **Quiz 3** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- [Lab 2 — NDVI](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/) is due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- TODO(instructor): reading chapter -->
 
 <!-- TODO(graphic): a closing image. Not generated in this pass. -->
 
-<!-- Fill in the reading chapter and the quiz due date before class. -->
+<!-- Lab 2 is due this Saturday, five days after this deck; make sure they have started it. -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 3 - ModelBuilder C.pptx", 7 slides -> 10 slides here (title, Today's Goals, source slides 2-7, a Lab 2 preview, and Before Next Class). No source slide dropped; no hidden slides in the source. CONTENT PROBLEM: the deck is titled "Spatial Modeling and ArcGIS ModelBuilder - Part C" but contains no ModelBuilder content whatsoever - it is a short NDVI lesson. Title kept as the source has it; see the TODO at the top of this file. CORRECTION MADE: source slide 3 read "Emphasizes areas that have MORE HEAT (NIR) and LESS RED color." Near-infrared here is reflected sunlight, not emitted heat, so this now reads "more reflected near-infrared (NIR) and less red". No other factual change. ArcGIS 9 wording in the slide 1 speaker note updated to ArcGIS Pro. Source slides 2 and 3 were PowerPoint text on a navy background with no figure; the NDVI equation is typeset in HTML/CSS here rather than kept as an image. Images: mbc-ndvi-africa-map.jpg + mbc-ndvi-africa-legend.jpg (source image2/image3, only 265x251 and 94x239 px - soft on a projector and uncredited, flagged for replacement), mbc-ndvi-us-2015.jpg (1200x927, from a TIFF), mbc-ndvi-farm-plot.jpg (1515x1547, from a 9.4 MB TIFF), mbc-ndvi-change-detection.jpg (1962x1438, from a 4.7 MB PNG); all converted to JPEG, nothing wider than 2000 px, folder ~1.8 MB. The source title-slide EMF (a BYU seal) was not carried across. Speaker notes: source slides 5, 6 and 7 all carry a copy of slide 4's Africa note; every one is carried across as required, each flagged. Link checks 2026-09-03: newsroom.heart.org NDVI map 200; pix4d blog 200; dx.doi.org/10.3390/ijgi6070189 resolves to mdpi.com/2220-9964/6/7/189, which returns 403 to curl behind Cloudflare bot protection but is live in a browser - the DOI is good and was not replaced. Lab 2 page and the office-hours link both 200. No ArcGIS screenshots appear in this deck, so there is nothing to re-shoot; the outstanding image work is the five TODO(graphic) placeholders and the low-resolution Africa raster. -->

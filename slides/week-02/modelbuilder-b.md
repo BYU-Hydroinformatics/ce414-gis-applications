@@ -520,12 +520,12 @@ The example map is not a template: yours will differ, because your stores and yo
 
 ![bg right:32% w:88%](images/mbb-lab1-example-map-scenario.png)
 
-- Finish [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/) — get your peer review done before the deadline, not the night of it <!-- TODO(instructor): Lab 1 due date -->
-- Read the assigned textbook chapter <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on **Learning Suite**
+- Finish [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/) by **Saturday 11:59 pm** — get your peer review done before the deadline, not the night of it
+- Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
+- Take **Quiz 2** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Fill in the reading chapter, the quiz due date and the lab due date before class. Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
+<!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
 <!--
 Revision notes (2026-09-07): Part B revised against slides/week-02/LECTURE_PLAN.md. 20 slides -> 30.

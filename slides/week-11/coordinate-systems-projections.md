@@ -676,12 +676,10 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 
 ![bg right:34% w:90%](images/crs-utm-zones-conus.png)
 
-- Read the assigned chapter <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on **Learning Suite**
-- Current lab: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) — check the coordinate system of every layer before you combine them
+- Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
+- Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Current lab: [Lab 10 — Least Cost Path](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- VERIFY: schedule reconstructed. The pairing of this deck with Lab 9 was inferred from the week number, not read off a syllabus; confirm the current lab and the reading before class. -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Review - Coordinate Systems and Projections.pptx",
      56 slides (55 PDF pages; slide 14 is hidden). Converted to 57 slides: 55 source slides kept, plus a

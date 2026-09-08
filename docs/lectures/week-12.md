@@ -7,10 +7,17 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
-## Lab
+## Due this week
 
-[Lab 10 — Least Cost Path Power Line Analysis](../assignments/lab-10/README.md)
+Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
+
+| What | Details |
+| --- | --- |
+| Reading | Chapter 5 of *GIS Fundamentals*, 7th edition (Bolstad) |
+| Quiz 11 | *GPS and GNSS Data* — open book, on Learning Suite, done independently |
+| Lab 11 | Lab 11 — Choose Your Own Adventure (on Learning Suite) — one PDF report on Learning Suite |
+| **Midterm 2** — closed book, in the Testing Center | opens Thursday after class and closes Saturday afternoon |
 
 > [!NOTE]
-> Which lab is due in which week is reconstructed from the deck filenames and has not been
-> confirmed against the Learning Suite calendar.
+> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
+> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.

@@ -1198,17 +1198,12 @@ Past initiatives:
 
 # Before Next Class
 
-- **Lab 7 — Big Southern Butte**: [assignments/lab-07](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
-- Read the assigned chapter <!-- TODO(instructor): reading chapter -->
-- Take the open-book quiz on Learning Suite
+- **Lab 8 — Practicing with Interpolation** is due **Saturday 11:59 pm**: [assignments/lab-08](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
+- Read **Chapter 14** of *GIS Fundamentals* (Data Standards and Data Quality)
+- Take **Quiz 8** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- VERIFY: schedule reconstructed — the pairing of this deck with Lab 7 (Big Southern Butte) was assigned
-     during conversion and has not been checked against the semester schedule. -->
-
 <!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Fill in the reading and the quiz due date before class. -->
 
 <!-- Conversion notes (2026-09-03):
 
