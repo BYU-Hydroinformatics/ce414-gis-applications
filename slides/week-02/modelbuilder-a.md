@@ -657,14 +657,13 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 
 ![bg right:30% w:90%](images/mba-pumpkin-pie.jpg)
 
-- **Sketch a model of baking a cookie** on paper — ovals for ingredients, boxes for steps — and bring it. Thursday starts with it
+- **Think about what is involved in baking a cookie** — we will do an in-class activity on this!
 - Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/): Steps 0 to 4 are within reach tonight
 - Read the assigned textbook chapter <!-- TODO(instructor): reading chapter -->
 - Take the **open-book quiz** on Learning Suite
-- Bring a laptop with ArcGIS Pro, and have a project open before class
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Fill in the reading chapter and the quiz due date before class. The cookie sketch is the prep for Thursday's exercise; a photo of a napkin is fine. -->
+<!-- Fill in the reading chapter and the quiz due date before class. The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->
 
 <!--
 Revision notes (2026-09-07): Part A revised against slides/week-02/LECTURE_PLAN.md. 28 slides -> 35.
