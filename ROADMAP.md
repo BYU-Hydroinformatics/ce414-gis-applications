@@ -249,6 +249,9 @@ first attempt stalled at the Citrix door, and the Mac-side capture helper are in
 
 ## Definition of done, per lab
 
+The full standard, section by section, is `tools/lab-conversion-guide.md`; Labs 1 and 2 are the
+reference pages. The short list:
+
 - [ ] Text converted, headings correct, tables render
 - [ ] Images renamed descriptively and displaying
 - [ ] Every field name, SQL expression, unit, CRS, and coded value verified in ArcGIS Pro

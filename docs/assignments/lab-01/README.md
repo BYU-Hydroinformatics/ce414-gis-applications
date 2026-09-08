@@ -188,7 +188,7 @@ Your ModelBuilder model might look like the following when it is finished. Note 
 
 For an advanced GIS student, the information up to this point is all you need to complete the assignment and create an output map from the results. Feel free to try conducting the analysis using only the information provided above. If you complete the lab using only the information provided above (without using the step-by-step instructions below), say so in your report.
 
-## Step by Step Solution
+## Step-by-Step Solution
 
 > [!NOTE]
 > **Important Note #1:** The following step-by-step solution walks through the analysis of Utah
