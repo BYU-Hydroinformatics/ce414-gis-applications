@@ -469,9 +469,6 @@ Find all **U.S. cities within 10 miles of a major river**.
 <div style="font-size:0.66em;color:#5a6472;line-height:1.35;">678 cities and the major rivers of the lower 48, in USA Contiguous Equidistant Conic.<br><br>The case in point: Chicago, photographed from the Chicago River in summer 2026. The city is there because the river is.</div>
 </div>
 
-<!-- TODO(photo): when the Trump Tower shot from the river is saved as images/mba-chicago-river-1.jpg,
-make the grid above 150px 150px 1fr with a second <img> for it. -->
-
 </div>
 </div>
 
