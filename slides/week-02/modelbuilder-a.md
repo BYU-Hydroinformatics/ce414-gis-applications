@@ -231,7 +231,7 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 ![w:140](images/mba-gp-route.svg)
 
-<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">What is the best route over rugged terrain?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Cost Distance · Cost Path — Lab 10</div></div>
+<div><div style="font-weight:700;color:#002e5d;font-size:0.9em;line-height:1.3;">What is the best route over rugged terrain?</div><div style="font-size:0.68em;color:#5a6472;margin-top:0.35em;">Cost Distance · Cost Path — Lab 11</div></div>
 </div>
 <div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;background:#eef3f9;border-radius:10px;padding:0.35em 0.9em;">
 
@@ -245,7 +245,7 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 <!-- Questions adapted from Brett Rose, Esri DC Technology Center. -->
 
-<!-- Say the word out loud: geoprocessing. A tool takes data in and puts new data out; everything in the labs is geoprocessing. Four familiar questions: site selection from several criteria layers, nearest facility, least-cost route over terrain, and population inside a zone. Every one of them is several tools in a row, which is precisely when a model pays for itself. Site selection is Lab 1; least-cost path is Lab 10 and its own lecture later in the semester. The tool names on the cards are the ArcGIS Pro tools that answer each question. -->
+<!-- Say the word out loud: geoprocessing. A tool takes data in and puts new data out; everything in the labs is geoprocessing. Four familiar questions: site selection from several criteria layers, nearest facility, least-cost route over terrain, and population inside a zone. Every one of them is several tools in a row, which is precisely when a model pays for itself. Site selection is Lab 1; least-cost path is Lab 11 and its own lecture later in the semester. The tool names on the cards are the ArcGIS Pro tools that answer each question. -->
 
 ---
 

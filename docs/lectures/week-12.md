@@ -15,7 +15,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Reading | Chapter 5 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 11 | *GPS and GNSS Data* — open book, on Learning Suite, done independently — 20 points |
-| Lab 11 | Lab 11 — Choose Your Own Adventure (on Learning Suite) — one PDF report on Learning Suite — 50 points |
+| Lab 11 | [Lab 11 — Least Cost Path Power Line Analysis](../assignments/lab-11/README.md) — one PDF report on Learning Suite — 50 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

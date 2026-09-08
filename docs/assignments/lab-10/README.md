@@ -1,355 +1,530 @@
-# Lab 10: Least Cost Path Power Line Analysis
+# Lab 10: Wind Farm Site Selection
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
+*Using raster analysis.*
+
 ## Background
 
-Aging infrastructure in the United States has generated an increased demand for new infrastructure. Utility companies are exploring ways to enhance this aging infrastructure and reduce its limitations. To do this, the utility companies first need to identify suitable locations for utility lines. ArcGIS Pro ModelBuilder is a useful tool for this process and can help determine the best location for constructing the new infrastructure.
-
-As a GIS professional, you might be asked to perform network analysis and create models that identify these locations. The placement of utility lines is a complex modeling topic. Normally, the least-cost path between two points would be a straight line. However, in this case, engineering limitations and topography make it very difficult to model a least-cost path. Additionally, public opinion can also influence the location and process of construction. Public opinions such as NIMBYism (Not In My Back Yard) and BANANAism (Build Absolutely Nothing Anywhere Near Anything) require rethinking of locations and processes (Vajjhala and Fischbeck, 2006).
-
-A GIS professional will be assigned to adjust model inputs and create paths that include many factors (Meehan, 2003). <!-- VERIFY: in-text citation says "Meehan, 2003" but the only Meehan entry in the References list is dated 2007. Kept verbatim — there are both a 2003 and a later Esri Press Meehan title, so the intended edition is not unambiguous. --> This underscores the importance of creating an ArcGIS Pro model. Additional layers, weights on those layers, and changes in requirements influence the least-cost path. A standard model makes it easier to create a path. This is because it automates the process, allowing it to be used as many times as necessary to derive an acceptable path for all parties involved. The purpose of this lab is to familiarize you with a few of the processes and requirements that might be used in the modeling of a least cost path for utility line placement. You will not be asked to model social behaviors in this model.
+Recent advances in clean energy research and ongoing efforts to update energy sources and reduce
+carbon emissions have led to a rise in wind energy farms. To maximize efficiency, it's crucial to
+analyze their locations based on criteria like consistent high winds and expansive flat plains. GIS
+technology, leveraging various elevation and wind pattern datasets, provides an effective and
+efficient way to evaluate different sites.
 
 ## Problem Statement
 
-This lab simulates the placement of a high-voltage power line between two points in Utah County. Although the start and end points for this lab are not the locations of substations or proposed substations, its purpose is to produce a model that is feasible to replicate on other projects where the points are real. This lab assumes that the new NSA Data Center, built in Bluffdale, will require power from the wind farm at the mouth of Spanish Fork Canyon, Utah.
+We selected several counties in South Dakota for analysis to identify the optimal site for a new
+wind farm. The counties include Minnehaha, Moody, Lake, McCook, Turner, and Lincoln. South Dakota
+was chosen because its topography and wind patterns make it a common location for wind farms.
+Additionally, these counties are near cities that could benefit from increased electrical power
+sources. You will conduct your analysis twice: first for this collection of counties, then for a
+collection of counties you select in South Dakota.
 
-<!-- TODO(instructor): the instructor plan calls for updating the scenario language (the "new NSA Data Center" framing dates from the original handout). Scenario wording is a pedagogy decision, so it is left as written. -->
+<!-- TODO(instructor): STUDY-AREA CONTRADICTION #1 of 2. This paragraph names Minnehaha, Moody,
+     Lake, McCook, Turner, and Lincoln counties, which are all in *southeastern* South Dakota, and
+     the example map (Figure 28) shows that same southeastern corner. The "Spatial Considerations"
+     paragraph below says "Suppose you are planning to develop a new wind farm in western South
+     Dakota." Both wordings are preserved verbatim; pick one and correct the other. -->
 
 ## Spatial Considerations
 
-For this exercise, the spatial considerations will be limited to the following:
+Suppose you are planning to develop a new wind farm in western South Dakota. Several factors can
+influence your decision on the placement, but for this lab exercise, you'll concentrate on the
+following:
 
-**Lines:**
+<!-- TODO(instructor): STUDY-AREA CONTRADICTION #2 of 2. Exact wording here: "Suppose you are
+     planning to develop a new wind farm in western South Dakota." Exact wording in the Problem
+     Statement above: "We selected several counties in South Dakota for analysis... The counties
+     include Minnehaha, Moody, Lake, McCook, Turner, and Lincoln." Those counties are in
+     southeastern South Dakota. Not resolved here — instructor decision. -->
 
-1. Start at a proposed substation near the mouth of Spanish Fork Canyon and end at a proposed substation near the new NSA facility in Bluffdale.
-2. Be within 2 kilometers of a major highway or interstate. Reclassify values to either 1 or NODATA.
-3. Not be within 2 kilometers of a major river or water body. Set the new values to either 1 or 10.
-4. Should not pass through or around cities within a 5-kilometer radius. Depending on the distance from a city, scale new values from 1 to 10.
-5. Use existing power lines along the path. Set new values as either 1 or 10.
+- The area's average wind speed must be at least 7 m/s
+- It must be within 30 miles of a town or city
+- It must be within 2 miles of a main road
+- It must not be within 20 miles of a current wind farm
+- It must not be within 1 mile of a river
 
-**Elevations:** Lower elevations are more suitable for power lines. You will use the elevation as the scale, so no reclassification is needed for this lab.
+<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 1 of 4. This criterion says
+     "It must not be within 1 mile of a river." Step 3's instruction text says "a 2-mile buffer
+     around the Roads and Rivers." The Buffer Rivers dialog (Figure 11) shows 1 Mile. The model
+     canvas labels the output "Rivers 2mi Buffer" (Figures 1, 8, and 13). Not resolved here. -->
 
-**Scaling:** Use a uniform scale factor (1 to 10) for the raster calculator/reclassification tools to determine suitable locations. The scales above are scaling guidelines, with lower values indicating more suitable areas. This scale will work well with the Multiple Ring Buffer tool.
+<!-- TODO(instructor): The criteria above mix hard exclusions (wind speed >= 7 m/s; not within
+     20 miles of an existing wind farm; not within 1 mile of a river) with what are really
+     preferences (proximity to a town and to a road). The Step 6 / Step 7 procedure flattens all
+     five to 0/1 and then weights them, so an "excluded" cell can still score highly if the other
+     factors carry enough weight. Recommend separating a Boolean exclusion mask (applied with Times
+     or Con) from the weighted preference layers. Pedagogy change — not made here. -->
 
-<!-- TODO(instructor): the spatial considerations do not distinguish an impassable barrier (a cell the path may never cross, i.e. NODATA on the cost surface) from a merely expensive cell (a high traversal cost). Consideration 2 makes everything outside the 2 km road corridor NODATA — an absolute barrier — while considerations 3-5 use costs of 1 or 10. Decide which constraints are hard and which are weighted, and say so here. -->
+<!-- TODO(instructor): Factor scores are not normalized before combining. Every reclassified input
+     is 0/1 (Step 6) and the Weighted Sum weights in Figure 23 are raw integers 7/6/4/3/2 that do
+     not sum to 1. Recommend normalizing each factor to a common 0-1 (or 1-10) scale and using
+     weights that sum to 1 so the output score is interpretable. Pedagogy change — not made here. -->
 
-<!-- TODO(instructor): units and raster environments are not specified in this section. The step-by-step solution sets a 100 (map unit) cell size and an extent taken from the Utah County DEM, but the handout never states the analysis coordinate system or whether the cost surface's units are meters. Add an explicit statement of projected CRS, linear unit, cell size, extent, and snap raster. -->
+<!-- TODO(instructor): The lab asks for one weighting and never tests it. Recommend requiring a
+     weight-sensitivity comparison: run Weighted Sum at least twice with different defensible
+     weight sets and have students report how (or whether) the selected site moves. Would need a
+     matching rubric row. Not added here. -->
 
-<!-- TODO(instructor): the instructor plan asks that students run at least one alternative weighting scenario (for example, re-running the model with the municipality or river weights changed) and compare the resulting paths. That is a change to what students must produce, so it is not added here. The rubric currently asks only "what classifications would you change" as a written answer. -->
+<!-- TODO(instructor): The analysis CRS is never stated. All buffers are in miles and all rasters
+     must align, so the lab needs an explicit projected coordinate system set on the map and in the
+     geoprocessing environment before Step 1. The student example map (Figure 28) records
+     "NAD 1983 Zone 14" in its text box, which is consistent with NAD 1983 UTM Zone 14N for eastern
+     South Dakota, but the handout never asks for it. Not asserted in the text here. -->
 
-For this lab, you are only creating a least cost path for the placement of a line. Do not be concerned about the placement of individual towers.
+<!-- TODO(instructor): The geoprocessing environment settings that make a cell-by-cell raster
+     overlay valid are never specified: snap raster, processing extent, mask, and resampling
+     method. Step 6 only says "it is essential for all raster data sets you create to have the same
+     projection and cell size," which is necessary but not sufficient — without a common snap
+     raster and extent the layers will not align cell for cell. Not added here. -->
+
+> [!NOTE]
+> This lab assignment may feel a bit like our Walmart site selection, cell phone tower placement, or
+> other site selection labs we have completed this semester. However, there is a major difference:
+> we are going to use a raster-based index approach where we convert each layer to a raster and
+> compare them strictly using grid-based, cell-by-cell map algebra instead of using only
+> vector-based analysis.
 
 ## Data
 
-<!-- TODO(instructor): every gis.utah.gov link below still resolves, but each one redirects to a reorganized page on the current Utah Geospatial Resource Center site, and the named download links ("UDOT LRS Routes: Shapefile", "Lakes NHD High Res: Shapefile", etc.) may no longer carry those exact labels. Links kept as written rather than replaced with a guess; see the migration notes at the end of this file for the observed redirect targets. -->
+The following datasets will be needed for this project. You can either download the data from the
+suggested sources or create the data you need to complete this exercise. When you download the
+data, unzip it, and save it to a folder created for this lab.
 
-- **UDOT Highways:** <http://gis.utah.gov/data/sgid-transportation/roads-system/>
+| Dataset | Source |
+| --- | --- |
+| Local Roads | Polyline data from Open Data GIS. Go to <https://gis.sd.gov> and search for "Local Roads" |
+| Major Rivers | National Hydrography Dataset (NHD) shapefile dataset. Go to <https://nationalmap.gov/> and use the data downloader to find and download the NHD for South Dakota. |
+| City Boundaries | South Dakota State GIS Website Shapefile. Go to <https://gis.sd.gov> and search for "South Dakota City Boundaries". |
+| County Boundaries | Polygon data from Open Data GIS. Go to <https://gis.sd.gov> and search for "South Dakota County Boundaries". |
+| State Boundaries | South Dakota State GIS Website Shapefile. Go to <https://gis.sd.gov> and search for "Statewide Boundary" |
+| Existing Wind Farm Locations | Point Data of locations of existing wind farms can be downloaded from the U.S. Geological Survey Wind Turbine Database (USWTDB) here: <https://eerscmap.usgs.gov/uswtdb/data/> |
+| Wind Speed | Explore the data in the Wind Resource Database of the National Renewable Energy Laboratory: <https://wrdb.nrel.gov/>. You can also download JPG images of wind speed from the Department of Energy here: <https://windexchange.energy.gov/maps-data/>. (Search for South Dakota.) If you use an image, you'll need to georeference it and digitize polygons representing different wind speed regions. The simplest option here is to use the 30 meter height data and digitize the polygons from it. |
 
-    You can find a shapefile that represents all the major roads and highways in Utah. You should download the UDOT LRS Routes: Shapefile. This will download in a zipped file.
+<!-- VERIFY: <https://gis.sd.gov> redirects to
+     https://opendata2017-09-18t192802468z-sdbit.opendata.arcgis.com/ (HTTP 200). The redirect
+     target looks like an auto-generated ArcGIS Open Data hostname; confirm the search terms above
+     still return these five layers on the current site. -->
 
-- **Utah Lakes and Streams:** <http://gis.utah.gov/data/water-data-services/lakes-rivers-dams/>
+<!-- VERIFY: <https://nationalmap.gov/> redirects to
+     https://www.usgs.gov/programs/national-geospatial-program/national-map (HTTP 200; returns 403
+     to a non-browser user agent). Confirm the "data downloader" path for the NHD is still what a
+     student would find there. -->
 
-    You will need to download a shapefile that contains all known water bodies in Utah. Using the NHD Lakes section, download the Lakes NHD High Res: Shapefile link. You will also need to download a shapefile that contains all known streams in Utah. Using the NHD Streams section, download the Streams NHD High Res: Shapefile link.
+<!-- VERIFY: <https://wrdb.nrel.gov/> could not be reached from the migration environment (DNS for
+     the whole nrel.gov domain does not resolve here, so this is not evidence the link is dead).
+     Test it from a normal network before the lab is assigned. -->
 
-- **NED (National Elevation Dataset):** <http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/>
+<!-- VERIFY: <https://windexchange.energy.gov/maps-data/> redirects to
+     https://www.energy.gov/cmei/systems/windexchange/maps-and-data (HTTP 200). Consider updating
+     the printed URL to the redirect target. -->
 
-    You will need to download the elevation dataset for Utah provided by the USGS. You should either download the 10 m or 30 m NED for Utah County using any of the methods on the page.
+<!-- TODO(instructor): The Wind Speed row tells students to use "the 30 meter height data," but the
+     example image (Figure 3), the model's input dataset ("Wind Speed 80m"), and its clipped output
+     ("South Dakota 80m Wind Raster") are all 80 m data, and the 7 m/s threshold in the Spatial
+     Considerations is a plausible 80 m threshold, not a 30 m one. Data-source decision — not
+     changed here. -->
 
-- **Municipal Boundaries:** <http://gis.utah.gov/data/boundaries/citycountystate/>
-
-    You will need to download the city boundaries for Utah. This can be found in the Municipal Boundaries section using the Municipal Boundaries: Shapefile link.
-
-- **Utah County Shapefile:** <http://gis.utah.gov/data/boundaries/citycountystate/>
-
-    You can find a shapefile that represents all the counties from Utah (you will select the specific county you need during the exercise).
-
-- **Utility Data:** You will need to download the electrical lines that are in Utah. Download `ElectricalLines_shp.zip` from Learning Suite.
-
-- **User Created Point Shapefiles:** For the starting and ending locations, you will need to create two separate point shapefiles with a proper projection. One should show where to start (the source) and to end (the destination) in the least cost path calculation. These points do not represent actual or future substations. The starting point should be at the mouth of Spanish Fork Canyon (approximately at 40.076955, -111.584886) and the ending point near the proposed NSA facility in Bluffdale (approximately 40.460597, -111.935419; near the Point of the Mountain).
+<!-- TODO(instructor): The Spatial Considerations require a site "within 2 miles of a main road,"
+     but the only road dataset listed is "Local Roads," and Step 2 intersects Local Roads. Decide
+     whether the criterion should say local roads or whether a separate primary/main road layer
+     should be added to the data table. -->
 
 ## ModelBuilder Tools
 
-In this exercise, you may use previous tools and will use the following new tools.
+In this exercise, you will need to use tools from previous lab exercises as well as the following
+new tools:
 
-- **Polyline/Polygon to Raster:** Converts a feature class or layer into a raster based on a specified value field.
-- **Cost Distance:** Calculates the least cost distance for each cell from the start point on the cost surface. <!-- TODO(instructor): Cost Distance is a legacy Spatial Analyst tool. The current ArcGIS Pro equivalent is Distance Accumulation. -->
-- **Cost Path:** Calculates a least cost path from the source to the destination by using the Cost Distance tool outputs. <!-- TODO(instructor): Cost Path is a legacy Spatial Analyst tool. The current ArcGIS Pro equivalents are Optimal Path As Line and Optimal Path As Raster. -->
-- **Multiple Ring Buffer:** Creates multiple buffers at specified distances around the input features.
+- **Weighted Sum** — This tool allows you to calculate a weighted sum. Using this tool allows us to
+  assign different weights to each of our input datasets. Consider that some factors are more
+  important than others, so when you are combining layers, you may want to give the more important
+  factors greater weight.
+- **Get Raster Properties** — This tool allows you to extract individual data values from your
+  raster datasets.
+- **Equal To** — This allows you to extract data that is equal to the input value.
 
-## Example Model
+## Model Example
 
-![Full ModelBuilder diagram for the least cost path analysis, running from the input shapefiles on the left through select, clip, buffer, raster conversion and reclassify steps to the Raster Calculator, Cost Distance, Cost Path and Raster to Polyline tools on the right](images/lab10-full-model-overview.png)
+![ModelBuilder canvas showing the first half of the completed wind farm model: county selection, intersects, buffers, polygon-to-raster conversions, and reclassifications for cities, roads, rivers, wind farms, and wind speed](images/lab10-model-overview-preprocessing.png)
 
-**Figure 1.** The complete least cost path model in ModelBuilder.
+**Figure 1.** The preprocessing half of the completed model — select, intersect, buffer, convert to
+raster, and reclassify, once for each input dataset.
 
-<!-- TODO(instructor): Figure 1 is a zoomed-out ModelBuilder canvas capture and the node labels are effectively illegible at page width. It needs to be re-exported from ModelBuilder (Export to Graphic at a larger size, or as a model-documentation table), not re-screenshotted. -->
+<!-- TODO(instructor): Figure 1 is one of the six illegible ModelBuilder canvas grabs identified in
+     the September 2026 image audit. It is a wide, zoomed-out screen capture; the node labels are at
+     the edge of readability on screen and will not survive printing at 10 pt. It needs to be
+     re-exported from ModelBuilder (Model > Export > To Graphic) rather than re-screenshotted, and
+     is probably best split into two or three panels. Kept in place because the text refers to it. -->
+
+<!-- TODO(instructor): The node labels inside Figure 1 disagree with the handout's own numbers and
+     with the tool dialogs: the canvas reads "Cities 20mi Buffer" where the text and Figure 9 both
+     say 30 miles; "Roads 2km Buffer" where the text and Figure 10 both say 2 miles (km vs. mi);
+     and "Rivers 2mi Buffer" where Figure 11 shows 1 mile. Screenshots cannot be edited — the model
+     must be rebuilt and re-exported once the buffer distances are settled. -->
+
+![ModelBuilder canvas showing the second half of the model: five reclassified rasters feeding Weighted Sum, then Get Raster Properties, Equal To, and Raster to Point](images/lab10-model-overview-weighted-sum.png)
+
+**Figure 2.** The analysis half of the completed model — the five reclassified rasters feed Weighted
+Sum, and the maximum value of the result is used to extract the ideal wind farm locations.
 
 ## Complete the Lab
 
-For an advanced GIS student, the information up to this point is all you need to complete the assignment and create an output map from the results. Feel free to try conducting the analysis using only the information provided above. If you complete the lab only using the information provided above (without using the step-by-step instructions below), make sure to indicate this in your lab report to be considered for extra credit. If you need extra help, follow the step-by-step solution below.
+For an advanced GIS student, the information provided so far may be all you need to complete the
+assignment and generate an output map from the results. Feel free to try conducting the analysis
+using only the information above. If you complete the lab using only the info above (without the
+step-by-step instructions below), be sure to indicate this in your lab report to qualify for extra
+credit. If you need additional help, follow the step-by-step solution below.
 
 ## Step-by-Step Solution
 
-> [!NOTE]
-> **About the tools used below.** This solution uses the legacy Spatial Analyst tools **Cost Distance**, **Cost Back Link**, and **Cost Path**. Those tools still run in ArcGIS Pro, but Esri has deprecated them; current practice is **Distance Accumulation** (which produces the accumulative cost and back-direction rasters) followed by **Optimal Path As Line** or **Optimal Path As Raster**. The screenshots, parameter names, and rubric on this page all assume the legacy tools, so the steps have deliberately not been rewritten. Your instructor will confirm which set of tools to use before you start.
+<!-- TODO(instructor): This step-by-step section runs about 21 pages in the Word original and 26 of
+     the lab's 28 figures sit inside it. Recommend restructuring into a short core brief (criteria,
+     required outputs, environment settings, deliverables) plus a clearly labeled appendix holding
+     the click-by-click walkthrough, so the analytical decisions are not buried in tool dialogs.
+     Structural change to the assignment — not made here. -->
+
+### Step 0
+
+Either download raw wind speed data in shapefile or raster format from the links provided, or
+download an image of wind speed and digitize the polygons of wind speeds. For the second approach,
+we need to build our own wind speed raster using the JPG image downloaded from the Department of
+Energy. This will require using the georeferencing tools learned in a previous lab to assign the
+image a spatial location and projection. Next, you will either need to digitize the main polygons of
+wind speed or convert your polygons to a raster. You can also convert the JPG to a raster and
+reclassify the results from color codes to wind speeds. Regardless, the goal is to obtain a
+georeferenced raster dataset showing the average wind speed regionally across South Dakota.
+
+![Map of South Dakota annual average wind speed at 80 meters, shaded by wind speed class from under 4 m/s to over 10.5 m/s, published by AWS Truepower and NREL](images/lab10-sd-wind-speed-80m-map.png)
+
+**Figure 3.** An annual average wind speed map for South Dakota — the kind of JPG you would
+georeference and digitize in this step.
 
 ### Step 1
 
-Use the Mosaic To New Raster tool to combine the DEMs of Utah County. Set the cell size to 100.
+Use the Select tool to select the following counties: Minnehaha, Moody, Lake, McCook, Turner, and
+Lincoln. We have been asked to build our wind farm in one of these counties.
 
-![Mosaic To New Raster tool in the ModelBuilder canvas, with four 30 m DEM tiles and the project geodatabase as inputs and CombinedRaster as the output](images/lab10-mosaic-to-new-raster-model.png)
+![ModelBuilder canvas showing the South Dakota County Boundaries input feeding the Select Counties tool, producing the selected-counties output](images/lab10-select-counties-model.png)
 
-**Figure 2.** Mosaic To New Raster tool in ModelBuilder.
+**Figure 4.** The Select step in the model.
 
-<!-- VERIFY: "Set the cell size to 100" does not name a unit. The DEM tiles in Figure 2 are 30 m products, so 100 is presumably 100 meters in a projected coordinate system, but the handout never says so. Kept verbatim. -->
+![Select tool dialog with South Dakota County Boundaries as the input and a series of Or clauses on the name field for Minnehaha, Moody, Lake, McCook, and Turner](images/lab10-select-counties-dialog.png)
+
+**Figure 5.** The Select tool dialog, with one clause per county name.
+
+<!-- VERIFY: Figure 5 shows the query built on a field named "name" with values "Minnehaha",
+     "Moody", "Lake", "McCook", "Turner". Confirm the field name and the exact spelling of the
+     values against whichever county boundary layer is downloaded — the field is often NAME or
+     NAMELSAD, and the clause list is scrolled so the Lincoln clause is not visible. -->
 
 ### Step 2
 
-Use the Select tool to select lakes with an area greater than 1 square kilometer by using the SQL expression `AreaSqKm > 1`. Use the Select tool to select the major rivers by using the SQL expression `IsMajor = 1`. This will filter out small lakes and streams and will help the model to run faster.
+Next, we will use the Intersect tool to intersect the Local Roads with the selected counties. This
+will allow us to keep the data only in the counties we are working with. Do the same for the US
+Rivers and Streams and the wind farm locations.
 
-<!-- VERIFY: field names AreaSqKm (NHD lakes) and IsMajor (NHD streams) are taken verbatim from the source handout and have not been checked against the current Utah NHD High Res downloads. -->
+![ModelBuilder canvas showing three Intersect tools producing roads in selected counties, rivers in South Dakota, and wind farms in South Dakota](images/lab10-intersect-model.png)
 
-Select and Buffer Utah County to use as a clip or intersect feature in the following steps. This layer will limit each of the layers to the area of interest for the calculations and provides a cleaner map. Set the buffer of Utah County to 5 kilometers.
+**Figure 6.** The three Intersect operations in the model.
 
-![ModelBuilder canvas showing the Counties layer flowing through Select Utah County and Buffer to a Utah County Buffer output, with Streams NHD and Lakes NHD each flowing through a Select tool](images/lab10-select-buffer-county-model.png)
+![Intersect tool dialog with Local Roads and the selected counties layer as input features and Local_Roads_Intersect as the output feature class](images/lab10-intersect-roads-dialog.png)
 
-**Figure 3.** Steps 1 and 2 in ModelBuilder.
+**Figure 7.** The Intersect tool dialog for the roads.
 
 ### Step 3
 
-Clip or intersect the buffered Utah County layer with the highways, cities, rivers (streams), lakes, and electrical lines to isolate the data needed for the analysis and to have the model run faster. In Figure 4, the roads are being clipped by the county, while the other datasets are intersected with the county. Using either tool for any of the datasets will produce the desired result we need for this lab.
+Next, we will use the Buffer tool to buffer each of our datasets. Each of these is shown below in
+Figures 8 through 12. Make a 30-mile buffer around each of the cities, a 2-mile buffer around the
+Roads and Rivers, and a 20-mile buffer around existing wind farms.
 
-![ModelBuilder canvas showing Intersect tools applied to streams, lakes, municipalities and electrical lines, and a Clip tool applied to the UDOT routes, each against the Utah County Buffer](images/lab10-clip-intersect-model.png)
+<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 2 of 4. Exact wording in this step:
+     "a 2-mile buffer around the Roads and Rivers." Exact wording in the Spatial Considerations:
+     "It must not be within 1 mile of a river." Figure 11 (Buffer Rivers dialog) shows a distance of
+     1 Miles. The model canvas node in Figures 1, 8, and 13 is labeled "Rivers 2mi Buffer". Not
+     resolved here. -->
 
-**Figure 4.** Using the Clip and Intersect tools.
+> [!TIP]
+> Don't forget to toggle the Dissolve Type to "Dissolve all output features into a single feature"!
+
+![ModelBuilder canvas showing four Buffer tools producing a cities buffer, a roads buffer, a rivers buffer, and a wind farm buffer](images/lab10-buffer-model.png)
+
+**Figure 8.** The four Buffer operations in the model.
+
+<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 3 of 4. The rivers node in Figure 8 is
+     labeled "Rivers 2mi Buffer", which contradicts the 1 Mile shown in Figure 11 and the "not
+     within 1 mile of a river" criterion. Figure 8 also labels the cities output "Cities 20mi
+     Buffer" while the text and Figure 9 both say 30 miles. Screenshot — cannot be corrected
+     without rebuilding and re-exporting the model. -->
+
+![Buffer tool dialog for cities with a distance of 30 Miles, full side type, planar method, and dissolve all output features into a single feature](images/lab10-buffer-cities-dialog.png)
+
+**Figure 9.** Buffer Cities — 30 Miles, dissolved into a single feature.
+
+![Buffer tool dialog for roads in selected counties with a distance of 2 Miles and dissolve all output features into a single feature](images/lab10-buffer-roads-dialog.png)
+
+**Figure 10.** Buffer Roads — 2 Miles.
+
+![Buffer tool dialog for rivers in South Dakota with a distance of 1 Miles and dissolve all output features into a single feature](images/lab10-buffer-rivers-dialog.png)
+
+**Figure 11.** Buffer Rivers — the dialog shows 1 Mile.
+
+<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 4 of 4. This screenshot shows a
+     Distance of "1" with units "Miles", agreeing with the Spatial Considerations criterion and
+     disagreeing with Step 3's "2-mile buffer around the Roads and Rivers" and with the "Rivers 2mi
+     Buffer" node label in Figures 1, 8, and 13. Not resolved here. -->
+
+![Buffer tool dialog for wind farms in South Dakota with a distance of 20 Miles and dissolve all output features into a single feature](images/lab10-buffer-windfarms-dialog.png)
+
+**Figure 12.** Buffer Windfarms — 20 Miles.
 
 ### Step 4
 
-The requirements state that the lines need to be within 2 kilometers of a major road, should avoid major rivers and lakes by at least 2 kilometers, and avoid cities by at least 5 kilometers. Use the Buffer and Multiple Ring Buffer tools to accomplish this. In Figure 5, the municipalities layer is being buffered with the Multiple Ring Buffer tool while the roads, rivers, and lakes can be buffered with the Buffer tool.
+Next, we will use the Polygon to Raster tool on each dataset. Set the Cell Size to 1.
 
-![ModelBuilder canvas with Buffer tools on the clipped streams, lakes and UDOT routes, and a Multiple Ring Buffer tool on the clipped municipalities](images/lab10-buffer-tools-model.png)
+<!-- TODO(instructor): The cell size of 1 is given with no units and no justification. Its meaning
+     depends entirely on the (unspecified) analysis CRS: 1 meter in a UTM-based CRS produces an
+     enormous raster over six South Dakota counties, while 1 foot or 1 degree would each be worse.
+     The source wind data in Figure 3 is 2.5 km resolution, so nothing in the analysis supports a
+     1-unit cell. Recommend stating an explicit cell size with units (for example, a few hundred
+     meters) and explaining how it was chosen from the coarsest input. Value left at 1 as
+     written. -->
 
-**Figure 5.** The Buffer, Multiple Ring Buffer, and Intersect tools in ModelBuilder.
+![ModelBuilder canvas showing four Polygon to Raster tools converting the cities, roads, rivers, and wind farm buffers to rasters](images/lab10-polygon-to-raster-model.png)
 
-The Multiple Ring Buffer tool should be configured as shown in Figures 6 and 7. Use 1 kilometer increment offsets from 1 to 5 kilometers. In the Environments tab, set the Extent to the combined NED raster of Utah County.
+**Figure 13.** The four Polygon to Raster conversions in the model.
 
-![Multiple Ring Buffer tool Parameters tab with UCO Municipalities as input, distances 1 through 5, Buffer Unit set to Kilometers, field name distance, and Dissolve Option set to Non-overlapping rings](images/lab10-multiple-ring-buffer-parameters.png)
+![Polygon to Raster tool dialog with the cities buffer as input, OBJECTID as the value field, cell assignment type of cell center, and a cellsize of 1](images/lab10-polygon-to-raster-dialog.png)
 
-**Figure 6.** Parameters tab of the Multiple Ring Buffer tool.
+**Figure 14.** The Polygon to Raster dialog — note the Cellsize of 1.
 
-![Multiple Ring Buffer tool Environments tab with Extent set to As Specified Below and numeric extent values filled in](images/lab10-multiple-ring-buffer-environments.png)
-
-**Figure 7.** Environments tab of the Multiple Ring Buffer tool, with the Extent set from the combined NED raster.
-
-<!-- VERIFY: the extent coordinates shown in Figure 7 (326628.07, 4316571.77 to 500228.07, 4540871.77) are from the original author's session. They are not stated anywhere in the text and their coordinate system is not given; students should set the Extent from their own combined DEM rather than typing these numbers. -->
+<!-- VERIFY: Figure 14 uses OBJECTID as the Value field. Because the buffers were dissolved into a
+     single feature, every polygon carries OBJECTID = 1, which is what makes the Step 6
+     reclassification of "1 -> 1, NODATA -> 0" work. Confirm this is intended rather than
+     incidental, and that OBJECTID exists on the buffer outputs in the student's workspace. -->
 
 ### Step 5
 
-Once all the data layers are processed with their buffers, all layers need to be converted to a raster to process in a raster calculator. To make the raster similar in size to the other rasters in the series, each layer needs to be processed to the extent of the Utah County DEM. The extent can be entered in as an environment parameter. Use the Polygon to Raster tool for the buffers and the Polyline to Raster tool for the power line shapefile. Make sure that all the rasters are set to the same cell size as the DEM under the Environments tab.
+Use the Clip Raster tool to clip the wind speed raster data to the county boundaries data that we
+created earlier.
 
-![Polygon to Raster tool Parameters tab with Buffered Lakes as the input feature, OBJECTID as the value field, cell assignment type of Cell center, and Cellsize set from CombinedRaster](images/lab10-polygon-to-raster-parameters.png)
+![ModelBuilder canvas showing the Wind Speed 80m raster and a boundary input feeding Clip Raster, producing the South Dakota 80m Wind Raster, which then feeds Reclassify](images/lab10-clip-raster-model.png)
 
-**Figure 8.** Parameters tab of the Polygon to Raster tool.
+**Figure 15.** The Clip Raster step, producing the clipped wind speed raster.
 
-![Polygon to Raster tool Environments tab with Extent set to As Specified Below and Cell Size set to 100](images/lab10-polygon-to-raster-environments.png)
-
-**Figure 9.** Environments tab of the Polygon to Raster tool, showing the extent and the 100 cell size.
+<!-- VERIFY: The text says the wind speed raster is clipped "to the county boundaries data that we
+     created earlier," but in Figures 1 and 15 the clip input comes from the "Select South Dakota"
+     branch off US States — that is, the state boundary, not the six selected counties. Confirm
+     which extent is intended. -->
 
 ### Step 6
 
-Reclassify each layer according to the spatial considerations stated in the beginning of the lab.
-
-![ModelBuilder canvas showing five Polygon to Raster and Polyline to Raster tools producing the streams, lakes, roads, municipalities and power line rasters, each feeding a Reclassify tool](images/lab10-raster-conversion-reclassify-model.png)
-
-**Figure 10.** Polygon to Raster, Polyline to Raster, and Reclassify tools in ModelBuilder.
-
-All values within lake/streams buffers should be given the value of 10 and NODATA the value of 1.
-
-![Reclassify tool for the streams raster, mapping value 1 to 10 and NODATA to 1](images/lab10-reclassify-streams.png)
-
-**Figure 11.** Reclassify tool in ModelBuilder for the streams raster.
-
-![Reclassify tool for the lakes raster, mapping value 1 to 10 and NODATA to 1](images/lab10-reclassify-lakes.png)
-
-**Figure 12.** Reclassify tool in ModelBuilder for the lakes raster.
-
-Values within the road buffer should be reclassified to 1 with all outside values assigned to NODATA.
-
-![Reclassify tool for the roads raster, mapping the value range 1 to 236 to 1 and leaving NODATA as NODATA](images/lab10-reclassify-roads.png)
-
-**Figure 13.** Reclassify tool in ModelBuilder for the roads raster.
-
-The Municipalities should be reclassified so that the inner rings have a greater value and the outer rings have a lesser value.
-
-![Reclassify tool for the municipalities raster, mapping ring values 1 through 5 to 10, 8, 6, 4 and 2 respectively and NODATA to 1](images/lab10-reclassify-municipalities.png)
-
-**Figure 14.** Reclassify tool in ModelBuilder for the municipalities raster.
-
-Values along the power lines should be 1 with all NODATA values assigned to 10.
-
-![Reclassify tool for the power lines raster, mapping value 1 to 1 and NODATA to 10](images/lab10-reclassify-power-lines.png)
-
-**Figure 15.** Reclassify tool in ModelBuilder for the power lines raster.
+Next, use the Reclassify tool to reclassify each raster dataset. This allows us to separate the
+desirable areas to build a wind farm from the undesirable areas. We will assign a value of 1 to the
+desirable areas and 0 to the undesirable areas.
 
 > [!IMPORTANT]
-> Make sure that the cell size is set to 100 in all the Reclassify tools. You can check this under the Environments tab in the Reclassify tool window. The elevation will be multiplied to the scale factors. There will be no need to reclassify any of the values from the DEM.
+> It is essential for all raster datasets you create to have the same projection and cell size.
+> Also, ensure there are no spaces in your file names or folder paths.
+
+![ModelBuilder canvas showing five Reclassify tools producing the city, road, river, wind farm, and wind speed reclassified rasters](images/lab10-reclassify-model.png)
+
+**Figure 16.** The five Reclassify operations in the model.
+
+![Reclassify tool dialog for the city raster mapping value 1 to 1 and NODATA to 0](images/lab10-reclassify-cities-dialog.png)
+
+**Figure 17.** Reclassify Cities — inside the 30-mile city buffer is desirable (1).
+
+![Reclassify tool dialog for the roads raster mapping the range 1 to 2 to a new value of 1 and NODATA to 0](images/lab10-reclassify-roads-dialog.png)
+
+**Figure 18.** Reclassify Roads — inside the road buffer is desirable (1).
+
+![Reclassify tool dialog for the river raster mapping value 1 to 0 and NODATA to 1](images/lab10-reclassify-rivers-dialog.png)
+
+**Figure 19.** Reclassify River — the mapping is reversed, because being inside the river buffer is
+undesirable (0).
+
+![Reclassify tool dialog for the wind farm raster mapping value 1 to 0 and NODATA to 1](images/lab10-reclassify-windfarms-dialog.png)
+
+**Figure 20.** Reclassify Windfarm — reversed as well, because being near an existing wind farm is
+undesirable (0).
+
+![Reclassify tool dialog for the South Dakota 80m wind raster mapping 0 to 7 to a new value of 0, 7 to 15 to a new value of 1, and NODATA to 0](images/lab10-reclassify-wind-speed-dialog.png)
+
+**Figure 21.** Reclassify the wind speed raster — speeds of 7 m/s and above become 1, everything
+below becomes 0.
 
 ### Step 7
 
-Use the Raster Calculator tool and multiply the reclassified rasters together. This result gives you a sort of artificial "terrain." Desired, low-cost areas act like valleys while undesirable, high-cost areas are represented like mountains or plateaus. This artificial "terrain" can be manipulated by changing the buffers or reclassification values to weight different information on how it impacts our result. For this lab, we are considering all the spatial considerations almost equally.
+Next, we will use the Weighted Sum tool. To do so, we will enter each of our input datasets and
+assign a weight to each based on its importance in our model. See Figure 23 to set these weights.
+Note that the specific weights you select depend on your engineering judgment. Consider which
+datasets are most important and which constraints deserve the most attention when choosing these
+weights.
 
-![ModelBuilder canvas showing the five reclassified rasters and CombinedRaster feeding the Raster Calculator tool, which outputs the Powerline Use Rating raster](images/lab10-raster-calculator-model.png)
+![ModelBuilder canvas showing the five reclassified rasters feeding the Weighted Sum tool, producing the Weighted Wind Locations raster](images/lab10-weighted-sum-model.png)
 
-**Figure 16.** Using the Raster Calculator tool to combine all the different rasters that were created in the model.
+**Figure 22.** The Weighted Sum step in the model.
+
+![Weighted Sum tool dialog listing five input rasters with the VALUE field and weights of 7 for windspeed, 6 for wind farms, 3 for rivers, 4 for cities, and 2 for roads](images/lab10-weighted-sum-dialog.png)
+
+**Figure 23.** The Weighted Sum dialog. The weights shown here are one student team's judgment, not
+a required answer.
+
+<!-- VERIFY: the weights visible in Figure 23 are Windspeed 7, Windfarm 6, River 3, City 4, Road 2.
+     The surrounding text says students choose their own weights, so treat this screenshot as an
+     example rather than as the specification. -->
 
 ### Step 8
 
-Use the Cost Distance tool to calculate the least accumulative cost distance.
+Finally, we will use the Get Raster Properties tool to find the maximum value. This value will then
+be used in the Equal To tool to obtain our maximum raster points. This will ultimately show us the
+best locations for a wind farm. Finally, use the Raster to Point tool to find the ideal wind farm
+locations.
 
-<!-- TODO(instructor): legacy tool. Cost Distance is deprecated; the current ArcGIS Pro replacement is Distance Accumulation, whose Output Back Direction Raster feeds Optimal Path As Line. Steps and screenshots left as written pending a re-test. -->
+![ModelBuilder canvas showing Weighted Wind Locations feeding Get Raster Properties to produce a maximum value, and feeding Equal To with an input maximum to produce maximum raster points, then Raster to Point to produce ideal wind farm locations](images/lab10-final-steps-model.png)
 
-![ModelBuilder canvas showing the Powerline Use Rating raster and Windfarm.shp feeding the Cost Distance tool, which outputs a cost distance raster and a cost backlink raster](images/lab10-cost-distance-model.png)
+**Figure 24.** The final chain of the model.
 
-**Figure 17.** The Cost Distance tool in ModelBuilder.
+![Get Raster Properties tool dialog with Weighted Wind Locations as the input raster, a property type of maximum cell value, and Band_1 as the band name](images/lab10-get-raster-properties-dialog.png)
 
-![Cost Distance tool window with Windfarm.shp as the source, Powerline Use Rating as the input cost raster, and outputs for the distance raster and the backlink raster](images/lab10-cost-distance-tool.png)
+**Figure 25.** Get Raster Properties — set the Property type to **Maximum cell value**.
 
-**Figure 18.** Cost Distance tool window.
+![Equal To tool dialog with Weighted Wind Locations as the first input and Input Maximum as the second](images/lab10-equal-to-dialog.png)
 
-### Step 9
+**Figure 26.** Equal To — compares the weighted raster against the maximum value found in Figure 25.
 
-Use the Cost Path tool to create the least cost path. This tool takes the two cost rasters from the previous tool and the destination point to create the least cost path.
+![Raster to Point tool dialog with Maximum Raster Points as the input raster and VALUE as the field](images/lab10-raster-to-point-dialog.png)
 
-<!-- TODO(instructor): legacy tool. Cost Path is deprecated; the current ArcGIS Pro replacements are Optimal Path As Line and Optimal Path As Raster. Steps and screenshots left as written pending a re-test. -->
+**Figure 27.** Raster to Point — converts the maximum-value cells to point features.
 
-![ModelBuilder canvas showing the cost distance raster, cost backlink raster and DataCenter.shp feeding the Cost Path tool, which outputs the Cost Path Raster](images/lab10-cost-path-model.png)
-
-**Figure 19.** The Cost Path tool in ModelBuilder.
-
-![Cost Path tool window with DataCenter.shp as the destination, Id as the destination field, the cost distance and cost backlink rasters as inputs, and Path type set to Each cell](images/lab10-cost-path-tool.png)
-
-**Figure 20.** Cost Path tool window.
-
-<!-- VERIFY: Figure 20 shows Path type set to "Each cell" and Destination field "Id". Neither is stated in the text; both are taken from the original author's session and have not been re-tested. -->
-
-### Step 10
-
-This final step takes the least cost path raster and converts it to a polyline shapefile. This makes the line visible to the viewer and it is easier to change the symbology.
-
-![ModelBuilder canvas showing the Cost Path Raster feeding the Raster to Polyline tool, which outputs the Least Cost Path feature class](images/lab10-raster-to-polyline-model.png)
-
-**Figure 21.** The Raster to Polyline tool in ModelBuilder.
-
-> [!TIP]
-> Make sure to save your model, because in a later lab you will need to access the work that you have done in this laboratory exercise.
-
-## Deliverables
-
-Once completed, submit your ModelBuilder process chart in its entirety and a map that demonstrates how you analyzed the included data and the results. Your map should conform to generally accepted cartography standards and should include at minimum, a scale bar, north arrow, and legend (see the following rubric). Your report should explain your ModelBuilder process and how it works. Make sure to provide any equations you used in your calculations and feel free to share any challenges you faced as you completed the process. Make sure to review the rubric at the end of this lab for the full requirements for the laboratory exercise.
-
-## References
-
-Meehan, Bill. *Case Studies in GIS: Empowering Electric and Gas Utilities with GIS.* Redlands, California: Esri Press, 2007. Print.
-
-Schmidt, Andrew J. "Implementing a GIS Methodology for Siting High Voltage Electric Transmission Lines." *Papers in Resource Analysis* Volume 11, Winona, Minnesota: Saint Mary's University of Minnesota University Central Services Press, 2009. Accessed 05 July 2010. Web.
-
-Vajjhala, Shalini P. and Paul S. Fischbeck. "Quantifying Siting Difficulty: A Case Study of U.S. Transmission Line Siting." Discussion Paper for Resources For the Future. Accessed 24 June 2010. Web. <http://www.rff.org/rff/documents/Rff-DP-06-03.pdf> <!-- TODO(instructor): this URL returns 404. A working replacement has not been substituted because the correct current location has not been verified. -->
+<!-- VERIFY: the "Input Maximum" node in Figures 2 and 24 is a model variable fed from the Get
+     Raster Properties output. Confirm in ArcGIS Pro how that value is wired (the Get Raster
+     Properties output is a string-typed value and normally needs to be connected as a precondition
+     or converted before Equal To will accept it as a constant). The handout does not explain this
+     connection and it is the step students are most likely to get stuck on. -->
 
 ## Example Map
 
-![Example finished layout titled "Least Cost Path Power Lines", showing the computed path in red running from the wind farm south-east of Utah Lake north to the data center, with a north arrow, scale bar, legend, and a circular inset map of the Powerline Use Rating cost surface](images/lab10-example-map.png)
-
-**Figure 22.** Example map layout for the least cost path analysis.
-
-## Rubric for Least Cost Path Analysis
-
 > [!NOTE]
-> We are only running this lab for one study area.
+> This is not a complete example map, because it doesn't show the final selected point locations.
+> Make sure your final map includes point locations that meet the goal of identifying the one
+> location that has the maximum value from your weighted sum raster. Also, your project sponsor
+> doesn't care about "bad locations," so this doesn't need to be mentioned on your map.
+
+![Example student map titled Windfarm Locations, showing a purple suitable-area polygon over an aerial base map of southeastern South Dakota near Sioux Falls, with scale bar, north arrow, legend, author names, projection NAD 1983 Zone 14, and date](images/lab10-example-map.png)
+
+**Figure 28.** An example student map. Note that it shows suitable *areas*, not the final selected
+point locations, and that its legend still lists "Bad Locations" — both of which the note above asks
+you to fix in your own map.
+
+## Rubric for Wind Farm Site Selection
 
 | Item | Points |
 | --- | --- |
-| Assignment Title, Name, Date, Course | |
-| Brief report of the requirements of the project and why it matters. | /10 |
-| Describe your model: list each of the tools used; list tool settings applied for the analysis (could someone repeat the assignment using your lab report?); list all input, intermediate, and output datasets; describe each input dataset, including type (point, line, polygon, raster) and the source of the data; describe each output dataset (point, line, polygon, raster) | /10 |
-| One or more full pages (8.5 x 11) showing your model; all text is readable (10 pt. font minimum); all tools and data sets are shown | /10 |
-| Describe the route computed for the new power line and what appears realistic versus unrealistic. What classifications would you change to make the model more realistic? | /5 |
-| Create a full-page (8.5 x 11) map showing the results of your least-cost path analysis: map title, neat line, north arrow, scale bar; text box with author name, date, map projection; proposed path for new power lines clearly shown; all datasets clearly symbolized; visible basemap showing cities and major roads; zoomed to an appropriate scale for viewing analysis results; all text is legible on printed map; include an inset map showing the virtual terrain that was created. | /15 |
+| Assignment Title, Name, Date, Course |  |
+| Brief report of the requirements of the project, what you learned, what worked well, and what you did differently, if anything, than the lab assignment. Describe the specific areas recommended for new wind farms. Do you agree with the results of the model, or did you find anything different from what you expected? | /10 |
+| One or more full pages (8.5 x 11) showing your model. Also, describe your model, including:<br>• List tool settings applied for the analysis (could someone repeat the assignment using your lab report?)<br>• List all input, intermediate, and output datasets<br>• Describe each input dataset, including type (point, line, polygon, raster) and the source of the data<br>• Describe each output dataset (point, line, polygon, raster)<br>• All text in the graphics is readable (10 pt. font minimum)<br>• All tools and datasets are shown | /10 |
+| Make a full page (8.5 x 11) map showing the results of the analysis.<br>• Map Title, Neat Line, North Arrow, Scale Bar<br>• Text box with author name, date, and map projection<br>• Suitable locations for new wind farms are clearly shown<br>• All datasets clearly symbolized<br>• Visible base map showing road data<br>• Data points showing existing wind farms<br>• Zoomed to an appropriate scale for viewing analysis results<br>• All text is legible on the printed map | /15<br><br>/15<br><br>(Analyze two counties in South Dakota and make two maps). |
+| **Total Points** | **/50** |
 
-<!-- TODO(instructor): the rubric states no total. The five scored rows sum to 50 points, and the first row ("Assignment Title, Name, Date, Course") carries no point value at all — it may be intended as a checklist item or may be missing its points. Point values are an instructor decision and have not been changed. -->
+<!-- Rubric total checked: 10 + 10 + 15 + 15 = 50, which matches the stated /50. The title row
+     carries no points, as in the original. -->
 
-<!-- TODO(instructor): the instructor plan asks that the lecture example, the assignment steps, and the rubric be aligned. The Week 11 lecture deck teaches the same legacy Cost Distance / Cost Path workflow used here, and the rubric asks students to list "tool settings applied," which will need updating in step with whichever tool set is adopted. -->
+<!-- TODO(instructor): The last rubric row awards 15 + 15 for "two maps" and its parenthetical says
+     "Analyze two counties in South Dakota and make two maps," but the Problem Statement asks for
+     two *collections* of counties (the six named ones, then a set the student chooses). Reconcile
+     the count. Point values and structure left unchanged. -->
 
-<!-- Migration notes (2026-09-03):
-source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 10 - Least Cost Path Power Line Analysis.docx
-ArcGIS Pro version verified against: NOT VERIFIED in this migration.
+<!-- TODO(instructor): No rubric row covers the raster-specific work this lab is actually about —
+     the reclassification scheme, the choice and justification of weights, the environment settings,
+     or a weight-sensitivity comparison. Adding one would need point values reallocated, so nothing
+     was changed. -->
+
+## Credits
+
+This lab was originally created by Camden Greenhalgh, Sarah Fox, and Emma Stucki as part of a final
+project for BYU Civil Engineering 414, Fall 2021.
+
+<!-- Migration notes (2026-09-03): REDACTION (2026-09-03): lab10-weighted-sum-model.png had a file-path tooltip containing a student surname painted out; lab10-example-map.png had the three student author names in the map text block painted out (CRS and date lines kept). Model nodes and map content are otherwise unchanged.
+source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 9 - Wind Farm Site Selection.docx
+
+ArcGIS Pro version verified against: NOT VERIFIED in this migration. No ArcGIS Pro session was
+opened; every tool name, parameter, and field name below is as it appeared in the Word original or
+in its screenshots.
 
 images renamed from fig-NN:
-  fig-01 -> lab10-full-model-overview.png
-  fig-02 -> lab10-mosaic-to-new-raster-model.png
-  fig-03 -> lab10-select-buffer-county-model.png
-  fig-04 -> lab10-clip-intersect-model.png
-  fig-05 -> lab10-buffer-tools-model.png
-  fig-06 -> lab10-multiple-ring-buffer-parameters.png
-  fig-07 -> lab10-multiple-ring-buffer-environments.png
-  fig-08 -> lab10-polygon-to-raster-parameters.png
-  fig-09 -> lab10-polygon-to-raster-environments.png
-  fig-10 -> lab10-raster-conversion-reclassify-model.png
-  fig-11 -> lab10-reclassify-streams.png
-  fig-12 -> lab10-reclassify-lakes.png
-  fig-13 -> lab10-reclassify-roads.png
-  fig-14 -> lab10-reclassify-municipalities.png
-  fig-15 -> lab10-reclassify-power-lines.png
-  fig-16 -> lab10-raster-calculator-model.png
-  fig-17 -> lab10-cost-distance-model.png
-  fig-18 -> lab10-cost-distance-tool.png
-  fig-19 -> lab10-cost-path-model.png
-  fig-20 -> lab10-cost-path-tool.png
-  fig-21 -> lab10-raster-to-polyline-model.png
-  fig-22 -> lab10-example-map.png
-No image was deleted; all 22 are referenced. images/.gitkeep removed.
-
-figure numbering: the Word captions were numbered 1-17 but two images (the full-model
-overview and the example map) had no caption, and three captions each covered two
-screenshots. All 22 images are now numbered 1-22 in document order, and the three in-text
-references were repointed (old "Figure 3" -> Figure 4, old "Figure 4" -> Figure 5,
-old "Figure 5" -> Figures 6 and 7).
+  fig-01 -> lab10-model-overview-preprocessing.png
+  fig-02 -> lab10-model-overview-weighted-sum.png
+  fig-03 -> lab10-sd-wind-speed-80m-map.png
+  fig-04 -> lab10-select-counties-model.png
+  fig-05 -> lab10-select-counties-dialog.png
+  fig-06 -> lab10-intersect-model.png
+  fig-07 -> lab10-intersect-roads-dialog.png
+  fig-08 -> lab10-buffer-model.png
+  fig-09 -> lab10-buffer-cities-dialog.png
+  fig-10 -> lab10-buffer-roads-dialog.png
+  fig-11 -> lab10-buffer-rivers-dialog.png
+  fig-12 -> lab10-buffer-windfarms-dialog.png
+  fig-13 -> lab10-polygon-to-raster-model.png
+  fig-14 -> lab10-polygon-to-raster-dialog.png
+  fig-15 -> lab10-clip-raster-model.png
+  fig-16 -> lab10-reclassify-model.png
+  fig-17 -> lab10-reclassify-cities-dialog.png
+  fig-18 -> lab10-reclassify-roads-dialog.png
+  fig-19 -> lab10-reclassify-rivers-dialog.png
+  fig-20 -> lab10-reclassify-windfarms-dialog.png
+  fig-21 -> lab10-reclassify-wind-speed-dialog.png
+  fig-22 -> lab10-weighted-sum-model.png
+  fig-23 -> lab10-weighted-sum-dialog.png
+  fig-24 -> lab10-final-steps-model.png
+  fig-25 -> lab10-get-raster-properties-dialog.png
+  fig-26 -> lab10-equal-to-dialog.png
+  fig-27 -> lab10-raster-to-point-dialog.png
+  fig-28 -> lab10-example-map.png
+No image was deleted; the text uses all 28. images/.gitkeep was removed.
 
 stale/unverified screenshots:
-  - lab10-full-model-overview.png (Figure 1) — illegible at page width; needs re-export
-    from ModelBuilder, not a re-screenshot.
-  - All 21 ModelBuilder/tool captures are from an earlier ArcGIS Pro session and show the
-    legacy Cost Distance / Cost Path dialogs. Not re-shot; not verified against a current
-    ArcGIS Pro release.
+  Figure 1 - illegible wide ModelBuilder canvas grab; needs re-export from ModelBuilder, not a
+    re-screenshot. Also carries stale node labels: "Cities 20mi Buffer" (text and Figure 9 say 30
+    miles), "Roads 2km Buffer" (text and Figure 10 say 2 miles), "Rivers 2mi Buffer" (Figure 11
+    shows 1 mile).
+  Figure 8 - same stale node labels for cities (20mi) and rivers (2mi).
+  Figure 13 - same stale node labels for cities (20mi) and rivers (2mi).
+  Figure 22 - a tooltip showing a personal file path
+    (C:\Fox-Pinkney\Final Project-414\...\South Dakota Wind Farm.gdb\Reclass_City1) is open over the
+    canvas; it should be dismissed before re-capture.
+  Figure 28 - 2021 student map; carries the original authors' names and a December 6, 2021 date,
+    shows areas rather than the required point locations, and its legend still lists "Bad
+    Locations". Kept because the note above it depends on those defects.
+  All dialog screenshots (Figures 5, 7, 9-12, 14, 17-21, 23, 25-27) are from an unidentified
+    ArcGIS Pro version and were not re-verified against a current release.
 
-TODO(instructor):
-  - scenario language ("new NSA Data Center") not updated
-  - impassable barriers vs high traversal costs not distinguished
-  - units and raster environments (CRS, linear unit, cell size, extent, snap raster) not specified
-  - no alternative weighting scenario required
-  - data links redirect; named download labels may have changed
-  - Cost Distance / Cost Path / Cost Back Link are deprecated (ModelBuilder Tools list, Step 8, Step 9)
-  - Figure 1 needs re-export from ModelBuilder
-  - rubric states no total; scored rows sum to 50; first row has no point value
-  - lecture example, assignment steps, and rubric need aligning
+TODO(instructor): study area southeastern vs. western South Dakota (2 spots); river buffer 1 mi vs.
+  2 mi (4 spots); hard exclusions not separated from weighted preferences; factor scores not
+  normalized; no weight-sensitivity comparison required; analysis CRS unspecified; snap raster,
+  extent, mask and resampling unspecified; cell size of 1 has no units or justification; wind data
+  30 m vs. 80 m; "main road" criterion vs. Local Roads dataset; 21-page procedure should be split
+  into a core brief plus an appendix; Figure 1 needs re-export; stale model node labels; rubric
+  "two counties" vs. "two collections of counties"; rubric has no row for the raster-specific work.
 
-VERIFY:
-  - "Meehan, 2003" in-text vs "Meehan ... 2007" in the References list
-  - "Set the cell size to 100" — no unit given
-  - field names AreaSqKm and IsMajor not checked against current Utah NHD downloads
-  - Multiple Ring Buffer extent coordinates in Figure 7 — session-specific, CRS unknown
-  - Cost Path "Path type = Each cell" and "Destination field = Id" in Figure 20 — not in the text
+VERIFY: county name field and values in Figure 5; OBJECTID as the Polygon to Raster value field in
+  Figure 14; whether Clip Raster uses the state or the county extent in Figure 15; the example
+  weights in Figure 23; how the Get Raster Properties output is wired into Equal To; and the four
+  data URLs noted in the Data section.
 
-dead/redirected links (checked 2026-09-03 with curl -sIL):
-  - http://gis.utah.gov/data/sgid-transportation/roads-system/ -> 200 after redirect to
-    https://gis.utah.gov/products/sgid/transportation/road-centerlines/
-  - http://gis.utah.gov/data/water-data-services/lakes-rivers-dams/ -> 200 after redirect to
-    https://gis.utah.gov/products/sgid/water/nhd-lakes/
-  - http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/ -> 200
-    after redirect to https://gis.utah.gov/products/sgid/elevation/
-  - http://gis.utah.gov/data/boundaries/citycountystate/ -> 200 after redirect to
-    https://gis.utah.gov/products/sgid/boundaries/
-  - http://www.rff.org/rff/documents/Rff-DP-06-03.pdf -> 404 DEAD
+dead/redirected links:
+  https://gis.sd.gov -> 200, redirects to
+    https://opendata2017-09-18t192802468z-sdbit.opendata.arcgis.com/
+  https://nationalmap.gov/ -> 200 with a browser user agent (403 without), redirects to
+    https://www.usgs.gov/programs/national-geospatial-program/national-map
+  https://eerscmap.usgs.gov/uswtdb/data/ -> 200, no redirect
+  https://wrdb.nrel.gov/ -> COULD NOT TEST. DNS in the migration environment does not resolve
+    nrel.gov at all (the apex domain fails too), so this is an environment limitation, not evidence
+    the link is dead. Retest from a normal network.
+  https://windexchange.energy.gov/maps-data/ -> 200, redirects to
+    https://www.energy.gov/cmei/systems/windexchange/maps-and-data
+No link was replaced with a guess.
 -->

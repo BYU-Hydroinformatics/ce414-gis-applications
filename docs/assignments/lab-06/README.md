@@ -1,321 +1,407 @@
-# Lab 6: Avalanche Hazard
+# Lab 6: Lake Depth Explorer
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-> [!WARNING]
-> **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
-> terrain-based screening of slope, aspect, and elevation, produced for the purpose of learning
-> raster analysis and ModelBuilder. It does not account for snowpack, weather, wind loading,
-> recent avalanche activity, or human triggering, and it is **not suitable for operational
-> avalanche safety decisions**. For real trip planning, use the current advisory from the
-> responsible avalanche center.
+*Shorelines at Every Water Level — Looping in ModelBuilder*
 
-<!-- TODO(instructor): the recommended plan asks that the lab's output be renamed
-     "terrain-based avalanche susceptibility screening" (rather than "avalanche hazard" /
-     "avalanche risk"). Renaming the lab and its deliverables is an instructor decision, so the
-     original wording is kept throughout this page. -->
+<!-- **Revision notes.** This page was created on September 8, 2026, as a placeholder for a new
+lab, written to the anatomy in `tools/lab-conversion-guide.md`. It is the first lab in the course
+that was not converted from a Word handout. What is settled: the analytical question, the parameters
+the student varies, the tool list, the step titles, the deliverables, and the rubric. What is not
+settled, and is marked `TODO(instructor)` throughout: the lake, the elevation surface and its
+vertical datum, the prepared data package, the water-surface elevation range and step, every check
+value, every figure, and the example maps. The lab has not been built in ArcGIS Pro yet; nothing on
+this page has been verified against data. Do not publish the Week 7 page as final until the
+migration notes at the bottom say the lab was run and piloted. -->
+
+> [!WARNING]
+> **This lab is being built.** The question, the deliverables, and the rubric below are final. The
+> data package, the check values, and the figures are not on this page yet; they will be added
+> before the lab is assigned in Week 7. Until then, read this page to understand what the lab asks,
+> and do not start work on it.
 
 ## Background
 
-An avalanche is defined as a large mass of snow, ice, earth, rock, or other material in swift motion down a mountainside or over a precipice (Webster, 2012). The possibility of an avalanche occurring is a risk that outdoor adventurers take every time they venture into the backwoods during the winter. Numerous avalanche risk centers operate extensive programs every winter to help analyze and predict avalanche hazard. These avalanche centers typically assess risk in terms of terrain variables combined with climate/weather conditions. Based on these factors, it is possible to create a map showing areas that fall under specific risk categories. This exercise involves creating an ArcGIS Pro ModelBuilder model that takes risk categories as input factors and generates an output map highlighting areas based on an established risk coloring scheme. See the Utah Avalanche Center website here: [https://utahavalanchecenter.org/](https://utahavalanchecenter.org/).
+A reservoir is a valley with a dam across it, and the lake behind the dam is not one shape. It is a
+different shape at every water-surface elevation: as the lake rises it spreads up side canyons and
+across benches, and as it drops it retreats to the old river channel, leaving boat ramps, marinas,
+and water intakes stranded above the water line. Anyone who plans around a reservoir — an engineer
+sizing an intake, a park service deciding which ramp to extend, a river runner planning a trip —
+needs to know where the shoreline will be at the elevation the lake is *going* to be, not where it
+is today.
 
-<!-- TODO(instructor): the recommended plan asks that this section define and distinguish
-     susceptibility, hazard, exposure, vulnerability, and risk, which the handout currently uses
-     interchangeably. That is a content/pedagogy change, so it is flagged rather than written. -->
+The two large reservoirs on the Colorado River, Lake Powell and Lake Mead, have moved through more
+than a hundred feet of elevation in the last twenty years. The instructor built two web maps that
+answer exactly this question for them, and you should spend a few minutes with each before reading
+further: the [Lake Powell Depth Explorer](https://lakepowell.hydromap.com){ target="_blank" } and
+the [Lake Mead Depth Explorer](https://lakemead.hydromap.com){ target="_blank" }. Drag the water
+level and watch the shoreline move. Every shoreline you see there is the output of the same
+analysis you will build in this lab.
 
-![Utah Avalanche Center home page showing the Current Danger Ratings list for each Utah forecast region beside a map of the regions](images/lab06-utah-avalanche-center-ratings.png)
+The analysis itself is simple: the lake bed is an elevation surface, and the shoreline at any
+water-surface elevation is the line where that surface equals that elevation. Everything below is
+wet; everything above is dry. What makes the problem interesting for a modeler is that nobody wants
+*one* shoreline. They want a dozen, at regular intervals, and they want them all from one run. Every
+lab so far built a model that runs once and produces one answer. This lab builds a model that
+**loops**: it takes a list of water-surface elevations, runs the same tools for each one, and
+collects the results into one dataset with the elevation recorded on every shoreline. Once you have
+seen that pattern you will find it everywhere, because most real analyses are one analysis repeated
+over a list of something.
 
-**Figure 1.** A sample advisory: the Utah Avalanche Center home page, listing the current danger rating for each forecast region.
+Like every model, this one is only as good as the choices you make in it: which elevation surface,
+in which vertical datum, at what cell size, over what range of elevations and at what step. In
+Step 7 you will vary the range and the step, see how far the shorelines and their areas move, and
+use what moves to say how much the answer depends on those choices.
+
+> [!IMPORTANT]
+> **Your job — see the deliverables below.** Build one ModelBuilder model that loops over a list of
+> water-surface elevations and produces a shoreline polygon for each, with the elevation stored as
+> an attribute; run it on the study lake; test the elevation range and step; and make two maps of
+> the nested shorelines.
 
 ## Problem Statement
 
-Winter backwoods adventures can include awesome activities such as cross-country skiing, snowshoeing, and snowmobiling. It is a common pastime for many people in mountainous areas, including Utah, Idaho, and Wyoming. There are specific risks to these activities, such as hypothermia and getting caught in an avalanche. In the world, more than 150 people are killed per year by an avalanche (National Geographic). Backwoods enthusiasts need to be aware of the potential avalanche hazard in the area they are going to visit. They also need to know that avalanche hazard is continually changing due to weather and ground conditions.
+You are given an elevation surface for a reservoir basin that covers both the lake bed (bathymetry,
+surveyed while the lake was full or after it fell) and the surrounding land (topography from a
+digital elevation model), merged into one raster. Using that surface, produce the shoreline of the
+lake at each of a series of water-surface elevations, from a low elevation to a high one at a fixed
+step, as a single polygon feature class in which every polygon carries the elevation it represents.
+Report the surface area of the lake at each elevation, map the nested shorelines, and identify the
+elevations at which named features on the shore (a boat ramp, a marina, an intake) go dry.
 
-<!-- VERIFY: the "more than 150 people per year" figure above is attributed only to "National
-     Geographic", with no citation, year, or link, and National Geographic does not appear in the
-     References section. Kept verbatim. -->
+<!-- TODO(instructor): choose the lake. Lake Powell and Lake Mead are the obvious candidates because
+the depth explorers exist for them and the Bureau of Reclamation publishes their elevation
+records; a smaller Utah reservoir with a public bathymetric survey would make a lighter data
+package. The choice decides the data section, every check value, and the named shore features. -->
 
-Avalanche information centers such as the Northwest Weather and Avalanche Center and the Sawtooth National Forest Avalanche Center publish advisories throughout the avalanche season to help warn people about avalanche-prone areas. The American Avalanche Association describes avalanche hazards and provides safety information for North America. They provide a "North American Danger Scale" which describes the likelihood of an avalanche occurring and the expected size of the avalanche (see Figure 3).
+## Analysis Considerations
 
-- Northwest Avalanche Center: [https://nwac.us/get-the-forecast/](https://nwac.us/get-the-forecast/)
-- Wyoming State Trails avalanche map: [http://www.jhavalanche.org/statetrailmaps/index.php](http://www.jhavalanche.org/statetrailmaps/index.php)
-- American Avalanche Association: [http://www.avalanche.org/](http://www.avalanche.org/)
+Every one of these is a decision somebody made, and every one of them can change the answer:
 
-<!-- VERIFY: the Word original labeled the jhavalanche.org URL above "Sawtooth Avalanche Center",
-     but the same URL is described later in the handout as the Wyoming State Trails Website, so
-     the label was corrected to match the handout's own description. No URL for the Sawtooth
-     Avalanche Center appears in this list in the original; the References section gives one. -->
-
-![Avalanche.org current conditions page showing forecast zones across the western United States with a danger-level color legend along the bottom](images/lab06-avalanche-org-danger-map.png)
-
-**Figure 2.** A second sample advisory: the avalanche.org current-conditions map, with the five danger levels shown in the legend.
-
-It should be relatively clear from these sample advisories (Figures 1 and 2) that it is possible to identify the rough aspect, slope, and elevation associated with the various warning levels. Note that not every advisory includes every hazard level. Nor does each advisory provide information on the full range of terrain factors that influence avalanche potential. Most avalanche advisory sites give tabular data only. However, some sites are beginning to show maps of avalanche hazard areas, such as the Wyoming State Trails Website: [http://www.jhavalanche.org/statetrailmaps/index.php](http://www.jhavalanche.org/statetrailmaps/index.php)
-
-In this lab, you will use ArcGIS Pro ModelBuilder to develop a model that is flexible enough to generate any hazard level for any combination of terrain parameters in any location. Your approach should include calculating slope and aspect for the input digital elevation model (DEM); then using a Raster Calculator to return only those cells that meet the specified requirements. You will then create a map from the output to show the locations that have avalanche hazard, the degree of the hazard (i.e., low to extreme), and the corresponding color as described by the American Avalanche Association. The North American Danger Scale describes the danger levels, ranging from low to extreme, for the United States and Canada. It can be found on several avalanche awareness websites, including the American Avalanche Association's website.
-
-![The North American Public Avalanche Danger Scale table, listing the five danger levels from 1 Low (green) to 5 Extreme (black) with travel advice, likelihood of avalanches, and avalanche size and distribution](images/lab06-north-american-danger-scale.jpeg)
-
-**Figure 3.** Table showing the different hazards and other stats on avalanches.
-
-## Spatial Considerations
-
-Many factors contribute to avalanches. However, it is generally accepted that terrain is the most significant factor. For this project, you will assume that this set of terrain factors is reduced to a three-parameter set called the "three A's of avalanches." Altitude, slope, and aspect.
-
-<!-- TODO(instructor): the recommended plan asks for an explicit statement here of the dynamic
-     variables this model omits — snowpack structure and stability, weather, wind loading, and
-     triggering (natural and human). The handout mentions weather only in passing, and adding a
-     substantive discussion changes the content, so it is flagged rather than written. -->
-
-Altitude refers to the elevation above mean sea level. Generally, higher altitudes tend to have a greater avalanche risk. Angle refers to the slope of the terrain. As one would expect, higher slopes tend to have a higher risk of an avalanche. This factor is also known as steepness. Aspect, or direction, refers to the compass direction the slope is facing. As noted above, shady slopes with north and northeastern aspects tend to have a greater risk of avalanches. The key terrain hazard factors for an avalanche are as follows:
-
-- **Slope:** The constrained distribution of slope in degrees (values must fall within the range 0 to 90 degrees). Slopes under 25 degrees and over 60 degrees typically have a low avalanche risk because of the angle of repose for snow. Snow does not accumulate significantly on steep slopes and does not easily flow on flat slopes. Distribution of avalanches by slope has a sharp peak between 35 to 45 degrees. That peak hazard lies at around 38 degrees. Unfortunately, the steepest slopes are favored for skiing. (Clark et al. 2002, p 11)
-- **Aspect:** The constrained distribution of Aspect is a constrained circular distribution (values go from 0 to 360 and then back to 0 degrees). The three primary variables that influence snowpack evolution are temperature, precipitation, and wind. In medium latitudes of the Northern Hemisphere, more accidents occur on shady slopes with northern and northeastern aspects. Slopes in the lee of the wind accumulate more snow, presenting locally deep areas and wind slabs. Cornices also accumulate on the downwind side of ridges and can contribute to avalanche danger. (Clark et al. 2002, p 11)
-- **Profile:** Convex slopes are statistically more dangerous than concave slopes. The reasons lie partly in human behavior and the tensile strength of snow layers compared to their compression strength.
-- **Surface:** Full-depth avalanches are more common on slopes with smooth ground cover, such as grass or a rock slab. Vegetation coverage is important for anchoring the snowpack; however, boulders or buried vegetation may create weak areas within the snowpack.
-
-<!-- VERIFY: "Clark et al. 2002, p 11" is cited twice above but does not appear in the References
-     section. The full citation could not be reconstructed, so the in-text citation is kept as
-     written. -->
-
-|  | Altitude (meters) | Slope (degrees) | Aspect (degrees) |
-| --- | --- | --- | --- |
-| Low (1) | 0 – 2200 | -1 – 25<br>60 – 90 | 180 – 225 |
-| Moderate (2) | 2200 – 2400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
-| Considerable (3) | 2400 – 2600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
-| High (4) | 2600 – 2800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
-| Extreme (5) | 2800 – 10000 | 35 – 45 | -1 – 45 |
-
-**Table 1.** The ratings on the left should be applied to the different altitudes, slopes, and aspects.
-
-<!-- VERIFY: the Low slope range begins at -1. Slope output from the Slope tool is 0-90 degrees;
-     -1 is the flat-aspect NoData-style code used by the Aspect tool, not a slope value. The
-     threshold is left exactly as the instructor wrote it. -->
-
-Table 1 is an example of avalanche risk hazard ranges for the altitude, slope, and aspect of the terrain. These values were obtained from an actual avalanche advisory posted on the Sawtooth National Forest Avalanche website.
+- **The elevation surface.** Bathymetry and topography come from different surveys, in different
+  years, at different resolutions, and are merged into one raster. Where they meet there may be a
+  seam. The merged surface you are given has already been built; the data section will say how.
+  <!-- TODO(instructor): state the surveys, their dates, and the merge method once the extract exists. -->
+- **The vertical datum and units.** Reservoir elevations in the United States are quoted in feet
+  above a stated datum; digital elevation models are usually in meters above a different one. If
+  the surface and the elevation list are in different units or datums, every shoreline is wrong by
+  a constant and nothing in ArcGIS Pro will tell you. The data section states the datum and units
+  of the surface; your elevation list must match them.
+  <!-- TODO(instructor): the datum and units of the prepared surface. -->
+- **The water-surface elevation range and step.** The default run uses a range and a step chosen
+  to span the lake's recent history at a spacing that shows the shape of the basin. Both are model
+  parameters, and Step 7 varies them.
+  <!-- TODO(instructor): the default low elevation, high elevation, and step, in the surface's units. -->
+- **Cell size.** The shoreline is only as fine as the surface's cells. A coarser surface runs
+  faster and produces smoother, less accurate shorelines; the model's environments fix the cell
+  size so every loop iteration uses the same one.
+- **The coordinate system.** Area is reported for every shoreline, so the model runs in a
+  projected, equal-area-friendly coordinate system set in the environments, not in the geographic
+  coordinates the surface may arrive in.
+  <!-- TODO(instructor): the output coordinate system, and the check value (the extract's extent
+  area in that system) that proves it is set. -->
+- **What counts as the lake.** At any elevation, some cells below the water surface are in
+  closed depressions on the surrounding land that would not actually fill. The default analysis
+  keeps only the polygon connected to the main pool; the step that does this is where the decision
+  lives, and you will say in your report what it excluded.
 
 ## Data
 
-Avalanche Risk Values: The numeric ranges of aspect, elevation, and slope associated with low, moderate, considerable, high, and extreme avalanche risk are generally posted on specific avalanche center websites and are updated daily throughout the avalanche season. The values shown in Table 1 were extracted from the Sawtooth National Forest Avalanche website and will be used for this laboratory exercise.
+> [!IMPORTANT]
+> **Set up your folder before you download anything.** On the lab machines, work on the
+> **D: drive**, in a folder named after you with one folder per lab inside it — `D:\Smith\Lab06\`.
+> Put the project and this lab's data there. The C: drive is locked, network drives make ArcGIS Pro
+> hang on large rasters, and a USB 3.0 external drive is a legitimate alternative. **Never use a
+> space in a folder or file name**: the raster tools fail on paths with spaces and do not say that
+> the space is why. The full set of workspace conventions is on the
+> [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-- **National Elevation Dataset:** [http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/](http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/)
-    - Download the elevation dataset for Utah provided by the USGS. You should either download the 10 m or 30 m NED for Salt Lake County using any of the methods on the page. The Snowbird Ski Resort is in Salt Lake County.
-    - Download data for another ski resort area of your choosing. It can be in Utah or another state.
-- **Utah Ski Area Boundaries:** [http://gis.utah.gov/data/recreation/ski-areas/](http://gis.utah.gov/data/recreation/ski-areas/)
-    - Download the boundaries (or locations) for this exercise. Use the Utah Ski Area Boundaries link to find and download the shapefile.
+This lab's main input is a **surveyed surface**: somebody went out on the water with sonar, or flew
+over the drained lake bed with lidar, and turned the measurements into a grid. The six metadata
+questions from Lab 1 apply with unusual force, because the *when* decides whether the survey saw
+the lake bed at all, the *how* decides its accuracy, and the vertical datum answers a question the
+earlier labs never had to ask. You will copy the survey date, the vertical datum, and the cell size
+of the prepared surface into your report.
+
+<!-- TODO(graphic): Figure A, an infographic of the six metadata questions answered for the
+prepared surface, generated by tools/lab06/make_svgs.py once the data exist (see Lab 2's Figure B
+for the pattern). -->
+
+Here is where this lab's data will come from:
+
+| Layer | Where it comes from |
+| --- | --- |
+| Merged lake-bed and land elevation surface | A **prepared extract** we make for you and host on this site |
+| Reservoir elevation record (how high the lake has actually been) | An **official download** from the Bureau of Reclamation, which you read to choose your elevation range |
+| Named shore features (ramps, marinas, intakes) | A layer **you create** from the basemap and the agency's facility list, with a rule for what you include |
+| Basemap and imagery | A **live web service** you never download at all |
+
+### The prepared surface (prepared for you)
+
+<!-- TODO(instructor): host `docs/data/lab06-<lake>-surface.zip` (under about 30 MB) with a
+READ-ME-FIRST.txt giving provenance, processing, vintage, datum, license and a credit line. Build it
+with a script in tools/lab06/ so it can be rebuilt. Then replace this paragraph with: the files in
+the zip in a table, what was done to them, and the check values a student sees on loading (value
+range, cell count, cell size, coordinate system, vertical units). -->
+
+The download link, the file list, and the check values you should see on loading the surface will
+appear here when the data package is ready.
+
+### The reservoir elevation record
+
+The Bureau of Reclamation publishes daily water-surface elevations for the reservoirs it operates.
+You will read the record for the study lake to choose the low and high elevations for your default
+run, and you will cite the dates of the highest and lowest levels in your report.
+
+<!-- TODO(instructor): link the record for the chosen lake. Candidates checked live on
+September 8, 2026: the Upper Colorado hydrodata reservoir dashboards under
+https://www.usbr.gov/uc/water/hydrodata/ (a dashboard page answered; confirm which reservoir id is Lake Powell) and the Lower Colorado levels archive at
+https://www.usbr.gov/lc/region/g4000/levels_archive.html (Lake Mead). -->
+
+### Shore features you create
+
+Choose at least three named features on the shore — a boat ramp, a marina, a water intake, a
+campground — and digitize a point for each, with a `Name` field and an `Elevation` field holding
+the elevation of the feature's working surface, taken from the prepared raster at the point. State
+in your report how you chose them. These points are what turns a stack of shorelines into an
+answer: the elevation at which each one goes dry.
 
 ## ModelBuilder Tools
 
-You will use the following new tools in this exercise, along with tools from previous labs:
+The tools this lab uses for the first time. Icons will be added with the figures.
 
-- **Project:** Changes the projection of the input feature class, layer, or raster to one you define.
-- **Slope:** Identifies the slope of each cell within a raster and creates a new raster.
-- **Aspect:** Identifies the aspect of the steepest slope in each cell within a raster and creates a new raster.
-- **Times:** Takes input rasters and multiplies cell values where they overlap.
+<!-- TODO(instructor): verify every tool name, toolbox location, and menu label below in ArcGIS
+Pro 3.7 before the lab is assigned; none has been checked in a live session yet. Add icons to
+tools/lab06/make_svgs.py. -->
 
-<!-- VERIFY: Step 1 and the example model both use Project Raster, which is the raster tool;
-     Project operates on feature classes. The tool list is left as the instructor wrote it. -->
+| Tool | What it does |
+| --- | --- |
+| **For** (ModelBuilder ▸ Iterators) | The loop. Given a *from* value, a *to* value, and a *by* step, it runs everything downstream of it once per value and hands the current value to those tools as a variable. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/for.htm){ target="_blank" } |
+| **Inline variable substitution** | Not a tool but the mechanism that makes the loop useful: writing `%Value%` in a tool's expression or output name inserts the current loop value, so each iteration computes and names its own result. [Help page](https://pro.arcgis.com/en/pro-app/latest/help/analysis/geoprocessing/modelbuilder/inline-variable-substitution.htm){ target="_blank" } |
+| **Con** (Spatial Analyst) | Cell-by-cell *if*: where the surface is at or below the current elevation, output 1; elsewhere, output nothing. The wet cells at one water level. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/con-.htm){ target="_blank" } |
+| **Raster to Polygon** (Conversion) | Turns the wet cells into a polygon whose boundary is the shoreline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/conversion/raster-to-polygon.htm){ target="_blank" } |
+| **Collect Values** (ModelBuilder ▸ Utilities) | Gathers the output of every iteration into one list so a tool after the loop can act on all of them at once. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/collect-values.htm){ target="_blank" } |
+| **Merge** (Data Management) | Appends the collected shorelines into one feature class. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/merge.htm){ target="_blank" } |
+
+Tools you already know from earlier labs and will use again: **Add Field** and **Calculate Field**
+to store the elevation on each shoreline, **Project Raster** if the surface needs it, and the
+environment settings from Lab 2's Step 0.
 
 ## Example Model
 
-![ModelBuilder canvas showing a DEM feeding Project Raster to produce a Projected DEM, which branches into Slope and Aspect tools and a Reclassify Altitude tool; the Slope, Aspect, and Altitude class rasters all feed a Raster Calculator that outputs Hazard Zones](images/lab06-example-model-overview.png)
+<!-- TODO(instructor): Figure C, the finished model exported from ModelBuilder as SVG (Export ▸
+Export To Graphic, nothing selected), every intermediate dataset renamed, the For iterator and the
+Collect Values element visible, and the parameters marked P. Cut the per-step snippets from this
+export with a copy of tools/lab02/cut_model_snippets.py. -->
 
-**Figure 4.** The complete example model, from the input DEM through Project Raster, Slope, Aspect, three Reclassify operations, and the Raster Calculator that produces the Hazard Zones output.
+The finished model will appear here as **Figure C**. Its shape is the point of the lab: an iterator
+at the left, a short chain of tools inside the loop that computes one shoreline, and a collector at
+the right that turns the loop's outputs into one dataset. Everything marked `P` in it appears in
+the tool dialog you build in Step 6.
 
 ## Complete the Lab
 
-For an advanced GIS student, the information up to this point is all you need to complete the assignment and create an output map from the results. Feel free to try conducting the analysis using only the information provided above. If you need extra help, follow the step-by-step solution below. Make sure to conduct the lab for 2 study areas. Also, make sure to read Step 5 and Step 6 and the deliverables section because you need to make three maps using two methods.
+For an advanced GIS student, the information up to this point is all you need to complete the
+assignment and create an output map from the results. Feel free to try conducting the analysis
+using only the information provided above. If you need extra help, follow the step-by-step solution
+below. Ensure that you create and screen capture an ArcGIS Pro toolbox interface for your model.
 
 > [!TIP]
-> If you complete the lab only using the information provided above (without using the
-> step-by-step instructions below), make sure to indicate this in your lab report to be
-> considered for extra credit.
+> If you complete the lab using only the information provided above — without using the
+> step-by-step instructions below — say so in your report.
 
 ## Step-by-Step Solution
 
-You will notice in the example ModelBuilder model that there are groupings of functions. This is done to illustrate the separate considerations that were given in the instructions; specifically, altitude, slope, and aspect. The parameters are classified into ranges that correspond to the five avalanche hazards described. The last step is combining the three raster layers into one output raster, indicating each of the individual avalanche hazards.
-
-### Step 1
-
-Use the Project Raster tool to transform the raster to the NAD 1983 projection. This will result in a new raster layer, assuming it is not already in that projection. This will ensure that all DEMs are projected into NAD 1983 for future projects as well.
-
-<!-- VERIFY: "NAD 1983" names a datum, not a projection. Slope and Aspect need a projected
-     coordinate system with linear units (and z-units matching x/y units) to return correct
-     degrees. The specific projected CRS the instructor intends is not stated anywhere in the
-     handout, so nothing has been substituted. -->
-
-![ModelBuilder canvas detail: a blue DEM oval connected to the yellow Project Raster tool, which outputs a green Projected DEM oval](images/lab06-model-project-raster.png)
-
-**Figure 5.** Using the Project Raster tool in ModelBuilder.
-
-### Step 2
-
-Use the Slope tool to calculate the slope of the projected raster layer from Step 1.
-
-![ModelBuilder canvas detail: the Projected DEM oval connected to the Slope tool, which outputs a Slope Raster oval](images/lab06-model-slope.png)
-
-**Figure 6.** Using the Slope tool in ModelBuilder.
-
-### Step 3
-
-Use the Aspect tool to calculate the aspect of the projected raster layer from Step 1.
+> [!NOTE]
+> **Important Note #1:** The steps below walk through the study lake at the default elevation
+> range and step. In Step 7 you will re-run the same model with a different range and step — so
+> build it once, and build it so it is easy to change.
 
 > [!NOTE]
-> Flat aspects are given the value of **-1**. Remember this when you use the Reclassify tool.
+> **Important Note #2:** The figures for this lab have not been captured yet. When they are added
+> they will come from ArcGIS Pro 3.7 against the surface you download, and they may not match your
+> screen exactly; read what is actually in front of you.
 
-![ModelBuilder canvas detail: a raster variable connected to the Aspect tool, which outputs an Aspect Raster oval](images/lab06-model-aspect.png)
+<!-- TODO(instructor): every step below needs its tool-dialog figure, its ModelBuilder snippet cut
+from the Figure C export, and a "Check the result" TIP with a measured number and what the common
+wrong numbers mean. Nothing numeric may be added to a step until it has been measured on the
+prepared surface. -->
 
-**Figure 7.** Using the Aspect tool in ModelBuilder.
+### Step 0 — Set Up the Project
 
-<!-- VERIFY: in this screenshot the upstream variable is labeled "Raster Coordinate System", while
-     the same variable is labeled "Projected DEM" in Figure 4. The two captures appear to come
-     from different versions of the model. Screenshot not re-shot for this migration. -->
+Create a new project for the lab (the *Location* box does not take a typed path; browse to your
+`D:\<you>\Lab06\` folder). Add the prepared surface to a map and answer the *Calculate statistics*
+prompt. Confirm the Spatial Analyst extension is licensed. Create a toolbox and a model in the
+project's Catalog pane and rename the model. Then set the model's **Environments**: the output
+coordinate system, the cell size, and the processing extent, all taken from the prepared surface.
 
-### Step 4
+<!-- TODO(instructor): the check value that proves the environments are right, e.g. the extent
+area in the output coordinate system or the cell count of the surface. -->
 
-Use the Reclassify tool to reclassify the different values that are required for the parameters in Table 1. Note that different ranges can be reclassified to the same new value. An example of this is shown in Figure 9.
+### Step 1 — Read the Surface
 
-![ModelBuilder canvas detail: three parallel branches in which the Slope Raster, the altitude raster, and the Aspect Raster each pass through a Reclassify tool to produce Slope Class, Altitude Class, and Aspect Class rasters](images/lab06-model-reclassify-three.png)
+Before building anything, read the surface. Note its value range, its cell size, its coordinate
+system, and its vertical units, and compare them with the elevation record from the Bureau of
+Reclamation. Identify on the map the dam, the old river channel, and at least three named shore
+features, and record their elevations from the surface. These become your shore-feature points.
 
-**Figure 8.** Using the Reclassify tool on the Aspect, Slope, and Elevation rasters.
+<!-- TODO(instructor): the value range and cell size students should see, and the elevations of
+the named features at the chosen lake. -->
 
-![The ArcGIS Pro Reclassify tool pane for the Aspect raster, with a reclassification table mapping start and end aspect values to new class values from 1 through 5](images/lab06-reclassify-aspect-window.png)
+### Step 2 — Add the Loop
 
-**Figure 9.** The Reclassify window for Aspect.
+Add a **For** iterator to the model. Its three inputs are the low elevation, the high elevation,
+and the step, in the surface's units. Set them to the default values for this lab. The iterator's
+output is a variable holding the current elevation; rename it `Elevation` so the substitution in
+the next step reads clearly.
 
-Add and edit the rows directly in the table. Enter the previous ranges given in Table 1 and then insert the values associated with their appropriate hazard level.
+<!-- TODO(instructor): default from/to/by values; the count of iterations they produce, which is
+the first check value ("the model reports N iterations"). Verify in ArcGIS Pro 3.7 where the For
+iterator sits on the ModelBuilder ribbon and what its parameters are called. -->
 
-### Step 5
+### Step 3 — Flood the Surface
 
-Use the Raster Calculator tool to combine the classification layers to create a map of the different hazard levels. There are multiple ways you can combine these raster layers to identify the hazard areas. One option would be to use a series of "con" statements (similar to "if then" statements in programming) to identify areas that meet specific classes. For example, the code below in Raster Calculator will mark all areas that meet class "1" in slope, aspect, and altitude as "1". And all areas that meet class "2" would be marked as class "2". Try using this expression in the Raster Calculator and explore the results. Make sure to label your risk zones and follow the symbology on Table 1 for the risk levels Low, Moderate, Considerable, High, and Extreme. Explore your mapped results. Are these results realistic? What is the problem with these results? Please include this map in your report and an explanation, in your own words, of the problem with this map. (Hint… what about an area that is class 5 warning on elevation, class 5 on slope, and class 4 on aspect? What would it be marked as in your final map?)
+Inside the loop, add **Con**. Its condition compares the surface with the current elevation; cells
+at or below it get the value 1 and everything else gets no data. Use inline substitution, writing
+the loop variable as `%Elevation%` in the expression, so every iteration floods to its own level.
+Name the output with the elevation in it the same way, so the intermediate rasters do not overwrite
+each other.
 
-```
-Con(("%Altitude Class%" == 1) & ("%Slope Class%" == 1) & ("%Aspect Class%" == 1), 1, Con(("%Altitude Class%" == 2) & ("%Slope Class%" == 2) & ("%Aspect Class%" == 2), 2, Con(("%Altitude Class%" == 3) & ("%Slope Class%" == 3) & ("%Aspect Class%" == 3), 3, Con(("%Altitude Class%" == 4) & ("%Slope Class%" == 4) & ("%Aspect Class%" == 4), 4, Con(("%Altitude Class%" == 5) & ("%Slope Class%" == 5) & ("%Aspect Class%" == 5), 5, 0)))))
-```
+> [!WARNING]
+> If the surface is in meters and your elevations are in feet, or the other way round, this step
+> runs without error and every shoreline is wrong. Check Step 1 before you check anything else.
 
-![The ArcGIS Pro Raster Calculator tool pane inside ModelBuilder, showing the Rasters and Tools lists and the nested Con expression in the Map Algebra expression box, with the Slope Class, Aspect Class, and Altitude Class ovals connected to the Raster Calculator element](images/lab06-raster-calculator-con.png)
+<!-- TODO(instructor): the exact Con expression as it reads in ArcGIS Pro 3.7, and the wet cell
+count at one stated elevation as the check value. -->
 
-**Figure 10.** Raster Calculator window in ModelBuilder.
+### Step 4 — Keep the Main Pool
 
-Check the Parameter and Add to Display options on the Hazard Level raster layer.
+The flooded raster includes every cell below the elevation, including closed depressions on land
+that would never fill. Keep only the region connected to the dam. State in your report what this
+removed.
 
-### Step 6
+<!-- TODO(instructor): decide the method (Region Group on the flooded raster and a selection of
+the region containing the dam is the natural one) and verify it in ArcGIS Pro 3.7 before writing
+it as fact. Add the check value: cells removed at the default elevation. -->
 
-Use the Raster Calculator again, but with a different calculation that will give more realistic or reliable results. Specifically, what if you multiply all of the classes together? Then your final range would be 0 to 125 (i.e., the highest risk areas would be class 5 slope, class 5 elevation, and class 5 aspect = 5 × 5 × 5 = 125). The problem with this approach is that now you have 125 results. But this is better because the 5,5,4 class will appear on your map as risk 100, which is much better than a map that shows it as risk 0. Does that make sense? Run this "multiply the values" calculation in Raster Calculator and then, in your risk map, divide the ranges 0-125 into five categories, Low, Moderate, Considerable, High, and Extreme, and apply the correct symbology (based on Table 1). Make a map of these results and include it in your report. Identify areas in your second map that show significantly different results than in your first map. Discuss why these differences exist and which results you are more confident in, and why.
+### Step 5 — Draw the Shoreline
 
-<!-- TODO(instructor): the recommended plan asks for a validation/reflection step here — compare
-     the model output against published avalanche-terrain information (for example a forecast
-     center's terrain or avalanche-path mapping for the same area) and discuss where and why they
-     disagree. Adding a task changes the deliverables, so it is flagged rather than written. -->
+Add **Raster to Polygon** inside the loop to turn the wet cells into a polygon. Then add a field
+named `Elevation` to the polygon and calculate it to `%Elevation%`, so the shoreline carries the
+elevation it was drawn at. Every polygon that leaves the loop is labeled.
+
+<!-- TODO(instructor): whether to simplify polygons, and the area of the default-elevation polygon
+as the check value. -->
+
+### Step 6 — Collect and Merge
+
+Connect the labeled polygon to **Collect Values**, and connect Collect Values to **Merge**, outside
+the loop. When the model runs, the loop finishes every elevation before Merge runs once and writes
+all of the shorelines into one feature class. Open its attribute table: one row per elevation, in
+order. Then expose the three loop values — low, high, and step — as model parameters, so the run
+you are about to repeat is a change in a dialog box, not in the model.
+
+<!-- TODO(instructor): the row count of the merged feature class at the defaults as the check
+value; the toolbox interface figure with the three parameters. -->
+
+### Step 7 — Test the Range and Step
+
+The default run gives *a* set of shorelines, not *the* set. Run the model at least three more times
+from its tool dialog: once with a finer step, once with a coarser step, and once over a different
+range — for example, only the elevations the lake has actually reached in the last ten years. Choose
+your values deliberately and say why.
+
+For every run, record in a table the low elevation, the high elevation, the step, the number of
+shorelines produced, and the surface area of the lake at the lowest and highest elevations. Then
+answer, in your report:
+
+1. **Which shore features go dry, and at what elevation?** Does the answer change with the step,
+   and if so, how far?
+2. **How much does the lake's area change per unit of elevation**, and is that rate the same at the
+   bottom of the range as at the top? What about the basin's shape explains the difference?
+3. **What is the smallest step that still shows the shape of the basin?** What did the finer runs
+   add, and what did they cost in run time?
+
+Pick one of your runs for your second map, and say on the map what changed and why you chose it.
+
+> [!TIP]
+> One of the three runs will tell you far more than the other two. Look at where the shorelines
+> bunch together and where they spread apart: that is the basin's shape talking, and the step you
+> choose decides whether you can hear it.
 
 ## Deliverables
 
-For the Snowbird Ski Resort near Alta, Utah, construct a ModelBuilder model that prepares all your input data for a terrain analysis, conducts the analysis, and creates a map showing the avalanche hazard levels. Use the colors shown in Table 1 to symbolize the raster cells. You will need to prepare the map coloring/symbology outside of ModelBuilder. Assign the legend with the appropriate labels from Table 1. Include the legend on your map, labeling the levels from low to high, rather than using numbers. Duplicate these results for a second Ski Resort area of your choosing.
+Make **two** professional map layouts:
 
-Your project report should show 3 maps:
+1. **Your baseline result** — the nested shorelines at the default range and step, symbolized so
+   the elevation of each is readable, with your shore-feature points and an inset or close-up of
+   one feature at the elevation it goes dry.
+2. **One scenario from Step 7** — the same model at a different range or step, whichever of your
+   runs most changes the picture. Say on the map what changed and why you chose that run to show.
 
-1. A map of Snowbird, showing the "con statement method" results where we only color areas that specifically meet specific criteria,
-2. A map of Snowbird showing the "multiply method" where we multiply the risk values to get a range of 1-125 and then reclassify these in the symbology tab.
-3. A map of an area of your choosing where you use the multiply method to identify the risk areas in this newly selected area.
+Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
-Write a brief report that presents your final model and clearly shows all elements of the model. Describe the steps and tools in your model and display your final map. Include any changes you made to the reclassifications or analysis and why you chose those methods. Make sure to review the rubric at the end of this chapter for the full requirements for the laboratory exercise.
+- a title block — assignment title, your name, the date and the course — and the name of your
+  peer reviewer
+- the requirements of the project and your approach to solving it
+- **a description of your model** a reader could repeat from: the iterator and its three values,
+  each tool inside the loop and its settings, how the results are collected, and every input,
+  intermediate and output dataset with its type
+- **one** full-page figure of your model — export it from ModelBuilder (**Export ▸ Export To
+  Graphic**) rather than screen-capturing it — and **one** screen capture of its toolbox interface
+  showing the three parameters
+- **the three metadata values** for the surface — survey date, vertical datum, and cell size — and
+  what each one means for your result
+- your **shore-feature table**: each feature, its elevation, and the water-surface elevation at
+  which it goes dry
+- your **range-and-step table** from Step 7 and your answers to its three questions
+- **where the shorelines are wrong and why** — the seam between surveys, the cell size, the
+  depressions you removed — and what additional data would fix it
+- **a copy of the rubric below with your self-assessment filled in** — a score in every row,
+  honestly arrived at. The grader will compare it with theirs.
+
+The rubric at the end of this lab gives the point value of every item above, so read it before
+you write.
+
+> [!IMPORTANT]
+> **Peer review before you submit.** Have another student in the class read your report against
+> the rubric and give you feedback, then act on that feedback before the deadline. Name your
+> reviewer in the report and say in a sentence what you changed because of them. A report nobody
+> else has read is a draft, not a submission.
 
 ## References
 
-American Avalanche Association website: (http://www.avalanche.org/, 2011).
+- Ames, D. P. *Lake Powell Depth Explorer*, [lakepowell.hydromap.com](https://lakepowell.hydromap.com){ target="_blank" }, and *Lake Mead Depth Explorer*, [lakemead.hydromap.com](https://lakemead.hydromap.com){ target="_blank" }.
+- Esri. *An overview of the ModelBuilder toolbox*, ArcGIS Pro documentation, [pro.arcgis.com](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/an-overview-of-the-modelbuilder-toolbox.htm){ target="_blank" }.
+- Bolstad, P. *GIS Fundamentals*, 7th edition. <!-- TODO(instructor): the chapter and pages on raster analysis and on iteration or scripting, if any, to cite here. -->
+- <!-- TODO(instructor): the bathymetric survey and the DEM the prepared surface was built from, cited to their agencies, once the lake is chosen. -->
 
-Northwest Weather and Avalanche Center (http://www.nwac.us/, 2011)
+## Example Maps
 
-Sawtooth National Forest Avalanche Center: (http://www.sawtoothavalanche.com/index.html, 2011)
+<!-- TODO(instructor): two real layouts built with arcpy.mp against the default run and one Step 7
+scenario, exported at 150 dpi, each captioned with what a student should do better than the
+example. See tools/lab02/build_layout.py for the pattern. -->
 
-Wikipedia: (http://en.wikipedia.org/wiki/Avalanche, 2011)
+Example layouts will be added here when the lab has been run. They will be examples, not
+templates, and your name must be on your maps.
 
-Merriam-Webster Dictionary: (http://www.merriam-webster.com/dictionary/avalanche, 2012).
+## Rubric for the Lake Depth Explorer
 
-<!-- TODO(instructor): the recommended plan asks that these references be updated (they are dated
-     2011-2012) and that the lab point students at a current avalanche-information authority.
-     The existing links were tested during migration: the Sawtooth "/index.html" page now returns
-     404, though the site root responds; the others resolve. No links were added or replaced,
-     since choosing the authority to cite is an instructor decision. -->
-
-## Example Map
-
-> [!NOTE]
-> This is an example of the "con statement method" from Step 5. This is the first of 3 maps you
-> will produce in this lab. Remember that this is **not** a great result, and we would not want to
-> share this with the public. Read Step 5 and Step 6 carefully and generate all three requested
-> maps (2 for Snowbird and one for an area of your choosing).
-
-![Example student map titled Avalanche Hazard Map, Snowbird Area, Utah: an inset locator map of the Salt Lake Valley with the study area outlined in red, and a main map of the Snowbird and Alta ski areas showing scattered hazard cells colored by level, with a legend, north arrow, and scale bars](images/lab06-example-map-snowbird.png)
-
-**Figure 11.** Example output map for the Snowbird area using the con statement method.
-
-## Rubric for Mapping Avalanche Risk using Slope, Aspect, Elevation
+Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
+what to submit.
 
 | Item | Points |
 | --- | --- |
-| Assignment Title, Name, Date, Course, Summary of the requirements of the project | /5 |
-| Show and describe your model:<br>List each of the tools used<br>List tool settings applied for the analysis (could someone repeat the assignment using your lab report?)<br>List all input, intermediate, and output datasets<br>Describe each input dataset, including type (point, line, polygon, raster) and the source of the data<br>Describe each output dataset (point, line, polygon, raster)<br>Model is shown on one full page (8.5 × 11)<br>All text is readable (10 pt. font minimum)<br>All tools and data sets are shown<br>Show a Toolbox User Interface for your model that allows a user to select any input DEM and run the Avalanche analysis. | /10 |
-| Discussion of Results:<br>Carefully read Step 5, Step 6, and the Deliverables section and make sure to show and discuss the 3 requested maps.<br>Discuss the two methods we used and answer the questions posed in those sections.<br>Is there a third possible way to combine aspect, slope, and elevation classes? We tried identifying unique areas with con statements and multiplying the risk areas, but what other options could we use? | /5 |
-| Make THREE full-page (8.5 × 11) maps showing the results as requested in Step 5, Step 6, and the deliverables section. Be sure to include all of the map elements and standard map design techniques learned in class so far.<br>Map 1: Snowbird area using the con statement classification approach<br>Map 2: Snowbird area using the "multiply classes" method (make sure to classify your final results using symbology as shown in Table 1)<br>Map 3: Your selected study area, using the "multiply classes" method. | /30<br>(10/map) |
-| Self-assessment | /50 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the surface and what each means for your result (2)<br>• The shore-feature table: how you chose the features and the elevation at which each goes dry (2)<br>• Where the shorelines are wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, loops over the elevations, and produces one merged feature class with one labeled shoreline per elevation; the shoreline count and the areas at the default values match the check values (4)<br>• A full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2)<br>• A screen capture of the toolbox interface with the low, high, and step parameters exposed (2)<br>• A description of the model a reader could repeat from, including how the loop value reaches the tools inside it (2) | /10 |
+| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• An inset or close-up of one feature at the elevation it goes dry (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
+| **Map 2 — one Step 7 scenario** (full page, 8.5 × 11)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
+| **Range and step sensitivity** (Step 7)<br>• A table of at least three additional runs, giving the range, the step, the number of shorelines, and the areas at the lowest and highest elevations for each (4)<br>• Which features go dry and whether the step changes that answer (2)<br>• How the area changes per unit elevation and what the basin's shape has to do with it (2)<br>• The smallest step that still shows the basin's shape, and what the finer runs cost (2) | /10 |
+| **Total** | **/50** |
 
-<!-- TODO(instructor): the four scored rows above sum to exactly 50 (5 + 10 + 5 + 30), which
-     matches the "/50" on the last row — so that row reads as the assignment total rather than a
-     separately scored "Self-assessment" item. If self-assessment is meant to be scored on its
-     own, the lab is worth 100 and a total row is missing. Point values were not changed. -->
-
-<!-- Migration notes (2026-09-03): CROP (2026-09-03): the two browser captures (Figures 1 and 2) had the Chrome tab strip and address bar removed (they showed the capturing user's other open tabs and profile avatar); the page content is unchanged.
-     source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 6 - Avalanche Hazard.docx
-     (Word title: "Lab 6 – Mapping Avalanche Risk using Slope, Aspect, and Elevation"; the page
-     header follows the site-wide "Lab 6: Avalanche Hazard" pattern and the full descriptive title
-     is preserved in the rubric heading.)
-     ArcGIS Pro version verified against: NOT VERIFIED in this migration.
-     images renamed from fig-NN:
-       fig-01.png  -> lab06-utah-avalanche-center-ratings.png
-       fig-02.png  -> lab06-avalanche-org-danger-map.png
-       fig-03.jpeg -> lab06-north-american-danger-scale.jpeg
-       fig-04.png  -> lab06-example-model-overview.png
-       fig-05.png  -> lab06-model-project-raster.png
-       fig-06.png  -> lab06-model-slope.png
-       fig-07.png  -> lab06-model-aspect.png
-       fig-08.png  -> lab06-model-reclassify-three.png
-       fig-09.png  -> lab06-reclassify-aspect-window.png
-       fig-10.png  -> lab06-raster-calculator-con.png
-       fig-11.png  -> lab06-example-map-snowbird.png
-     (Two further images in the .docx are header logos, referenced only from header1.xml, and were
-     not extracted. Nothing in the body text refers to them.)
-     figure renumbering: all 11 body images are now numbered in document order. Source captions
-     Figure 1-7 map to Figures 3, 5, 6, 7, 8, 9, 10; Figures 1, 2, 4 and 11 are newly captioned
-     images that the Word original left uncaptioned. In-text cross references were updated:
-     "(see Figure 1)" -> "(see Figure 3)" and "shown in Figure 6" -> "shown in Figure 9".
-     stale/unverified screenshots: Figure 7 (model-aspect) shows the upstream variable as "Raster
-     Coordinate System" while Figure 4 shows "Projected DEM" — captures appear to be from
-     different model versions. Figures 1 and 2 are live-website captures and will drift as those
-     sites change. Figure 11 is a student example carrying placeholder text ("Avalanche Lab /
-     Date / Projection"). No screenshot was re-shot or altered.
-     TODO(instructor): rename output to "terrain-based avalanche susceptibility screening";
-     define susceptibility vs hazard vs exposure vs vulnerability vs risk; state the dynamic
-     variables the model omits (snowpack, weather, wind loading, triggering); add a
-     validation/reflection comparison against published avalanche-terrain information; update the
-     2011-2012 references and point at a current avalanche-information authority; resolve whether
-     the rubric's "/50" row is the total or a separately scored self-assessment.
-     VERIFY: "more than 150 people killed per year (National Geographic)" is uncited; "Clark et
-     al. 2002, p 11" is cited twice but missing from References; Table 1's Low slope range starts
-     at -1 although slope is 0-90; Step 1 calls NAD 1983 a "projection" and no projected CRS is
-     specified; the ModelBuilder Tools list names "Project" while the steps use "Project Raster".
-     dead/redirected links:
-       http://www.sawtoothavalanche.com/index.html -> 404 (site root https://www.sawtoothavalanche.com/ returns 200)
-       http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/ -> 200 but redirects to https://gis.utah.gov/products/sgid/elevation/
-       http://gis.utah.gov/data/recreation/ski-areas/ -> 200 but redirects to https://gis.utah.gov/products/sgid/recreation/ski-areas/
-       http://www.avalanche.org/ -> 200, redirects to https://avalanche.org/
-       http://www.nwac.us/ -> 200, redirects to https://nwac.us/
-       http://en.wikipedia.org/wiki/Avalanche -> 200, redirects to https
-       https://utahavalanchecenter.org/ and http://www.merriam-webster.com/dictionary/avalanche
-         -> 403 to curl (bot protection); both appear live in a browser
-       http://www.jhavalanche.org/statetrailmaps/index.php -> 200 with a browser user agent;
-         a plain HEAD request returns 406 and redirects to https://bridgertetonavalanchecenter.org/
-       https://nwac.us/get-the-forecast/ -> 200
-     No source paragraph or table was dropped. -->
+<!-- Migration notes (2026-09-08): NEW LAB, no Word source. Created as a placeholder on September 8, 2026, when the Word-era Labs 6 to 10 were renumbered 7 to 11 and "Lab 11 — Choose Your Own Adventure" was dropped; written to the anatomy in tools/lab-conversion-guide.md, section 9. Introduced Thursday of Week 7 (the session freed when Midterm 1 moved to Week 8) and due that Saturday.
+NOT VERIFIED: the lab has not been run in ArcGIS Pro. No tool name, menu label, parameter name, expression, check value, or figure on this page has been checked in a live session. The ArcGIS Pro documentation links were checked live (HTTP 200) on September 8, 2026; the two Bureau of Reclamation links in the data-section comment likewise.
+DESIGN, settled: one model that loops over water-surface elevations with the ModelBuilder For iterator and inline %Elevation% substitution, floods the surface with Con, keeps the main pool, vectorizes with Raster to Polygon, labels each shoreline with its elevation, and collects and merges the results; the student varies the elevation range and step (Step 7) and creates a shore-feature point layer; two maps; five-row rubric of ten.
+TODO(instructor), in order: (1) choose the lake; (2) build the merged bathymetry-plus-topography surface, state its surveys, datum, units and cell size, host it as docs/data/lab06-<lake>-surface.zip with a READ-ME-FIRST.txt and a build script in tools/lab06/; (3) decide the default low, high and step and measure the iteration count, wet-cell counts, polygon areas and merged row count as check values; (4) decide and verify the main-pool method in Step 4 (Region Group is the candidate); (5) verify every tool name, ribbon location and parameter label in ArcGIS Pro 3.7, in particular the For iterator's inputs and where Collect Values lives; (6) capture the dialog figures, export Figure C as SVG and cut the snippets; (7) generate Figure A and the tool icons with tools/lab06/make_svgs.py; (8) build the two example layouts with arcpy.mp; (9) name the shore features and their elevations for the chosen lake; (10) cite the surveys and the textbook chapter; (11) pilot (no-GUI at minimum) and record the results here; (12) remove the under-construction WARNING box when the page is assignable. -->

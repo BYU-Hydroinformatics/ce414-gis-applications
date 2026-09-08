@@ -15,7 +15,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Reading | Chapter 3 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 10 | *Projections and Coordinate Systems* — open book, on Learning Suite, done independently — 20 points |
-| Lab 10 | [Lab 10 — Least Cost Path Power Line Analysis](../assignments/lab-10/README.md) — one PDF report on Learning Suite — 50 points |
+| Lab 10 | [Lab 10 — Wind Farm Site Selection](../assignments/lab-10/README.md) — one PDF report on Learning Suite — 50 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

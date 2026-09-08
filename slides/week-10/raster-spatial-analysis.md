@@ -214,14 +214,14 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 
 ---
 
-# Next: Lab 9 — Wind Farm Site Selection
+# Next: Lab 10 — Wind Farm Site Selection
 
 <!-- TODO(graphic): this slide needs a figure from the wind farm lab — a suitability
      surface or the finished site map — once those captures exist. No image was added
      rather than reusing one already shown earlier in the deck. -->
 
 - The lab applies this workflow end to end:
-  [Lab 9 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+  [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 - Bring the vocabulary from today with you: **reclassify**, **overlay**, **cell size**,
   **suitability surface**
 
@@ -236,8 +236,8 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 
 - Reading: **Chapter 9** of *GIS Fundamentals* (Spatial Analysis)
 - Take **Quiz 9** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Finish [Lab 9 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
-- Start [Lab 10 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- Finish [Lab 9 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
+- Start [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- TODO(instructor): this deck is too short to carry the wind farm suitability lab on its own. It stops at "combine the layers" and never covers the decisions the lab requires. Missing, in the order a student needs them:
@@ -248,4 +248,4 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
   5. Environment settings for a multicriteria model — extent, cell size, snap raster, mask, and coordinate system, set once so every layer lines up.
 These are content decisions for the instructor, not conversion fixes, so nothing has been written for them here. -->
 
-<!-- Conversion notes (2026-09-03): source is "CE 414 Week 10 - Raster Based Spatial Analysis.pptx", 8 slides, converted to 14. No slides were dropped and no hidden slides existed. The expansion is layout only: the source's Overlay slide carried two unrelated diagrams and was split into "stack the layers" and "cell-by-cell arithmetic"; the Reclassify slide's schematic and its DEM worked example were split; the Create Heat Map slide's three images were split across two slides. Title and Today's Goals slides were added per the conversion guide. Slide 3's discussion question is marked `_class: activity`. Two GIFs (the reclassification schematic and the layer stack) plus three more were converted to PNG; the 2048-px temple photo was resized to 1800 px JPEG. The source deck contains no ArcGIS UI screenshots at all, so nothing needed ArcMap-to-Pro replacement — but that also means nothing in this deck shows a student where these tools live. Two VERIFY comments name ArcGIS Pro tools (Reclassify, Raster Calculator) that were not checked against a running Pro session. Two TODO(graphic) markers (the Lab 9 preview slide and the closing slide have no figure; none was generated, per this pass's rules). The Before Next Class slide's schedule is reconstructed, not taken from the source. See the TODO(instructor) above for the content gaps between this deck and the wind farm lab. -->
+<!-- Conversion notes (2026-09-03): source is "CE 414 Week 10 - Raster Based Spatial Analysis.pptx", 8 slides, converted to 14. No slides were dropped and no hidden slides existed. The expansion is layout only: the source's Overlay slide carried two unrelated diagrams and was split into "stack the layers" and "cell-by-cell arithmetic"; the Reclassify slide's schematic and its DEM worked example were split; the Create Heat Map slide's three images were split across two slides. Title and Today's Goals slides were added per the conversion guide. Slide 3's discussion question is marked `_class: activity`. Two GIFs (the reclassification schematic and the layer stack) plus three more were converted to PNG; the 2048-px temple photo was resized to 1800 px JPEG. The source deck contains no ArcGIS UI screenshots at all, so nothing needed ArcMap-to-Pro replacement — but that also means nothing in this deck shows a student where these tools live. Two VERIFY comments name ArcGIS Pro tools (Reclassify, Raster Calculator) that were not checked against a running Pro session. Two TODO(graphic) markers (the Lab 10 preview slide and the closing slide have no figure; none was generated, per this pass's rules). The Before Next Class slide's schedule is reconstructed, not taken from the source. See the TODO(instructor) above for the content gaps between this deck and the wind farm lab. -->

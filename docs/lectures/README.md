@@ -42,7 +42,7 @@ authoritative dates live in the Learning Suite syllabus. Each week page lists wh
 
 ## Week 7: Watershed Delineation, Part 3
 
-- No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity.<!-- TODO(instructor): Thursday of Week 7 is open now that Midterm 1 sits in Week 8; say what happens in class. -->
+- No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. Thursday introduces Lab 6 — Lake Depth Explorer and the ModelBuilder idea it is built on: a model that **loops** over a list of water-surface elevations instead of being run once per elevation.
 - [Week 7 page](week-07.md)
 
 ## Week 8: Interpolation and Midterm 1

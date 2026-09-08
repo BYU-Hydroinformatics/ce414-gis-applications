@@ -196,11 +196,19 @@ Open, in priority order:
 3. **Final project proposal date.** The proposal meeting is due Friday December 4, after
    presentations begin on Thursday December 3. Move it earlier (Week 13 is the natural slot), then
    update `DUE[14]`, the schedule page's milestone table, and `docs/assignments/final-project.md`.
-4. **Lab 11.** "Choose Your Own Adventure" is to be replaced by a new lab on **depth analysis of a
-   lake** (bathymetry); the instructor has a draft to provide. When it arrives: write
-   `docs/assignments/lab-11/README.md` to the lab definition of done, rename `LABS[11]`, add it to
-   `LAB_PAGE`, add it to the nav, index page, and assignments overview, and update the Week 11 and
-   12 closing slides that mention Lab 11.
+4. **Lab 6 — Lake Depth Explorer (renumbering done September 8, 2026).** The new bathymetry lab
+   is Lab 6, introduced Thursday of Week 7 and due that Saturday; the Word-era Labs 6 to 10 became
+   Labs 7 to 11 (folders, image prefixes, nav, index, overview, DUE table, schedule, and every
+   deck closing slide were renumbered) and "Choose Your Own Adventure" is gone. Learning Suite
+   matches except Lab 6's due date, which still reads October 10 and should be October 17.
+   `docs/assignments/lab-06/README.md` is a **placeholder** written to the anatomy in
+   `tools/lab-conversion-guide.md`: the analytical question, the parameters the student varies,
+   the tool list, the step titles, the deliverables, and the rubric are in place; every check
+   value, figure, and data file is a `TODO(instructor)`. The design still to be settled: which
+   lake, the elevation surface and its vertical datum, the water-surface elevation range and step,
+   and how the model loops (the ModelBuilder **For** iterator with inline `%Value%` substitution,
+   to be verified in ArcGIS Pro 3.7). Then build it per section 9 of the guide: model, data
+   package, check values, figures, example maps, pilot.
 5. **Rethink the reading quizzes.** Open question: what is a "reading quiz" worth in the AI era? One
    option under consideration is a short **pre-class quiz and a post-class quiz** per topic, with
    AI and web search allowed instead of the book. Nothing is decided; until it is, the site describes

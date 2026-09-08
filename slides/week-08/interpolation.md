@@ -786,8 +786,8 @@ Is there a difference at the sample locations?
 
 **Labs**
 
-- [Lab 7 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
-- [Lab 8 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next and applies these methods in ArcGIS Pro
+- [Lab 7 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
+- [Lab 8 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next; [Lab 9 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) follows it and applies these methods in ArcGIS Pro
 
 </div>
 <div>
@@ -801,7 +801,7 @@ Is there a difference at the sample locations?
 </div>
 </div>
 
-<!-- Point them at Lab 8 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
+<!-- Point them at Lab 9 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
 
 <!-- TODO(instructor): consider adding a slide mapping each method in this deck to its ArcGIS Pro tool (Create Thiessen Polygons, IDW, Kriging, Spline, Trend, Natural Neighbor) once the tool names and toolbox locations have been checked in Pro. The source deck names no software at all. -->
 

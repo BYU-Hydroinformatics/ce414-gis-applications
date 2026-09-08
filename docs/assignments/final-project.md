@@ -32,8 +32,8 @@ together with the instructor available.
 
 ## Past projects
 
-Prior-year projects are the pool for **Lab 11 — Choose Your Own Adventure** and the best guide to
-what a finished project looks like. Presentation decks from past years and example write-ups
+Prior-year projects are the best guide to what a finished project looks like. Presentation decks
+from past years and example write-ups
 (parks, trip planners, sledding hills, fire paths, earthquake risk, reservoir siting, culverts,
 Mars craters, and more) are linked from the Week 12 schedule page on Learning Suite.
 

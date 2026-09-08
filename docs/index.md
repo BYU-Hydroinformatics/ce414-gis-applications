@@ -18,11 +18,12 @@ the backbone — every lab is a reproducible model, not a sequence of clicks.
 | [Lab 3](assignments/lab-03/README.md) | Georectifying and Digitizing Images |
 | [Lab 4](assignments/lab-04/README.md) | Cell Phone Tower Placement |
 | [Lab 5](assignments/lab-05/README.md) | Watershed Delineation |
-| [Lab 6](assignments/lab-06/README.md) | Avalanche Hazard |
-| [Lab 7](assignments/lab-07/README.md) | Big Southern Butte |
-| [Lab 8](assignments/lab-08/README.md) | Practicing with Interpolation |
-| [Lab 9](assignments/lab-09/README.md) | Wind Farm Site Selection |
-| [Lab 10](assignments/lab-10/README.md) | Least Cost Path Power Line Analysis |
+| [Lab 6](assignments/lab-06/README.md) | Lake Depth Explorer |
+| [Lab 7](assignments/lab-07/README.md) | Avalanche Hazard |
+| [Lab 8](assignments/lab-08/README.md) | Big Southern Butte |
+| [Lab 9](assignments/lab-09/README.md) | Practicing with Interpolation |
+| [Lab 10](assignments/lab-10/README.md) | Wind Farm Site Selection |
+| [Lab 11](assignments/lab-11/README.md) | Least Cost Path Power Line Analysis |
 
 ## Course Structure
 

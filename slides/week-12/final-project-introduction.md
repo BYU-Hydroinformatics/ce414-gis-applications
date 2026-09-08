@@ -310,7 +310,7 @@ That is the difference between a result and a recommendation.
 # Before Next Class
 
 - **Read** the [Final Project page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) on the course site
-- **Finish** Lab 11 — Choose Your Own Adventure (on Learning Suite), due **Saturday 11:59 pm**
+- **Finish** [Lab 11 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/), due **Saturday 11:59 pm**
 - **Start** your data-feasibility table — one row per layer
 - **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
 - **Quiz 11** (Chapter 5, GPS and GNSS Data), open book, due **Saturday 11:59 pm**

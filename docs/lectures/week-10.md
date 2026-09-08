@@ -14,7 +14,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Reading | Chapter 9 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 9 | *Spatial Analysis* — open book, on Learning Suite, done independently — 20 points |
-| Lab 9 | [Lab 9 — Wind Farm Site Selection](../assignments/lab-09/README.md) — one PDF report on Learning Suite — 50 points |
+| Lab 9 | [Lab 9 — Practicing with Interpolation](../assignments/lab-09/README.md) — one PDF report on Learning Suite — 50 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

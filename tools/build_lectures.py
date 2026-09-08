@@ -12,8 +12,8 @@ the week they are listed under. In-class activities are due at 9:30 am the day t
 fifteen minutes after the 8:00-9:15 class.
 
 Decisions still pending (Sept 7, 2026, see ROADMAP.md "Syllabus decisions"): the reading quizzes may be
-replaced by pre- and post-class quizzes; the exam schedule and the Week 12 pile-up are to be reworked; Lab 11
-is to be replaced by a lake depth-analysis lab. Update DUE when those land."""
+replaced by pre- and post-class quizzes. Settled September 8, 2026: midterms in Weeks 8 and 14; Lab 6 is the
+new Lake Depth Explorer lab, Labs 6 to 10 of the Word era became 7 to 11, and Choose Your Own Adventure is gone."""
 import re
 from pathlib import Path
 
@@ -44,9 +44,9 @@ DECKS = [
     (12, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored."),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
-        5:"Watershed Delineation",6:"Avalanche Hazard",7:"Big Southern Butte",8:"Practicing with Interpolation",
-        9:"Wind Farm Site Selection",10:"Least Cost Path Power Line Analysis",11:"Choose Your Own Adventure"}
-LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 11)}   # Lab 11 has no page yet
+        5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Avalanche Hazard",8:"Big Southern Butte",
+        9:"Practicing with Interpolation",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
+LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 12)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"ModelBuilder and Raster Analysis",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Watershed Delineation, Part 3",
                8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
@@ -56,8 +56,9 @@ WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"ModelBuilder and Ra
 # Weeks with no new slide deck still get a page, with this description of what happens in class.
 NO_DECK = {
     7:  "No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, "
-        "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity."
-        "<!-- TODO(instructor): Thursday of Week 7 is open now that Midterm 1 sits in Week 8; say what happens in class. -->",
+        "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. "
+        "Thursday introduces Lab 6 — Lake Depth Explorer and the ModelBuilder idea it is built on: a model that "
+        "**loops** over a list of water-surface elevations instead of being run once per elevation.",
     13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
     14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
         "project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is "
@@ -81,7 +82,7 @@ DUE = {
              other=[("In-class activity: Terrain Analysis, Slope (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     6:  dict(reading="Chapter 10 review; some of this quiz needs a web search", quiz=(6, "Watershed Delineation"), lab=5,
              other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
-    7:  dict(reading=None, quiz=None, lab=6,
+    7:  dict(reading=None, quiz=None, lab=6,   # Lab 6 (Lake Depth Explorer) is introduced Thursday and due the same Saturday; see ROADMAP item 4
              other=[("In-class activity: Practicing Hydrology Tools", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
                     ("In-class activity: Where is my watershed?", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class")]),
     8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=7,
@@ -91,6 +92,7 @@ DUE = {
     10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
     11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),
     12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11, other=[]),
+    # Lab N is due the Saturday of Week N+1 from Lab 7 on; Lab 6 is the exception (due in Week 7, its own week).
     13: dict(reading=None, quiz=None, lab=None, other=[]),
     14: dict(reading=None, quiz=None, lab=None,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),

@@ -17,7 +17,7 @@ Dr. Dan Ames
 Civil & Construction Engineering
 Brigham Young University
 
-<!-- Concepts lecture for Week 11. This deck sets up Lab 10, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
+<!-- Concepts lecture for Week 11. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
 
 ---
 
@@ -41,7 +41,7 @@ Brigham Young University
 ![bg right:48% w:96%](images/lcp-google-maps-route.jpg)
 
 - What is the **"cost"** Google Maps is minimizing here? Distance? Travel time? Traffic?
-- This route runs from the **NSA Utah Data Center** in Bluffdale south toward **Spanish Fork Canyon** — the two endpoints of Lab 10
+- This route runs from the **NSA Utah Data Center** in Bluffdale south toward **Spanish Fork Canyon** — the two endpoints of Lab 11
 - More on the [NSA Utah Data Center](https://nsa.gov1.info/utah-data-center/), code named "Bumblehive"
 
 <div class="imggrid" style="grid-template-columns: repeat(2, 1fr); margin-top:0.3em;">
@@ -52,7 +52,7 @@ Brigham Young University
 
 </div>
 
-<!-- Open with the question, not the answer. Google Maps is already doing least-cost path analysis; it just hides the cost function. Ask what it is minimizing, and get students to notice that the fastest route and the shortest route are different lines. Then say that in Lab 10 they write the cost function themselves. The two photos are the endpoints of that lab: the data center in Bluffdale and the wind farm at the mouth of Spanish Fork Canyon. -->
+<!-- Open with the question, not the answer. Google Maps is already doing least-cost path analysis; it just hides the cost function. Ask what it is minimizing, and get students to notice that the fastest route and the shortest route are different lines. Then say that in Lab 11 they write the cost function themselves. The two photos are the endpoints of that lab: the data center in Bluffdale and the wind farm at the mouth of Spanish Fork Canyon. -->
 
 ---
 
@@ -87,7 +87,7 @@ Brigham Young University
 4. Run **Cost Path** with those two rasters and the destination to get the path
 5. Convert the path raster to a **polyline** so you can symbolize and map it
 
-<!-- These are the steps as Lab 10 runs them. Step 5, Raster to Polyline, is not on the original slide but is in the lab, and without it students end up trying to symbolize a one-cell-wide raster. The next slide shows the whole Lab 10 model, so students can see how much of it is step 1. -->
+<!-- These are the steps as Lab 11 runs them. Step 5, Raster to Polyline, is not on the original slide but is in the lab, and without it students end up trying to symbolize a one-cell-wide raster. The next slide shows the whole Lab 11 model, so students can see how much of it is step 1. -->
 
 <!-- TODO(graphic): a clean five-step schematic of this workflow — input rasters, reclassify, Raster Calculator, cost surface, source/destination, accumulated cost + back link, path. Not generated here; needs a real figure. -->
 
@@ -99,9 +99,9 @@ Brigham Young University
 
 <p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last few boxes on the right.</p>
 
-<!-- Do not read this diagram. The point is scale: about forty tools, and only the last four are the least-cost path itself. Everything to the left is preparing the cost surface. Say plainly that this is what Lab 10 asks them to build, and that they build it left to right. -->
+<!-- Do not read this diagram. The point is scale: about forty tools, and only the last four are the least-cost path itself. Everything to the left is preparing the cost surface. Say plainly that this is what Lab 11 asks them to build, and that they build it left to right. -->
 
-<!-- TODO(instructor): this ModelBuilder overview is a zoomed-out canvas capture and the node labels are illegible at any display size. It needs a re-export from ModelBuilder (right-click the model > Export > As Graphic at high resolution), not a re-screenshot. The same image is Figure 1 in Lab 10. -->
+<!-- TODO(instructor): this ModelBuilder overview is a zoomed-out canvas capture and the node labels are illegible at any display size. It needs a re-export from ModelBuilder (right-click the model > Export > As Graphic at high resolution), not a re-screenshot. The same image is Figure 1 in Lab 11. -->
 
 ---
 
@@ -111,12 +111,12 @@ Brigham Young University
 - The current replacements are:
   - **Distance Accumulation** — produces the accumulative cost raster *and* the back direction raster in one run
   - **Optimal Path As Line** / **Optimal Path As Raster** — replaces Cost Path, and can hand you a polyline directly
-- Lab 10's steps, screenshots, parameter names, and rubric all assume the **legacy** tools, so the lab and this deck have to change together
+- Lab 11's steps, screenshots, parameter names, and rubric all assume the **legacy** tools, so the lab and this deck have to change together
 - Your instructor will confirm which set of tools to use before you start the lab
 
 <!-- Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
 
-<!-- TODO(instructor): replace Cost Distance/Cost Path with Distance Accumulation/Optimal Path; align with Lab 10 -->
+<!-- TODO(instructor): replace Cost Distance/Cost Path with Distance Accumulation/Optimal Path; align with Lab 11 -->
 
 <!-- TODO(graphic): a capture of the ArcGIS Pro Geoprocessing pane search results for "distance accumulation" and "optimal path", showing the deprecation notice on the legacy tools. Not fabricated here; needs a real Pro session. -->
 
@@ -148,7 +148,7 @@ Brigham Young University
 </div>
 </div>
 
-<!-- Two steps in the figure: cost surface generation on top, least-cost path determination below. The AHP box is one way to pick criteria weights; students are not required to use it in Lab 10, but it answers the question "where do the weights come from?" Stress that all the inputs must share a projected coordinate system, cell size, and extent before the Raster Calculator will give a sensible answer. -->
+<!-- Two steps in the figure: cost surface generation on top, least-cost path determination below. The AHP box is one way to pick criteria weights; students are not required to use it in Lab 11, but it answers the question "where do the weights come from?" Stress that all the inputs must share a projected coordinate system, cell size, and extent before the Raster Calculator will give a sensible answer. -->
 
 ---
 
@@ -236,7 +236,7 @@ Brigham Young University
 
 <!-- _class: activity -->
 
-# Next: Lab 10, power line routing
+# Next: Lab 11, power line routing
 
 ![bg right:38% w:88%](images/lcp-example-map-power-lines.jpg)
 
@@ -251,8 +251,8 @@ Brigham Young University
 
 # Before Next Class
 
-- **Lab 10 — Least Cost Path Power Line Analysis** is due **Saturday 11:59 pm**: [assignments/lab-10](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
-- **Lab 11 — Choose Your Own Adventure** is next: pick a prior-year final project on Learning Suite
+- **Lab 10 — Wind Farm Site Selection** is due **Saturday 11:59 pm**: [assignments/lab-10](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- **Lab 11 — Least Cost Path Power Line Analysis** is next: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 - Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
 - Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
@@ -260,9 +260,9 @@ Brigham Young University
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.
 No source slides were dropped; there were no hidden slides and no speaker notes in the original, so every
 presenter note here is new. Added: a Today's Goals slide, two lead section dividers, a dedicated full-size
-slide for the ModelBuilder overview, a "Current tool names in ArcGIS Pro" slide, a Lab 10 preview, and a
+slide for the ModelBuilder overview, a "Current tool names in ArcGIS Pro" slide, a Lab 11 preview, and a
 Before Next Class slide. The legacy Cost Distance / Cost Back Link / Cost Path workflow was deliberately NOT
-rewritten: Lab 10's steps, screenshots and rubric use the same legacy tools, and the two have to change
+rewritten: Lab 11's steps, screenshots and rubric use the same legacy tools, and the two have to change
 together. The deprecation is stated on its own slide instead.
 Stale imagery: images/lcp-cost-distance-backlink-arcmap.png is a scanned ArcMap-era tutorial page and needs a
 Pro capture; images/lcp-full-model-overview.png is an illegible zoomed-out ModelBuilder canvas and needs a

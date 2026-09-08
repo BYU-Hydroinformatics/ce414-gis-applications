@@ -678,7 +678,7 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 
 - Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
 - Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Current lab: [Lab 10 — Least Cost Path](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them
+- Current lab: [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them; [Lab 11 — Least Cost Path](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/) is next
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Review - Coordinate Systems and Projections.pptx",

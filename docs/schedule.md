@@ -20,12 +20,12 @@ happen, fifteen minutes after class ends.
 | 4 | [Georectifying images · Remote sensing and 3D imaging](lectures/week-04.md) · in-class *Georeference Your Home* | Chapter 6 · Quiz 4 | Lab 3 — Georectifying and Digitizing |
 | 5 | [Terrain analysis, parts 1 and 2](lectures/week-05.md) · in-class *Slope* | Chapter 11 · Quiz 5 | Lab 4 — Cell Phone Tower Placement |
 | 6 | [Watershed delineation, parts 1 and 2](lectures/week-06.md) · in-class *Aspect and D8 Flow Direction* | Watershed delineation · Quiz 6 | Lab 5 — Watershed Delineation |
-| 7 | [Hydrology tools hands-on, StreamStats](lectures/week-07.md) | — | Lab 6 — Avalanche Hazard |
-| 8 | [Interpolation, parts 1 and 2](lectures/week-08.md) · in-class *Air Temperature Interpolation* · **Midterm 1** in the Testing Center, Tuesday to Thursday | Chapter 12 · Quiz 7 | Lab 7 — Big Southern Butte |
-| 9 | [Interpolation part 3 (kriging) · ArcGIS Online and OGC web services](lectures/week-09.md) | Chapter 14 · Quiz 8 | Lab 8 — Practicing with Interpolation |
-| 10 | [Raster-based site suitability, parts 1 and 2](lectures/week-10.md) | Chapter 9 · Quiz 9 | Lab 9 — Wind Farm Site Selection |
-| 11 | [Least cost path, parts 1 and 2 · Projections and coordinate systems review](lectures/week-11.md) | Chapter 3 · Quiz 10 | Lab 10 — Least Cost Path |
-| 12 | [Final projects introduced · GPS review](lectures/week-12.md) | Chapter 5 · Quiz 11 | Lab 11 — Choose Your Own Adventure <!-- TODO(instructor): to be replaced by a lake depth-analysis lab --> |
+| 7 | [Hydrology tools hands-on, StreamStats · Lake Depth Explorer and looping in ModelBuilder](lectures/week-07.md) | — | Lab 6 — Lake Depth Explorer |
+| 8 | [Interpolation, parts 1 and 2](lectures/week-08.md) · in-class *Air Temperature Interpolation* · **Midterm 1** in the Testing Center, Tuesday to Thursday | Chapter 12 · Quiz 7 | Lab 7 — Avalanche Hazard |
+| 9 | [Interpolation part 3 (kriging) · ArcGIS Online and OGC web services](lectures/week-09.md) | Chapter 14 · Quiz 8 | Lab 8 — Big Southern Butte |
+| 10 | [Raster-based site suitability, parts 1 and 2](lectures/week-10.md) | Chapter 9 · Quiz 9 | Lab 9 — Practicing with Interpolation |
+| 11 | [Least cost path, parts 1 and 2 · Projections and coordinate systems review](lectures/week-11.md) | Chapter 3 · Quiz 10 | Lab 10 — Wind Farm Site Selection |
+| 12 | [Final projects introduced · GPS review](lectures/week-12.md) | Chapter 5 · Quiz 11 | Lab 11 — Least Cost Path |
 | 13 | [Project work day · Thanksgiving, no class Thursday](lectures/week-13.md) | — | — |
 | 14 | [Project work day · Presentations, day 1](lectures/week-14.md) · **Midterm 2** in the Testing Center, Tuesday to Thursday · proposal meeting by Friday | — | — |
 | 15 | [Presentations, day 2 · last day of class](lectures/week-15.md) · project deliverables Wednesday and Thursday · Friday is exam preparation, no class | — | — |

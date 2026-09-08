@@ -14,7 +14,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Reading | Chapter 14 of *GIS Fundamentals*, 7th edition (Bolstad) |
 | Quiz 8 | *Data Standards and Data Quality* — open book, on Learning Suite, done independently — 20 points |
-| Lab 8 | [Lab 8 — Practicing with Interpolation](../assignments/lab-08/README.md) — one PDF report on Learning Suite — 50 points |
+| Lab 8 | [Lab 8 — Big Southern Butte](../assignments/lab-08/README.md) — one PDF report on Learning Suite — 50 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
