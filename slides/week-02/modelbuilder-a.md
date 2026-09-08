@@ -462,20 +462,15 @@ Find all **U.S. cities within 10 miles of a major river**.
 </div>
 <div style="text-align:center;">
 
-![w:600](images/mba-cities-rivers-problem.png)
+![w:520](images/mba-cities-rivers-problem.png)
 
-<p style="font-size:0.6em;color:#5a6472;margin:0.1em 0 0 0;">678 cities and the major rivers of the lower 48, USA Contiguous Equidistant Conic</p>
-
-<!-- TODO(photos): two Chicago River photos go here. Save them as images/mba-chicago-river-1.jpg
-(Trump Tower and the Wrigley-side towers from the river) and images/mba-chicago-river-2.jpg (the
-skyline from the tour boat), change the map above to w:520, and replace this comment with:
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;">
-<img src="images/mba-chicago-river-1.jpg" style="width:100%;height:190px;object-fit:cover;border-radius:6px;">
-<img src="images/mba-chicago-river-2.jpg" style="width:100%;height:190px;object-fit:cover;border-radius:6px;">
+<div style="display:grid;grid-template-columns:150px 1fr;gap:12px;margin-top:6px;align-items:center;text-align:left;">
+<img src="images/mba-chicago-river-2.jpg" style="width:150px;height:200px;object-fit:cover;object-position:top;border-radius:6px;">
+<div style="font-size:0.66em;color:#5a6472;line-height:1.35;">678 cities and the major rivers of the lower 48, in USA Contiguous Equidistant Conic.<br><br>The case in point: Chicago, photographed from the Chicago River in summer 2026. The city is there because the river is.</div>
 </div>
-<p style="font-size:0.6em;color:#5a6472;margin:0.1em 0 0 0;">A city on its river: Chicago from the Chicago River, summer 2026</p>
--->
+
+<!-- TODO(photo): when the Trump Tower shot from the river is saved as images/mba-chicago-river-1.jpg,
+make the grid above 150px 150px 1fr with a second <img> for it. -->
 
 </div>
 </div>
