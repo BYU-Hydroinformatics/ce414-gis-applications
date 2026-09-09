@@ -53,3 +53,35 @@ Lessons from the second Lab 2 session (2026-09-06, evening, display scaling 175 
   thumbs, or use the keyboard.
 - The run dialog's message log renders at a large font at 175 % and will not scroll; capture the
   dialog wider (drag its grip) rather than fighting it.
+
+Lessons from the Week 2 Part B session (2026-09-08, 175 %, `CitiesRivers.aprx`):
+
+- **`stitch.py OUT SKIP IN1 IN2 ...`** joins scrolled captures of one tall view (the metadata
+  editor, the View Metadata page) by locating the top 150 px of each capture inside the previous
+  one; `SKIP` is the height of a fixed header to drop from the later captures (55 px for the
+  Catalog view's Metadata/Geography/Table strip). Scroll with the scrollbar arrow buttons, which
+  move in fixed steps; the scrollbar thumb is far too sensitive (30 px of thumb is 800 px of
+  canvas). If the match error stays above about 1, the control scrolled by a fractional pixel and
+  re-rendered its text; pick the local minimum and check the seam by eye.
+- **Context menus flip upward** when the element sits in the lower half of the screen and the
+  menu would cross the taskbar; the flipped menu covers the ribbon. Arrange the model so the
+  elements you will right-click sit near the top of the canvas (here: rivers row on top, cities
+  row below), then menus open downward next to the element. A three-level menu (Create Variable
+  > From Parameter > Distance) needs the right-click near the element's left edge to fit.
+- **A right-click while a menu is still open** is swallowed by the open menu. End every menu
+  batch with Escape and a click on empty canvas, and hover an item before the grab so it is
+  highlighted.
+- **Dragging a canvas element** only works on a selected element: click it, then mouse down,
+  several mouse_move steps, mouse up. `left_click_drag` (one instantaneous move) does nothing in
+  ModelBuilder; the same is true of the Pan tool.
+- **The "Show Toolbar" overlay** at the canvas's top-right corner is semi-transparent and lands
+  in any strip that reaches that corner. Paint the light pixels of that corner white afterwards
+  rather than moving the model (a threshold of 185 keeps the P badge ring and element borders).
+- After `front.py`/`park.py`, the first click in Pro sometimes does nothing: `mouse_move` to the
+  target first, then click.
+- Ctrl+R renames the selected element in place, Ctrl+P toggles Parameter, Ctrl+S saves the model;
+  all three work without the menu. A new variable from Create Variable > From Parameter lands on
+  top of the tool's input element and has to be dragged clear.
+- The Geoprocessing pane only re-reads the model's parameters when the model is re-opened
+  (double-click it in Catalog again) after Ctrl+S.
+- The Save-project icon is the third Quick Access icon; the first is New Project.

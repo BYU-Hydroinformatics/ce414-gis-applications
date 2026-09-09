@@ -8,7 +8,7 @@ footer: "CE 414 · Week 2 — ModelBuilder, Part B"
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:42% w:95%](images/mbb-model-renamed-nodes.png)
+![bg right:45% w:96%](images/mbb-pro-window-model-and-tool.png)
 
 ![w:130](../theme/images/byu-medallion.svg)
 
@@ -19,13 +19,11 @@ Civil & Construction Engineering, Brigham Young University
 
 Dr. Dan Ames
 
-<!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. -->
+<!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. The window on the right is where we end up: the Cities Near Rivers model with four P markers, and the tool dialog those four parameters produce, side by side in ArcGIS Pro 3.7. -->
 
 ---
 
 # Today's Goals
-
-![bg right:34% w:92%](images/mbb-parameter-p-marker.png)
 
 Part A built the **Cities Near Rivers** model and ran it. By the end of class you should be able to:
 
@@ -36,7 +34,9 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 - Read the **Lab 1 rubric** and know what each part rewards
 - Give, and act on, a **peer review**
 
-<!-- Set expectations: nothing new gets added to the analysis today. Everything on this list is about turning a canvas that only you can run into a tool that anyone can run, and then about finishing Lab 1 well. -->
+![w:1060 center](images/mbb-model-three-parameters.png)
+
+<!-- Set expectations: nothing new gets added to the analysis today. Everything on this list is about turning a canvas that only you can run into a tool that anyone can run, and then about finishing Lab 1 well. The strip is where the model will be by the middle of class: readable names and three P markers. -->
 
 ---
 
@@ -128,26 +128,37 @@ Which one would you put in a model you have to hand to someone else — and why 
 
 # Get the output onto the map
 
-![bg right:42% w:78%](images/mbb-add-to-display-menu.png)
+![bg right:42% w:88%](images/mbb-add-to-display-menu.png)
 
 - Running a model does **not** put its results in your map by default
 - Right-click the **output data** element you care about and check **Add To Display**
 - Do this for the final output; leave the intermediate data unchecked so your **Contents** pane stays readable
 - The check mark sticks with the model, so it applies every time the model runs
 
-<!-- This is the single most common "my model did nothing" complaint. The model ran fine; the output just went to the geodatabase without being added to the map. Show the check mark going on and off. -->
+<!-- This is the single most common "my model did nothing" complaint. The model ran fine; the output just went to the geodatabase without being added to the map. The menu on the right is the Cities_Near_Rivers output element in ArcGIS Pro 3.7.1, with Add To Display already checked from Part A; show the check mark going on and off. -->
 
 ---
 
 # A gray element means a missing parameter
 
-![bg right:46% w:96%](images/mbb-gray-node-missing-parameters.png)
+![w:1080 center](images/mbb-gray-node-strip.png)
+
+<div class="columns" style="grid-template-columns: 1.05fr 1fr; align-items: center; gap: 24px;">
+<div style="font-size:0.92em;">
 
 - If a tool or its output is **gray**, the model is not ready to run
-- Hover the element: the tooltip lists what the tool is set to, and what is still blank
-- Here the **Buffer** distance has no value, so **Buffer** and everything downstream of it stay gray
+- Gray **propagates downstream**: one empty box in Buffer grays out Buffer, its output, Intersect, and the final result
+- **Hover** the gray tool: the tooltip lists every setting, and the blank one is the culprit — here the Buffer **distance**
 
-<!-- Colored means ready: blue ovals are input data, yellow rectangles are tools, green ovals are output data. Gray means "not ready", and it propagates downstream, so always fix the leftmost gray element first. Hovering gives you the whole parameter list without opening the tool. -->
+</div>
+<div style="text-align:center;">
+
+![h:290](images/mbb-gray-node-missing-parameters.png)
+
+</div>
+</div>
+
+<!-- Colored means ready: blue inputs, yellow tools, green outputs. Gray means "not ready", and it propagates downstream, so always fix the leftmost gray element first. The strip is the Part A model with the Buffer distance deleted: everything upstream of Buffer is still colored and everything from Buffer on is gray. Hovering gives you the whole parameter list without opening the tool; "Distance [value or field]:" with nothing after it is the answer. -->
 
 ---
 
@@ -160,7 +171,7 @@ Which one would you put in a model you have to hand to someone else — and why 
 - ModelBuilder runs that tool and everything it depends on, and stops
 - **Messages…** on the same menu shows what the tool actually reported
 
-<!-- Build and debug incrementally. A five tool model that you only ever run end to end takes five times as long to debug. Point out Messages: that is where the real error text lives, not in the canvas. -->
+<!-- Build and debug incrementally. A five tool model that you only ever run end to end takes five times as long to debug. Point out Messages: that is where the real error text lives, not in the canvas. The menu is the Intersect tool's right-click menu in ArcGIS Pro 3.7.1. -->
 
 ---
 
@@ -168,13 +179,13 @@ Which one would you put in a model you have to hand to someone else — and why 
 
 ![bg right:26% w:96%](images/mbb-rename-node-menu.png)
 
-Right-click an element and choose **Rename**. Default names, then better names:
+Right-click an element and choose **Rename** (or select it and press Ctrl+R). The names ArcGIS Pro gave them, then the names a reader needs:
 
 ![w:820 center](images/mbb-model-default-node-names.png)
 
 ![w:820 center](images/mbb-model-renamed-nodes.png)
 
-<!-- Compare the two strips. "rivers_Project_Buffer" tells you which tools ran. "Areas Near Rivers" tells you what the data means. The second one is what you want on a canvas someone else has to read, and it is also what shows up as the parameter label when the model is run as a tool. Renaming an element does not rename the data on disk, and it does not rename the model itself; the model's Name lives in Properties, General. -->
+<!-- Compare the two strips. "Project (2)" tells you which tool ran, twice. "Project to Equidistant" tells you why. "us_rivers" is a file name; "Input Rivers" is what the data means, and it is also the label that shows up on the tool dialog when the model is run as a tool. Renaming an element does not rename the data on disk, and it does not rename the model itself; the model's Name lives in Properties, General. Both strips are the same model in ArcGIS Pro 3.7.1, before and after ten renames. -->
 
 ---
 
@@ -201,14 +212,14 @@ Right-click an element and choose **Rename**. Default names, then better names:
 
 # Mark a variable as a parameter
 
-![bg right:44% w:95%](images/mbb-parameter-p-marker.png)
+![w:820 center](images/mbb-parameter-p-marker.png)
 
 - Any data variable in your model can be made a **parameter**
-- Right-click the element and click **Parameter**
-- A letter **P** next to the element marks it
+- Right-click the element and click **Parameter** (or select it and press Ctrl+P)
+- A circled **P** on the element's corner marks it
 - This tells ArcGIS Pro to treat that variable as an **input the user supplies** when the model is run directly, instead of a value baked into the model
 
-<!-- Toggle the P on and off so they see the marker appear. This is Lab 1 Step 10 and Lab 2 Step 4. -->
+<!-- Toggle the P on and off so they see the marker appear; in ArcGIS Pro 3.7 it is a circled P on the top-right corner of the element. This is Lab 1 Step 10 and Lab 2 Step 4. -->
 
 ---
 
@@ -217,7 +228,7 @@ Right-click an element and choose **Rename**. Default names, then better names:
 <div class="columns">
 <div>
 
-![w:460 center](images/mbb-catalog-toolbox-model.png)
+![h:330 center](images/mbb-catalog-toolbox-model.png)
 
 - Find the model in the **Catalog** pane under **Toolboxes**
 - **Double-click** it — you get a tool dialog, not the canvas
@@ -225,7 +236,7 @@ Right-click an element and choose **Rename**. Default names, then better names:
 </div>
 <div>
 
-![w:460 center](images/mbb-tool-dialog-one-parameter.png)
+![h:330 center](images/mbb-tool-dialog-one-parameter.png)
 
 - The **Geoprocessing** pane shows one box per parameter
 - Labels are the names you gave the elements, already filled in with the values you set
@@ -233,7 +244,7 @@ Right-click an element and choose **Rename**. Default names, then better names:
 </div>
 </div>
 
-<!-- Double-click runs the model as a tool; right-click and Edit opens the canvas. Students mix these two up constantly. Note that the parameter label reads "Input Rivers" because that is what we renamed the element to on the previous slide - renaming and parameterizing pay off together. The screenshot shows a .tbx toolbox; new projects in current ArcGIS Pro create .atbx toolboxes, which behave the same way here. -->
+<!-- Double-click runs the model as a tool; right-click and Edit opens the canvas. Students mix these two up constantly. Note that the parameter label reads "Input Rivers" because that is what we renamed the element to on the previous slide: renaming and parameterizing pay off together. The blue "Input Coordinate System" line under the box is ArcGIS Pro telling you the layer is in WGS 1984, which is why the model projects it first. -->
 
 ---
 
@@ -261,17 +272,17 @@ Right-click an element and choose **Rename**. Default names, then better names:
 
 # Create a variable from a tool parameter — the same move in your lab
 
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
+<div class="columns" style="grid-template-columns: 1.3fr 0.7fr; align-items: center;">
 <div style="text-align:center;">
 
-![h:380](images/mbb-create-variable-from-parameter.png)
+![w:700](images/mbb-create-variable-from-parameter.png)
 
 **Cities Near Rivers** — Buffer ▸ Create Variable ▸ From Parameter ▸ *Distance*
 
 </div>
 <div style="text-align:center;">
 
-![h:380](images/mbb-lab1-create-variable-menu.png)
+![w:380](images/mbb-lab1-create-variable-menu.png)
 
 **Lab 1, Step 10** — the same menu on the road buffer
 
@@ -284,22 +295,22 @@ Right-click an element and choose **Rename**. Default names, then better names:
 
 # Then make that variable a parameter
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.15fr 0.85fr; align-items: center;">
 <div>
 
-![w:540 center](images/mbb-distance-variable-parameter.png)
+![w:560 center](images/mbb-distance-variable-parameter.png)
 
 </div>
 <div>
 
-![w:420 center](images/mbb-tool-dialog-three-parameters.png)
+![w:360 center](images/mbb-tool-dialog-three-parameters.png)
 
 </div>
 </div>
 
 The distance is now a **P** on the canvas, and a third box on the tool dialog — units and all. Lab 2 does the same with a **Double** variable and a Raster Calculator expression.
 
-<!-- The new variable appears as its own oval wired into Buffer. Right-click it, click Parameter, and it joins the other two on the dialog as a Linear Unit with its own units dropdown. Now the same model answers "cities within 5 km" and "cities within 25 km" without anyone opening the canvas. This is the payoff: three parameters, one reusable tool. -->
+<!-- The new variable appears as its own element wired into Buffer; ArcGIS Pro drops it on top of the tool's input, so drag it somewhere readable. Right-click it, click Parameter, and it joins the other two on the dialog as a Linear Unit with its own units dropdown. Now the same model answers "cities within 5 km" and "cities within 25 km" without anyone opening the canvas. This is the payoff: three parameters, one reusable tool. -->
 
 ---
 
@@ -328,44 +339,46 @@ How do you do it?
 
 # Edit metadata documentation
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1fr 1fr; align-items: start;">
 <div>
 
-![h:470 center](images/mbb-edit-metadata-item-description.png)
+![h:540 center](images/mbb-edit-metadata-item-description.png)
 
 </div>
-<div>
+<div style="font-size:0.9em;">
 
 - **Title** — a name a stranger would understand
-- **Tags** — required; the editor flags it in red until you fill it in
-- **Summary** and **Usage** — what it does, and when to use it
+- **Tags** — required; leave them empty and the editor flags the box in red
+- **Summary** — what the model does, in two sentences
+- **Usage** — what to supply, and when to run it
 - Under **Syntax**, expand each parameter and write one line explaining it
+- **Save** on the Metadata ribbon when you are done
+
+<!-- This is the Item Description metadata style, which is the default and is plenty for a class model. The four entries under Syntax are exactly the parameters we created, Input_Rivers, Cities_Near_Rivers, Distance__value_or_field_, Input_Cities, so the parameter names you chose become the documentation headings. In the capture the Summary and Usage are written and the four parameter explanations are still empty; the next slide shows what that looks like from the reader's side. -->
 
 </div>
 </div>
-
-<!-- This is the Item Description metadata style, which is the default and is plenty for a class model. Point at the red Tags box: the editor will not let you finish without at least one tag. The four entries under Syntax are exactly the parameters we created - Input_Rivers, Cities_Near_Rivers, Distance__value_or_field_, Input_Cities - so the parameter names you chose become the documentation headings. -->
 
 ---
 
 # View metadata documentation
 
-<div class="columns">
-<div>
+<div class="columns" style="grid-template-columns: 0.85fr 1.15fr; align-items: center;">
+<div style="font-size:0.92em;">
 
-- What you typed comes back as a formatted tool help page
+- What you typed comes back as a formatted tool help page: right-click the model, **View Metadata**
 - The **Syntax** line is generated from your parameters, in order
 - Blank entries show as "There is no explanation for this parameter" — that is the checklist of what you still owe
 
 </div>
 <div>
 
-![h:470 center](images/mbb-view-metadata.png)
+![h:560 center](images/mbb-view-metadata.png)
 
 </div>
 </div>
 
-<!-- Compare this against the help page of any built-in ArcGIS Pro tool: same layout, same sections. That is the standard your model is being held to. Every gray "There is no ..." line in this screenshot is a gap the author left. -->
+<!-- Compare this against the help page of any built-in ArcGIS Pro tool: same layout, same sections. That is the standard your model is being held to. The Description and Usage came from the editor on the previous slide; every gray "There is no ..." line in this capture is a gap the author left, and the four parameter explanations are the ones that matter most to whoever runs the tool. -->
 
 ---
 
@@ -497,22 +510,32 @@ The example map is not a template: yours will differ, because your stores and yo
 
 # Going forward: build a tool interface for all your models
 
-<div class="columns">
-<div>
+<div class="columns" style="grid-template-columns: 1.1fr 0.9fr 0.9fr; align-items: start; gap: 18px;">
+<div style="font-size:0.88em;">
 
 - Every analysis you repeat is a candidate for a model
 - Parameters plus metadata turn it into something you can hand to a colleague, or to yourself next year
-- Here the same pattern wraps a watershed delineation: a list of input rasters, an output, and a threshold
+- Right: today's model with **four** parameters, and the **Lab 1** model with its two distances exposed
+- The Lab 1 dialog says *Distance [value or field] (2)* because nobody renamed the variables — **rename yours** before you capture the dialog for your report
 
 </div>
-<div>
+<div style="text-align:center;">
 
-![h:400 center](images/mbb-model-tool-interface.png)
+![w:330](images/mbb-tool-dialog-four-parameters.png)
+
+<small>Cities Near Rivers, four parameters</small>
+
+</div>
+<div style="text-align:center;">
+
+![w:330](images/mbb-lab1-tool-dialog.png)
+
+<small>The Lab 1 model, two distances</small>
 
 </div>
 </div>
 
-<!-- The habit to leave them with: whenever you catch yourself doing the same five clicks twice, build the model, expose the two or three things that actually change, and write the metadata while you still remember it. -->
+<!-- The habit to leave them with: whenever you catch yourself doing the same five clicks twice, build the model, expose the two or three things that actually change, and write the metadata while you still remember it. Both dialogs are ArcGIS Pro 3.7.1. The Lab 1 one is exactly what a student gets after Step 10 if they stop there: it works, and the labels are unreadable. The rubric's "tool-dialog capture with the two distances exposed" is worth more when the two boxes say which distance is which. -->
 
 ---
 
@@ -528,6 +551,22 @@ The example map is not a template: yours will differ, because your stores and yo
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
 <!--
+Revision notes (2026-09-08): every ArcGIS Pro capture in Part B replaced with ArcGIS Pro 3.7.1 captures
+taken the same way as Part A's (Sept 8, 175 % display scaling, project C:\Ames\Week02\CitiesRivers.aprx,
+model Cities Near Rivers). The Sept 3 "RiversDemo" captures were from an older ArcGIS Pro (oval elements)
+and are gone. New this session:
+- Canvas strips: default and renamed element names, gray-element strip, first P marker, two and three
+  parameters, the Distance variable wired into Buffer; all screen grabs of the canvas at 105 % zoom.
+- Right-click menus: Rename, Add To Display (checked), Run/Messages on a tool, Create Variable > From
+  Parameter > Distance, and the hover tooltip on a gray Buffer.
+- Catalog tree with the model; Geoprocessing pane with one, two, three and four parameters; the whole
+  ArcGIS Pro window (model plus its four-parameter dialog) on the title slide.
+- Metadata editor (Item Description, Tags/Summary/Usage filled, parameter explanations empty) and the
+  View Metadata page, each stitched from three or four scrolled captures.
+- The Lab 1 model's own tool dialog from C:\Ames\Lab01\Lab01.aprx replaces the ArcMap-era watershed
+  dialog on the "Going forward" slide, and the slide now says why the labels there need renaming.
+- The model in CitiesRivers.atbx now carries the renames, four parameters and the metadata; the Part A
+  state of the toolbox and project is archived in C:\Ames\Week02\Backup_partA.
 Revision notes (2026-09-07): Part B revised against slides/week-02/LECTURE_PLAN.md. 20 slides -> 30.
 - Kept every RiversDemo capture from the Sept 3 conversion; they remain the quality bar.
 - New ArcGIS Pro 3.7.1 captures (Sept 7, 175 % scaling, C:\Ames\Week02\CitiesRivers.aprx): the Catalog
