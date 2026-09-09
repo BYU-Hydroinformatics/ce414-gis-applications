@@ -85,3 +85,26 @@ Lessons from the Week 2 Part B session (2026-09-08, 175 %, `CitiesRivers.aprx`):
 - The Geoprocessing pane only re-reads the model's parameters when the model is re-opened
   (double-click it in Catalog again) after Ctrl+S.
 - The Save-project icon is the third Quick Access icon; the first is New Project.
+
+Lessons from the Week 3 session (2026-09-09, 175 %, `Lab02.aprx`, Geoprocessing-pane dialogs):
+
+- **Do the analysis headlessly first** (`tools/week03_prep.py` with arcpy into a scratch
+  geodatabase), then use the GUI only to fill dialogs and show results. The numbers for the speaker
+  notes come from the script, the captures come from the session, and the project is closed
+  without saving.
+- **Add data from the Catalog pane's Computer tab** (This PC > drive > folder > .gdb), right-click
+  > Add To Current Map; answer the Build Pyramids prompt with Yes. A click on an already-selected
+  Catalog item opens rename mode, and Escape does not always leave it: click the box and press
+  Enter to accept the unchanged name.
+- **Geoprocessing dialogs**: type a layer name into a combo box and press Delete before Tab, or
+  type-ahead completes it to the first longer match (`NDVI` became `NDVI_intdiv`). A full path typed
+  into a feature-class box is shortened to the name once validated. The layer dropdown does not
+  refresh while open; close and reopen it after adding a layer. Tall dialogs are two grabs plus
+  `stitch.py` with SKIP 161 (the pane's fixed header at 175 %).
+- **Go To XY** rejects a typed minus sign through desktop control; use `111.95W` / `39.95N`. The
+  scale box needs a click, Ctrl+A, the bare number, Enter. A left-click on the map with the
+  Explore tool opens a pop-up over the map; close it before grabbing.
+- **Table views** open as a short panel under the map and the divider would not drag; for a
+  student-facing table, put the numbers in HTML on the slide and keep the small capture as proof.
+- The Toolboxes tree scrolls with the keyboard (End, Up/Down, Right to expand); grab overlapping
+  views and stitch, then bleach the selection highlight (light-blue pixels) before use.

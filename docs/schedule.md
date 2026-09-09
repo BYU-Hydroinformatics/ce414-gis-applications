@@ -16,7 +16,7 @@ happen, fifteen minutes after class ends.
 | --- | --- | --- | --- |
 | 1 | Course introduction (Thursday only) · [Data models refresher](lectures/week-01.md) | Chapters 1 and 2 · Quiz 1 | — |
 | 2 | [ModelBuilder, parts A and B](lectures/week-02.md) · in-class *Model a Cookie* | Chapter 13 · Quiz 2 | Lab 1 — Walmart Site Selection |
-| 3 | [Raster analysis and map algebra · ModelBuilder part C (NDVI)](lectures/week-03.md) · in-class *Simple Map Algebra* | Chapter 10 · Quiz 3 | Lab 2 — NDVI |
+| 3 | [Raster analysis and map algebra, with NDVI · Raster analysis hands-on](lectures/week-03.md) · in-class *Simple Map Algebra* (Tuesday) and *Raster Analysis Hands-On* (Thursday) | Chapter 10 · Quiz 3 | Lab 2 — NDVI |
 | 4 | [Georectifying images · Remote sensing and 3D imaging](lectures/week-04.md) · in-class *Georeference Your Home* | Chapter 6 · Quiz 4 | Lab 3 — Georectifying and Digitizing |
 | 5 | [Terrain analysis, parts 1 and 2](lectures/week-05.md) · in-class *Slope* | Chapter 11 · Quiz 5 | Lab 4 — Cell Phone Tower Placement |
 | 6 | [Watershed delineation, parts 1 and 2](lectures/week-06.md) · in-class *Aspect and D8 Flow Direction* | Watershed delineation · Quiz 6 | Lab 5 — Watershed Delineation |

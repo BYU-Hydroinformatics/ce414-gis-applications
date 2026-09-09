@@ -2,8 +2,8 @@
 
 ## Slides
 
-- [ModelBuilder, Part C — NDVI](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/modelbuilder-c.html) — What counts as a model, the NDVI equation and why red and near-infrared carry the vegetation signal, and the same index read at continental, farm-plot, and multi-date scale.
-- [Raster Analysis and Map Algebra](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-map-algebra.html) — Rasters as grids of numbers: cell-by-cell operations, map algebra, and NDVI as a worked example.
+- [Raster Analysis and Map Algebra](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-map-algebra.html) — Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model; then local, focal, zonal and global functions.
+- [Raster Analysis Hands-On](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-hands-on.html) — Four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -17,6 +17,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Quiz 3 | *Raster Analysis and Map Algebra* — open book, on Learning Suite, done independently — 20 points |
 | Lab 2 | [Lab 2 — NDVI](../assignments/lab-02/README.md) — one PDF report on Learning Suite — 50 points |
 | In-class activity: Simple Map Algebra (Excel) | done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class — 5 points |
+| In-class activity: Raster Analysis Hands-On | done in class Thursday; upload the numbers sheet by 9:30 am, fifteen minutes after class — 5 points |
 
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they

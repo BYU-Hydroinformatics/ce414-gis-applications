@@ -10,16 +10,18 @@ footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra"
 
 ![bg right:45% w:92%](images/ra-raster-grid-concept.jpg)
 
+![w:130](../theme/images/byu-medallion.svg)
+
 # Raster Analysis and Map Algebra
 
-Dr. Dan Ames
+## NDVI as your first raster model
+
 CE 414 Engineering Applications of GIS
-Civil & Construction Engineering
-Brigham Young University
+Civil & Construction Engineering, Brigham Young University
 
-<!-- Week 3 concepts lecture. The lab this week is Lab 2, NDVI, which is map algebra on two bands of a satellite image, so everything here has a direct payoff on Thursday. -->
+Dr. Dan Ames
 
-<!-- TODO(instructor): the source title slide carried a speaker note left over from a different presentation - a ModelBuilder workshop abstract that has nothing to do with raster analysis. It is preserved here for the record but is not used in the deck: "ModelBuilder is one of the most powerful - and yet most underused - tools in ArcGIS. The ModelBuilder environment introduces a new and exciting way to perform analysis and to automate workflows... The workshop will include instruction, hands-on computer experience, and useful strategies for creating and working with models with ArcGIS 9. Audience: This workshop is targeted to those familiar with ArcGIS, but new to ModelBuilder." Delete or replace. -->
+<!-- Week 3, Tuesday. Two decks this week: today is the concepts and the first raster model, Thursday is hands-on raster analysis in ArcGIS Pro on the Lab 2 data. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
 
 ---
 
@@ -27,28 +29,56 @@ Brigham Young University
 
 ![bg right:32% w:88%](images/ra-continuous-grid-stack.png)
 
+<div style="font-size:0.88em;">
+
 By the end of class you should be able to:
 
-- Say what a **raster** is, and what one cell actually stores
-- Tell **discrete** raster data from **continuous** raster data, and give an example of each
-- Define **map algebra** and explain why it is a *cell-by-cell* operation
-- Tell a **local**, a **focal** (neighborhood), and a **global** function apart
-- Name what has to line up before two rasters can be combined
-- Find the raster tools in ArcGIS Pro and read a raster expression
+- Say what one raster cell stores, and whether that number is a **measurement** or a **label**
+- Define **map algebra** and state the rule: *same cell in, same cell out*
+- Name the four things that must line up before two rasters can be combined, and what **integer** division does to a ratio
+- Write the **NDVI** equation, explain why **red** and **near-infrared** are the two bands, and read it as a **local** raster function
+- Recognize the Lab 2 model as that equation, tool by tool
+- Tell **local**, **focal**, **zonal** and **global** functions apart
 
-<!-- Set expectations. This is the concepts day. Lab 2 applies it: NDVI is a single local map-algebra expression on two raster bands. -->
+</div>
+
+<!-- Set expectations. Part 1 is a short refresher, Week 1 did the data model. Part 2 is map algebra, with the Excel activity in the middle of it. Part 3 is NDVI, built up from the physics to the Lab 2 model. Part 4 is the taxonomy of raster functions that Thursday's exercises walk through. -->
 
 ---
 
-# What is Raster Data?
+# Where this sits
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0.8em 0 0.6em 0;">
+<div style="background:#eef3f9;border-top:8px solid #5a6472;border-radius:8px;padding:0.7em 0.8em;"><div style="font-weight:800;color:#5a6472;">Week 1</div><div style="font-size:0.8em;">Data models: a raster is a grid of numbers</div></div>
+<div style="background:#eef3f9;border-top:8px solid #5a6472;border-radius:8px;padding:0.7em 0.8em;"><div style="font-weight:800;color:#5a6472;">Week 2</div><div style="font-size:0.8em;">ModelBuilder: chain tools, expose parameters</div></div>
+<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.7em 0.8em;"><div style="font-weight:800;color:#e8792b;">Today</div><div style="font-size:0.8em;">Raster analysis: math on the grid, and NDVI as the first model</div></div>
+<div style="background:#eef3f9;border-top:8px solid #002e5d;border-radius:8px;padding:0.7em 0.8em;"><div style="font-weight:800;color:#002e5d;">Thursday and Lab 2</div><div style="font-size:0.8em;">Hands-on raster analysis; the NDVI model as a tool with a threshold parameter</div></div>
+</div>
+
+- Lab 1 was **vector** analysis: buffers, intersects, an erase, on features with attribute tables
+- Lab 2 is **raster** analysis: the same idea of a model, but every operation is arithmetic on cells
+- The vocabulary from Week 2 carries straight over: data, tool, derived data, parameter
+
+<!-- One slide to place the week. Nothing new in ModelBuilder this week; the new thing is what the tools do to a grid. Say out loud that the Lab 2 model is six tools long and that four of them are arithmetic. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 1
+## A raster is a grid of numbers
+
+---
+
+# What is raster data?
 
 <div class="columns">
 <div>
 
-- "Regularly spaced grid of numeric values"
-- **"Grid cells" = "pixels"**
-- The value of a pixel can be **continuous** (e.g. elevation) or **categorical** (e.g. land use)
+- A **regularly spaced grid** of numeric values; grid cells are pixels
 - One cell holds **one number**. No shape, no boundary, no attribute table row of its own
+- The cell size is the resolution: **30 m** for the Landsat bands in Lab 2, so every cell is 900 square meters
+- Zoom in far enough on any image and it stops being a picture and becomes a table of numbers
 - [datacarpentry.org — Introduction to Raster Data](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
 
 </div>
@@ -59,68 +89,27 @@ By the end of class you should be able to:
 </div>
 </div>
 
-<!-- Source: Data Carpentry, Introduction to Raster Data. Zoom in far enough on any image and it stops being a picture and becomes a table of numbers. That table is the whole data model. Ask: what is the smallest thing this dataset can tell you about? Answer: one cell. -->
+<!-- Source: Data Carpentry, Introduction to Raster Data. Ask: what is the smallest thing this dataset can tell you about? Answer: one cell. That is why cell size is the first question about any raster. Week 1 covered the data model; this is one slide of reminder. -->
 
 ---
 
-# Discrete versus Continuous Raster Data
-
-![h:430 center](images/ra-discrete-vs-continuous-panels.jpg)
-
-- **Discrete**: land use, roads. The value is a *class code*, and the classes have edges
-- **Continuous**: a DEM, an image. The value is a *measurement*, and it changes gradually
-
-<!-- Four panels: discrete land use, discrete roads, a continuous DEM, a continuous image. The distinction is not about the file, it is about what the number means. Averaging two elevations is sensible; averaging land-use code 4 and code 8 is not. -->
-
----
-
-# Discrete versus Continuous Raster Data
+# Is the number a measurement or a label?
 
 ![bg right:45% w:88%](images/ra-landuse-and-elevation.jpg)
 
 - Same area, two very different rasters
-- **Land use** (top): a handful of values, each standing for a category — Recreation, Agriculture, Industrial, Residential
-- **Elevation** (bottom): a continuous surface, high 532 to low 299
-- The question to ask of any raster: **is this number a measurement, or a label?**
+- **Land use** (top): a handful of values, each standing for a category. Averaging code 4 and code 8 is meaningless
+- **Elevation** (bottom): a continuous surface, high 532 to low 299. Averaging two elevations is sensible
+- The answer decides which operations are legal, how to symbolize it, and how to **resample** it: nearest neighbor for labels, bilinear or cubic for measurements
+- NDVI is a measurement. The classified NDVI map in Lab 2 is a label
 
-<!-- The answer decides which operations are legal. It also decides how you symbolize it - unique values for a label, a stretched color ramp for a measurement - and which resampling method you may use later. -->
-
----
-
-# Example Continuous Raster Data
-
-Precipitation · Temperature · Elevation · **Other?** Anything you could measure at *any* point in the study area and get a number.
-
-<div class="imggrid" style="grid-template-columns: repeat(4, 1fr);">
-
-![](images/ra-annual-precipitation-normals.jpg)
-
-![](images/ra-mean-july-temperature.jpg)
-
-![](images/ra-vapor-pressure-deficit.jpg)
-
-![](images/ra-continuous-grid-stack.png)
-
-</div>
-
-<!-- Ask the class for more: pH, air pressure, salinity, population density, noise level, groundwater depth. The precipitation and vapor-pressure-deficit maps are PRISM Climate Group products. The bottom-right panel is the mental model to keep: stacked grids, perfectly registered, one value per cell per layer. -->
+<!-- This is the one distinction from the old discrete-versus-continuous slides that matters for analysis. It comes back on the resampling slide and again in Lab 2 Step 3, where Reclassify turns a measurement into a label. -->
 
 ---
 
-# Example Discrete Raster Data
+# NoData is not zero
 
 <div class="columns">
-<div>
-
-- Political boundaries
-- Things on the land
-- Land cover types
-- Soil types
-- Other?
-
-A discrete raster usually carries a **value attribute table**: one row per class, not one row per cell.
-
-</div>
 <div>
 
 ![w:430 center](images/ra-real-world-to-raster.jpg)
@@ -128,122 +117,55 @@ A discrete raster usually carries a **value attribute table**: one row per class
 ![w:430 center](images/ra-discrete-raster-value-table.jpg)
 
 </div>
-</div>
-
-<!-- Top: the real world resolved into a coarse grid of class letters - F for forest, W for water, R for road, H for house. Bottom: the same idea with a value attribute table, plus the gray NoData class. NoData is not zero. Point at it now; it comes back in every analysis they will run. -->
-
----
-
-# Why we use Raster GIS
-
-<div class="columns">
 <div>
 
-Raster GIS is often used because:
-
-- Raster is better suited for spatially **continuous** data like elevation
-- Raster is better for **visualization** and for modeling environmental phenomena
-- Other continuous data: pH, air pressure, temperature, salinity
-- A raster is a **simplified realization** of the world, which allows fast and efficient processing
-- A raster GIS performs geoprocessing on a **grid-based** realization of the world
-
-</div>
-<div>
-
-![h:430 center](images/ra-hillshade-terrain.jpg)
+- A cell with **no value** is NoData, shown gray here, and stored separately from every real number
+- NoData is not zero: zero elevation is sea level, zero NDVI is bare rock; NoData is *we do not know*
+- Every tool this week treats it the same way: **anything combined with NoData is NoData**, and statistics skip it
+- The Lab 2 extract has NoData outside the county, so the county boundary in your results is where the data stop, not a line anyone drew
 
 </div>
 </div>
 
-<!-- The efficiency argument is worth dwelling on: a raster operation is an array operation. No topology to traverse, no geometry to intersect - just walk the array. That is why continental-scale analysis is done on grids. -->
-
----
-
-# Raster GIS, put to work
-
-<div class="imggrid" style="grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto;">
-
-![](images/ra-arcscene-dem-legacy.jpg)
-
-![](images/ra-arcscene-city-legacy.jpg)
-
-</div>
-
-Terrain and urban surfaces rendered from grids — every visible surface is one number per cell.
-
-<!-- These two captures are from ArcGIS 9-era ArcScene and are kept only as illustrations of what grid-based rendering looks like. The equivalent in ArcGIS Pro is a local or global scene in a 3D map view. Flagged for re-capture. -->
-
-<!-- TODO(graphic): replace both legacy ArcScene captures with one ArcGIS Pro 3D scene showing a DEM as an elevation surface. -->
+<!-- Top: the real world resolved into a coarse grid of class letters. Bottom: the same idea with a value attribute table, plus the gray NoData class. Point at it now; it comes back in the next four slides and in every analysis they will run. The Lab 2 sanity check (6,040,284 cells with data) is a NoData count in disguise. -->
 
 ---
 
 <!-- _class: quiz -->
 
-# A Spatial Data Mantra?
+# A spatial data mantra?
 
 ![bg right:35% w:80%](images/ra-raster-or-vector-cartoon.png)
 
-## "Raster is Faster but Vector is Better"
+## "Raster is faster but vector is better"
 
 **Is it true?**
 
 - Faster at *what*?
 - Better for *what*?
-- What would you have to measure to settle it?
+- Which of Lab 1's steps would have been easier on a grid? Which of Lab 2's would be easier on polygons?
 
-<!-- Let them argue for two or three minutes. Push toward: raster wins on continuous surfaces, per-cell math, and whole-area coverage; vector wins on discrete objects, exact boundaries, network problems, and attribute richness. The honest answer is that the data model should follow the phenomenon, not the other way around. -->
-
----
-
-# Basic Raster Grid Manipulation
-
-<div class="columns">
-<div>
-
-Some basic raster manipulations include:
-
-- **Reclassify** — collapse many values into few
-- **Convert** — raster to vector, or vector to raster
-- **Preparation for analysis**
-  - Set the **extent**
-  - **Mask** (the cousin of what we did with Clip)
-- **Watch out for coordinate systems!**
-
-</div>
-<div>
-
-<div class="imggrid" style="grid-template-columns: repeat(2, 1fr); max-width: 420px;">
-
-![](images/ra-reclassify-before.jpg)
-
-![](images/ra-reclassify-after.jpg)
-
-![](images/ra-convert-raster.jpg)
-
-![](images/ra-convert-vector.jpg)
-
-</div>
-
-<span style="font-size:0.75em">Top row: reclassify. Bottom row: raster converted to vector.</span>
-
-</div>
-</div>
-
-<!-- Top row, left to right: many classes collapsed to two. Bottom row: the blocky raster boundary becomes a smooth polygon boundary - and notice that the conversion invents precision the raster never had. In ArcGIS Pro these are Reclassify, Raster to Polygon / Polygon to Raster, and Extract by Mask, all in the Geoprocessing pane. Environment settings for extent, cell size, and mask are set per tool or per project. -->
+<!-- Let them argue for two or three minutes. Push toward: raster wins on continuous surfaces, per-cell math, and whole-area coverage; vector wins on discrete objects, exact boundaries, network problems, and attribute richness. The honest answer is that the data model should follow the phenomenon. A raster operation is an array operation: no topology to traverse, no geometry to intersect, just walk the array. That is why continental-scale analysis is done on grids. -->
 
 ---
 
-# Map Algebra
+<!-- _class: lead -->
+
+# Part 2
+## Map algebra: arithmetic on the grid
+
+---
+
+# Map algebra
 
 <div class="columns">
 <div>
 
 - Map algebra is a **cell-by-cell** combination of raster layers using mathematical operations
-  - **Unary** — one layer
-  - **Binary** — two layers
-- Basic mathematical operations
-  - Addition, subtraction, division, max, min — virtually any operation you would find in a spreadsheet
-- Strong analytical functions
+  - **Unary**: one layer in, one out
+  - **Binary**: two layers in, one out
+- Addition, subtraction, multiplication, division, max, min, comparisons: virtually any operation you would find in a spreadsheet
+- Every output cell depends **only** on the input cell at the same place
 
 </div>
 <div>
@@ -255,52 +177,114 @@ Some basic raster manipulations include:
 </div>
 </div>
 
-<!-- (a) is unary: multiply every cell of one layer by 2. (b) is binary: add LayerA to LayerB cell by cell to get Sumlayer. Note the circled cells - 1 + 2 = 3 - and say out loud that the two layers had to be the same size, aligned, and in the same coordinate system for that sentence to even mean anything. That is the next slide. -->
+<!-- (a) is unary: multiply every cell of one layer by 2. (b) is binary: add LayerA to LayerB cell by cell to get Sumlayer. Note the circled cells, 1 + 2 = 3, and say out loud that the two layers had to be the same size, aligned, and in the same coordinate system for that sentence to even mean anything. That is the slide after next. -->
 
 ---
 
-# Map Algebra in a Spreadsheet
+# The rule: same cell in, same cell out
 
-<div class="columns">
+![w:1000 center](images/ra-map-algebra-add.svg)
+
+<!-- Walk one cell: row 3, column 2 of A is 2, of B is 3, so the answer is 5, and nothing else on either grid was consulted. Then the hole: B has a NoData cell, so the answer has a NoData cell in the same place. This is the whole of local map algebra; everything else is which operation you put between the grids. -->
+
+---
+
+<!-- _class: activity -->
+
+# In-class activity: Simple Map Algebra in Excel
+
+<div class="columns" style="grid-template-columns: 1.1fr 0.9fr;">
 <div>
 
-- Map algebra and raster GIS is simple to visualize in a spreadsheet — an example of multiplication and addition
-- The use of **arrays** makes map algebra and raster GIS very computationally efficient
-- But be careful of:
-  - Layers that are **not coincident**
-  - **Different cell sizes**
+- Open the workbook from Learning Suite: two small grids and a blank one
+- Fill the blank grid with **formulas**, not numbers: `=B3+H3`, then drag across the block
+- Then the three variations on the sheet: a **product**, a **comparison** (`=IF(B3>5,1,0)`), and a division with a **blank** cell in one input
+- **Upload the workbook to Learning Suite by 9:30 am**, fifteen minutes after class
 
 </div>
 <div>
 
-![w:400 center](images/ra-map-algebra-spreadsheet.png)
-
-![w:195 center](images/ra-noncoincident-layers.png)
+![w:440 center](images/ra-map-algebra-spreadsheet.png)
 
 <span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
 
 </div>
 </div>
 
-<!-- The spreadsheet formula =A2+E2 is map algebra. Drag it across the block and you have run a binary local function. The lower figure is the failure mode: Layer1 and Layer2 do not share an origin or a cell size, so "cell A plus cell B" has no well-defined answer until you decide what to resample. -->
+<!-- The spreadsheet formula =B3+H3 is map algebra. Drag it across the block and you have run a binary local function. The blank-cell variation is NoData: Excel treats a blank as zero in addition, which is exactly the mistake a raster GIS is built to avoid. Ten minutes. Collect the workbooks through Learning Suite; the point is that they have typed a cell-by-cell expression before they see the Raster Calculator. -->
 
-<!-- TODO(instructor): the course plan asks for explicit coverage here, before the class runs its first expression - cell-by-cell operations stated as a rule, NoData propagation, raster data type (integer vs float, and what division does to each), analysis extent, cell size, snap raster, and the choice of resampling method (nearest for discrete, bilinear or cubic for continuous). The plan also asks for a raster-calculator prediction exercise: show two small grids and an expression, have students write the output grid on paper before the computer answers. Write the slides you want; this is a content decision, not a conversion one. -->
-
-<!-- Legacy screenshot: the spreadsheet capture is Excel 2003-era. Harmless as a concept illustration, but flagged. -->
+<!-- Legacy figure: the spreadsheet capture is Bolstad's, Excel 2003-era. Kept as the concept illustration; the activity workbook itself lives on Learning Suite. -->
 
 ---
 
-# Map Algebra: a 0/1 mask
+# Predict before you compute
+
+![w:960 center](images/ra-predict-exercise.svg)
+
+<!-- Paper exercise, two minutes, no computer. Con(A > 5, B, 0) reads: where A is greater than 5, take B, otherwise 0. Have them fill in all nine cells, including the one where A is NoData. Then the next slide. -->
+
+---
+
+# The answer
+
+![w:860 center](images/ra-predict-answer.svg)
+
+<div style="font-size:0.9em;">
+
+- **Con** is the workhorse of the Raster Calculator: *condition, value if true, value if false*
+- It is a **local** function: nine cells in, nine cells out, no neighbors consulted
+- In Lab 2 Step 5 the same expression classifies six million cells: `Con("NDVI" >= 0.4, 1, 0)`
+
+</div>
+
+<!-- The NoData cell is the one most people get wrong: it is not 0, it is NoData, because the condition cannot be evaluated. Then point at the Lab 2 expression: it is this exercise with a real raster in place of A and constants in place of B. -->
+
+---
+
+# Four things that must line up
+
+<div class="columns" style="grid-template-columns: 1.3fr 0.7fr; align-items: center;">
+<div style="font-size:0.9em;">
+
+1. **Coordinate system.** Both grids in the same one, or the cells do not even lie on top of each other
+2. **Cell size.** A 30 m cell and a 10 m cell have no one-to-one match; the tool resamples one of them
+3. **Alignment.** Same origin, so cell edges coincide (the **snap raster** environment)
+4. **Extent.** The output covers the **intersection** of the inputs unless you say otherwise
+
+When a tool has to resample, the choice is yours: **nearest neighbor** for labels, **bilinear** or **cubic** for measurements. In Lab 2 the two bands come from one scene, so all four line up by construction. The day you mix a DEM with a Landsat band, none of them do.
+
+</div>
+<div style="text-align:center;">
+
+![w:260](images/ra-noncoincident-layers.png)
+
+<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
+
+</div>
+</div>
+
+<!-- The figure is the failure mode: Layer1 and Layer2 do not share an origin or a cell size, so "cell A plus cell B" has no well-defined answer until you decide what to resample. In ArcGIS Pro these are the Environments: Output Coordinate System, Cell Size, Snap Raster, Extent, Mask. Lab 2 Step 0 opens that dialog on purpose. -->
+
+---
+
+# Integer or float
+
+![w:920 center](images/ra-integer-division.svg)
+
+<!-- The Lab 2 extract stores reflectance as integers, times ten thousand, to keep the files small. Divide two integer rasters and the Divide tool keeps only the whole part: every NDVI between minus one and one becomes zero, and the map is a single flat color. Thursday's first exercise is to do exactly this on purpose and look at the result. The fix is the Float tool, which is Lab 2 Step 1. Raster Calculator division behaves differently (it returns floating point), which is one reason the lab uses the Spatial Analyst tools explicitly. -->
+
+---
+
+# Map algebra as a switch: the 0/1 mask
 
 <div class="columns">
 <div>
 
-- Map algebra extends to a great many mathematical operations
-- The computer will let you perform virtually any calculation — **beware: some will make sense, others won't**
-- Build a grid where water is `0` and land is `1`, then multiply it by an elevation grid:
+- Build a grid where water is `0` and land is `1`, then **multiply** it by an elevation grid
   - `0` wherever water was (x × 0 = 0)
   - the original elevation wherever land was (x × 1 = x)
-- You *could* add the two grids instead — but the result would be meaningless
+- You *could* add the two grids instead, and the computer would let you. The result would be meaningless
+- Better still in ArcGIS Pro: set the water to **NoData**, and those cells drop out of every downstream statistic instead of dragging the mean toward zero
 
 </div>
 <div>
@@ -310,27 +294,165 @@ Some basic raster manipulations include:
 </div>
 </div>
 
-<!-- This is the workhorse pattern: a 0/1 grid is a switch. Multiplying by it turns areas off. Ask why adding is meaningless - because you would be adding a unitless class code to meters, and every land cell would silently gain one meter of elevation. Also note the alternative in ArcGIS Pro: set water to NoData instead of 0, and the cells drop out of downstream statistics entirely rather than dragging the mean toward zero. -->
+<!-- A 0/1 grid is a switch. Ask why adding is meaningless: because you would be adding a unitless class code to meters, and every land cell would silently gain one meter of elevation. The Lab 2 classified map is a 0/1 grid; multiply it by anything and you have masked that thing to irrigated land. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Part 2
-## Raster Functions
-
-<!-- Break point. Part 1 was what a raster is and what cell-by-cell math means. Part 2 is the classification of raster functions by how much of the grid each one looks at. -->
+# Part 3
+## NDVI: your first raster model
 
 ---
 
-# Raster Functions
+# Why red and near-infrared
+
+![w:640 center](images/ra-spectral-signature.svg)
+
+<div style="font-size:0.85em;">
+
+- Chlorophyll **absorbs red** light for photosynthesis, so a healthy leaf reflects very little of it
+- The leaf's cell structure **scatters near-infrared** strongly, so reflectance jumps at the **red edge**
+- Soil rises gently across both; water absorbs almost everything past red
+- Two bands, one on each side of the red edge, separate living vegetation from everything else
+
+</div>
+
+<!-- The single most common misconception: near-infrared here is reflected sunlight, not heat. Thermal infrared is a different, much longer band. Say it out loud; students carry "NIR = heat" into Lab 2. The curves are schematic, after Jensen and after Lillesand, Kiefer and Chipman; the band windows are the Landsat 8 and 9 OLI table on the Lab 2 page. Week 4's remote sensing lecture goes further into the spectrum and sensors; today only needs the red edge. -->
+
+---
+
+# In the red band, vegetation is dark
+
+![bg left:58% contain](images/ra-modis-band1-red.png)
+
+<div style="font-size:0.85em;">
+
+- One MODIS scene over western Europe, one band at a time: this is **0.65 µm**, red
+- Healthy vegetation is **dark**, because chlorophyll absorbs red
+- Bare ground is brighter; cloud and snow are brightest of all
+- A **band** is one wavelength window stored as its own grid of numbers. Landsat gives you nine of them; Lab 2 uses two
+
+</div>
+
+<!-- Borrowed from the Week 4 remote sensing deck so that the physics arrives before the lab instead of after it. Set the pattern: a band is a raster. The red band and the near-infrared band of one scene are two rasters that line up perfectly, which is why NDVI is the ideal first map-algebra problem. -->
+
+---
+
+# The equation, one cell at a time
+
+![w:760 center](images/ra-ndvi-cell.svg)
+
+<div style="font-size:0.9em;">
+
+- NDVI is **normalized**: always between **−1 and +1**, whatever the sensor or the sun angle
+- Dense healthy vegetation is high; bare soil and rock sit near zero; water goes negative
+- It is a **local** function: red in, near-infrared in, one number out, six million times
+
+</div>
+
+<!-- Read the arithmetic: 0.47 minus 0.09 over 0.47 plus 0.09 is 0.38 over 0.56, which is 0.68. That is a well-watered pivot in July. The point of drawing it as three cells is to connect the equation to Part 2: this is A and B and an expression, nothing more. The normalization is why an index from a drone and an index from Landsat can be compared at all. -->
+
+---
+
+# What NDVI sees in Utah County
+
+![w:1080 center](images/ra-what-ndvi-sees.svg)
+
+<!-- Measured, not asserted: red and NIR reflectance at five places in the July 12, 2025 scene students download for Lab 2. Two things to point at. The forest above Provo scores higher than the irrigated field near Elberta, so NDVI is a greenness index, not an irrigation detector; and a downtown block and a dry bench are almost indistinguishable at 0.27 and 0.24. The lake at minus 0.99 is an artifact of the extract, explained on the lab page. -->
+
+---
+
+# The same model at every scale
+
+<div class="columns" style="grid-template-columns: 1.15fr 0.85fr; align-items: center;">
+<div style="text-align:center;">
+
+![h:300](images/mbc-ndvi-us-2015.jpg)
+
+<span style="font-size:0.6em">Source: <a href="https://newsroom.heart.org/file/aitken-ndvi-map-of-the-united-states?action=">newsroom.heart.org</a></span>
+
+</div>
+<div style="text-align:center;">
+
+![h:190](images/mbc-ndvi-farm-plot.jpg)
+
+<span style="font-size:0.6em">Drone NDVI of one field. Source: <a href="https://www.pix4d.com/blog/pix4dmapper-optimizing-the-ROI-of-fungicides-with-NDVI">pix4d.com</a></span>
+
+</div>
+</div>
+
+<div style="font-size:0.88em;">
+
+- The **equation does not care about the platform**: kilometers per pixel across a continent, centimeters per pixel across one field
+- What changes is the cell size and the question. Run it on three dates and difference the results, and it becomes a monitoring tool
+
+</div>
+
+<!-- Left: the United States. The hundredth meridian shows up as a color break without anyone drawing it; ask why the Wasatch Front reads greener than the West Desert forty miles away. Right: a single field from a drone, used to target fungicide. Same two lines of arithmetic. -->
+
+---
+
+# NDVI as a ModelBuilder model
+
+![w:1150 center](images/ra-ndvi-model.svg)
+
+- **Float** both bands so the division keeps its decimals; **Minus** and **Plus** for the numerator and the denominator; **Divide** for the index
+- **Reclassify** turns the measurement into a two-class label at a threshold; **Raster Calculator** does the same with `Con()` so the threshold can be a **parameter**
+- Every P is something the tool dialog asks for: the two bands, the threshold, the outputs
+
+<!-- This is the finished Lab 2 model, exported from ModelBuilder. Read it left to right with Part 2's vocabulary: four local operations and two classifications. The two classification branches exist because a number typed into a Reclassify table cannot be a model parameter, and a number in a Con() expression can; that is Lab 2 Step 5, and it is why Thursday's threshold sweep takes a minute per run instead of an afternoon. -->
+
+---
+
+# The threshold is a choice, and a raster model makes it cheap to test
+
+<div class="columns" style="grid-template-columns: 0.8fr 1.2fr; align-items: center;">
+<div style="text-align:center;">
+
+![h:380](images/ra-lab2-example-map.png)
+
+</div>
+<div style="font-size:0.85em;">
+
+Utah County, July 2025, cells at or above the threshold:
+
+| Threshold | Square miles | Share of county |
+| --- | ---: | ---: |
+| 0.3 | 1,327 | 63 % |
+| 0.4 | 1,111 | 53 % |
+| 0.5 | 917 | 44 % |
+| 0.6 | 722 | 34 % |
+| 0.7 | 496 | 24 % |
+
+- The 0.4 in the handout is the county **median**, and it calls the forested Wasatch Front cropland
+- Lab 2 Step 6 asks you to run it at three more thresholds and say what drops in and out. Thursday you will do it live
+
+</div>
+</div>
+
+<!-- The numbers were computed from the course extract with the same Con() expression the lab uses; they match the lab page's check values at 0.4 and 0.6. The teaching point is not the numbers, it is that a raster model with a parameter turns "is 0.4 right?" from an opinion into a table. The forest never drops out before the fields do, which is the honest answer to whether one threshold can map irrigation. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 4
+## Beyond one cell: local, focal, zonal, global
+
+---
+
+# Four kinds of raster function
 
 <div class="columns">
 <div>
 
-- **Local**: only uses data in a single cell to calculate an output value — what we typically think of as map algebra
-- **Neighborhood (Focal)**: uses data from a set of cells, most often a **kernel**
-- **Global**: uses all the data in a raster layer
+- **Local**: one cell in, one cell out. Map algebra, Reclassify, NDVI, Con
+- **Focal** (neighborhood): a **window** of cells in, one cell out. Focal Statistics, Filter, Slope, Aspect
+- **Zonal**: all the cells sharing a **zone** in, one number per zone out. Zonal Statistics
+- **Global**: the whole grid in, every cell out. Euclidean Distance, Flow Accumulation, Distance Accumulation
+
+Thursday is one exercise on each of the first three.
 
 </div>
 <div>
@@ -342,222 +464,127 @@ Some basic raster manipulations include:
 </div>
 </div>
 
-<!-- This three-way split organizes the entire Spatial Analyst toolbox. Local: Raster Calculator, Reclassify, NDVI. Focal: Focal Statistics, Filter, Slope, Aspect. Global: Euclidean Distance, Flow Accumulation, Distance Accumulation. Zonal is the fourth family - all cells sharing a zone value - and it shows up in the toolbox tour later. -->
+<!-- This four-way split organizes the entire Spatial Analyst toolbox, and it is the reading's organizing idea (Chapter 10). Ask, for each Lab 1 and Lab 2 tool they have used, which family it belongs to. Everything in Lab 2 is local. Terrain analysis in Week 5 is focal; watersheds in Week 6 are global. -->
 
 ---
 
-![bg contain](images/ra-overlay-transformations-figure.jpg)
+# Moving windows
 
-<!-- A catalog of transformation operations in overlay analysis: renumbering and reclassing a point or a region; a point taking a value that reflects a property of its region; spreading isotropically from a point; spreading with inverse-distance weighting; interpolating a value at a point from its surroundings; spreading from a point through a barrier; spreading from a point over a surface. Walk two or three of them and ask which family - local, focal, global - each belongs to. -->
+![w:700 center](images/ra-focal-window.svg)
 
-<!-- TODO(instructor): this is a scanned figure from a textbook (the page footer reads "Methods of Data Analysis and Spatial Modelling", p. 87). It carries no attribution on the source slide. Add the citation or replace the figure. -->
+<div style="font-size:0.9em;">
+
+- A **kernel** is the set of weights the window applies; 1/9 in every cell is the 3 × 3 mean
+- The same window with a different function: **mean** smooths, **range** finds edges, **majority** cleans up a classified map
+- Slope and aspect are focal functions on a DEM; Week 5 is built on them
+
+</div>
+
+<!-- The dashed box is the window; it steps one cell at a time across the whole grid and writes one number at every stop. The spike of 9 becomes 4.1: smoothing removes noise, and it removes real detail with it, which is why a smoothed DEM makes a worse slope map. Ask what happens at the edge of the grid: the window hangs off the data, and the border cells are NoData unless the tool is told to ignore them. -->
 
 ---
 
-# Moving Windows
+# Kernels and noise
 
 <div class="columns">
 <div>
 
-- Useful for calculating **local statistical functions** or **edge detection**
-- **Kernel**: a set of constants applied with a function — such as 1/9 being the mean of the center cell and its eight neighbors
-- Other configurations may be used when dealing with diagonal or adjacent cells
+![w:480 center](images/ra-moving-window-kernels.png)
 
 </div>
 <div>
 
-![w:520 center](images/ra-moving-window-kernels.png)
+![h:440 center](images/ra-noise-filtering.png)
+
+</div>
+</div>
 
 <span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
 
-</div>
-</div>
-
-<!-- The dashed box is the window; it steps one cell at a time across the whole grid, and at every stop it writes one number to the output. Ask what happens at the edge of the grid - the window hangs off, and the output is NoData unless you tell the tool otherwise. -->
+<!-- Left: three window shapes and the weights they carry. Right: an input layer with a spike, a high-pass kernel, and the output, with one window position worked out longhand in the middle. A low-pass filter averages the spike away; a high-pass filter makes it stand out. Thursday's third exercise runs a 5 by 5 mean over NDVI and looks at what it does to the edge of a center-pivot field. -->
 
 ---
 
-# Moving Windows: Noise Removal
+# Where the tools live in ArcGIS Pro
 
-<div class="columns">
-<div>
+![bg right:36% h:96%](images/ra-spatial-analyst-toolbox.png)
 
-- **Noise removal**
-- Noise may be erroneous data values, or spikes we wish to remove
-- Gores, or spikes in a DEM, may be removed through **filtering** and **smoothing**
-- The same window, a different function: a low-pass filter averages the spike away, a high-pass filter makes it stand out
+<div style="font-size:0.82em;">
 
-</div>
-<div>
+The **Spatial Analyst** toolbox is organized the way this lecture was:
 
-![h:480 center](images/ra-noise-filtering.png)
-
-<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
-
-</div>
-</div>
-
-<!-- Input layer with noise, a kernel for a high-pass filter, output layer. The arithmetic in the middle is one window position worked out longhand. Point out the cost: smoothing removes real detail along with the spike, so a smoothed DEM makes a worse slope map. -->
-
----
-
-# Raster Analysis: Overlay and Cost Surfaces
-
-<div class="columns">
-<div>
-
-- A look at some raster functions
-- In ArcGIS Pro, run through the **Raster Calculator** tool in the Geoprocessing pane (Spatial Analyst), or script it with **arcpy** and the `arcpy.sa` map-algebra syntax
-- Historically the same work was written as GRID `DOCELL` blocks:
-
-<div style="font-size:0.55em">
-
-```
-DOCELL
-  if (ingrid1 > 5 & ingrid < 50) outgrid = 500
-     else if (ingrid1 == 50) outgrid = 700
-     else if (ingrid1 > 50 & ingrid < 100) outgrid = 800
-     else outgrid = 1000
-END
-```
-
-</div>
-
-</div>
-<div>
-
-![h:430 center](images/ra-focal-statistics-fan.png)
-
-<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
-
-</div>
-</div>
-
-<!-- One 3x3 window, eight different focal functions, eight different answers: mean 3.9, median 3, minimum 1, range 8, max 9, majority 3, slope 2.3, aspect 330. The DOCELL block is the ancestor of Con() nested inside Con() in the Raster Calculator; it is here for context, not to be typed. -->
-
-<!-- TODO(instructor): the DOCELL example is reproduced verbatim from the source slide and has two defects worth fixing or teaching from - it switches between `ingrid1` and `ingrid`, and the ranges leave gaps (values 0 to 5, and 100 and above, all fall to the final `else`). Decide whether to correct it, replace it with the ArcGIS Pro `Con()` equivalent, or keep it as a debugging exercise. -->
-
-<!-- Legacy wording note: the source slide said "Tour of ARC/INFO Grid help", "the command line in ArcInfo", and "Addition of scripts to automate tasks". Updated to ArcGIS Pro Raster Calculator and arcpy. -->
-
----
-
-# Terrain Ruggedness Index
-
-<div class="columns">
-<div>
-
-A focal function on a DEM: compare the center cell to each of its **eight neighbors**.
-
-$$
-Y = \left[\;\sum (x_{ij} - x_{oo})^2\;\right]^{1/2}
-$$
-
-where
-
-- **Y** = estimated terrain ruggedness index ("tri") of cell (0,0)
-- **x<sub>ij</sub>** = elevation of a neighbor cell to cell (0,0)
-
-</div>
-<div>
-
-![w:520 center](images/ra-tri-neighborhood.png)
-
-</div>
-</div>
-
-<!-- The right-hand table is the neighbor offsets: (-1,-1) through (1,1), with (0,0) at the center. TRI is the root of the summed squared elevation differences, so it has units of meters and it is large where the surface changes fast in any direction. Flat ground gives zero. -->
-
-<!-- VERIFY: the summation symbol did not survive the source slide's embedded equation - the rendered formula reads "Y = [ (xij - xoo)^2 ]^1/2" with a blank where the sigma belongs. It is restored here from the DOCELL implementation on the next slide, which sums eight squared differences before taking the square root. Confirm before class. -->
-
----
-
-# TRI, Written Out
-
-```
-docell
-    ssdiff := ((sqr (el (0, 0) - el (-1, -1))) + (sqr (el (0, 0) - el (0, -1)))
-            + (sqr (el (0, 0) - el (1, -1))) + (sqr (el (0, 0) - el (-1, 0)))
-            + (sqr (el (0, 0) - el (1, 0))) + (sqr (el (0,0) - el (-1,1)))
-            + (sqr (el (0, 0) - el (0, 1))) + (sqr (el (0, 0) - el (1, 1))))
-
-    tri  =  sqrt (ssdiff)
-end
-```
-
-- `ssdiff` = temporary scalar, "sum squared difference" (square meters)
-- `tri` = terrain ruggedness index (meters)
-- `el` = name of elevation grid (meters)
-
-<!-- Eight terms, one per neighbor, each a squared difference from the center. Then one square root. Read it aloud once and the formula on the previous slide stops being abstract. The modern equivalent is a single Raster Calculator expression, or the Focal Statistics range/standard-deviation tools as an approximation. -->
-
-<!-- TODO(graphic): a screenshot of the equivalent expression typed into the ArcGIS Pro Raster Calculator would replace this bare code slide. -->
-
-<!-- Note: the source slide labels the variable "terrain roughness index" here and "Terrain Ruggedness Index" in the title. Kept verbatim. -->
-
----
-
-# TRI Across Montana
-
-<div class="imggrid" style="grid-template-columns: 1.71fr 1.38fr 2.21fr;">
-
-![](images/ra-montana-dem.jpg)
-
-![](images/ra-montana-tri-continuous.jpg)
-
-![](images/ra-montana-tri-classified.jpg)
-
-</div>
-
-Elevation → continuous ruggedness → classified ruggedness
-
-<!-- Left: the input DEM. Center: TRI as a continuous surface - the Rockies light up, the eastern plains go flat. Right: the same surface reclassified into named categories from Level to Extremely Rugged. That last step is a local function, and it is the moment a measurement becomes a label. Ask who chose the class breaks and on what basis. -->
-
-<!-- VERIFY: the three source panels carry no captions. The reading given here - DEM, continuous TRI, classified TRI - is inferred from the images and from the legend on the third panel. -->
-
----
-
-# Raster Functions in ArcGIS Pro
-
-![bg right:36% w:96%](images/ra-spatial-analyst-toolbox-legacy.png)
-
-The **Spatial Analyst** toolbox is organized by the families we just named:
-
-- **Local**: Map Algebra, Math, Reclass
-- **Neighborhood**: Block Statistics, Filter, Focal Statistics
+- **Local**: Map Algebra (Raster Calculator), Math (Float, Plus, Minus, Divide), Reclass, Conditional
+- **Neighborhood**: Focal Statistics, Filter, Block Statistics
+- **Zonal**: Zonal Statistics, Zonal Statistics as Table, Tabulate Area
 - **Surface**: Slope, Aspect, Hillshade, Contour, Viewshed
 - **Hydrology**: Fill, Flow Direction, Flow Accumulation, Watershed
-- **Zonal**: Tabulate Area, Zonal Statistics
 
-Reach all of it from the **Geoprocessing pane** search box, or from **Toolboxes** in the **Catalog** pane.
+Find any of them by name in the **Geoprocessing pane** search box, or browse **Toolboxes ▸ Spatial Analyst Tools**.
 
-<!-- Spend a few minutes browsing the live toolbox rather than the screenshot. The point is that the toolbox is organized exactly the way the lecture was: by how much of the grid each function reads. -->
+</div>
 
-<!-- Legacy screenshot: this is an ArcToolbox tree from ArcMap, not the ArcGIS Pro Geoprocessing pane. Flagged for re-capture. Note also that the Distance toolset shown here lists the deprecated Cost Distance / Cost Back Link / Cost Path tools; current practice is Distance Accumulation and Optimal Path As Line, which is the Week 11 topic. -->
+<!-- Spend a minute in the live toolbox rather than the screenshot, which is the Geoprocessing pane's Toolboxes tab in ArcGIS Pro 3.7.1 with Spatial Analyst Tools expanded. The toolsets are the families we just named. Every Lab 2 tool is in Math, Map Algebra or Reclass, which is to say local. -->
 
-<!-- TODO(graphic): re-capture as the ArcGIS Pro Geoprocessing pane with the Spatial Analyst toolbox expanded. -->
+---
+
+# Thursday: hands-on raster analysis
+
+<div class="columns" style="grid-template-columns: 1fr 1fr;">
+<div>
+
+Bring your **Lab 2 project** with the two bands and your NDVI raster. Four short exercises, each ending in a number you write down:
+
+1. **The integer trap.** Minus, Plus and Divide on the raw bands, no Float. What comes out?
+2. **One expression, five thresholds.** `Con()` in the Raster Calculator, then the sweep
+3. **Neighborhoods.** Focal Statistics on NDVI, and what a mean does to a field edge
+4. **Zones.** Zonal Statistics as Table: which city in Utah County is greenest?
+
+</div>
+<div style="text-align:center;">
+
+![w:520](images/ra-pivots-ndvi.png)
+
+<span style="font-size:0.7em">The center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens</span>
+
+</div>
+</div>
+
+<!-- Preview so they arrive with the project open. Exercise 2 is Lab 2 Step 6 done live, so anyone who finishes it in class has half of that step done. The numbers they record are the in-class activity for Thursday. -->
 
 ---
 
 # Before Next Class
 
-![bg right:34% w:94%](images/ra-montana-tri-classified.jpg)
+![bg right:34% w:94%](images/ra-lab2-example-map.png)
 
-- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/)
-  NDVI is a single **local** map-algebra expression on two raster bands. Everything in Part 1 of today applies directly
-- **Reading**: Chapter 10 of *GIS Fundamentals* (Raster Analysis and Map Algebra)
-- **Quiz 3**, open book, on Learning Suite — due **Saturday 11:59 pm**
+- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Steps 0 to 3 are within reach tonight; the model is the six tools on the slide you just saw
+- **Thursday**: bring the Lab 2 project to class with the two bands and your NDVI raster loaded
+- **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
+- **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. -->
+<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter; NDVI itself is not in it, which is why today carried it. -->
 
-<!-- TODO(instructor): this deck never introduces NDVI, but the lab that follows it is entirely NDVI. Consider adding two or three slides that teach NDVI with sensor-specific band selection, including Landsat 8/9 examples. Band numbers differ by sensor, so none are asserted here. -->
-
-<!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 3 - Raster Analysis and Map Algebra.pptx", 22 slides, converted to 24. No source slides dropped; nothing in the deck was genuinely empty. Slide 13 ("Part 2") was a bare section divider and is kept as a `lead` slide with a subtitle. Slides 15, 20 and 21 carried images with no title text and have been given titles. Added: a Today's Goals slide and a Before Next Class slide.
-
-Slides 19-21 of the source were built from PowerPoint shapes and EMF objects; those regions were re-rendered from the PDF at 200 dpi rather than rebuilt (ra-tri-neighborhood.png, ra-grid-multiply-example.png, ra-spatial-analyst-toolbox-legacy.png, ra-noise-filtering.png).
-
-Version wording updated to ArcGIS Pro: "Tour of ARC/INFO Grid help" and "the command line in ArcInfo" became the Raster Calculator in the Geoprocessing pane plus arcpy; "A tour of raster functions in ArcGIS" became ArcGIS Pro with the Geoprocessing and Catalog panes named. Concepts were not changed. Both DOCELL blocks are reproduced verbatim.
-
-Stale screenshots kept and flagged, none fabricated: ra-arcscene-dem-legacy.jpg and ra-arcscene-city-legacy.jpg (ArcGIS 9-era ArcScene), ra-spatial-analyst-toolbox-legacy.png (ArcMap ArcToolbox tree, which also shows the deprecated Cost Distance / Cost Path tools), ra-map-algebra-spreadsheet.png (Excel 2003-era).
-
-Open items are marked in place: TODO(instructor) on the title slide (leftover ModelBuilder speaker note), on the spreadsheet slide (the course plan's cell-by-cell / NoData / data type / extent / cell size / snap raster / resampling material and the raster-calculator prediction exercise), on the overlay-transformations figure (uncited textbook scan), on the DOCELL example (inconsistent variable name and gaps in the ranges), and on the Before Next Class slide (reading chapter; NDVI with sensor-specific band selection). TODO(graphic) on the ArcScene slide, the TRI code slide, and the toolbox slide. VERIFY on the TRI formula (the summation symbol did not survive the source EMF and was reconstructed from the DOCELL code) and on the three Montana panels (captions inferred; the source gave none). No Landsat band numbers were added. -->
+<!--
+Revision notes (2026-09-09): this deck now merges the Sept 3 "Raster Analysis and Map Algebra" deck (24 slides)
+with the Sept 3 "ModelBuilder, Part C" deck (10 slides of NDVI mislabeled as ModelBuilder), which is retired.
+32 slides. Structure: a three-slide raster refresher (Week 1 did the data model), map algebra with the Excel
+activity, the paper prediction exercise, the four alignment rules, and the integer-division trap; then NDVI
+built up from the red edge to the Lab 2 model and the threshold table; then the local/focal/zonal/global
+taxonomy, the Spatial Analyst toolbox, and a preview of Thursday's hands-on deck (raster-hands-on.md).
+- New figures, generated by tools/week03_grid_figures.py and tools/week03_spectral_signature.py (SVG):
+  A + B = C with NoData, the prediction exercise and its answer, integer versus float division, NDVI on one
+  cell, the 3 x 3 window, and the schematic spectral-signature curves (labeled schematic, after Jensen and
+  Lillesand, Kiefer and Chipman; Landsat 8/9 band windows from the USGS table on the Lab 2 page).
+- New ArcGIS Pro 3.7.1 captures (Sept 9, 175 % scaling, C:\Ames\Lab02\Lab02.aprx): the Geoprocessing pane's
+  Toolboxes tab with Spatial Analyst Tools expanded, and the Elberta pivots in the Lab 2 NDVI.
+- Reused: Lab 2's model diagram, "What NDVI sees" infographic and example map (copied with ra- prefixes);
+  the Week 4 MODIS red-band slide and the Bolstad figures from the old deck.
+- The threshold table was computed with tools/week03_prep.py from the course extract; 0.4 and 0.6 match the
+  lab page's check values.
+- Dropped from the old decks: the ArcGIS 9 ArcScene pair, the ArcMap toolbox tree, the uncited scanned
+  overlay-transformations figure, the two ARC/INFO DOCELL code slides (one had a variable-name bug), the
+  three Montana TRI panels and TRI formula (terrain is Week 5), the low-resolution uncredited Africa NDVI
+  pair, and the change-detection figure. The "how many types of model" slide is Week 2 material.
+- The Excel map-algebra activity stays on Tuesday per the instructor (Sept 9).
+-->

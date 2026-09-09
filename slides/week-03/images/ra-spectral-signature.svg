@@ -1,0 +1,50 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 420' width='760' height='420'>
+<rect width='760' height='420' fill='#ffffff'/>
+<rect x='70.0' y='30' width='329.99999999999994' height='310' fill='#f7f7f7'/>
+<rect x='334.0' y='30' width='33.00000000000006' height='310' fill='#e53935' fill-opacity='0.18'/>
+<text x='350.5' y='48' text-anchor='middle' font-size='14' font-weight='700' fill='#e53935' font-family='Segoe UI, Helvetica, Arial, sans-serif'>red, Band 4</text>
+<rect x='565.0' y='30' width='33.0' height='310' fill='#8e24aa' fill-opacity='0.18'/>
+<text x='581.5' y='48' text-anchor='middle' font-size='14' font-weight='700' fill='#8e24aa' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR, Band 5</text>
+<line x1='70' y1='340' x2='730' y2='340' stroke='#002e5d' stroke-width='2'/>
+<line x1='70' y1='30' x2='70' y2='340' stroke='#002e5d' stroke-width='2'/>
+<line x1='70.0' y1='340' x2='70.0' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='70.0' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.4</text>
+<line x1='179.99999999999997' y1='340' x2='179.99999999999997' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='179.99999999999997' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.5</text>
+<line x1='289.99999999999994' y1='340' x2='289.99999999999994' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='289.99999999999994' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.6</text>
+<line x1='399.99999999999994' y1='340' x2='399.99999999999994' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='399.99999999999994' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.7</text>
+<line x1='510.00000000000006' y1='340' x2='510.00000000000006' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='510.00000000000006' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.8</text>
+<line x1='620.0' y1='340' x2='620.0' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='620.0' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.9</text>
+<line x1='730.0' y1='340' x2='730.0' y2='346' stroke='#002e5d' stroke-width='2'/>
+<text x='730.0' y='364' text-anchor='middle' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>1.0</text>
+<line x1='64' y1='340.0' x2='70' y2='340.0' stroke='#002e5d' stroke-width='2'/>
+<text x='60' y='345.0' text-anchor='end' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<line x1='64' y1='236.66666666666669' x2='70' y2='236.66666666666669' stroke='#002e5d' stroke-width='2'/>
+<text x='60' y='241.66666666666669' text-anchor='end' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>20</text>
+<line x1='64' y1='133.33333333333334' x2='70' y2='133.33333333333334' stroke='#002e5d' stroke-width='2'/>
+<text x='60' y='138.33333333333334' text-anchor='end' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>40</text>
+<line x1='64' y1='30.0' x2='70' y2='30.0' stroke='#002e5d' stroke-width='2'/>
+<text x='60' y='35.0' text-anchor='end' font-size='14' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>60</text>
+<text x='400.0' y='388' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>wavelength, micrometers</text>
+<text x='18' y='185.0' text-anchor='middle' font-size='15' fill='#002e5d' transform='rotate(-90 18 185.0)' font-family='Segoe UI, Helvetica, Arial, sans-serif'>reflectance, percent</text>
+<rect x='70.0' y='332' width='54.999999999999986' height='8' fill='#7b4fbf'/>
+<rect x='124.99999999999999' y='332' width='54.999999999999986' height='8' fill='#2e5bd6'/>
+<rect x='179.99999999999997' y='332' width='55.00000000000006' height='8' fill='#1fa64a'/>
+<rect x='235.00000000000003' y='332' width='55.000000000000085' height='8' fill='#c9d400'/>
+<rect x='289.99999999999994' y='332' width='55.00000000000006' height='8' fill='#f0a500'/>
+<rect x='345.0' y='332' width='55.00000000000006' height='8' fill='#e53935'/>
+<text x='235.00000000000003' y='326' text-anchor='middle' font-size='12' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>visible</text>
+<text x='565.0' y='326' text-anchor='middle' font-size='12' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>near-infrared</text>
+<path d='M 70.0 319.3 L 125.0 319.3 L 180.0 309.0 L 235.0 278.0 L 290.0 303.8 L 345.0 319.3 L 378.0 319.3 L 400.0 278.0 L 422.0 185.0 L 455.0 107.5 L 510.0 81.7 L 620.0 81.7 L 730.0 92.0' fill='none' stroke='#2e7d32' stroke-width='4' stroke-linejoin='round'/>
+<path d='M 70.0 298.7 L 180.0 267.7 L 290.0 236.7 L 400.0 216.0 L 510.0 200.5 L 620.0 185.0 L 730.0 174.7' fill='none' stroke='#a1662f' stroke-width='4' stroke-linejoin='round'/>
+<path d='M 70.0 303.8 L 125.0 298.7 L 180.0 303.8 L 235.0 314.2 L 290.0 319.3 L 345.0 324.5 L 400.0 329.7 L 510.0 334.8 L 620.0 337.4 L 730.0 338.4' fill='none' stroke='#1e88e5' stroke-width='4' stroke-linejoin='round'/>
+<text x='625.5' y='71.66666666666663' font-size='15' font-weight='700' fill='#2e7d32' font-family='Segoe UI, Helvetica, Arial, sans-serif'>green vegetation</text>
+<text x='625.5' y='177.0' font-size='15' font-weight='700' fill='#a1662f' font-family='Segoe UI, Helvetica, Arial, sans-serif'>dry soil</text>
+<text x='625.5' y='329.4166666666667' font-size='15' font-weight='700' fill='#1e88e5' font-family='Segoe UI, Helvetica, Arial, sans-serif'>clear water</text>
+<text x='416.99999999999994' y='195.33333333333334' font-size='13' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>the red edge</text>
+<text x='70' y='412' font-size='12' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Schematic curves after Jensen and Lillesand, Kiefer and Chipman; band windows from the USGS Landsat 8/9 OLI table.</text>
+</svg>

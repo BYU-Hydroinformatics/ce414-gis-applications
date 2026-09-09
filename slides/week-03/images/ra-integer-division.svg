@@ -1,0 +1,76 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 790 480' width='790' height='480'>
+<rect width='790' height='480' fill='#ffffff'/>
+<rect x='30' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='92.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>3200</text>
+<rect x='84' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='92.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>4100</text>
+<rect x='138' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='92.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>900</text>
+<rect x='30' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='146.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>4800</text>
+<rect x='84' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='146.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>2600</text>
+<rect x='138' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='146.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>300</text>
+<rect x='30' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>3900</text>
+<rect x='84' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>3500</text>
+<rect x='138' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>3700</text>
+<text x='111.0' y='50' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>NIR (integer)</text><text x='215' y='150' text-anchor='middle' font-size='34' font-weight='700' fill='#e8792b' font-family='Segoe UI, Helvetica, Arial, sans-serif'>−</text><rect x='240' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='92.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>1100</text>
+<rect x='294' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='92.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>700</text>
+<rect x='348' y='60' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='92.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>800</text>
+<rect x='240' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='146.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>600</text>
+<rect x='294' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='146.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>2200</text>
+<rect x='348' y='114' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='146.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>500</text>
+<rect x='240' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>1000</text>
+<rect x='294' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>2900</text>
+<rect x='348' y='168' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='200.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>1200</text>
+<text x='321.0' y='50' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>red (integer)</text><text x='30' y='260' text-anchor='start' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>(NIR − red) ÷ (NIR + red), cell by cell:</text><rect x='30' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='332.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='84' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='332.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='138' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='332.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='30' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='386.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='84' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='386.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='138' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='386.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='30' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='57.0' y='440.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='84' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='111.0' y='440.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<rect x='138' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='165.0' y='440.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0</text>
+<text x='111.0' y='290' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>both integers</text><rect x='240' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='332.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.49</text>
+<rect x='294' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='332.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.71</text>
+<rect x='348' y='300' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='332.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.06</text>
+<rect x='240' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='386.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.78</text>
+<rect x='294' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='386.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.08</text>
+<rect x='348' y='354' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='386.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>-0.25</text>
+<rect x='240' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='267.0' y='440.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.59</text>
+<rect x='294' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='321.0' y='440.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.09</text>
+<rect x='348' y='408' width='54' height='54' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
+<text x='375.0' y='440.0' text-anchor='middle' font-size='12' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>0.51</text>
+<text x='321.0' y='290' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>after Float</text><text x='430' y='330' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Integer ÷ integer keeps only the whole part.</text><text x='430' y='354' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Every NDVI between −1 and 1 becomes 0.</text><text x='430' y='378' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>The lone −1 is the cell where NIR is below red.</text><text x='430' y='412' text-anchor='start' font-size='15' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Float first, and the decimals survive.</text><text x='430' y='436' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>That is the whole reason Lab 2 has Step 1.</text>
+</svg>

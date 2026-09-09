@@ -20,8 +20,8 @@ authoritative dates live in the Learning Suite syllabus. Each week page lists wh
 
 ## Week 3: ModelBuilder and Raster Analysis
 
-- [ModelBuilder, Part C — NDVI](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/modelbuilder-c.html) — What counts as a model, the NDVI equation and why red and near-infrared carry the vegetation signal, and the same index read at continental, farm-plot, and multi-date scale.
-- [Raster Analysis and Map Algebra](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-map-algebra.html) — Rasters as grids of numbers: cell-by-cell operations, map algebra, and NDVI as a worked example.
+- [Raster Analysis and Map Algebra](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-map-algebra.html) — Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model; then local, focal, zonal and global functions.
+- [Raster Analysis Hands-On](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-hands-on.html) — Four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.
 - [Week 3 page](week-03.md)
 
 ## Week 4: Imagery

@@ -147,7 +147,9 @@ Leave the three problem decks until their content questions are settled (see bel
 These came out of the September 2026 audit and are **not** cosmetic:
 
 - **`Week 3 - ModelBuilder C.pptx` is not about ModelBuilder.** It is seven slides of NDVI content.
-  Decide what this deck is before converting it.
+  *Resolved September 9, 2026:* its NDVI content was folded into `slides/week-03/raster-analysis-map-algebra.md`
+  (Tuesday: map algebra, then NDVI as the first raster model) and the Thursday session became a new
+  hands-on deck, `slides/week-03/raster-hands-on.md`. The Part C deck is gone.
 - **`Week 11 - Least Cost Path Analysis.pptx` teaches deprecated tools.** It uses ArcMap-era
   `CostDistance` / `Backlink`. Current practice is **Distance Accumulation** + **Optimal Path As
   Line**. Fix the tool choice before converting; the screenshots cannot be fixed independently.
