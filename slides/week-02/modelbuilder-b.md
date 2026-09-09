@@ -248,23 +248,23 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 <div class="columns" style="grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 20px;">
 <div style="text-align:center;">
 
-![w:540](images/mbb-create-variable-from-parameter.png)
+![w:520](images/mbb-distance-parameter.gif)
 
-<span style="font-size:0.62em;color:#5a6472;">Right-click <strong>Buffer</strong> ▸ Create Variable ▸ From Parameter ▸ <strong>Distance</strong></span>
+<span style="font-size:0.6em;color:#5a6472;">Right-click <strong>Buffer</strong> ▸ Create Variable ▸ From Parameter ▸ <strong>Distance</strong>, then the new element ▸ <strong>Parameter</strong></span>
 
 </div>
 <div style="text-align:center;">
 
-![w:430](images/mbb-distance-variable-parameter.png)
+![w:320](images/mbb-distance-variable-parameter.png)
 
-<span style="font-size:0.62em;color:#5a6472;">A new element appears, wired into Buffer. Right-click it ▸ <strong>Parameter</strong> and it gets a <strong>P</strong></span>
+<span style="font-size:0.6em;color:#5a6472;">The new element, wired into Buffer, with its <strong>P</strong></span>
 
 </div>
 </div>
 
 <div style="font-size:0.85em;">
 
-- The distance used to live inside the Buffer dialog. Now it is its own **variable** on the canvas, and the circled **P** tells ArcGIS Pro it is an **input the user supplies**
+- The distance used to live inside the Buffer dialog. Now it is its own **variable** on the canvas, and the **P** makes it an **input the user supplies**
 - Any element can be marked the same way: right-click ▸ **Parameter**, or select it and press Ctrl+P
 
 </div>

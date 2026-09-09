@@ -108,3 +108,21 @@ Lessons from the Week 3 session (2026-09-09, 175 %, `Lab02.aprx`, Geoprocessing-
   student-facing table, put the numbers in HTML on the slide and keep the small capture as proof.
 - The Toolboxes tree scrolls with the keyboard (End, Up/Down, Right to expand); grab overlapping
   views and stitch, then bleach the selection highlight (light-blue pixels) before use.
+
+Stepped GIFs (2026-09-09, `tools/week02_parameter_gif.py`, the first one, on Part B slide 13):
+
+- A short UI sequence is better shown as a **stepped GIF** (one grab per state, 1.5 to 2.5 s each,
+  `loop=0`) than as a real-time recording: menus are readable, the file is a few hundred KB, and a
+  retake is one grab. Marp shows `![](x.gif)` animated in the browser and the first frame in the
+  PNG render. Grab every frame from the **same region** (`cap.py OUT x0 y0 x1 y1`) with the same
+  canvas layout; draw the cursor in afterwards (`ImageGrab` never captures it).
+- **Context menus anchor on the last item you chose** in that menu: after picking Group, the next
+  menu opens with Group under the cursor, which pushes it upward and off the region. Choose
+  Open... once (and Escape its dialog) to reset the anchor so menus open downward again, and keep
+  the element being right-clicked in the upper third of the canvas.
+- Blemishes are cheaper to repair than to re-shoot when the layout is unchanged: copy the clean
+  region from a neighboring frame, or the identical menu rows from another menu after
+  template-matching an intact row to get the exact offset. Blank the scrollbars and the Mode bar
+  except under menus, and blank the "Show Toolbar" corner.
+- Windows toasts (Dell SupportAssist) can land in a frame; there is no way to suppress them from
+  here, so check every frame before assembling.
