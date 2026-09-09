@@ -243,18 +243,35 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 
 ---
 
-# Mark a variable as a parameter
+# Make the distance a parameter
 
-![w:640 center](images/mbb-parameter-p-marker.png)
+<div class="columns" style="grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 20px;">
+<div style="text-align:center;">
 
-- Any data variable in your model can be made a **parameter**
-- Right-click the element and click **Parameter** (or select it and press Ctrl+P)
-- A circled **P** on the element's corner marks it
-- This tells ArcGIS Pro to treat that variable as an **input the user supplies** when the model is run directly, instead of a value baked into the model
+![w:540](images/mbb-create-variable-from-parameter.png)
+
+<span style="font-size:0.62em;color:#5a6472;">Right-click <strong>Buffer</strong> ▸ Create Variable ▸ From Parameter ▸ <strong>Distance</strong></span>
+
+</div>
+<div style="text-align:center;">
+
+![w:430](images/mbb-distance-variable-parameter.png)
+
+<span style="font-size:0.62em;color:#5a6472;">A new element appears, wired into Buffer. Right-click it ▸ <strong>Parameter</strong> and it gets a <strong>P</strong></span>
+
+</div>
+</div>
+
+<div style="font-size:0.85em;">
+
+- The distance used to live inside the Buffer dialog. Now it is its own **variable** on the canvas, and the circled **P** tells ArcGIS Pro it is an **input the user supplies**
+- Any element can be marked the same way: right-click ▸ **Parameter**, or select it and press Ctrl+P
+
+</div>
 
 * <span class="tryit"><strong>You try it:</strong> right-click <strong>Buffer</strong> ▸ Create Variable ▸ From Parameter ▸ <strong>Distance</strong>, then right-click the new element ▸ <strong>Parameter</strong>.</span>
 
-<!-- Toggle the P on and off so they see the marker appear; in ArcGIS Pro 3.7 it is a circled P on the top-right corner of the element. This is Lab 1 Step 10 and Lab 2 Step 4. -->
+<!-- This is Lab 1 Step 10 and Lab 2 Step 5. Sometimes the thing you want the user to control is not a dataset but a setting inside a tool; Create Variable pulls it out onto the canvas, and the submenu is exactly the Buffer tool's own parameter list, so what you can expose depends on the tool. ArcGIS Pro drops the new variable on top of the tool's input, so drag it clear. Toggle the P on and off so they see the marker appear. Both captures are ArcGIS Pro 3.7.1 on the Part A model. -->
 
 ---
 
@@ -263,89 +280,85 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 <div class="columns">
 <div>
 
-![h:330 center](images/mbb-catalog-toolbox-model.png)
+![h:270 center](images/mbb-catalog-toolbox-model.png)
+
+<div style="font-size:0.9em;">
 
 - Find the model in the **Catalog** pane under **Toolboxes**
 - **Double-click** it — you get a tool dialog, not the canvas
 
 </div>
+
+</div>
 <div>
 
-![h:330 center](images/mbb-tool-dialog-one-parameter.png)
+![h:270 center](images/mbb-tool-dialog-distance-parameter.png)
 
-- The **Geoprocessing** pane shows one box per parameter
-- Labels are the names you gave the elements, already filled in with the values you set
+<div style="font-size:0.9em;">
+
+- The **Geoprocessing** pane shows one box per parameter: here the **distance**, already filled in with 10 Statute Miles, units dropdown and all
+- Type 5, click Run, and the same model answers a different question
+
+</div>
 
 </div>
 </div>
 
-<!-- Double-click runs the model as a tool; right-click and Edit opens the canvas. Students mix these two up constantly. Note that the parameter label reads "Input Rivers" because that is what we renamed the element to on the previous slide: renaming and parameterizing pay off together. The blue "Input Coordinate System" line under the box is ArcGIS Pro telling you the layer is in WGS 1984, which is why the model projects it first. -->
+<!-- Double-click runs the model as a tool; right-click and Edit opens the canvas. Students mix these two up constantly. The dialog is the model with exactly one parameter, the distance we just created: a Linear Unit box with its own units list. This is the payoff of the previous slide, and it is what Lab 1's tool dialog looks like once the two buffer distances are exposed. -->
 
 ---
 
-# Two parameters, two inputs
+# Three parameters: an input, a setting, an output
 
-![w:1060 center](images/mbb-model-two-parameters.png)
+![w:940 center](images/mbb-model-three-parameters.png)
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.15fr 0.85fr;">
+<div style="font-size:0.85em;">
+
+- Mark the rivers input and the final output the same way, right-click ▸ **Parameter**
+- The **P** markers show everything the user will be asked for; everything without one stays fixed inside the model
+- The **distance** is the one you will change most; a different input is how the same model runs on another state's rivers
+
+</div>
 <div>
 
-- Mark **both** the rivers input and the final output as parameters
-- The **P** markers show which elements the user will be asked for
-
-</div>
-<div>
-
-![h:250 center](images/mbb-tool-dialog-two-parameters.png)
+![h:240 center](images/mbb-tool-dialog-three-parameters.png)
 
 </div>
 </div>
 
-<!-- Left to right: Input Rivers is a P because the user chooses which rivers; Cities Near Rivers is a P because the user chooses where the answer gets written. The warning triangle on the output just means that feature class already exists and will be overwritten. Everything without a P stays fixed inside the model. -->
+<!-- Left to right on the canvas: Input Rivers is a P because the user may choose which rivers; Distance is a P because they will certainly change it; Cities Near Rivers is a P because the user chooses where the answer gets written. The dialog lists the three in that order, the distance as a Linear Unit with its units dropdown. The warning triangle on the output just means that feature class already exists and will be overwritten. Now the same model answers "cities within 5 km" and "cities within 25 km" without anyone opening the canvas. -->
 
 ---
 
-# Create a variable from a tool parameter — the same move in your lab
+# The same move in your lab
 
-<div class="columns" style="grid-template-columns: 1.3fr 0.7fr; align-items: center;">
+<div class="columns" style="grid-template-columns: 1fr 1fr; align-items: center;">
 <div style="text-align:center;">
 
-![w:700](images/mbb-create-variable-from-parameter.png)
+![w:400](images/mbb-lab1-create-variable-menu.png)
 
-**Cities Near Rivers** — Buffer ▸ Create Variable ▸ From Parameter ▸ *Distance*
+<span style="font-size:0.62em;color:#5a6472;">Lab 1, Step 10: the same menu on the road buffer</span>
 
 </div>
 <div style="text-align:center;">
 
-![w:380](images/mbb-lab1-create-variable-menu.png)
+![h:290](images/mbb-lab1-tool-dialog.png)
 
-**Lab 1, Step 10** — the same menu on the road buffer
-
-</div>
-</div>
-
-<!-- Sometimes the thing you want the user to control is not a dataset but a setting inside a tool: here, the Buffer distance. Right-click the tool, choose Create Variable, then From Parameter, then pick the setting you want to pull out. The submenu is exactly the Buffer tool's own parameter list, so what you can expose depends on the tool. The right-hand capture is from the Lab 1 run: identical move, identical menu. -->
-
----
-
-# Then make that variable a parameter
-
-<div class="columns" style="grid-template-columns: 1.15fr 0.85fr; align-items: center;">
-<div>
-
-![w:560 center](images/mbb-distance-variable-parameter.png)
-
-</div>
-<div>
-
-![w:360 center](images/mbb-tool-dialog-three-parameters.png)
+<span style="font-size:0.62em;color:#5a6472;">The Lab 1 model as a tool, two distances exposed</span>
 
 </div>
 </div>
 
-The distance is now a **P** on the canvas, and a third box on the tool dialog — units and all. Lab 2 does the same with a **Double** variable and a Raster Calculator expression.
+<div style="font-size:0.85em;">
 
-<!-- The new variable appears as its own element wired into Buffer; ArcGIS Pro drops it on top of the tool's input, so drag it somewhere readable. Right-click it, click Parameter, and it joins the other two on the dialog as a Linear Unit with its own units dropdown. Now the same model answers "cities within 5 km" and "cities within 25 km" without anyone opening the canvas. This is the payoff: three parameters, one reusable tool. -->
+- Lab 1 pulls **both buffer distances** out exactly this way, and the rubric asks for a capture of the dialog they produce
+- Lab 2 does it with a **Double** variable and a Raster Calculator expression, so the classification threshold becomes a parameter
+- Rename the variables before you capture the dialog: *Distance [value or field] (2)* tells your reader nothing
+
+</div>
+
+<!-- The right-hand capture is from the Lab 1 run: identical move, identical menu, and the dialog it produces if you stop at Step 10 without renaming anything. The rubric's "tool-dialog capture with the two distances exposed" is worth more when the two boxes say which distance is which. -->
 
 ---
 
@@ -586,6 +599,12 @@ The example map is not a template: yours will differ, because your stores and yo
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
 <!--
+Revision notes (2026-09-09, evening): the parameter sequence now follows the distance. Slide 13 creates the Distance
+variable from Buffer and marks it (new bubble with a P); slide 14 opens the model with the distance as its only parameter
+(new capture, mbb-tool-dialog-distance-parameter.png, ArcGIS Pro 3.7.1); slide 15 adds the input and output for three
+parameters; the old "create a variable" and "then make that variable a parameter" slides fold into these, and the Lab 1
+tie-in slide keeps the Lab 1 menu beside the Lab 1 dialog. The one-parameter (Input Rivers) and two-parameter dialog
+captures are no longer used.
 Revision notes (2026-09-09, later): the quiz question mark is gone from the cookie review and how-many-ways slides; how-many-ways
 now shows three ModelBuilder canvases (tools/week02_three_ways.py) with the map small at the side; the four save-you-an-hour
 slides and the two parameter slides carry an orange "You try it" fragment (theme class .tryit) so the class stops and does
