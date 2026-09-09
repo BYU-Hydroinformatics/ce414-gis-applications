@@ -22,3 +22,9 @@ Labs 1–10, Fall 2026 (`cid-ahk3xMzyr311`). Each `.docx` download became a link
 Lab 1 is the one exception to "removed block only": its description held nothing but the
 attachment, a `(2025 updated)` note, and empty `<br />`s, so the whole description was replaced
 with the standard sentence used in CCE 114. `lab-01.html` records it in full.
+
+## Applied September 9, 2026
+
+Week 3 schedule cells (Tue Sep 15 and Thu Sep 17) aligned with the rebuilt Week 3 decks, the
+"NDVI Model" text item deleted, and the "In Class Activity - Raster Analysis Hands-On" assignment
+created. Removed markup and every kept `fileId` are in [`schedule-week03.md`](schedule-week03.md).
