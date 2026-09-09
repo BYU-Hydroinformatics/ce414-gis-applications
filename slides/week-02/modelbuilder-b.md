@@ -40,58 +40,75 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 ---
 
+<!-- _class: activity -->
+
+# Model a cookie
+
+![bg right:36% w:90%](images/mbb-cookie-monster.jpg)
+
+- Get out a piece of paper, look at the cookie sitting in front of you, think about the recipe, and try to build a **ModelBuilder-style model** showing the process of building that cookie
+- **Don't eat the cookie**
+- Once you've completed your model, **write your name** on your paper, **take a picture** of it, and **submit it on Learning Suite** for today's in-class activity
+
+<!-- Hand out the cookies first, then put this up. Ten minutes. Blue ovals for ingredients, yellow boxes for what you do to them, green ovals for what comes out: that is the only rule. Walk the room and look for two things, someone who drew one box called "make cookies" and someone who is still drawing the wheat field; both go on the document camera for the next slide. The picture goes to Learning Suite by 9:30 am, fifteen minutes after class. -->
+
+---
+
 <!-- _class: quiz -->
 
 # Cookie model review
 
-<div class="columns">
-<div>
+<div class="columns" style="grid-template-columns: 1fr 0.95fr 0.85fr; align-items: center; gap: 18px;">
+<div style="font-size:0.72em;">
 
 - Is a **bigger** model better?
-- What is the value of a **smaller** model?
-  - Speed?
-  - Easiness to understand, and to explain?
-  - Less buggy?
-- How can you make a smaller model?
+- What is a **smaller** model good for? Speed? Easier to explain? Fewer things to break?
+- What does the **big** one give you that the small one cannot?
 
 </div>
-<div>
+<div style="text-align:center;">
 
-![w:520 center](images/mbb-cookie-model-sketch.png)
+![w:300](images/mbb-cookie-sketch-simple.png)
 
-![w:420 center](images/mbb-cookie-monster.jpg)
+<span style="font-size:0.62em;color:#5a6472;">One tool. Still a model.</span>
+
+</div>
+<div style="text-align:center;">
+
+![w:250](images/mbb-cookie-model-sketch.png)
+
+<span style="font-size:0.62em;color:#5a6472;">Two tools: the sketch most people draw</span>
 
 </div>
 </div>
 
-<!-- Everyone brought a sketch. Put three or four of them side by side on the document camera or the shared doc. Some list every ingredient as its own node; others collapse the dry ingredients into one. Ask the class which sketch they would rather hand to someone else, and why. The answer we are steering toward: a model is a communication device as much as an automation device, and every extra node is something else that can break. -->
+<div style="text-align:center;margin-top:0;">
+
+![w:790](images/mbb-cookie-sketch-detailed.png)
+
+<span style="font-size:0.62em;color:#5a6472;">Eleven tools, back to the chick and the wheat seed</span>
+
+</div>
+
+<!-- Three sketches of the same cookie. The one-tool version is a legitimate model: it says what goes in and what comes out and hides everything else, which is exactly what you want when the recipe is not the question. The middle one is what most of the room drew. The long one starts from a baby chicken and a wheat seed and names every intermediate product; it is not wrong either, and it is the one you want when a step might change (a different flour), when someone has to check your work, or when you need to reuse a piece (the flour chain is a model of its own). Ask which one they would hand to a stranger, and which one they would hand to an auditor. The answer we are steering toward: a model is a communication device as much as an automation device, the right size depends on who has to read it, and every extra node is something else that can break. -->
+
+<!-- Figures: the one-tool and eleven-tool sketches are drawn by tools/week02_cookie_sketches.py in the style of the student sketch in the middle (green marker, ovals and boxes, handwriting font, rendered to PNG). -->
 
 ---
 
 # The same cookie, drawn the ModelBuilder way
 
-<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:0.8em 0;font-size:0.85em;">
-<div style="display:flex;flex-direction:column;gap:8px;">
-<span style="background:#cfe8ff;border:2px solid #2b7bd6;border-radius:999px;padding:.35em 1em;">flour</span>
-<span style="background:#cfe8ff;border:2px solid #2b7bd6;border-radius:999px;padding:.35em 1em;">sugar</span>
-<span style="background:#cfe8ff;border:2px solid #2b7bd6;border-radius:999px;padding:.35em 1em;">eggs</span>
-<span style="background:#cfe8ff;border:2px solid #2b7bd6;border-radius:999px;padding:.35em 1em;">butter</span>
-</div>
-<span style="font-size:1.6em;">→</span>
-<span style="background:#fff3b0;border:2px solid #d4a800;padding:.6em 1.2em;">Mix</span>
-<span style="font-size:1.6em;">→</span>
-<span style="background:#d8f5d0;border:2px solid #3a9b3a;border-radius:999px;padding:.35em 1em;">dough</span>
-<span style="font-size:1.6em;">→</span>
-<span style="background:#fff3b0;border:2px solid #d4a800;padding:.6em 1.2em;">Bake<br><small>350 °F, 11 min</small></span>
-<span style="font-size:1.6em;">→</span>
-<span style="background:#d8f5d0;border:2px solid #3a9b3a;border-radius:999px;padding:.35em 1em;"><strong>cookies</strong></span>
+![w:820 center](images/mbb-cookie-model.svg)
+
+<div style="font-size:0.9em;">
+
+- Five **inputs** (blue), two **tools** (yellow), one **intermediate** dataset and one **output** (green), drawn the way ArcGIS Pro 3.7 draws them
+- The oven temperature and time are a **setting inside Bake**, pulled out as its own variable with a **P**: exactly what Step 10 of Lab 1 does to the buffer distance
+- Try it live: in ArcGIS Pro, five small tables, **Merge** renamed *Mix*, **Copy Rows** renamed *Bake*, every element renamed
+
 </div>
 
-- Four **inputs** (blue), two **tools** (yellow), one **intermediate** dataset and one **output** (green)
-- The oven temperature and time are **settings inside a tool** — the kind of thing Step 10 of Lab 1 pulls out as a parameter
-- Try it live: in ArcGIS Pro, four small tables, **Merge** renamed *Mix*, **Copy Rows** renamed *Bake*, every element renamed
-
-<!-- This is the tidy version of the sketches, drawn with ModelBuilder's colors. Build it live if there is time: create four empty tables in the project geodatabase, drag them onto a new model, add Merge and rename it Mix, add Copy Rows and rename it Bake, rename the outputs dough and cookies, and run it. The tools are stand-ins; the vocabulary is the point: data, tool, derived data, connector, and a setting that could become a parameter. -->
+<!-- This is the middle sketch redrawn in ModelBuilder's own element style, the same style as Part A's pie recipe: rounded rectangles with an icon panel for data, square boxes with a hammer for tools, a connector for every ingredient, and a value variable with a P marker for the oven setting. Build it live if there is time: create five empty tables in the project geodatabase, drag them onto a new model, add Merge and rename it Mix, add Copy Rows and rename it Bake, rename the outputs dough and cookies, and run it. The tools are stand-ins; the vocabulary is the point: data, tool, derived data, connector, parameter. Figure drawn by tools/week02_cookie_model.py. -->
 
 ---
 
@@ -551,6 +568,12 @@ The example map is not a template: yours will differ, because your stores and yo
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
 <!--
+Revision notes (2026-09-09): a "Model a cookie" activity slide (the instructor's wording) now precedes the
+cookie review; the review slide shows three sketches of the same cookie (one tool, the student sketch with two
+tools, and an eleven-tool version back to a baby chicken and a wheat seed; the two new ones are drawn by
+tools/week02_cookie_sketches.py in the student sketch's green-marker style and rendered to PNG); and the tidy
+cookie model is now an SVG in the ArcGIS Pro 3.7 element style (tools/week02_cookie_model.py), matching Part A's
+pie recipe, with the oven setting shown as a value variable with a P marker.
 Revision notes (2026-09-08): every ArcGIS Pro capture in Part B replaced with ArcGIS Pro 3.7.1 captures
 taken the same way as Part A's (Sept 8, 175 % display scaling, project C:\Ames\Week02\CitiesRivers.aprx,
 model Cities Near Rivers). The Sept 3 "RiversDemo" captures were from an older ArcGIS Pro (oval elements)

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 400" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#444"/></marker></defs>
+<path d="M169.0,50 C211.5,50 211.5,170 254.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,110 C211.5,110 211.5,170 254.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,170 C211.5,170 211.5,170 254.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,230 C211.5,230 211.5,170 254.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,290 C211.5,290 211.5,170 254.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M404.0,170 C429.0,170 429.0,170 454.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M604.0,170 C629.0,170 629.0,170 654.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M804.0,170 C834.0,170 834.0,170 864.0,170" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M730,82.0 L730,146.0" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<clipPath id="clip-95-50"><rect x="21.0" y="28.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="28.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="28.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-50)"/>
+<path d="M27.0,44 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="41" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="28.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="55" text-anchor="middle" fill="#111" font-size="14">flour</text>
+<clipPath id="clip-95-110"><rect x="21.0" y="88.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="88.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="88.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-110)"/>
+<path d="M27.0,104 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="101" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="88.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="115" text-anchor="middle" fill="#111" font-size="14">sugar</text>
+<clipPath id="clip-95-170"><rect x="21.0" y="148.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="148.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="148.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-170)"/>
+<path d="M27.0,164 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="161" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="148.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="175" text-anchor="middle" fill="#111" font-size="14">eggs</text>
+<clipPath id="clip-95-230"><rect x="21.0" y="208.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="208.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="208.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-230)"/>
+<path d="M27.0,224 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="221" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="208.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="235" text-anchor="middle" fill="#111" font-size="14">butter</text>
+<clipPath id="clip-95-290"><rect x="21.0" y="268.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="268.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="268.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-290)"/>
+<path d="M27.0,284 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="281" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="268.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="295" text-anchor="middle" fill="#111" font-size="14">chocolate chips</text>
+<clipPath id="clip-330-170"><rect x="256.0" y="148.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="256.0" y="148.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="256.0" y="148.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-330-170)"/>
+<path d="M264.0,161 l7,7 M271.0,168 l-8,8 l4,4 l8,-8 M262.0,163 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="256.0" y="148.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="347.0" y="175" text-anchor="middle" fill="#111" font-size="14">Mix</text>
+<clipPath id="clip-530-170"><rect x="456.0" y="148.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="456.0" y="148.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="456.0" y="148.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-530-170)"/>
+<rect x="462.0" y="161" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M462.0,172 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="456.0" y="148.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="547.0" y="175" text-anchor="middle" fill="#111" font-size="14">dough</text>
+<clipPath id="clip-730-170"><rect x="656.0" y="148.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="656.0" y="148.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="656.0" y="148.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-730-170)"/>
+<path d="M664.0,161 l7,7 M671.0,168 l-8,8 l4,4 l8,-8 M662.0,163 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="656.0" y="148.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="747.0" y="175" text-anchor="middle" fill="#111" font-size="14">Bake</text>
+<clipPath id="clip-940-170"><rect x="855.0" y="148.0" width="170" height="44" rx="14"/></clipPath>
+<rect x="855.0" y="148.0" width="170" height="44" rx="14" fill="#ffffff"/>
+<rect x="855.0" y="148.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-940-170)"/>
+<rect x="861.0" y="161" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M861.0,172 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="855.0" y="148.0" width="170" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="957.0" y="175" text-anchor="middle" fill="#111" font-size="14">cookies</text>
+<clipPath id="clip-730-60"><rect x="645.0" y="38.0" width="170" height="44" rx="14"/></clipPath>
+<rect x="645.0" y="38.0" width="170" height="44" rx="14" fill="#ffffff"/>
+<rect x="645.0" y="38.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-730-60)"/>
+<rect x="651.0" y="52" width="22" height="16" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><text x="662.0" y="64" text-anchor="middle" font-size="9" fill="#555">0.01</text>
+<rect x="645.0" y="38.0" width="170" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="747.0" y="65" text-anchor="middle" fill="#111" font-size="12">350 °F, 11 minutes</text>
+<circle cx="811" cy="40.0" r="11" fill="#fff" stroke="#666" stroke-width="1.5"/>
+<text x="811" y="45.0" text-anchor="middle" font-size="13" font-weight="700" fill="#333">P</text>
+<g transform="translate(250,352) scale(0.62)">
+<clipPath id="clip-74-22"><rect x="0.0" y="0.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="0.0" y="0.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="0.0" y="0.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-74-22)"/>
+<path d="M6.0,16.0 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="11.0" cy="13.0" r="3.5" fill="#f5a623"/>
+<rect x="0.0" y="0.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="91.0" y="27.0" text-anchor="middle" fill="#111" font-size="14">input data</text>
+<clipPath id="clip-334-22"><rect x="260.0" y="0.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="260.0" y="0.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="260.0" y="0.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-334-22)"/>
+<path d="M268.0,13.0 l7,7 M275.0,20.0 l-8,8 l4,4 l8,-8 M266.0,15.0 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="260.0" y="0.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="351.0" y="27.0" text-anchor="middle" fill="#111" font-size="14">tool</text>
+<clipPath id="clip-594-22"><rect x="520.0" y="0.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="520.0" y="0.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="520.0" y="0.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-594-22)"/>
+<rect x="526.0" y="13.0" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M526.0,24.0 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="520.0" y="0.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="611.0" y="27.0" text-anchor="middle" fill="#111" font-size="14">derived data</text>
+</g>
+</svg>
