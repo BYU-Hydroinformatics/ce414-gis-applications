@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 190" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#444"/></marker></defs>
+<path d="M169.0,70 C203.5,70 203.5,105 238.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,140 C203.5,140 203.5,105 238.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M440.0,105 C461.5,105 461.5,105 483.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M655.0,105 C679.5,105 679.5,105 704.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M854.0,105 C881.5,105 881.5,105 909.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M340,52.0 L340,81.0" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<clipPath id="clip-95-70"><rect x="21.0" y="48.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="48.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="48.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-70)"/>
+<path d="M27.0,64 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="61" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="48.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="75" text-anchor="middle" fill="#111" font-size="14">us_cities</text>
+<clipPath id="clip-95-140"><rect x="21.0" y="118.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="118.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-140)"/>
+<path d="M27.0,134 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="131" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="145" text-anchor="middle" fill="#111" font-size="14">us_rivers</text>
+<clipPath id="clip-340-30"><rect x="255.0" y="8.0" width="170" height="44" rx="14"/></clipPath>
+<rect x="255.0" y="8.0" width="170" height="44" rx="14" fill="#ffffff"/>
+<rect x="255.0" y="8.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-340-30)"/>
+<rect x="261.0" y="22" width="22" height="16" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><text x="272.0" y="34" text-anchor="middle" font-size="9" fill="#555">0.01</text>
+<rect x="255.0" y="8.0" width="170" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="357.0" y="35" text-anchor="middle" fill="#111" font-size="12">10 Miles, geodesic</text>
+<clipPath id="clip-340-105"><rect x="240.0" y="83.0" width="200" height="44" rx="3"/></clipPath>
+<rect x="240.0" y="83.0" width="200" height="44" rx="3" fill="#ffffff"/>
+<rect x="240.0" y="83.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-340-105)"/>
+<path d="M248.0,96 l7,7 M255.0,103 l-8,8 l4,4 l8,-8 M246.0,98 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="240.0" y="83.0" width="200" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="357.0" y="110" text-anchor="middle" fill="#111" font-size="12">Select Layer By Location</text>
+<clipPath id="clip-570-105"><rect x="485.0" y="83.0" width="170" height="44" rx="14"/></clipPath>
+<rect x="485.0" y="83.0" width="170" height="44" rx="14" fill="#ffffff"/>
+<rect x="485.0" y="83.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-570-105)"/>
+<rect x="491.0" y="96" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M491.0,107 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="485.0" y="83.0" width="170" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="587.0" y="110" text-anchor="middle" fill="#111" font-size="12">us_cities (selected)</text>
+<clipPath id="clip-780-105"><rect x="706.0" y="83.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="706.0" y="83.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="706.0" y="83.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-780-105)"/>
+<path d="M714.0,96 l7,7 M721.0,103 l-8,8 l4,4 l8,-8 M712.0,98 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="706.0" y="83.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="797.0" y="110" text-anchor="middle" fill="#111" font-size="14">Copy Features</text>
+<clipPath id="clip-985-105"><rect x="911.0" y="83.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="911.0" y="83.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="911.0" y="83.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-985-105)"/>
+<rect x="917.0" y="96" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M917.0,107 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="911.0" y="83.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="1002.0" y="110" text-anchor="middle" fill="#111" font-size="12">Cities Near Rivers</text>
+</svg>

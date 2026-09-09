@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 190" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#444"/></marker></defs>
+<path d="M169.0,70 C206.5,70 206.5,105 244.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,140 C206.5,140 206.5,105 244.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M394.0,105 C418.5,105 418.5,105 443.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M625.0,105 C654.5,105 654.5,105 684.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M834.0,105 C871.5,105 871.5,105 909.0,105" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M320,52.0 L320,81.0" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M760,52.0 L760,81.0" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<clipPath id="clip-95-70"><rect x="21.0" y="48.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="48.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="48.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-70)"/>
+<path d="M27.0,64 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="61" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="48.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="75" text-anchor="middle" fill="#111" font-size="14">us_cities</text>
+<clipPath id="clip-95-140"><rect x="21.0" y="118.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="118.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-140)"/>
+<path d="M27.0,134 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="131" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="145" text-anchor="middle" fill="#111" font-size="14">us_rivers</text>
+<clipPath id="clip-320-30"><rect x="235.0" y="8.0" width="170" height="44" rx="14"/></clipPath>
+<rect x="235.0" y="8.0" width="170" height="44" rx="14" fill="#ffffff"/>
+<rect x="235.0" y="8.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-320-30)"/>
+<rect x="241.0" y="22" width="22" height="16" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><text x="252.0" y="34" text-anchor="middle" font-size="9" fill="#555">0.01</text>
+<rect x="235.0" y="8.0" width="170" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="337.0" y="35" text-anchor="middle" fill="#111" font-size="12">10 Miles, geodesic</text>
+<clipPath id="clip-320-105"><rect x="246.0" y="83.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="246.0" y="83.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="246.0" y="83.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-320-105)"/>
+<path d="M254.0,96 l7,7 M261.0,103 l-8,8 l4,4 l8,-8 M252.0,98 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="246.0" y="83.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="337.0" y="110" text-anchor="middle" fill="#111" font-size="14">Near</text>
+<clipPath id="clip-535-105"><rect x="445.0" y="83.0" width="180" height="44" rx="14"/></clipPath>
+<rect x="445.0" y="83.0" width="180" height="44" rx="14" fill="#ffffff"/>
+<rect x="445.0" y="83.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-535-105)"/>
+<rect x="451.0" y="96" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M451.0,107 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="445.0" y="83.0" width="180" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="552.0" y="110" text-anchor="middle" fill="#111" font-size="12">us_cities + NEAR_FID</text>
+<clipPath id="clip-760-30"><rect x="685.0" y="8.0" width="150" height="44" rx="14"/></clipPath>
+<rect x="685.0" y="8.0" width="150" height="44" rx="14" fill="#ffffff"/>
+<rect x="685.0" y="8.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-760-30)"/>
+<rect x="691.0" y="22" width="22" height="16" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><text x="702.0" y="34" text-anchor="middle" font-size="9" fill="#555">0.01</text>
+<rect x="685.0" y="8.0" width="150" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="777.0" y="35" text-anchor="middle" fill="#111" font-size="12">NEAR_FID &lt;&gt; -1</text>
+<clipPath id="clip-760-105"><rect x="686.0" y="83.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="686.0" y="83.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="686.0" y="83.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-760-105)"/>
+<path d="M694.0,96 l7,7 M701.0,103 l-8,8 l4,4 l8,-8 M692.0,98 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="686.0" y="83.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="777.0" y="110" text-anchor="middle" fill="#111" font-size="14">Select</text>
+<clipPath id="clip-985-105"><rect x="911.0" y="83.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="911.0" y="83.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="911.0" y="83.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-985-105)"/>
+<rect x="917.0" y="96" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M917.0,107 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="911.0" y="83.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="1002.0" y="110" text-anchor="middle" fill="#111" font-size="12">Cities Near Rivers</text>
+</svg>

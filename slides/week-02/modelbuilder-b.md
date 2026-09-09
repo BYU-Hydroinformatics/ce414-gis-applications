@@ -54,8 +54,6 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 ---
 
-<!-- _class: quiz -->
-
 # Cookie model review
 
 <div class="columns" style="grid-template-columns: 1fr 0.95fr 0.85fr; align-items: center; gap: 18px;">
@@ -112,34 +110,42 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 ---
 
-<!-- _class: quiz -->
-
 # Cities Near Rivers: how many ways?
 
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div style="font-size:0.9em;">
+<div class="columns" style="grid-template-columns: 1.5fr 0.5fr; align-items: start; gap: 16px;">
+<div style="font-size:0.6em;color:#5a6472;line-height:1.25;">
 
-- **Option 1:** Buffer + Intersect — what we built in Part A: **256** cities
-- **Option 2:** **Select Layer By Location**, *within a distance geodesic* of the rivers: **257** cities
-- **Option 3?** There is always another way — the **Near** tool and a selection on its distance field, or rasterize and work in cell space
+![w:690](images/mbb-way1-buffer-intersect.svg)
 
-Which one would you put in a model you have to hand to someone else — and why are the two counts different?
+<strong style="color:#002e5d;">Option 1, Buffer + Intersect:</strong> what we built in Part A, <strong style="color:#002e5d;">256</strong> cities
+
+![w:690](images/mbb-way2-select-by-location.svg)
+
+<strong style="color:#002e5d;">Option 2, Select Layer By Location</strong> <em>within a distance geodesic</em>, then Copy Features: <strong style="color:#002e5d;">257</strong> cities
+
+![w:690](images/mbb-way3-near-select.svg)
+
+<strong style="color:#002e5d;">Option 3, Near</strong> writes the nearest river onto every city, then <strong style="color:#002e5d;">Select</strong> keeps the ones that found one
 
 </div>
-<div style="text-align:center;">
+<div style="text-align:center;font-size:0.72em;">
 
-![h:420](images/mbb-select-by-location-map.png)
+![w:250](images/mbb-select-by-location-map.png)
+
+Which one would you put in a model you have to hand to someone else? Why are the two counts different?
 
 </div>
 </div>
 
-<!-- Discussion slide, not a lookup. Buffer + Intersect creates real intermediate data you can inspect, which is good for teaching and bad for disk space. Select Layer By Location is one node instead of two but leaves you with a selection rather than a feature class. Near writes a distance field onto the input, which is a side effect. The counts differ by one because Option 1 measured 10 miles on a projected plane and Option 2 measured it geodesically; one city sits right at the edge. "Correct" is not the same as "smallest", and neither is the same as "easiest to explain". -->
+<!-- Discussion slide, not a lookup. Three canvases for one question, all drawn in ArcGIS Pro's element style. Buffer + Intersect creates real intermediate data you can inspect, which is good for teaching and bad for disk space. Select Layer By Location is one tool instead of four but leaves you with a selection rather than a feature class, so Copy Features follows it. Near writes NEAR_FID and NEAR_DIST onto the input, which is a side effect on your data, and then a Select on NEAR_FID does the classifying. The counts differ by one because Option 1 measured 10 miles on a projected plane and Option 2 measured it geodesically; one city sits right at the edge. "Correct" is not the same as "smallest", and neither is the same as "easiest to explain". The three diagrams come from tools/week02_three_ways.py; the map is Option 2's selection in Pro 3.7.1. -->
 
 ---
 
 <!-- _class: lead -->
 
 # First, three things that will save you an hour
+
+## Open your Cities Near Rivers model from Tuesday, or rebuild it: Project, Buffer, Project, Intersect
 
 ---
 
@@ -151,6 +157,8 @@ Which one would you put in a model you have to hand to someone else — and why 
 - Right-click the **output data** element you care about and check **Add To Display**
 - Do this for the final output; leave the intermediate data unchecked so your **Contents** pane stays readable
 - The check mark sticks with the model, so it applies every time the model runs
+
+* <span class="tryit"><strong>You try it:</strong> right-click your final output, check <strong>Add To Display</strong>, run the model. Does the result appear?</span>
 
 <!-- This is the single most common "my model did nothing" complaint. The model ran fine; the output just went to the geodatabase without being added to the map. The menu on the right is the Cities_Near_Rivers output element in ArcGIS Pro 3.7.1, with Add To Display already checked from Part A; show the check mark going on and off. -->
 
@@ -170,10 +178,12 @@ Which one would you put in a model you have to hand to someone else — and why 
 </div>
 <div style="text-align:center;">
 
-![h:290](images/mbb-gray-node-missing-parameters.png)
+![h:250](images/mbb-gray-node-missing-parameters.png)
 
 </div>
 </div>
+
+* <span class="tryit"><strong>You try it:</strong> delete Buffer's distance and click OK. What turns gray? Hover it, then put 10 miles back.</span>
 
 <!-- Colored means ready: blue inputs, yellow tools, green outputs. Gray means "not ready", and it propagates downstream, so always fix the leftmost gray element first. The strip is the Part A model with the Buffer distance deleted: everything upstream of Buffer is still colored and everything from Buffer on is gray. Hovering gives you the whole parameter list without opening the tool; "Distance [value or field]:" with nothing after it is the answer. -->
 
@@ -188,6 +198,8 @@ Which one would you put in a model you have to hand to someone else — and why 
 - ModelBuilder runs that tool and everything it depends on, and stops
 - **Messages…** on the same menu shows what the tool actually reported
 
+* <span class="tryit"><strong>You try it:</strong> right-click the <strong>Buffer</strong> tool and choose Run. Only Project and Buffer run. Then open its Messages.</span>
+
 <!-- Build and debug incrementally. A five tool model that you only ever run end to end takes five times as long to debug. Point out Messages: that is where the real error text lives, not in the canvas. The menu is the Intersect tool's right-click menu in ArcGIS Pro 3.7.1. -->
 
 ---
@@ -201,6 +213,8 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 ![w:820 center](images/mbb-model-default-node-names.png)
 
 ![w:820 center](images/mbb-model-renamed-nodes.png)
+
+* <span class="tryit"><strong>You try it:</strong> rename your rivers input to <strong>Input Rivers</strong> and the buffer output to <strong>Areas Near Rivers</strong>.</span>
 
 <!-- Compare the two strips. "Project (2)" tells you which tool ran, twice. "Project to Equidistant" tells you why. "us_rivers" is a file name; "Input Rivers" is what the data means, and it is also the label that shows up on the tool dialog when the model is run as a tool. Renaming an element does not rename the data on disk, and it does not rename the model itself; the model's Name lives in Properties, General. Both strips are the same model in ArcGIS Pro 3.7.1, before and after ten renames. -->
 
@@ -223,18 +237,22 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 - It will run, and it will produce the same answer every time
 - To make it answer a *different* question, someone has to open the canvas
 
+* <span class="tryit"><strong>You try it:</strong> <strong>double-click</strong> your model in the Catalog pane. What does the dialog offer you?</span>
+
 <!-- This is the hinge of the whole lecture, and it is what Part A's model looks like as a tool: nothing to fill in. Without parameters, a model is a recording of one specific analysis. With parameters, it is a tool. -->
 
 ---
 
 # Mark a variable as a parameter
 
-![w:820 center](images/mbb-parameter-p-marker.png)
+![w:640 center](images/mbb-parameter-p-marker.png)
 
 - Any data variable in your model can be made a **parameter**
 - Right-click the element and click **Parameter** (or select it and press Ctrl+P)
 - A circled **P** on the element's corner marks it
 - This tells ArcGIS Pro to treat that variable as an **input the user supplies** when the model is run directly, instead of a value baked into the model
+
+* <span class="tryit"><strong>You try it:</strong> right-click <strong>Buffer</strong> ▸ Create Variable ▸ From Parameter ▸ <strong>Distance</strong>, then right-click the new element ▸ <strong>Parameter</strong>.</span>
 
 <!-- Toggle the P on and off so they see the marker appear; in ArcGIS Pro 3.7 it is a circled P on the top-right corner of the element. This is Lab 1 Step 10 and Lab 2 Step 4. -->
 
@@ -568,6 +586,10 @@ The example map is not a template: yours will differ, because your stores and yo
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
 <!--
+Revision notes (2026-09-09, later): the quiz question mark is gone from the cookie review and how-many-ways slides; how-many-ways
+now shows three ModelBuilder canvases (tools/week02_three_ways.py) with the map small at the side; the four save-you-an-hour
+slides and the two parameter slides carry an orange "You try it" fragment (theme class .tryit) so the class stops and does
+each move on their own Cities Near Rivers model; the section lead tells them to open or rebuild it.
 Revision notes (2026-09-09): a "Model a cookie" activity slide (the instructor's wording) now precedes the
 cookie review; the review slide shows three sketches of the same cookie (one tool, the student sketch with two
 tools, and an eleven-tool version back to a baby chicken and a wheat seed; the two new ones are drawn by

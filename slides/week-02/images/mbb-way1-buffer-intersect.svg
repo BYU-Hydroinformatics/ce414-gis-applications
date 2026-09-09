@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 190" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#444"/></marker></defs>
+<path d="M169.0,50 C186.5,50 186.5,50 204.0,50" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M354.0,50 C371.5,50 371.5,50 389.0,50" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M539.0,50 C556.5,50 556.5,50 574.0,50" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M724.0,50 C741.5,50 741.5,50 759.0,50" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M169.0,140 C186.5,140 186.5,140 204.0,140" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M354.0,140 C371.5,140 371.5,140 389.0,140" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M539.0,140 C649.0,140 649.0,140 759.0,140" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M909.0,140 C921.5,140 921.5,140 934.0,140" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M835,72.0 L835,116.0" fill="none" stroke="#444" stroke-width="2.2" marker-end="url(#ah)"/>
+<clipPath id="clip-95-50"><rect x="21.0" y="28.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="28.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="28.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-50)"/>
+<path d="M27.0,44 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="41" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="28.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="55" text-anchor="middle" fill="#111" font-size="14">us_rivers</text>
+<clipPath id="clip-280-50"><rect x="206.0" y="28.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="206.0" y="28.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="206.0" y="28.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-280-50)"/>
+<path d="M214.0,41 l7,7 M221.0,48 l-8,8 l4,4 l8,-8 M212.0,43 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="206.0" y="28.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="297.0" y="55" text-anchor="middle" fill="#111" font-size="14">Project</text>
+<clipPath id="clip-465-50"><rect x="391.0" y="28.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="391.0" y="28.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="391.0" y="28.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-465-50)"/>
+<rect x="397.0" y="41" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M397.0,52 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="391.0" y="28.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="482.0" y="55" text-anchor="middle" fill="#111" font-size="14">Projected Rivers</text>
+<clipPath id="clip-650-50"><rect x="576.0" y="28.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="576.0" y="28.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="576.0" y="28.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-650-50)"/>
+<path d="M584.0,41 l7,7 M591.0,48 l-8,8 l4,4 l8,-8 M582.0,43 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="576.0" y="28.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="667.0" y="55" text-anchor="middle" fill="#111" font-size="12">Buffer (10 miles)</text>
+<clipPath id="clip-835-50"><rect x="761.0" y="28.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="761.0" y="28.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="761.0" y="28.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-835-50)"/>
+<rect x="767.0" y="41" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M767.0,52 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="761.0" y="28.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="852.0" y="55" text-anchor="middle" fill="#111" font-size="12">Areas Near Rivers</text>
+<clipPath id="clip-95-140"><rect x="21.0" y="118.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="21.0" y="118.0" width="34" height="44" fill="#bfe4fb" clip-path="url(#clip-95-140)"/>
+<path d="M27.0,134 l16,-5 l6,17 l-16,5 z" fill="#f2d96b" stroke="#8a6d1a" stroke-width="1.5"/><circle cx="32.0" cy="131" r="3.5" fill="#f5a623"/>
+<rect x="21.0" y="118.0" width="148" height="44" rx="14" fill="none" stroke="#1a7bd3" stroke-width="1.8"/>
+<text x="112.0" y="145" text-anchor="middle" fill="#111" font-size="14">us_cities</text>
+<clipPath id="clip-280-140"><rect x="206.0" y="118.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="206.0" y="118.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="206.0" y="118.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-280-140)"/>
+<path d="M214.0,131 l7,7 M221.0,138 l-8,8 l4,4 l8,-8 M212.0,133 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="206.0" y="118.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="297.0" y="145" text-anchor="middle" fill="#111" font-size="14">Project</text>
+<clipPath id="clip-465-140"><rect x="391.0" y="118.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="391.0" y="118.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="391.0" y="118.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-465-140)"/>
+<rect x="397.0" y="131" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M397.0,142 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="391.0" y="118.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="482.0" y="145" text-anchor="middle" fill="#111" font-size="14">Projected Cities</text>
+<clipPath id="clip-835-140"><rect x="761.0" y="118.0" width="148" height="44" rx="3"/></clipPath>
+<rect x="761.0" y="118.0" width="148" height="44" rx="3" fill="#ffffff"/>
+<rect x="761.0" y="118.0" width="34" height="44" fill="#fff2b3" clip-path="url(#clip-835-140)"/>
+<path d="M769.0,131 l7,7 M776.0,138 l-8,8 l4,4 l8,-8 M767.0,133 l4,-4 l8,8 l-4,4 z" fill="none" stroke="#8a6d1a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="761.0" y="118.0" width="148" height="44" rx="3" fill="none" stroke="#e0c200" stroke-width="1.8"/>
+<text x="852.0" y="145" text-anchor="middle" fill="#111" font-size="14">Intersect</text>
+<clipPath id="clip-1010-140"><rect x="936.0" y="118.0" width="148" height="44" rx="14"/></clipPath>
+<rect x="936.0" y="118.0" width="148" height="44" rx="14" fill="#ffffff"/>
+<rect x="936.0" y="118.0" width="34" height="44" fill="#b9e8b9" clip-path="url(#clip-1010-140)"/>
+<rect x="942.0" y="131" width="22" height="18" rx="2" fill="#fff" stroke="#555" stroke-width="1.5"/><path d="M942.0,142 q6,-10 12,-2 t10,-4" fill="none" stroke="#555" stroke-width="1.5"/>
+<rect x="936.0" y="118.0" width="148" height="44" rx="14" fill="none" stroke="#3aa63a" stroke-width="1.8"/>
+<text x="1027.0" y="145" text-anchor="middle" fill="#111" font-size="12">Cities Near Rivers</text>
+</svg>
