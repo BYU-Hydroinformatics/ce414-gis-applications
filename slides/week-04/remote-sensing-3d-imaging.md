@@ -24,14 +24,14 @@ Civil & Construction Engineering
 Brigham Young University
 
 <!-- Concepts lecture. Everything here is about how a sensor turns energy into numbers, and what
-those numbers let you measure. The lab that applies it is Lab 2, NDVI.
+those numbers let you measure. The lab that applied it was Lab 2, NDVI, which they have already done; this hour is the physics underneath it.
 
 The speaker note attached to this slide in the source PowerPoint was a leftover ModelBuilder
 workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with remote sensing.
 It was removed during conversion. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing and 3D Imaging<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing and 3D Imaging<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -565,41 +565,52 @@ archaeology. -->
 
 ---
 
-# Cool LiDAR videos
+# LiDAR, moving
 
-- <a href="https://www.youtube.com/watch?v=nXlqv_k4P8Q" target="_blank">youtube.com/watch?v=nXlqv_k4P8Q</a>
-- <a href="https://www.youtube.com/watch?v=TFZ7Guej8VM" target="_blank">youtube.com/watch?v=TFZ7Guej8VM</a>
-- <a href="https://www.youtube.com/watch?v=k6nfskNev-Q" target="_blank">youtube.com/watch?v=k6nfskNev-Q</a>
-- <a href="https://www.youtube.com/watch?v=hCP2XaOCAlk" target="_blank">youtube.com/watch?v=hCP2XaOCAlk</a>
+![bg right:38% w:88%](images/rs-lidar-city-buildings.jpg)
 
-<!-- TODO(graphic): this slide has no image. It wants four linked video thumbnails, one per clip.
-No image was generated for it in this pass.
-VERIFY: all four links came across from the source deck and have not been re-checked. -->
+<div style="font-size:0.92em;">
+
+- <a href="https://www.youtube.com/watch?v=nXlqv_k4P8Q" target="_blank">**Visualization of LIDAR data**</a> — flying through a raw point cloud
+- <a href="https://www.youtube.com/watch?v=TFZ7Guej8VM" target="_blank">**FRA Nepal Forest Lidar Visualization**</a> — canopy and ground returns separating out
+- <a href="https://www.youtube.com/watch?v=hCP2XaOCAlk" target="_blank">**LiDAR point cloud geovisualization: Balboa Park, San Diego**</a> — a surveyed city block
+
+</div>
+
+<!-- Play one, not three. The Nepal clip is the one that earns its time: you watch the canopy strip away and the ground surface appear underneath, which is the classification step the previous slides described in words. Link titles checked live on Sept 10, 2026; a fourth clip from the source deck (k6nfskNev-Q) is no longer available and was removed. -->
 
 ---
 
-<!-- _class: activity -->
+# Where today shows up
 
-# Next: Lab 2 — NDVI
+<div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.88em;">
+<div style="background:#eef3f9;border-top:8px solid #5a6472;border-radius:8px;padding:0.9em 1.1em;">
 
-- You will compute a **vegetation index** from a multi-band image in ArcGIS Pro
-- NDVI compares **reflected near-infrared** against **red**:
-  healthy leaves absorb red and reflect near-infrared strongly
-- That is the whole reason today's spectrum and band material matters — the index is arithmetic on two bands
-- Lab 2: [byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/)
+**Behind you — Lab 2**
 
-<!-- Say "reflected near-infrared", not "heat". The near-infrared signal in NDVI is reflected
-sunlight; leaf structure bounces it back. Nothing in NDVI measures temperature.
+You already built **NDVI**: reflected **near-infrared** against **red**, because healthy leaves absorb red and bounce near-infrared back.
 
-TODO(graphic): this slide has no image. It wants a red/near-infrared reflectance comparison for
-healthy versus stressed vegetation, or a paired natural-color / NDVI view of the lab study area.
-No image was generated for it in this pass. -->
+Today is why those two bands and not any other two. The index was arithmetic; the choice of bands was physics.
+
+</div>
+<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.9em 1.1em;">
+
+**Ahead — Weeks 5 and 6**
+
+The bare-earth surface on the last slide is a **DEM**, and LiDAR is where most of them now come from.
+
+Week 5 turns a DEM into **slope, aspect and hillshade**. Week 6 turns it into **watersheds**. Both start with the point cloud you just watched.
+
+</div>
+</div>
+
+<!-- Two minutes of joining up. Say "reflected near-infrared", not "heat": the near-infrared in NDVI is reflected sunlight that leaf structure bounces back, and nothing in NDVI measures temperature. Then point forward: the hillshade two slides ago is Week 5's opening image, and the fact that it came off a LiDAR point cloud is why this deck and that one belong next to each other. -->
 
 ---
 
 # Before Next Class
 
-- Finish **Lab 3 — Georectifying and Digitizing**, due **Saturday 11:59 pm**: [assignments/lab-03](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
+- Finish **Lab 3 — Georectifying and Digitizing Historic Maps**, due **Saturday 11:59 pm**: [assignments/lab-03](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
 - Reading: **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
 - Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
@@ -631,5 +642,5 @@ note. One image (the false-color scene) has no recorded subject or source. The K
 image is embedded and renders, but its only recorded provenance is a NOAA URL that no longer
 resolves.
 
-TODO(graphic): two slides have no image — "Cool LiDAR videos" and the Lab 2 preview. No images were
+RESOLVED 2026-09-10: the two slides that had no image now do. "Cool LiDAR videos" became "LiDAR, moving" with a point-cloud image, real video titles and one dead link removed; the Lab 2 preview became "Where today shows up", which looks back at Lab 2 and forward to Weeks 5 and 6. The original note read: two slides have no image, and no images were
 generated in this pass. -->

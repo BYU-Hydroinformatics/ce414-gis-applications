@@ -18,7 +18,7 @@ Dr. Dan Ames
 <!-- Week 5 concepts lecture. Everything in this deck is a raster surface operation: the input is a DEM and the output is another raster that answers an engineering question. The lab this week applies it. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -107,13 +107,16 @@ Examples of a DEM include a (square) digital elevation grid, a triangular irregu
 
 ![bg right:52% w:96%](images/ta-usgs-national-map.jpg)
 
-- Clearinghouse for many U.S. DEM and other datasets
-- [nationalmap.gov](https://www.nationalmap.gov/)
-- Select an area, filter to **Elevation Products (3DEP)**, then pick a resolution and a file format
+- The clearinghouse for U.S. elevation data, from the **3D Elevation Program (3DEP)**
+- Download from [apps.nationalmap.gov/downloader](https://apps.nationalmap.gov/downloader/)
+- Draw an area of interest, filter to **Elevation Products (3DEP)**, then pick a resolution and a format
+- 3DEP publishes **1 m**, **1/3 arc-second** (about 10 m) and **1 arc-second** (about 30 m). Which exists depends on where you look
 
-<!-- This is the portal students use for the lab. Show the subcategory tree on the left: they check the elevation product they want, draw an extent, and the download list appears. -->
+<!-- This is the portal students use for the lab. Show the Datasets tab on the left: they check the elevation product they want, draw an extent, and the download list appears under Products. Do it live rather than from the slide, because the interface moves. -->
 
-<!-- TODO(screenshot): The National Map download interface has been redesigned since this capture; re-shoot the current page. -->
+<!-- 2026-09-10: www.nationalmap.gov now 301s to the USGS National Map program page, which is not where you download anything. The slide points at the downloader itself. -->
+
+<!-- TODO(screenshot): ta-usgs-national-map.jpg predates the current TNM Downloader, which has Datasets / Products / Cart tabs across the top of the left panel. Re-shoot from apps.nationalmap.gov/downloader. -->
 
 ---
 
@@ -121,14 +124,15 @@ Examples of a DEM include a (square) digital elevation grid, a triangular irregu
 
 ![bg right:52% w:96%](images/ta-nasa-srtm-page.jpg)
 
-- During its 11-day mission, the Space Shuttle *Endeavour*, carrying SRTM, orbited the Earth 16 times
-- As part of this mission, it captured Earth's topography at **1 arc-second (30 meters)** for over 80% of the Earth's surface
+- SRTM flew aboard the Space Shuttle *Endeavour* on mission STS-99, **February 11 to 22, 2000**
+- Two radar antennas, one in the payload bay and one on the end of a **200-foot mast**, measured elevation by interferometry in a single pass
+- It mapped **nearly 80% of Earth's land surface** at **1 arc-second**, about 30 meters
 
 <!-- The Shuttle Radar Topography Mission flew in February 2000. Radar interferometry from a fixed mast: two antennas, one baseline, one pass. It is still the reference global DEM for a lot of hydrology work. -->
 
-<!-- VERIFY: "orbited the Earth 16 times" — 16 is the number of orbits per day, so the mission total is much larger. Check the figure before presenting. -->
-<!-- VERIFY: "over 80% of the Earth's surface" — SRTM coverage is usually quoted as a fraction of the *land* surface between about 60° N and 56° S. Confirm the wording. -->
-<!-- TODO(screenshot): this is a capture of a third-party web page, complete with an advertisement. Replace with a NASA/USGS source page or a plain SRTM coverage figure. -->
+<!-- CORRECTED 2026-09-10 against NASA Earthdata (earthdata.nasa.gov/data/instruments/srtm). The slide used to say the shuttle "orbited the Earth 16 times", which is the number of orbits in a day, not in an eleven-day mission; and "over 80% of the Earth's surface", which is wrong twice — NASA says nearly 80%, and of the *land* surface. Both were flagged VERIFY at migration. The mast length and the single-pass interferometry are from the same page and are worth saying, because they are why SRTM has voids in steep terrain: one look angle, radar shadow. -->
+
+<!-- TODO(screenshot): ta-nasa-srtm-page.jpg is a capture of a third-party web page, advertisement included. Replace with the NASA Earthdata SRTM page or a plain coverage figure. -->
 
 ---
 
@@ -136,14 +140,19 @@ Examples of a DEM include a (square) digital elevation grid, a triangular irregu
 
 ![bg right:52% w:96%](images/ta-aster-gdem-earthdata.jpg)
 
-- ASTER GDEM has a global resolution of 90 meters, with a resolution of 30 meters in the United States
-- Search and download through NASA **Earthdata Search**
+- ASTER GDEM is **1 arc-second — about 30 meters — everywhere**, not just in the United States
+- Built from **stereo optical imagery** rather than radar, so it fills SRTM's voids but is noisier over snow, sand and water
+- Search and download through NASA [Earthdata Search](https://search.earthdata.nasa.gov/)
 
 <!-- ASTER GDEM is built from stereo optical imagery rather than radar, so it fills in where SRTM has voids, but it is noisier over low-contrast surfaces such as snow, sand and water. -->
 
-<!-- VERIFY: the "90 m global / 30 m U.S." resolution claim. ASTER GDEM is generally distributed at 1 arc-second globally; confirm which product version this describes. -->
-<!-- Note: the source slide repeated this sentence twice, once beginning "ASTER GDEM has..." and once "ASTER GDEM boasted..."; the duplicate was removed. -->
-<!-- TODO(screenshot): Earthdata Search interface capture is stale; re-shoot. -->
+<!-- CORRECTED 2026-09-10 against the NASA Earthdata catalog entry for ASTER Global Digital Elevation Model V003: "a spatial resolution of 1 arc second (approximately 30 meter horizontal posting at the equator)", globally. The slide's "90 meters global, 30 meters in the United States" was false — it looks like SRTM's 3 arc-second global product confused with ASTER. This was flagged VERIFY at migration.
+
+Version 3 was built from ASTER scenes acquired March 2000 to November 2013, stacked and cloud-screened, with reference DEMs used to patch areas with too few scenes. That last detail is worth a sentence: parts of ASTER GDEM are not ASTER.
+
+The source slide repeated its one sentence twice, once beginning "ASTER GDEM has..." and once "ASTER GDEM boasted..."; the duplicate was removed at migration. -->
+
+<!-- TODO(screenshot): ta-aster-gdem-earthdata.jpg is a stale Earthdata Search capture; re-shoot from search.earthdata.nasa.gov. -->
 
 ---
 
@@ -151,13 +160,17 @@ Examples of a DEM include a (square) digital elevation grid, a triangular irregu
 
 ![bg right:52% w:96%](images/ta-jaxa-alos-portal.jpg)
 
-- JAXA distributes the **ALOS** global elevation and land-observation products
-- Another independent global DEM to cross-check SRTM and ASTER against
+- JAXA distributes **ALOS World 3D — 30m (AW3D30)**, a global 1 arc-second DEM from the ALOS PRISM stereo instrument
+- A third independent global DEM, worth having when SRTM and ASTER disagree
+- [eorc.jaxa.jp/ALOS/en/dataset/aw3d30](https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm)
 
 <!-- Worth naming so students know there is more than one global option. The useful habit is comparing two DEMs over the same area and seeing where they disagree — usually steep terrain, forest canopy and water. -->
 
-<!-- VERIFY: the source slide had no text at all here beyond the title; the two bullets describe what the captured page shows. Confirm which ALOS product is meant (and its cell size) before presenting. -->
-<!-- TODO(screenshot): JAXA portal capture is stale; re-shoot. -->
+<!-- The source slide had no text beyond its title. The product named here is AW3D30, JAXA's free global 30 m release; the commercial AW3D is 5 m and is not what students will download. Link checked live 2026-09-10.
+
+The teaching point of having three global DEMs on three slides is the habit in the next bullet: difference two of them over the same area and look at where they disagree. It is steep terrain, forest canopy and water every time, and that is a map of where your slope analysis is least trustworthy. -->
+
+<!-- TODO(screenshot): ta-jaxa-alos-portal.jpg is stale; re-shoot from the AW3D30 page. -->
 
 ---
 
