@@ -267,6 +267,13 @@ Merriam-Webster Dictionary: (http://www.merriam-webster.com/dictionary/avalanche
      separately scored "Self-assessment" item. If self-assessment is meant to be scored on its
      own, the lab is worth 100 and a total row is missing. Point values were not changed. -->
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03): CROP (2026-09-03): the two browser captures (Figures 1 and 2) had the Chrome tab strip and address bar removed (they showed the capturing user's other open tabs and profile avatar); the page content is unchanged.
      source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 6 - Avalanche Hazard.docx
      (Word title: "Lab 6 – Mapping Avalanche Risk using Slope, Aspect, and Elevation"; the page

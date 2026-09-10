@@ -641,6 +641,13 @@ Fifty points in five parts of ten, plus up to five points of extra credit. The b
 | **Total** | **/50** |
 | **Extra credit — the Magic Valley extract** (see *Going further* in the Data section)<br>• Your model run on the Magic Valley extract at your chosen threshold, with the cells and area of class 1 reported (1)<br>• NDVI read at a pivot you can verify is irrigated and at ground you can verify is not, and whether your threshold sits between them (2)<br>• A map or figure of the result (1)<br>• A paragraph: does your threshold transfer, and what in that landscape explains why or why not (1) | up to +5 |
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-06, draft, round 2): source: docs/assignments/lab-02/README.md (the 2026-09-03 migration of Lab 2 - NDVI.docx) plus a full run of the lab in ArcGIS Pro 3.7.1 on a local Windows machine (not Citrix), project C:\Ames\Lab02\Lab02.aprx, model NDVI in Lab02.atbx, outputs in Lab02.gdb. Round 2 works through tools/lab02/PARITY_PLAN.md, which compares this page with the Lab 1 draft.
 ArcGIS Pro version verified against: VERIFIED 2026-09-06 in ArcGIS Pro 3.7.1. Every step 0-6 was driven in the GUI. Every dialog on this page is a capture of that session.
 ROUND 3 (2026-09-06, later): instructor decision - the second study area is NOT a requirement. The old "find another scene" step (and round 2's Step 7 on the Magic Valley extract) is dropped in favor of the Step 6 sensitivity analysis, exactly as Lab 1 dropped its second county; the second deliverable map is now a Step 6 threshold scenario (Figure 20 already is one). The Magic Valley extract is KEPT in docs/data as an optional going-further download because it was already built and costs a student nothing; delete the zip and the two fetch/make scripts in tools/lab02 if it is not wanted.

@@ -401,6 +401,13 @@ what to submit.
 | **Range and step sensitivity** (Step 7)<br>• A table of at least three additional runs, giving the range, the step, the number of shorelines, and the areas at the lowest and highest elevations for each (4)<br>• Which features go dry and whether the step changes that answer (2)<br>• How the area changes per unit elevation and what the basin's shape has to do with it (2)<br>• The smallest step that still shows the basin's shape, and what the finer runs cost (2) | /10 |
 | **Total** | **/50** |
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-08): NEW LAB, no Word source. Created as a placeholder on September 8, 2026, when the Word-era Labs 6 to 10 were renumbered 7 to 11 and "Lab 11 — Choose Your Own Adventure" was dropped; written to the anatomy in tools/lab-conversion-guide.md, section 9. Introduced Thursday of Week 7 (the session freed when Midterm 1 moved to Week 8) and due that Saturday.
 NOT VERIFIED: the lab has not been run in ArcGIS Pro. No tool name, menu label, parameter name, expression, check value, or figure on this page has been checked in a live session. The ArcGIS Pro documentation links were checked live (HTTP 200) on September 8, 2026; the two Bureau of Reclamation links in the data-section comment likewise.
 DESIGN, settled: one model that loops over water-surface elevations with the ModelBuilder For iterator and inline %Elevation% substitution, floods the surface with Con, keeps the main pool, vectorizes with Raster to Polygon, labels each shoreline with its elevation, and collects and merges the results; the student varies the elevation range and step (Step 7) and creates a shore-feature point layer; two maps; five-row rubric of ten.

@@ -37,6 +37,13 @@ from past years and example write-ups
 (parks, trip planners, sledding hills, fire paths, earthquake risk, reservoir siting, culverts,
 Mars craters, and more) are linked from the Week 12 schedule page on Learning Suite.
 
+> [!NOTE]
+> **Using AI on the final project.** Use AI freely across the whole workflow — scoping the
+> question, evaluating data sources, troubleshooting the processing, and writing — and add one
+> line to your report saying what you used it for. Do not take a field name, an expression, a
+> coordinate system, or a number from it, and do not present generated output as a result you
+> produced in ArcGIS Pro. See the [AI Use Policy](../policies/ai-policy.md) for the full policy.
+
 <!-- TODO(instructor): the peer scoresheet and any instructor rubric are not in the Learning
      Suite syllabus printout. Add them here, and consider mirroring two or three example
      write-ups on this site so students do not depend on Learning Suite attachments. -->

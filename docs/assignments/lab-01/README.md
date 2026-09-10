@@ -604,6 +604,13 @@ Fifty points in five parts of ten. The bullets say what each part is worth, so y
 | **Sensitivity analysis** (Step 12)<br>• A table of at least three additional runs, giving the parameter values, the number of candidate polygons and the total area for each (4)<br>• Which parameter matters most and which barely matters, supported by those numbers (2)<br>• Whether any setting eliminates every candidate site, and what that means (2)<br>• Whether your recommended site survives every scenario, and whether it is still your recommendation (2) | /10 |
 | **Total** | **/50** |
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 1 - Walmart Site Selection.docx (the Sept 3, 2026 corrected version — census vintage, density units, projected CRS, Intersect-vs-Clip, road criterion, judgment step and rubric total all migrated as-is, nothing reverted).
 ArcGIS Pro version verified against: VERIFIED 2026-09-04 in ArcGIS Pro 3.7.1 (local install, not Citrix). The whole lab was run end to end as a first-time student, Steps 0-9, and every output was checked with arcpy and cross-checked against the live UGRC feature services.
 CONFIRMED CORRECT: NAME = 'UTAH' (29 counties, uppercase); !POP100! / (!ALAND20! / 2589988.110336) against the 2020 tract download (POP100 SmallInteger, ALAND20 Double m2, no ALAND20 = 0 statewide so no divide-by-zero); NAD 1983 UTM zone 12N as the model Output Coordinate System (Counties_Select area = 2,140.9 sq mi vs the true 2,141).

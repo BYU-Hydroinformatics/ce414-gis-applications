@@ -282,6 +282,13 @@ Vajjhala, Shalini P. and Paul S. Fischbeck. "Quantifying Siting Difficulty: A Ca
 
 <!-- TODO(instructor): the instructor plan asks that the lecture example, the assignment steps, and the rubric be aligned. The Week 11 lecture deck teaches the same legacy Cost Distance / Cost Path workflow used here, and the rubric asks students to list "tool settings applied," which will need updating in step with whichever tool set is adopted. -->
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03):
 source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 10 - Least Cost Path Power Line Analysis.docx
 ArcGIS Pro version verified against: NOT VERIFIED in this migration.

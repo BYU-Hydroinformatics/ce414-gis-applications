@@ -448,6 +448,13 @@ you to fix in your own map.
 This lab was originally created by Camden Greenhalgh, Sarah Fox, and Emma Stucki as part of a final
 project for BYU Civil Engineering 414, Fall 2021.
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03): REDACTION (2026-09-03): lab10-weighted-sum-model.png had a file-path tooltip containing a student surname painted out; lab10-example-map.png had the three student author names in the map text block painted out (CRS and date lines kept). Model nodes and map content are otherwise unchanged.
 source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 9 - Wind Farm Site Selection.docx
 

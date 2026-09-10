@@ -168,4 +168,11 @@ through to RMSE, with the remaining IDW and Kriging branches left for you to add
 
 <!-- TODO(instructor): the "Assignment Title, Name, Date, Course" row carries no point value in the Word original (rendered here as "—"). The five scored rows sum to 50, which matches the stated total, so this row appears to be worth 0 points. Confirm whether it should carry points or be folded into another row. -->
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 8 - Practicing with Interpolation.docx; ArcGIS Pro version verified against: NOT VERIFIED in this migration; images renamed from fig-NN: fig-01.png -> lab09-fixed-radius-interpolation-concept.png, fig-02.png -> lab09-example-modelbuilder-model.png; stale/unverified screenshots: lab09-example-modelbuilder-model.png (ModelBuilder canvas carried over from Word, not re-shot or re-verified); TODO(instructor): no download source given for the Y Mountain DEM (Step 1); training/validation split or repeated sampling not added (Step 3); seven-interpolation / seven-difference-raster volume not reduced and lab not converted to a low-stakes in-class practicum (Steps 4-7); RMSE summary sentence omits the mean and contradicts the steps below it (Step 8) — left verbatim, not rewritten; two full map layouts not replaced with a comparison matrix and grading not re-weighted toward interpretation (Deliverables); rubric title row carries no point value (Rubric); VERIFY: CRS wording "UTM NAD 83 Zone 12 North" (Step 2), stale Figure 2 screenshot; dead/redirected links: none — the source document contains no URLs -->

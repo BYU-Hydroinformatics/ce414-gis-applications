@@ -316,6 +316,13 @@ U.S. Geological Survey. Geologic Provinces of the United States. (2011) <http://
      and whether the title row should be scored. The rubric also has no line for the extra credit
      offered in the "Complete the Lab" section above. -->
 
+> [!NOTE]
+> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
+> tighten your write-up, and add one line at the end of your report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it —
+> those come from your own data, and the rubric asks you to defend every one. See the
+> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
 <!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 4 - Cell Phone Tower Placement.docx;
 ArcGIS Pro version verified against: NOT VERIFIED in this migration;
 images renamed from fig-NN: fig-01.png -> lab04-full-model-overview.png; fig-02.png -> lab04-mosaic-to-new-raster.png; fig-03.png -> lab04-slope-raster-calculator.png; fig-04.png -> lab04-project-buffer-udot-routes.png; fig-05.png -> lab04-extract-by-mask.png; fig-06.png -> lab04-select-buffer-county.png; fig-07.png -> lab04-project-clip-towers.png; fig-08.png -> lab04-clip-tool-dialog.png; fig-09.png -> lab04-kernel-density-model.png; fig-10.png -> lab04-kernel-density-dialog.png; fig-11.png -> lab04-density-threshold-raster-calculator.png; fig-12.png -> lab04-density-threshold-raster-calculator-dialog.png; fig-13.png -> lab04-combine-rasters-raster-calculator.png; fig-14.jpg -> lab04-example-result-map.jpg;
