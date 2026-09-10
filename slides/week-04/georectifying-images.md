@@ -21,7 +21,7 @@ Civil & Construction Engineering, Brigham Young University
 <!-- TODO(instructor): the source title slide carried a speaker note that is a ModelBuilder workshop abstract left over from another deck. It was not carried across. Confirm nothing was lost. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -30,13 +30,17 @@ Civil & Construction Engineering, Brigham Young University
 
 ![bg right:32% w:88%](images/geo-dagupan-source-figure.png)
 
+<div style="font-size:0.88em;">
+
 By the end of class you should be able to:
 
-- Say what it means to **georectify** an image, in your own words
-- Tell which images *can* be georectified and which cannot, and why
-- Explain what a georectified raster stores: an origin, a cell size, a coordinate system
-- Name the three steps that turn a paper map into analyzable GIS data: **georectify → digitize → analyze**
-- Recognize when georectifying is the right answer to an engineering problem
+- Say what it means to **georectify** an image, and which images cannot be
+- Name what a georectified raster stores: an origin, a cell size, a coordinate system
+- Name the three steps: **georectify → digitize → analyze**, and why that order
+- Say where **control points** belong, and why their spread beats their number
+- Read a **residual** and a **total RMS error**, and say why a small one proves nothing
+
+</div>
 
 <!-- Set expectations. This is the concepts hour; the hands-on version is Lab 3, where students georeference a scanned map in ArcGIS Pro and digitize features off it. -->
 
@@ -232,17 +236,135 @@ You are handed an aerial photo of a cemetery taken from an airplane. You want to
 
 # In ArcGIS Pro
 
-- Add the image to a map, then open the **Imagery** ribbon tab ▸ **Georeference**
-- Use **Add Control Points** to pair a location on the image with the matching location on a reference layer
-- Watch the **control point table**: it lists each link with its **residual**, and the **RMSE** for the whole fit
-- Choose a **transformation** appropriate to the number and quality of your points
-- **Save** when the fit is acceptable, so the georeferencing travels with the raster
+![w:1120 center](images/geo-georeference-tab.png)
 
-<!-- The bullet steps are here so the lecture can name the workflow; the live version is Lab 3. -->
+<div style="font-size:0.85em;">
 
-<!-- TODO(graphic): needs Pro captures — see SCREENSHOT_SHOT_LIST -->
+Select the image, then **Imagery** tab ▸ **Georeference**. Everything is on the tab that opens:
+**Fit to Display** to get a first guess, **Add Control Points** to pair a spot on the image with the
+same spot on a reference layer, **Transformation** to choose the equation, **Control Point Table** to
+see what your points are doing, and **Save** — which writes the result to the raster.
 
-<!-- TODO(instructor): this deck never teaches the judgment part of georeferencing. Please add content for: (1) where to put control points and why distribution matters more than count; (2) how to choose a transformation; (3) how to read residuals and RMSE, and why a low RMSE is not proof of a good fit; (4) validating against points not used in the fit; (5) the distinction between georeferencing, rectification, and digitizing. -->
+</div>
+
+<!-- ArcGIS Pro 3.7.1, captured Sept 9, 2026. Walk the groups left to right; the order on the tab is the order of the workflow. Lab 3 is the live version of this. Note that Save is a separate deliberate act: close without it and the work is gone. -->
+
+---
+
+# Three words that are not the same thing
+
+<div class="columns" style="grid-template-columns: 1fr 1fr 1fr; font-size:0.88em;">
+<div style="background:#eef3f9;border-top:8px solid #002e5d;border-radius:8px;padding:0.8em;">
+
+**Georeferencing**
+
+Giving an image real-world coordinates, so the software knows where it is. The pixels do not move.
+
+</div>
+<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.8em;">
+
+**Rectification**
+
+Resampling the image onto that coordinate system, so the pixels really are square on the ground. The pixels move.
+
+</div>
+<div style="background:#eef3f9;border-top:8px solid #5a6472;border-radius:8px;padding:0.8em;">
+
+**Digitizing**
+
+Drawing vector features off the image once it is in place. Makes new data.
+
+</div>
+</div>
+
+Georeference first, digitize second. The other way round, every feature lands wrong, permanently.
+
+<!-- The words get used interchangeably and they should not be. In ArcGIS Pro, Save on the Georeference tab writes a transformation alongside the raster: it is georeferenced, not rectified, and the original pixels are untouched. Export the layer and you get a rectified raster. The distinction matters when somebody asks for "the georeferenced file" and you hand them a .tif with an auxiliary file they then lose. -->
+
+---
+
+# Where the control points go
+
+<div class="columns" style="grid-template-columns: 1.05fr 0.95fr;">
+<div style="font-size:0.86em;">
+
+**Distribution matters more than count.**
+
+- Put points near all four **corners**. A transformation is only constrained where you constrain it; a free corner will wander
+- Four points inside one town tell it almost as little as one point
+- Use things that have **not moved**: road intersections, section corners, rail crossings, building corners, river confluences
+- Do not use a shoreline, a riverbank, a field edge or a tree
+
+</div>
+<div style="font-size:0.86em;">
+
+**How many?** At least eight for a scanned sheet.
+
+Each transformation has a minimum, and giving it exactly that many is a trap: with three points a
+first-order polynomial passes through all three exactly and reports zero error.
+
+**A zero is not a good fit. It is an exact fit of too few points.**
+
+</div>
+</div>
+
+<!-- This is the judgment half of georeferencing and the half the software will not do for you. Ask the class where they would put points on the Dagupan figure from the start of the hour: the river bends are tempting and they are the worst choice on the sheet, because a river in 1990 is not the river in the basemap. -->
+
+---
+
+# Which transformation?
+
+<div class="columns" style="grid-template-columns: 0.85fr 1.15fr; align-items: center;">
+<div style="text-align:center;">
+
+![h:430](images/geo-transformation-list.png)
+
+</div>
+<div style="font-size:0.85em;">
+
+- **1st Order Polynomial (Affine)** shifts, scales, rotates and skews the whole sheet, and keeps straight lines straight. Start here
+- **2nd and 3rd Order** bend the sheet. Use them when the source really is distorted, not to make a number smaller
+- **Spline** forces every control point to match exactly and rubber-sheets everything in between. It will always give you the best-looking error
+- The menu states the **minimum points** each one needs
+
+</div>
+</div>
+
+<!-- ArcGIS Pro 3.7.1, captured Sept 9, 2026. The honest default is affine: a scanned sheet is a flat piece of paper photographed flat, and affine is the transformation that describes that. Reach for a higher order when you can name the distortion you are correcting — a folded sheet, a curled edge, a map drawn on a projection you cannot identify. -->
+
+---
+
+# The error it reports is measured on the points you fitted
+
+<div class="columns" style="grid-template-columns: 1fr 1fr; align-items: center;">
+<div style="font-size:0.86em;">
+
+The **Control Point Table** gives each link a **residual** and the whole fit a **total RMS error**.
+
+Every one of those points helped solve the transformation. The residuals describe how well the
+equation reproduces its own inputs. They say **nothing** about the rest of the sheet.
+
+A spline drives the total RMS to zero by construction, and can distort the map badly everywhere
+between the points.
+
+</div>
+<div>
+
+<div style="background:#fdf1e7;border-left:8px solid #e8792b;border-radius:8px;padding:0.9em 1.1em;font-size:0.9em;">
+
+**So check it somewhere you did not fit.**
+
+Pick a feature that exists on both the sheet and the basemap and that you did **not** use as a
+control point. Measure how far apart they are.
+
+*That* distance is your georeferencing accuracy. The RMS error is a fit statistic.
+
+</div>
+
+</div>
+</div>
+
+<!-- This is the single most useful idea in the hour and the one students get wrong for years afterwards. It is the same hold-out logic as any model validation: a number computed on the training data is not a measure of performance. Lab 3 Step 8 makes them do it — three transformations, the same points, and the check feature moving the opposite way from the RMS. -->
 
 ---
 
@@ -287,7 +409,8 @@ Try to georectify your hand-drawn map of your home neighborhood…
 
 # Before Next Class
 
-- Lab 3, [Georectifying and Digitizing](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/), is due **Saturday 11:59 pm**
+- Lab 3, [Georectifying and Digitizing Historic Maps](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/), is due **Saturday 11:59 pm**. **One** sheet, older than 1900, georeferenced and digitized — and Step 8 asks you to solve it three ways and say which one you would defend
+- Start by finding your sheet. [USGS topoView](https://ngmdb.usgs.gov/topoview/) has every USGS topographic map back to 1884, free
 - Read **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
 - Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
