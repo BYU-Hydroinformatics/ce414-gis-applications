@@ -8,7 +8,7 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | --- | --- | --- |
 | [1](week-01.md) | Data Models Refresher | — |
 | [2](week-02.md) | ModelBuilder | Lab 1 — Walmart Site Selection |
-| [3](week-03.md) | ModelBuilder and Raster Analysis | Lab 2 — NDVI |
+| [3](week-03.md) | Raster Analysis and Map Algebra | Lab 2 — NDVI |
 | [4](week-04.md) | Imagery | Lab 3 — Georectifying and Digitizing Images |
 | [5](week-05.md) | Terrain Analysis | Lab 4 — Cell Phone Tower Placement |
 | [6](week-06.md) | Watershed Delineation | Lab 5 — Watershed Delineation |

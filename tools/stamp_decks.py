@@ -52,6 +52,32 @@ def git_last_date(paths):
     return out.stdout.strip()
 
 
+def show(rev):
+    """File content at a revision, or "" if it did not exist there."""
+    out = subprocess.run(["git", "show", rev], cwd=ROOT, capture_output=True,
+                         text=True, encoding="utf-8", errors="replace")
+    return out.stdout if out.returncode == 0 else ""
+
+
+def deck_content_date(deck):
+    """Date of the newest commit that changed the deck's *content*.
+
+    Commits that only rewrote the stamp do not count. Stamping every deck lands as one commit
+    touching every deck, so a plain `git log -1` would report that commit and every deck would
+    claim it changed the day the stamps were last run — which is exactly the date this figure is
+    supposed to disprove. So walk the history newest-first and stop at the first commit whose
+    unstamped content differs from its parent's."""
+    rel = deck.relative_to(ROOT).as_posix()
+    log = subprocess.run(["git", "log", "--format=%H %cs", "--", rel], cwd=ROOT,
+                         capture_output=True, text=True, encoding="utf-8",
+                         errors="replace", check=True).stdout.split()
+    commits = list(zip(log[0::2], log[1::2]))
+    for sha, date in commits:
+        if unstamped(show(f"{sha}:{rel}")) != unstamped(show(f"{sha}^:{rel}")):
+            return date
+    return commits[-1][1] if commits else dt.date.today().isoformat()
+
+
 def is_dirty(deck, text, image_paths):
     """Has anything about this deck changed since the last commit, ignoring the stamp itself?
 
@@ -126,7 +152,10 @@ def process(deck, check):
         date = dt.date.today().isoformat()
         note = " (uncommitted changes, stamped today)"
     else:
-        date = git_last_date([str(deck.relative_to(ROOT)), *images])
+        # The deck's own history ignores stamp-only commits; an image change counts as it stands.
+        date = deck_content_date(deck)
+        if images:
+            date = max(date, git_last_date(images) or date)
         note = ""
 
     body = STAMP_RE.sub("", text)

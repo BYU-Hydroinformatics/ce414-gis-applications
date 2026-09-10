@@ -73,7 +73,7 @@ nav:
       - Overview: schedule/README.md
       - "Week 1 — Data Models Refresher": schedule/week-01.md
       - "Week 2 — ModelBuilder": schedule/week-02.md
-      - "Week 3 — ModelBuilder and Raster Analysis": schedule/week-03.md
+      - "Week 3 — Raster Analysis and Map Algebra": schedule/week-03.md
       - "Week 4 — Imagery": schedule/week-04.md
       - "Week 5 — Terrain Analysis": schedule/week-05.md
       - "Week 6 — Watershed Delineation": schedule/week-06.md

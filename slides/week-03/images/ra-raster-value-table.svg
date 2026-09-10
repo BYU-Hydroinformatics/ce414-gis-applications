@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 862 400" width="862" height="400" font-family="Segoe UI, Avenir Next, Helvetica, Arial, sans-serif" role="img" aria-label="A classified raster beside its value attribute table. NoData cells are gray and have no row in the table.">
+<text x="168.0" y="38" text-anchor="middle" font-size="23" font-weight="700" fill="#002e5d">Classified raster</text>
+<rect x="30" y="56" width="46" height="46" fill="#b9bfc7" stroke="#ffffff" stroke-width="2"/>
+<text x="53.0" y="77.0" text-anchor="middle" font-size="15" font-weight="700" fill="#5d6673">no</text><text x="53.0" y="93.0" text-anchor="middle" font-size="15" font-weight="700" fill="#5d6673">value</text>
+<rect x="76" y="56" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="99.0" y="87.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="122" y="56" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="145.0" y="87.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="168" y="56" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="191.0" y="87.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="214" y="56" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="237.0" y="87.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="260" y="56" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="283.0" y="87.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="30" y="102" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="53.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="76" y="102" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="99.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="122" y="102" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="145.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="168" y="102" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="191.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="214" y="102" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="237.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="260" y="102" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="283.0" y="133.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="30" y="148" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="53.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="76" y="148" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="99.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="122" y="148" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="145.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="168" y="148" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="191.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="214" y="148" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="237.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="260" y="148" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="283.0" y="179.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="30" y="194" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="53.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="76" y="194" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="99.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="122" y="194" width="46" height="46" fill="#c8c445" stroke="#ffffff" stroke-width="2"/>
+<text x="145.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">3</text>
+<rect x="168" y="194" width="46" height="46" fill="#8d63c6" stroke="#ffffff" stroke-width="2"/>
+<text x="191.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">2</text>
+<rect x="214" y="194" width="46" height="46" fill="#8d63c6" stroke="#ffffff" stroke-width="2"/>
+<text x="237.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">2</text>
+<rect x="260" y="194" width="46" height="46" fill="#4a9a4f" stroke="#ffffff" stroke-width="2"/>
+<text x="283.0" y="225.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">1</text>
+<rect x="30" y="240" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="53.0" y="271.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="76" y="240" width="46" height="46" fill="#d94f4f" stroke="#ffffff" stroke-width="2"/>
+<text x="99.0" y="271.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">4</text>
+<rect x="122" y="240" width="46" height="46" fill="#8d63c6" stroke="#ffffff" stroke-width="2"/>
+<text x="145.0" y="271.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">2</text>
+<rect x="168" y="240" width="46" height="46" fill="#8d63c6" stroke="#ffffff" stroke-width="2"/>
+<text x="191.0" y="271.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">2</text>
+<rect x="214" y="240" width="46" height="46" fill="#8d63c6" stroke="#ffffff" stroke-width="2"/>
+<text x="237.0" y="271.0" text-anchor="middle" font-size="23" font-weight="700" fill="#ffffff">2</text>
+<rect x="260" y="240" width="46" height="46" fill="#b9bfc7" stroke="#ffffff" stroke-width="2"/>
+<text x="283.0" y="261.0" text-anchor="middle" font-size="15" font-weight="700" fill="#5d6673">no</text><text x="283.0" y="277.0" text-anchor="middle" font-size="15" font-weight="700" fill="#5d6673">value</text>
+<rect x="30" y="56" width="276" height="230" fill="none" stroke="#4a5568" stroke-width="2.5"/>
+<text x="597.0" y="38" text-anchor="middle" font-size="23" font-weight="700" fill="#002e5d">Value attribute table</text>
+<rect x="362" y="56" width="470" height="38" fill="#002e5d"/>
+<text x="408" y="82" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Value</text>
+<text x="530" y="82" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Class</text>
+<text x="662" y="82" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Count</text>
+<text x="774" y="82" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Area (m²)</text>
+<rect x="362" y="94" width="470" height="42" fill="#f4f7fa"/>
+<rect x="376" y="104" width="22" height="22" fill="#4a9a4f"/>
+<text x="408" y="121" text-anchor="start" font-size="19" fill="#22262e">1</text>
+<text x="530" y="121" text-anchor="middle" font-size="19" fill="#22262e">Forest</text>
+<text x="662" y="121" text-anchor="middle" font-size="19" fill="#22262e">6</text>
+<text x="774" y="121" text-anchor="middle" font-size="19" fill="#22262e">5,400</text>
+<line x1="362" y1="94" x2="832" y2="94" stroke="#c3ccd8"/>
+<rect x="362" y="136" width="470" height="42" fill="#ffffff"/>
+<rect x="376" y="146" width="22" height="22" fill="#8d63c6"/>
+<text x="408" y="163" text-anchor="start" font-size="19" fill="#22262e">2</text>
+<text x="530" y="163" text-anchor="middle" font-size="19" fill="#22262e">Wetland</text>
+<text x="662" y="163" text-anchor="middle" font-size="19" fill="#22262e">5</text>
+<text x="774" y="163" text-anchor="middle" font-size="19" fill="#22262e">4,500</text>
+<line x1="362" y1="136" x2="832" y2="136" stroke="#c3ccd8"/>
+<rect x="362" y="178" width="470" height="42" fill="#f4f7fa"/>
+<rect x="376" y="188" width="22" height="22" fill="#c8c445"/>
+<text x="408" y="205" text-anchor="start" font-size="19" fill="#22262e">3</text>
+<text x="530" y="205" text-anchor="middle" font-size="19" fill="#22262e">Crop</text>
+<text x="662" y="205" text-anchor="middle" font-size="19" fill="#22262e">8</text>
+<text x="774" y="205" text-anchor="middle" font-size="19" fill="#22262e">7,200</text>
+<line x1="362" y1="178" x2="832" y2="178" stroke="#c3ccd8"/>
+<rect x="362" y="220" width="470" height="42" fill="#ffffff"/>
+<rect x="376" y="230" width="22" height="22" fill="#d94f4f"/>
+<text x="408" y="247" text-anchor="start" font-size="19" fill="#22262e">4</text>
+<text x="530" y="247" text-anchor="middle" font-size="19" fill="#22262e">Urban</text>
+<text x="662" y="247" text-anchor="middle" font-size="19" fill="#22262e">9</text>
+<text x="774" y="247" text-anchor="middle" font-size="19" fill="#22262e">8,100</text>
+<line x1="362" y1="220" x2="832" y2="220" stroke="#c3ccd8"/>
+<rect x="362" y="56" width="470" height="206" fill="none" stroke="#4a5568" stroke-width="2"/>
+<rect x="362" y="280" width="470" height="64" rx="8" fill="#fdf1e7" stroke="#e8792b" stroke-width="2"/>
+<rect x="380" y="299" width="26" height="26" fill="#b9bfc7" stroke="#8c98a8" stroke-width="1.5"/>
+<text x="418" y="308" font-size="19" font-weight="700" fill="#a8551a">NoData</text>
+<text x="418" y="331" font-size="17" fill="#7a4415">has no row: it is not a class and not a value</text>
+<text x="431.0" y="366" text-anchor="middle" font-size="20" font-weight="600" fill="#002e5d">Every value in the grid is one row in the table</text>
+<text x="431.0" y="390" text-anchor="middle" font-size="18" fill="#4b5563">Cell size 30 m, so one cell is 900 m²</text>
+</svg>

@@ -1,14 +1,14 @@
-# Week 3: ModelBuilder and Raster Analysis
+# Week 3: Raster Analysis and Map Algebra
 
 ## Slides
 
 ### Tuesday
 
-[Raster Analysis and Map Algebra](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-map-algebra.html) — Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model; then local, focal, zonal and global functions.
+[Raster Analysis and Map Algebra, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-a.html) — Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model and its threshold table.
 
 ### Thursday
 
-[Raster Analysis Hands-On](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-hands-on.html) — Four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.
+[Raster Analysis and Map Algebra, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-b.html) — Local, focal, zonal and global functions; the NDVI model as a tool with a threshold parameter; then four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

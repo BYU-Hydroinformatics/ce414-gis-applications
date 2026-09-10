@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 364" width="760" height="364" font-family="Segoe UI, Avenir Next, Helvetica, Arial, sans-serif" role="img" aria-label="A landscape of forest, a road, water and two houses, sampled onto a grid where every cell carries one class letter.">
+<defs><marker id="ar" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#002e5d"/></marker><clipPath id="panel"><rect x="30" y="52" width="304" height="266"/></clipPath></defs>
+<text x="182.0" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#002e5d">Real world</text>
+<rect x="30" y="52" width="304" height="266" fill="#f4f8f2"/>
+<g clip-path="url(#panel)">
+<ellipse cx="73" cy="277" rx="62" ry="35" fill="#4a9fd8" stroke="#2b6f9c" stroke-width="2"/>
+<path d="M49 147 L87 185 L125 185 L163 185 L201 223 L239 223 L277 223 L315 261" fill="none" stroke="#6b7280" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M49 147 L87 185 L125 185 L163 185 L201 223 L239 223 L277 223 L315 261" fill="none" stroke="#eef1f4" stroke-width="2.5" stroke-dasharray="11 11" stroke-linecap="round"/>
+<g transform="translate(87,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(125,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(163,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(201,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(239,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(277,71) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(87,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(125,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(163,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(201,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(239,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(277,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(315,109) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(163,147) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(201,147) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(239,147) scale(0.62)"><rect x="-4" y="12" width="8" height="20" fill="#8a5a33"/><circle cx="0" cy="0" r="18" fill="#2f7d32"/><circle cx="-11" cy="12" r="12" fill="#3d9140"/><circle cx="11" cy="12" r="12" fill="#3d9140"/></g>
+<g transform="translate(239,261) scale(0.78)"><path d="M-20 0 L0 -19 L20 0 Z" fill="#b4472e"/><rect x="-14" y="0" width="28" height="21" fill="#e9dcc7" stroke="#8a7a63" stroke-width="1.5"/><rect x="-4" y="7" width="9" height="14" fill="#8a7a63"/></g>
+<g transform="translate(277,299) scale(0.78)"><path d="M-20 0 L0 -19 L20 0 Z" fill="#b4472e"/><rect x="-14" y="0" width="28" height="21" fill="#e9dcc7" stroke="#8a7a63" stroke-width="1.5"/><rect x="-4" y="7" width="9" height="14" fill="#8a7a63"/></g>
+</g>
+<rect x="30" y="52" width="304" height="266" fill="none" stroke="#4a5568" stroke-width="2.5"/>
+<line x1="354" y1="185.0" x2="400" y2="185.0" stroke="#002e5d" stroke-width="6" marker-end="url(#ar)"/>
+<text x="380" y="171.0" text-anchor="middle" font-size="18" font-weight="700" fill="#002e5d">sample</text>
+<text x="578.0" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#002e5d">Raster</text>
+<rect x="426" y="52" width="304" height="266" fill="#ffffff"/>
+<g stroke="#8c98a8" stroke-width="1"><line x1="464" y1="52" x2="464" y2="318"/><line x1="502" y1="52" x2="502" y2="318"/><line x1="540" y1="52" x2="540" y2="318"/><line x1="578" y1="52" x2="578" y2="318"/><line x1="616" y1="52" x2="616" y2="318"/><line x1="654" y1="52" x2="654" y2="318"/><line x1="692" y1="52" x2="692" y2="318"/><line x1="426" y1="90" x2="730" y2="90"/><line x1="426" y1="128" x2="730" y2="128"/><line x1="426" y1="166" x2="730" y2="166"/><line x1="426" y1="204" x2="730" y2="204"/><line x1="426" y1="242" x2="730" y2="242"/><line x1="426" y1="280" x2="730" y2="280"/></g>
+<text x="483" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="521" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="559" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="597" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="635" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="673" y="79" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="483" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="521" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="559" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="597" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="635" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="673" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="711" y="117" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="445" y="155" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="559" y="155" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="597" y="155" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="635" y="155" text-anchor="middle" font-size="23" font-weight="700" fill="#1f5c22">F</text>
+<text x="483" y="193" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="521" y="193" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="559" y="193" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="597" y="231" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="635" y="231" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="673" y="231" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="445" y="269" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5378">W</text>
+<text x="483" y="269" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5378">W</text>
+<text x="635" y="269" text-anchor="middle" font-size="23" font-weight="700" fill="#8a3f28">H</text>
+<text x="711" y="269" text-anchor="middle" font-size="23" font-weight="700" fill="#4b5563">R</text>
+<text x="445" y="307" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5378">W</text>
+<text x="483" y="307" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5378">W</text>
+<text x="521" y="307" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5378">W</text>
+<text x="673" y="307" text-anchor="middle" font-size="23" font-weight="700" fill="#8a3f28">H</text>
+<rect x="426" y="52" width="304" height="266" fill="none" stroke="#4a5568" stroke-width="2.5"/>
+<text x="380.0" y="348" text-anchor="middle" font-size="20" font-weight="600" fill="#002e5d">One cell holds one class. Anything smaller than a cell is gone.</text>
+</svg>

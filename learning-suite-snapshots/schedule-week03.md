@@ -87,3 +87,18 @@ Suite item the deck's authoring notes said was missing.
 Every removed span is reproduced or tabulated above with its `fileId`, so a cell can be restored
 through the CKEditor **Source** view without re-embedding. The "NDVI Model" item itself must be
 re-created as a new text item on Tue Sep 15 (the day's `⋯` menu has no undo).
+
+## Superseded September 9, 2026 — the deck URLs in this snapshot are dead
+
+Later on September 9 the Week 3 pair was resplit into Part A and Part B, and both slugs recorded
+above changed:
+
+| In this snapshot | Now |
+| --- | --- |
+| `/slides/week-03/raster-analysis-map-algebra.html` | `/slides/week-03/raster-analysis-a.html` |
+| `/slides/week-03/raster-hands-on.html` | `/slides/week-03/raster-analysis-b.html` |
+
+**TODO(instructor):** the Week 3 Tuesday and Thursday entries on Learning Suite still carry the old
+links and will 404. Update both, and the deck titles with them: they are now "Raster Analysis and
+Map Algebra, Part A" and "... Part B". The Thursday entry should also say that the hour opens with
+the raster-function families and the threshold parameter before the four exercises.

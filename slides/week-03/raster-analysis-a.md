@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra"
+footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A"
 ---
 
 <!-- _class: lead -->
@@ -12,7 +12,7 @@ footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra"
 
 ![w:130](../theme/images/byu-medallion.svg)
 
-# Raster Analysis and Map Algebra
+# Raster Analysis and Map Algebra — Part A
 
 ## NDVI as your first raster model
 
@@ -21,10 +21,10 @@ Civil & Construction Engineering, Brigham Young University
 
 Dr. Dan Ames
 
-<!-- Week 3, Tuesday. Two decks this week: today is the concepts and the first raster model, Thursday is hands-on raster analysis in ArcGIS Pro on the Lab 2 data. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
+<!-- Week 3, Tuesday. Part A is the concepts and the first raster model: what a raster is, map algebra, and NDVI end to end. Part B on Thursday takes the same model, makes its threshold a parameter, and spends most of the hour in ArcGIS Pro. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -40,13 +40,12 @@ By the end of class you should be able to:
 - Say what one raster cell stores, and whether that number is a **measurement** or a **label**
 - Define **map algebra** and state the rule: *same cell in, same cell out*
 - Name the four things that must line up before two rasters can be combined, and what **integer** division does to a ratio
-- Write the **NDVI** equation, explain why **red** and **near-infrared** are the two bands, and read it as a **local** raster function
+- Write the **NDVI** equation, and explain why **red** and **near-infrared** are the two bands
 - Recognize the Lab 2 model as that equation, tool by tool
-- Tell **local**, **focal**, **zonal** and **global** functions apart
 
 </div>
 
-<!-- Set expectations. Part 1 is a short refresher, Week 1 did the data model. Part 2 is map algebra, with the Excel activity in the middle of it. Part 3 is NDVI, built up from the physics to the Lab 2 model. Part 4 is the taxonomy of raster functions that Thursday's exercises walk through. -->
+<!-- Set expectations. Part 1 is a short refresher, Week 1 did the data model. Part 2 is map algebra, with the Excel activity in the middle of it. Part 3 is NDVI, built up from the physics to the Lab 2 model and the threshold table. Thursday's Part B picks up from there: the local, focal, zonal, global families, the threshold as a parameter, and four exercises in ArcGIS Pro. -->
 
 ---
 
@@ -97,17 +96,19 @@ By the end of class you should be able to:
 
 ---
 
-# Is the number a measurement or a label?
+# Measurement or label?
 
 ![bg right:45% w:88%](images/ra-landuse-and-elevation.jpg)
 
-- Same area, two very different rasters
-- **Land use** (top): a handful of values, each standing for a category. Averaging code 4 and code 8 is meaningless
-- **Elevation** (bottom): a continuous surface, high 532 to low 299. Averaging two elevations is sensible
-- The answer decides which operations are legal, how to symbolize it, and how to **resample** it: nearest neighbor for labels, bilinear or cubic for measurements
-- NDVI is a measurement. The classified NDVI map in Lab 2 is a label
+- **Land use** (top): codes for categories. Averaging code 4 and code 8 means nothing
+- **Elevation** (bottom): continuous. Averaging two elevations gives an elevation
+- The answer sets what is legal, how to symbolize, and how to **resample**: nearest neighbor for labels, bilinear for measurements
+- NDVI is a measurement; its classified Lab 2 map is a label
+
+<!-- Open by saying it out loud: same area, two very different rasters. That line used to be the first bullet and was cut on 2026-09-09 when the text was overrunning the footer; the figure makes the point without it. -->
 
 <!-- This is the one distinction from the old discrete-versus-continuous slides that matters for analysis. It comes back on the resampling slide and again in Lab 2 Step 3, where Reclassify turns a measurement into a label. -->
+<!-- The elevation range was cut from the text on 2026-09-09 when the slide was shortened: it read "high 532 to low 299", but the legend in ra-landuse-and-elevation.jpg reads "High : 53.2 / Low : 299", which cannot both be right. VERIFY against the source raster before quoting a number here again. -->
 
 ---
 
@@ -116,9 +117,9 @@ By the end of class you should be able to:
 <div class="columns">
 <div>
 
-![w:430 center](images/ra-real-world-to-raster.jpg)
+![w:520 center](images/ra-real-world-to-raster.svg)
 
-![w:430 center](images/ra-discrete-raster-value-table.jpg)
+![w:520 center](images/ra-raster-value-table.svg)
 
 </div>
 <div>
@@ -131,23 +132,25 @@ By the end of class you should be able to:
 </div>
 </div>
 
-<!-- Top: the real world resolved into a coarse grid of class letters. Bottom: the same idea with a value attribute table, plus the gray NoData class. Point at it now; it comes back in the next four slides and in every analysis they will run. The Lab 2 sanity check (6,040,284 cells with data) is a NoData count in disguise. -->
+<!-- Top: the real world resolved into a coarse grid of class letters. Bottom: the same idea with a value attribute table, plus the gray NoData cells. Point at it now; it comes back in the next four slides and in every analysis they will run. The Lab 2 sanity check (6,040,284 cells with data) is a NoData count in disguise. -->
+
+<!-- Figures redrawn as SVG on 2026-09-09, replacing ra-real-world-to-raster.jpg and ra-discrete-raster-value-table.jpg, which came across in the migration with no recorded source and so could not be cited. These are ours. The counts in the value attribute table are the real counts of the grid drawn beside it (6, 5, 8, 9 of the 28 cells that carry a value; the other two are NoData), and the areas follow from the 30 m cell size stated on the figure. -->
 
 ---
 
-<!-- _class: quiz -->
-
 # A spatial data mantra?
 
-![bg right:35% w:80%](images/ra-raster-or-vector-cartoon.png)
+![bg right:46% w:98%](images/ra-raster-vector-banner-classroom.jpg)
 
-## "Raster is faster but vector is better"
+## "Raster is faster, but vector is correcter"
 
 **Is it true?**
 
 - Faster at *what*?
-- Better for *what*?
+- Correcter about *what*?
 - Which of Lab 1's steps would have been easier on a grid? Which of Lab 2's would be easier on polygons?
+
+<!-- "Correcter" is how the saying is actually passed around in the GIS community, and it is what the banner in the photo says, so the slide matches it. If someone objects to the word, that is a fine way into the argument. -->
 
 <!-- Let them argue for two or three minutes. Push toward: raster wins on continuous surfaces, per-cell math, and whole-area coverage; vector wins on discrete objects, exact boundaries, network problems, and attribute richness. The honest answer is that the data model should follow the phenomenon. A raster operation is an array operation: no topology to traverse, no geometry to intersect, just walk the array. That is why continental-scale analysis is done on grids. -->
 
@@ -439,156 +442,28 @@ Utah County, July 2025, cells at or above the threshold:
 
 ---
 
-<!-- _class: lead -->
-
-# Part 4
-## Beyond one cell: local, focal, zonal, global
-
----
-
-# Four kinds of raster function
-
-<div class="columns">
-<div>
-
-- **Local**: one cell in, one cell out. Map algebra, Reclassify, NDVI, Con
-- **Focal** (neighborhood): a **window** of cells in, one cell out. Focal Statistics, Filter, Slope, Aspect
-- **Zonal**: all the cells sharing a **zone** in, one number per zone out. Zonal Statistics
-- **Global**: the whole grid in, every cell out. Euclidean Distance, Flow Accumulation, Distance Accumulation
-
-Thursday is one exercise on each of the first three.
-
-</div>
-<div>
-
-![h:470 center](images/ra-local-focal-global.png)
-
-<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
-
-</div>
-</div>
-
-<!-- This four-way split organizes the entire Spatial Analyst toolbox, and it is the reading's organizing idea (Chapter 10). Ask, for each Lab 1 and Lab 2 tool they have used, which family it belongs to. Everything in Lab 2 is local. Terrain analysis in Week 5 is focal; watersheds in Week 6 are global. -->
-
----
-
-# Moving windows
-
-![w:700 center](images/ra-focal-window.svg)
-
-<div style="font-size:0.9em;">
-
-- A **kernel** is the set of weights the window applies; 1/9 in every cell is the 3 × 3 mean
-- The same window with a different function: **mean** smooths, **range** finds edges, **majority** cleans up a classified map
-- Slope and aspect are focal functions on a DEM; Week 5 is built on them
-
-</div>
-
-<!-- The dashed box is the window; it steps one cell at a time across the whole grid and writes one number at every stop. The spike of 9 becomes 4.1: smoothing removes noise, and it removes real detail with it, which is why a smoothed DEM makes a worse slope map. Ask what happens at the edge of the grid: the window hangs off the data, and the border cells are NoData unless the tool is told to ignore them. -->
-
----
-
-# Kernels and noise
-
-<div class="columns">
-<div>
-
-![w:480 center](images/ra-moving-window-kernels.png)
-
-</div>
-<div>
-
-![h:440 center](images/ra-noise-filtering.png)
-
-</div>
-</div>
-
-<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
-
-<!-- Left: three window shapes and the weights they carry. Right: an input layer with a spike, a high-pass kernel, and the output, with one window position worked out longhand in the middle. A low-pass filter averages the spike away; a high-pass filter makes it stand out. Thursday's third exercise runs a 5 by 5 mean over NDVI and looks at what it does to the edge of a center-pivot field. -->
-
----
-
-# Where the tools live in ArcGIS Pro
-
-![bg right:36% h:96%](images/ra-spatial-analyst-toolbox.png)
-
-<div style="font-size:0.82em;">
-
-The **Spatial Analyst** toolbox is organized the way this lecture was:
-
-- **Local**: Map Algebra (Raster Calculator), Math (Float, Plus, Minus, Divide), Reclass, Conditional
-- **Neighborhood**: Focal Statistics, Filter, Block Statistics
-- **Zonal**: Zonal Statistics, Zonal Statistics as Table, Tabulate Area
-- **Surface**: Slope, Aspect, Hillshade, Contour, Viewshed
-- **Hydrology**: Fill, Flow Direction, Flow Accumulation, Watershed
-
-Find any of them by name in the **Geoprocessing pane** search box, or browse **Toolboxes ▸ Spatial Analyst Tools**.
-
-</div>
-
-<!-- Spend a minute in the live toolbox rather than the screenshot, which is the Geoprocessing pane's Toolboxes tab in ArcGIS Pro 3.7.1 with Spatial Analyst Tools expanded. The toolsets are the families we just named. Every Lab 2 tool is in Math, Map Algebra or Reclass, which is to say local. -->
-
----
-
-# Thursday: hands-on raster analysis
-
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div>
-
-Bring your **Lab 2 project** with the two bands and your NDVI raster. Four short exercises, each ending in a number you write down:
-
-1. **The integer trap.** Minus, Plus and Divide on the raw bands, no Float. What comes out?
-2. **One expression, five thresholds.** `Con()` in the Raster Calculator, then the sweep
-3. **Neighborhoods.** Focal Statistics on NDVI, and what a mean does to a field edge
-4. **Zones.** Zonal Statistics as Table: which city in Utah County is greenest?
-
-</div>
-<div style="text-align:center;">
-
-![w:520](images/ra-pivots-ndvi.png)
-
-<span style="font-size:0.7em">The center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens</span>
-
-</div>
-</div>
-
-<!-- Preview so they arrive with the project open. Exercise 2 is Lab 2 Step 6 done live, so anyone who finishes it in class has half of that step done. The numbers they record are the in-class activity for Thursday. -->
-
----
-
 # Before Next Class
 
 ![bg right:34% w:94%](images/ra-lab2-example-map.png)
 
 - **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Steps 0 to 3 are within reach tonight; the model is the six tools on the slide you just saw
-- **Thursday**: bring the Lab 2 project to class with the two bands and your NDVI raster loaded
+- **Thursday, Part B**: bring the Lab 2 project with the two bands and your NDVI raster loaded. Most of the hour is ArcGIS Pro open on your own desk
 - **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
 - **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter; NDVI itself is not in it, which is why today carried it. -->
+<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter, which Part B opens with; NDVI itself is not in it, which is why today carried it. Say plainly that Thursday needs a working project, because the first exercise starts a few minutes in. -->
 
 <!--
-Revision notes (2026-09-09): this deck now merges the Sept 3 "Raster Analysis and Map Algebra" deck (24 slides)
-with the Sept 3 "ModelBuilder, Part C" deck (10 slides of NDVI mislabeled as ModelBuilder), which is retired.
-32 slides. Structure: a three-slide raster refresher (Week 1 did the data model), map algebra with the Excel
-activity, the paper prediction exercise, the four alignment rules, and the integer-division trap; then NDVI
-built up from the red edge to the Lab 2 model and the threshold table; then the local/focal/zonal/global
-taxonomy, the Spatial Analyst toolbox, and a preview of Thursday's hands-on deck (raster-hands-on.md).
-- New figures, generated by tools/week03_grid_figures.py and tools/week03_spectral_signature.py (SVG):
-  A + B = C with NoData, the prediction exercise and its answer, integer versus float division, NDVI on one
-  cell, the 3 x 3 window, and the schematic spectral-signature curves (labeled schematic, after Jensen and
-  Lillesand, Kiefer and Chipman; Landsat 8/9 band windows from the USGS table on the Lab 2 page).
-- New ArcGIS Pro 3.7.1 captures (Sept 9, 175 % scaling, C:\Ames\Lab02\Lab02.aprx): the Geoprocessing pane's
-  Toolboxes tab with Spatial Analyst Tools expanded, and the Elberta pivots in the Lab 2 NDVI.
-- Reused: Lab 2's model diagram, "What NDVI sees" infographic and example map (copied with ra- prefixes);
-  the Week 4 MODIS red-band slide and the Bolstad figures from the old deck.
-- The threshold table was computed with tools/week03_prep.py from the course extract; 0.4 and 0.6 match the
-  lab page's check values.
-- Dropped from the old decks: the ArcGIS 9 ArcScene pair, the ArcMap toolbox tree, the uncited scanned
-  overlay-transformations figure, the two ARC/INFO DOCELL code slides (one had a variable-name bug), the
-  three Montana TRI panels and TRI formula (terrain is Week 5), the low-resolution uncredited Africa NDVI
-  pair, and the change-detection figure. The "how many types of model" slide is Week 2 material.
+Revision notes (2026-09-09): Part A of the Week 3 pair. This was one 32-slide deck, "Raster Analysis
+and Map Algebra", itself a merge of the Sept 3 raster deck with the retired "ModelBuilder, Part C"
+NDVI deck. Split into Part A and Part B on 2026-09-09 at the instructor's request, immediately after
+the NDVI material: Part A keeps Parts 1 to 3 (the raster refresher, map algebra with the Excel
+activity, and NDVI through the threshold table); Part 4 and the whole of the former
+raster-hands-on.md became Part B for Thursday, plus new material on the threshold as a parameter.
+- Figures generated by tools/week03_grid_figures.py, tools/week03_spectral_signature.py and
+  tools/week03_nodata_svgs.py; ArcGIS Pro 3.7.1 captures from Sept 9 at 175 % scaling.
+- The threshold table was computed with tools/week03_prep.py from the course extract; 0.4 and 0.6
+  match the lab page's check values.
 - The Excel map-algebra activity stays on Tuesday per the instructor (Sept 9).
 -->

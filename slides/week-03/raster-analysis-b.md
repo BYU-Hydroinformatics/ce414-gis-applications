@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 3 — Raster Analysis Hands-On"
+footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B"
 ---
 
 <!-- _class: lead -->
@@ -12,19 +12,19 @@ footer: "CE 414 · Week 3 — Raster Analysis Hands-On"
 
 ![w:130](../theme/images/byu-medallion.svg)
 
-# Raster Analysis Hands-On
+# Raster Analysis and Map Algebra — Part B
 
-## Four exercises on your Lab 2 data
+## Beyond one cell, and four exercises on your Lab 2 data
 
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering, Brigham Young University
 
 Dr. Dan Ames
 
-<!-- Week 3, Thursday. Tuesday was the concepts: map algebra, NDVI as a local raster function, the local, focal, zonal, global families. Today is ArcGIS Pro open on every desk. Four exercises on the Lab 2 extract, one on each family that matters this week, and every exercise ends in a number students write on the activity sheet. Exercise 2 is Lab 2 Step 6 done live. The image is the center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens. -->
+<!-- Week 3, Thursday. Part A was the concepts: map algebra, NDVI as a local raster function, the Lab 2 model and its threshold table. Part B is a short run of new material and then ArcGIS Pro open on every desk. The new material is the local, focal, zonal, global families, and the one thing Part A stopped short of: turning the threshold into a model parameter, so the sweep is five runs of a tool rather than five edits of an expression. Then four exercises on the Lab 2 extract, each ending in a number students write on the activity sheet. Exercise 2 is Lab 2 Step 6 done live. The image is the center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis Hands-On<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -32,24 +32,169 @@ Dr. Dan Ames
 # How today works
 
 <div class="columns" style="grid-template-columns: 1.1fr 0.9fr; align-items: center;">
-<div style="font-size:0.88em;">
+<div style="font-size:0.85em;">
 
-- Open your **Lab 2 project**. You need the two bands and an **NDVI** raster in the map. If you have not run the model yet, run it now from its tool dialog: about a minute
+- **First**, the four families of raster function, and the NDVI model as a tool with a **threshold parameter**
+- **Then the rest of the hour**, four exercises in ArcGIS Pro. Open your **Lab 2 project** now: you need the two bands and an **NDVI** raster in the map. If you have not run the model yet, run it from its tool dialog, about a minute
 - Every tool today is in the **Geoprocessing pane**: search it by name, fill in the boxes, Run
-- Each exercise ends in **one number** (an area, a count, a city). Write it on the **activity sheet** and upload the sheet to Learning Suite by **9:30 am**
+- Each exercise ends in **one number**, an area, a count or a city. Write it on the **activity sheet** and upload the sheet to Learning Suite by **9:30 am**
 - Work in pairs if you like, but each of you runs the tools
 
 </div>
 <div style="text-align:center;">
 
-![h:420](images/ra-spatial-analyst-toolbox.png)
+![h:400](images/ra-spatial-analyst-toolbox.png)
 
 <span style="font-size:0.65em">Spatial Analyst Tools, by family</span>
 
 </div>
 </div>
 
-<!-- Ten minutes of setup at most. Anyone without a working NDVI raster can compute it in one Raster Calculator line: Float("red") and Float("NIR") in the expression; the point of exercise 1 is exactly what happens without the Float. Check that Spatial Analyst shows Licensed: Yes (Lab 2 Step 0) before anyone gets stuck on a gray Run button. -->
+<!-- Have them open the project while you talk; ten minutes of setup at most. Anyone without a working NDVI raster can compute it in one Raster Calculator line, with Float() around both bands; the point of exercise 1 is exactly what happens without it. Check that Spatial Analyst shows Licensed: Yes (Lab 2 Step 0) before anyone gets stuck on a gray Run button. -->
+
+---
+
+<!-- _class: lead -->
+
+# Beyond one cell
+## Local, focal, zonal, global
+
+---
+
+# Four kinds of raster function
+
+<div class="columns">
+<div>
+
+- **Local**: one cell in, one cell out. Map algebra, Reclassify, NDVI, Con
+- **Focal** (neighborhood): a **window** of cells in, one cell out. Focal Statistics, Filter, Slope, Aspect
+- **Zonal**: all the cells sharing a **zone** in, one number per zone out. Zonal Statistics
+- **Global**: the whole grid in, every cell out. Euclidean Distance, Flow Accumulation, Distance Accumulation
+
+Later today you run one exercise on each of the first three.
+
+</div>
+<div>
+
+![h:470 center](images/ra-local-focal-global.png)
+
+<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
+
+</div>
+</div>
+
+<!-- This four-way split organizes the entire Spatial Analyst toolbox, and it is the reading's organizing idea (Chapter 10). Ask, for each Lab 1 and Lab 2 tool they have used, which family it belongs to. Everything in Lab 2 is local. Terrain analysis in Week 5 is focal; watersheds in Week 6 are global. -->
+
+---
+
+# Moving windows
+
+![w:700 center](images/ra-focal-window.svg)
+
+<div style="font-size:0.9em;">
+
+- A **kernel** is the set of weights the window applies; 1/9 in every cell is the 3 × 3 mean
+- The same window with a different function: **mean** smooths, **range** finds edges, **majority** cleans up a classified map
+- Slope and aspect are focal functions on a DEM; Week 5 is built on them
+
+</div>
+
+<!-- The dashed box is the window; it steps one cell at a time across the whole grid and writes one number at every stop. The spike of 9 becomes 4.1: smoothing removes noise, and it removes real detail with it, which is why a smoothed DEM makes a worse slope map. Ask what happens at the edge of the grid: the window hangs off the data, and the border cells are NoData unless the tool is told to ignore them. -->
+
+---
+
+# Kernels and noise
+
+<div class="columns">
+<div>
+
+![w:480 center](images/ra-moving-window-kernels.png)
+
+</div>
+<div>
+
+![h:440 center](images/ra-noise-filtering.png)
+
+</div>
+</div>
+
+<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
+
+<!-- Left: three window shapes and the weights they carry. Right: an input layer with a spike, a high-pass kernel, and the output, with one window position worked out longhand in the middle. A low-pass filter averages the spike away; a high-pass filter makes it stand out. The third exercise today runs a 5 by 5 mean over NDVI and looks at what it does to the edge of a center-pivot field. -->
+
+---
+
+# Where the tools live in ArcGIS Pro
+
+![bg right:36% h:96%](images/ra-spatial-analyst-toolbox.png)
+
+<div style="font-size:0.82em;">
+
+The **Spatial Analyst** toolbox is organized the way this lecture was:
+
+- **Local**: Map Algebra (Raster Calculator), Math (Float, Plus, Minus, Divide), Reclass, Conditional
+- **Neighborhood**: Focal Statistics, Filter, Block Statistics
+- **Zonal**: Zonal Statistics, Zonal Statistics as Table, Tabulate Area
+- **Surface**: Slope, Aspect, Hillshade, Contour, Viewshed
+- **Hydrology**: Fill, Flow Direction, Flow Accumulation, Watershed
+
+Find any of them by name in the **Geoprocessing pane** search box, or browse **Toolboxes ▸ Spatial Analyst Tools**.
+
+</div>
+
+<!-- Spend a minute in the live toolbox rather than the screenshot, which is the Geoprocessing pane's Toolboxes tab in ArcGIS Pro 3.7.1 with Spatial Analyst Tools expanded. The toolsets are the families we just named. Every Lab 2 tool is in Math, Map Algebra or Reclass, which is to say local. -->
+
+---
+
+<!-- _class: lead -->
+
+# The threshold as a parameter
+## What Part A stopped short of
+
+---
+
+# Make the threshold a parameter
+
+![w:700 center](images/ra-threshold-parameter.svg)
+
+<div style="font-size:0.85em;">
+
+- In Part A the threshold was a **number inside the model**. Changing it meant opening the canvas and retyping the expression
+- Mark the variable as a **parameter**, exactly as in Week 2: right-click it, choose **Parameter**, a **P** appears. It is now a box on the model's own tool dialog
+- That is why Lab 2 classifies with `Con()`: a number in a Reclassify table cannot be a parameter, a number in an expression can
+
+</div>
+
+<!-- This is the one idea Part A stopped short of, and it is Lab 2 Step 5. The Week 2 procedure applies unchanged, which is the point worth making: nothing about ModelBuilder is different because the data are rasters. VERIFY the exact right-click wording in ArcGIS Pro 3.7 before class; the figure is deliberately drawn as a schematic rather than a screen capture, and a real capture of the model and its dialog side by side would be better here. TODO(instructor). -->
+
+---
+
+# One tool, five answers
+
+<div class="columns" style="grid-template-columns: 1.05fr 0.95fr; align-items: center;">
+<div style="font-size:0.88em;">
+
+Same model, same data, five runs of the tool dialog:
+
+| Threshold | Square miles | Share of county |
+| --- | ---: | ---: |
+| 0.3 | 1,327 | 63 % |
+| 0.4 | 1,111 | 53 % |
+| 0.5 | 917 | 44 % |
+| 0.6 | 722 | 34 % |
+| 0.7 | 496 | 24 % |
+
+</div>
+<div style="font-size:0.88em;">
+
+- A parameter turns *"is 0.4 right?"* from an opinion into a table you can put in a report
+- The area falls by more than half across the range. Any recommendation that does not say which threshold it used is not a recommendation
+- **Exercise 2** is this table, built by you, and it is Lab 2 Step 6
+
+</div>
+</div>
+
+<!-- These are the Part A numbers, repeated on purpose: Tuesday they were a result you were shown, today they are a result you produce. Computed from the course extract with the same Con() expression the lab uses; they match the lab page's check values at 0.4 and 0.6. The forest never drops out before the fields do, which is the honest answer to whether one threshold can map irrigation. -->
 
 ---
 
@@ -378,6 +523,7 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 ![bg right:34% w:94%](images/ra-lab2-example-map.png)
 
 - **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Step 6 is today's sweep, written up; the two maps and the rubric self-assessment are what remain
+- **Today's activity sheet**, with your four numbers, is due on Learning Suite by **9:30 am**
 - **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
 - **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
@@ -385,19 +531,30 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 <!-- Remind them that the sweep table from exercise 2 is a required Lab 2 deliverable, and that the map they choose for the scenario should be the run that most changes what a reader would conclude. -->
 
 <!--
-Authoring notes (2026-09-09): new deck for the Thursday session of Week 3, replacing the retired
-"ModelBuilder, Part C" NDVI deck (its content moved into raster-analysis-map-algebra.md). 19 slides.
-- Every exercise runs on the Lab 2 Utah County extract students already have; exercise 4 needs the UGRC
-  municipal boundaries (link checked Sept 9, 200) or the Lab 1 census tracts as a fallback.
-- Results were computed headlessly first with tools/week03_prep.py into C:\Ames\Week03\Week03.gdb, so the
-  speaker notes carry real numbers: integer division gives -1 on 138 sq mi, 0 on 1,961 sq mi, 1 on 48 cells;
-  the threshold sweep is 1,327 / 1,111 / 917 / 722 / 496 sq mi at 0.3 to 0.7; the 5 x 5 majority of the 0.4
-  class covers 1,133 sq mi; mean NDVI by municipality runs from Vineyard (-0.03) to Woodland Hills (0.56).
-- ArcGIS Pro 3.7.1 captures (Sept 9, 175 % scaling, C:\Ames\Lab02\Lab02.aprx, project closed without
-  saving): the integer-division result with its Contents pane, the Raster Calculator, Focal Statistics and
-  Zonal Statistics as Table panes (each stitched from two scrolled grabs), the zonal table panel, the
-  Spatial Analyst toolset list, and the Elberta pivots in NDVI and in the 5 x 5 mean at 1:50,000.
-- The sweep table on the slide is deliberately blank except for the 0.4 check value the lab already gives.
-- The Thursday activity (the numbers sheet) is new and needs a matching Learning Suite item; the Excel
+Authoring notes (2026-09-09): Part B of the Week 3 pair, for the Thursday session. It combines
+Part 4 of the former "Raster Analysis and Map Algebra" deck (local, focal, zonal, global; moving
+windows; kernels; the Spatial Analyst toolbox) with the whole of the former raster-hands-on.md,
+plus two new slides on the threshold as a model parameter. The split was made on 2026-09-09 at the
+instructor's request, immediately after the NDVI material in Part A.
+- NEW on 2026-09-09: the "threshold as a parameter" section, which the week page had promised
+  ("the NDVI model as a tool with a threshold parameter") but no deck carried. Its figure,
+  ra-threshold-parameter.svg, is a hand-drawn schematic and says so on the figure; a real ArcGIS Pro
+  capture of the model beside its tool dialog would be better. TODO(instructor). The right-click
+  wording is stated as it is in the Week 2 Part B deck and is marked VERIFY on the slide's notes.
+- Every exercise runs on the Lab 2 Utah County extract students already have; exercise 4 needs the
+  UGRC municipal boundaries (link checked Sept 9, 200) or the Lab 1 census tracts as a fallback.
+- Results were computed headlessly first with tools/week03_prep.py into C:\Ames\Week03\Week03.gdb,
+  so the speaker notes carry real numbers: integer division gives -1 on 138 sq mi, 0 on 1,961 sq mi,
+  1 on 48 cells; the threshold sweep is 1,327 / 1,111 / 917 / 722 / 496 sq mi at 0.3 to 0.7; the
+  5 x 5 majority of the 0.4 class covers 1,133 sq mi; mean NDVI by municipality runs from Vineyard
+  (-0.03) to Woodland Hills (0.56).
+- ArcGIS Pro 3.7.1 captures (Sept 9, 175 % scaling, C:\Ames\Lab02\Lab02.aprx, project closed
+  without saving): the integer-division result with its Contents pane, the Raster Calculator, Focal
+  Statistics and Zonal Statistics as Table panes (each stitched from two scrolled grabs), the zonal
+  table panel, the Spatial Analyst toolset list, and the Elberta pivots in NDVI and in the 5 x 5
+  mean at 1:50,000.
+- The sweep table on the exercise slide is deliberately blank except for the 0.4 check value the lab
+  already gives; the filled table on the parameter slide is the instructor's own run.
+- The Thursday activity (the numbers sheet) needs a matching Learning Suite item; the Excel
   map-algebra activity stays on Tuesday.
 -->

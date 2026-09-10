@@ -24,7 +24,10 @@ Decisions still pending (Sept 7, 2026, see ROADMAP.md "Syllabus decisions"): the
 be replaced by pre- and post-class quizzes. Settled September 8, 2026: midterms in Weeks 8 and 14;
 Lab 6 is the new Lake Depth Explorer lab, Labs 6 to 10 of the Word era became 7 to 11, and Choose
 Your Own Adventure is gone. Settled September 9, 2026: Week 3 rebuilt around NDVI folded into raster
-analysis (Tuesday) plus a new raster-hands-on deck (Thursday), retiring ModelBuilder Part C."""
+analysis (Tuesday) plus a new hands-on deck (Thursday), retiring ModelBuilder Part C. Settled
+September 9, 2026: that pair was resplit as Part A and Part B, matching Week 2 — Part A ends with the
+NDVI threshold table, and Part B carries the raster-function families, the threshold as a model
+parameter, and the four hands-on exercises."""
 import re
 from pathlib import Path
 
@@ -40,8 +43,8 @@ DECKS = [
     (1,  "data-models-refresher",          "Data Models Refresher",                      "What a model is, and the vector, raster, and TIN data models that every later week builds on.", "Thu"),
     (2,  "modelbuilder-a",                 "ModelBuilder, Part A",                       "Why models, then ModelBuilder in ArcGIS Pro: toolboxes, a first model, environments, reading a canvas, the Cities Near Rivers example start to finish, and how Lab 1 is the same pattern.", "Tue"),
     (2,  "modelbuilder-b",                 "ModelBuilder, Part B",                       "The cookie model, then making a working model reusable: Add To Display, gray elements, renaming, parameters so the model runs as a tool, metadata; then a Lab 1 clinic on the rubric, a complete submission, checking your answer, and peer review.", "Thu"),
-    (3,  "raster-analysis-map-algebra",    "Raster Analysis and Map Algebra",            "Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model; then local, focal, zonal and global functions.", "Tue"),
-    (3,  "raster-hands-on",                "Raster Analysis Hands-On",                   "Four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.", "Thu"),
+    (3,  "raster-analysis-a",              "Raster Analysis and Map Algebra, Part A",     "Rasters as grids of numbers, map algebra cell by cell, the four things that must line up, the integer trap, and NDVI built up from the red edge to the Lab 2 model and its threshold table.", "Tue"),
+    (3,  "raster-analysis-b",              "Raster Analysis and Map Algebra, Part B",     "Local, focal, zonal and global functions; the NDVI model as a tool with a threshold parameter; then four exercises in ArcGIS Pro on the Lab 2 data: the integer trap, a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics by city.", "Thu"),
     (4,  "georectifying-images",           "Georectifying Images",                       "Giving a scanned map or photo real-world coordinates: control points, transformations, and what can go wrong.", "Tue"),
     (4,  "remote-sensing-3d-imaging",      "Remote Sensing and 3D Imaging",              "How sensors see the Earth — the electromagnetic spectrum, Landsat, and imagery in three dimensions.", "Thu"),
     (5,  "terrain-analysis",               "Terrain Analysis",                           "Elevation models and the products derived from them: slope, aspect, hillshade, curvature, and viewsheds.", None),
@@ -58,7 +61,7 @@ LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Imag
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Avalanche Hazard",8:"Big Southern Butte",
         9:"Practicing with Interpolation",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 12)}
-WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"ModelBuilder and Raster Analysis",4:"Imagery",
+WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Watershed Delineation, Part 3",
                8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
                10:"Raster-Based Spatial Analysis",11:"Least Cost Path and Coordinate Systems",12:"GPS and the Final Project",
