@@ -204,23 +204,21 @@ By the end of class you should be able to:
 <div>
 
 - Open the workbook from Learning Suite: two small grids and a blank one
-- Fill the blank grid with **formulas**, not numbers: `=B3+H3`, then drag across the block
+- Fill the blank grid with **formulas**, not numbers: `=B3+H3`, then drag it across the block
 - Then the three variations on the sheet: a **product**, a **comparison** (`=IF(B3>5,1,0)`), and a division with a **blank** cell in one input
 - **Upload the workbook to Learning Suite by 9:30 am**, fifteen minutes after class
 
 </div>
 <div>
 
-![w:440 center](images/ra-map-algebra-spreadsheet.png)
-
-<span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
+![w:520 center](images/ra-map-algebra-excel.png)
 
 </div>
 </div>
 
 <!-- The spreadsheet formula =B3+H3 is map algebra. Drag it across the block and you have run a binary local function. The blank-cell variation is NoData: Excel treats a blank as zero in addition, which is exactly the mistake a raster GIS is built to avoid. Ten minutes. Collect the workbooks through Learning Suite; the point is that they have typed a cell-by-cell expression before they see the Raster Calculator. -->
 
-<!-- Legacy figure: the spreadsheet capture is Bolstad's, Excel 2003-era. Kept as the concept illustration; the activity workbook itself lives on Learning Suite. -->
+<!-- Figure rebuilt on 2026-09-09 in current Excel, replacing Bolstad's Excel 2003 screenshot and its credit line. The cells are placed so the first output formula really is =B3+H3, the string this slide asks students to type: Layer A starts at B3, Layer B at H3. Regenerate the workbook with tools/week03_map_algebra_xlsx.py and recapture if the layout ever changes, because the slide text quotes the formula. -->
 
 ---
 

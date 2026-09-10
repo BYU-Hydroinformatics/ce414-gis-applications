@@ -14,14 +14,14 @@ footer: "CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B"
 
 # Raster Analysis and Map Algebra — Part B
 
-## Beyond one cell, and four exercises on your Lab 2 data
+## Beyond one cell, and three exercises on your Lab 2 data
 
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering, Brigham Young University
 
 Dr. Dan Ames
 
-<!-- Week 3, Thursday. Part A was the concepts: map algebra, NDVI as a local raster function, the Lab 2 model and its threshold table. Part B is a short run of new material and then ArcGIS Pro open on every desk. The new material is the local, focal, zonal, global families, and the one thing Part A stopped short of: turning the threshold into a model parameter, so the sweep is five runs of a tool rather than five edits of an expression. Then four exercises on the Lab 2 extract, each ending in a number students write on the activity sheet. Exercise 2 is Lab 2 Step 6 done live. The image is the center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens. -->
+<!-- Week 3, Thursday. Part A was the concepts: map algebra, NDVI as a local raster function, the Lab 2 model and its threshold table. Part B is a short run of new material and then ArcGIS Pro open on every desk. The new material is the local, focal, zonal, global families, and the one thing Part A stopped short of: turning the threshold into a model parameter, so the sweep is five runs of a tool rather than five edits of an expression. Then three exercises on the Lab 2 extract, one per family, each ending in a number students write on the activity sheet. Exercise 1 is the start of Lab 2 Step 6, done live. The image is the center pivots near Elberta in the Lab 2 NDVI, where exercise 2 happens. The integer-trap exercise was cut on 2026-09-09: there was not time for four, Part A already teaches integer versus float, and it was the one exercise that taught a bug rather than a family of tools. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -35,9 +35,9 @@ Dr. Dan Ames
 <div style="font-size:0.85em;">
 
 - **First**, the four families of raster function, and the NDVI model as a tool with a **threshold parameter**
-- **Then the rest of the hour**, four exercises in ArcGIS Pro. Open your **Lab 2 project** now: you need the two bands and an **NDVI** raster in the map. If you have not run the model yet, run it from its tool dialog, about a minute
+- **Then the rest of the hour**, three exercises in ArcGIS Pro, one on each family. Open your **Lab 2 project** now: you need the two bands and an **NDVI** raster in the map. If you have not run the model yet, run it from its tool dialog, about a minute
 - Every tool today is in the **Geoprocessing pane**: search it by name, fill in the boxes, Run
-- Each exercise ends in **one number**, an area, a count or a city. Write it on the **activity sheet** and upload the sheet to Learning Suite by **9:30 am**
+- Each exercise ends in **one number**, an area or a value. Write it on the **activity sheet** and upload the sheet to Learning Suite by **9:30 am**
 - Work in pairs if you like, but each of you runs the tools
 
 </div>
@@ -50,7 +50,7 @@ Dr. Dan Ames
 </div>
 </div>
 
-<!-- Have them open the project while you talk; ten minutes of setup at most. Anyone without a working NDVI raster can compute it in one Raster Calculator line, with Float() around both bands; the point of exercise 1 is exactly what happens without it. Check that Spatial Analyst shows Licensed: Yes (Lab 2 Step 0) before anyone gets stuck on a gray Run button. -->
+<!-- Have them open the project while you talk; ten minutes of setup at most. Anyone without a working NDVI raster can compute it in one Raster Calculator line, with Float() around both bands — and Float() is the whole point, as Part A's integer-division slide showed. Check that Spatial Analyst shows Licensed: Yes (Lab 2 Step 0) before anyone gets stuck on a gray Run button. -->
 
 ---
 
@@ -120,7 +120,7 @@ Later today you run one exercise on each of the first three.
 
 <span style="font-size:0.7em">© Paul Bolstad, *GIS Fundamentals*</span>
 
-<!-- Left: three window shapes and the weights they carry. Right: an input layer with a spike, a high-pass kernel, and the output, with one window position worked out longhand in the middle. A low-pass filter averages the spike away; a high-pass filter makes it stand out. The third exercise today runs a 5 by 5 mean over NDVI and looks at what it does to the edge of a center-pivot field. -->
+<!-- Left: three window shapes and the weights they carry. Right: an input layer with a spike, a high-pass kernel, and the output, with one window position worked out longhand in the middle. A low-pass filter averages the spike away; a high-pass filter makes it stand out. The second exercise today runs a 5 by 5 mean over NDVI and looks at what it does to the edge of a center-pivot field. -->
 
 ---
 
@@ -155,17 +155,16 @@ Find any of them by name in the **Geoprocessing pane** search box, or browse **T
 
 # Make the threshold a parameter
 
-![w:700 center](images/ra-threshold-parameter.svg)
+![w:800 center](images/ra-threshold-parameter.png)
 
-<div style="font-size:0.85em;">
+<div style="font-size:0.82em;">
 
-- In Part A the threshold was a **number inside the model**. Changing it meant opening the canvas and retyping the expression
-- Mark the variable as a **parameter**, exactly as in Week 2: right-click it, choose **Parameter**, a **P** appears. It is now a box on the model's own tool dialog
+- Mark the variable as a **parameter**, exactly as in Week 2: right-click it, choose **Parameter**, a **P** appears
 - That is why Lab 2 classifies with `Con()`: a number in a Reclassify table cannot be a parameter, a number in an expression can
 
 </div>
 
-<!-- This is the one idea Part A stopped short of, and it is Lab 2 Step 5. The Week 2 procedure applies unchanged, which is the point worth making: nothing about ModelBuilder is different because the data are rasters. VERIFY the exact right-click wording in ArcGIS Pro 3.7 before class; the figure is deliberately drawn as a schematic rather than a screen capture, and a real capture of the model and its dialog side by side would be better here. TODO(instructor). -->
+<!-- Say the first half out loud, because it is no longer a bullet: in Part A the threshold was a number inside the model, and changing it meant opening the canvas and retyping the expression. This is the one idea Part A stopped short of, and it is Lab 2 Step 5. The Week 2 procedure applies unchanged, which is the point worth making: nothing about ModelBuilder is different because the data are rasters. Both halves of the figure are real captures of the Lab 2 model in ArcGIS Pro 3.7.1 on Sept 9, 2026, composed by tools/week03_threshold_parameter_figure.py; the schematic they replaced is gone. Worth doing live if the room is with you: the Geoprocessing pane only re-reads a model's parameters after the model is saved and the tool re-opened, which is a good thing to have hit once yourself before thirty students hit it. -->
 
 ---
 
@@ -189,7 +188,7 @@ Same model, same data, five runs of the tool dialog:
 
 - A parameter turns *"is 0.4 right?"* from an opinion into a table you can put in a report
 - The area falls by more than half across the range. Any recommendation that does not say which threshold it used is not a recommendation
-- **Exercise 2** is this table, built by you, and it is Lab 2 Step 6
+- **Exercise 1**, in a few minutes, is three rows of this table, built by you. Lab 2 Step 6 wants the rest
 
 </div>
 </div>
@@ -198,72 +197,24 @@ Same model, same data, five runs of the tool dialog:
 
 ---
 
-# The four exercises
+# The three exercises
 
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0.6em 0;">
-<div style="background:#eef3f9;border-top:8px solid #002e5d;border-radius:8px;padding:0.7em 0.8em;"><div style="font-size:1.4em;font-weight:800;color:#002e5d;">1</div><div style="font-weight:700;">The integer trap</div><div style="font-size:0.75em;color:#5a6472;margin-top:0.3em;">Minus, Plus, Divide on the raw bands. <em>Local.</em></div></div>
-<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.7em 0.8em;"><div style="font-size:1.4em;font-weight:800;color:#e8792b;">2</div><div style="font-weight:700;">One expression, five thresholds</div><div style="font-size:0.75em;color:#5a6472;margin-top:0.3em;">Con() in the Raster Calculator, then the sweep. <em>Local.</em></div></div>
-<div style="background:#eef3f9;border-top:8px solid #002e5d;border-radius:8px;padding:0.7em 0.8em;"><div style="font-size:1.4em;font-weight:800;color:#002e5d;">3</div><div style="font-weight:700;">Neighborhoods</div><div style="font-size:0.75em;color:#5a6472;margin-top:0.3em;">Focal Statistics on NDVI, at a field edge. <em>Focal.</em></div></div>
-<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.7em 0.8em;"><div style="font-size:1.4em;font-weight:800;color:#e8792b;">4</div><div style="font-weight:700;">Zones</div><div style="font-size:0.75em;color:#5a6472;margin-top:0.3em;">Zonal Statistics as Table by city. <em>Zonal.</em></div></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0.6em 0;">
+<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.7em 0.9em;"><div style="font-size:1.4em;font-weight:800;color:#e8792b;">1</div><div style="font-weight:700;">One expression, three thresholds</div><div style="font-size:0.78em;color:#5a6472;margin-top:0.3em;">Con() in the Raster Calculator. <em>Local.</em></div></div>
+<div style="background:#eef3f9;border-top:8px solid #002e5d;border-radius:8px;padding:0.7em 0.9em;"><div style="font-size:1.4em;font-weight:800;color:#002e5d;">2</div><div style="font-weight:700;">Neighborhoods</div><div style="font-size:0.78em;color:#5a6472;margin-top:0.3em;">Focal Statistics at a field edge. <em>Focal.</em></div></div>
+<div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.7em 0.9em;"><div style="font-size:1.4em;font-weight:800;color:#e8792b;">3</div><div style="font-weight:700;">Zones</div><div style="font-size:0.78em;color:#5a6472;margin-top:0.3em;">Zonal Statistics as Table by tract. <em>Zonal.</em></div></div>
 </div>
 
-Budget: about fifteen minutes each. An optional fifth exercise, an **edge detector**, is at the end for anyone who finishes early.
+One exercise per family, about fifteen minutes each. Two optional ones are at the end for anyone who finishes early.
 
-<!-- Say the family out loud each time a tool runs: this is local, this is focal, this is zonal. That is the reading's organizing idea and it is what the quiz can ask about. -->
+<!-- Say the family out loud each time a tool runs: this is local, this is focal, this is zonal. That is the reading's organizing idea and it is what the quiz can ask about. The point of the hour is breadth — that the Spatial Analyst toolbox is large and organized — not depth in any one tool. Terrain and hydrology are deliberately absent; they are Weeks 5 and 6. -->
 
 ---
 
 <!-- _class: lead -->
 
 # Exercise 1
-## The integer trap
-
----
-
-# Do Lab 2 wrong on purpose
-
-<div class="columns" style="grid-template-columns: 1fr 1fr; align-items: center;">
-<div style="font-size:0.88em;">
-
-1. Search the Geoprocessing pane for **Minus** (Spatial Analyst). Input 1 the **NIR** band, input 2 the **red** band, both straight from the zip, no Float. Output `Diff_int`
-2. **Plus**, same two bands, output `Sum_int`
-3. **Divide**: `Diff_int` over `Sum_int`, output `NDVI_intdiv`
-4. Look at the new layer's symbology in the **Contents** pane, then open its **attribute table**
-
-**Write down:** how many distinct values the output has, and how many square miles came out as **−1**
-
-</div>
-<div>
-
-![w:580 center](images/ra-integer-division.svg)
-
-</div>
-</div>
-
-<!-- Three tools, three minutes. The bands are stored as integers (reflectance times ten thousand), and the Spatial Analyst Divide tool keeps the output integer when both inputs are integer, so it truncates: every NDVI between minus one and one becomes zero. The attribute table is the tell: three rows instead of six million distinct values. Cells times 900 square meters divided by 2,589,988 gives square miles, the same conversion as the lab. -->
-
----
-
-# What you should see
-
-![w:800 center](images/ra-intdiv-map.png)
-
-<div style="font-size:0.9em;">
-
-- Three values in the whole county: **0** almost everywhere, **−1** over the lake and a few shadows, and a handful of **1**s
-- The green is not "no vegetation"; it is a **data type** deciding your answer for you
-- The fix is one tool on each band: **Float**. Lab 2 Step 1 exists for this reason
-
-</div>
-
-<!-- Captured from the course extract in ArcGIS Pro 3.7.1: the integer division gives minus one on about 138 square miles (Utah Lake, where NIR is zero in the extract, plus shadowed slopes), zero on about 1,961 square miles, and one on 48 cells in the whole county. Ask what the Reclassify step would have done with this raster: at a 0.4 threshold, nothing at all is cropland. Then have everyone delete the three outputs; nobody wants them in a report by accident. -->
-
----
-
-<!-- _class: lead -->
-
-# Exercise 2
-## One expression, five thresholds
+## One expression, three thresholds
 
 ---
 
@@ -279,7 +230,7 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 3. Output `NDVI_class_04`, then **Run**
 4. Open the output's attribute table: two rows, **Count** for 0 and for 1
 
-**Write down:** the count of 1 cells and the square miles at 0.4. The lab page has the check value; do you match it?
+**Write down:** the square miles at 0.4. The lab page has the check value; do you match it?
 
 </div>
 <div style="text-align:center;">
@@ -289,45 +240,43 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 </div>
 </div>
 
-<!-- The Geoprocessing-pane Raster Calculator, ArcGIS Pro 3.7.1. Con reads: where the condition is true, 1, otherwise 0. This is the paper exercise from Tuesday with a real raster in place of A. The check value at 0.4 is on the lab page (about 3,197,000 cells, 1,111 square miles, 53 percent of the county); a different number usually means the model's environments changed the extent or cell size. -->
+<!-- The Geoprocessing-pane Raster Calculator, ArcGIS Pro 3.7.1. Con reads: where the condition is true, 1, otherwise 0. This is the paper exercise from Part A with a real raster in place of A. The check value at 0.4 is on the lab page (about 3,197,000 cells, 1,111 square miles, 53 percent of the county); a different number usually means the model's environments changed the extent or cell size. Cells times 900 square meters divided by 2,589,988 gives square miles. -->
 
 ---
 
-# Now sweep it
+# Now change the number twice
 
 <div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div style="font-size:0.85em;">
+<div style="font-size:0.88em;">
 
-- Run the same expression at **0.3, 0.5, 0.6 and 0.7**, changing only the number and the output name (`NDVI_class_03`, and so on)
-- Each run takes about fifteen seconds; the whole model would take a minute, which is why Lab 2 exposes the threshold as a parameter
-- Fill the table on the activity sheet: threshold, cells at or above it, square miles, share of the county
+- Run the same expression at **0.3** and at **0.6**, changing only the number and the output name
+- Two runs, about fifteen seconds each. Doing the whole sweep is why Lab 2 exposes the threshold as a **parameter**
+- Fill three rows of the table on the activity sheet
 
-**Write down:** the threshold at which the **mountain forest** above Provo drops out of class 1, and whether the Elberta pivots are still in it
+**Write down:** whether the **mountain forest** above Provo is still in class 1 at 0.6
 
 </div>
-<div style="font-size:0.85em;">
+<div style="font-size:0.88em;">
 
 | Threshold | Square miles | Share |
 | --- | ---: | ---: |
 | 0.3 | | |
 | 0.4 | 1,111 | 53 % |
-| 0.5 | | |
 | 0.6 | | |
-| 0.7 | | |
 
-- Turn layers on and off over the imagery basemap to answer the forest question
-- This table **is** Lab 2 Step 6; keep it
+- Turn the layers on and off over the imagery basemap to answer the forest question
+- These three rows are a start on **Lab 2 Step 6**; the lab asks for more
 
 </div>
 </div>
 
-<!-- Instructor's answers, computed from the course extract on Sept 9, 2026: 0.3 gives 1,327 square miles (63 percent), 0.5 gives 917 (44 percent), 0.6 gives 722 (34 percent), 0.7 gives 496 (24 percent). The forest never drops out before the fields do: at 0.7 the pivots are thinning and the Wasatch canopy is still in the class. That is the honest answer to Lab 2's third question, and the reason the lab suggests adding elevation or a second date. Leave the table blank on the slide; the numbers are theirs to find. -->
+<!-- Instructor's answers, computed from the course extract on Sept 9, 2026: 0.3 gives 1,327 square miles (63 percent) and 0.6 gives 722 (34 percent). The forest never drops out before the fields do: at 0.6 the Wasatch canopy is still in the class while the pivots are thinning. That is the honest answer to Lab 2's third question, and the reason the lab suggests adding elevation or a second date. Leave the table blank on the slide; the numbers are theirs to find. Two extra runs rather than four keeps this to fifteen minutes; the lab is where the full sweep happens. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Exercise 3
+# Exercise 2
 ## Neighborhoods
 
 ---
@@ -335,14 +284,13 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 # Focal Statistics
 
 <div class="columns" style="grid-template-columns: 1.05fr 0.95fr; align-items: center;">
-<div style="font-size:0.88em;">
+<div style="font-size:0.9em;">
 
 1. Search for **Focal Statistics** (Spatial Analyst)
-2. Input **NDVI**; neighborhood **Rectangle, 3 by 3 cells**; statistic **Mean**; output `NDVI_focal3_mean`. Run
-3. Run it again with a **5 by 5** window, output `NDVI_focal5_mean`
-4. Go to the pivots near **Elberta** (Map ▸ Go To XY: 111.95 W, 39.95 N, then set the scale to **1:50,000**) and flip between NDVI and the two means
+2. Input **NDVI**; neighborhood **Rectangle, 5 by 5 cells**; statistic **Mean**; output `NDVI_focal5_mean`. Run
+3. Zoom to the pivots near **Elberta** (Map ▸ Go To XY: 111.95 W, 39.95 N, scale **1:50,000**) and flip between NDVI and the mean
 
-**Write down:** the NDVI of one cell at the **edge** of a pivot in the original, and in the 5 by 5 mean (use the Explore tool pop-up)
+**Write down:** the NDVI of one cell on the **edge** of a pivot, before and after, from the Explore tool pop-up
 
 </div>
 <div style="text-align:center;">
@@ -352,7 +300,7 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 </div>
 </div>
 
-<!-- Focal: a window of cells in, one cell out. Three by three is nine cells, five by five is twenty-five. Ask what the window does at the county boundary: with Ignore NoData checked it averages whatever data are in the window; unchecked, the border cells become NoData. -->
+<!-- Focal: a window of cells in, one cell out. Five by five is twenty-five cells. One run rather than two: the 3 by 3 added a size comparison that the next slide makes anyway. Ask what the window does at the county boundary: with Ignore NoData checked it averages whatever data are in the window; unchecked, the border cells become NoData. -->
 
 ---
 
@@ -385,7 +333,7 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 
 <!-- _class: lead -->
 
-# Exercise 4
+# Exercise 3
 ## Zones
 
 ---
@@ -393,14 +341,14 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 # Zonal Statistics as Table
 
 <div class="columns" style="grid-template-columns: 1.05fr 0.95fr; align-items: center;">
-<div style="font-size:0.82em;">
+<div style="font-size:0.88em;">
 
-1. You need **city polygons**: download the Utah Municipal Boundaries from [UGRC](https://gis.utah.gov/products/sgid/boundaries/municipal/), or use the Utah County census tracts from Lab 1 as the zones instead
+1. Zones: the **Utah County census tracts** from your Lab 1 project. Drag them into this map
 2. Search for **Zonal Statistics as Table** (Spatial Analyst)
-3. Zone data the municipalities, zone field **NAME**; value raster **NDVI**; output `NDVI_by_city`; statistics **All**. Run
+3. Zone data the tracts, zone field the tract id; value raster **NDVI**; output `NDVI_by_tract`; statistics **Mean**. Run
 4. Open the table from **Standalone Tables** in the Contents pane and sort by **MEAN**
 
-**Write down:** the greenest and the least green city in Utah County by mean NDVI, and the one with the largest **standard deviation**
+**Write down:** the greenest and the least green tract by mean NDVI
 
 </div>
 <div style="text-align:center;">
@@ -410,7 +358,7 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 </div>
 </div>
 
-<!-- Zonal: every cell that shares a zone value in, one number per zone out. The table has one row per city: count, area, min, max, range, mean, standard deviation, sum, median, ninetieth percentile. Cities that cross the county line (Draper, Bluffdale) are cut by the county extent, so their statistics describe only the part inside the county. -->
+<!-- Zonal: every cell that shares a zone value in, one number per zone out. Tracts rather than the UGRC municipal boundaries so nobody spends the exercise on a download; the tracts are already on their disk from Lab 1. If you would rather use cities, the boundaries are at gis.utah.gov and the next slide's table is by city. Statistics "Mean" rather than "All" keeps the output narrow enough to read on screen. -->
 
 ---
 
@@ -430,21 +378,20 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 
 ---
 
-# The table, and what it says
-
-![w:1100 center](images/ra-zonal-table.png)
+# Optional: the same thing by city
 
 <div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.85em;">
 <div>
 
-**Least green**, July 2025 mean NDVI
+Download the Utah Municipal Boundaries from [UGRC](https://gis.utah.gov/products/sgid/boundaries/municipal/) and run Zonal Statistics as Table again, zone field **NAME**. The instructor's run, July 2025 mean NDVI:
+
+**Least green**
 
 | City | Mean |
 | --- | ---: |
 | Vineyard | −0.03 |
 | Eagle Mountain | 0.21 |
 | Fairfield | 0.22 |
-| Saratoga Springs | 0.28 |
 
 </div>
 <div>
@@ -456,12 +403,13 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 | Woodland Hills | 0.56 |
 | Draper (county part) | 0.54 |
 | Spring Lake | 0.52 |
-| Alpine | 0.51 |
+
+![w:420 center](images/ra-zonal-table.png)
 
 </div>
 </div>
 
-<!-- Vineyard's mean is negative because a third of its polygon is Utah Lake at minus one in the extract; that is exercise 1's lesson coming back. Eagle Mountain and Fairfield are Cedar Valley: dry benches and new subdivisions. The greenest cities are bench towns against the mountain with mature trees and, in Woodland Hills, forest inside the boundary. Provo, the biggest city, is in the middle at 0.42 with the largest standard deviation, 0.29, because it contains everything from the lake to the canyon. Ask what a mean NDVI per city is actually a measurement of: tree canopy and lawn, not agriculture. Numbers from tools/week03_prep.py on the course extract, Sept 9, 2026. -->
+<!-- Was exercise 4's third slide; now optional, because the download is the slow part. Vineyard's mean is negative because a third of its polygon is Utah Lake, at minus one in the extract. Eagle Mountain and Fairfield are Cedar Valley: dry benches and new subdivisions. The greenest are bench towns with mature trees, and Woodland Hills has forest inside the boundary. Provo is in the middle at 0.42 with the largest standard deviation, 0.29, because it contains everything from the lake to the canyon. Ask what a mean NDVI per city actually measures: tree canopy and lawn, not agriculture. Numbers from tools/week03_prep.py on the course extract, Sept 9, 2026. -->
 
 ---
 
@@ -494,27 +442,26 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 
 **On the activity sheet, uploaded by 9:30 am:**
 
-1. Distinct values and the −1 area from the integer division
-2. Cells and square miles at 0.4, and the sweep table
-3. One edge cell before and after the 5 × 5 mean
-4. Greenest and least green city, and the widest spread
+1. Square miles at 0.4, 0.3 and 0.6, and the forest answer
+2. One edge cell before and after the 5 × 5 mean
+3. Greenest and least green tract
 
-**In your Lab 2 project:** the threshold sweep that Step 6 asks for, half done
+**In your Lab 2 project:** three rows of the Step 6 sweep, and the classified rasters to keep going with
 
 </div>
 <div>
 
 **The families, once more**
 
-- **Local**: Minus, Plus, Divide, Float, Con, Reclassify
+- **Local**: Con and Reclassify today; Float, Minus, Plus and Divide in the Lab 2 model
 - **Focal**: Focal Statistics, and in Week 5, Slope and Aspect
 - **Zonal**: Zonal Statistics as Table
-- **Global**: next month, when a DEM becomes a watershed
+- **Global**: Week 6, when a DEM becomes a watershed
 
 </div>
 </div>
 
-<!-- Close by naming the family of every tool they ran today. If the quiz asks which family Reclassify belongs to, or what Focal Statistics does at the edge of a raster, they have run both. -->
+<!-- Close by naming the family of every tool they ran today. If the quiz asks which family Reclassify belongs to, or what Focal Statistics does at the edge of a raster, they have run both. The Spatial Analyst toolbox has far more than these; the point of the hour was that it is organized, and that terrain and hydrology are the next two weeks. -->
 
 ---
 
@@ -522,13 +469,13 @@ Budget: about fifteen minutes each. An optional fifth exercise, an **edge detect
 
 ![bg right:34% w:94%](images/ra-lab2-example-map.png)
 
-- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Step 6 is today's sweep, written up; the two maps and the rubric self-assessment are what remain
-- **Today's activity sheet**, with your four numbers, is due on Learning Suite by **9:30 am**
+- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Step 6 needs the full sweep; you have three of its rows. The two maps and the rubric self-assessment are what remain
+- **Today's activity sheet**, with your three numbers, is due on Learning Suite by **9:30 am**
 - **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
 - **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Remind them that the sweep table from exercise 2 is a required Lab 2 deliverable, and that the map they choose for the scenario should be the run that most changes what a reader would conclude. -->
+<!-- Remind them that the sweep table started in exercise 1 is a required Lab 2 deliverable and needs finishing, and that the map they choose for the scenario should be the run that most changes what a reader would conclude. -->
 
 <!--
 Authoring notes (2026-09-09): Part B of the Week 3 pair, for the Thursday session. It combines
@@ -541,8 +488,18 @@ instructor's request, immediately after the NDVI material in Part A.
   ra-threshold-parameter.svg, is a hand-drawn schematic and says so on the figure; a real ArcGIS Pro
   capture of the model beside its tool dialog would be better. TODO(instructor). The right-click
   wording is stated as it is in the Week 2 Part B deck and is marked VERIFY on the slide's notes.
-- Every exercise runs on the Lab 2 Utah County extract students already have; exercise 4 needs the
-  UGRC municipal boundaries (link checked Sept 9, 200) or the Lab 1 census tracts as a fallback.
+- CUT TO THREE EXERCISES on 2026-09-09 at the instructor's request: there was not time for four,
+  and the goal of the hour is breadth across the raster tool families rather than depth. The
+  integer-trap exercise went, because Part A already teaches integer versus float and it was the
+  one exercise that taught a bug rather than a family. What remains is one per family: Con() in the
+  Raster Calculator (local), Focal Statistics (focal), Zonal Statistics as Table (zonal). The
+  threshold sweep dropped from five runs to three, the focal exercise from two windows to one, and
+  the zonal exercise now uses the Lab 1 census tracts, already on the students' disks, instead of a
+  UGRC download. The city version of the zonal table and the edge detector are both optional slides
+  at the end, so the material is still there for a year with more time.
+- Every exercise runs on data students already have: the Lab 2 Utah County extract and the Lab 1
+  census tracts. The optional city version needs the UGRC municipal boundaries (link checked
+  Sept 9, 200).
 - Results were computed headlessly first with tools/week03_prep.py into C:\Ames\Week03\Week03.gdb,
   so the speaker notes carry real numbers: integer division gives -1 on 138 sq mi, 0 on 1,961 sq mi,
   1 on 48 cells; the threshold sweep is 1,327 / 1,111 / 917 / 722 / 496 sq mi at 0.3 to 0.7; the

@@ -124,3 +124,19 @@ Thu Sep 17:
   to rename the assignment item as well.
 
 Nothing else in either cell was touched; every attachment and fileId is as recorded above.
+
+## Second edit, later on September 9, 2026 — the exercises were cut to three
+
+The Thursday cell was edited again after Part B dropped from four in-class exercises to three:
+
+- Discussion line: "Then four short exercises ... the integer trap, a Con() threshold sweep in the
+  Raster Calculator, Focal Statistics at a field edge, and Zonal Statistics as Table by city."
+  -> "Then three short exercises ... one per family: a Con() threshold sweep in the Raster
+  Calculator, Focal Statistics at a field edge, and Zonal Statistics as Table by census tract."
+- Data line: the UGRC municipal boundaries are now marked optional, for the city version at the end
+  of the deck, and the line says the exercise itself uses the Lab 1 census tracts students already
+  have. The UGRC link and every attachment are untouched.
+
+The "In Class Activity: Raster Analysis Hands-On" line still carries that name, matching the
+Learning Suite assignment item. TODO(instructor) as before: rename both or neither.
+
