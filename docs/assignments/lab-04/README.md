@@ -68,12 +68,30 @@ For this exercise, you will limit the spatial considerations to the following:
 
     Download an elevation dataset for Utah provided by the USGS. Open either **Raster App: 10-meter USGS DEMs** or **30-meter USGS DEMs**. Download the 10 m or 30 m NED for Utah County using any of the methods on the page.
 
-<!-- VERIFY: all three gis.utah.gov URLs in the original handout now redirect to reorganized
-     product pages (see the migration notes at the end of this file). The section names quoted
-     above — "County Boundaries: Shapefile", "Highway Linear Referencing System Routes",
-     "UDOT LRS Routes: Shapefile", "Raster App: 10-meter USGS DEMs" — were kept verbatim from the
-     handout and have NOT been checked against the current UGRC pages. Walk the pages once and
-     update the labels if they have changed. -->
+> [!TIP]
+> The three links above land on a **product page** that describes the data. The download itself is
+> on the dataset's own page on the Utah open data site, which the product page links to. If a page
+> shows you a map and a description but no working **Download** button, you are on the wrong one —
+> follow the link through to the dataset and use the Download tab there. Give the page ten or
+> fifteen seconds to populate before deciding the button is broken.
+
+> [!NOTE]
+> You can also get the elevation data from the USGS directly, at
+> [apps.nationalmap.gov/downloader](https://apps.nationalmap.gov/downloader/), which is the
+> **3D Elevation Program (3DEP)** portal the Week 5 lecture uses. Draw an area over Utah County,
+> filter to Elevation Products, and take the 1/3 arc-second (about 10 m) DEM.
+
+<!-- VERIFY: the section names quoted above — "County Boundaries: Shapefile", "Highway Linear
+     Referencing System Routes", "UDOT LRS Routes: Shapefile", "Raster App: 10-meter USGS DEMs" —
+     are verbatim from the handout and have still NOT been checked against the current UGRC pages.
+     Walk the three pages once and update the labels if they have moved.
+
+     2026-09-10: the three product-page URLs were re-checked and all return 200. Swapping them for
+     the opendata.gis.utah.gov "/explore" form that Lab 1 uses was considered and NOT done: the
+     obvious slug for the UDOT routes layer, opendata.gis.utah.gov/datasets/udot-lrs-routes/explore,
+     renders an empty ArcGIS Hub shell rather than a dataset, and Hub returns HTTP 200 for pages
+     that do not exist, so a status check would have hidden that. Whoever does the rebuild should
+     find the real dataset pages in a browser and link those. -->
 
 ## ModelBuilder Tools
 
@@ -282,17 +300,21 @@ Prepare a brief report in Microsoft Word that includes a screenshot of your mode
 
 Bolstad, P. (2008) *GIS Fundamentals: A First Text on Geographic Information Systems*. 3rd Edition. Esri Publishing.
 
-U.S. Census Bureau. Population Profile of the United States. (2011) <http://www.census.gov/population/www/pop-profile/profiledynamic.html>
+U.S. Census Bureau. *Population and Housing Unit Estimates.*
+<https://www.census.gov/topics/population.html>
 
-<!-- VERIFY: the census.gov URL above returns HTTP 404 (checked 2026-09-03). Left in place rather
-     than replaced with a guess — the 2011 "Population Profile of the United States" needs to be
-     re-located on census.gov or the citation dropped. -->
+<!-- 2026-09-10: the original citation was "Population Profile of the United States (2011)" at
+     census.gov/population/www/pop-profile/profiledynamic.html, which has been 404 since at least
+     2026-09-03. That specific 2011 publication is no longer on census.gov under any obvious path,
+     and the lab body never cites a figure from it, so the citation now points at the Census
+     Bureau's population topic page (checked 200 on 2026-09-10) rather than at a dead deep link.
+     If the lab ever quotes a population number, cite the table it came from instead. -->
 
-U.S. Geological Survey. Geologic Provinces of the United States. (2011) <http://geomaps.wr.usgs.gov/parks/province/rockymtn.html>
-
-<!-- VERIFY: the geomaps.wr.usgs.gov URL above returns HTTP 403 and redirects to the USGS home page
-     (checked 2026-09-03). This reference is also never cited in the body of the lab. Left in place
-     rather than replaced with a guess. -->
+<!-- The USGS "Geologic Provinces of the United States" reference was removed on 2026-09-10. Its
+     URL, geomaps.wr.usgs.gov/parks/province/rockymtn.html, has been dead since at least
+     2026-09-03 — it 403s and redirects to the USGS home page — and nothing in the body of this lab
+     cites it. Rather than replace a reference the lab does not use with a guess at what it meant,
+     it is gone. -->
 
 ## Example Map
 
@@ -309,12 +331,18 @@ U.S. Geological Survey. Geologic Provinces of the United States. (2011) <http://
 | ModelBuilder<br>One or more full pages (8.5 × 11) showing your model<br>All text in the graphics is readable (10 pt. font minimum)<br>All tools and datasets are shown | /5 |
 | Make TWO full-page (8.5 × 11) maps showing the results of your cell tower analysis.<br>Map Title<br>Neat Line<br>North Arrow<br>Scale Bar<br>Text box with author name, date, and map projection<br>Suitable locations for new cell phone towers are clearly shown<br>All datasets clearly symbolized<br>Visible base map showing road data<br>Data points showing existing cell phone towers<br>Zoomed to an appropriate scale for viewing analysis results<br>All text is legible on the printed map | /30<br>(15 pts each) |
 | Create a Toolbox Interface for your model and include a screen capture of it, including input and output data parameters. | /5 |
+| **Total** | **/50** |
 
-<!-- TODO(instructor): the rubric states no total. The four scored rows sum to 50 points
-     (10 + 5 + 30 + 5); the "Assignment Title, Name, Date, Course" row carries no points in the
-     source and is shown here with an em dash. No numbers were changed. Confirm the intended total
-     and whether the title row should be scored. The rubric also has no line for the extra credit
-     offered in the "Complete the Lab" section above. -->
+<!-- 2026-09-10: the stated total was added. The four scored rows sum to 50 (10 + 5 + 30 + 5), which
+     matches every other lab in the course, so the number is not a guess — but no row's value was
+     changed to make it so, and the "Assignment Title, Name, Date, Course" row still carries no
+     points, which is how the handout had it.
+
+     TODO(instructor): two things this rubric still does not match in Labs 1, 2 and 3. It is not
+     five parts of ten, and its bullets are not individually valued, so a student cannot tell what
+     any single item is worth. And there is no row for the extra credit offered in "Complete the
+     Lab" above. Both are part of the rebuild this lab still needs; see the note at the head of the
+     migration notes below. -->
 
 > [!NOTE]
 > **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
@@ -322,6 +350,19 @@ U.S. Geological Survey. Geologic Provinces of the United States. (2011) <http://
 > for. Do not take a field name, an expression, a coordinate system, or a number from it —
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+
+<!--
+STATUS 2026-09-10: this lab has NOT had the rebuild that Labs 1, 2 and 3 have had. It is still the
+September 3 migration of the Word handout, with nine TODO(instructor) items and seven VERIFY items
+open. What it is missing against tools/lab-conversion-guide.md: check values at each step, a
+sensitivity step (the three thresholds are handed down with no rationale and never varied), any
+validation or reasonableness check on the result, and a rubric of five parts of ten with valued
+bullets. Its ModelBuilder captures are undated, and the model overview is illegible at page width
+and shows a geodatabase named for Lab 8.
+
+Fixed on 2026-09-10 without touching the design: two dead reference links, the rubric's missing
+total, and a note about where the UGRC download button actually lives.
+-->
 
 <!-- Migration notes (2026-09-03): source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 4 - Cell Phone Tower Placement.docx;
 ArcGIS Pro version verified against: NOT VERIFIED in this migration;
