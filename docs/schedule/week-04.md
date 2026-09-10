@@ -8,7 +8,7 @@
 
 ### Thursday
 
-[Remote Sensing and 3D Imaging](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-04/remote-sensing-3d-imaging.html) — How sensors see the Earth — the electromagnetic spectrum, Landsat, and imagery in three dimensions.
+[Remote Sensing](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-04/remote-sensing.html) — How sensors see the Earth: the electromagnetic spectrum, what a digital image stores, bands and false color, hyperspectral imagery, and a gallery of what orbit looks like.
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

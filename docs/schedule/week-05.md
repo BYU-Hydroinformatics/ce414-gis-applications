@@ -2,7 +2,13 @@
 
 ## Slides
 
-- [Terrain Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-05/terrain-analysis.html) — Elevation models and the products derived from them: slope, aspect, hillshade, curvature, and viewsheds.
+### Tuesday
+
+[Elevation Data and LiDAR](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-05/elevation-data-lidar.html) — What an elevation surface is, how LiDAR measures one, and where to download a DEM — the National Map and 3DEP, SRTM, ASTER GDEM and ALOS, and what cell size costs you.
+
+### Thursday
+
+[Terrain Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-05/terrain-analysis.html) — What you compute from a DEM: shaded relief, contours, slope, aspect, curvature and viewsheds, each from a moving window.
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

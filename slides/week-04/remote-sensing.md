@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 4 — Remote Sensing and 3D Imaging"
+footer: "CE 414 · Week 4 — Remote Sensing"
 ---
 
 <!-- TODO(instructor): the course plan suggests two structural changes to this deck, both of which
@@ -14,9 +14,9 @@ Lab 2 rather than after. Everything below is in the source deck's original order
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:45% w:95%](images/rs-lidar-city-buildings.jpg)
+![bg right:45% w:95%](images/rs-false-color-terrain.jpg)
 
-# Remote Sensing and 3D Imaging
+# Remote Sensing
 
 CE 414 Engineering Applications of GIS
 Dr. Dan Ames
@@ -31,7 +31,7 @@ workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with re
 It was removed during conversion. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing and 3D Imaging<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing<span class="updated">Last Updated: 2026-09-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -45,7 +45,7 @@ It was removed during conversion. -->
   - Explain what a digital image actually stores, and read a hexadecimal color
   - Say what a **band** is, and why one scene looks different in every band
   - Tell **multispectral** from **hyperspectral** imagery
-  - Explain how **LiDAR** measures a surface, and what a point cloud is
+  - Read a **false-color** image and say which band was put in which channel
 
 <!-- Set expectations: this is a "how the data get made" lecture. Nothing here is software-specific,
 but it is what makes the band math in Lab 2 mean something. -->
@@ -63,12 +63,10 @@ but it is what makes the band math in Lab 2 mean something. -->
 3. Multi-band Images
 4. Hyperspectral Images
 5. Some Example Images
-6. LiDAR Imagery, and some example LiDAR images
 
 </div>
 
-<!-- The original outline slide. Five topics plus the LiDAR half. Point out that the first four
-build on each other and the fifth is a gallery. -->
+<!-- Five topics. The first four build on each other and the fifth is a gallery. LiDAR used to be a sixth part here; it moved to Week 5 on 2026-09-10, where it sits next to terrain analysis, because a bare-earth LiDAR surface is a DEM. -->
 
 ---
 
@@ -470,117 +468,6 @@ totallycoolpix.com/2011/03/japan-earthquake-and-tsunami-before-and-after/ -->
 
 ---
 
-<!-- _class: lead -->
-
-# LiDAR
-
-## Light Detection And Ranging
-
----
-
-# What is LiDAR and how does it work?
-
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div>
-
-- Fire a pulse of laser light, measure how long it takes to come back
-- Time of flight × speed of light ÷ 2 = **range**
-- Combine range with the sensor's own **position and orientation** (GPS and IMU) to get an `(x, y, z)` point
-- Hundreds of thousands of pulses a second gives a **point cloud**
-- A single pulse can return **more than once** — treetop, branch, ground
-
-</div>
-<div>
-
-<a href="https://www.youtube.com/watch?v=EYbhNSUnIdU" target="_blank">
-
-![w:480 center](images/rs-lidar-wordmark.png)
-
-</a>
-
-<p style="text-align:center;font-size:0.7em;margin-top:0;"><a href="https://www.youtube.com/watch?v=EYbhNSUnIdU" target="_blank">youtube.com/watch?v=EYbhNSUnIdU</a></p>
-
-</div>
-</div>
-
-<!-- Click the graphic to open the video. Multiple returns per pulse is the idea that makes the next
-slide make sense: it is how a laser sees the ground through a canopy.
-VERIFY: this YouTube link came across from the source deck and has not been re-checked. -->
-
----
-
-# A forest, in points
-
-![h:450 center](images/rs-lidar-forest-points.jpg)
-
-<!-- A side view through a point cloud of trees. Every white dot is one laser return. Note that there
-are returns from inside and below the canopy — that is the multiple-return behavior from the last
-slide, and it is why LiDAR can produce a bare-earth surface under forest. -->
-
----
-
-# Mount Rushmore as a point cloud
-
-![h:450 center](images/rs-lidar-mount-rushmore.jpg)
-
-<!-- Terrestrial scanning at very high point density. The scan lines are visible as vertical striping.
-Used here for documentation and change monitoring of the monument. -->
-
----
-
-# Where the scanner sits
-
-![h:450 center](images/rs-terrestrial-scanner.jpg)
-
-<!-- Terrestrial (tripod-mounted) LiDAR. Airborne LiDAR gets you a county; a terrestrial scanner gets
-you one slope, one bridge, one quarry face, at far higher density. Civil engineering uses both. -->
-
----
-
-# A city as a surface
-
-![h:450 center](images/rs-lidar-city-buildings.jpg)
-
-<!-- Buildings extracted from an airborne point cloud and rendered as a surface. This is the input to
-line-of-sight studies, solar potential, view analysis, and flood modeling in an urban core. -->
-
----
-
-# Bare-earth terrain
-
-![h:450 center](images/rs-lidar-terrain-canyon.jpg)
-
-<!-- Same data, classified to ground returns only and rendered as a surface. Vegetation and structures
-have been removed. -->
-
----
-
-# The same terrain, hillshaded
-
-![h:450 center](images/rs-lidar-terrain-hillshade.jpg)
-
-<!-- A hillshade of the bare-earth model. Channels, terraces, roads, and old cut lines show up that
-you cannot see on the ground or in a photograph. This is why LiDAR changed geomorphology and
-archaeology. -->
-
----
-
-# LiDAR, moving
-
-![bg right:38% w:88%](images/rs-lidar-city-buildings.jpg)
-
-<div style="font-size:0.92em;">
-
-- <a href="https://www.youtube.com/watch?v=nXlqv_k4P8Q" target="_blank">**Visualization of LIDAR data**</a> — flying through a raw point cloud
-- <a href="https://www.youtube.com/watch?v=TFZ7Guej8VM" target="_blank">**FRA Nepal Forest Lidar Visualization**</a> — canopy and ground returns separating out
-- <a href="https://www.youtube.com/watch?v=hCP2XaOCAlk" target="_blank">**LiDAR point cloud geovisualization: Balboa Park, San Diego**</a> — a surveyed city block
-
-</div>
-
-<!-- Play one, not three. The Nepal clip is the one that earns its time: you watch the canopy strip away and the ground surface appear underneath, which is the classification step the previous slides described in words. Link titles checked live on Sept 10, 2026; a fourth clip from the source deck (k6nfskNev-Q) is no longer available and was removed. -->
-
----
-
 # Where today shows up
 
 <div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.88em;">
@@ -595,52 +482,40 @@ Today is why those two bands and not any other two. The index was arithmetic; th
 </div>
 <div style="background:#eef3f9;border-top:8px solid #e8792b;border-radius:8px;padding:0.9em 1.1em;">
 
-**Ahead — Weeks 5 and 6**
+**Ahead — Week 5**
 
-The bare-earth surface on the last slide is a **DEM**, and LiDAR is where most of them now come from.
+Next week the sensor points at the ground and measures **distance** instead of brightness.
 
-Week 5 turns a DEM into **slope, aspect and hillshade**. Week 6 turns it into **watersheds**. Both start with the point cloud you just watched.
+**LiDAR** on Tuesday, and what you can compute from the surface it produces on Thursday.
 
 </div>
 </div>
 
-<!-- Two minutes of joining up. Say "reflected near-infrared", not "heat": the near-infrared in NDVI is reflected sunlight that leaf structure bounces back, and nothing in NDVI measures temperature. Then point forward: the hillshade two slides ago is Week 5's opening image, and the fact that it came off a LiDAR point cloud is why this deck and that one belong next to each other. -->
+<!-- Two minutes of joining up. Say "reflected near-infrared", not "heat": the near-infrared in NDVI is reflected sunlight that leaf structure bounces back, and nothing in NDVI measures temperature. Then hand off to Week 5: everything today was passive, measuring sunlight that something else emitted; LiDAR is active, and that difference is where Tuesday starts. -->
 
 ---
 
 # Before Next Class
 
 - Finish **Lab 3 — Georectifying and Digitizing Historic Maps**, due **Saturday 11:59 pm**: [assignments/lab-03](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
-- Reading: **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
+- Read **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
 - Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Conversion notes (2026-09-03): converted from "CE 414 Week 4 - Remote Sensing and 3D
-Imaging.pptx" (38 slides) to 43 slides. DROPPED: source slide 11, a byte-identical duplicate of
-source slide 7 (same title, same two images). The title slide's speaker note was also dropped — it
-was a leftover ArcGIS 9 ModelBuilder workshop abstract pasted in from another deck. ADDED: Today's
-Goals, a Lab 2 preview, and Before Next Class, per the conversion guide. Source slide 23 (the
-inauguration pair) was split across two slides so each image is legible at projector size; no other
-slide was re-cut.
+<!-- Lab 3 is due this Saturday. Next week is elevation: LiDAR on Tuesday, terrain analysis on Thursday, and Lab 4 needs a DEM, so Tuesday is the hour that tells them where to get one. -->
 
-ArcGIS wording: source slide 12's "Open an image in ArcGIS" is now "ArcGIS Pro". No other ArcGIS 9 /
-ArcMap / ArcCatalog / ArcToolbox wording appears in this deck — it contains no ArcGIS UI screenshots
-at all, so nothing here needs a Pro re-shoot.
+<!--
+Split notes (2026-09-10). This was "Remote Sensing and 3D Imaging", 43 slides, at slug
+remote-sensing-3d-imaging. Its last nine slides were LiDAR and they moved to Week 5, into
+slides/week-05/elevation-data-lidar.md, at the instructor's decision: 43 slides is too many for a
+75-minute session, and a bare-earth LiDAR surface is a DEM, so LiDAR belongs beside terrain
+analysis rather than at the end of a spectrum-and-bands lecture.
 
-Infrared/heat check: no slide in the source equated near-infrared with heat, so no such wording was
-changed. The Katrina infrared slide is genuinely about emitted thermal infrared and was left as it
-stands; the near-infrared-is-reflected-not-emitted point was added as a speaker note on the spectrum
-slide and in the Lab 2 preview, where it is load-bearing for NDVI.
+What changed here beyond the removal: the deck is renamed "Remote Sensing"; the title slide's
+background was a LiDAR city render that left with the LiDAR block, replaced with the false-color
+terrain image; the LiDAR goal became a false-color goal; "Where we are going" lost its sixth item;
+and the closing "Where today shows up" now hands off to Week 5 on the passive-versus-active
+distinction rather than pointing at LiDAR slides that are no longer in this deck.
 
-Sensor bands: the three MODIS band slides keep the band numbers and wavelengths shown in the original
-screenshots. Nothing was renumbered — see the TODO(instructor) on that slide.
-
-Stale/at-risk images: the three MODIS captures are from a legacy Multi-Channel Viewer; the Eiffel
-Tower, Dubai, Maryland-snow, wildfire, night-lights, inauguration and tsunami images are all
-2007–2011 web-sourced and were kept as-is, with the source URLs recorded in each slide's speaker
-note. One image (the false-color scene) has no recorded subject or source. The Katrina infrared
-image is embedded and renders, but its only recorded provenance is a NOAA URL that no longer
-resolves.
-
-RESOLVED 2026-09-10: the two slides that had no image now do. "Cool LiDAR videos" became "LiDAR, moving" with a point-cloud image, real video titles and one dead link removed; the Lab 2 preview became "Where today shows up", which looks back at Lab 2 and forward to Weeks 5 and 6. The original note read: two slides have no image, and no images were
-generated in this pass. -->
+Old slug remote-sensing-3d-imaging.html is now a 404. Learning Suite carries it on Thu Sep 24.
+-->

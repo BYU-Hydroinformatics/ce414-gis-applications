@@ -50,3 +50,18 @@ than pasting a recorded `fileId`.
 - The sixteen `Example Final Project - *.docx` / `.pdf` files (Tue Nov 17) — see open question 2
   in [`../LEARNING_SUITE_MIGRATION_PLAN.md`](../LEARNING_SUITE_MIGRATION_PLAN.md); undecided.
 - All data `.zip`, `.xlsx` and `.txt` files, and the two prior-year student PDFs (Thu Sep 10).
+
+## Pending after the 2026-09-10 LiDAR split — Weeks 4 and 5 deck links
+
+The Week 4 Thursday deck was split and LiDAR moved to Week 5. Three schedule cells need attention;
+none has been edited yet.
+
+| Cell | Now points at | Should point at |
+| --- | --- | --- |
+| Thu Sep 24 · Satellite and Imagery Data | `/slides/week-04/remote-sensing-3d-imaging.html` — **404** | `/slides/week-04/remote-sensing.html`, titled "Remote Sensing" |
+| Tue Sep 29 · Terrain Analysis Part 1 | `/slides/week-05/terrain-analysis.html` — resolves, but that is now the **Thursday** deck | `/slides/week-05/elevation-data-lidar.html`, titled "Elevation Data and LiDAR" |
+| Thu Oct 1 · Week 5 Thursday | no entry recorded in this snapshot | `/slides/week-05/terrain-analysis.html`, titled "Terrain Analysis" |
+
+**TODO(instructor):** the Thursday Week 5 cell may need creating rather than editing. Check the
+Fall 2026 schedule before assuming it is only a link swap.
+

@@ -12,215 +12,41 @@ footer: "CE 414 · Week 5 — Terrain Analysis"
 
 # Terrain Analysis
 
+## What you compute from a DEM
+
 CE 414 Engineering Applications of GIS
 Dr. Dan Ames
 
 <!-- Week 5 concepts lecture. Everything in this deck is a raster surface operation: the input is a DEM and the output is another raster that answers an engineering question. The lab this week applies it. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-09-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
 
 # Today's Goals
 
-![bg right:34% w:90%](images/ta-elevation-surface.png)
+![bg right:34% w:90%](images/ta-shaded-relief.jpg)
+
+<div style="font-size:0.92em;">
 
 By the end of class you should be able to:
 
-- Define an **elevation surface** and name the ways a **DEM** can represent one
-- Say where U.S. and global DEMs come from, and at what **cell size**
-- Explain what **slope**, **aspect**, **curvature**, and **hillshade** measure, and how each is computed from a 3 × 3 window
-- Compute slope at a cell by hand, two different ways, and get the same answer the software would
+- Explain what **slope**, **aspect**, **curvature** and **hillshade** measure, and how each is computed from a 3 × 3 window
+- Compute slope at a cell by hand, two different ways, and get the answer the software would
+- Say how the **cell size** you chose on Tuesday changes every one of them
 - Explain what a **viewshed** is and name three engineering uses for one
 
-<!-- Frame the hour. The first third is where elevation data comes from; the middle is what you derive from it; the last is visibility. Each derived surface is a raster in, raster out. -->
+</div>
+
+<!-- Tuesday was where the surface comes from; today is what you derive from it. Every derived surface here is raster in, raster out, computed from a moving window — which is the focal family from Week 3. Say that out loud once. -->
 
 ---
 
 <!-- _class: lead -->
 
 # Part 1
-## Elevation surfaces and where DEMs come from
-
-<!-- Divider. Move quickly through the data-source slides; the students mostly need to know which portal to open and what cell size to expect. -->
-
----
-
-# Elevation surface and DEM
-
-![bg right:42% w:88%](images/ta-elevation-surface.png)
-
-- **Elevation surface** — the ground surface elevation at each point
-- **Digital Elevation Model (DEM)** — a digital representation of an elevation surface
-
-Examples of a DEM include a (square) digital elevation grid, a triangular irregular network, a set of digital line graph contours, or random points.
-
-<!-- The distinction that matters: the surface is the real thing, the DEM is a model of it. A grid is only one way to model a surface; a TIN, contours and a point cloud are others. Everything else today assumes the square grid case. -->
-
----
-
-# Digital elevation grid
-
-**Digital elevation grid** — a grid of cells (square or rectangular) in some coordinate system, having land surface elevation as the value stored in each cell. A **square digital elevation grid** is the common special case.
-
-![h:370 center](images/ta-elevation-grid-anatomy.jpg)
-
-<!-- Walk the anatomy: number of rows, number of columns, cell size, an (X,Y) origin, and NODATA cells where there is no value. The number in the cell is an elevation; the color is only symbology applied to that number. -->
-
----
-
-# DEM data sources
-
-- **3″** (3 arc seconds ≈ 90 m) DEMs from **SRTM** (space shuttle global scan)
-- **30 m** DEMs derived from 1:24,000 scale maps, available for the full U.S.
-- **10 m** DEM for the U.S., resampled and downscaled from 30 m for most of the U.S.
-- **1 m** DEM for parts of the earth, derived from lidar
-
-<!-- TODO(graphic): this source slide was text only; a four-tier resolution-ladder figure would carry it. None was generated for this pass. -->
-
-<!-- These four tiers are the mental model students should leave with: coarse global, medium national, fine national, very fine and patchy. The specific dataset names below the tiers have moved on since this slide was written. -->
-
-<!-- VERIFY: "3″ (3 arc seconds ≈ 90 m) DEMs from SRTM" — SRTM is distributed at 1 arc-second and 3 arc-second; confirm which product and which resolution is meant. -->
-<!-- VERIFY: "30 m DEMs derived from 1:24,000 scale maps available for the full U.S." — this describes the legacy NED / USGS DEM lineage; confirm against what USGS actually distributes now. -->
-<!-- VERIFY: "10 m DEM for the US resampled and downscaled from 30 m for most of the U.S." — check whether the 1/3 arc-second product is natively 10 m or derived from 30 m, and note that going 30 m to 10 m is upsampling, not downscaling. -->
-<!-- VERIFY: "1 m DEM for parts of the earth derived from LiDAR" — confirm current coverage and the correct product name. -->
-<!-- TODO(instructor): restate this slide in current USGS 3DEP terminology (3DEP product tiers and their arc-second/meter designations), and decide whether "NED" should still be named at all or only mentioned as the historical predecessor. -->
-
----
-
-# Where to get global DEMs
-
-![bg right:40% w:92%](images/ta-global-dem-3d.jpg)
-
-- A maintained roundup of free global elevation data:
-  [gisgeography.com/free-global-dem-data-sources](https://gisgeography.com/free-global-dem-data-sources/)
-- Read the entry for each dataset before you download: **coverage**, **cell size**, **vertical datum**, and **license**
-- The next four slides are the sources you will actually use in this course
-
-<!-- Have the page open. The point of the list is that "a DEM" is never just "a DEM" — you pick one, and the choice shows up in every derived surface afterward. -->
-
----
-
-# USGS — The National Map
-
-![bg right:52% w:96%](images/ta-usgs-national-map.jpg)
-
-- The clearinghouse for U.S. elevation data, from the **3D Elevation Program (3DEP)**
-- Download from [apps.nationalmap.gov/downloader](https://apps.nationalmap.gov/downloader/)
-- Draw an area of interest, filter to **Elevation Products (3DEP)**, then pick a resolution and a format
-- 3DEP publishes **1 m**, **1/3 arc-second** (about 10 m) and **1 arc-second** (about 30 m). Which exists depends on where you look
-
-<!-- This is the portal students use for the lab. Show the Datasets tab on the left: they check the elevation product they want, draw an extent, and the download list appears under Products. Do it live rather than from the slide, because the interface moves. -->
-
-<!-- 2026-09-10: www.nationalmap.gov now 301s to the USGS National Map program page, which is not where you download anything. The slide points at the downloader itself. -->
-
-<!-- TODO(screenshot): ta-usgs-national-map.jpg predates the current TNM Downloader, which has Datasets / Products / Cart tabs across the top of the left panel. Re-shoot from apps.nationalmap.gov/downloader. -->
-
----
-
-# NASA SRTM
-
-![bg right:52% w:96%](images/ta-nasa-srtm-page.jpg)
-
-- SRTM flew aboard the Space Shuttle *Endeavour* on mission STS-99, **February 11 to 22, 2000**
-- Two radar antennas, one in the payload bay and one on the end of a **200-foot mast**, measured elevation by interferometry in a single pass
-- It mapped **nearly 80% of Earth's land surface** at **1 arc-second**, about 30 meters
-
-<!-- The Shuttle Radar Topography Mission flew in February 2000. Radar interferometry from a fixed mast: two antennas, one baseline, one pass. It is still the reference global DEM for a lot of hydrology work. -->
-
-<!-- CORRECTED 2026-09-10 against NASA Earthdata (earthdata.nasa.gov/data/instruments/srtm). The slide used to say the shuttle "orbited the Earth 16 times", which is the number of orbits in a day, not in an eleven-day mission; and "over 80% of the Earth's surface", which is wrong twice — NASA says nearly 80%, and of the *land* surface. Both were flagged VERIFY at migration. The mast length and the single-pass interferometry are from the same page and are worth saying, because they are why SRTM has voids in steep terrain: one look angle, radar shadow. -->
-
-<!-- TODO(screenshot): ta-nasa-srtm-page.jpg is a capture of a third-party web page, advertisement included. Replace with the NASA Earthdata SRTM page or a plain coverage figure. -->
-
----
-
-# NASA ASTER
-
-![bg right:52% w:96%](images/ta-aster-gdem-earthdata.jpg)
-
-- ASTER GDEM is **1 arc-second — about 30 meters — everywhere**, not just in the United States
-- Built from **stereo optical imagery** rather than radar, so it fills SRTM's voids but is noisier over snow, sand and water
-- Search and download through NASA [Earthdata Search](https://search.earthdata.nasa.gov/)
-
-<!-- ASTER GDEM is built from stereo optical imagery rather than radar, so it fills in where SRTM has voids, but it is noisier over low-contrast surfaces such as snow, sand and water. -->
-
-<!-- CORRECTED 2026-09-10 against the NASA Earthdata catalog entry for ASTER Global Digital Elevation Model V003: "a spatial resolution of 1 arc second (approximately 30 meter horizontal posting at the equator)", globally. The slide's "90 meters global, 30 meters in the United States" was false — it looks like SRTM's 3 arc-second global product confused with ASTER. This was flagged VERIFY at migration.
-
-Version 3 was built from ASTER scenes acquired March 2000 to November 2013, stacked and cloud-screened, with reference DEMs used to patch areas with too few scenes. That last detail is worth a sentence: parts of ASTER GDEM are not ASTER.
-
-The source slide repeated its one sentence twice, once beginning "ASTER GDEM has..." and once "ASTER GDEM boasted..."; the duplicate was removed at migration. -->
-
-<!-- TODO(screenshot): ta-aster-gdem-earthdata.jpg is a stale Earthdata Search capture; re-shoot from search.earthdata.nasa.gov. -->
-
----
-
-# JAXA — Japan's space agency
-
-![bg right:52% w:96%](images/ta-jaxa-alos-portal.jpg)
-
-- JAXA distributes **ALOS World 3D — 30m (AW3D30)**, a global 1 arc-second DEM from the ALOS PRISM stereo instrument
-- A third independent global DEM, worth having when SRTM and ASTER disagree
-- [eorc.jaxa.jp/ALOS/en/dataset/aw3d30](https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm)
-
-<!-- Worth naming so students know there is more than one global option. The useful habit is comparing two DEMs over the same area and seeing where they disagree — usually steep terrain, forest canopy and water. -->
-
-<!-- The source slide had no text beyond its title. The product named here is AW3D30, JAXA's free global 30 m release; the commercial AW3D is 5 m and is not what students will download. Link checked live 2026-09-10.
-
-The teaching point of having three global DEMs on three slides is the habit in the next bullet: difference two of them over the same area and look at where they disagree. It is steep terrain, forest canopy and water every time, and that is a map of where your slope analysis is least trustworthy. -->
-
-<!-- TODO(screenshot): ta-jaxa-alos-portal.jpg is stale; re-shoot from the AW3D30 page. -->
-
----
-
-# Mars DEMs!
-
-![bg right:52% w:96%](images/ta-mars-dem-quadrangles.jpg)
-
-- Elevation surfaces are not a terrestrial idea: Mars is mapped, quadrangle by quadrangle, the same way
-- Same data model, same derived surfaces, no field survey
-
-<!-- A one-slide aside, but it makes the point that everything in this lecture is arithmetic on a grid of numbers. Nothing in the slope or viewshed math cares which planet the numbers came from. -->
-
----
-
-# Coverage of 30 m and 3″ DEMs
-
-![h:470 center](images/ta-dem-coverage-extents.png)
-
-<!-- Two different things are being compared: cell size and tile extent. The 3-arc-second DEM covers a 1-degree tile; the 30 m DEM covers a 7.5-minute quadrangle, which is a small square inside it. Finer cells mean smaller tiles and more files for the same study area. -->
-
----
-
-# Cell size changes what you can see
-
-<div class="columns">
-<div>
-
-**30 m cells**
-
-![w:420 center](images/ta-cellsize-30m.png)
-
-</div>
-<div>
-
-**100 m cells**
-
-![w:420 center](images/ta-cellsize-100m.png)
-
-</div>
-</div>
-
-<!-- Same terrain, same symbology, two cell sizes. The red outline is the same parcel in both. At 100 m the small drainages disappear and the parcel spans only a handful of cells; any slope you compute for it is an average over a much larger footprint. -->
-
-<!-- TODO(instructor): add the native-versus-resampled distinction here — a 10 m grid resampled from 30 m source data has 10 m cells but 30 m information, and every derived surface inherits the coarser one. Decide how to state it and whether to demonstrate it with a resampled raster. -->
-
----
-
-<!-- _class: lead -->
-
-# Part 2
 ## Describing the surface
 
 <!-- Divider. From here on, every slide is a raster derived from the DEM by looking at a moving 3 x 3 window. -->
@@ -417,7 +243,7 @@ $$
 
 <!-- _class: lead -->
 
-# Part 3
+# Part 2
 ## Viewsheds
 
 <!-- Divider. Visibility is the last of the standard terrain surfaces and the one with the most direct engineering uses. -->
@@ -506,3 +332,15 @@ The battles of Saratoga:
 <!-- TODO(graphic): no graphic on this slide; a small course-schedule or lab-thumbnail figure would carry it. -->
 
 <!-- Conversion notes (2026-09-03): CROP (2026-09-03): the five browser captures (National Map, SRTM/GISGeography, Earthdata, JAXA ALOS, Mars DEMs) had the Chrome tab strip and address bar removed because they showed the capturing user's other open tabs and profile avatar; page content unchanged. source "CE 414 Week 5 - Terrain Analysis.pptx", 28 slides, no hidden slides and no speaker notes in the source — every note in this deck is new. 28 source slides became 35: added a title byline slide, Today's Goals, three section dividers, a Lab 4 preview, and Before Next Class; source slide 22 was split into two slides (four nearest cells / 3rd-order finite difference) because its figure is unreadable at 16:9 on one slide. No slides were dropped. The duplicated sentence on the ASTER slide was removed. Source media1 (a stock tomato photo, unused by any slide) was not carried over. Slides 2, 3, 11 and 26 were built from PowerPoint shapes and are 200 dpi renders of the PDF page, cropped. Stale non-ArcGIS screenshots kept and flagged: The National Map, the SRTM page (a third-party page with an advertisement in the capture), Earthdata Search, and the JAXA portal. There are no ArcMap-era ArcGIS captures in this deck and no ArcGIS UI at all — ArcGIS Pro tool names appear only in speaker notes and carry a VERIFY. Open items: DEM resolution and dataset claims (four VERIFY flags plus a 3DEP terminology TODO; ten VERIFY flags in the deck overall), native-vs-resampled resolution, scale/uncertainty for hillshade, slope, curvature and viewshed, a hand-versus-tool validation exercise, the susceptibility/hazard/risk/exposure distinction, the reading chapter, the Week 5/6 lab schedule, and three TODO(graphic) slides. -->
+
+<!--
+Split notes (2026-09-10). This deck used to open with Part 1, "Elevation surfaces and where DEMs
+come from" — eleven slides that have moved to slides/week-05/elevation-data-lidar.md, the new
+Tuesday deck, along with the LiDAR block from Week 4. What remains is what you compute from a DEM,
+which is a Thursday session of 23 slides.
+
+The two remaining parts were renumbered 1 and 2 (they were 2 and 3). Today's Goals was rewritten to
+promise only what this deck now delivers, and it names the handoff: cell size was chosen on Tuesday
+and every derived surface here depends on it. The deck's day in tools/build_schedule.py changed
+from None to Thu.
+-->
