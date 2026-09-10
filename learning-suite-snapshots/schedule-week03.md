@@ -98,7 +98,29 @@ above changed:
 | `/slides/week-03/raster-analysis-map-algebra.html` | `/slides/week-03/raster-analysis-a.html` |
 | `/slides/week-03/raster-hands-on.html` | `/slides/week-03/raster-analysis-b.html` |
 
-**TODO(instructor):** the Week 3 Tuesday and Thursday entries on Learning Suite still carry the old
-links and will 404. Update both, and the deck titles with them: they are now "Raster Analysis and
-Map Algebra, Part A" and "... Part B". The Thursday entry should also say that the hour opens with
-the raster-function families and the threshold parameter before the four exercises.
+**Applied September 9, 2026.** Both Week 3 schedule cells were edited in the Fall 2026 Schedule
+and the new hrefs verified after a reload.
+
+Tue Sep 15:
+
+- Slides link: text "Raster Analysis and Map Algebra" -> "Raster Analysis and Map Algebra, Part A",
+  href -> `/slides/week-03/raster-analysis-a.html`.
+- Discussion line: "...NDVI as the first raster model, and local, focal, zonal and global functions."
+  -> "...NDVI as the first raster model, and the threshold table it produces." The four families
+  moved to Part B, so the old sentence promised material the Tuesday deck no longer carries.
+- The bold cell heading still reads "Raster Analysis and Map Algebra", which is correct for Part A
+  read as the week title. Left alone.
+
+Thu Sep 17:
+
+- Bold cell heading: "Raster Analysis Hands-On" -> "Raster Analysis and Map Algebra, Part B".
+- Slides link: text -> "Raster Analysis and Map Algebra, Part B", href ->
+  `/slides/week-03/raster-analysis-b.html`.
+- Discussion line now opens with the new material before the exercises: "Local, focal, zonal and
+  global raster functions, and the NDVI model as a tool with a threshold parameter. Then four short
+  exercises..."
+- The "In Class Activity: Raster Analysis Hands-On" line was **not** renamed: it names a Learning
+  Suite assignment item, and renaming it here would desync the two. TODO(instructor): decide whether
+  to rename the assignment item as well.
+
+Nothing else in either cell was touched; every attachment and fileId is as recorded above.
