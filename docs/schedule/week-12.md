@@ -24,6 +24,10 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Quiz 11 | *GPS and GNSS Data* — open book, on Learning Suite, done independently — 20 points |
 | Lab 11 | [Lab 11 — Least Cost Path Power Line Analysis](../assignments/lab-11/README.md) — one PDF report on Learning Suite — 50 points |
 
+## Final project
+
+See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
 > survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.

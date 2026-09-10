@@ -64,6 +64,9 @@ WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"ModelBuilder and Ra
                10:"Raster-Based Spatial Analysis",11:"Least Cost Path and Coordinate Systems",12:"GPS and the Final Project",
                13:"Final Project Work",14:"Presentations and Midterm 2",15:"Final Project Presentations"}
 DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
+# Weeks whose page should point at the final project page. The project is introduced in Week 12 and
+# runs to the end, and the page is not in the site menu — these pointers are how students reach it.
+FINAL_PROJECT_WEEKS = (12, 13, 14, 15)
 
 # Weeks with no new slide deck still get a page, with this description of what happens in class.
 NO_DECK = {
@@ -180,6 +183,10 @@ def week_page(w, decks):
     if w in NO_DECK:
         lines += ["## In class", "", NO_DECK[w], ""]
     lines += due_section(w)
+    if w in FINAL_PROJECT_WEEKS:
+        lines += ["## Final project", "",
+                  "See the [Final Project](../assignments/final-project.md) page for the requirements, "
+                  "the proposal meeting, the milestones, and how the project is scored.", ""]
     lines += ["> [!NOTE]", "> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they",
               "> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.", ""]
     return "\n".join(lines)
@@ -221,12 +228,20 @@ def index_page(weeks):
     return "\n".join(lines)
 
 def update_nav(weeks):
+    """Replace the whole Schedule section of mkdocs.yml — the '  - Schedule:' line and every
+    indented entry under it — with one generated from WEEK_TITLES. Matching the section rather
+    than one fixed line keeps this idempotent: it rewrites the nav it wrote last time. Raises if
+    the section is not found, because silently doing nothing leaves the menu out of step with the
+    week pages this same run just generated."""
     yml = ROOT / "mkdocs.yml"; text = yml.read_text(encoding="utf-8")
     nav = ["  - Schedule:", "      - Overview: schedule/README.md"]
     for w in sorted(weeks):
         nav.append(f'      - "Week {w} — {WEEK_TITLES[w]}": schedule/week-{w:02d}.md')
-    text = re.sub(r"  - Schedule: schedule\.md\n", "\n".join(nav) + "\n", text)
-    text = re.sub(r"  - Lectures:\n(?:      .*\n)+", "", text)
+    text, n = re.subn(r"^  - Schedule:.*\n(?:      .*\n)*", "\n".join(nav) + "\n", text,
+                      count=1, flags=re.MULTILINE)
+    if n != 1:
+        raise SystemExit("mkdocs.yml: no '  - Schedule:' nav section to replace — fix the nav or "
+                         "this script's pattern before trusting the menu.")
     yml.write_bytes(text.encode("utf-8"))
 
 def main():

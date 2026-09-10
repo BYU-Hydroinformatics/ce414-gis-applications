@@ -12,6 +12,10 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | --- | --- |
 | Nothing is due this week | Work on the final project |
 
+## Final project
+
+See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
 > survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.

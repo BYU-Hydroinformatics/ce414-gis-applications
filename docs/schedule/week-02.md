@@ -26,6 +26,7 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
 > survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.
+
 <!-- notes -->
 
 ## Data for the Part A exercise

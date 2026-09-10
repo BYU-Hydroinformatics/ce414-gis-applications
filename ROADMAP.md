@@ -69,6 +69,12 @@ page per week — Week 1 through Week 15 — each linking that week's Tuesday an
 decks, the lab due, and study guides once they exist; there is no separate top-level "Lectures"
 menu (restructured September 2026).
 
+The menu was cut to two sections in September 2026: **Course** (the overview page, which absorbed
+the old Course Overview page and the "what every lab expects" section, plus ArcGIS tips and the
+three policy pages) and **Schedule** (the fifteen weeks). Lab handouts and the final project are
+deliberately out of the nav and reached from the week page each belongs to, so
+`validation.nav.omitted_files` is set to `ignore`.
+
 | Piece | State |
 | --- | --- |
 | MkDocs config, theme, nav | Done — mirrors CCE 114 |
@@ -171,7 +177,7 @@ These came out of the September 2026 audit and are **not** cosmetic:
 ## Syllabus decisions and open items (September 7, 2026)
 
 The Fall 2026 Learning Suite syllabus was transcribed into `tools/build_schedule.py` (the `DUE`
-table), `docs/schedule/README.md`, `docs/policies/grading.md`, and `docs/course.md`. Reviewing it with the
+table), `docs/schedule/README.md`, `docs/policies/grading.md`, and `docs/index.md`. Reviewing it with the
 instructor produced these decisions; the open ones need to be settled on Learning Suite and then
 mirrored here.
 

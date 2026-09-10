@@ -329,17 +329,21 @@ then promote.
    `search: exclude: true`, the title prefixed `DRAFT — `, and a `> [!WARNING]` box after the byline
    headed **This is a draft for review** that lists *changes to what the lab asks students to do*,
    *corrections to things that were wrong*, the figure provenance, and site behavior. The draft
-   is not in the nav; `mkdocs build --strict` reports it as unlinked, which is expected. Commit the
-   draft in rounds with messages that say what changed and why.
+   is not in the nav, and neither is the assigned page — `validation.nav.omitted_files` is set to
+   `ignore` in `mkdocs.yml`, so the build says nothing about either. Reach the draft by URL.
+   Commit the draft in rounds with messages that say what changed and why.
 3. **Pilot** (section 6) and fix.
 4. **Promote.** Strip the front matter and the `DRAFT — ` prefix; turn the review box into the
    `<!-- Revision notes -->` comment (it is the changelog; students do not need it); replace
    `README.md` with the draft and `git rm` the draft; delete the images only the old page used and
    note the deletions in the migration notes; make sure nothing student-visible references a
-   deleted image or the draft; add any new site page to `mkdocs.yml`; update `ROADMAP.md`.
+   deleted image or the draft; update `ROADMAP.md`. Lab pages do **not** go in `mkdocs.yml` — the
+   sidebar is a list of weeks, and a lab reaches students through the `LAB_PAGE`/`DUE` tables in
+   `tools/build_schedule.py`, which link it from the week page it is due in. Only a page that
+   belongs to the whole course, like `docs/arcgis-tips.md`, goes in the nav.
    Then confirm: rubric rows sum to ten and the total to fifty; no bare "Pro"; no "old version"
-   language; every link live; `mkdocs build --strict` passes with no unlinked-page notice for the
-   lab; and the rendered page read in a browser (`preview_start` with the `mkdocs-pro` launch
+   language; every link live; `mkdocs build --strict` passes; the lab is linked from its week page;
+   and the rendered page read in a browser (`preview_start` with the `mkdocs-pro` launch
    configuration; the site is served under `/ce414-gis-applications/`).
 5. **Commit; do not push.** The push publishes to students and is the maintainer's call. A
    subagent leaves its work in the tree and reports.

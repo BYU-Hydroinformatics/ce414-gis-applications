@@ -17,6 +17,10 @@ Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
 | Notes on at least ten classmates' presentations | Thursday 11:59 pm |
 | Course evaluation (extra credit) | Friday 11:59 pm |
 
+## Final project
+
+See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+
 > [!NOTE]
 > Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
 > survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.
