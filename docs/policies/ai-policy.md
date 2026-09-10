@@ -27,7 +27,9 @@ One line at the end of your submission is enough. For example:
 
 Specific beats long. If you did not use AI, you do not need to say anything. Disclosure is not a
 penalty and it is never held against your grade. Undisclosed use of AI on work you present as your
-own is an academic honesty problem, and it is the only part of this policy with teeth.
+own is an academic honesty problem under the university's
+[Academic Honesty policy](university.md#academic-honesty), and it is the only part of this policy
+with teeth.
 
 ## The one test that covers everything
 
@@ -149,5 +151,7 @@ review and for the final project, where you are working with a partner.
         candidates.
      3. Settle whether ArcGIS Pro's AI assistant is actually enabled on the lab machines; the
         sentence above hedges because it has not been checked.
-     4. Reconcile with the Learning Suite syllabus text and with the university academic honesty
-        statement once docs/policies/university.md is written. -->
+     4. Reconcile with the Learning Suite syllabus text. The university's Academic Honesty policy
+        is now on docs/policies/university.md and is linked from the disclosure section above;
+        nothing here contradicts it, but the Learning Suite syllabus does not yet carry this AI
+        policy at all. -->
