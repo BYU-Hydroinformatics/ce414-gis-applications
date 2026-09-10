@@ -23,6 +23,10 @@ Dr. Dan Ames
 
 <!-- Week 3, Tuesday. Two decks this week: today is the concepts and the first raster model, Thursday is hands-on raster analysis in ArcGIS Pro on the Lab 2 data. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

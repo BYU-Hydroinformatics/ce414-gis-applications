@@ -21,6 +21,10 @@ Brigham Young University
 
 <!-- Week 1 review lecture. Most students have had an introductory GIS course, so this hour is a refresher on data models rather than a first exposure. The hands-on look at ArcGIS Pro comes at the end of the hour, and the full version is Lab 1. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Outline

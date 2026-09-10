@@ -21,6 +21,10 @@ Dr. Dan Ames
 
 <!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. The window on the right is where we end up: the Cities Near Rivers model with four P markers, and the tool dialog those four parameters produce, side by side in ArcGIS Pro 3.7. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

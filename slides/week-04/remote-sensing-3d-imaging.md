@@ -30,6 +30,10 @@ The speaker note attached to this slide in the source PowerPoint was a leftover 
 workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with remote sensing.
 It was removed during conversion. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing and 3D Imaging<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

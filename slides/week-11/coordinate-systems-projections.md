@@ -24,6 +24,10 @@ Dr. Dan Ames
 
 <!-- Review session. The deck was inherited from the introductory Geomatics course, so the title slide originally read "CCE 114 Geomatics"; it now names CE 414. Everything after this is a review of the concepts the labs depend on. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 11 — Coordinate Systems and Projections<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

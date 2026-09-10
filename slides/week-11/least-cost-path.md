@@ -19,6 +19,10 @@ Brigham Young University
 
 <!-- Concepts lecture for Week 11. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

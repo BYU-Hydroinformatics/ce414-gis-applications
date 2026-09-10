@@ -20,6 +20,10 @@ Civil & Construction Engineering, Brigham Young University
 
 <!-- TODO(instructor): the source title slide carried a speaker note that is a ModelBuilder workshop abstract left over from another deck. It was not carried across. Confirm nothing was lost. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

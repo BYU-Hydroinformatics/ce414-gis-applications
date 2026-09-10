@@ -19,6 +19,10 @@ Brigham Young University
 
 <!-- Week 10 concepts lecture. The whole hour builds one workflow: criteria, data, convert to raster, reclassify, overlay, heat map. The lab that applies it is the wind farm site selection lab. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 10 — Raster-Based Spatial Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

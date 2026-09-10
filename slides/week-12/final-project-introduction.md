@@ -20,6 +20,10 @@ requirements, expectations, and deliverables slides comes from that page; the mi
 the "what a lab-sized project looks like" slide, the pitfalls, and the proposal checklist are
 additions meant to make the expectations concrete. Adjust anything marked TODO before presenting. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 12 — Final Project Introduction<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

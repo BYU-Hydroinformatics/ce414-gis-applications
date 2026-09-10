@@ -114,6 +114,17 @@ footer: "CE 414 · Day NN — <Deck Title>"
 The theme is `slides/theme/ce414.css` (BYU navy, `lead`/`quiz`/`activity` classes, `columns`,
 `imggrid`). Do not edit the theme. Inline `style` attributes are fine for one-off layout.
 
+Do not hand-write the title slide's last-updated date or the licence line. Run:
+
+```bash
+python3 tools/stamp_decks.py
+```
+
+It reads each deck's last-changed date from git — the newest commit touching the deck or any image
+it uses — and rewrites the `<!-- stamp:begin -->` block that overrides the title slide's footer.
+Run it after the deck is committed, or it will stamp today's date and say so. `--check` reports
+stale stamps without writing and exits non-zero, which is what a pre-publish check should call.
+
 ## Step 5: build and check (required)
 
 ```bash

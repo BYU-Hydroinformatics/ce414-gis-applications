@@ -23,6 +23,10 @@ Dr. Dan Ames
 
 <!-- Week 3, Thursday. Tuesday was the concepts: map algebra, NDVI as a local raster function, the local, focal, zonal, global families. Today is ArcGIS Pro open on every desk. Four exercises on the Lab 2 extract, one on each family that matters this week, and every exercise ends in a number students write on the activity sheet. Exercise 2 is Lab 2 Step 6 done live. The image is the center pivots near Elberta in the Lab 2 NDVI, where exercise 3 happens. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis Hands-On<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # How today works

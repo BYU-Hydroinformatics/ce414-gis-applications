@@ -21,6 +21,10 @@ Brigham Young University
 
 <!-- ModelBuilder is one of the most powerful, and most underused, tools in ArcGIS Pro. It is a way to perform analysis and to automate workflows: you build the workflow once, document it, and run it again on new data. This session and Part B together walk through creating and executing models with geoprocessing tools and data, and using the ModelBuilder environment to document and share models so other people can run them. Today is concepts and mechanics; by the end you should be able to start Lab 1 tonight. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part A<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

@@ -21,6 +21,10 @@ Dr. Dan Ames
 <!-- Week 6 runs in three parts: (1) the eight-step terrain-analysis workflow, cell by cell; (2) what a watershed actually is and why we care; (3) a hands-on comparison of hand delineation against USGS StreamStats. Lab 5 applies all of it in ArcGIS Pro. -->
 <!-- VERIFY: source deck credits "Center for Water Resources Research, UT Austin"; confirm the exact center name before publishing. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

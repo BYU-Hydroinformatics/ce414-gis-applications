@@ -19,6 +19,10 @@ Brigham Young University
 
 <!-- Let's learn about sampling and interpolation. This is a two-session topic: the first session runs from sampling design through splines, the second session is kriging. The surface on the right is the end product of everything we do today — a continuous surface built from a scatter of measured points. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 8 — Interpolation<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

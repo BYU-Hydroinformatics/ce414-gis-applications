@@ -26,6 +26,10 @@ Open Geospatial Consortium, January 2011
 
 <!-- The source is a conference presentation given by Luis Bermudez, then OGC Director of Interoperability Certification, in Washington DC on January 18, 2011. The presenter contact block and the event date/location were dropped from the slide face during conversion. Everything technical in this deck is the 2011 standards baseline; say so out loud at the start of class. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 9 — Overview of OGC Web Services<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals

@@ -23,6 +23,10 @@ Brigham Young University
 
 <!-- Week 12 concepts lecture. This hour is a review of how satellite positioning actually works, and why the position a receiver reports is never exactly where you are. It runs as a refresher: most students met GPS in the introductory geomatics course, so move quickly through the signal material and spend the time on error sources and differential correction. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 12 — GPS and Positioning<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # Today's Goals
