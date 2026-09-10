@@ -3,12 +3,12 @@
 The final project is a self-directed spatial analysis of an engineering problem your team
 chooses, carried through the same standard the labs use: a framed question, documented data, a
 reproducible model, a validated result, a professional map, and a stated set of limitations. The
-[Week 12 introduction deck](../lectures/week-12.md) walks through how to pick a problem, how big it
+[Week 12 page](../schedule/week-12.md) walks through how to pick a problem, how big it
 should be, and how it is scored.
 
 ## Deliverables and when they are due
 
-Weeks are course weeks; see the [Schedule](../schedule.md) for how they map to the calendar.
+Weeks are course weeks; see the [Schedule](../schedule/README.md) for how they map to the calendar.
 
 | Step | What | When |
 | --- | --- | --- |

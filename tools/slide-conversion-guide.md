@@ -13,7 +13,7 @@ structure, tone, and formatting; until then use CCE 114's `slides/day-02/gis-dat
 - The site builds each `slides/*/*.md` with marp-cli on every push and publishes it at
   `https://byu-hydroinformatics.github.io/ce414-geomatics/slides/day-NN/<slug>.html`.
 - Do **not** commit the local `.html` build, and do not edit anything outside your
-  `slides/day-NN/` folder. The lecture-day pages under `docs/lectures/` are generated from
+  `slides/day-NN/` folder. The weekly schedule pages under `docs/schedule/` are generated from
   `tools/build_schedule.py`; report your deck title and URL and the maintainer adds it there.
 - Do **not** run `git commit` or `git push`. Leave the work in the working tree.
 

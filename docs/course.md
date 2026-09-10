@@ -24,8 +24,8 @@ questions, and learn to state the assumptions and limitations that come with the
 ## Textbook
 
 *GIS Fundamentals*, 7th edition, by Paul Bolstad. The access card is required: every week has an
-open-book reading quiz on the assigned chapter, listed on the [Schedule](schedule.md) and on each
-week's lecture page.
+open-book reading quiz on the assigned chapter, listed on the [Schedule](schedule/README.md) and on
+each week's page.
 
 ## Software
 
@@ -66,4 +66,4 @@ recommendation through a professional map and a concise report.
 - **Peer review.** You will review and stamp at least ten classmates' lab reports over the
   semester; make your engineering stamp in the first week.
 
-Details are on the [Schedule](schedule.md) and [Grading](policies/grading.md) pages.
+Details are on the [Schedule](schedule/README.md) and [Grading](policies/grading.md) pages.

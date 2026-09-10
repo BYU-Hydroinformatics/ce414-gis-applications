@@ -28,13 +28,11 @@ the backbone — every lab is a reproducible model, not a sequence of clicks.
 ## Course Structure
 
 - [Course Overview](course.md) — description, prerequisites, software, and learning outcomes.
-- [Schedule](schedule.md) — the week-by-week sequence and what is due when.
+- [Schedule](schedule/README.md) — one page per week, with that week's Tuesday and Thursday lecture
+  slides, the lab due, and study guides once they exist. Navigate the weeks from the sidebar;
+  press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes on any
+  deck.
 - [Final Project](assignments/final-project.md) — the capstone spatial analysis.
-
-## Lectures
-
-Interactive web slide decks for every lecture week, indexed under [Lectures](lectures/README.md).
-Navigate with the arrow keys; press <kbd>P</kbd> for presenter view with speaker notes.
 
 ## Policies
 

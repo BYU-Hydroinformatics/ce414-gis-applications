@@ -17,7 +17,7 @@ CE 414 is the applications course and uses **ArcGIS Pro**.
 | Where | What |
 | --- | --- |
 | [docs/assignments/](docs/assignments/) | Lab assignments 1–10, one folder per lab with its images |
-| [docs/lectures/](docs/lectures/) | One page per lecture topic, linking to its slide deck |
+| [docs/schedule/](docs/schedule/) | One page per week, linking that week's lecture decks and lab |
 | [docs/policies/](docs/policies/) | Grading, AI use, and university policies |
 | [slides/](slides/) | Marp source for the web slide decks |
 | [tools/](tools/) | Word → Markdown and PowerPoint → Marp conversion pipeline |
