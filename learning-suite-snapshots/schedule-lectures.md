@@ -62,6 +62,28 @@ none has been edited yet.
 | Tue Sep 29 · Terrain Analysis Part 1 | `/slides/week-05/terrain-analysis.html` — resolves, but that is now the **Thursday** deck | `/slides/week-05/elevation-data-lidar.html`, titled "Elevation Data and LiDAR" |
 | Thu Oct 1 · Week 5 Thursday | no entry recorded in this snapshot | `/slides/week-05/terrain-analysis.html`, titled "Terrain Analysis" |
 
-**TODO(instructor):** the Thursday Week 5 cell may need creating rather than editing. Check the
-Fall 2026 schedule before assuming it is only a link swap.
+**Applied 2026-09-11.** All three cells were edited and the hrefs verified after a reload. The
+Thursday Week 5 cell existed after all, as "Terrain Analysis Part 2"; it simply had no slides link.
+
+| Cell | Heading | Slides link |
+| --- | --- | --- |
+| Thu Sep 24 | Satellite and Imagery Data (unchanged) | "Remote Sensing" -> `/slides/week-04/remote-sensing.html` |
+| Tue Sep 29 | "Terrain Analysis Part 1" -> "Elevation Data and LiDAR" | "Elevation Data and LiDAR (slides)" -> `/slides/week-05/elevation-data-lidar.html` |
+| Thu Oct 1 | "Terrain Analysis Part 2" -> "Terrain Analysis" | "Slides: Terrain Analysis" -> `/slides/week-05/terrain-analysis.html`, **added**; the cell had none |
+
+Discussion lines were rewritten on all three to describe what each deck now covers. Two other edits
+followed from the split:
+
+- The Thu Sep 24 bullet "3D models from LiDAR and Structure from Motion" (the BYU PRISM gallery)
+  **moved** to Tue Sep 29, since Thursday no longer teaches LiDAR.
+- Thu Sep 24's discussion no longer says "LiDAR and aerial/satellite imagery".
+
+Every attachment, fileId and in-class activity line was left alone.
+
+**TODO(instructor):** the graded assignment item **"In Class Activity - Terrain Analysis - Slope"**
+still sits on **Tue Sep 29**, and the "Compute terrain variables" line with
+`terrain analysis - in class activity.xlsx` is on that cell too. Slope is now **Thursday's**
+material. Moving a graded item changes its due date, so nothing was touched — but the activity and
+the lecture that teaches it are currently a day apart. The same xlsx is attached to the Thursday
+cell as well, so the simplest fix may be to move the assignment item's date rather than any text.
 
