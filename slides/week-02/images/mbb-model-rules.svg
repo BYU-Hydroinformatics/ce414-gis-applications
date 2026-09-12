@@ -1,28 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 360" width="980" height="360" font-family="Segoe UI, Avenir Next, Helvetica, Arial, sans-serif" role="img" aria-label="Oval means data, rectangle means tool. A valid chain runs data to tool to data. Tool into tool and data into data are both crossed out.">
-<text x="26" y="34" font-size="21" font-weight="700" fill="#002e5d">Shape tells you which</text>
-<ellipse cx="112" cy="92" rx="62.0" ry="27.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="112" y="99" text-anchor="middle" font-size="19" font-weight="700" fill="#12314f">DATA</text>
-<text x="190" y="86" font-size="18" font-weight="600" fill="#5a6472">a <tspan font-style="italic">noun</tspan></text>
-<text x="190" y="109" font-size="16" fill="#5a6472">flour, dough, cookies</text>
-<rect x="46.0" y="151.0" width="132" height="54" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="112" y="185" text-anchor="middle" font-size="19" font-weight="700" fill="#5c4a06">TOOL</text>
-<text x="190" y="172" font-size="18" font-weight="600" fill="#5a6472">an <tspan font-style="italic">action verb</tspan></text>
-<text x="190" y="195" font-size="16" fill="#5a6472">mix, bake, cool</text>
-<line x1="392" y1="20" x2="392" y2="340" stroke="#c3ccd8" stroke-width="2"/>
-<text x="424" y="34" font-size="21" font-weight="700" fill="#002e5d">The only legal chain</text>
-<ellipse cx="494" cy="92" rx="62.0" ry="27.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="494" y="99" text-anchor="middle" font-size="19" font-weight="700" fill="#12314f">DATA</text>
-<line x1="558" y1="92" x2="593" y2="92" stroke="#4b5563" stroke-width="4"/><polygon points="606,92 591,83 591,101" fill="#4b5563"/>
-<rect x="608.0" y="65.0" width="132" height="54" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="674" y="99" text-anchor="middle" font-size="19" font-weight="700" fill="#5c4a06">TOOL</text>
-<line x1="742" y1="92" x2="777" y2="92" stroke="#4b5563" stroke-width="4"/><polygon points="790,92 775,83 775,101" fill="#4b5563"/>
-<ellipse cx="854" cy="92" rx="62.0" ry="27.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="854" y="99" text-anchor="middle" font-size="19" font-weight="700" fill="#12314f">DATA</text>
-<text x="674" y="140" text-anchor="middle" font-size="16" fill="#5a6472">Start and end with data. One direction only.</text>
-<text x="424" y="196" font-size="21" font-weight="700" fill="#c0392b">Never</text>
-<rect x="444.0" y="223.0" width="132" height="54" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="510" y="257" text-anchor="middle" font-size="19" font-weight="700" fill="#5c4a06">TOOL</text>
-<line x1="578" y1="250" x2="633" y2="250" stroke="#c0392b" stroke-width="4"/><polygon points="646,250 631,241 631,259" fill="#c0392b"/>
-<rect x="648.0" y="223.0" width="132" height="54" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="714" y="257" text-anchor="middle" font-size="19" font-weight="700" fill="#5c4a06">TOOL</text>
-<g stroke="#c0392b" stroke-width="5" stroke-linecap="round"><line x1="595" y1="233" x2="629" y2="267"/><line x1="629" y1="233" x2="595" y2="267"/></g>
-<ellipse cx="510" cy="318" rx="62.0" ry="27.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="510" y="325" text-anchor="middle" font-size="19" font-weight="700" fill="#12314f">DATA</text>
-<line x1="574" y1="318" x2="633" y2="318" stroke="#c0392b" stroke-width="4"/><polygon points="646,318 631,309 631,327" fill="#c0392b"/>
-<ellipse cx="714" cy="318" rx="62.0" ry="27.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="714" y="325" text-anchor="middle" font-size="19" font-weight="700" fill="#12314f">DATA</text>
-<g stroke="#c0392b" stroke-width="5" stroke-linecap="round"><line x1="595" y1="301" x2="629" y2="335"/><line x1="629" y1="301" x2="595" y2="335"/></g>
-<text x="796" y="256" font-size="16" fill="#5a6472">a tool cannot feed a tool</text>
-<text x="796" y="324" font-size="16" fill="#5a6472">data cannot feed data</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 372" width="1000" height="372" font-family="Segoe UI, Avenir Next, Helvetica, Arial, sans-serif" role="img" aria-label="Two shape conventions, both acceptable: ovals and rectangles as in the textbook, or rounded and squared rectangles as in ArcGIS Pro. A legal chain runs data to tool to data. Tool into tool and data into data are crossed out.">
+<text x="24" y="30" font-size="21" font-weight="700" text-anchor="start" fill="#002e5d">Pick a pair, then stay consistent</text>
+<text x="24" y="92" font-size="17" font-weight="700" text-anchor="start" fill="#12314f">DATA</text>
+<ellipse cx="150" cy="86" rx="65.0" ry="21.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="150" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">flour</text>
+<text x="228" y="92" font-size="16" font-weight="400" text-anchor="middle" fill="#5a6472">or</text>
+<rect x="251.0" y="61.0" width="118" height="50" rx="12" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="310" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">flour</text>
+<text x="24" y="126" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472" font-style="italic">a noun</text>
+<text x="24" y="196" font-size="17" font-weight="700" text-anchor="start" fill="#5c4a06">TOOL</text>
+<rect x="91.0" y="165.0" width="118" height="50" rx="0" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="150" y="196" text-anchor="middle" font-size="17" font-weight="700" fill="#5c4a06">mix</text>
+<text x="24" y="236" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472" font-style="italic">an action verb</text>
+<text x="24" y="292" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472">The oval is your textbook's. ArcGIS Pro rounds a</text>
+<text x="24" y="314" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472">rectangle instead, and squares off its tools. Either</text>
+<text x="24" y="336" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472">is fine — so is a pair you invent, if you never swap them.</text>
+<line x1="386" y1="18" x2="386" y2="352" stroke="#c3ccd8" stroke-width="2"/>
+<text x="418" y="30" font-size="21" font-weight="700" text-anchor="start" fill="#002e5d">The only legal chain</text>
+<ellipse cx="482" cy="86" rx="65.0" ry="21.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="482" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">DATA</text>
+<line x1="543" y1="86" x2="581" y2="86" stroke="#4b5563" stroke-width="4"/><polygon points="594,86 579,77 579,95" fill="#4b5563"/>
+<rect x="599.0" y="61.0" width="118" height="50" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="658" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#5c4a06">TOOL</text>
+<line x1="719" y1="86" x2="757" y2="86" stroke="#4b5563" stroke-width="4"/><polygon points="770,86 755,77 755,95" fill="#4b5563"/>
+<ellipse cx="834" cy="86" rx="65.0" ry="21.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="834" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">DATA</text>
+<text x="658" y="132" font-size="15" font-weight="400" text-anchor="middle" fill="#5a6472">Start and end with data. One direction only.</text>
+<text x="418" y="196" font-size="21" font-weight="700" text-anchor="start" fill="#c0392b">Never</text>
+<rect x="439.0" y="223.0" width="118" height="50" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="498" y="254" text-anchor="middle" font-size="17" font-weight="700" fill="#5c4a06">TOOL</text>
+<line x1="560" y1="248" x2="619" y2="248" stroke="#c0392b" stroke-width="4"/><polygon points="632,248 617,239 617,257" fill="#c0392b"/>
+<rect x="635.0" y="223.0" width="118" height="50" rx="3" fill="#f6e6a8" stroke="#b99a24" stroke-width="2.5"/><text x="694" y="254" text-anchor="middle" font-size="17" font-weight="700" fill="#5c4a06">TOOL</text>
+<g stroke="#c0392b" stroke-width="5" stroke-linecap="round"><line x1="580" y1="232" x2="612" y2="264"/><line x1="612" y1="232" x2="580" y2="264"/></g>
+<text x="768" y="254" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472">a tool cannot feed a tool</text>
+<ellipse cx="498" cy="320" rx="65.0" ry="21.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="498" y="326" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">DATA</text>
+<line x1="560" y1="320" x2="619" y2="320" stroke="#c0392b" stroke-width="4"/><polygon points="632,320 617,311 617,329" fill="#c0392b"/>
+<ellipse cx="694" cy="320" rx="65.0" ry="21.0" fill="#bfd7ee" stroke="#4a7fb5" stroke-width="2.5"/><text x="694" y="326" text-anchor="middle" font-size="17" font-weight="700" fill="#12314f">DATA</text>
+<g stroke="#c0392b" stroke-width="5" stroke-linecap="round"><line x1="580" y1="304" x2="612" y2="336"/><line x1="612" y1="304" x2="580" y2="336"/></g>
+<text x="768" y="326" font-size="15" font-weight="400" text-anchor="start" fill="#5a6472">data cannot feed data</text>
 </svg>

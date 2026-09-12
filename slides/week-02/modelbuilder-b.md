@@ -58,31 +58,7 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 ---
 
-# The rules on the board
-
-![w:960 center](images/mbb-model-rules.svg)
-
-<div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.8em;">
-<div>
-
-1. **Shape matters.** Oval is data, rectangle is a tool
-2. **Flow goes one way.** No loops back
-3. **Arrows have solid heads**, and the head says which way
-
-</div>
-<div>
-
-4. **Start with data, end with data**
-5. **No chaining like with like.** Tool cannot feed a tool; data cannot feed data
-
-</div>
-</div>
-
-<!-- These five went on the board in Fall 2026 while the class was drawing, and they are worth putting up before anyone starts. The nouns-and-verbs test is the one that does the work: if a student cannot say their rectangle as an action verb, it is not a tool, it is a stage of data wearing a box. Rule 5 is the one that catches everybody, and it is not arbitrary — a tool's output IS data, so if two tools touch, a dataset has gone missing and nobody can see where the intermediate went. Same for two ovals: something happened between them and it was not written down. That is exactly the mistake that makes a real ModelBuilder canvas unreadable. -->
-
----
-
-# How it is scored
+# How it is graded
 
 <div class="columns" style="grid-template-columns: 0.95fr 1.05fr; align-items: center;">
 <div style="text-align:center;">
@@ -102,9 +78,10 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 </div>
 <div style="font-size:0.86em;">
 
-- **N** — every oval and every rectangle you drew. More detail scores more
-- **C** — coolness, and the instructor is the judge
-- **R** — **1** if you followed all five rules, **0** if you broke any
+- Swap papers with someone. You are grading **their** model
+- **N** — count every shape they drew
+- **C** — coolness, out of ten, and you are the judge
+- **R** — **1** if their model follows all five rules on the next slide, **0** if it breaks any
 
 </div>
 </div>
@@ -115,7 +92,39 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 </div>
 
-<!-- Put this up before they draw and the room gets noticeably more careful. The formula is a joke with a point in it: N rewards saying more, C rewards saying it well, and R is a gate, not a term — a diagram that breaks its own conventions does not communicate, however much is in it. That is the same reason Lab 1 grades the model figure on whether a reader could repeat the work from it. Written on the board in Fall 2026; keep the coolness factor, the class enjoys arguing about it. -->
+<!-- Put this up once everyone has drawn, and have them exchange papers before you show it. Peer grading is the point: they have to read somebody else's diagram, which is the first time most of them find out that a model is a communication device.
+
+Watch what happens when engineers see an equation. The room sits up — and then, a beat later, works out that it is a silly one. Let that land; it is the best moment in the hour.
+
+It is also, deliberately, a WRONG equation, and the next two slides are where that comes out. N rewards piling on nodes, so the eleven-tool cookie beats the one-tool cookie every time — and the very next slide asks whether a bigger model is actually better. Do not resolve the contradiction for them. Ask who got the highest score, then ask whose model they would rather be handed if they had to bake the cookie. The answers are usually different people, and the conversation after that is the lesson. -->
+
+---
+
+# The rules
+
+![w:940 center](images/mbb-model-rules.svg)
+
+<div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.78em;">
+<div>
+
+1. **Shapes matter.** One shape for data, another for tools — pick a pair and never swap them
+2. **Flow goes one way.** No loops back
+3. **Arrows have solid heads**, and the head says which way
+
+</div>
+<div>
+
+4. **Start with data, end with data**
+5. **No chaining like with like.** A tool cannot feed a tool; data cannot feed data
+
+</div>
+</div>
+
+<!-- Rule 1 is about consistency, not about ovals. Ovals and rectangles are what Bolstad draws and what older ArcGIS used; ArcGIS Pro today rounds the data elements and squares off the tools. Both are on the figure. A student who invents their own pair and holds to it has followed the rule, and saying so out loud is worth more than the convention itself — the reader has to be able to tell the two apart at a glance, and that is the whole requirement.
+
+The nouns-and-verbs test is what does the work. If someone cannot say their tool shape out loud as an action verb, it is not a tool, it is a stage of data wearing the wrong box.
+
+Rule 5 catches everybody, and it is not arbitrary. A tool's output IS data, so if two tools touch, a dataset has gone missing and nobody can see where the intermediate went. Same for two data shapes: something happened in between and it was not written down. That is exactly what makes a real ModelBuilder canvas unreadable. -->
 ---
 
 # Cookie model review
