@@ -22,7 +22,7 @@ Dr. Dan Ames
 <!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. The window on the right is where we end up: the Cities Near Rivers model with four P markers, and the tool dialog those four parameters produce, side by side in ArcGIS Pro 3.7. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-09-12</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -56,6 +56,66 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 <!-- Hand out the cookies first, then put this up. Ten minutes. Blue ovals for ingredients, yellow boxes for what you do to them, green ovals for what comes out: that is the only rule. Walk the room and look for two things, someone who drew one box called "make cookies" and someone who is still drawing the wheat field; both go on the document camera for the next slide. The picture goes to Learning Suite by 9:30 am, fifteen minutes after class. -->
 
+---
+
+# The rules on the board
+
+![w:960 center](images/mbb-model-rules.svg)
+
+<div class="columns" style="grid-template-columns: 1fr 1fr; font-size:0.8em;">
+<div>
+
+1. **Shape matters.** Oval is data, rectangle is a tool
+2. **Flow goes one way.** No loops back
+3. **Arrows have solid heads**, and the head says which way
+
+</div>
+<div>
+
+4. **Start with data, end with data**
+5. **No chaining like with like.** Tool cannot feed a tool; data cannot feed data
+
+</div>
+</div>
+
+<!-- These five went on the board in Fall 2026 while the class was drawing, and they are worth putting up before anyone starts. The nouns-and-verbs test is the one that does the work: if a student cannot say their rectangle as an action verb, it is not a tool, it is a stage of data wearing a box. Rule 5 is the one that catches everybody, and it is not arbitrary — a tool's output IS data, so if two tools touch, a dataset has gone missing and nobody can see where the intermediate went. Same for two ovals: something happened between them and it was not written down. That is exactly the mistake that makes a real ModelBuilder canvas unreadable. -->
+
+---
+
+# How it is scored
+
+<div class="columns" style="grid-template-columns: 0.95fr 1.05fr; align-items: center;">
+<div style="text-align:center;">
+
+<div style="background:#eef3f9;border-radius:12px;padding:0.8em 1em;display:inline-block;">
+
+<span style="font-size:2.4em;font-weight:800;color:#002e5d;">G = (N + C) R</span>
+
+</div>
+
+<div style="font-size:0.8em;color:#5a6472;margin-top:0.5em;">
+
+**N** nodes &nbsp;·&nbsp; **C** coolness, 1 to 10 &nbsp;·&nbsp; **R** rules, 0 or 1
+
+</div>
+
+</div>
+<div style="font-size:0.86em;">
+
+- **N** — every oval and every rectangle you drew. More detail scores more
+- **C** — coolness, and the instructor is the judge
+- **R** — **1** if you followed all five rules, **0** if you broke any
+
+</div>
+</div>
+
+<div style="background:#fdf1e7;border-left:8px solid #e8792b;border-radius:8px;padding:0.7em 1.1em;font-size:0.88em;margin-top:0.3em;">
+
+**R multiplies.** Break one rule and the coolest, most detailed model in the room scores **zero**.
+
+</div>
+
+<!-- Put this up before they draw and the room gets noticeably more careful. The formula is a joke with a point in it: N rewards saying more, C rewards saying it well, and R is a gate, not a term — a diagram that breaks its own conventions does not communicate, however much is in it. That is the same reason Lab 1 grades the model figure on whether a reader could repeat the work from it. Written on the board in Fall 2026; keep the coolness factor, the class enjoys arguing about it. -->
 ---
 
 # Cookie model review
