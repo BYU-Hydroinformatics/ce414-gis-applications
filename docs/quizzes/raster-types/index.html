@@ -7,472 +7,95 @@
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
   <meta name="description" content="CE 414 in-class quiz: decide whether each raster dataset is categorical (discrete) or continuous.">
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --success: #16a34a;
-      --success-bg: #f0fdf4;
-      --danger: #dc2626;
-      --danger-bg: #fef2f2;
-      --border: #e2e8f0;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
-
-    .container {
-      max-width: 680px;
-      width: 100%;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-      color: #0f172a;
-    }
-
-    p.subtitle {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .score-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card);
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      margin-bottom: 1.25rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .quiz-card {
-      background: var(--card);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      padding: 1.75rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-
-    .question-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .layer-name {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #0f172a;
-    }
-
-    .layer-desc {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.4;
-    }
-
-    .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-
-    button.opt-btn {
-      padding: 0.85rem 1rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border: 2px solid var(--border);
-      background: #ffffff;
-      color: var(--text);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.15s ease-in-out;
-    }
-
-    button.opt-btn:hover:not(:disabled) {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: #eff6ff;
-    }
-
-    button.opt-btn:disabled {
-      cursor: default;
-    }
-
-    button.correct {
-      background: var(--success) !important;
-      border-color: var(--success) !important;
-      color: #ffffff !important;
-    }
-
-    button.incorrect {
-      background: var(--danger) !important;
-      border-color: var(--danger) !important;
-      color: #ffffff !important;
-    }
-
-    .feedback {
-      display: none;
-      padding: 1rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      line-height: 1.45;
-      margin-bottom: 1.25rem;
-    }
-
-    .feedback.visible {
-      display: block;
-    }
-
-    .feedback.correct-box {
-      background-color: var(--success-bg);
-      border-left: 4px solid var(--success);
-      color: #14532d;
-    }
-
-    .feedback.incorrect-box {
-      background-color: var(--danger-bg);
-      border-left: 4px solid var(--danger);
-      color: #7f1d1d;
-    }
-
-    .feedback strong {
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    button.next-btn {
-      padding: 0.65rem 1.4rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      display: none;
-    }
-
-    button.next-btn:hover {
-      background: var(--primary-hover);
-    }
-
-    .final-screen {
-      display: none;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-
-    .final-screen h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .final-score {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    button.restart-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-
-    footer.page-foot {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    footer.page-foot a {
-      color: var(--muted);
-    }
-
-    /* Phones: the quiz is meant to be scanned from a slide and answered on a handset. */
-    @media (max-width: 480px) {
-      body { padding: 1rem 0.75rem; }
-      h1 { font-size: 1.3rem; }
-      .quiz-card { padding: 1.1rem; }
-      .layer-name { font-size: 1.15rem; }
-      .options { gap: 0.6rem; }
-      button.opt-btn { padding: 0.9rem 0.5rem; font-size: 0.95rem; }
-      .controls { justify-content: stretch; }
-      button.next-btn { width: 100%; padding: 0.8rem 1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
-
-<div class="container">
-  <header>
-    <h1>Categorical or Continuous?</h1>
-    <p class="subtitle">CE 414 &middot; Week 3 &mdash; Raster Analysis and Map Algebra<br>
-      For each raster, decide what the cell value really is: a <strong>label</strong> (categorical, also called discrete) or a <strong>measurement</strong> (continuous).</p>
-  </header>
-
-  <div class="score-bar" id="scoreBar">
-    <span id="progressText">Question 1 of 10</span>
-    <span id="scoreText">Score: 0 / 0</span>
-  </div>
-
-  <div class="quiz-card" id="quizCard">
-    <div id="quizContent">
-      <div class="question-badge" id="categoryBadge">Raster dataset</div>
-      <div class="layer-name" id="layerTitle">Layer Name</div>
-      <div class="layer-desc" id="layerDesc">Layer Description</div>
-
-      <div class="options">
-        <button class="opt-btn" id="btnCategorical" onclick="checkAnswer('Categorical')">Categorical</button>
-        <button class="opt-btn" id="btnContinuous" onclick="checkAnswer('Continuous')">Continuous</button>
-      </div>
-
-      <div class="feedback" id="feedbackBox"></div>
-
-      <div class="controls">
-        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Dataset &rarr;</button>
-      </div>
-    </div>
-
-    <div class="final-screen" id="finalScreen">
-      <h2>Quiz Complete!</h2>
-      <div class="final-score" id="finalScoreDisplay">0 / 10</div>
-      <p id="finalFeedbackText" style="color: var(--muted); margin-bottom: 1.5rem;"></p>
-      <button class="restart-btn" onclick="restartQuiz()">Restart Exercise</button>
-    </div>
-  </div>
-
-  <footer class="page-foot">
-    CE 414 Engineering Applications of GIS &middot;
-    <a href="../../">Course site</a>
-  </footer>
-</div>
-
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
 <script>
-  const questions = [
+CE414Quiz.start({
+  title: "Categorical or Continuous?",
+  subtitle: "CE 414 &middot; Week 3 &mdash; Raster Analysis and Map Algebra<br>" +
+            "For each raster, decide what the cell value really is: a <strong>label</strong> " +
+            "(categorical, also called discrete) or a <strong>measurement</strong> (continuous).",
+  badge: "Raster dataset",
+  deckUrl: "../../slides/week-03/raster-analysis-a.html",
+  questions: [
     {
-      name: "Digital Elevation Model (DEM)",
-      desc: "Each pixel stores the terrain elevation above sea level in meters.",
-      correct: "Continuous",
-      explanation: "Elevation forms a continuous surface across the Earth. Between any two elevations, there is a smooth gradient of real-numbered values."
+      prompt: "Digital Elevation Model (DEM)",
+      detail: "Each cell stores the terrain elevation above sea level in meters.",
+      options: ["Categorical", "Continuous"],
+      answer: "Continuous",
+      explanation: "Elevation forms a continuous surface. Between any two elevations there is a smooth gradient of real-numbered values, and averaging two of them means something."
     },
     {
-      name: "National Land Cover Database (NLCD)",
-      desc: "Pixels are classified into categories like 'Deciduous Forest', 'Developed High Intensity', or 'Open Water'.",
-      correct: "Categorical",
-      explanation: "Values represent discrete classes with defined boundaries. The numbers stored (e.g., 41 = Forest, 11 = Water) are nominal codes, not quantities you can add or average."
+      prompt: "National Land Cover Database (NLCD)",
+      detail: "Cells are classified into categories like Deciduous Forest, Developed High Intensity, or Open Water.",
+      options: ["Categorical", "Continuous"],
+      answer: "Categorical",
+      explanation: "The values are discrete classes. The numbers stored (41 for forest, 11 for water) are nominal codes, not quantities — the average of 41 and 11 is not a land cover type."
     },
     {
-      name: "Euclidean Distance to Major Highways",
-      desc: "Each cell value represents the straight-line distance (in meters) to the closest interstate highway.",
-      correct: "Continuous",
-      explanation: "Proximity changes smoothly as you move away from features, creating a measurable continuous gradient across the map."
+      prompt: "Euclidean distance to major highways",
+      detail: "Each cell value is the straight-line distance in meters to the closest interstate.",
+      options: ["Categorical", "Continuous"],
+      answer: "Continuous",
+      explanation: "Proximity changes smoothly as you move away from a feature, which is what a distance surface measures."
     },
     {
-      name: "USDA SSURGO Soil Classification",
-      desc: "Polygons or raster cells identifying named soil series and taxonomic soil orders across a county.",
-      correct: "Categorical",
-      explanation: "Soil units are categorized by discrete soil families with clear map-unit boundaries, even if the transition in the real field is gradual."
+      prompt: "USDA SSURGO soil survey",
+      detail: "Cells identify named soil series and taxonomic soil orders across a county.",
+      options: ["Categorical", "Continuous"],
+      answer: "Categorical",
+      explanation: "Soil map units are discrete named classes with mapped boundaries, even though the transition in a real field is gradual."
     },
     {
-      name: "Land Surface Temperature (LST)",
-      desc: "Thermal infrared readings from satellite imagery representing ground temperature in degrees Celsius.",
-      correct: "Continuous",
-      explanation: "Temperature varies continuously across space without artificial steps or distinct perimeter boundaries."
+      prompt: "Land surface temperature",
+      detail: "Thermal infrared readings from satellite imagery, in degrees Celsius.",
+      options: ["Categorical", "Continuous"],
+      answer: "Continuous",
+      explanation: "Temperature varies smoothly across space. Nothing in the data imposes a boundary; any edges you see are real gradients."
     },
     {
-      name: "Watershed / Hydrologic Unit Code (HUC)",
-      desc: "Cells tagged with an identifier showing which drainage basin or watershed catchment they flow into.",
-      correct: "Categorical",
-      explanation: "Catchment IDs are nominal/categorical labels. Cell values represent unique regional identifiers, not continuous magnitudes."
+      prompt: "Watershed identifier (HUC)",
+      detail: "Cells tagged with the drainage basin they flow into.",
+      options: ["Categorical", "Continuous"],
+      answer: "Categorical",
+      explanation: "A basin ID is a nominal label. Two adjacent cells in basins 16020202 and 16020203 are neighbors, not one unit apart in anything."
     },
     {
-      name: "Normalized Difference Vegetation Index (NDVI)",
-      desc: "Satellite-derived index calculating photosynthetic activity with pixel values between -1.0 and +1.0.",
-      correct: "Continuous",
-      explanation: "NDVI is a continuous mathematical ratio representing relative green canopy density smoothly across the landscape."
+      prompt: "Normalized Difference Vegetation Index (NDVI)",
+      detail: "The Lab 2 output: (NIR − red) ÷ (NIR + red), between −1.0 and +1.0.",
+      options: ["Categorical", "Continuous"],
+      answer: "Continuous",
+      explanation: "NDVI is a ratio of measurements, so it is continuous. Note what happens in Lab 2: the moment you apply the threshold table, the continuous index becomes a categorical vegetation map."
     },
     {
-      name: "City Zoning Map",
-      desc: "Parcels classified into designations like Single-Family Residential (R-1), General Commercial (C-2), or Light Industrial.",
-      correct: "Categorical",
-      explanation: "Zoning categories are legal administrative classes with sharp, discrete jurisdictional boundaries."
+      prompt: "City zoning map",
+      detail: "Parcels classified as Single-Family Residential (R-1), General Commercial (C-2), Light Industrial, and so on.",
+      options: ["Categorical", "Continuous"],
+      answer: "Categorical",
+      explanation: "Zoning classes are legal designations with sharp jurisdictional boundaries that someone drew on purpose."
     },
     {
-      name: "Topographic Slope (Degrees)",
-      desc: "Raw calculated slope derived from a DEM, ranging continuously from 0° to 90°.",
-      correct: "Continuous",
-      explanation: "Calculated slope is continuous. (Note for class: If you reclassify slope into bins like 'Gentle', 'Moderate', and 'Steep' for suitability analysis, it becomes categorical!)"
+      prompt: "Slope in degrees, straight from the Slope tool",
+      detail: "Calculated from a DEM, ranging from 0° to 90°.",
+      options: ["Categorical", "Continuous"],
+      answer: "Continuous",
+      explanation: "As calculated it is continuous. Reclassify it into gentle, moderate and steep for a suitability analysis and it becomes categorical — that is Lab 2 Step 3 in a different costume."
     },
     {
-      name: "FEMA Flood Hazard Zones",
-      desc: "Mapped areas designated as Zone A (100-year floodplain), Zone X (minimal hazard), or regulatory floodways.",
-      correct: "Categorical",
-      explanation: "Regulatory flood maps group flood risk into discrete hazard zones. (Contrast this with hydrodynamic water surface elevation or depth rasters, which are continuous)."
+      prompt: "FEMA flood hazard zones",
+      detail: "Areas designated Zone A (100-year floodplain), Zone X (minimal hazard), or regulatory floodway.",
+      options: ["Categorical", "Continuous"],
+      answer: "Categorical",
+      explanation: "A regulatory flood map sorts risk into discrete zones. Contrast it with a water-surface-elevation or depth raster from a hydraulic model, which is continuous."
     }
-  ];
-
-  let currentIndex = 0;
-  let score = 0;
-  let answered = false;
-
-  const layerTitle = document.getElementById("layerTitle");
-  const layerDesc = document.getElementById("layerDesc");
-  const btnCat = document.getElementById("btnCategorical");
-  const btnCont = document.getElementById("btnContinuous");
-  const feedbackBox = document.getElementById("feedbackBox");
-  const nextBtn = document.getElementById("nextBtn");
-  const progressText = document.getElementById("progressText");
-  const scoreText = document.getElementById("scoreText");
-  const quizContent = document.getElementById("quizContent");
-  const finalScreen = document.getElementById("finalScreen");
-  const finalScoreDisplay = document.getElementById("finalScoreDisplay");
-  const finalFeedbackText = document.getElementById("finalFeedbackText");
-  const scoreBar = document.getElementById("scoreBar");
-
-  function loadQuestion() {
-    answered = false;
-    const q = questions[currentIndex];
-    layerTitle.textContent = q.name;
-    layerDesc.textContent = q.desc;
-
-    // Reset buttons
-    btnCat.className = "opt-btn";
-    btnCont.className = "opt-btn";
-    btnCat.disabled = false;
-    btnCont.disabled = false;
-
-    // Reset feedback & next button
-    feedbackBox.className = "feedback";
-    feedbackBox.innerHTML = "";
-    nextBtn.style.display = "none";
-
-    progressText.textContent = `Question ${currentIndex + 1} of ${questions.length}`;
-  }
-
-  function checkAnswer(selected) {
-    if (answered) return;
-    answered = true;
-
-    const q = questions[currentIndex];
-    const isCorrect = selected === q.correct;
-
-    if (isCorrect) {
-      score++;
-    }
-
-    scoreText.textContent = `Score: ${score} / ${currentIndex + 1}`;
-
-    // Style selected & correct buttons
-    if (selected === "Categorical") {
-      btnCat.classList.add(isCorrect ? "correct" : "incorrect");
-      if (!isCorrect) btnCont.classList.add("correct");
-    } else {
-      btnCont.classList.add(isCorrect ? "correct" : "incorrect");
-      if (!isCorrect) btnCat.classList.add("correct");
-    }
-
-    btnCat.disabled = true;
-    btnCont.disabled = true;
-
-    // Display feedback
-    feedbackBox.classList.add("visible");
-    feedbackBox.classList.add(isCorrect ? "correct-box" : "incorrect-box");
-    feedbackBox.innerHTML = `<strong>${isCorrect ? "✓ Correct!" : "✗ Incorrect"} (Answer: ${q.correct})</strong>${q.explanation}`;
-
-    nextBtn.style.display = "inline-block";
-    if (currentIndex === questions.length - 1) {
-      nextBtn.textContent = "View Results";
-    } else {
-      nextBtn.textContent = "Next Dataset →";
-    }
-  }
-
-  function nextQuestion() {
-    currentIndex++;
-    if (currentIndex < questions.length) {
-      loadQuestion();
-    } else {
-      showResults();
-    }
-  }
-
-  function showResults() {
-    quizContent.style.display = "none";
-    scoreBar.style.display = "none";
-    finalScreen.style.display = "block";
-
-    finalScoreDisplay.textContent = `${score} / ${questions.length}`;
-
-    if (score === questions.length) {
-      finalFeedbackText.textContent = "Outstanding — a perfect score.";
-    } else if (score >= 7) {
-      finalFeedbackText.textContent = "Great job! A solid understanding of categorical and continuous surfaces.";
-    } else {
-      finalFeedbackText.textContent = "Good effort! Remember: continuous data measures smooth gradients without abrupt boundaries, while categorical data groups locations into distinct classes.";
-    }
-  }
-
-  function restartQuiz() {
-    currentIndex = 0;
-    score = 0;
-    scoreBar.style.display = "flex";
-    quizContent.style.display = "block";
-    finalScreen.style.display = "none";
-    scoreText.textContent = `Score: 0 / 0`;
-    loadQuestion();
-  }
-
-  // Initialize
-  loadQuestion();
+  ],
+  perfectNote: "A perfect score — you have the distinction that the whole week rests on.",
+  goodNote: "Solid. Read the explanations for the ones you missed; they are the arguable ones on purpose.",
+  tryAgainNote: "Worth another pass. The short version: a measurement you could average is continuous; a label standing in for a name is categorical."
+});
 </script>
-
 </body>
 </html>

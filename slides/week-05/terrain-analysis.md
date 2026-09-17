@@ -331,6 +331,40 @@ The battles of Saratoga:
 
 <!-- TODO(graphic): no graphic on this slide; a small course-schedule or lab-thumbnail figure would carry it. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Slope, Aspect, Viewshed
+
+<div class="columns">
+<div>
+
+Eight questions on **what you get out of a DEM** — slope, aspect, hillshade, and what a viewshed will not tell you.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that it landed
+- Every answer explains itself; read the explanation before you move on
+- The last item is the call you have to defend in **Lab 4**: a viewshed says seen or not seen, and nothing else
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/terrain-analysis/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-terrain-analysis-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The aspect pair is
+     where it happens: 359 degrees and 1 degree are two degrees apart, not 358, and a flat cell gets
+     a separate code rather than a bearing - both catch people who have been treating aspect as an
+     ordinary number. The 25.3 versus 22.9 item is the other one; the point is that both answers are
+     right and the method is part of the result. If the room has no signal, put the URL on the board;
+     the items read aloud just as well. -->
+
 <!-- Conversion notes (2026-09-03): CROP (2026-09-03): the five browser captures (National Map, SRTM/GISGeography, Earthdata, JAXA ALOS, Mars DEMs) had the Chrome tab strip and address bar removed because they showed the capturing user's other open tabs and profile avatar; page content unchanged. source "CE 414 Week 5 - Terrain Analysis.pptx", 28 slides, no hidden slides and no speaker notes in the source — every note in this deck is new. 28 source slides became 35: added a title byline slide, Today's Goals, three section dividers, a Lab 4 preview, and Before Next Class; source slide 22 was split into two slides (four nearest cells / 3rd-order finite difference) because its figure is unreadable at 16:9 on one slide. No slides were dropped. The duplicated sentence on the ASTER slide was removed. Source media1 (a stock tomato photo, unused by any slide) was not carried over. Slides 2, 3, 11 and 26 were built from PowerPoint shapes and are 200 dpi renders of the PDF page, cropped. Stale non-ArcGIS screenshots kept and flagged: The National Map, the SRTM page (a third-party page with an advertisement in the capture), Earthdata Search, and the JAXA portal. There are no ArcMap-era ArcGIS captures in this deck and no ArcGIS UI at all — ArcGIS Pro tool names appear only in speaker notes and carry a VERIFY. Open items: DEM resolution and dataset claims (four VERIFY flags plus a 3DEP terminology TODO; ten VERIFY flags in the deck overall), native-vs-resampled resolution, scale/uncertainty for hillshade, slope, curvature and viewshed, a hand-versus-tool validation exercise, the susceptibility/hazard/risk/exposure distinction, the reading chapter, the Week 5/6 lab schedule, and three TODO(graphic) slides. -->
 
 <!--

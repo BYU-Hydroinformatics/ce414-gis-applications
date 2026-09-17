@@ -387,3 +387,36 @@ SRTM, ASTER on Earthdata Search, JAXA) are stale, though the facts on those slid
 against NASA Earthdata on 2026-09-10. The SRTM slide's image is a third-party page with an
 advertisement in it and should be replaced.
 -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Surfaces and Returns
+
+<div class="columns">
+<div>
+
+Eight questions on the hour: where a surface comes from, how LiDAR measures one, and which DEM to download. **Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The last two items are the ones Lab 4 will ask you again on Saturday
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/elevation-lidar/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-elevation-lidar-qr.png)
+
+</div>
+</div>
+
+<!-- Four to five minutes, in pairs, then a show of hands on the one that splits the room: which
+echo from a single pulse comes back last. Half the room says the treetop, because it is the first
+thing the pulse hits - the answer is the ground, because it is the farthest thing the pulse reaches
+and its echo makes the longest round trip. That is the whole basis of a bare-earth model under
+forest, so it is worth ten seconds at the board. The resolution item is the other one to watch: they
+expect 1 m everywhere, and The National Map will not give it to them in the lab. If the room has no
+signal, put the URL on the board; every item reads aloud just as well. -->

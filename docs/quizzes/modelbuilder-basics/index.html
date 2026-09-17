@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Models and ModelBuilder</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what a model is, how to read a ModelBuilder canvas, and the decisions inside the Cities Near Rivers model.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Models and ModelBuilder",
+  subtitle: "CE 414 &middot; Week 2 &mdash; ModelBuilder, Part A<br>" +
+            "Eight decisions from today: what counts as a <strong>model</strong>, how to read the " +
+            "<strong>canvas</strong>, and why <em>Cities Near Rivers</em> is built the way it is.",
+  badge: "Modeling question",
+  deckUrl: "../../slides/week-02/modelbuilder-a.html",
+  questions: [
+    {
+      prompt: "A globe, a paper map, an aerial photograph, and Manning's equation are all models. What do they have in common?",
+      options: ["Each one is a computer program", "Each one is an intentional simplification of the real world", "Each one stores one number per cell", "Each one was built in ModelBuilder"],
+      answer: "Each one is an intentional simplification of the real world",
+      explanation: "A model is an idealized, simplified representation of reality — an abstraction. Nothing on today's list of model types (theory, law, hypothesis, equation, structured idea) is a computer program; we model constantly and only sometimes write code."
+    },
+    {
+      prompt: "The Buffer step of Cities Near Rivers was shown four ways: the tool dialog, the Python window, a model, and a script. What actually differs between them?",
+      options: ["The geoprocessing tool each one calls", "The answer each one produces", "How repeatable the analysis is", "The coordinate system each one writes out"],
+      answer: "How repeatable the analysis is",
+      explanation: "All four front ends call the identical geoprocessing tool underneath and give the same result. What changes is repeatability: a dialog run is gone once you close it, while a model or a script is the analysis written down and can be run again."
+    },
+    {
+      prompt: "An element on your ModelBuilder canvas is gray instead of colored. What does that tell you?",
+      options: ["A required parameter is still empty", "That step has already run", "It is flagged as intermediate data", "The output has been added to the map"],
+      answer: "A required parameter is still empty",
+      explanation: "Gray means not ready to run, and it propagates downstream — so fix the leftmost gray element first. Colored means ready (blue input data, yellow tool, green derived data), and a green check means that step has already executed and its output exists on disk."
+    },
+    {
+      prompt: "Your model is full of gray elements and will not run. What is the fastest way to find out why?",
+      options: ["Press Auto Layout and look at the chain", "Export the model and read the export", "Run it and wait for the first error message", "Press Validate, which checks every tool's parameters at once"],
+      answer: "Press Validate, which checks every tool's parameters at once",
+      explanation: "Validate checks the whole model in one pass instead of stopping at the first failure, which is why it is the biggest time-saver on the ModelBuilder ribbon. Auto Layout and Fit to Window only rearrange what you are looking at."
+    },
+    {
+      prompt: "In a model's environment settings, Output Coordinate System is left empty. What do the outputs get?",
+      options: ["The coordinate system of the input data", "The coordinate system of the map the layers are drawn in", "Nothing — the tools refuse to run until it is set", "Latitude and longitude, always"],
+      answer: "The coordinate system of the input data",
+      explanation: "Empty means “same as input.” That is a defensible choice, but make it on purpose: environments are the background settings every tool consults, and this one quietly decides what projection your results come out in."
+    },
+    {
+      prompt: "Cities Near Rivers projects both layers before it buffers anything. Why?",
+      options: ["Buffer only accepts line features", "The inputs are in latitude and longitude, where “10 miles” has no meaning", "Projecting makes the model run faster", "Intersect requires the two layers to be in different coordinate systems"],
+      answer: "The inputs are in latitude and longitude, where “10 miles” has no meaning",
+      explanation: "A distance in miles needs a projected coordinate system with real linear units, so both layers go to USA Contiguous Equidistant Conic first — and because the datum changes, ArcGIS Pro proposes a geographic transformation you should accept knowingly."
+    },
+    {
+      prompt: "You type 10 in the Buffer tool's distance box and leave the unit box alone. What distance do you get?",
+      options: ["10 statute miles", "10 meters", "10 map units, whatever the map is using", "Nothing — the tool will not run without a unit"],
+      answer: "10 meters",
+      explanation: "The unit box reads Unknown until you set it, and then defaults to meters, so a buffer meant to be 10 miles becomes 10 meters and selects almost nothing. Nothing warns you. Lab 1 has the same trap, next to the one where Add Field's default Long type silently drops every decimal."
+    },
+    {
+      prompt: "The Buffer step of Cities Near Rivers dissolves all the river buffers into one feature. What does that dissolve prevent?",
+      options: ["Buffers that cross a state line", "A city being counted twice where two river buffers overlap", "The buffer distance reverting to meters", "The intermediate data being written to disk"],
+      answer: "A city being counted twice where two river buffers overlap",
+      explanation: "Without the dissolve, a city sitting inside two overlapping river buffers comes through Intersect as two records, and the count is wrong. Dissolving first is what makes “256 of 678 cities” a count of cities rather than a count of city-buffer pairs."
+    }
+  ],
+  perfectNote: "A clean sweep. You can read a canvas and defend every decision in the model — start Lab 1 tonight.",
+  goodNote: "Good. Read the explanations on the ones you missed; the buffer and projection items are where Lab 1 costs people hours.",
+  tryAgainNote: "Worth another pass. The short version: a model is a deliberate simplification, the canvas colors tell you what is ready and what has run, and a distance is only meaningful once the data are projected and the unit is set on purpose."
+});
+</script>
+</body>
+</html>

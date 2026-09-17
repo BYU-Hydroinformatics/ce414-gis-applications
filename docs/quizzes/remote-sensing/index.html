@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Light and Bands</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: the electromagnetic spectrum, what a band is, and whether a sensor measured reflected light or emitted heat.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Light and Bands",
+  subtitle: "CE 414 &middot; Week 4 &mdash; Remote Sensing<br>" +
+            "Eight questions on where energy sits on the spectrum, what a <strong>band</strong> " +
+            "really is, and whether the sensor measured <strong>reflected</strong> light or " +
+            "<strong>emitted</strong> heat.",
+  badge: "Remote sensing",
+  deckUrl: "../../slides/week-04/remote-sensing.html",
+  questions: [
+    {
+      prompt: "Healthy vegetation is bright in a reflected near-infrared image. Why?",
+      badge: "Reflected or emitted",
+      options: [
+        "Leaf structure reflects near-infrared strongly back to the sensor",
+        "Leaves are warmer than the bare ground around them",
+        "Chlorophyll gives off near-infrared while the plant photosynthesizes",
+        "The sensor brightens vegetation on purpose so it stands out"
+      ],
+      answer: "Leaf structure reflects near-infrared strongly back to the sensor",
+      explanation: "Reflected near-infrared is sunlight bouncing off a surface, exactly like visible light — it is not heat. Thermal infrared, farther along the spectrum, is energy a surface emits because of its own temperature. Plants are bright in the near-infrared because leaves reflect it, not because they are warm."
+    },
+    {
+      prompt: "Start at visible red and move toward longer wavelengths. Which order is right?",
+      badge: "The spectrum",
+      options: [
+        "Thermal infrared, then near-infrared, then ultraviolet",
+        "Ultraviolet, then near-infrared, then thermal infrared",
+        "Near-infrared, then thermal infrared, then microwaves and radar",
+        "Microwaves and radar, then X-rays, then near-infrared"
+      ],
+      answer: "Near-infrared, then thermal infrared, then microwaves and radar",
+      explanation: "Just longer than red sits the near-infrared, then thermal infrared and far infrared, then microwaves and radar, then radio and TV. Ultraviolet, X-rays and gamma rays lie on the other side of visible light — shorter than violet, not longer than red."
+    },
+    {
+      prompt: "The band choices on real satellite sensors look arbitrary until you put the solar irradiance curve behind them. What decides them?",
+      detail: "The sea-level curve is notched wherever ozone, oxygen, water vapor and carbon dioxide absorb.",
+      badge: "Atmospheric windows",
+      options: [
+        "The bands are spaced evenly from one end of the spectrum to the other",
+        "The bands sit in the gaps between the absorption notches",
+        "The bands are matched to the three types of cone cell in the human eye",
+        "The bands are set by how small the detector can make a pixel"
+      ],
+      answer: "The bands sit in the gaps between the absorption notches",
+      explanation: "You cannot measure a wavelength the atmosphere has already absorbed, so sensors are built for the atmospheric windows between the notches. The curve is why an apparently odd list of bands is actually the only list available."
+    },
+    {
+      prompt: "Two hexadecimal digits per channel give 256 values of red, 256 of green and 256 of blue. Why is that enough?",
+      badge: "Digital images",
+      options: [
+        "It gives about 16.8 million colors, more than ten times what the eye can resolve",
+        "It gives exactly the number of colors the eye can resolve, with none to spare",
+        "It gives 256 colors, which is all a raster cell is able to store",
+        "Hexadecimal has no upper limit, so it covers every color there is"
+      ],
+      answer: "It gives about 16.8 million colors, more than ten times what the eye can resolve",
+      explanation: "256 × 256 × 256 = 16,777,216 combinations, while the working figure for human color discrimination is about a million — three types of cone cell at roughly 100 shades each. Neighboring swatches in the hex color grid differ by one step in one channel, and most of those steps are invisible."
+    },
+    {
+      prompt: "One scene is shown one band at a time. The blue band looks hazier than the red or the green. Why?",
+      badge: "Bands",
+      options: [
+        "The blue band was collected on a different day",
+        "Blue light is absorbed by chlorophyll, so vegetation washes out",
+        "The blue band is stored at a coarser cell size than the others",
+        "Blue scatters hardest in the atmosphere"
+      ],
+      answer: "Blue scatters hardest in the atmosphere",
+      explanation: "All three bands are the same scene at the same instant; what differs is how each wavelength behaves. Blue scatters most on the way through the atmosphere, so the blue band carries more haze and less surface contrast than the others."
+    },
+    {
+      prompt: "What makes an image a false-color image?",
+      badge: "False color",
+      options: [
+        "Someone chose which band drives the red, green and blue channels",
+        "The colors were painted onto the image by hand afterward",
+        "The scene was captured at night, so nothing is its real color",
+        "The sensor recorded no color information at all"
+      ],
+      answer: "Someone chose which band drives the red, green and blue channels",
+      explanation: "Stack the red, green and blue bands into their matching display channels and you get a natural-color image. Put some other band into the red channel instead and the same scene comes out false color. The colors are band assignments, not what your eye would have seen."
+    },
+    {
+      prompt: "What separates hyperspectral imagery from multispectral imagery?",
+      badge: "Multispectral or hyperspectral",
+      options: [
+        "Smaller pixels, so you can see finer detail on the ground",
+        "Hundreds of narrow contiguous bands instead of a handful of wide ones",
+        "It measures emitted heat rather than reflected sunlight",
+        "It stores cell values in hexadecimal rather than as numbers"
+      ],
+      answer: "Hundreds of narrow contiguous bands instead of a handful of wide ones",
+      explanation: "The difference is spectral detail, not pixel size. Hyperspectral gives you a full spectrum for every pixel rather than a few samples, so a pixel can be matched against the spectral shape of soil, vegetation or water — and those cubes usually need dedicated software rather than a general-purpose GIS."
+    },
+    {
+      prompt: "In the enhanced infrared view of Hurricane Katrina, the eyewall stands out sharply. What is the sensor measuring, and what does the brightest area mean?",
+      badge: "Thermal infrared",
+      options: [
+        "Sunlight reflected off the top of the storm; the brightest area is the thickest cloud",
+        "Wind speed at the sea surface; the brightest area is the strongest wind",
+        "Energy the cloud tops emit because of their own temperature; the coldest tops are the tallest",
+        "Rain falling under the storm; the brightest area is the heaviest rain"
+      ],
+      answer: "Energy the cloud tops emit because of their own temperature; the coldest tops are the tallest",
+      explanation: "This is one of the few images in today's set that genuinely is about heat: the sensor reads thermal infrared, and the colors are a temperature enhancement. Cold means high, so the coldest cloud tops mark the tallest, most vigorous convection — which is why the eyewall lights up."
+    }
+  ],
+  perfectNote: "A perfect score — you can say what the sensor measured and why the band was chosen, which is the whole hour.",
+  goodNote: "Solid. Read the explanations for the ones you missed; the reflected-versus-emitted pair is the one that catches everybody.",
+  tryAgainNote: "Worth another pass. The short version: near-infrared in an image like the one behind Lab 2's NDVI is reflected sunlight, thermal infrared is heat a surface gives off, and a band is one wavelength window stored as its own grid of numbers."
+});
+</script>
+</body>
+</html>

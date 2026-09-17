@@ -8,6 +8,12 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Storing the World](../quizzes/data-models/index.html) — Eight questions on vector, raster and TIN: what the computer actually stores for a point, a line, a polygon or a grid, and why a shapefile is not a data model.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

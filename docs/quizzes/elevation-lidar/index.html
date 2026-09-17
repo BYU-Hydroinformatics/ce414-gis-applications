@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Surfaces and Returns</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: where an elevation surface comes from, how LiDAR measures one, and which DEM to download.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Surfaces and Returns",
+  subtitle: "CE 414 &middot; Week 5 &mdash; Elevation Data and LiDAR<br>" +
+            "Eight calls on where a surface <strong>comes from</strong> &mdash; how it is measured, " +
+            "which one to download, and what the cell size costs you.",
+  badge: "Elevation question",
+  deckUrl: "../../slides/week-05/elevation-data-lidar.html",
+  questions: [
+    {
+      prompt: "The elevation surface itself, or a model of it?",
+      detail: "A grid of square cells in a coordinate system, each cell holding one land surface elevation, downloaded this morning from The National Map.",
+      options: ["The elevation surface", "A DEM — a model of the surface"],
+      answer: "A DEM — a model of the surface",
+      explanation: "The elevation surface is the real ground elevation at each point; a Digital Elevation Model is a digital representation of it. The square grid is only one way to build that representation — a triangular irregular network, a set of contours, or a scatter of points model the same surface differently, and the grid you downloaded also carries a row and column count, a cell size, an origin, and NODATA cells where it has no value."
+    },
+    {
+      prompt: "What does a LiDAR sensor measure directly with each pulse?",
+      options: [
+        "The elevation of the ground beneath it",
+        "How long the pulse takes to come back, which gives a range",
+        "The color and texture of whatever the pulse hit",
+        "The slope of the surface beneath it"
+      ],
+      answer: "How long the pulse takes to come back, which gives a range",
+      explanation: "Time of flight times the speed of light, divided by two, is the range from the sensor to whatever the pulse struck. A range is not yet a point: it becomes an (x, y, z) only once it is combined with the sensor's own position and orientation from GPS and an IMU — which is why LiDAR accuracy leans on the positioning system as hard as it leans on the laser."
+    },
+    {
+      prompt: "One pulse over forest comes back more than once — treetop, branch, ground. Which of those echoes reaches the sensor last?",
+      options: [
+        "The treetop return",
+        "The branch return",
+        "The ground return",
+        "They arrive together; the sensor separates them by strength"
+      ],
+      answer: "The ground return",
+      explanation: "The ground is the farthest thing the pulse reaches, so its echo makes the longest round trip and arrives last. That ordering is the whole trick: because some energy gets all the way through the gaps in a canopy and back, ground returns can be picked out and a bare-earth surface built under a forest."
+    },
+    {
+      prompt: "Bare-earth model, or a surface off the buildings?",
+      detail: "You need a surface that includes rooftops, for a line-of-sight study in a downtown core.",
+      options: ["The bare-earth model", "A surface built from the returns off the buildings"],
+      answer: "A surface built from the returns off the buildings",
+      explanation: "A bare-earth model is classified to ground returns only, with vegetation and structures removed — so it discards exactly the rooftops the study needs. The city surface in this lecture is extracted from the building returns in the same point cloud, and it is the input to line-of-sight, solar potential, view analysis and flood modeling in an urban core."
+    },
+    {
+      prompt: "Airborne or terrestrial LiDAR?",
+      detail: "You need a very dense scan of a single quarry face to monitor whether it is moving.",
+      options: [
+        "Airborne LiDAR, flown over the site",
+        "A terrestrial, tripod-mounted scanner"
+      ],
+      answer: "A terrestrial, tripod-mounted scanner",
+      explanation: "The trade is extent against density. Airborne LiDAR gets you a whole county; a terrestrial scanner gets you one slope, one bridge or one quarry face at far higher point density — the same reason a monument like Mount Rushmore is scanned from the ground for documentation and change monitoring. Civil engineering uses both, and the job picks one."
+    },
+    {
+      prompt: "ASTER GDEM is built from stereo optical imagery rather than radar. Where is it noisiest?",
+      options: [
+        "Over dense urban areas",
+        "Over steep mountains",
+        "Over snow, sand and water",
+        "Over agricultural fields"
+      ],
+      answer: "Over snow, sand and water",
+      explanation: "Matching two optical images to get elevation needs visible contrast to find the same spot twice, and snow, sand and open water have almost none. That noise is the price of ASTER's advantage: being optical rather than radar, it fills in the voids SRTM leaves — SRTM measured by interferometry from a single pass, one look angle, so steep terrain sits in radar shadow."
+    },
+    {
+      prompt: "You open The National Map downloader for a site in Utah County and want the finest DEM available. What should you expect?",
+      options: [
+        "1 meter coverage everywhere in the United States",
+        "1 meter where it exists, otherwise 1/3 arc-second (about 10 meters) or 1 arc-second (about 30 meters)",
+        "Only 1 arc-second, about 30 meters, anywhere in the country",
+        "The same 1 meter coverage worldwide"
+      ],
+      answer: "1 meter where it exists, otherwise 1/3 arc-second (about 10 meters) or 1 arc-second (about 30 meters)",
+      explanation: "The 3D Elevation Program publishes 1 meter, 1/3 arc-second and 1 arc-second products, and which of them exists depends on where you look. So draw the area of interest, filter to Elevation Products (3DEP), and take what the downloader actually lists — do not plan a workflow around a resolution you assumed was there. Lab 4 needs a DEM for Utah County, and this is where it comes from."
+    },
+    {
+      prompt: "The same terrain, symbolized identically, at 30 meter cells and at 100 meter cells. What did the coarser grid cost you?",
+      options: [
+        "Nothing — the elevation values are the same numbers either way",
+        "The coordinate system, which has to be redefined",
+        "The vertical datum the elevations are referenced to",
+        "The small drainages, and any slope you compute is now an average over a much larger footprint"
+      ],
+      answer: "The small drainages, and any slope you compute is now an average over a much larger footprint",
+      explanation: "Cell size sets the finest thing the grid can resolve. At 100 meters the small drainages vanish and a parcel spans only a handful of cells, so a slope computed there describes a footprint far bigger than the parcel. Every surface derived from a DEM inherits that choice, which is why cell size is something you pick for a job rather than accept."
+    }
+  ],
+  perfectNote: "Perfect. You can say where a surface came from, how it was measured, and what you gave up choosing it.",
+  goodNote: "Solid. Read the explanations on the ones you missed — the returns question and the resolution question are the two that bite in the lab.",
+  tryAgainNote: "Worth another pass before you download anything. The short version: a DEM is a model of a surface, LiDAR times a pulse and the ground echo comes back last, and cell size decides what you will still be able to see."
+});
+</script>
+</body>
+</html>

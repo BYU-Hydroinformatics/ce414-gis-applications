@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Ready to Pitch?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: eight judgment calls about the final project — scope, requirements, the proposal meeting, and how the work is judged.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Ready to Pitch?",
+  subtitle: "CE 414 &middot; Week 12 &mdash; The Final Project<br>" +
+            "Eight calls you have to make before you propose: is the idea the right " +
+            "<strong>size</strong>, does it meet the <strong>requirements</strong>, and could you " +
+            "<strong>defend the result</strong> if someone pushed back?",
+  badge: "Project decision",
+  deckUrl: "../../slides/week-12/final-project-introduction.html",
+  questions: [
+    {
+      prompt: "Your partner opens with: \"Let's map every trailhead in Utah County and symbolize them by elevation.\"",
+      detail: "One study area, data that certainly exists, a clean map at the end. Is it the right size for a final project?",
+      options: [
+        "Too small — it displays data, it does not analyze anything",
+        "About right — one question, one study area, one map",
+        "Too big — county-wide is more than a project can carry"
+      ],
+      answer: "Too small — it displays data, it does not analyze anything",
+      explanation: "Mapping and symbolizing is display, not analysis: nothing is decided and there is no criterion to argue about. Turn it into a decision question — which trailheads are underserved by parking, say — and the same data becomes a project."
+    },
+    {
+      prompt: "A team plans a siting analysis built entirely from parcels, roads, streams and zoning polygons.",
+      detail: "Buffers, overlays and a selection at the end. Every layer is a feature class. Does the plan meet the project requirements?",
+      options: [
+        "Yes — the analysis is sound, and the requirements are about rigor, not file types",
+        "No — every project has to use both raster and vector data",
+        "Yes, as long as the model has enough tools in it"
+      ],
+      answer: "No — every project has to use both raster and vector data",
+      explanation: "Using both raster and vector is a stated requirement, and it is there for a reason: most real engineering questions mix measured surfaces with mapped features. Slope or land cover from a raster, combined with those parcels, is usually the cheapest way to satisfy it honestly."
+    },
+    {
+      prompt: "A model is proposed that uses Buffer, Clip, Intersect and Reclassify — all tools the labs already used.",
+      detail: "The workflow is correct and it answers the question. What is missing?",
+      options: [
+        "Nothing — familiar tools used well are exactly what the labs prepared you for",
+        "At least two tools that no lab this semester used",
+        "A raster output, which none of those tools produce"
+      ],
+      answer: "At least two tools that no lab this semester used",
+      explanation: "The requirement list asks for at least two tools we have not used in a lab, so the project teaches you something the course did not hand you: reading a tool's documentation, checking its assumptions, and deciding whether it fits your data. Pick them because the question needs them, not for novelty."
+    },
+    {
+      prompt: "Which of these best shows that your model \"exposes a tool interface\"?",
+      detail: "Requirement 6 says your model should open like any other geoprocessing tool.",
+      options: [
+        "The model runs from start to finish without an error",
+        "The model diagram is laid out neatly, left to right",
+        "A classmate can run it on a different county without opening the model"
+      ],
+      answer: "A classmate can run it on a different county without opening the model",
+      explanation: "That is the test on the slide, and it forces everything else: inputs and outputs marked as parameters, thresholds exposed rather than buried, labels a stranger can read instead of rivers_Project_Buffer_2, and metadata saying what the tool does, needs and makes."
+    },
+    {
+      prompt: "Your team arrives at the proposal meeting with a sharp one-sentence question and a sketch of the model on paper. The data plan is \"we will find it next week.\"",
+      detail: "Are you ready to pitch?",
+      options: [
+        "Yes — the analysis plan is what the meeting is for",
+        "Yes, provided the study area is settled",
+        "No — the feasibility table has to be filled in first, one row per layer"
+      ],
+      answer: "No — the feasibility table has to be filled in first, one row per layer",
+      explanation: "Every layer needs a source and URL, a vintage, a format, a coordinate reference system, raster or vector, and a license before you pitch. Projects fail on a data row far more often than on the analysis, and a layer that turns out to be a PDF, a paywall or a decade old is much cheaper to discover now."
+    },
+    {
+      prompt: "Asked \"what would a wrong answer look like?\", a team says the three sites their model picked are obviously the right ones.",
+      detail: "What does that answer tell you about the project?",
+      options: [
+        "It is in good shape — a result that obvious is a result you can defend",
+        "It has no way to be checked, so it is a picture rather than an analysis",
+        "It needs a larger study area before the result means anything"
+      ],
+      answer: "It has no way to be checked, so it is a picture rather than an analysis",
+      explanation: "A model with no validation or sensitivity check cannot be wrong, which means it also cannot be right. The cheapest check is to move one threshold and show what moves with it — if the same sites survive, you have an argument; if they do not, you have learned where your recommendation actually comes from."
+    },
+    {
+      prompt: "A team downloads streams and roads in latitude and longitude, buffers them straight away, and reports the buffered area.",
+      detail: "The tools run without complaint and the map looks plausible. What went wrong?",
+      options: [
+        "Nothing — ArcGIS Pro converts the units behind the scenes",
+        "The distances and areas are in degrees, which are not a ground measurement",
+        "Buffer cannot be used on line features"
+      ],
+      answer: "The distances and areas are in degrees, which are not a ground measurement",
+      explanation: "A degree of longitude is not a fixed distance on the ground, so a buffer in geographic coordinates is wider in the south of your study area than in the north, and a \"square degree\" of area means nothing to a client. Pick a projected coordinate system on purpose and project everything into it before you measure."
+    },
+    {
+      prompt: "Your classmates fill in a scoresheet while you present. Which of these does it NOT ask them to judge?",
+      detail: "Everyone in the room scores every other team.",
+      options: [
+        "How clearly the problem was described",
+        "How many hours the team spent on the project",
+        "Whether the basic requirements were met — raster, vector, new tools, ModelBuilder",
+        "How interesting the presentation was"
+      ],
+      answer: "How many hours the team spent on the project",
+      explanation: "The sheet scores what the room can see: the problem, the map, the explanation of the model and workflow, the requirements, and how engaging the presentation is. Effort is invisible from the back row, which is why you lead with the map, show the model, and explain one decision you had to make."
+    }
+  ],
+  perfectNote: "A clean sweep — you know what you are being asked for. Now go find the data.",
+  goodNote: "Good. Reread the explanations you missed before your proposal meeting; each one is a way projects have gone wrong before.",
+  tryAgainNote: "Worth another pass. The short version: one decision question, one study area, raster and vector, a ModelBuilder model someone else could run, documented data, and one honest check on the result."
+});
+</script>
+</body>
+</html>

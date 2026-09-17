@@ -12,6 +12,13 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Eight questions on cost surfaces and the cheapest route across them, and why the cheapest route is usually not the shortest one.
+- [Projections and Datums](../quizzes/coordinate-systems/index.html) — Eight questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

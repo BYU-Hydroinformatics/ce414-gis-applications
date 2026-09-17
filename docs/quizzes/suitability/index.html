@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Criteria to Surface</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: work the raster suitability workflow from criteria through reclassification and overlay to reading the finished surface.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Criteria to Surface",
+  subtitle: "CE 414 &middot; Week 10 &mdash; Raster-Based Spatial Analysis<br>" +
+            "Eight decisions from the workflow we just walked: what a criterion is, why " +
+            "everything gets <strong>reclassified</strong> before it gets added, and what the " +
+            "finished surface does and does not tell you.",
+  badge: "Suitability workflow",
+  deckUrl: "../../slides/week-10/raster-spatial-analysis.html",
+  questions: [
+    {
+      prompt: "Which city should get the new temple?",
+      detail: "Step 1 puts this question next to a second one: where inside a city should the building go? Are they the same analysis?",
+      options: [
+        "Different questions, different criteria — only the second is a site analysis",
+        "The same question asked at two scales, so one set of criteria covers both"
+      ],
+      answer: "Different questions, different criteria — only the second is a site analysis",
+      explanation: "Choosing the city is a regional question about who is served. Choosing the spot is a site question about the ground itself — parcel size, access, slope. Raster suitability answers the second one, and criteria borrowed from the first will not score a parcel."
+    },
+    {
+      prompt: "You rasterize a parcel boundary and a stream centerline, and the curves come out as stair steps.",
+      detail: "You accepted that when you picked the cell size. What else did picking it decide?",
+      options: [
+        "The coordinate system every later layer will be reprojected into",
+        "The number of classes the reclassification table can hold",
+        "The resolution of your answer",
+        "Nothing else — cell size only affects how the rasters draw"
+      ],
+      answer: "The resolution of your answer",
+      explanation: "Converting to raster trades detail for the ability to do arithmetic on the layers. The cell size is the size of the smallest thing your suitability surface can distinguish, so it is a statement about the answer, not about the drawing."
+    },
+    {
+      prompt: "Three criteria, three units: elevation in meters, slope in degrees, distance to a road in meters.",
+      detail: "Why does the workflow reclassify every one of them before the overlay step?",
+      options: [
+        "So the layers share an extent and a cell size before the math runs",
+        "So every criterion contributes on the same scale — raw meters added to raw degrees is a number that means nothing",
+        "Because raster arithmetic cannot be done on decimal values",
+        "Because a heat map legend can only display whole numbers"
+      ],
+      answer: "So every criterion contributes on the same scale — raw meters added to raw degrees is a number that means nothing",
+      explanation: "Overlay adds cells. Adding quantities measured in different units gives a sum with no meaning, and the criterion with the biggest raw numbers would quietly dominate. Reclassifying each one onto a shared scale — 1 and 0, or 1 through 10 — is what makes the sum interpretable. Getting the layers onto a common extent and cell size is real, but that is the earlier preparation step, not what reclassification is for."
+    },
+    {
+      prompt: "Two engineers start from the same downloaded layers and finish with two different suitability maps.",
+      detail: "Nothing was downloaded wrong and no tool crashed. Where did the disagreement most likely enter?",
+      options: [
+        "The reclassification tables",
+        "The order in which the rasters were added",
+        "The basemap each one had turned on",
+        "The map scale each one printed at"
+      ],
+      answer: "The reclassification tables",
+      explanation: "The reclassification table is where your judgment enters the model: the class breaks are a choice, not a measurement. Two people with the same data and different tables get different maps. Addition order is not a candidate — a sum does not care what order you add in."
+    },
+    {
+      prompt: "Two criteria, each reclassified to 1 = suitable and 0 = not, are added cell by cell. A cell comes out as 2.",
+      detail: "What have you learned about that cell?",
+      options: [
+        "It satisfies one criterion twice as strongly as the other",
+        "It satisfies both criteria",
+        "It covers twice the ground area of its neighbors",
+        "It is missing data in both inputs"
+      ],
+      answer: "It satisfies both criteria",
+      explanation: "On a 1/0 scale the sum counts how many criteria a location passes, so 2 out of two inputs means both. This is the raster version of the vector operation that cuts polygons against each other: same question, done as arithmetic on a stack of grids instead of on boundaries."
+    },
+    {
+      prompt: "One rule is absolute: land the city will not permit to be built on is out, however well it scores everywhere else.",
+      detail: "Step 6 lists three things combining the rasters does. Which one is this rule?",
+      options: [
+        "De-emphasize areas that are less optimal",
+        "Emphasize areas that are more optimal",
+        "Eliminate areas that fall outside the suitable range",
+        "None of them — it is applied after the heat map is made"
+      ],
+      answer: "Eliminate areas that fall outside the suitable range",
+      explanation: "A rule that excludes and a rule that scores do different work. Excluded ground has to leave the model entirely; if you merely gave it a low score instead, a strong score on another layer could out-vote it and put your site on land you are not allowed to use."
+    },
+    {
+      prompt: "Your finished surface has one bright, saturated hot spot. Is that the site?",
+      detail: "Everything upstream ran correctly.",
+      options: [
+        "Yes — the model has identified the location that satisfies the criteria",
+        "Not yet — every cell has a score, and where the line falls between suitable and not is still your decision"
+      ],
+      answer: "Not yet — every cell has a score, and where the line falls between suitable and not is still your decision",
+      explanation: "The output is a continuous surface, not a verdict. A color ramp is stretched across whatever range the data happens to have, so it can make a weak result look strong. Read the legend and the underlying values before you believe the color."
+    },
+    {
+      prompt: "A density map built from reported service outages burns brightest over the largest cities.",
+      detail: "What is that pattern mostly showing you?",
+      options: [
+        "That the outages really do concentrate in cities",
+        "That the density surface was built at too coarse a cell size",
+        "Where the most people are filing reports, as much as where the problem is",
+        "That the color ramp was applied in reverse"
+      ],
+      answer: "Where the most people are filing reports, as much as where the problem is",
+      explanation: "The input is reports, not outages per person, so the map partly maps population. A suitability model has the same trap: a criterion whose input layer is dense wherever people are will pull the result toward populated ground no matter what you meant it to measure."
+    }
+  ],
+  perfectNote: "Every one. You can defend each step of the workflow, which is exactly what the write-up for a suitability analysis has to do.",
+  goodNote: "Good work. Read the explanations for the ones you missed — the reclassification and heat map items are the arguable ones on purpose.",
+  tryAgainNote: "Worth another pass. The short version: criteria come first, reclassification puts them all on one scale so they can be added, overlay does the adding cell by cell, and the surface that comes out is a range of scores you still have to draw a line through."
+});
+</script>
+</body>
+</html>

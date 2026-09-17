@@ -719,3 +719,39 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
      STRUCTURE: the course plan wants the operational material moved to Weeks 1-2 and this session rebuilt
      around lab decisions (units, distortion, datum, cell size, transformations). That decision is flagged
      at the top of the file and has not been made here; the source order is preserved. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Projections and Datums
+
+<div class="columns">
+<div>
+
+Eight questions: what your coordinates **measure**, what your map **gives up**, and what both are **measured from**.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — a check that today landed
+- Every answer explains itself; read it before you move on
+- It is the check Lab 10 wants before you combine layers
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/coordinate-systems/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-coordinate-systems-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The Tennessee item
+     is the reliable one: the vote usually goes to UTM because UTM is the system they use, and the
+     figure earlier in the hour is the argument - match the shape of the low-distortion band to the
+     shape of the study area, and Tennessee is long east-west. The NAD 83 item splits a smaller room:
+     plenty of students read a datum name as a projection, which is exactly the confusion that makes
+     two layers land on top of each other and look fine until someone measures. If the room has no
+     signal, put the URL on the board; the items read aloud just as well, and the units question makes
+     a good one to argue out loud. -->

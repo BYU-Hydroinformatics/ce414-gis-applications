@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Which Family?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: local, focal, zonal and global raster functions, moving windows, and the threshold as a model parameter.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Which Family?",
+  subtitle: "CE 414 &middot; Week 3 &mdash; Raster Analysis and Map Algebra, Part B<br>" +
+            "Four families of raster function &mdash; <strong>local</strong>, <strong>focal</strong>, " +
+            "<strong>zonal</strong>, <strong>global</strong> &mdash; what a moving window does, and a " +
+            "threshold you can change without editing the expression.",
+  badge: "Raster function",
+  deckUrl: "../../slides/week-03/raster-analysis-b.html",
+  questions: [
+    {
+      prompt: "Reclassify",
+      detail: "A raster of NDVI values goes in; a raster of class numbers comes out, cell for cell.",
+      options: ["Local", "Focal", "Zonal", "Global"],
+      answer: "Local",
+      explanation: "One cell in, one cell out: a cell's new value depends only on that same cell's old value. Every tool in the Lab 2 model — Float, Minus, Plus, Divide, Con, Reclassify — is local for the same reason."
+    },
+    {
+      prompt: "Euclidean Distance",
+      detail: "Every cell comes out holding its straight-line distance to the nearest source feature.",
+      options: ["Local", "Focal", "Global", "Zonal"],
+      answer: "Global",
+      explanation: "To know the distance to the nearest source, a cell has to be measured against the whole grid, not just against its neighbors. Flow Accumulation and Distance Accumulation are global for the same reason, which is why Week 6's watersheds land in this family."
+    },
+    {
+      prompt: "A 3 by 3 window carrying 1/9 in every cell steps across a raster. What does the tool write at each stop?",
+      badge: "Moving window",
+      options: [
+        "The largest of the nine values",
+        "The center cell's own value, unchanged",
+        "How many of the nine cells match the center",
+        "The mean of the nine cells"
+      ],
+      answer: "The mean of the nine cells",
+      explanation: "Nine values each weighted 1/9 add up to their average, so those weights are the 3 by 3 mean. The kernel is only the weights: keep the same window and change the function and you get something else entirely — range finds edges, majority cleans speckle off a classified map."
+    },
+    {
+      prompt: "You run a 5 by 5 mean over the NDVI at the center pivots. What happens to the sharp boundary between a green field and the bare ground around it?",
+      badge: "Moving window",
+      options: [
+        "The boundary shifts one cell into the field",
+        "The step becomes a ramp a few cells wide",
+        "The boundary sharpens, because averaging removes stray values",
+        "Nothing changes at the boundary; only interior cells are averaged"
+      ],
+      answer: "The step becomes a ramp a few cells wide",
+      explanation: "For several positions in a row the window straddles the boundary and mixes the two populations, so an abrupt step comes out as a gradient. Smoothing removes noise, and it removes real detail with it — which is why a smoothed DEM makes a worse slope map."
+    },
+    {
+      prompt: "Zonal Statistics as Table, run with city boundaries over the NDVI",
+      badge: "Zonal",
+      detail: "What comes out of the tool, and what does it cost you?",
+      options: [
+        "A raster with every cell in a city replaced by that city's mean",
+        "A table with one row per cell, tagged with the city it falls in",
+        "A table with one row per city, which loses where inside the city the green is",
+        "A raster smoothed inside each city and unchanged outside"
+      ],
+      answer: "A table with one row per city, which loses where inside the city the green is",
+      explanation: "A zone stands still and writes one row — that is the difference from a focal function, where the window moves and writes a value at every cell. The table joins back to the polygons and maps, but the pattern inside a zone is gone, which is why the standard deviation column is worth reading."
+    },
+    {
+      prompt: "Why does the Lab 2 model classify with a Con() expression rather than a Reclassify table?",
+      badge: "Threshold",
+      options: [
+        "Con() runs faster than Reclassify on a large raster",
+        "Reclassify is not part of the Spatial Analyst toolbox",
+        "Con() is a focal function, so it smooths the class boundary",
+        "A number inside an expression can be exposed as a model parameter; a number in a Reclassify table cannot"
+      ],
+      answer: "A number inside an expression can be exposed as a model parameter; a number in a Reclassify table cannot",
+      explanation: "The threshold has to be reachable from the tool dialog. Mark the variable as a parameter, exactly as in Week 2, and the sweep becomes five runs of a tool instead of five edits of an expression. Con is local, not focal, and Reclassify sits in the Reclass toolset of Spatial Analyst."
+    },
+    {
+      prompt: "Con(\"NDVI\" >= 0.6, 1, 0)",
+      badge: "Threshold",
+      detail: "You run this in the Raster Calculator on the Lab 2 NDVI raster. What does the output hold?",
+      options: [
+        "1 where NDVI is below 0.6, and 0 everywhere else",
+        "1 where NDVI is 0.6 or greater, and 0 everywhere else",
+        "The NDVI value itself where it is 0.6 or greater, and 0 elsewhere",
+        "0.6 where the condition is true, and NoData elsewhere"
+      ],
+      answer: "1 where NDVI is 0.6 or greater, and 0 everywhere else",
+      explanation: "Con reads: where the condition is true, the first value; otherwise the second. The output's attribute table then has exactly two rows, and the Count on the class 1 row is what you turn into area."
+    },
+    {
+      prompt: "In the sweep, as the threshold is raised from 0.3 to 0.7, the area classified as vegetated...",
+      badge: "Threshold",
+      options: [
+        "changes by only a few percent, so the choice hardly matters",
+        "rises, because a higher threshold admits more cells",
+        "falls at first, then levels off above 0.5",
+        "falls by more than half"
+      ],
+      answer: "falls by more than half",
+      explanation: "1,327 square miles at 0.3 down to 496 at 0.7 — 63 percent of the county down to 24 percent. That is why a recommendation that does not say which threshold it used is not a recommendation, and why the sweep is a Lab 2 deliverable rather than a footnote."
+    }
+  ],
+  perfectNote: "A perfect score — you could sort the Spatial Analyst toolbox by hand now.",
+  goodNote: "Solid. Read the explanations on the ones you missed; the family a tool belongs to is the fastest way to predict what it will do to your data.",
+  tryAgainNote: "Worth another pass. The short version: ask what goes in. One cell is local, a window is focal, a zone is zonal, the whole grid is global."
+});
+</script>
+</body>
+</html>

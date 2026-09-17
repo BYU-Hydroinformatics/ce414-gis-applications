@@ -12,6 +12,13 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Models and ModelBuilder](../quizzes/modelbuilder-basics/index.html) — Eight questions on what a model is, how to read the ModelBuilder canvas, and the projection, unit and dissolve decisions inside the Cities Near Rivers model.
+- [Canvas to Tool](../quizzes/model-parameters/index.html) — Eight questions on turning a canvas into a tool someone else can run: getting output onto the map, gray elements, parameters, renaming, and metadata.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

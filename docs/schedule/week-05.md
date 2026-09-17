@@ -12,6 +12,13 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Surfaces and Returns](../quizzes/elevation-lidar/index.html) — Eight questions on where an elevation surface comes from: how LiDAR measures one, which DEM to download, and what cell size costs you.
+- [Slope, Aspect, Viewshed](../quizzes/terrain-analysis/index.html) — Eight questions on what you get out of a DEM: slope in degrees against percent, aspect as an azimuth, hillshade as a rendering, and what a viewshed does not tell you.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

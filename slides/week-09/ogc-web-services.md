@@ -1286,3 +1286,32 @@ TODO(graphic) on the GeoDRM cloud graphic whose text overflowed its shapes and w
 list; TODO(graphic) on sixteen text-only slides that want a figure (image generation was off for this pass);
 TODO(instructor) for the reading chapter; and VERIFY on the Lab 7 pairing in Before Next Class.
 -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — What Comes Back?
+
+<div class="columns">
+<div>
+
+Eight questions, one each: **what does the service actually hand you** — a picture, the features, the values, or a pointer to somebody else's server?
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The same distinction runs through this week's reading and open-book quiz
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/web-services/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-web-services-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: what you can do with a returned WMS map image. Half the room will want to run map algebra on the pixels of the Landsat mosaic, which is exactly the confusion worth having out loud - the image is symbolized display color, and the only way back to the data is to ask the server about a point, or to ask a WCS instead. The open-standard item is the other reliable split: closed-source software can be fully compliant, because the standard is the document, not the implementation. If the room has no signal, put the URL on the board; the items read aloud just as well. -->

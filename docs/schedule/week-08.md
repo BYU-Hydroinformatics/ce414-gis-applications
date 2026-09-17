@@ -6,6 +6,12 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Points Into Surfaces](../quizzes/interpolation/index.html) — Eight questions on estimating a surface from points: Thiessen polygons, IDW, splines and kriging, and how you would judge which one to trust.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

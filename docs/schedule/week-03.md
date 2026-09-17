@@ -16,7 +16,8 @@ Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd>
 
 Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
 
-- [Categorical or Continuous?](../quizzes/raster-types/index.html) — Ten real datasets, one question each: is that cell value a label or a measurement? The quiz the QR code on the Part A deck points to.
+- [Categorical or Continuous?](../quizzes/raster-types/index.html) — Ten real datasets, one question each: is that cell value a label, or a measurement?
+- [Which Family?](../quizzes/raster-functions/index.html) — Eight questions on the four families of raster function, what a moving window does to an edge, and why the Lab 2 threshold lives in a Con() expression as a parameter.
 
 ## Due this week
 

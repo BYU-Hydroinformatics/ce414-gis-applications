@@ -549,3 +549,32 @@ Stale / pre-Pro screenshots kept and flagged in place:
 - images/dm-tin-terrain.jpg — a capture from an old third-party 3D viewer.
 
 The reading chapters, Quiz 1, and its due date were filled in from the Fall 2026 syllabus transcription (see the "Site and decks" commit) — no longer a TODO. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Storing the World
+
+<div class="columns">
+<div>
+
+Eight questions on **what the computer actually stores** for a point, a line, a polygon and a grid.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- It is the warm-up for the graded quiz on Learning Suite and for Lab 1
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/data-models/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-data-models-qr.png)
+
+</div>
+</div>
+
+<!-- Speaker note: four minutes, individually, then a show of hands on the two that split the room. The first is "shapefile vs. polyline" - half the class has used shapefiles for a year without ever separating the format from the model, and this is the item that makes the distinction stick. The second is the stream gage question: somebody always argues for a raster because the gages measure a flowing river, so name the difference out loud - the river is continuous, the gages are not, and you can only store what was actually measured. If the room has no signal, put the URL on the board; the items read aloud just as well, and the eight of them take about the same four minutes. -->

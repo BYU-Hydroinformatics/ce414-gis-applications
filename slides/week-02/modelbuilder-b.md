@@ -671,6 +671,35 @@ The example map is not a template: yours will differ, because your stores and yo
 
 <!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Canvas to Tool
+
+<div class="columns">
+<div>
+
+Eight questions on **turning a canvas into a tool** someone else can run.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/model-parameters/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-model-parameters-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, while people pack up. The item that splits the room is the tool-feeding-a-tool sketch: half the class calls it fine because the missing dataset is "obvious", which is the whole argument from the cookie rules - a tool's output IS data, so two touching tools mean an intermediate nobody wrote down. The 256 versus 257 item is the other one worth a show of hands; if nobody says "projected versus geodesic", say it. No signal in the room: put the URL on the board and read the items aloud, they work fine spoken. -->
+
 <!--
 Revision notes (2026-09-09, evening): the parameter sequence now follows the distance. Slide 13 creates the Distance
 variable from Buffer and marks it (new bubble with a P); slide 14 opens the model with the distance as its only parameter

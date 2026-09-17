@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Canvas to Tool</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: the moves that turn a ModelBuilder canvas into a tool someone else can run — parameters, renaming, debugging and documentation.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Canvas to Tool",
+  subtitle: "CE 414 &middot; Week 2 &mdash; ModelBuilder, Part B<br>" +
+            "Eight decisions you make when you turn a canvas <strong>only you</strong> can run " +
+            "into a tool <strong>anyone</strong> can run.",
+  badge: "ModelBuilder decision",
+  deckUrl: "../../slides/week-02/modelbuilder-b.html",
+  questions: [
+    {
+      prompt: "The model ran, and nothing appeared on the map",
+      detail: "No error message. The output feature class is sitting in the geodatabase exactly where it should be, but the map looks the way it did before you clicked Run.",
+      options: ["The model has no parameters, so it produced nothing", "Add To Display was never checked on the output element", "The output element is gray", "The model has to be run twice the first time"],
+      answer: "Add To Display was never checked on the output element",
+      explanation: "Running a model does not put its results in your map by default. Right-click the output data element you care about and check Add To Display; the check mark stays with the model, so it applies every time the model runs. Leave the intermediate data unchecked, or the Contents pane fills up with things nobody wanted to see."
+    },
+    {
+      prompt: "Buffer, its output, Intersect and the final result are all gray",
+      detail: "Everything upstream of Buffer is still in color. Where do you start?",
+      options: ["At the final result, and work backwards", "Anywhere — gray is gray", "Delete the connectors and draw them again", "At the leftmost gray element"],
+      answer: "At the leftmost gray element",
+      explanation: "Gray means the model is not ready to run, and it propagates downstream: one blank setting in Buffer grays out Buffer, its output, Intersect and everything after. Only the leftmost gray element has the real problem. Hover it and the tooltip lists every setting, so you can find the blank one without opening the tool."
+    },
+    {
+      prompt: "In a sketched model, one tool box feeds straight into another tool box",
+      detail: "There is no data shape between them. The arrows are solid-headed and the flow goes one way.",
+      options: ["It breaks a rule: a dataset has gone missing", "Fine — the first tool's output is obvious from its name", "Fine, as long as the model starts and ends with data", "It breaks a rule: the shapes are not consistent"],
+      answer: "It breaks a rule: a dataset has gone missing",
+      explanation: "A tool's output is data. If two tools touch, an intermediate dataset exists but nobody wrote it down, and the reader cannot see where it went. The same goes for two data shapes in a row: something happened in between and it was not recorded. That is exactly what makes a real ModelBuilder canvas unreadable."
+    },
+    {
+      prompt: "You double-click your model and the dialog says No Parameters",
+      detail: "It is the model you built and ran on Tuesday, and it worked.",
+      options: ["It is broken and has to be rebuilt", "It will run, but only from the canvas", "It will run, and give the same answer every time", "It will run only after you write its metadata"],
+      answer: "It will run, and give the same answer every time",
+      explanation: "Without parameters everything is baked in — which rivers, which cities, which distance — so the model is a recording of one specific analysis. It runs fine; it just answers one question, and to make it answer a different one somebody has to open the canvas. Remember which click does which: double-click runs the model as a tool, right-click and Edit opens the canvas."
+    },
+    {
+      prompt: "You want whoever runs the model to choose the buffer distance",
+      detail: "Right now that distance lives inside the Buffer tool's own dialog.",
+      options: ["Mark the Buffer tool itself as a parameter", "Rename the Buffer tool so the distance shows in its label", "Create a variable from Buffer's Distance, then mark that variable as a parameter", "Put the distance in the model's metadata under Usage"],
+      answer: "Create a variable from Buffer's Distance, then mark that variable as a parameter",
+      explanation: "Two separate moves. Create Variable ▸ From Parameter pulls a setting out of a tool and onto the canvas as its own element; marking that element as a parameter is the second step, the one that puts the P on it and makes it an input the user supplies. The submenu is the tool's own list of settings, so what you can expose depends on the tool. Lab 1 Step 10 is this exact move on the road buffer."
+    },
+    {
+      prompt: "You rename a canvas element from us_rivers to Input Rivers",
+      detail: "What else changes as a result?",
+      options: ["The feature class on disk is renamed to match", "The model itself is renamed", "Nothing outside the canvas", "The label the user sees on the tool dialog"],
+      answer: "The label the user sees on the tool dialog",
+      explanation: "An element's name becomes its label on the tool dialog when the model is run as a tool — which is why a box reading Distance [value or field] (2) tells your reader nothing, and why you rename before you capture that dialog for the lab. Renaming an element does not rename the data on disk, and it does not rename the model; the model's own name lives in its properties."
+    },
+    {
+      prompt: "Buffer + Intersect found 256 cities; Select Layer By Location found 257",
+      detail: "Same rivers, same cities, the same 10 miles, two models built on the same data.",
+      options: ["One of the two models has a bug in it", "Select Layer By Location is the more accurate tool in every case", "The counts must match; rerun both and they will", "The 10 miles was measured two different ways, and one city sits at the edge"],
+      answer: "The 10 miles was measured two different ways, and one city sits at the edge",
+      explanation: "Buffer + Intersect measured the distance on a projected plane; Select Layer By Location measured it geodesically, and one city falls on opposite sides of the line. Both answers are defensible, which is the point: correct is not the same as smallest, and neither is the same as easiest to explain. Say which you used and why."
+    },
+    {
+      prompt: "A classmate is handed your model next semester and has to run it",
+      detail: "Where do the sentences that say what the model does, what to supply, and when to run it belong?",
+      options: ["In the model's metadata, under Summary and Usage", "In the element names on the canvas", "In the write-up only — the model itself cannot hold text", "In the tool dialog, as the default values"],
+      answer: "In the model's metadata, under Summary and Usage",
+      explanation: "Edit Metadata on the model gives you Title, Tags, Summary and Usage, plus one entry per parameter under Syntax, and View Metadata turns what you typed into a help page laid out like any built-in ArcGIS Pro tool's. Whatever you leave blank comes back saying there is no explanation, which is a fair list of what you still owe. Undocumented models are write-only: six months from now you will not remember which buffer mattered."
+    }
+  ],
+  perfectNote: "Eight for eight — you can hand that model to somebody else and they can run it.",
+  goodNote: "Solid. Read the explanations on the ones you missed; two of these start an argument every year.",
+  tryAgainNote: "Worth another pass. The through-line: a model only you can run is a recording. Names, parameters and metadata are what make it a tool, and the Lab 1 rubric pays for all three."
+});
+</script>
+</body>
+</html>

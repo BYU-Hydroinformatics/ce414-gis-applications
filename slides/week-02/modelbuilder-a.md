@@ -670,6 +670,35 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 
 <!-- The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Models and ModelBuilder
+
+<div class="columns">
+<div>
+
+Eight questions on **reading a canvas** — and the projection, unit and dissolve calls inside Cities Near Rivers.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- Two of them are the Buffer and projection decisions that Lab 1 charges you for
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/modelbuilder-basics/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-modelbuilder-basics-qr.png)
+
+</div>
+</div>
+
+<!-- Four minutes, phones out, then a show of hands on the buffer-unit item - that is the one that splits the room, because a number with no unit looks finished. The dissolve question is the other one worth a sentence out loud: without it, Intersect returns a city twice wherever two river buffers overlap, and 256 stops being a count of cities. If the room has no signal, put the URL on the board; the items read aloud just as well, and the buffer item works as a straight show of hands. -->
+
 <!--
 Revision notes (2026-09-07): Part A revised against slides/week-02/LECTURE_PLAN.md. 28 slides -> 35.
 - Dropped: the ArcGIS 9 "geoprocessing options" composite, the ArcMap Cities Near Rivers window, the

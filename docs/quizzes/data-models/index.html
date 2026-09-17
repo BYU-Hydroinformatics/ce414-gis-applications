@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Storing the World</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: vector, raster and TIN data models, and the difference between a data model and a file format.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Storing the World",
+  subtitle: "CE 414 &middot; Week 1 &mdash; Data Models Refresher<br>" +
+            "Eight decisions about how the world has to be turned into numbers before a " +
+            "computer can draw it.",
+  badge: "Data models",
+  deckUrl: "../../slides/week-01/data-models-refresher.html",
+  questions: [
+    {
+      badge: "Model or reality",
+      prompt: "A video shot from a raft running the Lochsa River",
+      detail: "Real water, real rapids, recorded and played back in class.",
+      options: ["Reality", "A model of reality", "Neither"],
+      answer: "A model of reality",
+      explanation: "A model is an abstraction of reality, and a video is one: framed, flattened, silent about depth, discharge and everything outside the lens. Nothing you open in a GIS is the thing itself — it is always a representation somebody chose."
+    },
+    {
+      badge: "Vector geometry",
+      prompt: "Colorado was digitized as four corners, but the coordinate table had five rows",
+      detail: "Each row held one (x, y) pair.",
+      options: ["The fifth row stores the area", "The fifth row repeats the first point to close the ring", "The fifth row is the center of the shape", "The fifth row records the units"],
+      answer: "The fifth row repeats the first point to close the ring",
+      explanation: "A polyline is an ordered list of coordinate pairs; a polygon is the same list with the last pair repeating the first so the ring closes. That repeat is the structural difference between the two."
+    },
+    {
+      badge: "Vector or raster",
+      prompt: "Stored as a filled grid, Colorado took several times the memory of the coordinate list",
+      detail: "Every cell had to carry a value — one for the state, another standing for no data.",
+      options: ["The raster version is therefore the more accurate one", "The extra memory bought no extra accuracy", "The raster is accurate only when the cells are large"],
+      answer: "The extra memory bought no extra accuracy",
+      explanation: "The grid cost far more memory and gave stair-stepped borders instead of clean edges. A raster has to be filled in everywhere, which is why it suits data that exists everywhere — not a boundary line."
+    },
+    {
+      badge: "TIN",
+      prompt: "Where does a TIN put its smallest triangles?",
+      detail: "The same surface, meshed with triangles rather than sampled on a grid.",
+      options: ["Spread evenly across the whole surface", "Where the surface is flat", "Where the surface is rough and changes quickly"],
+      answer: "Where the surface is rough and changes quickly",
+      explanation: "Big triangles cover flat ground with a handful of points; small ones go where the shape actually changes. That uneven spacing is the compression, and it is exactly what a fixed grid cannot do."
+    },
+    {
+      badge: "Model or format",
+      prompt: "Which of these is a data model rather than a file format?",
+      detail: "The rivers layer could be written any of these ways.",
+      options: ["Shapefile", "GeoJSON", "Polyline", "File geodatabase"],
+      answer: "Polyline",
+      explanation: "The data model is the conceptual organization of the data; the file format is how the bytes sit on disk. The same rivers can be a shapefile, a feature class in a file geodatabase, a GeoPackage or a GeoJSON file and still be polylines."
+    },
+    {
+      badge: "Choosing a model",
+      prompt: "Air temperature across a region",
+      detail: "You need a value anywhere somebody points on the map.",
+      options: ["Points", "Polylines", "Polygons", "Raster"],
+      answer: "Raster",
+      explanation: "Temperature has a value everywhere and changes gradually from place to place, which is what a grid of cells stores. The colors on the map are drawn by the software from those cell values."
+    },
+    {
+      badge: "Choosing a model",
+      prompt: "The stream gage sites along a river",
+      detail: "A handful of installed stations, each reporting its own record.",
+      options: ["Vector points", "Raster grid", "TIN"],
+      answer: "Vector points",
+      explanation: "A gage is one coordinate pair with attributes behind it — discrete and countable. A raster would have to invent a value for every cell between the gages, and there is nothing there to measure."
+    },
+    {
+      badge: "Attributes",
+      prompt: "Click a county on the map and its row in the attribute table lights up",
+      detail: "One row in the table for every polygon on the map.",
+      options: ["The shape and the row are the same record", "The map and the table are separate datasets that happen to match", "The highlight is a drawing effect with no data behind it"],
+      answer: "The shape and the row are the same record",
+      explanation: "The geometry and its attributes are one object, which is what separates a GIS layer from a drawing. It is also why selecting in one place selects in the other, and why a query on the table changes what is highlighted on the map."
+    }
+  ],
+  perfectNote: "A perfect score — the vocabulary the rest of the semester is built on is in place.",
+  goodNote: "Solid. Read the explanations for the ones you missed; a couple of these are argued over every year.",
+  tryAgainNote: "Worth another pass. The short version: a data model is the conceptual shape of the data — vector, raster or TIN — and a file format is only how those numbers get written to disk."
+});
+</script>
+</body>
+</html>

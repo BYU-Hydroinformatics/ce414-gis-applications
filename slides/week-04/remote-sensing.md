@@ -504,6 +504,39 @@ Next week the sensor points at the ground and measures **distance** instead of b
 
 <!-- Lab 3 is due this Saturday. Next week is elevation: LiDAR on Tuesday, terrain analysis on Thursday, and Lab 4 needs a DEM, so Tuesday is the hour that tells them where to get one. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Light and Bands
+
+<div class="columns">
+<div>
+
+Eight questions on what the sensor actually measured. **Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- Good warm-up for Quiz 4 on Learning Suite, and for the *GIS Fundamentals* reading
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/remote-sensing/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-remote-sensing-qr.png)
+
+</div>
+</div>
+
+<!-- Four or five minutes, then a show of hands on the first item. That one splits the room every
+time: near-infrared in a vegetation image is reflected sunlight bouncing off leaf structure, and a
+good half of the class will pick "leaves are warmer than the ground" because the word infrared
+sounds like heat. Draw the distinction on the board one more time - reflected near-infrared is
+sunlight, thermal infrared is what a surface emits because of its own temperature - and point back
+at the Katrina infrared slide, which is the one image today that really is heat. If the room has no
+signal, put the URL on the board; the items read aloud just as well. -->
+
 <!--
 Split notes (2026-09-10). This was "Remote Sensing and 3D Imaging", 43 slides, at slug
 remote-sensing-3d-imaging. Its last nine slides were LiDAR and they moved to Week 5, into

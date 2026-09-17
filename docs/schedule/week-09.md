@@ -8,6 +8,12 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [What Comes Back?](../quizzes/web-services/index.html) — Eight questions on what each OGC service actually hands you: a picture, the features themselves, the coverage values, or somewhere to find them.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

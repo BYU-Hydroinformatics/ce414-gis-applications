@@ -417,6 +417,35 @@ Try to georectify your hand-drawn map of your home neighborhood…
 
 <!-- Lab 3 is the hands-on version of everything in this lecture. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Line It Up
+
+<div class="columns">
+<div>
+
+Eight questions on **putting a scanned map in its place** — control points, and what RMS error is not.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The last three are the ones Lab 3 Step 8 hands straight back to you
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/georectifying/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-georectifying-qr.png)
+
+</div>
+</div>
+
+<!-- Four or five minutes, individually, then a show of hands on the spline item. That is the one that splits the room: students read "lowest error" as "best fit" and pick spline, and the explanation only lands if you say out loud that spline drives the RMS to zero by construction and can wreck the map between the points. The hold-out item behind it is the idea worth the whole hour. If the room has no signal, put the URL on the board; the items read aloud just as well, and the spline and three-point items are worth arguing through together anyway. -->
+
 <!-- Conversion notes (2026-09-03): Source "CE 414 Week 4 - Georectifying Images.pptx", 19 slides → 19 slides here (no slide dropped; source slides 11+12 merged into one, 13+14 merged into one, and three slides added: Today's Goals, In ArcGIS Pro, Before Next Class).
 
 This deck contains NO ArcGIS user interface at all — it is motivating photos and maps. The "In ArcGIS Pro" slide was added as text only, with a TODO(graphic) for real Pro captures of the Imagery ▸ Georeference tab, Add Control Points, and the control-point table with residuals and RMSE. Nothing was fabricated.

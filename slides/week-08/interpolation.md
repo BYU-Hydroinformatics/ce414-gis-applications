@@ -812,3 +812,32 @@ Is there a difference at the sample locations?
 <!-- TODO(instructor): the plan notes a Big Southern Butte example. Decide where it belongs in the sequence — the note is that it should be taught only after the methods above are established — and whether it replaces or supplements the class-vote slides. -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 8 - Interpolation.pptx", 48 slides, 4:3, converted to 46 Marp slides. No hidden slides in the source. No slides dropped outright; five pairs of source slides were merged because the second was a figure or a continuation of the first: 19+20 (fixed-radius text and figure), 30+31 (trend-surface text/equation and result figure), 32+33 (splines text and figure), 39+40 (tolerance and variogram), and 42+43 (variogram model and the IDW comparison). Source slide 10 is an exact repeat of source slide 4; it is kept, as the source intended, but rendered as a section-divider rather than a duplicate content slide. Source slide 17's title "Theissen" corrected to "Thiessen" — that was the only occurrence of the misspelling; slides 14, 18, 46 and 48 already spelled it correctly. Other objective fixes: "Can not"/"can not" to "cannot" (slides 3, 9); "Some circles many contain no points" to "may contain" (19); "nearby know points" to "known points" (23); "are use to interpolate" to "are used to" (32); "dependson" to "depends on" (35); "is know as the lag distance" to "is known as" (36); "Higher autocorrelations indicates points near each other are alike" to "Higher autocorrelation means..." (37). No ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording appears anywhere in the source deck, so no software-version substitutions were needed; the deck names no GIS software at all, which is itself flagged as a TODO(instructor) above. No screenshots of any GIS user interface exist in this deck, so there are no stale ArcMap-era captures to re-shoot — every figure is a textbook diagram, a scanned figure, a rendered surface, or a hand-drawn equation. The recurring handwritten linear-interpolation figure is kept once on each slide where the source used it (source slides 4, 11, 12, 14, 18, 23, 26) plus the goals and closing slides; it is a deliberate motif, not a duplicate. Five slides that were built from PowerPoint shapes were captured as 200 dpi renders and cropped: the Thiessen construction panels (15), the annotated lag-distance figure (36), the annotated idealized variogram (41), and the two class-vote comparison grids (47, 48). Kriging terminology on the nugget/sill/range slide and the exact/non-exact list is carried over verbatim and flagged with VERIFY comments rather than rewritten. Four slides carry TODO(graphic) markers where no source image exists (the Provo activity, the kriging-components slide, the variogram-to-surface slide, and the exact/non-exact slide); per this pass's instructions no AI images were generated. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Points Into Surfaces
+
+<div class="columns">
+<div>
+
+Eight items on the same question we spent the session on: **what is this method actually doing with the points?**
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The exponent and the neighbor count are the two knobs you turn by hand in Lab 9
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/interpolation/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-interpolation-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. The trend-surface item is the other reliable argument - "it looks wrong" is exactly what a trend surface is supposed to look like. If the room has no signal, put the URL on the board; the items read aloud just as well, and the two class-vote slides are still on screen behind you. -->

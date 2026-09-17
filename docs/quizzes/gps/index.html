@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Where Am I?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: how a GPS receiver turns a radio signal into a range, why satellite geometry matters as much as satellite count, and what differential correction can and cannot remove.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Where Am I?",
+  subtitle: "CE 414 &middot; Week 12 &mdash; GPS and Positioning<br>" +
+            "Eight questions on how a receiver turns a radio signal into a <strong>position</strong> " +
+            "&mdash; and on why that position is never exactly where you are standing.",
+  badge: "Positioning question",
+  deckUrl: "../../slides/week-12/gps-triangulation.html",
+  questions: [
+    {
+      prompt: "A receiver has locked onto a satellite. What has it actually measured?",
+      detail: "Think about what the figure of intersecting spheres is built from.",
+      options: [
+        "The angle between the receiver and the satellite",
+        "The satellite's bearing and its height above the horizon",
+        "The distance to the satellite, from the signal's travel time",
+        "The strength of the signal arriving from the satellite"
+      ],
+      answer: "The distance to the satellite, from the signal's travel time",
+      explanation: "Distance = speed of light x travel time, the D = R x T line from part B. Because what is measured is a distance and not an angle, the method is trilateration. Triangulation — fixing a position from measured angles to known points — is the classical surveying technique, and a GPS receiver never measures an angle at all."
+    },
+    {
+      prompt: "Where does the travel time come from?",
+      detail: "The receiver has no way to ask the satellite how long the trip took.",
+      options: [
+        "It times a pulse it sends up to the satellite and waits for the return",
+        "It generates the same pseudorandom code as the satellite and measures how far it has to slide its own copy to line the two up",
+        "It measures how much the signal has weakened on the way down",
+        "It compares the frequency it receives with the frequency the satellite transmits"
+      ],
+      answer: "It generates the same pseudorandom code as the satellite and measures how far it has to slide its own copy to line the two up",
+      explanation: "Satellite and receiver each run the same pseudorandom sequence, started together by synchronized clocks. The receiver slides its own copy along in time until it matches the code that arrived, and the size of that shift is the travel time. A pseudorandom code is transmitted rather than a plain tone precisely because it lines up in exactly one place. Note also that GPS is one-way: the receiver only listens, and sends nothing up."
+    },
+    {
+      prompt: "Three ranges already narrow you to two points, and knowing you are on the earth rules one of them out. So why does a receiver want a further measurement?",
+      options: [
+        "To solve for the receiver's own clock error",
+        "In case one of the first three satellites drops out of view",
+        "To get height, which the first three ranges cannot give",
+        "Because two range spheres never intersect cleanly"
+      ],
+      answer: "To solve for the receiver's own clock error",
+      explanation: "Until the receiver's clock error is solved for, every measurement is a pseudorange rather than a true range. A receiver's clock is nothing like as good as the ones on the satellites, and at the speed of light a very small timing error becomes a large distance error — so the extra measurement is spent on the clock, not on redundancy. Further readings beyond that go toward atmospheric and other errors."
+    },
+    {
+      prompt: "You take a fix standing against the glass face of a downtown building, and part of the signal reaches you after bouncing off the wall.",
+      detail: "Multipath. What does the bounce do to the range the receiver computes?",
+      options: [
+        "Makes it too short",
+        "Leaves it alone — the direct signal always arrives first and wins",
+        "Makes it too long or too short, depending on the angle of the wall",
+        "Makes it too long"
+      ],
+      answer: "Makes it too long",
+      explanation: "A reflected signal travels a longer path than the direct one, so it arrives late and the computed travel time — and with it the range — is too long. A reflection can only lengthen a path, never shorten it. That is why the same receiver can be good in an open field and close to useless between two buildings, and why the advice is simply to stay away from structures."
+    },
+    {
+      prompt: "A canyon wall takes four of your satellites out of view — all of them low in the sky on one side.",
+      detail: "You still have enough satellites for a fix. What is the main cost?",
+      options: [
+        "Nothing, as long as enough satellites remain for a fix",
+        "The satellites still in view are bunched, so the range bands cross at shallow angles and the position uncertainty grows",
+        "The remaining signals travel farther, so every range comes out too long",
+        "The receiver loses synchronization and has to start over"
+      ],
+      answer: "The satellites still in view are bunched, so the range bands cross at shallow angles and the position uncertainty grows",
+      explanation: "This is dilution of precision, and it is about geometry rather than signal strength. A measured range is not a line but a band of uncertainty; where the bands cross at a wide angle they leave a small area the receiver cannot distinguish within, and where they cross shallow they leave a long thin one. Same receiver, same signals, worse fix. It is also why losing the low satellites first hurts more than losing the same number overhead — the coverage problem under canopy or in an urban canyon and the geometry problem are the same problem."
+    },
+    {
+      prompt: "On the error table for civilian Standard Positioning Service, which entry is the largest?",
+      detail: "Not the hardest to remove — the biggest.",
+      options: ["Ionospheric delay", "Satellite clocks", "User error", "Multipath"],
+      answer: "User error",
+      explanation: "Every system source on that slide is a few meters or less, and the ionosphere is the largest of them. User error is listed at up to a kilometer or more: standing in the wrong place, recording the wrong feature, mistyping a point ID. The system is better than its users, and no amount of differential correction touches that line of the table. Remember too that the errors are cumulative, and that poor geometry multiplies whatever is left."
+    },
+    {
+      prompt: "A base station sits on a point whose coordinates are already known. At this moment the satellites place it a little north and east of where it truly is.",
+      detail: "What does the rover do with that?",
+      options: [
+        "Shift its own measured position the same distance north and east",
+        "Average its own measured position with the base station's known coordinates",
+        "Shift its own measured position the same distance south and west",
+        "Nothing — the rover's reading stands on its own"
+      ],
+      answer: "Shift its own measured position the same distance south and west",
+      explanation: "The difference between the base station's known position and its measured one is the error the satellites are making right now. The correction is that offset with the sign reversed, and the rover applies the same correction because it is close enough to be watching the same satellites through the same atmosphere. Whether the correction reaches the rover in real time or is applied afterward in post-processing, the arithmetic is identical."
+    },
+    {
+      prompt: "Which error does differential correction NOT remove from the rover's position?",
+      detail: "The base station is a short distance away, on a known point, logging the whole time.",
+      options: [
+        "Ionospheric delay, seen by both receivers",
+        "Multipath at the rover, off a building the base station cannot see",
+        "Satellite clock error, seen by both receivers",
+        "Orbital error, common to both receivers"
+      ],
+      answer: "Multipath at the rover, off a building the base station cannot see",
+      explanation: "Differential correction works on one assumption: that the base and the rover are seeing the same errors. That holds for anything coming from the satellites or from the atmosphere over the pair, and it degrades as the baseline between them grows. An error that belongs to one receiver alone — its own multipath, its own noise, and above all its own operator standing in the wrong place — is not shared, so nothing about the base station's correction removes it."
+    }
+  ],
+  perfectNote: "Perfect. You can say what a receiver measures, why the extra satellite is spent on the clock, and what differential correction can and cannot fix.",
+  goodNote: "Solid. Read the explanations on the ones you missed — the canyon question and the last one are the two that split the room.",
+  tryAgainNote: "Worth another pass. The short version: GPS measures distances, not angles; the extra measurement pays for the receiver's clock; geometry matters as much as satellite count; and differential correction removes only the errors the base and the rover share."
+});
+</script>
+</body>
+</html>

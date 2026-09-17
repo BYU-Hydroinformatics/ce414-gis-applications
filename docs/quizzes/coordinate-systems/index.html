@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Projections and Datums</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: units, projection distortion, UTM and Lambert Conformal Conic, the geoid, and what a datum is.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Projections and Datums",
+  subtitle: "CE 414 &middot; Week 11 &mdash; Coordinate Systems and Projections<br>" +
+            "Eight decisions about the frame your data sits in: what the numbers " +
+            "<strong>measure</strong>, what the map <strong>gives up</strong>, and what the " +
+            "coordinates are <strong>measured from</strong>.",
+  badge: "Coordinate question",
+  deckUrl: "../../slides/week-11/coordinate-systems-projections.html",
+  questions: [
+    {
+      badge: "Units",
+      prompt: "You subtract the latitude and longitude of two points and get a number. What is that number?",
+      detail: "Both points are stored in degrees of latitude and longitude, exactly as they came off a web map.",
+      options: ["A distance in meters", "A distance in kilometers", "An angle, in degrees", "A distance, but in unknown units"],
+      answer: "An angle, in degrees",
+      explanation: "Latitude and longitude are angles, so the difference between two of them is an angle too. It is not a length: a degree of longitude covers a different ground distance than a degree of latitude, and neither one is constant as you move over the Earth. Express the same two points in a projected system such as UTM and the coordinates are linear, so subtracting them gives meters."
+    },
+    {
+      badge: "Distortion",
+      prompt: "On a standard Mercator world map, Greenland looks about the size of Africa. On a globe it is closer to the size of Mexico. What is the Mercator sacrificing?",
+      options: ["Area", "Shape and angles", "Direction", "Nothing — the globe is the distorted one"],
+      answer: "Area",
+      explanation: "Mercator is conformal: it holds shape and angles locally, and it pays for that in area, which inflates toward the poles as the parallels spread apart. That is the general rule this deck is built on — a projection can preserve area, or shape, or distance, or direction, but never all four, so the question is never “which projection is right” but “which distortion can I afford here.”"
+    },
+    {
+      badge: "Surface and case",
+      prompt: "A cylinder is turned 90 degrees so that it touches the globe along a meridian instead of the equator. What is that?",
+      options: ["A Mercator", "A Transverse Mercator", "A conic", "An equal-area cylindrical"],
+      answer: "A Transverse Mercator",
+      explanation: "The plain Mercator is the normal, upright case, where the line of true scale is the equator. Rotate the cylinder 90 degrees and the line of least distortion rotates with it, onto a meridian: that is a Transverse Mercator, and it is the family UTM comes from. Tilt it to some other angle and it is oblique."
+    },
+    {
+      badge: "Tangent or secant",
+      prompt: "A projection surface cuts through the globe instead of resting against it. How many lines of true scale does that give you?",
+      options: ["None", "One", "Two", "True scale everywhere on the map"],
+      answer: "Two",
+      explanation: "A tangent surface touches along a single line and scale is true only there, degrading as you move away. A secant surface cuts through, so scale is true along both lines of intersection, slightly small between them and large outside them. That spreads the error over a wider band, which is why most working projections are secant."
+    },
+    {
+      badge: "UTM",
+      prompt: "Where inside a single UTM zone is distortion smallest?",
+      options: [
+        "Evenly across the whole zone",
+        "Along the equator",
+        "Along the meridian at the center of the zone",
+        "Along the northern and southern edges of the zone"
+      ],
+      answer: "Along the meridian at the center of the zone",
+      explanation: "Each zone is a transverse cylindrical projection, so its line of least distortion is a meridian running down the middle of the zone. Distortion grows to the east and west of that line, not to the north and south — which is why a UTM zone fits a study area that is long north-south and fights one that is long east-west."
+    },
+    {
+      badge: "Choosing a projection",
+      prompt: "You are mapping a state whose extent is long east-west, like Tennessee. Which minimizes distortion across it?",
+      options: ["Lambert Conformal Conic", "Universal Transverse Mercator"],
+      answer: "Lambert Conformal Conic",
+      explanation: "A cone contacts the globe along a parallel, so a conic projection's band of least distortion runs east-west along the long axis of the state. A UTM zone's runs north-south along the zone's central meridian, which leaves the east and west ends of the state far off the line. Match the shape of the low-distortion band to the shape of the study area."
+    },
+    {
+      badge: "Shape of the Earth",
+      prompt: "Which surface is defined by the Earth's gravity rather than by a formula?",
+      detail: "Sea level varies from place to place because gravity varies, and gravity varies because the density of the Earth varies.",
+      options: ["The ellipsoid", "The geoid", "The topographic surface"],
+      answer: "The geoid",
+      explanation: "The geoid is an equigravitational surface — where the sea would settle everywhere if water could flow freely — so it is lumpy in a way no equation predicts. The ellipsoid is the smooth mathematical best fit to that shape, and the topography is the ground you actually walk on. Keeping the three apart is what lets you say what a given elevation is measured from."
+    },
+    {
+      badge: "Datum",
+      prompt: "A classmate says “this layer is in NAD 83, so it is projected.” What is wrong with that?",
+      detail: "The layer is going to be combined with a second dataset that came from another agency.",
+      options: [
+        "Nothing — NAD 83 is a projection",
+        "NAD 83 is a datum, which is a different decision from how the curved surface is flattened",
+        "NAD 83 is a unit of measure, not a coordinate system",
+        "NAD 83 is a UTM zone"
+      ],
+      answer: "NAD 83 is a datum, which is a different decision from how the curved surface is flattened",
+      explanation: "A datum fixes the reference shape used for the Earth and how that shape is tied to the ground, so it answers what the coordinates are measured from; a projection answers how the curved surface is flattened onto a sheet. They are independent choices, and the datum is the one that bites when you merge data: find out which datum each dataset is in, choose the transformation deliberately rather than taking whatever the software defaults to, and record it in your metadata alongside the coordinate system."
+    }
+  ],
+  perfectNote: "A perfect score — you can say what your coordinates measure, what your map gives up, and what both are measured from.",
+  goodNote: "Solid. Read the explanations on the ones you missed; the distortion items are the ones that split a room.",
+  tryAgainNote: "Worth another pass. The short version: degrees are angles and meters are lengths; every projection sacrifices something, so you choose which; and the datum is a separate decision from the projection."
+});
+</script>
+</body>
+</html>

@@ -424,6 +424,35 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 
 <!-- TODO(graphic): a "what's due this week" visual, or a screenshot of the Final Project proposal template. -->
 
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Where Am I?
+
+<div class="columns">
+<div>
+
+Eight questions on what a receiver actually measures, and on why the position it reports is never exactly where you are.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- Quiz 11 on Learning Suite is the graded one this week; this is the rehearsal for it
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/gps/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-gps-qr.png)
+
+</div>
+</div>
+
+<!-- Four or five minutes, individually, then a show of hands on the last two items. The one that reliably splits the room is the differential-correction question: most of the class expects the base station to fix everything, and the point worth saying out loud is that it only removes what the two receivers share - the rover's own multipath off the building beside it is its own, and so is the operator standing in the wrong place. The canyon item is the other one to argue: "enough satellites for a fix" is not the same as a good fix, which is the whole of dilution of precision. If the room has no signal, put the URL on the board; the items read aloud just as well, and the canyon and differential items are worth working through together anyway. -->
+
 <!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 12 - Review - GPS and Triangulation.pptx", 30 slides (3 hidden, so the PDF renders 27 pages), extracted 2026-09-03.
 
 SLIDE COUNT: 30 source slides -> 30 slides in this deck. One source slide was dropped and two were merged into one, giving 28 source-derived slides; two slides were added (Today's Goals and Before Next Class), per the conversion guide. One previously untitled figure slide was given a title ("Every Range Carries Uncertainty").

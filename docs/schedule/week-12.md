@@ -14,6 +14,13 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Ready to Pitch?](../quizzes/final-project/index.html) — Eight questions on what the final project asks of you: what counts as a big enough project, what the proposal meeting is for, and how the work is judged.
+- [Where Am I?](../quizzes/gps/index.html) — Eight questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, and what differential correction cannot remove.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

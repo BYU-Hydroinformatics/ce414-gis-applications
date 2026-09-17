@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — What Comes Back?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what each OGC web service actually hands back, and what you can do with it.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "What Comes Back?",
+  subtitle: "CE 414 &middot; Week 9 &mdash; Overview of OGC Web Services<br>" +
+            "Eight decisions about what a service actually hands you &mdash; " +
+            "a <strong>picture</strong>, the <strong>features</strong>, the <strong>values</strong>, " +
+            "or only a pointer to somebody else&rsquo;s server.",
+  badge: "OGC web services",
+  deckUrl: "../../slides/week-09/ogc-web-services.html",
+  questions: [
+    {
+      prompt: "“It is closed-source software, so it cannot be OGC compliant.”",
+      detail: "A company ships a proprietary map server that implements the Web Map Service and Web Feature Service specifications exactly as written.",
+      badge: "Open standard",
+      options: [
+        "Right — an open standard means the implementation has to be open too",
+        "Wrong — a standard is a document anyone may implement, in any software"
+      ],
+      answer: "Wrong — a standard is a document anyone may implement, in any software",
+      explanation: "This is the distinction most often collapsed. An OGC standard is a consensus document — freely available, no license fees, vendor neutral — and it is explicitly not open source software. Open source and proprietary products can implement the same standard and interoperate, which is the whole point of writing the interface down."
+    },
+    {
+      prompt: "You need each country's name, population and area so your application can query them and re-symbolize on the fly.",
+      badge: "Choosing a service",
+      options: [
+        "Web Map Service (WMS)",
+        "Web Feature Service (WFS)",
+        "Web Coverage Service (WCS)",
+        "Catalog Service for the Web (CSW)"
+      ],
+      answer: "Web Feature Service (WFS)",
+      explanation: "WFS returns the features themselves — geometry plus attributes, encoded as GML — so the client holds the values and can query them. A WMS would put the same countries on screen as a picture with nothing left to interrogate; WCS serves coverages; CSW serves metadata about where services live."
+    },
+    {
+      prompt: "A Web Map Service returns a map image of a Landsat mosaic for the window you asked for.",
+      detail: "What can you legitimately do with what came back?",
+      badge: "Map as picture",
+      options: [
+        "Display it, and ask the server what is at a point on it",
+        "Display it, and run map algebra on the pixel values as if they were the Landsat bands",
+        "Display it, and select individual features in it to edit their attributes"
+      ],
+      answer: "Display it, and ask the server what is at a point on it",
+      explanation: "A WMS response is a symbolized picture, rendered on the fly from whichever bands you requested. It still supports GetFeatureInfo, because a pixel location on the returned image corresponds to a point in the data on the server — the deck's example comes back with an elevation of 237 meters. But the numbers in the image are display colors, not measurements, and there are no features inside it to select. For the values you would ask a WCS; for editable features, a WFS."
+    },
+    {
+      prompt: "Why can a tiled map service (WMTS) be cached when a plain Web Map Service really cannot?",
+      badge: "Tiling",
+      options: [
+        "Tiles are small enough to fit in a browser cache; a full map image is not",
+        "WMTS answers only from a fixed pyramid of tiles, so requests repeat; a WMS will draw any bounding box you ask for, so no two are alike",
+        "WMTS uses a compressed image format that a WMS is not allowed to return"
+      ],
+      answer: "WMTS answers only from a fixed pyramid of tiles, so requests repeat; a WMS will draw any bounding box you ask for, so no two are alike",
+      explanation: "The trade is generality for speed. A WMS request names a coordinate system, a bounding box and a pixel width and height, so almost every request is unique and has to be drawn fresh. A WMTS request names a tile matrix, a row and a column, so a popular tile is drawn once and served forever. That is why every web basemap you have ever panned around is tiled."
+    },
+    {
+      prompt: "A triangulated irregular network (TIN) of ground elevations",
+      detail: "Does it count as a coverage?",
+      badge: "Coverages",
+      options: [
+        "Yes — every position inside the triangulation has a value",
+        "No — the geometry is irregular, and a coverage has to be a grid of regular cells",
+        "No — elevation is a measurement, and coverages hold classes"
+      ],
+      answer: "Yes — every position inside the triangulation has a value",
+      explanation: "A coverage associates positions within a bounded space with attribute values — a space-varying phenomenon — and nothing in that definition demands square cells. The deck's four examples run from a brightness grid through land cover and multi-spectral imagery to a TIN, which also settles the third option: land cover is categories, brightness is magnitudes, and the coverage does not care which."
+    },
+    {
+      prompt: "Which of these is an encoding rather than a service?",
+      badge: "Service or encoding",
+      options: [
+        "Web Coverage Service (WCS)",
+        "Catalog Service for the Web (CSW)",
+        "Geography Markup Language (GML)",
+        "Web Processing Service (WPS)"
+      ],
+      answer: "Geography Markup Language (GML)",
+      explanation: "GML is an XML encoding for features, their geometry and their attributes — it is what arrives on the wire, not something you send a request to. The other three are services you ask. The same split puts KML, SLD and NetCDF on the encoding side and WMS, WFS and SOS on the service side, and it is why the service and the format are two separate choices."
+    },
+    {
+      prompt: "What does a catalog service actually serve?",
+      badge: "Publish, find, bind",
+      options: [
+        "A copy of the features held by every server it knows about",
+        "Metadata about other data and services, so a client can find them",
+        "Pre-rendered maps of everything in its holdings"
+      ],
+      answer: "Metadata about other data and services, so a client can find them",
+      explanation: "A catalog is a service whose data is metadata about other services — the GEOSS registry in the deck is a list of published components, not a copy of their data. It carries the publish and find steps of publish / find / bind: a provider advertises there, a client discovers what it needs, and then binds straight to the provider that holds the data."
+    },
+    {
+      prompt: "An agency wants other people's applications to discover and run its flood model over the web, rather than download its data.",
+      badge: "Publishing a process",
+      options: [
+        "Web Feature Service (WFS)",
+        "Web Coverage Service (WCS)",
+        "Web Processing Service (WPS)"
+      ],
+      answer: "Web Processing Service (WPS)",
+      explanation: "WPS applies publish / find / bind to a verb instead of a noun: it publishes a process — any algorithm, calculation or model that operates on spatially referenced data, from subtracting two sets of numbers to a global climate model — so a client can discover it and run it where the data already is. It is the ancestor of the geoprocessing services you meet in ArcGIS Pro, and chaining several of them together is how the deck's wildfire example gets from raw imagery to a decision."
+    }
+  ],
+  perfectNote: "A perfect score — you can read a service listing now and know what will land in your hands.",
+  goodNote: "Solid. Read the explanations on the ones you missed; the picture-versus-data ones are the ones that bite in practice.",
+  tryAgainNote: "Worth another pass. The short version: a map service sends a picture, a feature service sends the features with their attributes, a coverage service sends the values, and a catalog only tells you where to ask."
+});
+</script>
+</body>
+</html>

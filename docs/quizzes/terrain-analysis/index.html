@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Slope, Aspect, Viewshed</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: slope units and algorithms, aspect, curvature, hillshade, contours and viewsheds, all derived from a DEM.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Slope, Aspect, Viewshed",
+  subtitle: "CE 414 &middot; Week 5 &mdash; Terrain Analysis<br>" +
+            "Every surface today is <strong>raster in, raster out</strong>, computed from a moving " +
+            "3 &times; 3 window. Eight questions on what each one actually reports.",
+  badge: "Terrain question",
+  deckUrl: "../../slides/week-05/terrain-analysis.html",
+  questions: [
+    {
+      prompt: "A grading plan calls a hillside a 100 percent slope. In degrees, that is:",
+      detail: "Slope is the change in elevation (rise) over the change in horizontal position (run).",
+      options: ["45 degrees", "90 degrees", "100 degrees", "10 degrees"],
+      answer: "45 degrees",
+      explanation: "Percent slope is (rise/run) × 100, so 100 percent means rise = run — a 45 degree angle. Degrees run 0 to 90; percent has no ceiling and keeps climbing toward infinity as the surface approaches vertical. The two units are not interchangeable, so always say which one you are reporting."
+    },
+    {
+      prompt: "Contour lines crowd together on one side of a map and spread far apart on the other. What is the spacing telling you?",
+      options: [
+        "Steep ground where they crowd, gentle ground where they spread",
+        "Higher elevation where they crowd",
+        "A smaller contour interval where they crowd",
+        "More accurate survey data where they crowd"
+      ],
+      answer: "Steep ground where they crowd, gentle ground where they spread",
+      explanation: "Contours are connected lines of uniform elevation that run at right angles to local slope, and the interval is chosen once for the whole map. With the vertical step fixed, tight spacing means the same rise happens over a shorter run — steeper ground. That is why a contour map carries slope information a flat color ramp does not."
+    },
+    {
+      prompt: "Shaded relief (hillshade) is best described as:",
+      options: [
+        "A measurement of the surface, in the same sense as slope",
+        "A rendering of the surface, lit from an assumed sun position"
+      ],
+      answer: "A rendering of the surface, lit from an assumed sun position",
+      explanation: "A hillshade is a visualization effect: the surface is illuminated from an assumed sun azimuth and altitude, and the eye reads the shading as three-dimensional shape. Nothing in the output is a physical quantity you would put on a drawing — the illumination direction is a choice you made, and it decides which landforms stand out and which disappear."
+    },
+    {
+      prompt: "The aspect raster reads 270 degrees at a cell. Which way does the ground fall away there?",
+      options: ["North", "East", "South", "West"],
+      answer: "West",
+      explanation: "Aspect is the downhill direction of the steepest slope, reported as an azimuth clockwise from north: 0 and 360 are north, 90 is east, 180 is south, 270 is west. Note the direction is downhill — a west-facing slope at 270 degrees is the one that catches the afternoon sun."
+    },
+    {
+      prompt: "A DEM cell sits in the middle of a perfectly flat area. What should the aspect raster report there?",
+      options: [
+        "0 degrees, meaning north",
+        "The average of the eight neighboring aspect values",
+        "A separate code, because a flat cell has no aspect",
+        "180 degrees, by convention"
+      ],
+      answer: "A separate code, because a flat cell has no aspect",
+      explanation: "With no downhill direction there is nothing to report, so flat cells are coded separately rather than given a bearing. Reporting 0 would be worse than useless — it would put a phantom band of north-facing ground in every flat area and pull any summary you computed toward north."
+    },
+    {
+      prompt: "Two cells have aspect values of 359 degrees and 1 degree. How far apart are those two directions?",
+      options: ["358 degrees", "2 degrees", "180 degrees", "Exactly opposite"],
+      answer: "2 degrees",
+      explanation: "Aspect is circular data: it wraps at 360, so 359 and 1 are neighbors. Ordinary arithmetic does not know that — it would average them to 180 degrees, due south, which is the opposite of the truth. That is why aspect is usually reclassified into compass sectors before anything is summarized or overlaid with it."
+    },
+    {
+      prompt: "The same nine elevations and the same center cell give 25.3 degrees by the four-nearest-cells method and 22.9 degrees by the third-order finite difference method. What does that spread mean?",
+      options: [
+        "One of the two calculations must contain an arithmetic error",
+        "The two methods must have used different cell sizes",
+        "One answer is in degrees and the other in percent",
+        "The choice of algorithm alone changes the slope you report"
+      ],
+      answer: "The choice of algorithm alone changes the slope you report",
+      explanation: "Both are correct, and they disagree by 2.4 degrees. The four-nearest-cells method uses only the four cardinal neighbors and gives the diagonals zero weight; the third-order finite difference method uses all eight neighbors, weighting the cardinal ones double. Slope is not a property you read off the ground — it is what a particular window and weighting return, so record the method along with the number."
+    },
+    {
+      prompt: "A viewshed run from a candidate tower site produces a raster. What does the cell value actually answer?",
+      detail: "The question Lab 4 has to defend a site with.",
+      options: [
+        "How far each cell is from the viewpoint",
+        "Whether each cell can be seen from the viewpoint",
+        "How steep the ground is between the cell and the viewpoint",
+        "How high above sea level each cell sits"
+      ],
+      answer: "Whether each cell can be seen from the viewpoint",
+      explanation: "A viewshed is seen or not seen, cell by cell — sweep a line of sight out from the viewer and any cell that falls below the running maximum angle is hidden behind what came before it. It says nothing about distance or signal strength, so a cell can be visible and still be useless to serve; that is the argument Lab 4 asks you to make."
+    }
+  ],
+  perfectNote: "A perfect score. You can say what each derived surface reports and what it does not.",
+  goodNote: "Solid. Read the explanations on the ones you missed — aspect and the slope algorithms are where the arguments start.",
+  tryAgainNote: "Worth another pass. The short version: every surface here comes from the same 3 × 3 window over the DEM, and each one answers a different question — how steep, which way downhill, how the slope bends, and what can be seen from where."
+});
+</script>
+</body>
+</html>

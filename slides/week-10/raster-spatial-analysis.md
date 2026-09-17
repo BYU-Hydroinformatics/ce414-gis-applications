@@ -253,3 +253,38 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 These are content decisions for the instructor, not conversion fixes, so nothing has been written for them here. -->
 
 <!-- Conversion notes (2026-09-03): source is "CE 414 Week 10 - Raster Based Spatial Analysis.pptx", 8 slides, converted to 14. No slides were dropped and no hidden slides existed. The expansion is layout only: the source's Overlay slide carried two unrelated diagrams and was split into "stack the layers" and "cell-by-cell arithmetic"; the Reclassify slide's schematic and its DEM worked example were split; the Create Heat Map slide's three images were split across two slides. Title and Today's Goals slides were added per the conversion guide. Slide 3's discussion question is marked `_class: activity`. Two GIFs (the reclassification schematic and the layer stack) plus three more were converted to PNG; the 2048-px temple photo was resized to 1800 px JPEG. The source deck contains no ArcGIS UI screenshots at all, so nothing needed ArcMap-to-Pro replacement — but that also means nothing in this deck shows a student where these tools live. Two VERIFY comments name ArcGIS Pro tools (Reclassify, Raster Calculator) that were not checked against a running Pro session. Two TODO(graphic) markers (the Lab 10 preview slide and the closing slide have no figure; none was generated, per this pass's rules). The Before Next Class slide's schedule is reconstructed, not taken from the source. See the TODO(instructor) above for the content gaps between this deck and the wind farm lab. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Criteria to Surface
+
+<div class="columns">
+<div>
+
+Eight decisions from today's workflow: criteria, **reclassify**, overlay, and reading the surface.
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — a check that today landed
+- Every answer explains itself; read it before you move on
+- These are the decisions Lab 10 makes you write down
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/suitability/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-suitability-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The reliable
+     one is the rule that excludes: half the room scores forbidden land low instead of removing
+     it, and a strong score on another layer then out-votes the exclusion and puts the site on
+     ground you cannot build on. The second is the bright hot spot — a heat map is a range of
+     scores, and the line between suitable and not is still a decision someone has to make and
+     defend. If the room has no signal, put the URL on the board; the items read aloud just as
+     well, and the two above are worth arguing out loud anyway. -->

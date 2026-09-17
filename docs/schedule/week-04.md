@@ -12,6 +12,13 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Line It Up](../quizzes/georectifying/index.html) — Eight questions on putting a scanned image in its place: which sources can be georectified at all, where control points belong, and why a small RMS error is not an accuracy figure.
+- [Light and Bands](../quizzes/remote-sensing/index.html) — Eight questions on where near-infrared, thermal infrared and radar sit on the spectrum, what a band is, and whether an image shows reflected light or emitted heat.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

@@ -130,8 +130,43 @@ DUE = {
 # Due table; they are the web version of a deck's "your turn" slide, reachable by QR code in class and
 # by link afterwards. week: [(slug, title, one-liner)]
 PRACTICE = {
+    # Week -> the lecture quizzes that week's decks end with. Each deck closes on a QR code; this
+    # table is how a student who missed the scan still finds the quiz. Slugs are registered in
+    # tools/make_quiz_qr.py, and the pages live in docs/quizzes/<slug>/.
+    1: [("data-models", "Storing the World",
+         "Eight questions on vector, raster and TIN: what the computer actually stores for a point, a line, a polygon or a grid, and why a shapefile is not a data model.")],
+    2: [("modelbuilder-basics", "Models and ModelBuilder",
+         "Eight questions on what a model is, how to read the ModelBuilder canvas, and the projection, unit and dissolve decisions inside the Cities Near Rivers model."),
+        ("model-parameters", "Canvas to Tool",
+         "Eight questions on turning a canvas into a tool someone else can run: getting output onto the map, gray elements, parameters, renaming, and metadata.")],
     3: [("raster-types", "Categorical or Continuous?",
-         "Ten real datasets, one question each: is that cell value a label or a measurement? The quiz the QR code on the Part A deck points to.")],
+         "Ten real datasets, one question each: is that cell value a label, or a measurement?"),
+        ("raster-functions", "Which Family?",
+         "Eight questions on the four families of raster function, what a moving window does to an edge, and why the Lab 2 threshold lives in a Con() expression as a parameter.")],
+    4: [("georectifying", "Line It Up",
+         "Eight questions on putting a scanned image in its place: which sources can be georectified at all, where control points belong, and why a small RMS error is not an accuracy figure."),
+        ("remote-sensing", "Light and Bands",
+         "Eight questions on where near-infrared, thermal infrared and radar sit on the spectrum, what a band is, and whether an image shows reflected light or emitted heat.")],
+    5: [("elevation-lidar", "Surfaces and Returns",
+         "Eight questions on where an elevation surface comes from: how LiDAR measures one, which DEM to download, and what cell size costs you."),
+        ("terrain-analysis", "Slope, Aspect, Viewshed",
+         "Eight questions on what you get out of a DEM: slope in degrees against percent, aspect as an azimuth, hillshade as a rendering, and what a viewshed does not tell you.")],
+    6: [("watersheds", "Follow the Water",
+         "Eight questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.")],
+    8: [("interpolation", "Points Into Surfaces",
+         "Eight questions on estimating a surface from points: Thiessen polygons, IDW, splines and kriging, and how you would judge which one to trust.")],
+    9: [("web-services", "What Comes Back?",
+         "Eight questions on what each OGC service actually hands you: a picture, the features themselves, the coverage values, or somewhere to find them.")],
+    10: [("suitability", "Criteria to Surface",
+          "Eight questions on the suitability workflow: criteria, reclassifying onto a common scale, weighting, overlay, and reading the surface you get.")],
+    11: [("least-cost-path", "Cheapest or Shortest?",
+          "Eight questions on cost surfaces and the cheapest route across them, and why the cheapest route is usually not the shortest one."),
+         ("coordinate-systems", "Projections and Datums",
+          "Eight questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting.")],
+    12: [("final-project", "Ready to Pitch?",
+          "Eight questions on what the final project asks of you: what counts as a big enough project, what the proposal meeting is for, and how the work is judged."),
+         ("gps", "Where Am I?",
+          "Eight questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, and what differential correction cannot remove.")],
 }
 
 def deck_url(w, slug): return f"{SITE}/slides/week-{w:02d}/{slug}.html"

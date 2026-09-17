@@ -138,35 +138,6 @@ By the end of class you should be able to:
 
 ---
 
-<!-- _class: activity -->
-
-# Your Turn — Label or Measurement?
-
-<div class="columns">
-<div>
-
-Ten real datasets, one question each: **is that cell value a label, or a measurement?**
-
-- Scan the code and work through it on your phone
-- Every answer explains itself — read the explanation before you move on
-- Not graded; it is practice for Quiz 3
-
-The quiz says **categorical** for a label and **continuous** for a measurement. Same distinction, the words you will meet in the ArcGIS Pro documentation.
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-types/</span>
-
-</div>
-<div>
-
-![w:400 center](images/ra-quiz-raster-types-qr.png)
-
-</div>
-</div>
-
-<!-- Five minutes, in pairs, then a show of hands on the two that start an argument. Slope is continuous as calculated, and categorical the moment you reclassify it into gentle/moderate/steep for a suitability analysis - which is Lab 2 Step 3 in a different costume. FEMA flood zones are a regulatory class, unlike a water-surface-elevation or depth raster, which is continuous. If the room has no signal, put the URL on the board; the items work read aloud just as well. -->
-
----
-
 # A spatial data mantra?
 
 ![bg right:46% w:98%](images/ra-raster-vector-banner-classroom.jpg)
@@ -480,6 +451,35 @@ Utah County, July 2025, cells at or above the threshold:
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter, which Part B opens with; NDVI itself is not in it, which is why today carried it. Say plainly that Thursday needs a working project, because the first exercise starts a few minutes in. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Label or Measurement?
+
+<div class="columns">
+<div>
+
+Ten real datasets, one question each: **is that cell value a label, or a measurement?**
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- It is the same call Lab 2 Step 6 makes when the threshold table turns NDVI into a map
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-types/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-raster-types-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that start an argument. Slope is continuous as calculated, and categorical the moment you reclassify it into gentle/moderate/steep for a suitability analysis - which is Lab 2 Step 3 in a different costume. FEMA flood zones are a regulatory class, unlike a water-surface-elevation or depth raster, which is continuous. If the room has no signal, put the URL on the board; the items work read aloud just as well. -->
 
 <!--
 Revision notes (2026-09-09): Part A of the Week 3 pair. This was one 32-slide deck, "Raster Analysis

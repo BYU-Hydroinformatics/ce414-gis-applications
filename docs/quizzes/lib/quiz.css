@@ -1,0 +1,377 @@
+/* CE 414 lecture quizzes — shared stylesheet.
+   One engine behind every quiz under docs/quizzes/. Each quiz page supplies only its
+   questions; the look, the phone layout and the keyboard handling live here and in quiz.js.
+   Derived from the Week 3 "Categorical or Continuous?" pilot, generalized to 2-4 options. */
+
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --heading: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --success-text: #14532d;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-text: #7f1d1d;
+  --border: #e2e8f0;
+  --hover-bg: #eff6ff;
+}
+
+/* Phones are the point of these quizzes, and a lecture hall is dark. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --heading: #f1f5f9;
+    --muted: #94a3b8;
+    --primary: #60a5fa;
+    --primary-hover: #93c5fd;
+    --success: #22c55e;
+    --success-bg: #14321f;
+    --success-text: #bbf7d0;
+    --danger: #f87171;
+    --danger-bg: #3a1a1a;
+    --danger-text: #fecaca;
+    --border: #334155;
+    --hover-bg: #1e3a5f;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 680px;
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  color: var(--heading);
+}
+
+p.subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.score-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.25s ease-in-out;
+}
+
+.quiz-card {
+  background: var(--card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.question-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.question-prompt {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--heading);
+  line-height: 1.3;
+}
+
+.question-detail {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Three or four choices read better stacked than crammed side by side. */
+.options.stacked {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+button.opt-btn {
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-align: left;
+  line-height: 1.35;
+}
+
+.options:not(.stacked) button.opt-btn {
+  text-align: center;
+}
+
+button.opt-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--hover-bg);
+}
+
+button.opt-btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+button.opt-btn:disabled {
+  cursor: default;
+}
+
+button.opt-btn .key-hint {
+  display: inline-block;
+  min-width: 1.25em;
+  margin-right: 0.5em;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+button.correct {
+  background: var(--success) !important;
+  border-color: var(--success) !important;
+  color: #ffffff !important;
+}
+
+button.correct .key-hint,
+button.incorrect .key-hint {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+button.incorrect {
+  background: var(--danger) !important;
+  border-color: var(--danger) !important;
+  color: #ffffff !important;
+}
+
+.feedback {
+  display: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+}
+
+.feedback.visible {
+  display: block;
+}
+
+.feedback.correct-box {
+  background-color: var(--success-bg);
+  border-left: 4px solid var(--success);
+  color: var(--success-text);
+}
+
+.feedback.incorrect-box {
+  background-color: var(--danger-bg);
+  border-left: 4px solid var(--danger);
+  color: var(--danger-text);
+}
+
+.feedback strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button.next-btn {
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+}
+
+button.next-btn:hover {
+  background: var(--primary-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+  button.next-btn,
+  button.restart-btn { color: #0f172a; }
+}
+
+.final-screen {
+  display: none;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.final-screen h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--heading);
+}
+
+.final-score {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.final-note {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+
+.review {
+  text-align: left;
+  margin: 1.5rem 0 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.review h3 {
+  font-size: 1rem;
+  color: var(--heading);
+  margin-bottom: 0.75rem;
+}
+
+.review ol {
+  padding-left: 1.2rem;
+}
+
+.review li {
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.review li strong {
+  color: var(--text);
+  display: block;
+}
+
+.review .ans {
+  color: var(--success);
+  font-weight: 600;
+}
+
+button.restart-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+footer.page-foot {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+footer.page-foot a {
+  color: var(--muted);
+}
+
+.kbd-hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Phones: the quiz is meant to be scanned from a slide and answered on a handset. */
+@media (max-width: 480px) {
+  body { padding: 1rem 0.75rem; }
+  h1 { font-size: 1.3rem; }
+  .quiz-card { padding: 1.1rem; }
+  .question-prompt { font-size: 1.15rem; }
+  .options { gap: 0.6rem; }
+  button.opt-btn { padding: 0.9rem 0.6rem; font-size: 0.95rem; }
+  .controls { justify-content: stretch; }
+  button.next-btn { width: 100%; padding: 0.8rem 1rem; }
+  .kbd-hint { display: none; }
+}
+
+@media (hover: none) {
+  .kbd-hint { display: none; }
+  button.opt-btn .key-hint { display: none; }
+}

@@ -276,3 +276,39 @@ rather than reproduced in full; the original slide did not cite which arcgis.com
 The student example map (images/lcp-example-map-power-lines.jpg) still carries its placeholder
 "Name / Date / Projection" text block; kept, and used in the speaker notes as a rubric reminder.
 Nothing outside slides/week-11/ was created or modified. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Cheapest or Shortest?
+
+<div class="columns">
+<div>
+
+Eight questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that today landed
+- Every answer explains itself; read the explanation before you move on
+- The sign of the reclassification — **high means undesirable** — is what Lab 11 punishes hardest
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/least-cost-path/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-least-cost-path-qr.png)
+
+</div>
+</div>
+
+<!-- Four to five minutes, in pairs, then a show of hands on the item that splits the room every
+     time: what a single cell of the cost surface actually stores. Half the class picks "the total
+     cost of the cheapest route to that cell", because that is the raster they just watched get
+     built - so name the difference out loud. A cell of the cost surface is a price for crossing
+     that one cell; the accumulated cost raster is the running total of the cheapest way to reach
+     it. Everything else in the hour hangs off that distinction. The diagonal item is the other one
+     worth ten seconds: diagonal steps are legal and the back link raster codes all eight
+     neighbors, they simply cost about the square root of 2 more, which is why the path comes out
+     stepped. If the room has no signal, put the URL on the board; the items read aloud just as
+     well. -->

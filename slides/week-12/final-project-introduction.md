@@ -329,3 +329,37 @@ and the pitfalls slide. Images reuse course example maps from Labs 1, 9 (student
 and 10, and the ModelBuilder B RiversDemo captures. Open items: 2023-2025 examples and deck links,
 presentation length, how peer scores combine with the instructor grade, team accountability
 wording, whether to keep the "two new tools" rule, meeting booking method. -->
+
+---
+
+<!-- _class: activity -->
+
+# One Last Thing — Ready to Pitch?
+
+<div class="columns">
+<div>
+
+Eight calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result?
+
+**Scan the code**, or open the link below.
+
+- Not graded, nothing recorded — it is a check that the assignment landed
+- Every answer explains itself; read the explanation before you move on
+- Item 5 is the proposal meeting in miniature — bring the feasibility table
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/final-project/</span>
+
+</div>
+<div>
+
+![w:400 center](images/quiz-final-project-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the first item. The trailhead map is what
+usually splits the room: half call it "about right" because it has a study area, a real dataset and
+a map at the end, and the other half see that nothing is being decided. That argument is the whole
+scope lesson, so let it run a minute before settling it. The all-vector siting plan is the runner-up
+- teams forget the raster half of the requirement until the model is half built. If the room has no
+signal, put the URL on the board and read the items aloud; each one works as a show of hands. -->
