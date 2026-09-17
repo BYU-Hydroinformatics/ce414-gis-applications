@@ -3,7 +3,7 @@
     python tools/week03_grid_figures.py
 
 ra-map-algebra-add.svg      A + B = C on two 4x4 grids, one NoData cell, the cell-by-cell rule
-ra-predict-exercise.svg     two 3x3 grids and an expression, output grid blank (the paper exercise)
+ra-predict-exercise.svg     two 3x3 grids and an expression, output grid blank (the predict-it exercise)
 ra-predict-answer.svg       the same with the output filled in
 ra-integer-division.svg     the same division done on integers and on floats
 ra-ndvi-cell.svg            NDVI as a local function: one cell of red, one of NIR, one answer
@@ -70,7 +70,7 @@ ans = [[(b if a > 5 else 0) if a != ND else ND for a, b in zip(ra, rb)] for ra, 
 blank = [[None] * 3 for _ in range(3)]
 head = f"<rect x='30' y='20' width='720' height='44' rx='8' fill='{NAVY}'/>" + caption(390, 49, "Con( A > 5 ,  B ,  0 )", 22, "#ffffff", "middle", "700")
 body = head + grid(60, 110, A3, 48, label="A") + grid(260, 110, B3, 48, label="B") + op(430, 190, "→") + grid(480, 110, blank, 48, label="Output")
-body += caption(60, 290, "Fill in the nine output cells on paper first. Where A is NoData, what is the output?", 15)
+body += caption(60, 290, "Work the nine output cells out in your head, then compare with the person next to you. Where A is NoData?", 15)
 svg("ra-predict-exercise.svg", 780, 310, body)
 body = head + grid(60, 110, A3, 48, label="A") + grid(260, 110, B3, 48, label="B") + op(430, 190, "→") + grid(480, 110, ans, 48, label="Output")
 body += caption(60, 290, "Where A > 5 the output copies B, elsewhere 0; the NoData cell stays NoData. Con is local.", 15)
@@ -84,6 +84,14 @@ idiv = [[int((n - r) / (n + r)) for n, r in zip(rn, rr)] for rn, rr in zip(NIRg,
 body = grid(30, 60, NIRg, 54, label="NIR (integer)") + op(215, 150, "−") + grid(240, 60, REDg, 54, label="red (integer)")
 body += caption(30, 260, "(NIR − red) ÷ (NIR + red), cell by cell:", 16, NAVY, "start", "700")
 body += grid(30, 300, idiv, 54, label="both integers") + grid(240, 300, fdiv, 54, label="after Float")
+# the top-left cell of every grid, worked out in full in the space to the right
+for gx, gy in ((30, 60), (240, 60), (30, 300), (240, 300)):
+    body += f"<rect x='{gx}' y='{gy}' width='54' height='54' fill='none' stroke='{ORANGE}' stroke-width='3'/>"
+body += caption(430, 78, "That top-left cell, in full:", 15, GRAY, "start", "700")
+body += caption(430, 116, "(3200 − 1100) ÷ (3200 + 1100)", 20, NAVY, "start", "700")
+body += caption(430, 146, "=  2100 ÷ 4300", 20, NAVY)
+body += caption(430, 192, "=  0", 30, NAVY, "start", "700") + caption(510, 192, "both integers", 15)
+body += caption(430, 234, "=  0.49", 30, NAVY, "start", "700") + caption(553, 234, "after Float", 15)
 body += caption(430, 330, "Integer ÷ integer keeps only the whole part.", 15)
 body += caption(430, 354, "Every NDVI between −1 and 1 becomes 0.", 15)
 body += caption(430, 378, "The lone −1 is the cell where NIR is below red.", 15)
@@ -91,18 +99,26 @@ body += caption(430, 412, "Float first, and the decimals survive.", 15, NAVY, "s
 body += caption(430, 436, "That is the whole reason Lab 2 has Step 1.", 15)
 svg("ra-integer-division.svg", 790, 480, body)
 
-# 4. NDVI as a local function on one cell
-body = f"<rect x='20' y='20' width='660' height='60' rx='8' fill='{NAVY}'/>" + caption(350, 58, "NDVI  =  (NIR − red) ÷ (NIR + red)", 24, "#ffffff", "middle", "700")
-cells = [("red band", "0.09", "#f4c6c6"), ("NIR band", "0.47", "#cfe8ff"), ("NDVI", "0.68", "#d8f5d0")]
-x = 60
-for i, (lab, val, col) in enumerate(cells):
-    body += f"<rect x='{x}' y='120' width='120' height='120' rx='6' fill='{col}' stroke='{NAVY}' stroke-width='2'/>"
-    body += caption(x + 60, 195, val, 30, NAVY, "middle", "700") + caption(x + 60, 262, lab, 15, GRAY, "middle")
-    if i < 2: body += op(x + 180, 190, "→" if i == 1 else "+")
-    x += 240
-body += caption(60, 300, "One cell of a center-pivot field near Elberta in the Lab 2 scene. Reflectance in, one number out,", 15)
-body += caption(60, 322, "and the six million other cells get the same two-line treatment with no reference to their neighbors.", 15)
-svg("ra-ndvi-cell.svg", 700, 340, body)
+# 4. NDVI as a local function on one cell, with the arithmetic written out rather than implied
+
+
+def frac(cx, num, den, bar_half, size=26, bar_y=152):
+    """A stacked fraction centred on cx: numerator, rule, denominator."""
+    return (caption(cx, bar_y - 14, num, size, NAVY, "middle", "700")
+            + f"<line x1='{cx-bar_half}' y1='{bar_y}' x2='{cx+bar_half}' y2='{bar_y}' stroke='{NAVY}' stroke-width='2.5'/>"
+            + caption(cx, bar_y + 32, den, size, NAVY, "middle", "700"))
+
+
+body = f"<rect x='20' y='16' width='780' height='52' rx='8' fill='{NAVY}'/>" + caption(410, 50, "NDVI  =  (NIR − red) ÷ (NIR + red)", 24, "#ffffff", "middle", "700")
+for x, lab, val, col in ((40, "red band", "0.09", "#f4c6c6"), (170, "NIR band", "0.47", "#cfe8ff"), (650, "NDVI", "0.68", "#d8f5d0")):
+    body += f"<rect x='{x}' y='95' width='110' height='110' rx='6' fill='{col}' stroke='{NAVY}' stroke-width='2'/>"
+    body += caption(x + 55, 162, val, 30, NAVY, "middle", "700") + caption(x + 55, 228, lab, 15, GRAY, "middle")
+body += op(302, 162, "=") + frac(402, "0.47 − 0.09", "0.47 + 0.09", 84)
+body += op(512, 162, "=") + frac(565, "0.38", "0.56", 36)
+body += op(620, 162, "=")
+body += caption(40, 272, "One cell of a center-pivot field near Elberta in the Lab 2 scene. Two reflectances in, one number out,", 15)
+body += caption(40, 294, "and the six million other cells get the same treatment with no reference to their neighbors.", 15)
+svg("ra-ndvi-cell.svg", 820, 330, body)
 
 # 5. focal window
 G = [[2, 3, 3, 4, 5], [2, 3, 9, 4, 5], [3, 3, 4, 4, 6], [3, 4, 4, 5, 6], [4, 4, 5, 5, 7]]

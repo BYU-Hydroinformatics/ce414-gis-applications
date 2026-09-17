@@ -138,6 +138,35 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: activity -->
+
+# Your Turn — Label or Measurement?
+
+<div class="columns">
+<div>
+
+Ten real datasets, one question each: **is that cell value a label, or a measurement?**
+
+- Scan the code and work through it on your phone
+- Every answer explains itself — read the explanation before you move on
+- Not graded; it is practice for Quiz 3
+
+The quiz says **categorical** for a label and **continuous** for a measurement. Same distinction, the words you will meet in the ArcGIS Pro documentation.
+
+<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-types/</span>
+
+</div>
+<div>
+
+![w:400 center](images/ra-quiz-raster-types-qr.png)
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that start an argument. Slope is continuous as calculated, and categorical the moment you reclassify it into gentle/moderate/steep for a suitability analysis - which is Lab 2 Step 3 in a different costume. FEMA flood zones are a regulatory class, unlike a water-surface-elevation or depth raster, which is continuous. If the room has no signal, put the URL on the board; the items work read aloud just as well. -->
+
+---
+
 # A spatial data mantra?
 
 ![bg right:46% w:98%](images/ra-raster-vector-banner-classroom.jpg)
@@ -226,7 +255,7 @@ By the end of class you should be able to:
 
 ![w:960 center](images/ra-predict-exercise.svg)
 
-<!-- Paper exercise, two minutes, no computer. Con(A > 5, B, 0) reads: where A is greater than 5, take B, otherwise 0. Have them fill in all nine cells, including the one where A is NoData. Then the next slide. -->
+<!-- Two minutes, no paper and no computer: they work the nine cells out in their heads and then say their answer to the person next to them. Con(A > 5, B, 0) reads: where A is greater than 5, take B, otherwise 0. Make sure the pairs get to the cell where A is NoData - that is the one worth arguing about. Then the next slide. -->
 
 ---
 
@@ -327,7 +356,7 @@ When a tool has to resample, the choice is yours: **nearest neighbor** for label
 
 ---
 
-# In the red band, vegetation is dark
+# Why is vegetation dark in the red band?
 
 ![bg left:58% contain](images/ra-modis-band1-red.png)
 

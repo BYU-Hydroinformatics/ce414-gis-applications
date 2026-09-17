@@ -54,5 +54,5 @@
 <text x='552.0' y='235.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'></text>
 <rect x='576' y='206' width='48' height='48' fill='#ffffff' stroke='#002e5d' stroke-width='1.5'/>
 <text x='600.0' y='235.0' text-anchor='middle' font-size='15' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'></text>
-<text x='552.0' y='100' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Output</text><text x='60' y='290' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Fill in the nine output cells on paper first. Where A is NoData, what is the output?</text>
+<text x='552.0' y='100' text-anchor='middle' font-size='16' font-weight='700' fill='#002e5d' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Output</text><text x='60' y='290' text-anchor='start' font-size='15' font-weight='400' fill='#5a6472' font-family='Segoe UI, Helvetica, Arial, sans-serif'>Work the nine output cells out in your head, then compare with the person next to you. Where A is NoData?</text>
 </svg>

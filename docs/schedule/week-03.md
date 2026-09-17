@@ -12,6 +12,12 @@
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+## Practice
+
+Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+
+- [Categorical or Continuous?](../quizzes/raster-types/index.html) — Ten real datasets, one question each: is that cell value a label or a measurement? The quiz the QR code on the Part A deck points to.
+
 ## Due this week
 
 Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.

@@ -126,6 +126,14 @@ DUE = {
                     ("Course evaluation (extra credit)", "Friday 11:59 pm")]),
 }
 
+# Self-check quizzes hosted on this site (docs/quizzes/<slug>/index.html). Not graded and not in the
+# Due table; they are the web version of a deck's "your turn" slide, reachable by QR code in class and
+# by link afterwards. week: [(slug, title, one-liner)]
+PRACTICE = {
+    3: [("raster-types", "Categorical or Continuous?",
+         "Ten real datasets, one question each: is that cell value a label or a measurement? The quiz the QR code on the Part A deck points to.")],
+}
+
 def deck_url(w, slug): return f"{SITE}/slides/week-{w:02d}/{slug}.html"
 
 def lab_link(n, rel="../assignments"):
@@ -181,11 +189,22 @@ def slides_section(decks):
               "with speaker notes.", ""]
     return lines
 
+def practice_section(w, rel=".."):
+    if w not in PRACTICE:
+        return []
+    lines = ["## Practice", "",
+             "Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.", ""]
+    for slug, title, desc in PRACTICE[w]:
+        lines.append(f"- [{title}]({rel}/quizzes/{slug}/index.html) — {desc}")
+    lines.append("")
+    return lines
+
 def week_page(w, decks):
     lines = [f"# Week {w}: {WEEK_TITLES[w]}", ""]
     lines += slides_section(decks)
     if w in NO_DECK:
         lines += ["## In class", "", NO_DECK[w], ""]
+    lines += practice_section(w)
     lines += due_section(w)
     if w in FINAL_PROJECT_WEEKS:
         lines += ["## Final project", "",
