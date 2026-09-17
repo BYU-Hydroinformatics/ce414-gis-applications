@@ -8,7 +8,7 @@
 
 ### Thursday
 
-[Raster Analysis and Map Algebra, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-b.html) — Local, focal, zonal and global functions; the NDVI model as a tool with a threshold parameter; then three exercises in ArcGIS Pro on the Lab 2 data, one per family: a Con() threshold sweep, Focal Statistics at a field edge, and Zonal Statistics as Table by census tract.
+[Raster Analysis and Map Algebra, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-03/raster-analysis-b.html) — Local, focal, zonal and global functions: moving windows, what a mean does to an edge, one number per zone, and where the tools sit in the Geoprocessing pane; then the NDVI model as a tool with a threshold parameter, and a Con() threshold sweep in ArcGIS Pro on the Lab 2 data.
 
 Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

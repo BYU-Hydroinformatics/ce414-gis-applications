@@ -1,0 +1,45 @@
+READ-ME.txt  --  Utah County NDVI, ready to use
+================================================
+
+WHAT THIS IS
+  NDVI.tif   Normalized Difference Vegetation Index for Utah County, Utah, one band.
+  Float 32-bit, values from -1 to +1, cell size 30 m, NoData = -9999 (outside the county).
+  Coordinate system: WGS 1984 UTM Zone 12N (EPSG:32612).
+  3,838 by 2,955 cells; 6,040,284 of them carry a value.
+
+WHY IT EXISTS
+  It is the raster you would produce by running the Lab 2 model on the prepared Landsat extract.
+  It is here so that a class exercise that needs an NDVI layer can start immediately, without
+  waiting on the model. It does not replace Lab 2: computing this raster yourself, and
+  understanding why the Float step is necessary, is the lab.
+
+HOW TO USE IT
+  Download it, then in ArcGIS Pro use Map > Add Data and point at NDVI.tif. The layer will be
+  named NDVI, which is the name the class exercises use inside expressions, for example:
+      Con("NDVI" >= 0.4, 1, 0)
+
+HOW IT WAS MADE
+  From the two bands in lab02-utah-county-landsat.zip, which are Landsat 8 Collection 2 Level-2
+  surface reflectance stored as reflectance x 10,000:
+      NDVI = (NIR - red) / (NIR + red)
+  computed in floating point. The x 10,000 scale factor cancels in the ratio, so no rescaling is
+  needed; the Collection 2 scale factor and offset were already applied when the bands were
+  prepared (see READ-ME-FIRST.txt inside lab02-utah-county-landsat.zip). Cells where either band
+  is NoData are NoData here.
+
+  Check values, if you recompute it yourself:
+      cells with data        6,040,284
+      mean NDVI                  0.3995
+      cells with NDVI >= 0.3  3,819,189   (1,327 square miles, 63 percent of the county)
+      cells with NDVI >= 0.4  3,197,856   (1,111 square miles, 53 percent)
+      cells with NDVI >= 0.6  2,077,745   (722 square miles, 34 percent)
+  Square miles are cells x 900 square meters / 2,589,988.
+
+SOURCE AND CITATION
+  Product ID:  LC08_L2SP_038032_20250712_20250725_02_T1
+  Acquired:    2025-07-12, Landsat 8 OLI/TIRS, WRS-2 path 38 row 32, Collection 2 Level-2, Tier 1
+  Landsat data are in the public domain.
+
+  U.S. Geological Survey (2025). Landsat 8 OLI/TIRS Collection 2 Level-2 Surface Reflectance,
+  scene LC08_L2SP_038032_20250712_20250725_02_T1. NDVI derived for BYU CE 414, 2026.
+  Landsat 8 image courtesy of the U.S. Geological Survey.
