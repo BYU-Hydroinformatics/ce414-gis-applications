@@ -72,6 +72,23 @@ Specifically:
   be a bare image so the presenter knows what to say.
 - Mark question slides with `<!-- _class: quiz -->` and in-class activities with
   `<!-- _class: activity -->`. Multiple-choice options use `<ol type="A">`.
+- **Scannable self-check quizzes are encouraged** (instructor's request, 2026-09-17, after the
+  Week 3 one worked well). Where a deck turns on a distinction students need to practice, a
+  two-minute quiz they open on their phones beats another bullet list. The pattern, from
+  `slides/week-03/raster-analysis-a.md` slide 7:
+  - The quiz is a self-contained page at `docs/quizzes/<slug>/index.html`; MkDocs copies it
+    through untouched. Ten or so items, two buttons, and an explanation on every answer.
+  - The slide is `<!-- _class: activity -->`, two columns: the prompt and what to do on the left
+    with the URL in small text as a fallback, the QR code at `w:400` on the right.
+  - **Keep the published path short.** `/quizzes/raster-types/` encodes as a 37-module QR; a long
+    descriptive filename needed 45, and the code gets read from the back of the room. Use a
+    directory with an `index.html`, not a long `.html` filename.
+  - Generate the PNG locally with the `qrcode` Python package (`pip install qrcode[pil]`), pure
+    black on white, `border=3`. Do not use a third-party QR service.
+  - **Verify by decoding the rendered slide**, not just the source PNG — render the deck to PNG
+    and read the code back out of the 1280x720 image.
+  - Link it from the week's page through the `PRACTICE` table in `tools/build_schedule.py` so it
+    is reachable after class, not only by scanning.
 - Section-break slides use `<!-- _class: lead -->`.
 - **Software wording:** CE 414 uses **ArcGIS Pro**, not QGIS — the opposite of CCE 114, so do not
   copy that course's software substitutions. What must change here is *version* language: replace
