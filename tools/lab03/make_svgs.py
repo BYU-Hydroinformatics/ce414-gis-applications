@@ -133,12 +133,7 @@ body += (f"<path d='M60,45 L76,45' stroke='{NAVY}' stroke-width='2.4'/>"
          f"<rect x='88' y='42' width='18' height='6' fill='{ORANGE}'/>")
 icon("summary-statistics", "Summary Statistics: read a field down every row and write one row holding the total", body)
 
-# ---- Buffer: the digitized shape, grown by your own error into an envelope
-body = (f"<polygon points='16,52 32,22 60,16 80,42 66,74 30,76' fill='{LORANGE}' stroke='{ORANGE}' stroke-width='2' stroke-linejoin='round' opacity='0.75'/>"
-        f"<polygon points='28,52 40,32 58,28 70,44 60,64 38,66' fill='{LBLUE}' stroke='{BLUE}' stroke-width='2.2' stroke-linejoin='round'/>"
-        f"<line x1='70' y1='44' x2='80' y2='42' stroke='{NAVY}' stroke-width='1.8'/>"
-        f"<circle cx='70' cy='44' r='2.2' fill='{NAVY}'/><circle cx='80' cy='42' r='2.2' fill='{NAVY}'/>"
-        f"<text x='96' y='30' font-size='11' font-weight='bold' fill='{ORANGE}' text-anchor='middle' {FONT}>err</text>")
-icon("buffer", "Buffer: grow a feature by your own measured error to show the band it actually lies within", body)
+# Buffer deliberately has no icon here: it has a row in Lab 1's tool table, and section 2 of
+# tools/lab-conversion-guide.md says tools from earlier labs do not get a row in a later one.
 
 print("written:", sorted(p.name for p in OUT.glob("icon-*.svg")))
