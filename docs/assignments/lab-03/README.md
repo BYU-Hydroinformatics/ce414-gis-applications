@@ -51,11 +51,16 @@ all student-facing links live; mkdocs build --strict passes. Four things were fi
     zero to set up Step 4's TIP.
 12. Two statements in the migration notes below were wrong and are marked CORRECTED there.
 
-Still owed, and listed again in the migration notes at the foot of this page: Figures 6 to 11 are
-still the September 3 captures from an older ArcGIS Pro, one of them showing a geodatabase named
-"Lab 2 - Fun With Old Maps.gdb" — wrong lab number, and a name with spaces in it, which the Data
-section of this page forbids. That one needs re-shooting, not rewording. There are also no example
-layouts built as a baseline/scenario pair.
+13. FIGURE 6 RE-SHOT 2026-09-18 in ArcGIS Pro 3.7.1 at 175% display scaling, from a real Lab03
+    project at C:\Ames\Lab03. The old capture showed a geodatabase called "Lab 2 - Fun With Old
+    Maps.gdb" — wrong lab number, and a name with spaces in it, which the Data section of this page
+    forbids. It is now two figures, 6a and 6b: the Catalog pane showing Lab03.gdb, then the New
+    submenu. Splitting it was not cosmetic — the context menu covers the geodatabase name whichever
+    side it opens on, so one capture cannot show both the name and the menu path.
+
+Still owed, and listed again in the migration notes at the foot of this page: Figures 7 to 11 are
+still the September 3 captures from an older ArcGIS Pro, and there are no example layouts built as a
+baseline/scenario pair.
 -->
 
 ## Background
@@ -411,9 +416,14 @@ moved.
 2. Name it, choose **Point** or **Line** depending on what you are capturing, and give it the
    coordinate system of your map.
 
-![ArcGIS Pro Catalog pane with a project geodatabase right-clicked, the New submenu open, and Feature Class highlighted](images/lab03-new-feature-class.png)
+![ArcGIS Pro Catalog pane, Project tab, with the Databases entry expanded to show a single project geodatabase named Lab03.gdb, selected](images/lab03-catalog-project-gdb.png)
 
-**Figure 6.** Creating a feature class in the project geodatabase.
+**Figure 6a.** The project geodatabase in the Catalog pane. There is one, it is named for the lab,
+and everything you create in this lab goes in it.
+
+![The ArcGIS Pro context menu for a geodatabase with New highlighted and its submenu open, listing Feature Dataset, Feature Class, Table, View, Relationship Class and Raster Dataset](images/lab03-new-feature-class.png)
+
+**Figure 6b.** Right-click the geodatabase and choose **New ▸ Feature Class**.
 
 3. Select the new layer in the **Contents** pane, open the **Edit** tab, and click **Create** in the
    **Features** group.
@@ -627,12 +637,14 @@ VERIFIED in ArcGIS Pro 3.7.1 on 2026-09-09, from a live session:
   pane. That is what replaced the third-party converter.
 
 STILL OWED:
-- Figures 6 to 11 are the 2026-09-03 captures from an older ArcGIS Pro and have not been re-shot.
-  lab03-new-feature-class.png shows a geodatabase named "Lab 2 - Fun With Old Maps.gdb" in a Lab 3
-  handout, which will confuse students; Step 0 now names the geodatabase Lab03.gdb, so the figure
-  contradicts the text. lab03-add-field-button.png is correct as to the button ("Add", in the Field
-  group), and Step 7 now matches it. Re-shooting these needs a georeferenced historic sheet in a
-  project; none is on disk.
+- Figures 7 to 11 are the 2026-09-03 captures from an older ArcGIS Pro and have not been re-shot.
+  lab03-add-field-button.png is correct as to the button ("Add", in the Field group), and Step 7 now
+  matches it. Re-shooting the rest needs digitized features in a project, which the 2026-09-18 GUI
+  pass did not get as far as creating.
+- RESOLVED 2026-09-18: Figure 6 was re-shot at 175% scaling from C:\Ames\Lab03 (ArcGIS Pro 3.7.1) and
+  split into 6a (Catalog pane, Lab03.gdb) and 6b (New submenu). The old capture's "Lab 2 - Fun With
+  Old Maps.gdb" is gone. A georeferenced historic sheet now exists on disk — the 1852 Stansbury sheet
+  at C:\Ames\Lab03\Data — so the remaining re-shoots are no longer blocked on data.
 - Figures 1, 3 and 5 are the 2026-09-03 re-shoots against a USGS 1893 Escondido sheet. They are
   current enough, but the callouts that the Word original drew on them ("My Historic Map", "Basemap
   Reference", "Historic Map Reference") were text boxes and are gone, so Figure 1 is a basemap with

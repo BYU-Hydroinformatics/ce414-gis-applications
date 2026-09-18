@@ -101,26 +101,51 @@ That is Lab 3's Step 5 warning, occurring by accident, on a real sheet, at a sca
 measure. It is a better illustration of the point than the sentence currently in the lab, and it is
 the argument for the expansion proposed in `EXPANSION_PROPOSAL.md`.
 
+## Confirmed in ArcGIS Pro, 2026-09-18
+
+The arithmetic above was checked the only way that counts: the sheet was loaded over a basemap in
+ArcGIS Pro 3.7.1, in a project at `C:\Ames\Lab03`, and looked at.
+
+Two things had to be fixed before it would draw in place. The world file was read correctly on the
+first try — the extent came in at exactly the computed corners — but the raster had **no coordinate
+system**, so ArcGIS Pro drew it in the map's Web Mercator units and put a sheet whose coordinates run
+about -113 to -111 at roughly 113 metres west of the origin, in the Gulf of Guinea. That is the exact
+phenomenon the lab's Figure 1 illustrates, arrived at accidentally. `DefineProjection` to WGS 1984
+fixed it, and the sheet then landed over Utah.
+
+Measuring the sheet's own Promontory Point against the real one, in the map, in NAD 1983 UTM Zone
+12N:
+
+| | Latitude | Longitude |
+| --- | --- | --- |
+| Sheet's Promontory Point | 41.21143 N | 112.63130 W |
+| Actual Promontory Point | 41.22222 N | 112.41139 W |
+| **Offset** | **1.2 km** | **13.2' = 18.4 km west** |
+
+Against the headless estimate of 13.5' and 18.9 km. The two methods agree to within half a
+kilometre, which is inside the error of reading a feature's position off a ruled crop by eye.
+
+`slides/week-04/images/geo-stansbury-1852-over-basemap.png` is a capture of the sheet at 62%
+transparency over the modern lake: the 1852 islands sit visibly west of where the modern basemap puts
+them, and the 1852 shoreline runs out into what is now the Great Salt Lake Desert.
+
 ## What is still owed
 
 This georeference was derived analytically — graticule detection plus arithmetic — not by driving
 the Georeference tab the way the lab tells students to. Both routes are legitimate and the analytic
 one is reproducible, but the lab's own instructions have not been walked. Owed:
 
-1. **Put the sheet on a basemap in ArcGIS Pro and look at it.** No amount of arithmetic substitutes,
-   and the lab's own Step 6 check ("turn the historic scan off; is everything still sensible?") is a
-   looking test.
-2. **Georeference it a second time from ground features**, through the Georeference tab, collecting
+1. **Georeference it a second time from ground features**, through the Georeference tab, collecting
    control points as a student would. The difference between that answer and the graticule answer is
    the sheet's survey error, separated out — the optional extra proposed in `EXPANSION_PROPOSAL.md`.
-3. **Re-shoot Lab 3's Figures 6 to 11**, which need a georeferenced historic sheet in a real project.
-   Figure 6 currently shows a geodatabase called "Lab 2 - Fun With Old Maps.gdb" in a Lab 3 handout,
-   with a space in the name the same page forbids. This is the blocker on fixing it.
-4. **Build the two example layouts** as a baseline/scenario pair with `arcpy.mp`, the way
+2. **Re-shoot Lab 3's Figures 7 to 11.** Figure 6 was done on 2026-09-18 and is no longer a problem.
+   The rest need digitized features in the project, which means walking Steps 6 and 7 for real.
+3. **Build the two example layouts** as a baseline/scenario pair with `arcpy.mp`, the way
    `tools/lab01/build_layouts.py` does.
-5. **Georeference the 1847 plat**, which has no graticule and so must be done from ground features —
+4. **Georeference the 1847 plat**, which has no graticule and so must be done from ground features —
    the Salt Lake City street grid, anchored on Temple Square.
-6. **Re-measure Utah Lake's scan y**, per the note above.
+5. **Re-measure Utah Lake's scan y**, per the note above.
 
-Items 1 to 5 all need the ArcGIS Pro GUI on the instructor machine, which was in use for teaching
-when this work was done.
+Items 1 to 4 need the ArcGIS Pro GUI. The 2026-09-18 pass got as far as loading and verifying the
+sheet and re-shooting Figure 6; the project it left behind is `C:\Ames\Lab03\Lab03.aprx`, with the
+sheet loaded, defined as WGS 1984, over a NAD 1983 UTM Zone 12N map.
