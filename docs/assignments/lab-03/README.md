@@ -33,9 +33,29 @@ The substantive changes, each of which closes a TODO(instructor) left by the Sep
    PDFToTIFF exists in the 3.7.1 install), and a screen capture still works.
 8. The dead usgwarchives.net source link is gone from student-facing text.
 
+Audit of 2026-09-17 against tools/lab-conversion-guide.md. Verified clean: rubric is five rows of
+ten summing to 50 with every bullet priced; no bare "Pro"; no reference to earlier handout versions;
+all student-facing links live; mkdocs build --strict passes. Four things were fixed:
+
+9.  DELIVERABLES did not name three items the rubric grades: the check-feature error (3 points in
+    the Georeferencing row), the total RMS error and outlying-residual investigation (2 points), and
+    the map's coordinate system. A student working from the deliverables list could lose five points
+    without ever seeing what was asked for. All three are now in the list.
+10. The topoView row recommended "GeoTIFF, JPEG or GeoPDF" without saying that the first and third
+    arrive already georeferenced — the top-listed format at the top-listed source hands the student
+    a solved sheet. The row now says take the JPEG, and a WARNING after the source table says why,
+    quoting the USGS description of its own GeoTIFF.
+11. FIGURE 5 showed a single control point and a total RMS of 0.000000 while Step 4 asked for at
+    least eight spread to the corners. The figure was not replaced — it is an honest capture of the
+    first point placed — but the caption and alt text now say what it shows and use the meaningless
+    zero to set up Step 4's TIP.
+12. Two statements in the migration notes below were wrong and are marked CORRECTED there.
+
 Still owed, and listed again in the migration notes at the foot of this page: Figures 6 to 11 are
 still the September 3 captures from an older ArcGIS Pro, one of them showing a geodatabase named
-for Lab 2, and there are no example layouts built as a baseline/scenario pair.
+"Lab 2 - Fun With Old Maps.gdb" — wrong lab number, and a name with spaces in it, which the Data
+section of this page forbids. That one needs re-shooting, not rewording. There are also no example
+layouts built as a baseline/scenario pair.
 -->
 
 ## Background
@@ -156,10 +176,18 @@ further back it goes, the more change there is to find.
 
 | Source | What is there |
 | --- | --- |
-| [USGS topoView](https://ngmdb.usgs.gov/topoview/) | Every USGS topographic sheet ever published, back to 1884, free, downloadable as GeoTIFF, JPEG or GeoPDF. The most reliable starting point |
+| [USGS topoView](https://ngmdb.usgs.gov/topoview/) | Every USGS topographic sheet ever published, back to 1884, free. The most reliable starting point. **Take the JPEG download, not the GeoTIFF** — see the warning below |
 | [USGS Historical Topographic Map Collection](https://www.usgs.gov/programs/national-geospatial-program/historical-topographic-maps-preserving-past) | The program behind topoView, with an explanation of what was scanned and how |
 | [David Rumsey Map Collection](https://www.davidrumsey.com/) | Over 100,000 scanned historic maps, strong on the nineteenth century and on city plans |
 | [Library of Congress map collections](https://www.loc.gov/maps/collections/) | Fire insurance plans, city plans, railroad maps. May show a bot check before it loads |
+
+> [!WARNING]
+> **Take the plain image, not the georeferenced one.** Where a repository offers a choice of
+> formats, some of them already carry a spatial reference: USGS describes its GeoTIFF download as
+> having "embedded georeferencing information so that the map can be used directly in a GIS", and a
+> GeoPDF carries one too. Download one of those and ArcGIS Pro drops the sheet straight onto the
+> basemap, correctly placed, with nothing for you to solve — somebody else did this lab for you.
+> Take the **JPEG**, or any plain image format, so that the placement is yours.
 
 > [!TIP]
 > **Check the result.** Before you commit to a sheet, ask yourself: can you name at least six
@@ -303,9 +331,12 @@ In the **Adjust** group, click **Add Control Points**. Then, for each point:
 The scan moves as soon as you have enough points for the current transformation. It will keep
 moving, and settling, as you add more.
 
-![A historic topographic sheet displayed semi-transparently over a modern basemap, where road intersections and named landmarks can be matched between the two](images/lab03-control-point-example.jpg)
+![An 1893 USGS Escondido sheet displayed semi-transparently over modern imagery, with a single control point marker near the center of the sheet and a georeferencing status panel in the top right reading Transformation 1st Order Polynomial (Affine), Controls Points 1 / 1, Total RMS Errors Forward, Inverse and Forward-Inverse all 0.000000](images/lab03-control-point-example.jpg)
 
-**Figure 5.** Matching a feature on the scan to the same feature on the basemap.
+**Figure 5.** The very first control point, matched from the scan to the basemap. Read the status
+panel in the top right: one point, and a total RMS error of 0.000000. The sheet is plainly still in
+the wrong place, so that zero is telling you nothing — which is the whole point of the TIP below.
+This is where you start, not where you stop; keep going until you have eight, spread to the corners.
 
 **How many, and where.** Collect **at least eight**, and spread them out:
 
@@ -488,8 +519,11 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - the requirements of the project and your approach, in your own words
 - **the source of your historic map**: repository, title, survey date, publication date, scale and URL
 - the six metadata answers from *Judging the source*, and what they mean for your result
-- which basemap you georeferenced against, and why
+- which basemap you georeferenced against and why, and the coordinate system your map is in
 - **how many control points you used, how you distributed them, and which transformation you chose**
+- your **total RMS error**, and what you did about any point whose residual stood out from the rest
+- **the error at your check feature** — the one you did *not* use as a control point — given as a
+  distance on the ground, with a sentence on how you measured it
 - your Step 8 table and the answers to its three questions
 - where your result is wrong and why, and what would fix it
 - a description of your digitized features: what they are, what they were called, and what is there now
@@ -586,8 +620,9 @@ VERIFIED in ArcGIS Pro 3.7.1 on 2026-09-09, from a live session:
 - Layer transparency is on the contextual Raster Layer tab, Effects group — not an "Appearance" tab,
   which is what the handout said. Step 3 now says Raster Layer.
 - A georeferencing session shows a live status panel on the map with the transformation, the control
-  point count and the total RMS errors (forward, inverse, forward-inverse). Not used as a figure
-  because the only session available showed a Lab 2 raster; worth capturing against a real sheet.
+  point count and the total RMS errors (forward, inverse, forward-inverse). CORRECTED 2026-09-17: an
+  earlier note here said this panel had never been captured against a real sheet. It had — it is in
+  Figure 5, over the Escondido sheet, reading "1 / 1" and 0.000000. Figure 5's caption now uses it.
 - arcpy.conversion.PDFToTIFF exists in this install, so PDF To TIFF is available in the Geoprocessing
   pane. That is what replaced the third-party converter.
 
@@ -601,7 +636,10 @@ STILL OWED:
 - Figures 1, 3 and 5 are the 2026-09-03 re-shoots against a USGS 1893 Escondido sheet. They are
   current enough, but the callouts that the Word original drew on them ("My Historic Map", "Basemap
   Reference", "Historic Map Reference") were text boxes and are gone, so Figure 1 is a basemap with
-  a barely visible speck and Figure 5 shows no control points despite what it illustrates.
+  a barely visible speck. CORRECTED 2026-09-17: an earlier note here said Figure 5 showed no control
+  points. It shows exactly one, with the status panel reading 1 / 1 and RMS 0.000000 — which
+  contradicted Step 4's "at least eight, spread out" until the caption was rewritten on 2026-09-17
+  to use the single point and the meaningless zero as the lead-in to Step 4's TIP.
 - No example layouts built as a baseline/scenario pair; the two kept are from earlier offerings.
 - No hosted data. This lab deliberately has none — the student finds the sheet — but that means
   there are no absolute check values, only the structural ones in Steps 4 and 5.
