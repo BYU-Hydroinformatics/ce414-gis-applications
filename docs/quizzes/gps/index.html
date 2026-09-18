@@ -38,11 +38,11 @@ CE414Quiz.start({
       detail: "The receiver has no way to ask the satellite how long the trip took.",
       options: [
         "It times a pulse it sends up to the satellite and waits for the return",
-        "It generates the same pseudorandom code as the satellite and measures how far it has to slide its own copy to line the two up",
+        "It slides its copy of the satellite's pseudorandom code until they line up",
         "It measures how much the signal has weakened on the way down",
         "It compares the frequency it receives with the frequency the satellite transmits"
       ],
-      answer: "It generates the same pseudorandom code as the satellite and measures how far it has to slide its own copy to line the two up",
+      answer: "It slides its copy of the satellite's pseudorandom code until they line up",
       explanation: "Satellite and receiver each run the same pseudorandom sequence, started together by synchronized clocks. The receiver slides its own copy along in time until it matches the code that arrived, and the size of that shift is the travel time. A pseudorandom code is transmitted rather than a plain tone precisely because it lines up in exactly one place. Note also that GPS is one-way: the receiver only listens, and sends nothing up."
     },
     {
@@ -73,11 +73,11 @@ CE414Quiz.start({
       detail: "You still have enough satellites for a fix. What is the main cost?",
       options: [
         "Nothing, as long as enough satellites remain for a fix",
-        "The satellites still in view are bunched, so the range bands cross at shallow angles and the position uncertainty grows",
+        "Bunched satellites make the range bands cross at shallow angles",
         "The remaining signals travel farther, so every range comes out too long",
         "The receiver loses synchronization and has to start over"
       ],
-      answer: "The satellites still in view are bunched, so the range bands cross at shallow angles and the position uncertainty grows",
+      answer: "Bunched satellites make the range bands cross at shallow angles",
       explanation: "This is dilution of precision, and it is about geometry rather than signal strength. A measured range is not a line but a band of uncertainty; where the bands cross at a wide angle they leave a small area the receiver cannot distinguish within, and where they cross shallow they leave a long thin one. Same receiver, same signals, worse fix. It is also why losing the low satellites first hurts more than losing the same number overhead — the coverage problem under canopy or in an urban canyon and the geometry problem are the same problem."
     },
     {

@@ -24,56 +24,56 @@ CE414Quiz.start({
     {
       prompt: "An 1870s bird's-eye lithograph of Salt Lake City",
       detail: "The city is drawn as if from the air at an angle: foreground streets are large, the mountains behind are small.",
-      options: ["Georectifiable", "Not georectifiable"],
+      options: ["Not georectifiable", "Georectifiable as is"],
       answer: "Not georectifiable",
       explanation: "It is drawn in oblique perspective, so the scale changes continuously from the foreground to the background. No two-dimensional transformation can stretch that into agreement with a map. What you need is a plan view at a constant scale — an orthographic map, or an orthophoto shot straight down."
     },
     {
       prompt: "You are handed a paper earthquake fault map and you want to buffer the fault traces",
       detail: "Georectify and digitize are two of the three steps. Which comes first, and does the order really matter?",
-      options: ["Digitize first — tracing is easier before the image gets warped", "Georectify first — features traced off an unplaced image land wrong, permanently", "Either order works; the features follow the image when it is placed later", "Analyze first, to see whether the sheet is worth georectifying at all"],
-      answer: "Georectify first — features traced off an unplaced image land wrong, permanently",
+      options: ["Digitize first — tracing is easier before the image warps", "Either order works; the features follow the image later", "Analyze first, to see whether the sheet is worth placing", "Georectify first — otherwise every trace lands in the wrong place"],
+      answer: "Georectify first — otherwise every trace lands in the wrong place",
       explanation: "The sequence is georectify → digitize → analyze, and it is not a matter of taste. A scan has no coordinates, so place it; the fault traces are then still only pixels, so digitize them; only after that can you buffer, intersect or measure anything. Digitize first and every feature lands in the wrong place, permanently."
     },
     {
       prompt: "Georeferencing and rectification are not the same word",
       detail: "One of the two actually resamples the image. Which?",
-      options: ["Georeferencing resamples the image; rectification only records coordinates", "Both of them resample the image", "Rectification resamples the image; georeferencing only records coordinates", "Neither resamples anything — only digitizing changes the data"],
-      answer: "Rectification resamples the image; georeferencing only records coordinates",
+      options: ["Both resample the image, just at different stages of the work", "Rectification resamples the image; georeferencing does not", "Georeferencing resamples the image; rectification does not", "Neither resamples the image; digitizing is what changes it"],
+      answer: "Rectification resamples the image; georeferencing does not",
       explanation: "Georeferencing gives an image real-world coordinates so the software knows where it is, and the pixels do not move. Rectification resamples the image onto that coordinate system, so the pixels really are square on the ground — they do move. Digitizing is a third thing again: drawing vector features off the image once it is in place."
     },
     {
       prompt: "All eight of your control points are on street corners in the town at the center of the sheet",
       detail: "The sheet also covers farmland and a canyon out to its edges. Is that a good set of points?",
-      options: ["Yes — eight is the count a scanned sheet asks for", "Yes, as long as the total RMS error comes back small", "No — they need to be spread out, including near all four corners", "No — street corners are a poor choice of control point"],
-      answer: "No — they need to be spread out, including near all four corners",
+      options: ["Yes — eight is what a scanned sheet asks for", "Yes, if the total RMS error comes back small", "No — they must spread to all four corners", "No — street corners are poor control points"],
+      answer: "No — they must spread to all four corners",
       explanation: "Distribution matters more than count. A transformation is only constrained where you constrain it, so a corner with nothing near it will wander. Points packed inside one town tell the equation almost as little as a single point does. Street corners themselves are fine — road intersections are exactly the kind of thing that has not moved."
     },
     {
       prompt: "Which of these makes the worst control point?",
       detail: "You are matching a 1990 map sheet against current satellite imagery.",
-      options: ["A road intersection", "A section corner", "A railroad crossing", "A bend in the river"],
+      options: ["A road intersection", "A section corner", "A bend in the river", "A rail line crossing"],
       answer: "A bend in the river",
       explanation: "A control point has to be a thing that has not moved between the two sources. Road intersections, section corners and rail crossings hold still for decades. A riverbank, a shoreline, a field edge or a tree does not — the river bends on a 1990 sheet are the most tempting features on it and the worst, because that is not today's river."
     },
     {
       prompt: "Three control points, a first-order polynomial, and a total RMS error of zero",
       detail: "Your neighbor is delighted with the number. Should you be?",
-      options: ["Yes — zero error means the sheet is placed perfectly", "Yes — zero error means there is nothing left to gain from more points", "No — a first-order polynomial passes exactly through three points, so the zero is guaranteed", "No — three points is below the minimum, so the number is not computed at all"],
-      answer: "No — a first-order polynomial passes exactly through three points, so the zero is guaranteed",
+      options: ["No — a first-order polynomial fits three points exactly", "Yes — zero error means the sheet is placed perfectly", "Yes — zero means more points have nothing to add", "No — three points is below the minimum to compute it"],
+      answer: "No — a first-order polynomial fits three points exactly",
       explanation: "Giving a transformation exactly its minimum number of points is a trap: the equation reproduces those points exactly no matter where they are, and reports nothing. A zero is not a good fit — it is an exact fit of too few points, and it says nothing about the rest of the sheet."
     },
     {
       prompt: "Spline will always give you the best-looking error on the list",
       detail: "Why does it look so good?",
-      options: ["Because it fits the sheet better than the others — start with it", "Because it averages the error evenly across all the control points", "Because it keeps straight lines straight while the polynomials do not", "Because it forces every control point to match exactly, whatever happens in between"],
-      answer: "Because it forces every control point to match exactly, whatever happens in between",
+      options: ["Because it fits the sheet better than the polynomials do", "Because it spreads the error evenly across all the points", "Because it keeps straight lines straight and the others do not", "Because it forces every control point to match exactly"],
+      answer: "Because it forces every control point to match exactly",
       explanation: "Spline makes every link match exactly and rubber-sheets everything between them, so the total RMS goes to zero by construction while the map can be badly distorted away from the points. Keeping straight lines straight is the first-order polynomial (affine) — the honest default for a flat scanned sheet, and where you should start."
     },
     {
       prompt: "So how do you find out how accurate your georeferencing actually is?",
-      options: ["Read the total RMS error off the Control Point Table", "Add control points until the total RMS error stops dropping", "Try each transformation and keep whichever reports the lowest RMS error", "Measure the offset at a feature on both the sheet and the basemap that you did not use as a control point"],
-      answer: "Measure the offset at a feature on both the sheet and the basemap that you did not use as a control point",
+      options: ["Read the total RMS error off the Control Point Table", "Measure the offset at a feature you left out of the fit", "Add control points until the total RMS error stops dropping", "Try each transformation and keep the lowest RMS error"],
+      answer: "Measure the offset at a feature you left out of the fit",
       explanation: "Every control point helped solve the transformation, so its residual only describes how well the equation reproduces its own input. Check somewhere you did not fit: that distance is your georeferencing accuracy, and the RMS error is a fit statistic. It is the same hold-out logic as validating any model — and it is what Lab 3 Step 8 asks you to do three times over."
     }
   ],

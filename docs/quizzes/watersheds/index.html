@@ -25,96 +25,96 @@ CE414Quiz.start({
       prompt: "You have a projected DEM and a point you care about. What order do the core steps run in?",
       detail: "Name the chain from raw elevation to a basin polygon.",
       options: [
-        "Flow Direction, Fill, Flow Accumulation, Watershed, pour point",
-        "Fill, Flow Direction, Flow Accumulation, pour point, Watershed",
-        "Fill, Flow Accumulation, Flow Direction, pour point, Watershed",
-        "Pour point, Fill, Flow Direction, Watershed, Flow Accumulation"
+        "Flow direction, fill, accumulation, watershed, pour point",
+        "Fill, accumulation, flow direction, pour point, watershed",
+        "Fill, flow direction, accumulation, pour point, watershed",
+        "Pour point, fill, flow direction, watershed, accumulation"
       ],
-      answer: "Fill, Flow Direction, Flow Accumulation, pour point, Watershed",
+      answer: "Fill, flow direction, accumulation, pour point, watershed",
       explanation: "Each step is the input to the next. Fill repairs the surface, flow direction turns the surface into a tree of cell-to-cell links, flow accumulation counts how many cells drain through each cell along that tree, and only then can you place a pour point and ask the Watershed step which cells drain to it. Accumulation cannot be computed before direction, because it is counted along the direction grid."
     },
     {
       prompt: "Why is filling pits the first thing done with a DEM?",
       detail: "A pit is a cell, or a set of cells, with no downstream cell around it.",
       options: [
-        "Unfilled pits act as sinks that swallow flow, so downstream accumulation collapses and the network breaks into disconnected pieces",
-        "Filling removes noise so the Slope tool returns smoother values",
-        "The Fill step is what assigns each cell its direction code",
-        "Without filling, the DEM cannot be projected into ground units"
+        "Filling smooths the surface so the Slope tool returns cleaner values",
+        "Filling is the step that assigns each cell its flow direction code",
+        "A DEM cannot be projected into ground units until it is filled",
+        "Pits act as sinks; flow stops there and the network below breaks up"
       ],
-      answer: "Unfilled pits act as sinks that swallow flow, so downstream accumulation collapses and the network breaks into disconnected pieces",
+      answer: "Pits act as sinks; flow stops there and the network below breaks up",
       explanation: "Most pits are artifacts of how the DEM was built, not real closed depressions. Water routed into one has nowhere to go, so it never reaches the cells below and the stream network arrives in fragments. Filling raises elevations in exactly those places; it never lowers them. Real closed basins do exist, which is why Fill offers a z-limit."
     },
     {
       prompt: "Which neighbor does the water go to?",
       detail: "Cell size is 30 meters. The cell drops 19 meters to its diagonal neighbor and 15 meters to the neighbor directly south.",
       options: [
-        "The diagonal neighbor — it is the larger drop",
-        "The neighbor to the south",
-        "Both, split in proportion to the two drops",
-        "Neither — the cell is a pit"
+        "The diagonal neighbor — the larger drop",
+        "The neighbor directly to the south",
+        "Both, split in proportion to the drops",
+        "Neither, because the cell is a pit"
       ],
-      answer: "The neighbor to the south",
+      answer: "The neighbor directly to the south",
       explanation: "Slope is rise over run, and the run to a diagonal neighbor is longer: 30&middot;&radic;2, about 42.4 meters. That makes the diagonal 19 / 42.4 = 0.45 against 15 / 30 = 0.50 to the south, so south is the steeper descent. Comparing raw elevation drops instead of slopes is the classic mistake. Note also that D8 sends all of a cell's water to one neighbor — it never splits it."
     },
     {
       prompt: "What is the value stored in a cell of a flow direction grid?",
       detail: "Think about what you could and could not do with that number.",
       options: [
-        "A code that labels which one of eight neighbors the cell drains to",
+        "A code for which of eight neighbors it drains to",
         "The slope, in percent, toward the steepest neighbor",
-        "The number of cells that drain through it",
-        "The compass bearing of flow, in degrees"
+        "The count of upstream cells draining through it",
+        "The compass bearing of the flow, in degrees"
       ],
-      answer: "A code that labels which one of eight neighbors the cell drains to",
+      answer: "A code for which of eight neighbors it drains to",
       explanation: "Flow direction takes one out of eight possible values, and that value is a label for a direction, not a measurement of anything. Averaging two of them, or subtracting one from another, is meaningless. The count of upstream cells is flow accumulation, a separate grid computed from this one."
     },
     {
       prompt: "You hand a flow direction raster made in ArcGIS Pro to a classmate who routes it in TauDEM or QGIS",
       detail: "The raster opens, it draws, and nothing reports an error.",
       options: [
-        "Fine — the eight directions are standardized across software",
-        "Fine, as long as both are using the same DEM",
-        "Every downstream result will be wrong; regenerate flow direction in the software you are going to route with",
-        "It will fail to open, because the two use different raster formats"
+        "Fine — the eight direction codes are standardized across software",
+        "Fine, as long as both packages started from the same DEM",
+        "It will not open — the two use different raster formats",
+        "Silently wrong — regenerate flow direction in that software"
       ],
-      answer: "Every downstream result will be wrong; regenerate flow direction in the software you are going to route with",
+      answer: "Silently wrong — regenerate flow direction in that software",
       explanation: "Both packages run the same eight-direction algorithm, but they write different numbers on the output raster for the same eight neighbors. The grid looks perfectly healthy and every result computed from it is silently wrong. This is why a coded value is only meaningful alongside the software convention that wrote it."
     },
     {
       prompt: "You raise the stream threshold from 5 cells to 200 cells",
       detail: "Same DEM, same flow direction, same flow accumulation grid.",
       options: [
-        "Nothing changes until you rerun Fill",
-        "The network thins — only channels with enough drainage area upstream survive",
+        "The network thins — fewer cells clear the higher bar",
         "The network densifies, because more cells now qualify",
-        "The watershed boundary moves outward"
+        "Nothing changes until you rerun Fill on the DEM",
+        "The delineated watershed boundary moves outward"
       ],
-      answer: "The network thins — only channels with enough drainage area upstream survive",
+      answer: "The network thins — fewer cells clear the higher bar",
       explanation: "The threshold is compared against flow accumulation, and a higher bar means fewer cells clear it, so the drainage density of the mapped network drops. Nothing about the terrain changed — only the number you compared against. The threshold is a judgment call you make, not something the Watershed step decides for you, and there is no single right value."
     },
     {
       prompt: "Your pour point returns a watershed of a handful of cells",
       detail: "You placed it at a stream gage location you digitized from a report, and the Watershed result is a tiny blob instead of a basin.",
       options: [
-        "The DEM needs to be filled again",
-        "The threshold was set too high",
-        "The point is not on the flow accumulation network — snap it on first",
-        "Pour points have to be drawn as polygons"
+        "The DEM needs filling again before this works",
+        "The point is off the channel — snap it first",
+        "The stream threshold was set much too high",
+        "Pour points have to be digitized as polygons"
       ],
-      answer: "The point is not on the flow accumulation network — snap it on first",
+      answer: "The point is off the channel — snap it first",
       explanation: "A watershed is always the drainage area of a point, so a point sitting one cell off the channel gets exactly what it asked for: the few cells that drain to that spot on the hillslope. Snap user-supplied points onto the high-accumulation cells before delineating. The same thing happens in StreamStats when you click just off the blue line."
     },
     {
       prompt: "Your hand-drawn divide and the automated basin for the same outlet do not match",
       detail: "The deck makes a specific claim about what automated delineation buys you.",
       options: [
-        "The automated result is more accurate, so the hand-drawn one is simply wrong",
-        "The automated result is more consistent — the same DEM and the same pour point always give the same answer",
+        "The automated result is more accurate; the hand-drawn one is wrong",
         "The two should match exactly if the digitizing was careful",
-        "The hand-drawn result is the standard the automated one is judged against"
+        "The automated result is more consistent — it repeats exactly",
+        "The hand-drawn result is the standard the automated one must meet"
       ],
-      answer: "The automated result is more consistent — the same DEM and the same pour point always give the same answer",
+      answer: "The automated result is more consistent — it repeats exactly",
       explanation: "Consistent is not the same as accurate. Two people delineating the same basin by hand will disagree; the algorithm repeats itself exactly. But change the DEM, or move the pour point, and the algorithm's answer changes too. What it returns is where water would go on that surface, which is why comparing it against mapped hydrography is worth doing."
     }
   ],

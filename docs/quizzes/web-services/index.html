@@ -28,9 +28,9 @@ CE414Quiz.start({
       badge: "Open standard",
       options: [
         "Right — an open standard means the implementation has to be open too",
-        "Wrong — a standard is a document anyone may implement, in any software"
+        "Wrong — a standard is a document, not a piece of software"
       ],
-      answer: "Wrong — a standard is a document anyone may implement, in any software",
+      answer: "Wrong — a standard is a document, not a piece of software",
       explanation: "This is the distinction most often collapsed. An OGC standard is a consensus document — freely available, no license fees, vendor neutral — and it is explicitly not open source software. Open source and proprietary products can implement the same standard and interoperate, which is the whole point of writing the interface down."
     },
     {
@@ -62,10 +62,10 @@ CE414Quiz.start({
       badge: "Tiling",
       options: [
         "Tiles are small enough to fit in a browser cache; a full map image is not",
-        "WMTS answers only from a fixed pyramid of tiles, so requests repeat; a WMS will draw any bounding box you ask for, so no two are alike",
+        "WMTS serves a fixed pyramid of tiles, so requests repeat; a WMS request never does",
         "WMTS uses a compressed image format that a WMS is not allowed to return"
       ],
-      answer: "WMTS answers only from a fixed pyramid of tiles, so requests repeat; a WMS will draw any bounding box you ask for, so no two are alike",
+      answer: "WMTS serves a fixed pyramid of tiles, so requests repeat; a WMS request never does",
       explanation: "The trade is generality for speed. A WMS request names a coordinate system, a bounding box and a pixel width and height, so almost every request is unique and has to be drawn fresh. A WMTS request names a tile matrix, a row and a column, so a popular tile is drawn once and served forever. That is why every web basemap you have ever panned around is tiled."
     },
     {

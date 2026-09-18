@@ -25,21 +25,22 @@ CE414Quiz.start({
       prompt: "A systematic grid over a ridge-and-valley landscape",
       detail: "Samples are spaced at fixed X, Y intervals, and the spacing happens to be close to the spacing of the ridges.",
       options: [
+        "It may be biased — the spacing matches the ridge spacing",
         "Fixed spacing makes the design unbiased by construction",
-        "The design may be biased, because it matches a pattern in the landscape",
         "The design puts extra points where the surface varies most"
       ],
-      answer: "The design may be biased, because it matches a pattern in the landscape",
+      answer: "It may be biased — the spacing matches the ridge spacing",
       explanation: "A systematic design can line up with a repeating pattern in the terrain and land on ridge tops every time, so the valleys never enter the sample. Random sampling is less prone to that; adaptive sampling is the one that concentrates effort where the variable changes fastest, and it needs prior knowledge of where that is."
     },
     {
       prompt: "A Thiessen surface is flat inside each polygon and jumps at every boundary. Why?",
       options: [
         "Each cell averages every sample inside a search radius",
+        "Each cell blends nearby samples by inverse distance",
         "One polynomial is fit through all of the samples at once",
-        "Each cell takes the value of the single nearest sample point"
+        "Each cell takes the value of the nearest sample point"
       ],
-      answer: "Each cell takes the value of the single nearest sample point",
+      answer: "Each cell takes the value of the nearest sample point",
       explanation: "Thiessen is the zero-weighting case: the nearest point takes all of the weight and every other point takes none, so the estimate cannot change until you cross into another point's polygon. That suits a discrete variable such as soil type, and misrepresents a continuous one such as elevation or temperature."
     },
     {
@@ -47,18 +48,18 @@ CE414Quiz.start({
       detail: "Same sample points, same output grid — only the circle centered over each cell gets bigger.",
       options: [
         "The surface sharpens, showing more detail near each sample",
-        "The surface smooths away, flattening toward one average value",
+        "The surface smooths out, flattening toward one average value",
         "The surface starts passing exactly through the measured values"
       ],
-      answer: "The surface smooths away, flattening toward one average value",
+      answer: "The surface smooths out, flattening toward one average value",
       explanation: "Each circle ends up holding most of the samples, so neighboring cells average nearly the same list of points and the detail disappears. Shrinking the radius is the opposite failure: some circles contain no points at all, and those cells come out empty."
     },
     {
       prompt: "You raise the IDW exponent from 1 to 3 and change nothing else",
       options: [
-        "Closer sample points take more of the weight",
         "All sample points move toward equal weight",
-        "More sample points are pulled into each estimate"
+        "More sample points are pulled into each estimate",
+        "Closer sample points take more of the weight"
       ],
       answer: "Closer sample points take more of the weight",
       explanation: "The weights are one over distance raised to that exponent, so a larger exponent concentrates weight on the nearest points and pushes the surface toward the nearest-sample answer. The number of neighbors is a separate knob: using more of them smooths the surface but does not remove the bull's-eye rings around isolated points, because the exponent, not the neighbor count, is what concentrates the weight."
@@ -67,29 +68,29 @@ CE414Quiz.start({
       prompt: "The trend surface fitted to your points looks nothing like the original surface",
       detail: "The regional slope is there, but the drainage detail is gone. Is something wrong?",
       options: [
-        "Yes — the search radius was set too large",
-        "Yes — the exponent needs to be raised",
-        "No — a trend surface keeps the regional trend and discards local detail"
+        "No — a trend surface drops local detail on purpose",
+        "Yes — the search radius has been set much too large",
+        "Yes — the distance exponent needs to be raised"
       ],
-      answer: "No — a trend surface keeps the regional trend and discards local detail",
+      answer: "No — a trend surface drops local detail on purpose",
       explanation: "A trend surface is a regression: one polynomial fit through every measured point at once, so each sample influences the entire surface instead of only its own neighborhood. It has no search radius and no distance exponent, and it typically does not pass through the measured values."
     },
     {
       prompt: "Kriging is described as similar to IDW. Where does it differ?",
       options: [
         "It uses only the nearest sample point",
-        "It gets its weights from the data's own spatial structure, not from a rule you pick",
+        "The data's spatial structure sets the weights",
         "It requires the samples to lie on a regular grid"
       ],
-      answer: "It gets its weights from the data's own spatial structure, not from a rule you pick",
+      answer: "The data's spatial structure sets the weights",
       explanation: "IDW's weights come from an exponent you choose before you look at the data. Kriging first models how quickly the variable stops being similar as distance grows — that is what the fitted variogram model records — and then uses the minimum variance method to set the weights, so the data decide how far influence reaches."
     },
     {
       prompt: "Which of these could NOT return your measured values unchanged?",
       detail: "You interpolate, then sample the output raster at the locations of the input points.",
       options: [
-        "Thiessen polygons",
-        "Inverse distance weighted (IDW)",
+        "Thiessen nearest-point polygons",
+        "Inverse distance weighting (IDW)",
         "Fixed-radius local averaging"
       ],
       answer: "Fixed-radius local averaging",
@@ -99,11 +100,11 @@ CE414Quiz.start({
       prompt: "You have no true surface to compare against. How do you judge the interpolation?",
       detail: "The class-vote slides had the original surface beside the six results. A real project never does.",
       options: [
-        "Hold sample points back, interpolate without them, and compare measured against interpolated",
-        "Pick the surface that looks smoothest",
+        "Hold points back and compare them to the surface",
+        "Pick the surface that looks the smoothest overall",
         "Pick the method that used the most sample points"
       ],
-      answer: "Hold sample points back, interpolate without them, and compare measured against interpolated",
+      answer: "Hold points back and compare them to the surface",
       explanation: "Withheld points are the honest check once the truth panel is gone: the difference between the measured and the interpolated value at those locations is something you can actually compute. Smoothness is a property of the method rather than evidence that it is right — a spline gives the smoothest-looking result in this deck and can still overshoot well past the range of the measured values between widely spaced points."
     }
   ],

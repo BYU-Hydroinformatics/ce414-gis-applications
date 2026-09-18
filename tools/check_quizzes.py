@@ -125,6 +125,7 @@ def check_quiz(slug):
     if not 6 <= len(qs) <= 10:
         fail(where, f"has {len(qs)} questions; the guide asks for 6-8")
 
+    check_tells(slug, qs)
     for i, q in enumerate(qs, 1):
         at = f"{where} q{i}"
         if not q.get("prompt"):
@@ -181,6 +182,57 @@ def check_slide(slug, week):
         fail(where, "the quiz slide is not the last slide of the deck")
     if "_class: activity" not in last:
         notes.append(f"{where}: quiz slide is not marked <!-- _class: activity -->")
+
+
+def check_tells(slug, qs):
+    """Flag the two ways a quiz can be passed without knowing anything.
+
+    A student who has never seen the material can still do well if the correct option is
+    reliably the wordiest one, or if it always sits in the same place. Both are easy to
+    introduce by accident: a correct answer wants qualifying, and a distractor does not.
+    These are notes rather than failures — the judgment about a particular item belongs to a
+    person — but a quiz well outside these bounds is not testing what it thinks it is.
+    """
+    where = f"docs/quizzes/{slug}/index.html"
+    # A quiz that offers the same fixed scale every time - "Categorical" or "Continuous" - has
+    # no length tell to measure, because the wording never changes. Only the position matters.
+    option_sets = {tuple(q.get("options") or ()) for q in qs}
+    fixed_scale = len(option_sets) == 1
+    longest = 0
+    positions = []
+    for q in qs:
+        opts = q.get("options") or []
+        ans = q.get("answer")
+        if not opts or ans is None:
+            continue
+        idx = ans if isinstance(ans, int) else (opts.index(ans) if ans in opts else None)
+        if idx is None:
+            continue
+        positions.append(idx)
+        lens = [len(o) for o in opts]
+        if len(set(lens)) > 1 and len(opts[idx]) == max(lens):
+            longest += 1
+    # These are answered on a phone. Past about 95 characters an option wraps to four or five
+    # lines at 375px, and a student cannot see the choices together to compare them.
+    for i, q in enumerate(qs, 1):
+        longest_opt = max((len(o) for o in (q.get("options") or [])), default=0)
+        if longest_opt > 95:
+            notes.append(f"{where} q{i}: an option is {longest_opt} characters — too long to "
+                         f"read beside its siblings on a phone")
+
+    n = len(positions)
+    if not n:
+        return
+    # Four options picked at random put the longest on the answer about a third of the time.
+    if not fixed_scale and longest / n > 0.5:
+        notes.append(f"{where}: the correct answer is the longest option in {longest} of {n} "
+                     f"questions — long enough to be a strategy")
+    if len(set(positions)) < 2:
+        notes.append(f"{where}: every correct answer sits at index {positions[0]}")
+    elif n >= 6 and max(positions.count(i) for i in set(positions)) / n > 0.6:
+        common = max(set(positions), key=positions.count)
+        notes.append(f"{where}: {positions.count(common)} of {n} correct answers sit at "
+                     f"index {common}")
 
 
 def check_practice():

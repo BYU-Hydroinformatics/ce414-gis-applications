@@ -87,6 +87,24 @@ A question:
   answer wrong, and nothing will tell you — proof-read it.
 - Options are shown in the order you write them. Do not put all the correct answers first.
 
+### Two ways to fail without noticing
+
+A quiz can be passable by a student who has learned nothing, and neither failure is visible while
+you are writing it. `tools/check_quizzes.py` measures both and prints a note.
+
+**The longest option is the answer.** A correct statement wants qualifying — *unless the tool is
+told otherwise*, *in the version we use* — and a distractor does not, so the true option grows.
+With four choices, chance puts the longest on the answer about a third of the time; the first
+pass at this course's quizzes hit 55%, and one quiz managed 8 out of 8. Fix it by tightening the
+correct answer, not by padding the distractors: a bloated distractor is its own tell, and some
+correct answers should be the shortest thing on the screen. Keep every option in a question
+within about 25% of its siblings, and under about 95 characters so four of them fit a phone.
+
+**The answer is always in the same place.** Vary the index deliberately. Over eight questions use
+at least three of the four positions, including index 0 and index 3 at least once each. If a
+question has only three options, index 3 is unreachable — either give it a fourth or carry the
+spread elsewhere in the quiz.
+
 ## Writing the questions
 
 Six to eight questions. Fewer than six is not worth a QR code; more than eight and the room has
