@@ -80,6 +80,30 @@ answer, two defensible students can disagree, and answering it *requires* the er
 has been teaching. It is the "where the method breaks" item of the spine, arriving with a number
 attached instead of a paragraph.
 
+### The effect is big enough to carry a lab — worked from this sheet
+
+The size of the effect does not have to be taken on faith. The Stansbury sheet has already been
+georeferenced two ways, and the areas they imply differ substantially.
+
+The area a digitized polygon encloses scales with the product of the two axis scales, so the ratio
+between the two georeferences follows directly from them, whatever the polygon is — the shoreline's
+own accuracy cancels out:
+
+| | Longitude scale | Latitude scale |
+| --- | ---: | ---: |
+| Fitted to the printed graticule | 2.428e-4 deg/px | 1.820e-4 deg/px |
+| Fitted to three ground features | about 2.05e-4 deg/px | about 1.90e-4 deg/px |
+
+That puts the same digitized shoreline at roughly **10 to 20 percent** more enclosed area under the
+graticule georeference than under the ground-feature one. The range is wide because the ground fit
+rests on three hand-measured positions; a student collecting proper control points would pin it
+tighter, which is the exercise.
+
+Ten to twenty percent is far larger than any plausible digitizing sloppiness, and it is produced
+entirely by a choice the student made about control points. It is also the right order to be
+genuinely confusable with real hydrological change, which is what makes the question honest rather
+than rhetorical.
+
 ## Proposal 3 — restore the model spine with a measurement model
 
 Georeferencing cannot be a model; it is interactive by nature, and the lab is right about that. But

@@ -100,3 +100,27 @@ in the thing you anchored to.
 That is Lab 3's Step 5 warning, occurring by accident, on a real sheet, at a scale a student can
 measure. It is a better illustration of the point than the sentence currently in the lab, and it is
 the argument for the expansion proposed in `EXPANSION_PROPOSAL.md`.
+
+## What is still owed
+
+This georeference was derived analytically — graticule detection plus arithmetic — not by driving
+the Georeference tab the way the lab tells students to. Both routes are legitimate and the analytic
+one is reproducible, but the lab's own instructions have not been walked. Owed:
+
+1. **Put the sheet on a basemap in ArcGIS Pro and look at it.** No amount of arithmetic substitutes,
+   and the lab's own Step 6 check ("turn the historic scan off; is everything still sensible?") is a
+   looking test.
+2. **Georeference it a second time from ground features**, through the Georeference tab, collecting
+   control points as a student would. The difference between that answer and the graticule answer is
+   the sheet's survey error, separated out — the optional extra proposed in `EXPANSION_PROPOSAL.md`.
+3. **Re-shoot Lab 3's Figures 6 to 11**, which need a georeferenced historic sheet in a real project.
+   Figure 6 currently shows a geodatabase called "Lab 2 - Fun With Old Maps.gdb" in a Lab 3 handout,
+   with a space in the name the same page forbids. This is the blocker on fixing it.
+4. **Build the two example layouts** as a baseline/scenario pair with `arcpy.mp`, the way
+   `tools/lab01/build_layouts.py` does.
+5. **Georeference the 1847 plat**, which has no graticule and so must be done from ground features —
+   the Salt Lake City street grid, anchored on Temple Square.
+6. **Re-measure Utah Lake's scan y**, per the note above.
+
+Items 1 to 5 all need the ArcGIS Pro GUI on the instructor machine, which was in use for teaching
+when this work was done.
