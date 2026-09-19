@@ -33,6 +33,9 @@ extra_css:
 extra_javascript:
   - javascripts/external-links.js
 
+hooks:
+  - hooks/unlisted_pages.py
+
 plugins:
   - search
   - gh-admonitions

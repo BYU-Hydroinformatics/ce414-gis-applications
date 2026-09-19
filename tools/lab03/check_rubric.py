@@ -1,5 +1,5 @@
 import re
-path = r"C:\Users\dpame\code\ce414-gis-applications\docs\assignments\lab-03\draft.md"
+path = r"C:\Users\dpame\code\ce414-gis-applications\docs\assignments\lab-03\lab3-draft.md"
 txt = open(path, encoding="utf-8").read()
 section = txt.split("## Rubric for")[1]
 total = 0
