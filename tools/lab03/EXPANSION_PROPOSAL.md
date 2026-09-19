@@ -1,5 +1,13 @@
 # Lab 3, expansion proposal
 
+> **DECIDED 2026-09-18 by the instructor.** Lab 3 stays a manual, one-week lab: **no ModelBuilder**
+> (Proposal 3 rejected), no five-run sensitivity with re-tracing. Kept, in manual form: drawn check
+> features, one measured polygon (Calculate Geometry by hand, uncertainty by perimeter × error rather
+> than a Buffer envelope), control points varied alongside the transformation in three runs, the
+> Stansbury sheet as worked example, the graticule extra credit. New: attributes on every digitized
+> feature. The round-2 draft (`docs/assignments/lab-03/draft.md`) implements this. What follows is
+> the proposal as written, kept for the record.
+
 Instructor-facing. Written 2026-09-18 in response to three observations from the instructor: that
 the sensitivity step amounts to doing the same thing two or three times, that Lab 3 is materially
 easier than Lab 1, and that georeferencing and digitizing ought to lead to *measuring* something.

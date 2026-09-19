@@ -123,15 +123,16 @@ body = (f"<polygon points='14,56 30,26 56,20 72,44 60,72 26,74' fill='{LBLUE}' s
         f"<line x1='86' y1='60' x2='100' y2='60' stroke='{ORANGE}' stroke-width='1.6'/>")
 icon("calculate-geometry", "Calculate Geometry Attributes: write a shape's own area, perimeter or length into a field", body)
 
-# ---- Summary Statistics: many rows in, one row out
-body = f"<rect x='10' y='16' width='46' height='58' fill='white' stroke='{GRAY}' stroke-width='1.8'/>"
-for j in range(6):
-    body += f"<rect x='16' y='{22 + j * 9}' width='34' height='6' fill='{LBLUE}' stroke='{BLUE}' stroke-width='0.9'/>"
-body += (f"<path d='M60,45 L76,45' stroke='{NAVY}' stroke-width='2.4'/>"
-         f"<polygon points='80,45 73,41 73,49' fill='{NAVY}'/>"
-         f"<rect x='84' y='36' width='26' height='18' fill='{LORANGE}' stroke='{ORANGE}' stroke-width='2.2'/>"
-         f"<rect x='88' y='42' width='18' height='6' fill='{ORANGE}'/>")
-icon("summary-statistics", "Summary Statistics: read a field down every row and write one row holding the total", body)
+# ---- Measure: a ruler laid between two points, the distance in orange
+body = (f"<rect x='14' y='48' width='92' height='18' rx='2' fill='{LGRAY}' stroke='{GRAY}' stroke-width='1.8'/>")
+for i, x in enumerate(range(20, 104, 7)):
+    h = 9 if i % 2 == 0 else 5
+    body += f"<line x1='{x}' y1='48' x2='{x}' y2='{48 + h}' stroke='{GRAY}' stroke-width='1.3'/>"
+body += (f"<circle cx='24' cy='30' r='5' fill='white' stroke='{NAVY}' stroke-width='2.2'/>"
+         f"<circle cx='96' cy='30' r='5' fill='white' stroke='{NAVY}' stroke-width='2.2'/>"
+         f"<line x1='30' y1='30' x2='90' y2='30' stroke='{ORANGE}' stroke-width='2.6' stroke-dasharray='5 3'/>"
+         f"<text x='60' y='22' font-size='12' font-weight='bold' fill='{ORANGE}' text-anchor='middle' {FONT}>m</text>")
+icon("measure", "Measure: click from one point to another to read the distance between them", body)
 
 # Buffer deliberately has no icon here: it has a row in Lab 1's tool table, and section 2 of
 # tools/lab-conversion-guide.md says tools from earlier labs do not get a row in a later one.
