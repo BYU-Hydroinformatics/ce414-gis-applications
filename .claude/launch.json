@@ -36,6 +36,18 @@
         "site"
       ],
       "port": 8415
+    },
+    {
+      "name": "slides-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8416",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 8416
     }
   ]
 }
