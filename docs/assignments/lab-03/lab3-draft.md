@@ -69,6 +69,12 @@ data can tell you:
 - what a river, coastline or wetland looked like before it was engineered
 - what was on a site before the building that is on it now
 
+![Illustration: a smiling engineer in a hard hat lifts a large aged paper map, showing a winding river and a small street grid, out of a flat-file map drawer in a records room lined with filing cabinets; on a desk beside them a laptop displays the same river and grid as a modern GIS map with the features traced in orange](images/lab03-paper-to-gis.jpg)
+
+**Figure A.** The lab in one picture. Agencies and consulting firms hold thousands of drawers of
+mapping that exists only on paper. Scan it, georeference it, and digitize what it shows, and it
+becomes data you can overlay, measure and map alongside everything else in your project.
+
 Libraries and agencies have scanned a great deal of it, so more of this material is online now than
 ever before. A scan, though, is just a picture. It has rows and columns of pixels and no idea where
 on Earth it belongs. **Georeferencing** is the act of telling it: you match points you can identify
@@ -107,6 +113,12 @@ operations, in this order:
 
 The order matters. Digitize first and every feature you draw is in the wrong place, permanently.
 
+![Two icons joined by an arrow: on the left a map sheet pinned at its corners to a coordinate grid over a globe, on the right a pen tracing orange vector lines and points over a faded map](images/lab03-georeference-then-digitize.jpg)
+
+**Figure B.** The two operations, in the only order that works. Georeferencing pins the scan to
+real-world coordinates without changing its pixels; digitizing then draws new vector features off
+it. Digitize first and every feature you draw is in the wrong place, permanently.
+
 ## Spatial Considerations
 
 Every one of these is a decision you make, and every one of them changes your answer. Say in your
@@ -119,7 +131,8 @@ report what you chose and why.
   shows named features and section lines that are easier to match on an old sheet. The basemap is
   your control, so its accuracy is a ceiling on yours.
 - **How many control points, and where.** Three is the minimum for the default transformation and it
-  is not enough. Points bunched in the middle of the sheet leave the corners free to wander.
+  is not enough. Points bunched in the middle of the sheet leave the corners free to wander
+  (Figure C).
 - **Which transformation.** A first-order (affine) transformation can shift, scale, rotate and skew
   the whole sheet but keeps straight lines straight. Higher orders bend it. A spline forces the
   control points to match exactly and rubber-sheets everything between them.
@@ -127,6 +140,12 @@ report what you chose and why.
   inherit it, and every length and area you measure depends on it.
 - **What counts as "gone".** A road that moved fifty meters, a town that shrank, a lake that is
   smaller: you decide what qualifies, and you defend it.
+
+![Two copies of the same line-art town map. Left: five red control points clustered in one corner, and a semi-transparent orange copy of the map with a dashed outline that lines up at the cluster but swings away at the far corners, captioned "where the sheet actually lands". Right: eight red control points at the corners and edge midpoints, and the dashed orange outline lying exactly on the sheet, captioned "the sheet lands on its true outline"](images/lab03-control-point-spread.jpg)
+
+**Figure C.** Where the control points go matters more than how many there are. On the left, five
+points crowded into one corner pin that corner and leave the rest of the sheet free to swing; on
+the right, eight points spread to the corners and edges hold the whole sheet in place.
 
 ## Data
 
@@ -171,6 +190,13 @@ Apply the six metadata questions from the introductory course to your sheet befo
 > drawn in perspective from an imagined viewpoint, so scale changes continuously across the image
 > and no transformation will make it fit. They are wonderful documents and they will waste your
 > afternoon. Use a plan view, drawn looking straight down.
+
+![Side-by-side illustration of one town drawn two ways. Left, marked with a red X: a sepia bird's-eye view in oblique perspective, gabled cottages and a church steeple in three-quarter view with hills behind and a river with sailboats in front. Right, marked with a green check: the same town as a plan-view map drawn straight down, an orange street grid with navy building footprints, the river as a blue band, faint terrain lines, a north arrow and a small scale bar](images/lab03-plan-vs-birds-eye.jpg)
+
+**Figure D.** The same town, drawn two ways. The bird's-eye view on the left is in perspective, so
+its scale changes from the front of the picture to the back and no transformation can make it fit a
+map. The plan view on the right looks straight down at one scale, which is what georeferencing
+needs. Pick a sheet like the one on the right.
 
 ### Where to find a sheet
 
@@ -427,6 +453,13 @@ panel on the map.
 > reproduces its own inputs. It says nothing about the rest of the sheet. A high-order polynomial or
 > a spline can drive the total RMS to zero and distort the map badly everywhere in between. A small
 > number here is not a good result. It is a small number.
+
+![Scatter plot of twenty black dots shaped like a stream hydrograph, flow against time, with five of them marked as larger green control points and a red cubic spline that passes exactly through the five green points while clearly missing the peak and the recession, labeled "RMSE at the 5 control points = 0.0"](images/lab03-rmse-spline.svg)
+
+**Figure E.** What a zero RMS error can hide. Twenty observations, five chosen as control points,
+and a spline fitted through those five. The fit is exact at every control point, so the reported
+error is zero, and it misses most of the other fifteen. A georeferenced sheet behaves the same way:
+the error is measured only where you put the points.
 
 Work through the table once:
 
