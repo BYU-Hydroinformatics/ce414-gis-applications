@@ -24,7 +24,7 @@ Dr. Dan Ames
 <!-- Week 3, Tuesday. Part A is the concepts and the first raster model: what a raster is, map algebra, and NDVI end to end. Part B on Thursday takes the same model, makes its threshold a parameter, and spends most of the hour in ArcGIS Pro. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A<span class="updated">Last Updated: 2026-09-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A<span class="updated">Last Updated: 2026-09-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
