@@ -1,0 +1,6 @@
+# Site build dependencies, shared by local .venv and the Pages workflow.
+# MkDocs 2.0 drops the plugin system and breaks Material themes; stay on 1.x.
+mkdocs>=1.6,<2
+mkdocs-material>=9.7,<10
+mkdocs-github-admonitions-plugin>=0.1,<1
+mkdocs-glightbox>=0.5,<1

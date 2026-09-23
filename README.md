@@ -33,7 +33,7 @@ next and in what order.
 ## Working locally
 
 ```bash
-pip install mkdocs-material mkdocs-github-admonitions-plugin
+pip install -r requirements.txt
 mkdocs serve
 ```
 

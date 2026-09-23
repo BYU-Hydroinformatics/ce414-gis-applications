@@ -81,7 +81,7 @@ Those last two are worth reading in full before a large piece of work.
 ## How to build and check
 
 ```bash
-pip install mkdocs-material mkdocs-github-admonitions-plugin mkdocs-glightbox
+pip install -r requirements.txt
 mkdocs build --strict          # must pass; --strict catches broken nav and links
 mkdocs serve                   # local preview at :8000
 ```
