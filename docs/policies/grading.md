@@ -55,10 +55,19 @@ Regular attendance in class and lab sessions is critical. Some quiz and exam mat
 the book and is only presented in class, and the in-class activities are where the concepts get
 locked in.
 
-## Late work and regrades
+## Late work policy
 
-<!-- TODO(instructor): the syllabus does not state a late-work or regrade policy. Add one here, or
-     say explicitly that there is none. -->
+Lab assignments may be submitted late with a penalty of 10 % for each week late.
+
+The same rule lets you revise a lab. If you submit on time and score below 90 %, you may fix the
+problems and resubmit. The resubmission is graded as late work, so a corrected lab resubmitted
+within a week of the due date can raise your score to as much as 90 %.
+
+## AI grading disclaimer
+
+I may use AI tools to check your assignment against the grading rubric or to organize feedback
+for you. I do this only to improve the quality of the feedback you receive, and I personally
+review all AI-assisted grading and feedback before it reaches you.
 
 > [!NOTE]
 > Transcribed from the Fall 2026 Learning Suite syllabus on September 7, 2026. If this page and
