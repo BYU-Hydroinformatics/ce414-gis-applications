@@ -6,24 +6,16 @@ repo_name: BYU-Hydroinformatics/ce414-gis-applications
 
 theme:
   name: material
+  custom_dir: overrides
   favicon: assets/favicon.png
   features:
     - navigation.sections
     - navigation.top
     - navigation.footer
-    - toc.integrate
     - content.code.copy
+  # Light mode only: a single palette entry means no toggle and no following the OS setting.
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+    scheme: default
   icon:
     logo: material/layers-triple
 
@@ -32,6 +24,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/external-links.js
+  - javascripts/menu.js
 
 hooks:
   - hooks/unlisted_pages.py
@@ -59,8 +52,9 @@ markdown_extensions:
   - toc:
       permalink: true
 
-# The lab handouts and the final project are deliberately absent from nav: each is linked from the
-# week page it is due in, so the menu stays a short list of weeks.
+# There is no sidebar: this nav feeds the "Menu" dropdown in the header (overrides/partials/header.html)
+# and the previous/next footer links. The lab handouts and the final project are deliberately absent:
+# each is linked from the week page it is due in, so the menu stays a short list of weeks.
 validation:
   nav:
     omitted_files: ignore

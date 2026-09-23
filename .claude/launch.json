@@ -14,6 +14,25 @@
       "port": 8414
     },
     {
+      "name": "mkdocs-uv",
+      "runtimeExecutable": "/Users/danames/.local/bin/uvx",
+      "runtimeArgs": [
+        "-p",
+        "3.12",
+        "--with",
+        "mkdocs-material",
+        "--with",
+        "mkdocs-github-admonitions-plugin",
+        "--with",
+        "mkdocs-glightbox",
+        "mkdocs",
+        "serve",
+        "-a",
+        "127.0.0.1:8414"
+      ],
+      "port": 8414
+    },
+    {
       "name": "mkdocs-pro",
       "runtimeExecutable": "C:/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe",
       "runtimeArgs": [
