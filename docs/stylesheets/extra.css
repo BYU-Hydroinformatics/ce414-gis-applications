@@ -100,3 +100,45 @@
   white-space: nowrap;
   vertical-align: middle;
 }
+
+/* Week pages: four cards, each with its own icon and color (tools/build_schedule.py, CARDS). */
+.md-typeset .week-card {
+  --card-color: #002e5d;
+  margin: 1.2rem 0;
+  padding: 0.2rem 1.2rem 0.6rem;
+  border: 1px solid #dde3ea;
+  border-left: 0.3rem solid var(--card-color);
+  border-radius: 0.3rem;
+  background: #fff;
+}
+.md-typeset .week-card--slides   { --card-color: #0062b8; }
+.md-typeset .week-card--practice { --card-color: #1b8a5a; }
+.md-typeset .week-card--lab      { --card-color: #c8641a; }
+.md-typeset .week-card--quiz     { --card-color: #7a3fa0; }
+.md-typeset .week-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.8rem 0 0.6rem;
+  font-weight: 500;
+  color: var(--card-color);
+}
+.md-typeset .week-card h2 .twemoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--card-color);
+}
+.md-typeset .week-card h2 .twemoji svg {
+  width: 1.3rem;
+  height: 1.3rem;
+  max-height: none;
+  fill: #fff;
+}
+.md-typeset .week-card > p > em:only-child {
+  color: var(--md-default-fg-color--light);
+}

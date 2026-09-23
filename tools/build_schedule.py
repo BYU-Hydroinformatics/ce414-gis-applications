@@ -169,6 +169,27 @@ PRACTICE = {
           "Eight questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, and what differential correction cannot remove.")],
 }
 
+# Weeks rendered in the simplified four-card layout (see four_card_page). Being piloted on Weeks 1
+# and 2; the rest keep the older layout until the design is settled.
+FOUR_CARD_WEEKS = {1, 2}
+
+# Extra lines for a week's Presentation Slides card, such as the data an in-lecture exercise uses.
+SLIDE_EXTRAS = {
+    2: ["**Data for the Part A exercise:** [week02-cities-rivers.zip](../data/week02-cities-rivers.zip) (under 1 MB) — "
+        "U.S. cities, major rivers and a country outline for the conterminous United States, from Natural Earth "
+        "(1:10m, public domain), in WGS 1984. Project, buffer the rivers 10 miles, intersect, and count; the "
+        "answer the slides quote is 256 of 678 cities."],
+}
+
+# The four cards every week page carries, in order: (key, heading, icon, text when the week has none).
+# Icons are Material Design icons rendered by pymdownx.emoji; each card's color is set in extra.css.
+CARDS = [
+    ("slides",   "Presentation Slides", "material-presentation-play",     "No slides this week."),
+    ("practice", "In-Class Practice",   "material-account-group",         "No in-class practice this week."),
+    ("lab",      "Lab Assignment",      "material-flask",                 "No lab this week."),
+    ("quiz",     "Reading Quiz",        "material-book-open-page-variant", "No reading quiz this week."),
+]
+
 def deck_url(w, slug): return f"{SITE}/slides/week-{w:02d}/{slug}.html"
 
 def lab_link(n, rel="../assignments"):
@@ -234,7 +255,57 @@ def practice_section(w, rel=".."):
     lines.append("")
     return lines
 
+def four_card_page(w, decks):
+    """The simplified week page: the same four cards every week — slides, in-class practice, lab,
+    reading quiz — each with its own icon. A card with nothing in it says so rather than vanishing,
+    so every week page has the same shape."""
+    d = DUE.get(w, {})
+    body = {k: [] for k, *_ in CARDS}
+
+    for _, slug, title, desc, day in decks:
+        when = f"**{DAY_NAME[day.rstrip('?')]}** — " if day else ""
+        body["slides"].append(f"- {when}[{title}]({deck_url(w, slug)}) — {desc}")
+    if decks:
+        body["slides"] += ["", "Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes."]
+    for extra in SLIDE_EXTRAS.get(w, []):
+        body["slides"] += ["", extra]
+
+    activities = [(what, when) for what, when in d.get("other", []) if what.startswith("In-class activity")]
+    for what, when in activities:
+        name = what.split(":", 1)[1].strip()
+        name = name[:1].upper() + name[1:]
+        body["practice"].append(f"- **{name}** (graded, {ACTIVITY_PTS} points) — {when}.")
+    if w in PRACTICE:
+        if activities:
+            body["practice"].append("")
+        body["practice"].append("Self-check quizzes — not graded; open them on a phone or laptop as often as you like:")
+        body["practice"].append("")
+        for slug, title, desc in PRACTICE[w]:
+            body["practice"].append(f"- [{title}](../quizzes/{slug}/index.html) — {desc}")
+
+    if d.get("lab"):
+        body["lab"].append(f"{lab_link(d['lab'])}")
+        body["lab"] += ["", f"Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — {LAB_PTS} points."]
+
+    if d.get("quiz"):
+        n, title = d["quiz"]
+        if d.get("reading"):
+            body["quiz"] += [f"Read {d['reading']} of {TEXT}.", ""]
+        body["quiz"].append(f"**Quiz {n} — {title}** on Learning Suite: open book, done independently. "
+                            f"Due **Saturday at 11:59 pm** — {QUIZ_PTS} points.")
+
+    lines = [f"# Week {w}: {WEEK_TITLES[w]}", ""]
+    for key, heading, icon, empty in CARDS:
+        lines += [f'<div class="week-card week-card--{key}" markdown>', "",
+                  f"## :{icon}: {heading}", ""]
+        lines += body[key] or [f"*{empty}*"]
+        lines += ["", "</div>", ""]
+    lines += ["> [!NOTE]", "> If Learning Suite and this page disagree, Learning Suite wins.", ""]
+    return "\n".join(lines)
+
 def week_page(w, decks):
+    if w in FOUR_CARD_WEEKS:
+        return four_card_page(w, decks)
     lines = [f"# Week {w}: {WEEK_TITLES[w]}", ""]
     lines += slides_section(decks)
     if w in NO_DECK:
