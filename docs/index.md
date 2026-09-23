@@ -97,7 +97,7 @@ most time across all of them.
 
 Each week has its own page, and everything for that week is on it: the Tuesday and Thursday lecture
 slides, the reading and quiz, the in-class activities, and the lab that is due. Start from the
-[Schedule](schedule/README.md) or pick a week in the sidebar. On any deck, press <kbd>F</kbd> for
+[Schedule](schedule/README.md) or pick a week from the Schedule menu at the top of the page. On any deck, press <kbd>F</kbd> for
 fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 The lab handouts are linked from the week each lab is due. The

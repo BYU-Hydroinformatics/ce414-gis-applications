@@ -47,7 +47,7 @@ A lab that was wrong in Word should not be wrong in Markdown.
 6a. **`docs/schedule/` is generated.** `tools/build_schedule.py` rewrites every `docs/schedule/week-NN.md`,
    `docs/schedule/README.md`, and the Schedule section of `mkdocs.yml` from its `DECKS` and `DUE`
    tables. Edit the tables and re-run the script; hand edits to those files are overwritten (notes
-   survive only below a `<!-- notes -->` marker in a week page). The sidebar is organized one page
+   survive only below a `<!-- notes -->` marker in a week page). The Schedule menu in the header lists one page
    per week — each week's page links that week's Tuesday and Thursday lecture decks, the lab due,
    and study guides once they exist — not by a separate "Lectures" menu.
 7. **Never name an instructor when referring to another class session.** Instructors change between

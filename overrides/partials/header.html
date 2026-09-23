@@ -1,7 +1,7 @@
 {#-
   Override of Material's header: the left-side navigation drawer is gone, and its hamburger button
-  is replaced by a single "Menu" dropdown built from the nav in mkdocs.yml (Course pages, then the
-  schedule weeks).
+  is replaced by one dropdown per top-level section of the nav in mkdocs.yml ("Course Info" and
+  "Schedule").
 -#}
 {% set class = "md-header" %}
 {% if "navigation.tabs.sticky" in features %}
@@ -32,25 +32,20 @@
         </div>
       </div>
     </div>
-    <details class="ce-menu">
-      <summary class="ce-menu__button">Menu</summary>
-      <div class="ce-menu__panel">
-        {% for section in nav %}
-          {% if section.children %}
-            <div class="ce-menu__section">
-              <div class="ce-menu__heading">{{ section.title }}</div>
-              <ul>
-                {% for item in section.children %}
-                  {% if item.url is defined %}
-                    <li><a href="{{ item.url | url }}"{% if item.active %} class="ce-menu__active" aria-current="page"{% endif %}>{{ item.title }}</a></li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </details>
+    {% for section in nav %}
+      {% if section.children %}
+        <details class="ce-menu">
+          <summary class="ce-menu__button">{{ section.title }}</summary>
+          <ul class="ce-menu__panel">
+            {% for item in section.children %}
+              {% if item.url is defined %}
+                <li><a href="{{ item.url | url }}"{% if item.active %} class="ce-menu__active" aria-current="page"{% endif %}>{{ item.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </details>
+      {% endif %}
+    {% endfor %}
     {% if config.theme.palette %}
       {% if not config.theme.palette is mapping %}
         {% include "partials/palette.html" %}

@@ -1,4 +1,10 @@
-// Close the header "Menu" dropdown on a click outside it or on Escape.
+// Header dropdowns: only one open at a time, and close on a click outside them or on Escape.
+document.addEventListener("toggle", function (e) {
+  if (!e.target.matches || !e.target.matches("details.ce-menu") || !e.target.open) return;
+  document.querySelectorAll("details.ce-menu[open]").forEach(function (d) {
+    if (d !== e.target) d.removeAttribute("open");
+  });
+}, true);
 document.addEventListener("click", function (e) {
   document.querySelectorAll("details.ce-menu[open]").forEach(function (d) {
     if (!d.contains(e.target)) d.removeAttribute("open");

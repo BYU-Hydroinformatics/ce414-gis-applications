@@ -64,7 +64,7 @@ instead, so image generation can be run as a separate, visible step. Browser cap
 had their tab strips cropped for the same privacy reason as the labs.
 
 `docs/schedule/` is generated: edit the `DECKS`/`DUE` tables in `tools/build_schedule.py` and re-run
-it rather than hand-editing the week pages or the Schedule nav. The site's sidebar is organized one
+it rather than hand-editing the week pages or the Schedule nav. The site's Schedule menu lists one
 page per week — Week 1 through Week 15 — each linking that week's Tuesday and Thursday lecture
 decks, the lab due, and study guides once they exist; there is no separate top-level "Lectures"
 menu (restructured September 2026).

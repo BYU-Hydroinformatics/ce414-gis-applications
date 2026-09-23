@@ -338,7 +338,7 @@ then promote.
    `README.md` with the draft and `git rm` the draft; delete the images only the old page used and
    note the deletions in the migration notes; make sure nothing student-visible references a
    deleted image or the draft; update `ROADMAP.md`. Lab pages do **not** go in `mkdocs.yml` — the
-   sidebar is a list of weeks, and a lab reaches students through the `LAB_PAGE`/`DUE` tables in
+   Schedule menu is a list of weeks, and a lab reaches students through the `LAB_PAGE`/`DUE` tables in
    `tools/build_schedule.py`, which link it from the week page it is due in. Only a page that
    belongs to the whole course, like `docs/arcgis-tips.md`, goes in the nav.
    Then confirm: rubric rows sum to ten and the total to fifty; no bare "Pro"; no "old version"

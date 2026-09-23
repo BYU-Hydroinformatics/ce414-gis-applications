@@ -52,7 +52,7 @@ markdown_extensions:
   - toc:
       permalink: true
 
-# There is no sidebar: this nav feeds the "Menu" dropdown in the header (overrides/partials/header.html)
+# There are no sidebars: each top-level section of this nav becomes a dropdown in the header (overrides/partials/header.html)
 # and the previous/next footer links. The lab handouts and the final project are deliberately absent:
 # each is linked from the week page it is due in, so the menu stays a short list of weeks.
 validation:
@@ -60,7 +60,7 @@ validation:
     omitted_files: ignore
 
 nav:
-  - Course:
+  - Course Info:
       - Overview: index.md
       - ArcGIS Tips and Reminders: arcgis-tips.md
       - Grading: policies/grading.md
