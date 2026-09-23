@@ -72,9 +72,9 @@ DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
 # runs to the end, and the page is not in the site menu — these pointers are how students reach it.
 FINAL_PROJECT_WEEKS = (12, 13, 14, 15)
 
-# Weeks with no new slide deck still get a page, with this description of what happens in class.
+# Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    7:  "No new deck. Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, "
+    7:  "Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, "
         "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. "
         "Thursday introduces Lab 6 — Lake Depth Explorer and the ModelBuilder idea it is built on: a model that "
         "**loops** over a list of water-surface elevations instead of being run once per elevation.",
@@ -169,10 +169,6 @@ PRACTICE = {
           "Eight questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, and what differential correction cannot remove.")],
 }
 
-# Weeks rendered in the simplified four-card layout (see four_card_page). Being piloted on Weeks 1
-# and 2; the rest keep the older layout until the design is settled.
-FOUR_CARD_WEEKS = {1, 2}
-
 # Extra lines for a week's Presentation Slides card, such as the data an in-lecture exercise uses.
 SLIDE_EXTRAS = {
     2: ["**Data for the Part A exercise:** [week02-cities-rivers.zip](../data/week02-cities-rivers.zip) (under 1 MB) — "
@@ -196,96 +192,44 @@ def lab_link(n, rel="../assignments"):
     title = f"Lab {n} — {LABS[n]}"
     return f"[{title}]({rel}/lab-{n:02d}/README.md)" if n in LAB_PAGE else f"{title} (on Learning Suite)"
 
-def due_section(w, rel="../assignments"):
-    d = DUE.get(w)
-    if not d: return []
-    lines = ["## Due this week", "",
-             "Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.", "",
-             "| What | Details |", "| --- | --- |"]
-    if d["reading"]:
-        lines.append(f"| Reading | {d['reading']} of {TEXT} |")
-    if d["quiz"]:
-        n, title = d["quiz"]
-        lines.append(f"| Quiz {n} | *{title}* — open book, on Learning Suite, done independently — {QUIZ_PTS} points |")
-    if d["lab"]:
-        lines.append(f"| Lab {d['lab']} | {lab_link(d['lab'], rel)} — one PDF report on Learning Suite — {LAB_PTS} points |")
-    for what, when in d["other"]:
-        pts = f" — {ACTIVITY_PTS} points" if what.startswith("In-class activity") else ""
-        lines.append(f"| {what} | {when}{pts} |")
-    if not any([d["reading"], d["quiz"], d["lab"], d["other"]]):
-        lines.append("| Nothing is due this week | Work on the final project |")
-    lines.append("")
-    return lines
+def is_activity(what): return what.startswith("In-class activity")
 
-def slides_section(decks):
-    """Render this week's lecture(s). Tuesday/Thursday headings only when every deck this week has
-    a distinct, known day; otherwise a plain list — correct for a week where one deck spans both
-    class days, and honest about a week where the split just isn't confirmed yet."""
-    if not decks:
-        return []
-    lines = ["## Slides", ""]
-    bases = [d[4].rstrip("?") if d[4] else None for d in decks]
-    if all(bases) and len(set(bases)) == len(decks):
-        for day in ("Tue", "Thu"):
-            d = next((x for x in decks if x[4] and x[4].rstrip("?") == day), None)
-            if not d:
-                continue
-            w, slug, title, desc, deck_day = d
-            lines += [f"### {DAY_NAME[day]}", "", f"[{title}]({deck_url(w, slug)}) — {desc}"]
-            if deck_day.endswith("?"):
-                lines += ["", "*(day inferred from the Learning Suite migration notes, not yet confirmed — see "
-                               "`LEARNING_SUITE_MIGRATION_PLAN.md`)*"]
-            lines.append("")
-    else:
-        for w, slug, title, desc, day in decks:
-            prefix = f"{DAY_NAME[day.rstrip('?')]} — " if day else ""
-            lines.append(f"- {prefix}[{title}]({deck_url(w, slug)}) — {desc}")
-        lines.append("")
-    lines += ["Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view "
-              "with speaker notes.", ""]
-    return lines
-
-def practice_section(w, rel=".."):
-    if w not in PRACTICE:
-        return []
-    lines = ["## Practice", "",
-             "Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.", ""]
-    for slug, title, desc in PRACTICE[w]:
-        lines.append(f"- [{title}]({rel}/quizzes/{slug}/index.html) — {desc}")
-    lines.append("")
-    return lines
-
-def four_card_page(w, decks):
-    """The simplified week page: the same four cards every week — slides, in-class practice, lab,
-    reading quiz — each with its own icon. A card with nothing in it says so rather than vanishing,
-    so every week page has the same shape."""
+def week_page(w, decks):
+    """Every week page has the same shape: an optional callout for exams and final-project deadlines,
+    then four cards — slides, in-class practice, lab, reading quiz — each with its own icon. A card
+    with nothing in it says so rather than vanishing."""
     d = DUE.get(w, {})
     body = {k: [] for k, *_ in CARDS}
 
     for _, slug, title, desc, day in decks:
-        when = f"**{DAY_NAME[day.rstrip('?')]}** — " if day else ""
+        when = ""
+        if day:
+            when = f"**{DAY_NAME[day.rstrip('?')]}**" + (" (day not yet confirmed)" if day.endswith("?") else "") + " — "
         body["slides"].append(f"- {when}[{title}]({deck_url(w, slug)}) — {desc}")
     if decks:
         body["slides"] += ["", "Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes."]
     for extra in SLIDE_EXTRAS.get(w, []):
         body["slides"] += ["", extra]
 
-    activities = [(what, when) for what, when in d.get("other", []) if what.startswith("In-class activity")]
-    for what, when in activities:
-        name = what.split(":", 1)[1].strip()
-        name = name[:1].upper() + name[1:]
-        body["practice"].append(f"- **{name}** (graded, {ACTIVITY_PTS} points) — {when}.")
+    # A week with no deck says what happens in class instead.
+    if w in NO_DECK:
+        body["practice"].append(NO_DECK[w])
+    for what, when in d.get("other", []):
+        if is_activity(what):
+            name = what.split(":", 1)[1].strip()
+            name = name[:1].upper() + name[1:]
+            body["practice"] += ([""] if body["practice"] and not body["practice"][-1].startswith("- ") else [])
+            body["practice"].append(f"- **{name}** (graded, {ACTIVITY_PTS} points) — {when}.")
     if w in PRACTICE:
-        if activities:
+        if body["practice"]:
             body["practice"].append("")
-        body["practice"].append("Self-check quizzes — not graded; open them on a phone or laptop as often as you like:")
-        body["practice"].append("")
+        body["practice"] += ["Self-check quizzes — not graded; open them on a phone or laptop as often as you like:", ""]
         for slug, title, desc in PRACTICE[w]:
             body["practice"].append(f"- [{title}](../quizzes/{slug}/index.html) — {desc}")
 
     if d.get("lab"):
-        body["lab"].append(f"{lab_link(d['lab'])}")
-        body["lab"] += ["", f"Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — {LAB_PTS} points."]
+        body["lab"] += [lab_link(d["lab"]), "",
+                        f"Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — {LAB_PTS} points."]
 
     if d.get("quiz"):
         n, title = d["quiz"]
@@ -295,29 +239,23 @@ def four_card_page(w, decks):
                             f"Due **Saturday at 11:59 pm** — {QUIZ_PTS} points.")
 
     lines = [f"# Week {w}: {WEEK_TITLES[w]}", ""]
+
+    # Exams and final-project deadlines fit none of the four cards; they go in a callout at the top.
+    days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+    also = [f"- {what} — {'due ' if when.startswith(days) else ''}{when}."
+            for what, when in d.get("other", []) if not is_activity(what)]
+    if w in FINAL_PROJECT_WEEKS:
+        also.append("- See the [Final Project](../assignments/final-project.md) page for the requirements, "
+                    "the proposal meeting, the milestones, and how the project is scored.")
+    if also:
+        lines += ["> [!IMPORTANT] Also this week"] + [f"> {x}" for x in also] + [""]
+
     for key, heading, icon, empty in CARDS:
         lines += [f'<div class="week-card week-card--{key}" markdown>', "",
                   f"## :{icon}: {heading}", ""]
         lines += body[key] or [f"*{empty}*"]
         lines += ["", "</div>", ""]
     lines += ["> [!NOTE]", "> If you see a discrepancy between Learning Suite and this page, please let me know so I can rectify it.", ""]
-    return "\n".join(lines)
-
-def week_page(w, decks):
-    if w in FOUR_CARD_WEEKS:
-        return four_card_page(w, decks)
-    lines = [f"# Week {w}: {WEEK_TITLES[w]}", ""]
-    lines += slides_section(decks)
-    if w in NO_DECK:
-        lines += ["## In class", "", NO_DECK[w], ""]
-    lines += practice_section(w)
-    lines += due_section(w)
-    if w in FINAL_PROJECT_WEEKS:
-        lines += ["## Final project", "",
-                  "See the [Final Project](../assignments/final-project.md) page for the requirements, "
-                  "the proposal meeting, the milestones, and how the project is scored.", ""]
-    lines += ["> [!NOTE]", "> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they",
-              "> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.", ""]
     return "\n".join(lines)
 
 def index_page(weeks):

@@ -1,21 +1,39 @@
 # Week 13: Final Project Work
 
-## In class
+> [!IMPORTANT] Also this week
+> - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+
+<div class="week-card week-card--slides" markdown>
+
+## :material-presentation-play: Presentation Slides
+
+*No slides this week.*
+
+</div>
+
+<div class="week-card week-card--practice" markdown>
+
+## :material-account-group: In-Class Practice
 
 Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.
 
-## Due this week
+</div>
 
-Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
+<div class="week-card week-card--lab" markdown>
 
-| What | Details |
-| --- | --- |
-| Nothing is due this week | Work on the final project |
+## :material-flask: Lab Assignment
 
-## Final project
+*No lab this week.*
 
-See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+</div>
+
+<div class="week-card week-card--quiz" markdown>
+
+## :material-book-open-page-variant: Reading Quiz
+
+*No reading quiz this week.*
+
+</div>
 
 > [!NOTE]
-> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
-> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.
+> If you see a discrepancy between Learning Suite and this page, please let me know so I can rectify it.

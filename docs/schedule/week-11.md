@@ -1,34 +1,46 @@
 # Week 11: Least Cost Path and Coordinate Systems
 
-## Slides
+<div class="week-card week-card--slides" markdown>
 
-### Tuesday
+## :material-presentation-play: Presentation Slides
 
-[Least Cost Path Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path.html) — Cost surfaces and the cheapest route across them, with a power-line corridor as the example.
+- **Tuesday** — [Least Cost Path Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path.html) — Cost surfaces and the cheapest route across them, with a power-line corridor as the example.
+- **Thursday** — [Coordinate Systems and Projections](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/coordinate-systems-projections.html) — Datums, projections, and coordinate systems as decisions: distortion, units, and choosing a CRS for analysis.
 
-### Thursday
+Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
-[Coordinate Systems and Projections](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/coordinate-systems-projections.html) — Datums, projections, and coordinate systems as decisions: distortion, units, and choosing a CRS for analysis.
+</div>
 
-Navigate with the arrow keys; press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
+<div class="week-card week-card--practice" markdown>
 
-## Practice
+## :material-account-group: In-Class Practice
 
-Not graded, and nothing to hand in — open it on a phone or a laptop as many times as you like.
+Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Eight questions on cost surfaces and the cheapest route across them, and why the cheapest route is usually not the shortest one.
 - [Projections and Datums](../quizzes/coordinate-systems/index.html) — Eight questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting.
 
-## Due this week
+</div>
 
-Reading quizzes and labs are due **Saturday at 11:59 pm**. Other items say when.
+<div class="week-card week-card--lab" markdown>
 
-| What | Details |
-| --- | --- |
-| Reading | Chapter 3 of *GIS Fundamentals*, 7th edition (Bolstad) |
-| Quiz 10 | *Projections and Coordinate Systems* — open book, on Learning Suite, done independently — 20 points |
-| Lab 10 | [Lab 10 — Wind Farm Site Selection](../assignments/lab-10/README.md) — one PDF report on Learning Suite — 50 points |
+## :material-flask: Lab Assignment
+
+[Lab 10 — Wind Farm Site Selection](../assignments/lab-10/README.md)
+
+Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+
+</div>
+
+<div class="week-card week-card--quiz" markdown>
+
+## :material-book-open-page-variant: Reading Quiz
+
+Read Chapter 3 of *GIS Fundamentals*, 7th edition (Bolstad).
+
+**Quiz 10 — Projections and Coordinate Systems** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+
+</div>
 
 > [!NOTE]
-> Deadlines are from the Fall 2026 Learning Suite syllabus and are stated by week number so they
-> survive re-offering. If Learning Suite and this page disagree, Learning Suite wins.
+> If you see a discrepancy between Learning Suite and this page, please let me know so I can rectify it.
