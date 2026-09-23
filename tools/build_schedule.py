@@ -300,7 +300,7 @@ def four_card_page(w, decks):
                   f"## :{icon}: {heading}", ""]
         lines += body[key] or [f"*{empty}*"]
         lines += ["", "</div>", ""]
-    lines += ["> [!NOTE]", "> If Learning Suite and this page disagree, Learning Suite wins.", ""]
+    lines += ["> [!NOTE]", "> If you see a discrepancy between Learning Suite and this page, please let me know so I can rectify it.", ""]
     return "\n".join(lines)
 
 def week_page(w, decks):

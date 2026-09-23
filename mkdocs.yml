@@ -28,6 +28,7 @@ extra_javascript:
 
 hooks:
   - hooks/unlisted_pages.py
+  - hooks/cache_bust.py
 
 plugins:
   - search

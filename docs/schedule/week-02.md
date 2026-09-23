@@ -47,4 +47,4 @@ Read Chapter 13 of *GIS Fundamentals*, 7th edition (Bolstad).
 </div>
 
 > [!NOTE]
-> If Learning Suite and this page disagree, Learning Suite wins.
+> If you see a discrepancy between Learning Suite and this page, please let me know so I can rectify it.
