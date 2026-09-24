@@ -3,6 +3,9 @@
 **For:** the machine with ArcGIS Pro. **Deck:** `slides/week-04/remote-sensing.md`.
 **Written:** 2026-09-23, the day before the lecture.
 
+A Claude session on the ArcGIS Pro machine should start with
+`tools/week04-windows-agent-handoff.md`, which says how to run this plan there.
+
 The deck can be taught as it stands. Every item below replaces a stand-in with a real ArcGIS Pro
 capture. Each slide it touches carries a `TODO(instructor)` note that points back to this file.
 Save captures into `slides/week-04/images/` under the names given, then swap the references in the

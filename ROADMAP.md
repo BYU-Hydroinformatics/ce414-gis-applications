@@ -258,6 +258,11 @@ first attempt stalled at the Citrix door, and the Mac-side capture helper are in
 [`tools/screenshot-verification-handoff.md`](tools/screenshot-verification-handoff.md) and
 `tools/capture_citrix.py`. Read the handoff before starting any screenshot session.
 
+**Week 4 remote-sensing deck (Sept 23, 2026):** ArcGIS Pro captures still owed for the MODIS band
+slides and the four band-split slides. The Windows ArcGIS Pro session starts at
+[`tools/week04-windows-agent-handoff.md`](tools/week04-windows-agent-handoff.md); the checklist is
+[`tools/week04-arcgis-capture-plan.md`](tools/week04-arcgis-capture-plan.md).
+
 ## Conventions
 
 - One folder per lab: `docs/assignments/lab-NN/README.md` + `images/`. Nothing references an image
