@@ -730,7 +730,7 @@ Next week the sensor points at the ground and measures **distance** instead of b
 <div class="columns">
 <div>
 
-Eight questions on what the sensor actually measured. **Scan the code**, or open the link below.
+Eight questions on what the sensor measured and what satellites trade off. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on

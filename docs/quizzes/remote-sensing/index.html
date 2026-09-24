@@ -6,7 +6,7 @@
   <title>CE 414 — Light and Bands</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the electromagnetic spectrum, what a band is, and whether a sensor measured reflected light or emitted heat.">
+  <meta name="description" content="CE 414 in-class quiz: the electromagnetic spectrum, what a band is, whether a sensor measured reflected light or emitted heat, and what satellites trade off.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -17,8 +17,8 @@ CE414Quiz.start({
   title: "Light and Bands",
   subtitle: "CE 414 &middot; Week 4 &mdash; Remote Sensing<br>" +
             "Eight questions on where energy sits on the spectrum, what a <strong>band</strong> " +
-            "really is, and whether the sensor measured <strong>reflected</strong> light or " +
-            "<strong>emitted</strong> heat.",
+            "really is, whether the sensor measured <strong>reflected</strong> light or " +
+            "<strong>emitted</strong> heat, and what <strong>satellites</strong> trade off.",
   badge: "Remote sensing",
   deckUrl: "../../slides/week-04/remote-sensing.html",
   questions: [
@@ -35,18 +35,6 @@ CE414Quiz.start({
       explanation: "Reflected near-infrared is sunlight bouncing off a surface, exactly like visible light — it is not heat. Thermal infrared, farther along the spectrum, is energy a surface emits because of its own temperature. Plants are bright in the near-infrared because leaves reflect it, not because they are warm."
     },
     {
-      prompt: "Start at visible red and move toward longer wavelengths. Which order is right?",
-      badge: "The spectrum",
-      options: [
-        "Thermal infrared, then near-infrared, then ultraviolet",
-        "Ultraviolet, then near-infrared, then thermal infrared",
-        "Near-infrared, then thermal infrared, then microwaves",
-        "Microwaves, then X-rays, then near-infrared"
-      ],
-      answer: "Near-infrared, then thermal infrared, then microwaves",
-      explanation: "Just longer than red sits the near-infrared, then thermal infrared and far infrared, then microwaves and radar, then radio and TV. Ultraviolet, X-rays and gamma rays lie on the other side of visible light — shorter than violet, not longer than red."
-    },
-    {
       prompt: "The band choices on real satellite sensors look arbitrary until you put the solar irradiance curve behind them. What decides them?",
       detail: "The sea-level curve is notched wherever ozone, oxygen, water vapor and carbon dioxide absorb.",
       badge: "Atmospheric windows",
@@ -58,18 +46,6 @@ CE414Quiz.start({
       ],
       answer: "The bands sit in the gaps between the absorption notches",
       explanation: "You cannot measure a wavelength the atmosphere has already absorbed, so sensors are built for the atmospheric windows between the notches. The curve is why an apparently odd list of bands is actually the only list available."
-    },
-    {
-      prompt: "Two hexadecimal digits per channel give 256 values of red, 256 of green and 256 of blue. Why is that enough?",
-      badge: "Digital images",
-      options: [
-        "About 16.8 million colors — far more than the eye can resolve",
-        "Exactly as many colors as the eye can resolve, with none to spare",
-        "Only 256 colors, which is all that a raster cell can store",
-        "Hexadecimal has no upper limit, so it covers every color"
-      ],
-      answer: "About 16.8 million colors — far more than the eye can resolve",
-      explanation: "256 × 256 × 256 = 16,777,216 combinations, while the working figure for human color discrimination is about a million — three types of cone cell at roughly 100 shades each. Neighboring swatches in the hex color grid differ by one step in one channel, and most of those steps are invisible."
     },
     {
       prompt: "One scene is shown one band at a time. The blue band looks hazier than the red or the green. Why?",
@@ -84,6 +60,18 @@ CE414Quiz.start({
       explanation: "All three bands are the same scene at the same instant; what differs is how each wavelength behaves. Blue scatters most on the way through the atmosphere, so the blue band carries more haze and less surface contrast than the others."
     },
     {
+      prompt: "Landsat 8 records each band with 12 bits instead of the 8 bits behind a hex color. What does that change?",
+      badge: "Radiometric resolution",
+      options: [
+        "4,096 brightness levels per band instead of 256",
+        "Pixels twelve times smaller on the ground",
+        "Twelve bands instead of the three in a photo",
+        "A revisit every 12 days instead of every 16"
+      ],
+      answer: "4,096 brightness levels per band instead of 256",
+      explanation: "Eight bits is two hex digits, 00 to FF, or 256 levels. Twelve bits is 2 multiplied by itself twelve times, or 4,096 levels, so Landsat 8 can tell apart surfaces whose brightness differs too little for an 8-bit image. That is radiometric resolution. Pixel size, number of bands and revisit are the other three resolutions, and bit depth changes none of them."
+    },
+    {
       prompt: "What makes an image a false-color image?",
       badge: "False color",
       options: [
@@ -96,16 +84,28 @@ CE414Quiz.start({
       explanation: "Stack the red, green and blue bands into their matching display channels and you get a natural-color image. Put some other band into the red channel instead and the same scene comes out false color. The colors are band assignments, not what your eye would have seen."
     },
     {
-      prompt: "What separates hyperspectral imagery from multispectral imagery?",
-      badge: "Multispectral or hyperspectral",
+      prompt: "A weather satellite images a hurricane every few minutes. Landsat comes back to the same place only every 8 days. Why the difference?",
+      badge: "Orbits",
       options: [
-        "Smaller pixels, so you see finer detail on the ground",
-        "Hundreds of narrow bands, not a handful of wide ones",
-        "It measures emitted heat, not reflected sunlight",
-        "It stores cell values in hexadecimal, not as numbers"
+        "The weather satellite program has more satellites in orbit",
+        "One stays above one spot; Landsat sweeps Earth in strips",
+        "Larger pixels let the weather satellite scan the scene faster",
+        "Landsat waits for a clear sky before it takes a picture"
       ],
-      answer: "Hundreds of narrow bands, not a handful of wide ones",
-      explanation: "The difference is spectral detail, not pixel size. Hyperspectral gives you a full spectrum for every pixel rather than a few samples, so a pixel can be matched against the spectral shape of soil, vegetation or water — and those cubes usually need dedicated software rather than a general-purpose GIS."
+      answer: "One stays above one spot; Landsat sweeps Earth in strips",
+      explanation: "GOES is geostationary: 35,786 km above the equator, it orbits once a day and so stays over the same spot, watching a whole hemisphere continuously. Landsat is in a low, sun-synchronous polar orbit about 700 km up, which gives sharp 30 m pixels but covers the planet one strip at a time, so each place waits days for the next pass."
+    },
+    {
+      prompt: "After a storm, an engineer needs to know whether one stadium's roof was torn off. Which source fits the job?",
+      badge: "Trade-offs",
+      options: [
+        "GOES, because it images the storm every few minutes",
+        "MODIS, because it covers the whole region every day",
+        "A commercial satellite with pixels of about 0.3 m",
+        "Landsat, because its record goes back to 1972"
+      ],
+      answer: "A commercial satellite with pixels of about 0.3 m",
+      explanation: "A stadium roof is a few hundred meters across and the damage is much smaller. With 30 m Landsat pixels, the roof is only a few pixels across; with MODIS or GOES pixels of hundreds of meters to kilometers, it is less than one. Sub-meter commercial imagery shows the torn membrane, as in the Superdome image, but it covers a small area on request. Every satellite trades detail against coverage and revisit."
     },
     {
       prompt: "In the enhanced infrared view of Hurricane Katrina, the eyewall stands out sharply. What is the sensor measuring, and what does the brightest area mean?",
