@@ -1,0 +1,18 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 190' width='900' height='190' font-family='Avenir Next, Segoe UI, Helvetica, Arial, sans-serif'>
+<rect width='900' height='190' fill='none'/>
+<defs><linearGradient id='vis' x1='0' x2='1' y1='0' y2='0'><stop offset='0.000' stop-color='#aa00ff'/><stop offset='0.033' stop-color='#7f00ff'/><stop offset='0.067' stop-color='#5500ff'/><stop offset='0.100' stop-color='#2a00ff'/><stop offset='0.133' stop-color='#0000ff'/><stop offset='0.167' stop-color='#0033ff'/><stop offset='0.200' stop-color='#0066ff'/><stop offset='0.233' stop-color='#0099ff'/><stop offset='0.267' stop-color='#00ccff'/><stop offset='0.300' stop-color='#00ffff'/><stop offset='0.333' stop-color='#00ff7f'/><stop offset='0.367' stop-color='#00ff00'/><stop offset='0.400' stop-color='#24ff00'/><stop offset='0.433' stop-color='#48ff00'/><stop offset='0.467' stop-color='#6dff00'/><stop offset='0.500' stop-color='#91ff00'/><stop offset='0.533' stop-color='#b6ff00'/><stop offset='0.567' stop-color='#daff00'/><stop offset='0.600' stop-color='#ffff00'/><stop offset='0.633' stop-color='#ffd700'/><stop offset='0.667' stop-color='#ffb000'/><stop offset='0.700' stop-color='#ff8900'/><stop offset='0.733' stop-color='#ff6200'/><stop offset='0.767' stop-color='#ff3a00'/><stop offset='0.800' stop-color='#ff1300'/><stop offset='0.833' stop-color='#ff0000'/><stop offset='0.867' stop-color='#ff0000'/><stop offset='0.900' stop-color='#ff0000'/><stop offset='0.933' stop-color='#ff0000'/><stop offset='0.967' stop-color='#ff0000'/><stop offset='1.000' stop-color='#ff0000'/></linearGradient></defs>
+<rect x='60' y='95' width='780' height='34' fill='url(#vis)'/>
+<text x='60.0' y='155' font-size='18' fill='#c9d3df' text-anchor='middle'>400 nm</text>
+<text x='320.0' y='155' font-size='18' fill='#c9d3df' text-anchor='middle'>500</text>
+<text x='580.0' y='155' font-size='18' fill='#c9d3df' text-anchor='middle'>600</text>
+<text x='840.0' y='155' font-size='18' fill='#c9d3df' text-anchor='middle'>700 nm</text>
+<rect x='138.0' y='40' width='182.0' height='44' rx='6' fill='#1f5fbf'/>
+<text x='229.0' y='69' font-size='20' font-weight='700' fill='#fff' text-anchor='middle'>BLUE</text>
+<line x1='229.0' y1='84' x2='229.0' y2='95' stroke='#1f5fbf' stroke-width='3'/>
+<rect x='346.0' y='40' width='182.0' height='44' rx='6' fill='#1e8449'/>
+<text x='437.0' y='69' font-size='20' font-weight='700' fill='#fff' text-anchor='middle'>GREEN</text>
+<line x1='437.0' y1='84' x2='437.0' y2='95' stroke='#1e8449' stroke-width='3'/>
+<rect x='554.0' y='40' width='208.0' height='44' rx='6' fill='#c0392b'/>
+<text x='658.0' y='69' font-size='20' font-weight='700' fill='#fff' text-anchor='middle'>RED</text>
+<line x1='658.0' y1='84' x2='658.0' y2='95' stroke='#c0392b' stroke-width='3'/>
+</svg>

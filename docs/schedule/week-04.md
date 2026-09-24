@@ -5,7 +5,7 @@
 ## :material-presentation-play: Presentation Slides
 
 - **Tuesday** — [Georectifying Images](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-04/georectifying-images.html) — Giving a scanned map or photo real-world coordinates: control points, transformations, and what can go wrong.
-- **Thursday** — [Remote Sensing](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-04/remote-sensing.html) — How sensors see the Earth: the electromagnetic spectrum, what a digital image stores, bands and false color, hyperspectral imagery, and a gallery of what orbit looks like.
+- **Thursday** — [Remote Sensing](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-04/remote-sensing.html) — How sensors see the Earth: the electromagnetic spectrum, what a digital image stores, splitting images into bands, false color, hyperspectral imagery, and the satellites that take the pictures.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

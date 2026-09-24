@@ -5,16 +5,16 @@ paginate: true
 footer: "CE 414 · Week 4 — Remote Sensing"
 ---
 
-<!-- TODO(instructor): the course plan suggests two structural changes to this deck, both of which
-are instructor decisions and were NOT made during conversion: (1) split it into a remote-sensing
-deck and a separate 3D-imaging/LiDAR deck, and (2) move the essential remote-sensing material
+<!-- TODO(instructor): the course plan suggests moving the essential remote-sensing material
 (spectrum, bands, reflected near-infrared) ahead of the NDVI lab so students meet it before
-Lab 2 rather than after. Everything below is in the source deck's original order. -->
+Lab 2 rather than after. That is an instructor decision and has not been made. -->
 
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
 ![bg right:45% w:95%](images/rs-false-color-terrain.jpg)
+
+![w:130](../theme/images/byu-medallion.svg)
 
 # Remote Sensing
 
@@ -25,6 +25,11 @@ Brigham Young University
 
 <!-- Concepts lecture. Everything here is about how a sensor turns energy into numbers, and what
 those numbers let you measure. The lab that applied it was Lab 2, NDVI, which they have already done; this hour is the physics underneath it.
+
+The thread through the whole hour is the spectrum: every section comes back to it. Section 2 is a
+camera as a three-band sensor, section 3 is bands as stacked grids, section 4 is hundreds of
+narrow slices of the same spectrum, section 5 pulls real images apart band by band, and section 6
+puts the sensor in orbit.
 
 The speaker note attached to this slide in the source PowerPoint was a leftover ModelBuilder
 workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with remote sensing.
@@ -41,32 +46,14 @@ It was removed during conversion. -->
 ![bg right:32% w:95%](images/rs-katrina-from-space.jpg)
 
 - By the end of class you should be able to:
-  - Find visible light, **near-infrared**, **thermal infrared**, and radar on the electromagnetic spectrum
-  - Explain what a digital image actually stores, and read a hexadecimal color
-  - Say what a **band** is, and why one scene looks different in every band
+  - Find visible light, **near-infrared**, **thermal infrared**, and radar on the electromagnetic spectrum, and say why sensors look through **atmospheric windows**
+  - Explain what a pixel stores, and read a hexadecimal color
+  - Split a color image into its **red, green, and blue bands**, and read a **false-color** image
   - Tell **multispectral** from **hyperspectral** imagery
-  - Read a **false-color** image and say which band was put in which channel
+  - Name the main **Earth-observing satellites** and the four resolutions they trade off
 
 <!-- Set expectations: this is a "how the data get made" lecture. Nothing here is software-specific,
 but it is what makes the band math in Lab 2 mean something. -->
-
----
-
-<!-- _class: lead -->
-
-# Where we are going
-
-<div style="display:inline-block;text-align:left;">
-
-1. The Electromagnetic Spectrum
-2. Digital Images
-3. Multi-band Images
-4. Hyperspectral Images
-5. Some Example Images
-
-</div>
-
-<!-- Five topics. The first four build on each other and the fifth is a gallery. LiDAR used to be a sixth part here; it moved to Week 5 on 2026-09-10, where it sits next to terrain analysis, because a bare-earth LiDAR surface is a DEM. -->
 
 ---
 
@@ -76,19 +63,44 @@ but it is what makes the band math in Lab 2 mean something. -->
 
 ---
 
-# The spectrum, in two minutes
+# The spectrum, at a glance
 
-<a href="https://www.youtube.com/watch?v=m4t7gTmBK3g" target="_blank">
+<svg viewBox="0 0 1600 970" style="display:block;margin:0 auto;height:550px;" xmlns="http://www.w3.org/2000/svg" font-family="Avenir Next, Segoe UI, Helvetica, Arial, sans-serif">
+<defs><marker id="sp-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#002e5d"/></marker></defs>
+<line x1="40" y1="34" x2="1560" y2="34" stroke="#002e5d" stroke-width="5" marker-start="url(#sp-ah)" marker-end="url(#sp-ah)"/>
+<rect x="560" y="10" width="480" height="48" fill="#ffffff"/>
+<text x="800" y="46" font-size="32" font-weight="700" fill="#002e5d" text-anchor="middle">wavelength</text>
+<image href="images/rs-em-spectrum-visible.png" x="0" y="70" width="1600" height="897"/>
+<text x="24" y="398" font-size="30" font-style="italic" fill="#ffffff">shorter wavelength, more energy</text>
+<text x="24" y="440" font-size="30" font-style="italic" fill="#ffd27a">UV and shorter: mostly absorbed by the atmosphere</text>
+<text x="1580" y="398" font-size="30" font-style="italic" fill="#ffffff" text-anchor="end">longer wavelength, less energy</text>
+<text x="1580" y="440" font-size="30" font-style="italic" fill="#ffd27a" text-anchor="end">Radar: the satellite sends its own pulse</text>
+<rect x="0" y="608" width="245" height="94" fill="#7b2fc4"/>
+<text x="122" y="672" font-size="46" fill="#ffffff" text-anchor="middle">400 nm</text>
+<line x1="520" y1="712" x2="833" y2="462" stroke="#ffffff" stroke-width="10"/>
+<line x1="520" y1="712" x2="833" y2="462" stroke="#002e5d" stroke-width="5"/>
+<circle cx="833" cy="462" r="9" fill="#002e5d" stroke="#ffffff" stroke-width="3"/>
+<line x1="1000" y1="712" x2="960" y2="462" stroke="#ffffff" stroke-width="10"/>
+<line x1="1000" y1="712" x2="960" y2="462" stroke="#002e5d" stroke-width="5"/>
+<circle cx="960" cy="462" r="9" fill="#002e5d" stroke="#ffffff" stroke-width="3"/>
+<rect x="270" y="712" width="500" height="128" rx="12" fill="#ffffff" stroke="#8b1a1a" stroke-width="4"/>
+<text x="520" y="764" font-size="40" font-weight="700" fill="#8b1a1a" text-anchor="middle">Near-infrared</text>
+<text x="520" y="816" font-size="34" fill="#22262e" text-anchor="middle">reflected sunlight: NDVI</text>
+<rect x="800" y="712" width="500" height="128" rx="12" fill="#ffffff" stroke="#e8792b" stroke-width="4"/>
+<text x="1050" y="764" font-size="40" font-weight="700" fill="#c0601a" text-anchor="middle">Thermal infrared</text>
+<text x="1050" y="816" font-size="34" fill="#22262e" text-anchor="middle">heat the surface emits</text>
+</svg>
 
-![h:400 center](images/rs-em-spectrum-visible.png)
+<!-- The point to land: visible light is a sliver of a very wide spectrum, and a remote sensor is
+simply an instrument built to measure some other part of it. Walk the labels left to right: short
+wavelengths carry more energy per photon, and the atmosphere absorbs most of the ultraviolet and
+everything shorter, so Earth imaging lives from the visible rightward. Near-infrared sits just past
+700 nm and is reflected sunlight, the band NDVI used in Lab 2. Thermal infrared is further out
+(roughly 8 to 14 µm for Earth imaging) and is heat the surface emits. Radar is different again:
+the satellite supplies its own energy, which is where next week's active-sensor story starts.
 
-</a>
-
-<p style="text-align:center;font-size:0.7em;margin-top:0;"><a href="https://www.youtube.com/watch?v=m4t7gTmBK3g" target="_blank">youtube.com/watch?v=m4t7gTmBK3g</a></p>
-
-<!-- Click the image to open the video in a new tab. The point to land: visible light is a sliver of
-a very wide spectrum, and a remote sensor is simply an instrument built to measure some other part
-of it. VERIFY: this YouTube link came across from the source deck and has not been re-checked. -->
+The figure is a still from a short MonkeySee explainer video. The video link that used to sit on
+this slide is dead and was removed on 2026-09-23; the labels were added in its place. -->
 
 ---
 
@@ -112,23 +124,68 @@ because plants are warm. Diagram credit: Louis E. Keiner, Coastal Carolina Unive
 
 # What actually reaches the ground
 
-![bg right:45% w:95%](images/rs-solar-irradiance.png)
+<div class="columns" style="grid-template-columns: 0.9fr 1.25fr; align-items:center;">
+<div style="font-size:0.86em;">
 
-- Dashed curve: a **black body at 5900 K** — the sun as a perfect radiator
-- Solid curve: what arrives at **sea level** after the atmosphere takes its cut
-- Every notch is absorption by a gas: **O₃, O₂, H₂O, CO₂**
-- Sensors are designed for the gaps between the notches — the **atmospheric windows**
-- You cannot measure a wavelength the atmosphere has already eaten
+- **Same spectrum, zoomed in** to 0–3.2 µm: the strip on top is the visible and infrared from the last two slides
+- Dashed: the sun as a **5900 K black body**. Its output **peaks in the visible**, which is why our eyes work there
+- Solid: what arrives at **sea level**. Every notch is a gas: **O₃, O₂, H₂O, CO₂**
+- Sensors put their bands in the gaps, the **atmospheric windows**
 
-<!-- Ask why nobody builds a satellite sensor at 1.4 µm. Because water vapor absorbs essentially all
-of it — look at the notch. This is why band choices on real satellites look arbitrary until you put
-this curve behind them. -->
+</div>
+<div>
+
+<svg viewBox="0 -100 768 530" style="display:block;width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="Avenir Next, Segoe UI, Helvetica, Arial, sans-serif">
+<defs><linearGradient id="irr-vis" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#8000ff"/><stop offset="0.2" stop-color="#0000ff"/><stop offset="0.4" stop-color="#00ffcc"/><stop offset="0.55" stop-color="#33ff00"/><stop offset="0.75" stop-color="#ffcc00"/><stop offset="1" stop-color="#ff0000"/></linearGradient>
+<clipPath id="irr-clip"><rect x="0" y="0" width="768" height="430"/></clipPath></defs>
+<text x="384" y="-78" font-size="19" font-weight="700" fill="#002e5d" text-anchor="middle">The part of the spectrum satellites image in reflected sunlight</text>
+<rect x="166" y="-62" width="62" height="30" fill="url(#irr-vis)"/>
+<rect x="228" y="-62" width="123" height="30" fill="#8b1a1a"/>
+<rect x="351" y="-62" width="248" height="30" fill="#7a5c2e"/>
+<rect x="362" y="-62" width="21" height="30" fill="#ffffff" opacity="0.85"/>
+<rect x="454" y="-62" width="31" height="30" fill="#ffffff" opacity="0.85"/>
+<text x="197" y="-12" font-size="16" font-weight="700" fill="#22262e" text-anchor="middle">visible</text>
+<text x="290" y="-41" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">near-IR</text>
+<text x="420" y="-41" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">SWIR</text>
+<text x="545" y="-41" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">SWIR</text>
+<text x="372" y="-12" font-size="15" fill="#5a6472" text-anchor="middle">H₂O</text>
+<text x="470" y="-12" font-size="15" fill="#5a6472" text-anchor="middle">H₂O</text>
+<text x="686" y="-50" font-size="15" fill="#5a6472" text-anchor="middle">thermal IR is</text>
+<text x="686" y="-32" font-size="15" fill="#5a6472" text-anchor="middle">off-chart, ~10 µm →</text>
+<g clip-path="url(#irr-clip)"><image href="images/rs-solar-irradiance.png" x="0" y="0" width="768" height="562"/></g>
+<rect x="166" y="18" width="62" height="350" fill="url(#irr-vis)" opacity="0.28"/>
+<line x1="372" y1="-32" x2="372" y2="368" stroke="#5a6472" stroke-width="1.5" stroke-dasharray="4 4"/>
+<line x1="470" y1="-32" x2="470" y2="368" stroke="#5a6472" stroke-width="1.5" stroke-dasharray="4 4"/>
+</svg>
+
+</div>
+</div>
+
+<!-- This slide joins the last two to the physics. The strip across the top uses the same names as
+the spectrum slides: visible, then near-infrared, then shortwave infrared. The shaded column is
+the visible, and it is exactly where the sun's curve peaks: our eyes evolved to use the part of
+the spectrum where there is the most light and the atmosphere lets it through.
+
+Then the dashed lines: at 1.4 and 1.9 µm water vapor absorbs essentially all of the sunlight, so
+no satellite puts a band there. Ask why nobody builds a satellite sensor at 1.4 µm before you say
+it. This is why band choices on real satellites look arbitrary until you put this curve behind
+them. Thermal infrared, around 10 µm, is off the right edge of this chart; that energy is emitted
+by the Earth, not reflected from the sun. -->
 
 ---
 
 <!-- _class: lead -->
 
 # 2 — Digital Images
+
+## How a camera turns a slice of the spectrum into numbers
+
+![w:880](images/rs-camera-bands.svg)
+
+<!-- The bridge from section 1: a digital camera is a remote sensor with three bands, all inside
+the visible slice. Each band window gets its own number for every pixel. The windows drawn here
+are schematic, not a particular camera's filter curves. Everything in this section is those three
+numbers. -->
 
 ---
 
@@ -140,65 +197,99 @@ Each pixel (raster cell) is represented by a **hexadecimal number** that indicat
 
 <!-- Digital photos are raster images. Each pixel has a different value from the one next to it,
 representing a different color. Raster works really well for digital photos. Zoom far enough into
-any photo and the picture stops being a picture and becomes a grid of numbers. -->
+any photo and the picture stops being a picture and becomes a grid of numbers: one for the red
+window, one for green, one for blue. -->
 
 ---
 
 # What are hexadecimal numbers?
 
-<div class="columns" style="grid-template-columns: 1.15fr 1fr;">
+<div class="columns" style="grid-template-columns: 1.15fr 1fr; align-items:center;">
 <div>
 
 - A **6-digit** number holding the **red**, **green**, and **blue** components of a color
+- **Two digits per band**
 - Each digit takes one of **16** values:
   `0 1 2 3 4 5 6 7 8 9 A B C D E F`
 
 </div>
-<div>
-
 <div style="text-align:center;">
-<div style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;letter-spacing:0.06em;color:#22262e;">#000000</div>
-<div style="display:flex;justify-content:center;gap:0.9em;font-size:0.72em;font-weight:700;margin-top:0.2em;">
-<span style="color:#c0392b;">RED</span>
-<span style="color:#1e8449;">GREEN</span>
-<span style="color:#1f5fbf;">BLUE</span>
+<div style="display:inline-grid;grid-template-columns:auto auto auto auto;column-gap:0.22em;row-gap:0.25em;align-items:center;justify-items:center;">
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;color:#22262e;">#</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;color:#22262e;border:3px dashed #c0392b;border-radius:8px;padding:0 0.12em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;color:#22262e;border:3px dashed #1e8449;border-radius:8px;padding:0 0.12em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;color:#22262e;border:3px dashed #1f5fbf;border-radius:8px;padding:0 0.12em;">00</span>
+<span></span>
+<span style="font-size:0.72em;font-weight:700;color:#c0392b;">RED</span>
+<span style="font-size:0.72em;font-weight:700;color:#1e8449;">GREEN</span>
+<span style="font-size:0.72em;font-weight:700;color:#1f5fbf;">BLUE</span>
+</div>
 </div>
 </div>
 
-</div>
-</div>
-
-<!-- Two hex digits per channel. Walk through #FF0000, #00FF00, #0000FF on the board if the class
-has not seen hex before. -->
+<!-- Two hex digits per channel, and the dashed boxes show which pair belongs to which band. Walk
+through #FF0000, #00FF00, #0000FF on the board if the class has not seen hex before. -->
 
 ---
 
 # Counting in hexadecimal
 
-<div class="columns" style="grid-template-columns: 1.15fr 1fr;">
-<div>
+<div class="columns" style="grid-template-columns: 0.9fr 1.2fr; align-items:center;">
+<div style="font-size:0.9em;">
 
 - Two-digit counting runs:
-  `00, 01, 02, … 09, 0A, 0B, 0C, 0D, 0E, 0F,`
-  `10, 11, … 9E, 9F, A0, A1, … FE, FF`
-- That is **256 possible values** per channel
+  `00, 01, … 09, 0A, … 0F,`
+  `10, 11, … 9F, A0, … FE, FF`
+- That is **256 possible values** per band: `00` = 0, `FF` = 255
+- Mix the three bands to get any color
 
 </div>
 <div>
+<div style="display:inline-grid;grid-template-columns:auto auto auto auto auto;column-gap:0.3em;row-gap:0.05em;align-items:center;justify-items:center;font-size:0.95em;">
+<span style="width:1.3em;height:1.3em;background:#000000;border:1px solid #8a94a3;border-radius:4px;"></span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;">#</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #c0392b;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1e8449;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1f5fbf;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-size:0.66em;color:#5a6472;">black</span><span></span>
+<span style="font-size:0.72em;font-weight:700;color:#c0392b;">0</span>
+<span style="font-size:0.72em;font-weight:700;color:#1e8449;">0</span>
+<span style="font-size:0.72em;font-weight:700;color:#1f5fbf;">0</span>
+<span style="width:1.3em;height:1.3em;background:#800080;border-radius:4px;"></span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;">#</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #c0392b;border-radius:7px;padding:0 0.1em;">80</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1e8449;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1f5fbf;border-radius:7px;padding:0 0.1em;">80</span>
+<span style="font-size:0.66em;color:#5a6472;">purple</span><span></span>
+<span style="font-size:0.72em;font-weight:700;color:#c0392b;">128</span>
+<span style="font-size:0.72em;font-weight:700;color:#1e8449;">0</span>
+<span style="font-size:0.72em;font-weight:700;color:#1f5fbf;">128</span>
+<span style="width:1.3em;height:1.3em;background:#FFA500;border-radius:4px;"></span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;">#</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #c0392b;border-radius:7px;padding:0 0.1em;">FF</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1e8449;border-radius:7px;padding:0 0.1em;">A5</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1f5fbf;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-size:0.66em;color:#5a6472;">orange</span><span></span>
+<span style="font-size:0.72em;font-weight:700;color:#c0392b;">255</span>
+<span style="font-size:0.72em;font-weight:700;color:#1e8449;">165</span>
+<span style="font-size:0.72em;font-weight:700;color:#1f5fbf;">0</span>
+<span style="width:1.3em;height:1.3em;background:#FF0000;border-radius:4px;"></span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;">#</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #c0392b;border-radius:7px;padding:0 0.1em;">FF</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1e8449;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.9em;border:3px dashed #1f5fbf;border-radius:7px;padding:0 0.1em;">00</span>
+<span style="font-size:0.66em;color:#5a6472;">red</span><span></span>
+<span style="font-size:0.72em;font-weight:700;color:#c0392b;">255</span>
+<span style="font-size:0.72em;font-weight:700;color:#1e8449;">0</span>
+<span style="font-size:0.72em;font-weight:700;color:#1f5fbf;">0</span>
+</div>
+</div>
+</div>
 
-<div style="text-align:center;">
-<div style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:2.4em;letter-spacing:0.06em;color:#22262e;">#000000</div>
-<div style="display:flex;justify-content:center;gap:0.9em;font-size:0.62em;font-weight:700;margin-top:0.2em;line-height:1.25;">
-<span style="color:#c0392b;">256 values<br>of RED</span>
-<span style="color:#1e8449;">256 values<br>of GREEN</span>
-<span style="color:#1f5fbf;">256 values<br>of BLUE</span>
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- 0 through 255 in decimal, 00 through FF in hex. Same number, different base. -->
+<!-- 0 through 255 in decimal, 00 through FF in hex. Same number, different base. Cover the swatches
+and have the class predict each color from its three pairs before you reveal it: purple is equal
+red and blue with no green; orange is full red, about two-thirds green, no blue; pure red is one
+band full and the other two empty. Black is all three bands at zero: no light at all. -->
 
 ---
 
@@ -226,8 +317,24 @@ step in one channel, and most of those steps are invisible. -->
 ## Open an image in ArcGIS Pro
 
 <!-- In the source deck this said "open an image in ArcGIS" — ArcMap-era wording, updated to ArcGIS
-Pro. In Pro, a multiband raster comes into the Contents pane as one layer with a band list; the
-Symbology pane is where you choose which band drives red, green, and blue. -->
+Pro. In ArcGIS Pro, a multiband raster comes into the Contents pane as one layer with a band list;
+the Symbology pane is where you choose which band drives red, green, and blue. -->
+
+---
+
+# A color image is three bands, stacked
+
+![w:1060 center](images/rs-rgb-stack.svg)
+
+<!-- Read it left to right. Each sheet of grid paper is one band: the same 4 by 4 grid of pixels,
+but each sheet holds only one number per cell, how much red, green, or blue light that pixel sent
+back. Stack the three and every pixel now has three numbers, which is exactly the hex color from
+the last section: the roof pixel is R 200, G 60, B 50, or #C83C32.
+
+Run it backwards too, because that is the point for the rest of the hour: any full-color image can
+be pulled apart into its bands, and a satellite image is the same idea with more sheets. The pixel
+values are illustrative, chosen to look like water, grass, a red roof, and pavement. The figure is
+generated by tools/week04_remote_sensing_figures.py. -->
 
 ---
 
@@ -241,8 +348,11 @@ Symbology pane is where you choose which band drives red, green, and blue. -->
 - Bare ground is brighter; cloud and snow are brightest of all
 
 <!-- Three slides, one scene, three bands. Set the pattern here: a "band" is one wavelength window,
-stored as its own grid of numbers. The lat/lon and instrument are in the window's status bar —
-MODIS, off the coast of Britain and France. -->
+stored as its own grid of numbers, one sheet from the last slide. The lat/lon and instrument are in
+the window's status bar — MODIS, off the coast of Britain and France.
+
+TODO(instructor): re-create this slide and the next two in ArcGIS Pro on the machine that has it. Plan and
+checklist: tools/week04-arcgis-capture-plan.md, item 1. -->
 
 ---
 
@@ -254,7 +364,9 @@ MODIS, off the coast of Britain and France. -->
 - What changed between this and the red band, and what did not?
 - The annotations are the presenter's; look past them at the pixels
 
-<!-- Ask the class what changed and what did not before you say anything. -->
+<!-- Ask the class what changed and what did not before you say anything.
+
+TODO(instructor): re-create in ArcGIS Pro (tools/week04-arcgis-capture-plan.md, item 1). -->
 
 ---
 
@@ -269,13 +381,10 @@ MODIS, off the coast of Britain and France. -->
 <!-- Same scene again, blue band. Blue scatters hardest in the atmosphere, so this band tends to look
 hazier than the others.
 
-TODO(instructor): update the sensor/band material. These three captures are from a legacy
-Multi-Channel Viewer, and the wavelength/band-number labeling — and the satellite lineup the course
-talks about generally, including Landsat history — has not been refreshed. Band numbers were
-deliberately NOT changed during conversion; they are whatever the original screenshots show.
-
-TODO(instructor): the leader-line annotations are identical on all three slides, which undercuts the
-comparison the sequence is meant to set up. If these are re-shot, vary the labels per band. -->
+TODO(instructor): re-create in ArcGIS Pro (tools/week04-arcgis-capture-plan.md, item 1). These three
+captures are from a legacy Multi-Channel Viewer, the leader-line annotations are identical on all
+three slides, and the band numbers are whatever the original screenshots show. The re-shoot fixes
+all three problems. -->
 
 ---
 
@@ -292,9 +401,9 @@ comparison the sequence is meant to set up. If these are re-shot, vary the label
 
 - **Multispectral**: a handful of fairly wide bands
 - **Hyperspectral**: hundreds of narrow, contiguous bands
+- Each sheet in the stack is **one narrow slice of the spectrum**
 - The result is a **full spectrum for every pixel**, not just a few samples
 - Soil, vegetation, and water each have a spectral shape you can match against
-- Not every GIS reads a hyperspectral cube directly — they usually need dedicated software
 
 </div>
 <div>
@@ -306,61 +415,132 @@ comparison the sequence is meant to set up. If these are re-shot, vary the label
 
 <p style="font-size:0.6em;margin-top:0.2em;">Source: satjournal.tcom.ohiou.edu/pdf/shippert.pdf</p>
 
-<!-- The original slide said simply "Can't open in ArcGIS…". That claim is softened here rather than
-restated as fact.
+<!-- Same stack of sheets as the RGB slide, with hundreds of sheets instead of three. The curves on
+the right are what you get by drilling down through the stack at one pixel: the values of every
+sheet, plotted against wavelength. The next slide puts those sheets back on the spectrum.
 
-TODO(instructor): verify against current ArcGIS Pro. Pro's multidimensional raster support has moved
-a long way since this slide was written, and the "can't open it" line may no longer be true.
-VERIFY: the satjournal.tcom.ohiou.edu source link is from the original deck and has not been
-re-checked. -->
+The original slide said "Can't open in ArcGIS…". That is dropped: ArcGIS Pro's multidimensional
+raster support has moved a long way. VERIFY in ArcGIS Pro which hyperspectral formats it reads
+before saying anything either way. VERIFY: the satjournal.tcom.ohiou.edu source link is from the
+original deck and has not been re-checked. -->
+
+---
+
+# Where the bands sit on the spectrum
+
+![w:1020 center](images/rs-band-ruler.svg)
+
+<!-- This is the cube, unfolded along the wavelength axis from the spectrum slides. Top row: your
+eye, three wide overlapping bands, all in the visible. Middle row: Landsat 8/9's Operational Land
+Imager, eight bands in this range, each a few tens of nanometers wide; band 4 (red) and band 5
+(near-infrared) are the pair you used for NDVI in Lab 2. Band 9 sits deliberately inside the
+1.38 µm water-vapor notch: it sees only high cirrus cloud, because the atmosphere hides the ground.
+Bottom row: a hyperspectral sensor with 224 contiguous bands of about 10 nm, the AVIRIS layout.
+
+The gray columns are the same water-vapor notches as the sunlight-at-the-ground slide. Landsat's
+thermal bands (10 and 11, near 11 and 12 µm) are far off the right edge. The figure is generated by
+tools/week04_remote_sensing_figures.py from the USGS band designations. -->
 
 ---
 
 <!-- _class: lead -->
 
-# 5 — Some Example Images
+# 5 — Pulling Real Images Apart
 
-## What can you see from orbit?
-
----
-
-# The Eiffel Tower, straight down
-
-![h:450 center](images/rs-eiffel-tower-aerial.jpg)
-
-<!-- High-resolution aerial imagery served through a web map. Note the tower's shadow, which is how
-you get height out of a nadir image. Source noted in the original deck:
-llll20.wordpress.com/2007/06/09/very-cool-google-satellite-maps/ -->
+## Every picture is a stack of bands
 
 ---
 
-# Snow across the mid-Atlantic
+# The Eiffel Tower, band by band
 
-![h:450 center](images/rs-maryland-snow.jpg)
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4em;text-align:center;font-size:0.62em;font-weight:700;">
+<div><img src="images/rs-eiffel-tower-aerial.jpg" style="width:100%;"><br>Full color</div>
+<div><img src="images/rs-band-eiffel-red.jpg" style="width:100%;"><br><span style="color:#c0392b;">Red band, 0–255</span></div>
+<div><img src="images/rs-band-eiffel-green.jpg" style="width:100%;"><br><span style="color:#1e8449;">Green band, 0–255</span></div>
+<div><img src="images/rs-band-eiffel-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band, 0–255</span></div>
+</div>
 
-<!-- A winter storm over Maryland and the mid-Atlantic coast. Snow and cloud are both bright; telling
-them apart is a classic multi-band problem, because snow and cloud separate in the shortwave
-infrared even though they look the same in visible light. Source noted in the original deck:
-weblogs.marylandweather.com, January 2009. -->
+- Each band is drawn from **black (0) to full color (255)**, so the three add back up to the original
+- The lawn is brightest in **green**; the iron and pavement are about equal in all three
+- The shadow is dark in every band: no light came back to measure
+
+<!-- Same move as the grid-paper slide, on real pixels. The tower's shadow is also how you get height
+out of a straight-down image.
+
+These band images were split from the photo's own pixel values with a script
+(tools/week04_remote_sensing_figures.py), not captured in ArcGIS Pro. TODO(instructor): replace
+with the ArcGIS Pro version, one band loaded at a time with a black-to-red, black-to-green,
+black-to-blue stretch (tools/week04-arcgis-capture-plan.md, item 2). Source of the photo noted in
+the original deck: llll20.wordpress.com/2007/06/09/very-cool-google-satellite-maps/ -->
+
+---
+
+# Snow or cloud?
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4em;text-align:center;font-size:0.62em;font-weight:700;">
+<div><img src="images/rs-maryland-snow.jpg" style="width:100%;"><br>Full color</div>
+<div><img src="images/rs-band-snow-red.jpg" style="width:100%;"><br><span style="color:#c0392b;">Red band</span></div>
+<div><img src="images/rs-band-snow-green.jpg" style="width:100%;"><br><span style="color:#1e8449;">Green band</span></div>
+<div><img src="images/rs-band-snow-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band</span></div>
+</div>
+
+- Snow and cloud are **bright in all three visible bands**: visible light cannot tell them apart
+- Move to the **shortwave infrared, near 1.6 µm** (Landsat band 6): snow goes dark, cloud stays bright
+- Notice the yellow state lines vanish from the blue band: yellow is **red + green, no blue**
+
+<!-- A winter storm over Maryland and the mid-Atlantic, January 2009. The lesson is that the answer
+to "snow or cloud?" is on the band ruler, not in the picture: you need a band outside the visible.
+That is what the Normalized Difference Snow Index is built on. Source noted in the original deck:
+weblogs.marylandweather.com, January 2009.
+
+Band images split by script, not ArcGIS Pro (tools/week04-arcgis-capture-plan.md, item 2). -->
 
 ---
 
 # Smoke from the 2007 California wildfires
 
-![h:450 center](images/rs-california-wildfires.jpg)
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4em;text-align:center;font-size:0.62em;font-weight:700;">
+<div><img src="images/rs-california-wildfires.jpg" style="width:100%;"><br>Full color</div>
+<div><img src="images/rs-band-smoke-red.jpg" style="width:100%;"><br><span style="color:#c0392b;">Red band</span></div>
+<div><img src="images/rs-band-smoke-green.jpg" style="width:100%;"><br><span style="color:#1e8449;">Green band</span></div>
+<div><img src="images/rs-band-smoke-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band</span></div>
+</div>
 
-<!-- Smoke plumes blowing offshore. This is the kind of image that gets used operationally within
-hours. Source noted in the original deck: andrewlias.blogspot.com, October 2007. -->
+- The desert is brightest in **red**; smoke over the ocean is brightest in **blue**
+- Small smoke particles **scatter short wavelengths** most, the same reason the MODIS blue band looked hazy
+- A longer wavelength sees **through** haze, which is why fire maps lean on infrared bands
+
+<!-- Numbers from this image: open desert averages about R 198, G 171, B 142; smoke over open water
+about R 88, G 112, B 123, against clear water at R 8, G 18, B 28. The smoke adds more to the blue
+band than to the red. Point back at the Band 3 slide.
+
+Source noted in the original deck: andrewlias.blogspot.com, October 2007. Band images split by
+script, not ArcGIS Pro (tools/week04-arcgis-capture-plan.md, item 2). -->
 
 ---
 
-# Europe before dawn
+# Europe at night
 
-![h:450 center](images/rs-europe-at-night.jpg)
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4em;text-align:center;font-size:0.62em;font-weight:700;">
+<div><img src="images/rs-europe-at-night.jpg" style="width:100%;"><br>Full color</div>
+<div><img src="images/rs-band-night-red.jpg" style="width:100%;"><br><span style="color:#c0392b;">Red band</span></div>
+<div><img src="images/rs-band-night-green.jpg" style="width:100%;"><br><span style="color:#1e8449;">Green band</span></div>
+<div><img src="images/rs-band-night-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band</span></div>
+</div>
 
-<!-- City lights at night — the sensor is measuring emitted light rather than reflected sunlight.
-Night lights are used as a proxy for population and for economic activity. Source noted in the
-original deck: strangetravel.com. -->
+- City lights are **emitted** light, not reflected sunlight
+- Strong in red and green, weak in blue: that mix is **orange**
+- The thin blue rim is the atmosphere **scattering** sunlight on the day side
+
+<!-- Night lights are used as a proxy for population and for economic activity. The orange of older
+European street lighting comes from sodium-vapor lamps, which put nearly all their light near
+589 nm, between green and red on the spectrum; the switch to white LEDs is adding blue to night
+imagery.
+
+Caution: this is a rendered composite (a day side and a night side on one globe), not a single
+satellite frame, so the colors are the renderer's choice. Use it for the band logic, not as a
+measurement. Source noted in the original deck: strangetravel.com. Band images split by script,
+not ArcGIS Pro (tools/week04-arcgis-capture-plan.md, item 2). -->
 
 ---
 
@@ -375,7 +555,7 @@ original deck: strangetravel.com. -->
 - What is the dark line running down the middle?
 
 <!-- Open discussion. Draw out that "false color" means someone chose which band drives red, green,
-and blue.
+and blue: the same three sheets, but one of them is from outside the visible.
 
 TODO(instructor): this image came into the deck from a "cool satellite photos" link and its subject,
 sensor, and location are not recorded anywhere in the source. Identify and attribute it, or replace
@@ -383,88 +563,125 @@ it, before using it as a discussion prompt. -->
 
 ---
 
-# Inauguration day: the National Mall
+<!-- _class: lead -->
 
-![w:1020 center](images/rs-inauguration-mall.jpg)
+# 6 — Satellites
 
-<!-- The 2009 presidential inauguration, imaged from orbit. The dark texture filling the Mall is a
-crowd. Source noted in the original deck: zeitgeistinapetiole.wordpress.com. In the source deck this
-image and the next one shared a single slide; they were split so each is legible. -->
+## Who takes the picture, and what they trade off
 
 ---
 
-# Inauguration day: the Capitol
+# How a satellite image gets made
 
-![w:1020 center](images/rs-inauguration-capitol.jpg)
+![w:1060 center](images/rs-image-chain.svg)
 
-<!-- The west front of the Capitol, zoomed. Crowd-size estimation from satellite imagery is a real
-and contested application — ask what you would need to know to turn this into a number (ground
-resolution, and an assumption about people per square meter). -->
+<!-- The whole lecture on one diagram; walk the numbers. (1) Sunlight arrives, peaking in the
+visible: the dashed black-body curve. (2) The atmosphere absorbs and scatters it on the way down
+and again on the way back up, which is why bands sit in the windows. (3) Each surface reflects
+each band differently: that difference is the signal, and it is what NDVI exploits. (4) Warm
+surfaces also emit thermal infrared, day and night. (5) The sensor counts the energy in each band
+window and writes one grid of numbers per band, the sheets from section 3.
 
----
-
-# Palm Jumeirah, Dubai
-
-![h:450 center](images/rs-dubai-palm-islands.jpg)
-
-<!-- Man-made islands. A good prompt: how would you map the shoreline of something that did not exist
-five years before the image was taken? Source noted in the original deck:
-noupe.com/photography/40-bizarre-and-cool-google-earth-photos.html -->
+All of this is passive: the sun supplies the energy. Next week LiDAR supplies its own. Radar
+satellites such as Sentinel-1 do the same with microwaves, which is why they see through cloud and
+work at night. -->
 
 ---
 
-# Hurricane Katrina, August 2005
+# Two orbits, two jobs
 
-![h:450 center](images/rs-katrina-from-space.jpg)
+<div class="columns" style="grid-template-columns: 1fr 1.05fr; align-items:center;">
+<div>
 
-<!-- True-color view of the storm in the Gulf. The next three slides follow Katrina through three very
-different kinds of imagery. Source noted in the original deck: sapphireeventsnola.com. -->
+![w:600](images/rs-orbits.svg)
+
+</div>
+<div style="font-size:0.84em;">
+
+**Sun-synchronous polar**: Landsat, Sentinel-2, Terra and Aqua (MODIS)
+- Pole to pole while Earth turns underneath: the **whole planet**, one strip at a time
+- Crosses each place at the **same local time**, so shadows and light match between dates
+- Returns every few days to weeks
+
+**Geostationary**: GOES
+- Orbits once a day over the equator, so it **hangs over one spot**
+- Watches a whole hemisphere **every few minutes**, with coarser pixels
+
+</div>
+</div>
+
+<!-- Low and close means sharp pixels but a long wait to come back; high and far means you never
+look away but each pixel covers kilometers. Landsat flies at about 705 km, Sentinel-2 at about
+786 km. Weather satellites like GOES are geostationary, which is why the Katrina infrared loop a
+few slides on could be refreshed every few minutes. -->
 
 ---
 
-# The Superdome, 2005
+# Every satellite is a trade-off
 
-![h:450 center](images/rs-katrina-superdome.jpg)
+![w:1000 center](images/rs-four-resolutions.svg)
 
-<!-- High-resolution commercial satellite imagery of the Superdome after the storm — you can see the
-roof membrane torn away. Source noted in the original deck:
-satimagingcorp.com/galleryimages/hurricane-katrina-superdome-picture.jpg -->
+<div style="font-size:0.68em;">
+
+| Satellite (agency) | Pixel size | Bands | Revisit |
+| --- | --- | --- | --- |
+| **Landsat 8 & 9** (NASA / USGS) | 30 m (15 m panchromatic) | 11 | 8 days, the pair together |
+| **Sentinel-2** (ESA) | 10, 20, or 60 m | 13 | 5 days, two satellites |
+| **MODIS** on Terra & Aqua (NASA) | 250 m to 1 km | 36 | 1 to 2 days |
+| **GOES** (NOAA), geostationary | 0.5 to 2 km | 16 | 5 to 15 minutes |
+| **Commercial**, e.g., WorldView-3 | about 0.3 m | 8 visible/near-IR, plus more | on request |
+
+</div>
+
+<!-- No satellite wins on all four. Sharp pixels cost coverage and revisit; frequent revisit costs
+pixel size. Radiometric resolution ties back to the hex slides: an 8-bit band has 256 levels,
+while Landsat 8 records 12 bits (4,096 levels) and Landsat 9 records 14 bits. Landsat has an
+unbroken record back to 1972, and Landsat and Sentinel-2 data are free, which is why most
+engineering work starts there.
+
+VERIFY before class: Terra and Aqua are both well past their design lives and drifting; check
+whether MODIS is still delivering, and name VIIRS as its successor if not. The WorldView-3 band
+count and revisit are summarized loosely on purpose; the commercial lineup changes quickly. -->
 
 ---
 
-# Katrina in the thermal infrared
+# One storm, three sensors
 
-![h:450 center](images/rs-katrina-infrared.png)
+<div style="display:grid;grid-template-columns:1.25fr 1.1fr 0.85fr;gap:0.5em;text-align:center;font-size:0.6em;align-items:end;">
+<div><img src="images/rs-katrina-from-space.jpg" style="width:100%;"><br><b>Wide view</b><br>the whole storm, coarse pixels</div>
+<div><img src="images/rs-katrina-superdome.jpg" style="width:100%;"><br><b>Commercial, sub-meter</b><br>the Superdome roof, a few blocks across</div>
+<div><img src="images/rs-katrina-infrared.png" style="width:100%;"><br><b>Thermal infrared</b><br>emitted heat, day or night</div>
+</div>
 
-<!-- Same storm, enhanced infrared. This one genuinely IS about emitted heat: the sensor measures
-thermal infrared, the colors are a temperature enhancement, and cold means high — the coldest
-cloud tops are the tallest, most vigorous convection, which is why the eyewall lights up.
-Timestamp on the image: 17:25Z, 29 August 2005.
+- Same event, three **trade-offs**: coverage, detail, and a band outside the visible
+- Which would you want **during** the storm? Which **the week after**?
 
-TODO(instructor): provenance. The image is embedded in the PowerPoint and renders correctly, but its
-only recorded source is a NOAA URL in the picture's alt text
-(www.srh.noaa.gov/images/hun/stormsurveys/katrina/katrina_IRsat_29_1725Z.png) that the September 2026
-audit found no longer resolves. Re-source or re-attribute it from a current NOAA archive. -->
+<!-- Hurricane Katrina, August 2005. The true-color view shows the whole storm in the Gulf. The
+high-resolution commercial image of the Superdome after the storm shows the roof membrane torn
+away: the detail an insurance adjuster or engineer needs, and useless for tracking the storm.
+The enhanced infrared view genuinely IS about emitted heat: colors are a temperature enhancement,
+and the coldest cloud tops are the tallest, most vigorous convection, which is why the eyewall
+lights up. Timestamp on the image: 17:25Z, 29 August 2005.
+
+Sources noted in the original deck: sapphireeventsnola.com (true color);
+satimagingcorp.com/galleryimages/hurricane-katrina-superdome-picture.jpg (Superdome).
+
+TODO(instructor): provenance of the infrared image. Its only recorded source is a NOAA URL
+(www.srh.noaa.gov/images/hun/stormsurveys/katrina/katrina_IRsat_29_1725Z.png) that the September
+2026 audit found no longer resolves. Re-source or re-attribute it from a current NOAA archive. -->
 
 ---
 
 # Japan, March 2011: before and after
 
-![h:450 center](images/rs-japan-tsunami-panels.jpg)
+![h:430 center](images/rs-japan-tsunami-panels.jpg)
 
 <!-- Yuriage in Natori, and Yagawahama: 2007–2008 imagery on the left, 12 March 2011 on the right.
-Before-and-after pairs are the single most common emergency-response product. Source noted in the
-original deck: boingboing.net, March 2011. -->
-
----
-
-# The same village, before and after
-
-![h:450 center](images/rs-japan-tsunami-village.jpg)
-
-<!-- A closer pair. Ask what you would have to do to these two images before you could difference them
-— which is exactly the georectification problem. Source noted in the original deck:
-totallycoolpix.com/2011/03/japan-earthquake-and-tsunami-before-and-after/ -->
+This is what temporal resolution buys: a satellite that passes regularly already has the "before"
+image on file. Before-and-after pairs are the single most common emergency-response product. Ask
+what you would have to do to these two images before you could difference them, which is exactly
+the georectification problem from Tuesday. Source noted in the original deck: boingboing.net,
+March 2011. -->
 
 ---
 
@@ -551,4 +768,16 @@ and the closing "Where today shows up" now hands off to Week 5 on the passive-ve
 distinction rather than pointing at LiDAR slides that are no longer in this deck.
 
 Old slug remote-sensing-3d-imaging.html is now a 404. Learning Suite carries it on Thu Sep 24.
+-->
+
+<!--
+Revision notes (2026-09-23), instructor review the day before the lecture. Removed the "Where we
+are going" contents slide. Removed the dead YouTube link from the spectrum slide and labeled the
+figure instead. The irradiance slide and the Digital Images divider now tie back to the spectrum.
+Added dashed pair boxes to the hex slides, and four decoded colors to the counting slide. Added the
+grid-paper RGB stack slide and a band-ruler slide after the hyperspectral cube. The old gallery is
+gone: Eiffel, snow, smoke and night lights are now band splits (section 5), the inauguration, Dubai
+and second Japan slides are dropped, and Katrina's three images are one slide in a new Satellites
+section (section 6). New figures: tools/week04_remote_sensing_figures.py. ArcGIS Pro captures still
+to make: tools/week04-arcgis-capture-plan.md.
 -->
