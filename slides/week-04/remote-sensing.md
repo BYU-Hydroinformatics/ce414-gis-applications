@@ -36,7 +36,7 @@ workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with re
 It was removed during conversion. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing<span class="updated">Last Updated: 2026-09-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing<span class="updated">Last Updated: 2026-09-23</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
