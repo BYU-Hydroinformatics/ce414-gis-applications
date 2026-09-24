@@ -1,7 +1,9 @@
-﻿# Render the Week 4 band tiles from C:\Ames\Week04\RemoteSensing.aprx with ArcGIS Pro's own map
+# Render the Week 4 band tiles from C:\Ames\Week04\RemoteSensing.aprx with ArcGIS Pro's own map
 # renderer (a layout map frame exported with arcpy), after tools/week04_arcgis_project.py built it.
 #   python week04_arcgis_render.py clean     remove the default basemap from every map
-#   python week04_arcgis_render.py photos    rs-arcgis-<key>-<band>.jpg, one per band of each photo
+#   python week04_arcgis_render.py photos    rs-arcgis-<key>-<band>.jpg, one per band of each photo,
+#                                            on the white-to-color ramps the slides use (not saved,
+#                                            so the project keeps its black-to-color Screen-blend demo)
 #   python week04_arcgis_render.py landsat   rs-arcgis-band-<blue|green|red|nir>.jpg
 # Output goes to slides/week-04/images/. Close the project in ArcGIS Pro before running.
 import os, sys
@@ -55,13 +57,19 @@ def render(aprx, m, target, out, px_w, dpi=96):
 
 
 def photos(aprx):
+    # White (0) to full color (255): reads better on a white slide than black-to-color, at the
+    # cost of the bands no longer adding back up to the photo. Stretch stays fixed at 0-255.
+    from week04_arcgis_project import set_stretch, BANDS as RAMPS
+    color = {str(i): c for _, i, c in RAMPS}
     for m in aprx.listMaps():
         if m.name not in KEYS: continue
         full = next(l for l in m.listLayers() if l.name.endswith("full color"))
         px_w = arcpy.Raster(full.dataSource).width
         for l in m.listLayers():
             if "Band_" not in l.name: continue
-            b = BANDS[l.name.split("Band_")[1][0]]
+            n = l.name.split("Band_")[1][0]
+            b = BANDS[n]
+            set_stretch(l, 0, 255, color[n], from_color=(255, 255, 255))
             render(aprx, m, l, os.path.join(OUT, f"rs-arcgis-{KEYS[m.name]}-{b}.jpg"), px_w)
 
 
@@ -80,5 +88,5 @@ def landsat(aprx):
 if __name__ == "__main__":
     aprx = arcpy.mp.ArcGISProject(APRX)
     {"clean": clean, "photos": photos, "landsat": landsat}[sys.argv[1]](aprx)
-    if sys.argv[1] != "clean":
+    if sys.argv[1] == "landsat":
         aprx.save()

@@ -52,6 +52,12 @@ The Eiffel map was saved with the three band layers on and blended with Screen, 
     Color Dodge, Lighten, Linear Dodge; darkening modes Multiply, Color Burn, Darken, Linear Burn;
     comparison modes Difference, Exclusion; divergent modes Overlay, Hard Light, Soft Light, Linear
     Light, Pin Light, Vivid Light, and more below.
+- 2026-09-24, at the instructor's request: the twelve tiles were re-rendered on **white-to-color**
+  ramps (white at 0, full color at 255; `week04_arcgis_render.py photos`, not saved to the
+  project), because they read better on a white slide. Checked: own channel 255, other two channels
+  255 − v within 1–3 DN. The "same split in ArcGIS Pro" slide keeps the black-to-color captures and
+  says why: only black-to-color recombines with Screen. The project on disk still holds the
+  black-to-color Screen-blend demo.
 - The twelve script-made `rs-band-*.jpg` files and `band_splits()` in
   `tools/week04_remote_sensing_figures.py` were deleted.
 
@@ -66,6 +72,9 @@ The Eiffel map was saved with the three band layers on and blended with Screen, 
 
 ## Still open
 
-- The `satjournal.tcom.ohiou.edu/pdf/shippert.pdf` source on "Many narrow, contiguous bands" timed
-  out on 2026-09-23; it is still marked VERIFY in the note.
+- ~~The dead satjournal source~~ 2026-09-24: slide "Many narrow, contiguous bands" was replaced by
+  "Multispectral vs. hyperspectral" (Edmund Optics Figure 4, from the instructor's screenshot, plus
+  the Shippert cube). Shippert now cited at
+  `ohioopen.library.ohio.edu/spacejournal/vol2/iss3/8/`; the archived shippert.pdf was checked to
+  be the same article.
 - No Landsat capture of the ArcGIS Pro UI itself (the band slides are map renders only).

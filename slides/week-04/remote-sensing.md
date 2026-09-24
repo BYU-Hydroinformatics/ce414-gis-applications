@@ -513,37 +513,53 @@ saturated to white. Compare the labeled reflectance numbers across slides, not t
 
 ---
 
-# Many narrow, contiguous bands
+# Multispectral vs. hyperspectral
 
-<div class="columns" style="grid-template-columns: 1fr 1fr;">
-<div>
+<div class="columns" style="grid-template-columns: 1fr 1.05fr; align-items:start; gap:0.8em;">
+<div style="text-align:center;">
 
-- **Multispectral**: a handful of fairly wide bands
-- **Hyperspectral**: hundreds of narrow, contiguous bands
-- Each sheet in the stack is **one narrow slice of the spectrum**
-- The result is a **full spectrum for every pixel**, not just a few samples
-- Soil, vegetation, and water each have a spectral shape you can match against
+<img src="images/rs-multi-vs-hyperspectral.png" style="width:100%;">
+<p style="font-size:0.5em;margin:0;">Figure: Edmund Optics, <a href="https://www.edmundoptics.com/knowledge-center/application-notes/imaging/hyperspectral-and-multispectral-imaging/">Hyperspectral and Multispectral Imaging</a></p>
 
 </div>
-<div>
+<div style="font-size:0.78em;">
 
-![w:520 center](images/rs-hyperspectral-cube.png)
+- **Multispectral**: a few **chosen** bands, each tens of nanometers wide (Landsat 8: 11)
+- **Hyperspectral**: hundreds of narrow, **contiguous** bands, so every pixel holds a **continuous spectrum**
+- The result is a **data cube**: x, y, and wavelength
+- More bands catch **subtle** differences; fewer bands mean **less data** and faster processing
+
+<div style="overflow:hidden;aspect-ratio:813/410;width:84%;margin:0.3em auto 0;"><img src="images/rs-hyperspectral-cube.png" style="width:100%;display:block;"></div>
+<p style="font-size:0.6em;margin:0;text-align:center;">Source: Shippert, <a href="https://ohioopen.library.ohio.edu/spacejournal/vol2/iss3/8/">Introduction to Hyperspectral Image Analysis</a></p>
 
 </div>
 </div>
 
-<p style="font-size:0.6em;margin-top:0.2em;">Source: satjournal.tcom.ohiou.edu/pdf/shippert.pdf</p>
+<!-- Same stack of sheets as the RGB slide. Left figure: a multispectral sensor samples the spectrum
+at a few chosen bands (the bar chart), a hyperspectral sensor samples it so finely that the result
+is a continuous curve. That is why hyperspectral imaging is also called imaging spectroscopy: every
+pixel is a spectrometer reading. Lower right: drill down through the cube at one pixel and you get
+that pixel's spectrum; soil, vegetation, and water each have a shape you can match against a
+library.
 
-<!-- Same stack of sheets as the RGB slide, with hundreds of sheets instead of three. The curves on
-the right are what you get by drilling down through the stack at one pixel: the values of every
-sheet, plotted against wavelength. The next slide puts those sheets back on the spectrum.
+The trade-off, per the Edmund Optics note: hyperspectral is best when the difference you care about
+is subtle and lies along a continuous spectrum; multispectral carries less data, so capture,
+processing, and analysis are faster, and its bands can be placed exactly where an application needs
+them (Landsat's red and near-infrared for NDVI). Worth one sentence if there is time: sensors build
+the cube by scanning, one point at a time (whiskbroom), one line at a time (pushbroom, as on
+Landsat 8 and 9), one wavelength at a time (area scanning), or all at once (snapshot).
 
 The original slide said "Can't open in ArcGIS…". That is no longer true. ArcGIS Pro's supported
 raster formats list (checked 2026-09-23) reads ENVI header files (.hdr, with .dat, .img, .raw, or
 .bsq data), AVIRIS (.hdr), HDF4 and HDF5, netCDF, EMIT (.nc), and Hyperion (.tif); PRISMA, EnMAP,
 and DESIS are not on the list. If a student asks: yes, ArcGIS Pro opens a hyperspectral cube as
-one many-band raster. VERIFY: the satjournal.tcom.ohiou.edu source link is from the
-original deck and has not been re-checked. -->
+one many-band raster.
+
+Sources. Left figure: Edmund Optics application note (Figure 4), cropped above its caption;
+captured 2026-09-24. Cube figure: Peg Shippert, "Introduction to Hyperspectral Image Analysis,"
+Online Journal of Space Communication, vol. 2, issue 3 (Figure 3, caption cropped). The deck used to
+cite it at satjournal.tcom.ohiou.edu/pdf/shippert.pdf, which is dead; the journal now lives at
+Ohio Open Library (the archived PDF was checked to be the same article). -->
 
 ---
 
@@ -581,17 +597,19 @@ tools/week04_remote_sensing_figures.py from the USGS band designations. -->
 <div><img src="images/rs-arcgis-eiffel-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band, 0–255</span></div>
 </div>
 
-- Each band is drawn from **black (0) to full color (255)**, so the three add back up to the original
-- The lawn is brightest in **green**; the iron and pavement are about equal in all three
-- The shadow is dark in every band: no light came back to measure
+- Each band is shaded from **white (0) to full color (255)**: the deeper the color, the more light in that band
+- The lawn is deepest in **green**; the iron and pavement are about equal in all three
+- The shadow is nearly white in every band: almost no light came back to measure
 
 <!-- Same move as the grid-paper slide, on real pixels. The tower's shadow is also how you get height
 out of a straight-down image.
 
 The band images are ArcGIS Pro renderings: the JPEG added to a map as three single-band layers
 (Band_1, Band_2, Band_3), each symbolized as Stretch, Minimum Maximum, with Edit min/max values set to
-0 and 255 and a black-to-red, black-to-green, or black-to-blue color scheme. The next slide shows the
-Symbology pane. Source of the photo noted in the original deck:
+0 and 255 and a white-to-red, white-to-green, or white-to-blue color scheme. White-to-color was chosen
+because it reads better on a white slide; black-to-color is the physically literal version (0 means
+no light), and it is the one whose three bands add back up to the photo, which the next slide shows
+in the Symbology pane. Source of the photo noted in the original deck:
 llll20.wordpress.com/2007/06/09/very-cool-google-satellite-maps/ -->
 
 ---
@@ -605,8 +623,8 @@ llll20.wordpress.com/2007/06/09/very-cool-google-satellite-maps/ -->
 
 - Add **Band_1**, **Band_2**, **Band_3** as separate layers
 - **Symbology**: Stretch, check **Edit min/max values**, 0 and 255
-- Black-to-red ramp: **Color scheme properties…**
-- **Raster Layer** tab → **Layer Blend** → **Screen**: the photo comes back
+- Two-color ramp: **Color scheme properties…**
+- With **black**-to-color ramps, **Layer Blend** → **Screen** puts the photo back together
 
 </div>
 </div>
@@ -620,7 +638,11 @@ layers channel by channel, so red + green + blue layers give back R, G, B. Check
 properties…, Continuous Color Scheme, one stop black and one stop red). Layer Blend on the Raster
 Layer tab (Effects group) offers Normal, the lightening modes Screen, Color Dodge, Lighten, and
 Linear Dodge, and darkening, comparison, and divergent modes. Linear Dodge (add) gives the same
-result here. -->
+result here.
+
+This slide deliberately uses black-to-color, not the white-to-color of the band slides: with a black
+ramp, 0 adds nothing, so three layers sum back to the photo. White-to-color reads better on a
+slide, but white is full light in every channel, so those layers do not recombine. -->
 
 ---
 
@@ -633,14 +655,20 @@ result here. -->
 <div><img src="images/rs-arcgis-snow-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band</span></div>
 </div>
 
-- Snow and cloud are **bright in all three visible bands**: visible light cannot tell them apart
+- Snow and cloud are **bright in all three visible bands** (deep color here): visible light cannot tell them apart
 - Move to the **shortwave infrared, near 1.6 µm** (Landsat band 6): snow goes dark, cloud stays bright
-- Notice the yellow state lines vanish from the blue band: yellow is **red + green, no blue**
+- The yellow state lines disappear into the snow in red and green but **show up in blue**: yellow is **red + green, no blue**
 
 <!-- A winter storm over Maryland and the mid-Atlantic, January 2009. The lesson is that the answer
 to "snow or cloud?" is on the band ruler, not in the picture: you need a band outside the visible.
-That is what the Normalized Difference Snow Index is built on. Source noted in the original deck:
-weblogs.marylandweather.com, January 2009. Band images rendered in ArcGIS Pro, set up as on the\nEiffel Tower slide. -->
+That is what the Normalized Difference Snow Index is built on.
+
+The state-line bullet was corrected on 2026-09-24: it used to say the lines vanish from the blue
+band, which is backwards. Measured on this image, the yellow lines average about R 229, G 236,
+B 87: as bright as snow in red and green, so they vanish there, and low in blue, so the blue band
+is where they stand out. Source noted in the original deck:
+weblogs.marylandweather.com, January 2009. Band images rendered in ArcGIS Pro, set up as on the
+Eiffel Tower slide. -->
 
 ---
 
@@ -653,7 +681,7 @@ weblogs.marylandweather.com, January 2009. Band images rendered in ArcGIS Pro, s
 <div><img src="images/rs-arcgis-smoke-blue.jpg" style="width:100%;"><br><span style="color:#1f5fbf;">Blue band</span></div>
 </div>
 
-- The desert is brightest in **red**; smoke over the ocean is brightest in **blue**
+- The desert is deepest in **red**; smoke over the ocean is deepest in **blue**
 - Small smoke particles **scatter short wavelengths** most, the same reason blue is the haziest band
 - A longer wavelength sees **through** haze, which is why fire maps lean on infrared bands
 
@@ -661,7 +689,8 @@ weblogs.marylandweather.com, January 2009. Band images rendered in ArcGIS Pro, s
 about R 88, G 112, B 123, against clear water at R 8, G 18, B 28. The smoke adds more to the blue
 band than to the red. Point back at the blue-band slide.
 
-Source noted in the original deck: andrewlias.blogspot.com, October 2007. Band images rendered in\nArcGIS Pro; the pixel values in ArcGIS Pro match these numbers. -->
+Source noted in the original deck: andrewlias.blogspot.com, October 2007. Band images rendered in
+ArcGIS Pro; the pixel values in ArcGIS Pro match these numbers. -->
 
 ---
 
@@ -685,7 +714,8 @@ imagery.
 
 Caution: this is a rendered composite (a day side and a night side on one globe), not a single
 satellite frame, so the colors are the renderer's choice. Use it for the band logic, not as a
-measurement. Source noted in the original deck: strangetravel.com. Band images rendered in\nArcGIS Pro. -->
+measurement. Source noted in the original deck: strangetravel.com. Band images rendered in
+ArcGIS Pro. -->
 
 ---
 
