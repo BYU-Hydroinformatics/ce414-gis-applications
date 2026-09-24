@@ -359,25 +359,6 @@ def four_resolutions() -> None:
     write("rs-four-resolutions.svg", p)
 
 
-# ---------------------------------------------------------------------------------------------
-# 7. Band splits of the example images
-# ---------------------------------------------------------------------------------------------
-SPLITS = {"eiffel": "rs-eiffel-tower-aerial.jpg", "snow": "rs-maryland-snow.jpg",
-          "smoke": "rs-california-wildfires.jpg", "night": "rs-europe-at-night.jpg"}
-
-
-def band_splits() -> None:
-    for key, src in SPLITS.items():
-        im = Image.open(os.path.join(OUT, src)).convert("RGB")
-        im.thumbnail((900, 900))
-        a = np.asarray(im)
-        for i, name in enumerate(("red", "green", "blue")):
-            t = np.zeros_like(a)
-            t[..., i] = a[..., i]          # black (0) to full channel color (255)
-            Image.fromarray(t).save(os.path.join(OUT, f"rs-band-{key}-{name}.jpg"), quality=88)
-        print("wrote rs-band-%s-{red,green,blue}.jpg" % key)
-
-
 if __name__ == "__main__":
     rgb_stack()
     camera_bands()
@@ -385,4 +366,3 @@ if __name__ == "__main__":
     image_chain()
     orbits()
     four_resolutions()
-    band_splits()

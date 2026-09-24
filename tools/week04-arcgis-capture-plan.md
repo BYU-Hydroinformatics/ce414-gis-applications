@@ -1,75 +1,71 @@
 # Week 4 remote-sensing deck: ArcGIS Pro captures to make
 
 **For:** the machine with ArcGIS Pro. **Deck:** `slides/week-04/remote-sensing.md`.
-**Written:** 2026-09-23, the day before the lecture.
+**Written:** 2026-09-23, the day before the lecture. **Status:** items 1–3 done 2026-09-23 on the
+Windows machine (ArcGIS Pro 3.7.1); what was done and how is recorded under each item.
 
 A Claude session on the ArcGIS Pro machine should start with
 `tools/week04-windows-agent-handoff.md`, which says how to run this plan there.
 
-The deck can be taught as it stands. Every item below replaces a stand-in with a real ArcGIS Pro
-capture. Each slide it touches carries a `TODO(instructor)` note that points back to this file.
-Save captures into `slides/week-04/images/` under the names given, then swap the references in the
-deck. Crop to the map view, plus the Symbology pane where the step says so. Leave out the ribbon and
-any account or tab strip.
+Project: `C:\Ames\Week04\RemoteSensing.aprx`, built by `tools/week04_arcgis_project.py` (maps
+Eiffel, Snow, Smoke, Night, Landsat; symbology set through the CIM) and rendered by
+`tools/week04_arcgis_render.py` (a layout map frame sized to each raster, exported by ArcGIS Pro).
+The Eiffel map was saved with the three band layers on and blended with Screen, ready for a live demo.
 
-## 1. Re-create the three MODIS band slides ("Band 1 — red", "Band 4 — green", "Band 3 — blue")
+## 1. ~~Re-create the three MODIS band slides~~ Done: Landsat band slides
 
-The current slides are legacy Multi-Channel Viewer screenshots. All three carry the same annotations
-and the wavelength labels have not been checked.
+- ~~Legacy Multi-Channel Viewer screenshots with identical annotations~~ replaced by four slides,
+  "Band 4 — red", "Band 3 — green", "Band 2 — blue", "Band 5 — near-infrared".
+- Data: the Lab 2 scene, Landsat 8 OLI `LC08_L2SP_038032_20250712_02_T1` (path 38, row 32,
+  12 July 2025), Collection 2 Level-2 surface reflectance. B4 and B5 came from the Lab 2 download;
+  B2 and B3 were fetched by `tools/week04_fetch_bands.py` from the Microsoft Planetary Computer
+  mirror of the USGS archive (no login). Living Atlas was not tried: the Lab 2 scene ties straight
+  to the NDVI students computed. Clipped to Utah Lake / Provo / Orem, UTM 12N
+  415000–460000 E, 4430000–4470000 N, in `C:\Ames\Week04\RemoteSensing.gdb`.
+- Symbology: grayscale Stretch, Minimum Maximum with custom min/max DN 7,700–18,800 (0.5th–99.5th
+  percentile of the three visible bands together; reflectance about 0.01–0.32) on B2, B3, B4. B5
+  has its own stretch, DN 7,000–26,300, because every field saturates on the shared one; the slide
+  note says so.
+- Files: `rs-arcgis-band-red.jpg`, `-green.jpg`, `-blue.jpg`, `-nir.jpg` (1000 px wide).
+- Labels are inline SVG over the image, different on each slide, with reflectance sampled from the
+  band rasters (7×7 means): center-pivot field B2 0.046, B3 0.076, B4 0.062, B5 0.484; Utah Lake
+  0.101 / 0.156 / 0.100 / 0.011; Provo Bay 0.027 / 0.076 / 0.043 / 0.024; bare ground west of the
+  lake 0.099 / 0.146 / 0.173 / 0.248.
 
-1. Download one scene that shows vegetation, bare ground, cloud, and water together. Use Landsat 8/9
-   Collection 2 Level-2 from EarthExplorer; a Utah scene with Utah Lake, farmland, and some cloud
-   works well. A Sentinel-2 L2A scene also works. Note the scene ID for the speaker notes.
-2. Add the red, green, and blue band files to a new map one at a time (Landsat 8/9: B4 = red,
-   B3 = green, B2 = blue).
-3. Symbolize each band as **Stretch** with the same stretch type (Percent Clip or Min-Max) and
-   **grayscale**. Capture the map and the Symbology pane for each band:
-   `rs-arcgis-band-red.png`, `rs-arcgis-band-green.png`, `rs-arcgis-band-blue.png`.
-4. Label each capture differently. That fixes the old slides' problem of identical annotations.
-   Mark the features whose brightness actually changes from band to band: vegetation (dark in red),
-   water, cloud, and bare ground.
-5. Optional, to set up NDVI: capture B5 (near-infrared) the same way, as `rs-arcgis-band-nir.png`.
-   Vegetation turns bright in that band.
-6. Check the band wavelengths in the speaker notes against the scene's metadata.
+## 2. ~~Split the four example images into bands~~ Done
 
-## 2. Split the four example images into bands (section 5, "Pulling Real Images Apart")
+- Each JPEG is in its map as a full-color layer plus three single-band layers (`Band_1/2/3`),
+  Stretch, Minimum Maximum, **Edit min/max values** 0 and 255, black-to-red / -green / -blue.
+- Files: `rs-arcgis-<eiffel|snow|smoke|night>-<red|green|blue>.jpg`. Checked against the source
+  photos: the band channel matches the photo's channel to a mean of 1–4 DN (JPEG noise) and the
+  other two channels are about 0, so the pixel claims on the slides (smoke over water about
+  R 88, G 112, B 123, and so on) hold in ArcGIS Pro.
+- New slide after the Eiffel Tower slide, "The same split in ArcGIS Pro", with two live screen grabs
+  at 175 % scaling: `rs-arcgis-eiffel-symbology.png` (the Symbology pane) and
+  `rs-arcgis-eiffel-screen-blend.jpg` (all three layers on, Layer Blend = Screen, the photo
+  reassembled).
+- VERIFIED in ArcGIS Pro 3.7.1:
+  - There is no "Format color ramp…". The Color scheme dropdown ends with **More color schemes…**
+    and **Color scheme properties…**; the latter opens the **Color Scheme Editor** (Continuous
+    Color Scheme, color stops, Algorithm Linear).
+  - **Raster Layer** tab → Effects group → **Layer Blend** offers Normal; lightening modes Screen,
+    Color Dodge, Lighten, Linear Dodge; darkening modes Multiply, Color Burn, Darken, Linear Burn;
+    comparison modes Difference, Exclusion; divergent modes Overlay, Hard Light, Soft Light, Linear
+    Light, Pin Light, Vivid Light, and more below.
+- The twelve script-made `rs-band-*.jpg` files and `band_splits()` in
+  `tools/week04_remote_sensing_figures.py` were deleted.
 
-These slides now show band splits made by a Python script
-(`tools/week04_remote_sensing_figures.py`), computed from the images' own pixels. The values are
-correct. What the slides lack is the ArcGIS Pro context.
+## 3. ~~While ArcGIS Pro is open~~ Done
 
-Images: `rs-eiffel-tower-aerial.jpg`, `rs-maryland-snow.jpg`, `rs-california-wildfires.jpg`,
-`rs-europe-at-night.jpg`. They are all in `slides/week-04/images/`.
+- Hyperspectral: ArcGIS Pro's supported raster formats page (checked 2026-09-23) lists ENVI header
+  (.hdr with .dat/.img/.raw/.bsq), AVIRIS, HDF4, HDF5, netCDF, EMIT (.nc), and Hyperion (.tif).
+  PRISMA, EnMAP, and DESIS are not listed. Speaker note updated.
+- MODIS: still delivering, but NASA Earthdata says Terra and Aqua begin shutting down in late
+  2026 / early 2027, and Suomi NPP data delivery ends 1 November 2026. VIIRS (NOAA-20, NOAA-21) added
+  to the trade-off table.
 
-For each one:
+## Still open
 
-1. Add the JPEG to a map. ArcGIS Pro reads it as a three-band raster. It has no spatial reference,
-   which is fine for this purpose; dismiss the warning.
-2. Expand the layer, or add the bands individually (`image.jpg/Band_1` and so on). Band_1 = red,
-   Band_2 = green, Band_3 = blue.
-3. Symbolize each band as **Stretch**, type **None** or **Min-Max** with min 0 and max 255, so the
-   ramp spans the full 0–255 range and is not auto-stretched.
-4. Choose a color ramp for each band:
-   - **Black → red** for Band_1, **black → green** for Band_2, **black → blue** for Band_3. This is
-     what the slides use now. It is the physically correct version, because 0 means no light, and
-     the three tinted bands add back up to the original. You can demonstrate that live: set the
-     layers to the **Screen** blend mode and stack them. VERIFY which layer blend modes
-     ArcGIS Pro offers.
-   - Or **white → red** and so on, if you prefer that look. It reads well, but the bands no longer
-     add up to the original image.
-   - If ArcGIS Pro has no black-to-red ramp, make one: in the color-ramp dropdown, open
-     **Format color ramp…** and create a two-color **Algorithmic** ramp. VERIFY the menu name.
-5. Capture the map with the Symbology pane showing the 0–255 range. Name each capture
-   `rs-arcgis-<key>-<band>.png`, where key is `eiffel`, `snow`, `smoke`, or `night`.
-6. In the deck, replace the `rs-band-<key>-<band>.jpg` references with the new captures. The
-   four-across layout on each slide can stay as it is.
-
-Worth doing live in class, if there is time: do the Eiffel Tower split in front of the students.
-It takes about two minutes and makes the grid-paper slide ("A color image is three bands, stacked") concrete.
-
-## 3. While ArcGIS Pro is open
-
-- "Many narrow, contiguous bands": check which hyperspectral formats ArcGIS Pro opens natively, for example ENVI `.hdr`
-  or HDF, and whether multidimensional raster tools apply. Update the speaker note either way.
-- "Every satellite is a trade-off": check whether MODIS (Terra/Aqua) is still delivering data. If it is not, add VIIRS as
-  its successor in the table.
+- The `satjournal.tcom.ohiou.edu/pdf/shippert.pdf` source on "Many narrow, contiguous bands" timed
+  out on 2026-09-23; it is still marked VERIFY in the note.
+- No Landsat capture of the ArcGIS Pro UI itself (the band slides are map renders only).
