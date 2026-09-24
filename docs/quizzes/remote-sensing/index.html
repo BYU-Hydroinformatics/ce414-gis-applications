@@ -6,7 +6,7 @@
   <title>CE 414 — Light and Bands</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the electromagnetic spectrum, what a band is, whether a sensor measured reflected light or emitted heat, and what satellites trade off.">
+  <meta name="description" content="CE 414 in-class quiz: hex colors, the bands inside a color image, false color, and the satellites that take the pictures.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -16,12 +16,59 @@
 CE414Quiz.start({
   title: "Light and Bands",
   subtitle: "CE 414 &middot; Week 4 &mdash; Remote Sensing<br>" +
-            "Eight questions on where energy sits on the spectrum, what a <strong>band</strong> " +
-            "really is, whether the sensor measured <strong>reflected</strong> light or " +
-            "<strong>emitted</strong> heat, and what <strong>satellites</strong> trade off.",
+            "Eight questions on <strong>hex colors</strong>, the <strong>bands</strong> inside a color " +
+            "image, <strong>false color</strong>, and the <strong>satellites</strong> that take the pictures.",
   badge: "Remote sensing",
   deckUrl: "../../slides/week-04/remote-sensing.html",
   questions: [
+    {
+      prompt: "What color is #FFFF00?",
+      badge: "Hex colors",
+      options: [
+        "Green",
+        "Yellow",
+        "White",
+        "Pure red"
+      ],
+      answer: "Yellow",
+      explanation: "Read it in pairs: FF red, FF green, 00 blue. Full red plus full green with no blue is yellow. White would need blue at FF too (#FFFFFF). It is the same reason the yellow state lines vanished from the blue band of the snow image: yellow has nothing in the blue band."
+    },
+    {
+      prompt: "Two hexadecimal digits per band give 256 levels each of red, green and blue. Why is that enough?",
+      badge: "Hex colors",
+      options: [
+        "About 16.8 million colors, far more than the eye can resolve",
+        "Exactly as many colors as the eye can resolve, none to spare",
+        "Only 256 colors in all, which is what one pixel can store",
+        "Hexadecimal has no upper limit, so it covers every color"
+      ],
+      answer: "About 16.8 million colors, far more than the eye can resolve",
+      explanation: "Each band runs 00 to FF, which is 0 to 255, so the combinations are 256 × 256 × 256 = 16,777,216. The working figure for how many colors the eye can tell apart is about a million, so neighboring hex colors that differ by one step in one band are mostly invisible."
+    },
+    {
+      prompt: "You split a color photo into its red, green and blue bands. What does each band hold?",
+      badge: "Bands",
+      options: [
+        "A third of the photo's pixels, chosen at random",
+        "The photo's colors, sorted from dark to light",
+        "One number per pixel: that color's brightness",
+        "A copy of the whole photo, tinted one color"
+      ],
+      answer: "One number per pixel: that color's brightness",
+      explanation: "Every band covers every pixel. It is one sheet of grid paper, holding one number per cell: how much red, or green, or blue light came back from that spot, from 0 to 255. Stack the three sheets and each pixel has three numbers, which is its hex color."
+    },
+    {
+      prompt: "An orange pixel is #FFA500. What is its value in the blue band, and how does it look there?",
+      badge: "Hex and bands",
+      options: [
+        "255, so it shows bright blue",
+        "165, so it shows medium blue",
+        "A5, so it shows medium blue",
+        "0, so it shows as black"
+      ],
+      answer: "0, so it shows as black",
+      explanation: "The pairs are FF red, A5 green and 00 blue. A5 is the green band's value (165), not the blue band's. The blue pair is 00, so this pixel sends back no blue at all and is black in the blue band. That is why the orange city lights nearly vanished from the blue band of the Europe-at-night image."
+    },
     {
       prompt: "Healthy vegetation is bright in a reflected near-infrared image. Why?",
       badge: "Reflected or emitted",
@@ -35,94 +82,45 @@ CE414Quiz.start({
       explanation: "Reflected near-infrared is sunlight bouncing off a surface, exactly like visible light — it is not heat. Thermal infrared, farther along the spectrum, is energy a surface emits because of its own temperature. Plants are bright in the near-infrared because leaves reflect it, not because they are warm."
     },
     {
-      prompt: "The band choices on real satellite sensors look arbitrary until you put the solar irradiance curve behind them. What decides them?",
-      detail: "The sea-level curve is notched wherever ozone, oxygen, water vapor and carbon dioxide absorb.",
-      badge: "Atmospheric windows",
-      options: [
-        "The bands are spaced evenly from one end of the spectrum to the other",
-        "The bands sit in the gaps between the absorption notches",
-        "The bands are matched to the three types of cone cell in the human eye",
-        "The bands are set by how small the detector can make a pixel"
-      ],
-      answer: "The bands sit in the gaps between the absorption notches",
-      explanation: "You cannot measure a wavelength the atmosphere has already absorbed, so sensors are built for the atmospheric windows between the notches. The curve is why an apparently odd list of bands is actually the only list available."
-    },
-    {
-      prompt: "One scene is shown one band at a time. The blue band looks hazier than the red or the green. Why?",
-      badge: "Bands",
-      options: [
-        "The blue band was taken on a different day",
-        "Chlorophyll absorbs blue, so the vegetation washes out",
-        "The blue band is stored at a coarser cell size",
-        "Blue light scatters hardest in the atmosphere"
-      ],
-      answer: "Blue light scatters hardest in the atmosphere",
-      explanation: "All three bands are the same scene at the same instant; what differs is how each wavelength behaves. Blue scatters most on the way through the atmosphere, so the blue band carries more haze and less surface contrast than the others."
-    },
-    {
-      prompt: "Landsat 8 records each band with 12 bits instead of the 8 bits behind a hex color. What does that change?",
-      badge: "Radiometric resolution",
-      options: [
-        "4,096 brightness levels per band instead of 256",
-        "Pixels twelve times smaller on the ground",
-        "Twelve bands instead of the three in a photo",
-        "A revisit every 12 days instead of every 16"
-      ],
-      answer: "4,096 brightness levels per band instead of 256",
-      explanation: "Eight bits is two hex digits, 00 to FF, or 256 levels. Twelve bits is 2 multiplied by itself twelve times, or 4,096 levels, so Landsat 8 can tell apart surfaces whose brightness differs too little for an 8-bit image. That is radiometric resolution. Pixel size, number of bands and revisit are the other three resolutions, and bit depth changes none of them."
-    },
-    {
-      prompt: "What makes an image a false-color image?",
+      prompt: "You load each band as its own layer in ArcGIS Pro, turn off the blue and red band layers, and symbolize the near-infrared band with a rainbow ramp from purple (0) to red (255). What have you made?",
       badge: "False color",
       options: [
-        "The colors were painted onto the image by hand afterward",
-        "The scene was captured at night, so nothing is real color",
-        "The sensor recorded no color information at all",
-        "Someone chose which band drives each display channel"
+        "A false-color image: the colors are a display choice",
+        "A natural-color image, since it spans purple to red",
+        "A thermal image, since near-infrared measures heat",
+        "Nothing yet: false color needs all three bands on"
       ],
-      answer: "Someone chose which band drives each display channel",
-      explanation: "Stack the red, green and blue bands into their matching display channels and you get a natural-color image. Put some other band into the red channel instead and the same scene comes out false color. The colors are band assignments, not what your eye would have seen."
+      answer: "A false-color image: the colors are a display choice",
+      explanation: "Any color on any band is false color. The near-infrared band is still just one number per pixel; the rainbow ramp only decides how each number is drawn, so 0 is purple and 255 is red. It needs no second or third band, and it is not heat: near-infrared is reflected sunlight. Bright leaves will simply land at the red end of the ramp."
     },
     {
-      prompt: "A weather satellite images a hurricane every few minutes. Landsat comes back to the same place only every 8 days. Why the difference?",
-      badge: "Orbits",
+      prompt: "What sets a weather satellite like GOES apart from Landsat?",
+      badge: "Satellites",
       options: [
-        "The weather satellite program has more satellites in orbit",
-        "One stays above one spot; Landsat sweeps Earth in strips",
-        "Larger pixels let the weather satellite scan the scene faster",
-        "Landsat waits for a clear sky before it takes a picture"
+        "It flies lower, so its pixels are much sharper",
+        "It stays over one spot, imaging it every few minutes",
+        "It carries hundreds of narrow, contiguous bands",
+        "It sends its own radar pulse, so it sees at night"
       ],
-      answer: "One stays above one spot; Landsat sweeps Earth in strips",
-      explanation: "GOES is geostationary: 35,786 km above the equator, it orbits once a day and so stays over the same spot, watching a whole hemisphere continuously. Landsat is in a low, sun-synchronous polar orbit about 700 km up, which gives sharp 30 m pixels but covers the planet one strip at a time, so each place waits days for the next pass."
+      answer: "It stays over one spot, imaging it every few minutes",
+      explanation: "GOES is geostationary: far out over the equator, it circles once a day, so it hangs over the same part of the Earth and can image it again and again. Landsat flies much lower, pole to pole, so its pixels are sharper, but it covers the planet one strip at a time and comes back only every few days."
     },
     {
-      prompt: "After a storm, an engineer needs to know whether one stadium's roof was torn off. Which source fits the job?",
-      badge: "Trade-offs",
+      prompt: "Why doesn't one satellite do everything?",
+      badge: "Satellites",
       options: [
-        "GOES, because it images the storm every few minutes",
-        "MODIS, because it covers the whole region every day",
-        "A commercial satellite with pixels of about 0.3 m",
-        "Landsat, because its record goes back to 1972"
+        "Each satellite can carry only one band at a time",
+        "Only one space agency is allowed to launch them",
+        "Sharper pixels cost coverage and time between visits",
+        "Clouds block every sensor, whatever its band"
       ],
-      answer: "A commercial satellite with pixels of about 0.3 m",
-      explanation: "A stadium roof is a few hundred meters across and the damage is much smaller. With 30 m Landsat pixels, the roof is only a few pixels across; with MODIS or GOES pixels of hundreds of meters to kilometers, it is less than one. Sub-meter commercial imagery shows the torn membrane, as in the Superdome image, but it covers a small area on request. Every satellite trades detail against coverage and revisit."
-    },
-    {
-      prompt: "In the enhanced infrared view of Hurricane Katrina, the eyewall stands out sharply. What is the sensor measuring, and what does the brightest area mean?",
-      badge: "Thermal infrared",
-      options: [
-        "Energy the cloud tops emit themselves; the coldest are the tallest",
-        "Sunlight reflected off the storm top; the brightest area is thickest cloud",
-        "Wind speed at the sea surface; the brightest area is the strongest wind",
-        "Rain falling under the storm; the brightest area is the heaviest rain"
-      ],
-      answer: "Energy the cloud tops emit themselves; the coldest are the tallest",
-      explanation: "This is one of the few images in today's set that genuinely is about heat: the sensor reads thermal infrared, and the colors are a temperature enhancement. Cold means high, so the coldest cloud tops mark the tallest, most vigorous convection — which is why the eyewall lights up."
+      answer: "Sharper pixels cost coverage and time between visits",
+      explanation: "Every satellite trades detail against coverage and revisit. A sub-meter commercial image shows one torn roof but covers a few blocks; a weather satellite sees the whole storm every few minutes with pixels kilometers wide; Landsat sits in between. Satellites carry many bands, many agencies launch them, and radar sees through cloud."
     }
   ],
-  perfectNote: "A perfect score — you can say what the sensor measured and why the band was chosen, which is the whole hour.",
-  goodNote: "Solid. Read the explanations for the ones you missed; the reflected-versus-emitted pair is the one that catches everybody.",
-  tryAgainNote: "Worth another pass. The short version: near-infrared in an image like the one behind Lab 2's NDVI is reflected sunlight, thermal infrared is heat a surface gives off, and a band is one wavelength window stored as its own grid of numbers."
+  perfectNote: "A perfect score — you can read a hex color, pull an image apart into bands, and say what any display of those bands means.",
+  goodNote: "Solid. Read the explanations for the ones you missed; the hex-and-bands pair is the one to get solid before Quiz 4.",
+  tryAgainNote: "Worth another pass. The short version: a hex color is three pairs, one per band; a band is one grid of numbers from 0 to 255; and any colors you put on a band make a false-color display."
 });
 </script>
 </body>

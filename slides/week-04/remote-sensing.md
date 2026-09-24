@@ -880,7 +880,7 @@ Next week the sensor points at the ground and measures **distance** instead of b
 <div class="columns">
 <div>
 
-Eight questions on what the sensor measured and what satellites trade off. **Scan the code**, or open the link below.
+Eight questions on hex colors, bands, false color, and satellites. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
@@ -896,8 +896,9 @@ Eight questions on what the sensor measured and what satellites trade off. **Sca
 </div>
 </div>
 
-<!-- Four or five minutes, then a show of hands on the first item. That one splits the room every
-time: near-infrared in a vegetation image is reflected sunlight bouncing off leaf structure, and a
+<!-- Four or five minutes, then a show of hands on two items. The false-color item (6) is the one
+to discuss: any color ramp on any single band is a false-color display, with no need for three
+bands. The near-infrared item (5) splits the room every time: near-infrared in a vegetation image is reflected sunlight bouncing off leaf structure, and a
 good half of the class will pick "leaves are warmer than the ground" because the word infrared
 sounds like heat. Draw the distinction on the board one more time - reflected near-infrared is
 sunlight, thermal infrared is what a surface emits because of its own temperature - and point back
