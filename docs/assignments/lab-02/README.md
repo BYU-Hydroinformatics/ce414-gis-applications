@@ -481,8 +481,16 @@ Now open the model as a tool: in the **Catalog** pane, right-click `NDVI` in `La
 > "intermediate," and ModelBuilder deletes intermediate datasets from your geodatabase when the
 > model finishes running from the tool dialog (not when you click Run inside ModelBuilder). The
 > NDVI layer will vanish from your map. If you want to keep the NDVI surface — and you do, for
-> your report and for Step 6 — select the `NDVI` oval on the canvas and click **Intermediate** on
-> the ModelBuilder ribbon to switch that flag off, or make it a parameter too.
+> your report and for Step 6 — the dependable way is to make the `NDVI` oval a **parameter** too
+> (right-click it ▸ **Parameter**); parameters are never deleted. ArcGIS Pro also has an
+> **Intermediate Data** flag (select the oval and press `Ctrl+I`), but you may have to save the
+> model and reopen the tool before it takes effect. Do not click the **✗ Intermediate** button on
+> the canvas toolbar: that one is *Delete Intermediate Data*.
+
+<!-- 2026-09-25: this box used to say "click Intermediate on the ModelBuilder ribbon". In the Lab 4
+     GUI session the visible "X Intermediate" button turned out to be Delete Intermediate Data; the
+     per-element flag is the command "Intermediate Data (Ctrl+I)", and one test of it (without
+     reopening the tool dialog) did not keep the data. The parameter route is the reliable one. -->
 
 ### Step 5 — Expose the Threshold
 
