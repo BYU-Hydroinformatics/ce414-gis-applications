@@ -1,0 +1,99 @@
+{
+ "zones_ge_1km2": [
+  {
+   "km2": 37.25,
+   "x": 418391,
+   "y": 4425403,
+   "lon": -111.9557,
+   "lat": 39.9748,
+   "nearest_highway": "SR 68",
+   "highway_m": 104
+  },
+  {
+   "km2": 34.3,
+   "x": 447064,
+   "y": 4446718,
+   "lon": -111.6217,
+   "lat": 40.1692,
+   "nearest_highway": "SR 77",
+   "highway_m": 892
+  },
+  {
+   "km2": 11.43,
+   "x": 453686,
+   "y": 4413988,
+   "lon": -111.5416,
+   "lat": 39.8747,
+   "nearest_highway": "US 89",
+   "highway_m": 199
+  },
+  {
+   "km2": 6.98,
+   "x": 426769,
+   "y": 4454983,
+   "lon": -111.861,
+   "lat": 40.2421,
+   "nearest_highway": "SR 68",
+   "highway_m": 484
+  },
+  {
+   "km2": 4.67,
+   "x": 496369,
+   "y": 4413991,
+   "lon": -111.0425,
+   "lat": 39.876,
+   "nearest_highway": "US 6",
+   "highway_m": 320
+  },
+  {
+   "km2": 3.28,
+   "x": 489151,
+   "y": 4411626,
+   "lon": -111.1268,
+   "lat": 39.8546,
+   "nearest_highway": "SR 96",
+   "highway_m": 15
+  },
+  {
+   "km2": 2.39,
+   "x": 431127,
+   "y": 4422543,
+   "lon": -111.8063,
+   "lat": 39.9502,
+   "nearest_highway": "I-15",
+   "highway_m": 220
+  },
+  {
+   "km2": 1.38,
+   "x": 455309,
+   "y": 4431523,
+   "lon": -111.5238,
+   "lat": 40.0327,
+   "nearest_highway": "US 6",
+   "highway_m": 223
+  },
+  {
+   "km2": 1.34,
+   "x": 400296,
+   "y": 4454340,
+   "lon": -112.172,
+   "lat": 40.2336,
+   "nearest_highway": "SR 73",
+   "highway_m": 13
+  }
+ ],
+ "kd_county_per10k": {
+  "min": 0.0,
+  "max": 114.50311169028282,
+  "mean": 27.662062954169095
+ },
+ "suitable_outside_corridor": "checked by construction: Extract by Mask sets NoData outside",
+ "one_tower_peak_per10k": {
+  "10000": 95.4929658551372,
+  "20000": 23.8732414637843,
+  "40000": 5.968310365946075
+ },
+ "towers_clip": 71,
+ "towers_clip_distinct": 65,
+ "dedup_suitable_km2": 176.1741
+}

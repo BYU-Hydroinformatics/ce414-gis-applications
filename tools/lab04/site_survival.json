@@ -1,0 +1,125 @@
+{
+ "site_utm": [
+  418391,
+  4425403
+ ],
+ "runs": [
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 116.8362,
+   "pct_county": 2.1071036661923985,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 5,
+   "suitable_km2": 30.6828,
+   "pct_county": 0.5533545285540622,
+   "site_suitable": false
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 10,
+   "suitable_km2": 45.783,
+   "pct_county": 0.8256818276295068,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 40,
+   "suitable_km2": 274.4415,
+   "pct_county": 4.949465069946995,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 80,
+   "suitable_km2": 592.0848,
+   "pct_county": 10.678060847381145,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 10000,
+   "max_density": 20,
+   "suitable_km2": 364.6728,
+   "pct_county": 6.576757835676333,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 1,
+   "radius_m": 40000,
+   "max_density": 20,
+   "suitable_km2": 78.795,
+   "pct_county": 1.421042736563069,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 3,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 91.566,
+   "pct_county": 1.6513636552590136,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 10,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 163.6011,
+   "pct_county": 2.9504937476835877,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 15,
+   "road_km": 1,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 200.0907,
+   "pct_county": 3.6085720653445024,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 0.5,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 71.3097,
+   "pct_county": 1.286047734392937,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 2,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 176.9238,
+   "pct_county": 3.1907644002174895,
+   "site_suitable": true
+  },
+  {
+   "max_slope": 5,
+   "road_km": 5,
+   "radius_m": 20000,
+   "max_density": 20,
+   "suitable_km2": 303.4647,
+   "pct_county": 5.472889240919992,
+   "site_suitable": true
+  }
+ ]
+}
