@@ -365,6 +365,15 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 The rubric at the end of this lab gives the point value of every item above, so read it before
 you write.
 
+> [!TIP]
+> **Start from the template.** [`lab06-report-template.docx`](lab06-report-template.docx) has the
+> title block, a section for every item in the list above, the tables already set up with the
+> columns the rubric asks for (including the shore-feature table and the range-and-step
+> table), and the rubric at the end ready to fill in. Open it in Word or
+> upload it to Google Docs, replace every gray italic prompt, and delete the prompts as you go. You
+> are welcome to write your report any way you like — the template is a floor, not a ceiling — but
+> if you use it and fill in every section, you will not have left a graded item out.
+
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your
@@ -391,6 +400,10 @@ templates, and your name must be on your maps.
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
+
+This rubric is already laid out as a fillable table at the end of
+[`lab06-report-template.docx`](lab06-report-template.docx), so you do not have to copy it
+out of this page.
 
 | Item | Points |
 | --- | --- |

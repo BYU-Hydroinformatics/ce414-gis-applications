@@ -183,8 +183,16 @@ tools/templates/make_lab_report_template.js           the builder (LABS block at
 docs/assignments/lab-NN/labNN-report-template.docx    the artifact MkDocs serves
 ```
 
-Built so far: Labs 2, 3 and 4. Run `node make_lab_report_template.js` with no argument to see
-which keys exist.
+Built so far: **Labs 1, 2, 3, 4 and 6.** Run `node make_lab_report_template.js` with no argument to
+see which keys exist.
+
+**Labs 5, 7, 8, 9, 10 and 11 do not have templates yet, and should not until they are revised.**
+Their rubrics are still the Word-era ones — a handful of rows with no per-bullet point values, and
+in some cases no `## Deliverables` list to build sections from. The builder reads the rubric out of
+the lab page, so it would either find nothing or reproduce a rubric that does not match how the five
+parts of ten are actually graded. Building a template for one of those means inventing structure the
+rubric does not have, which is the one thing section 3 says not to do. Add the `LABS` entry as part
+of revising each lab, not before.
 
 `node_modules/` is git-ignored; run `npm install docx` inside `tools/templates/` once.
 

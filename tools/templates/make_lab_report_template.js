@@ -19,6 +19,78 @@ const REPO = path.resolve(__dirname, '..', '..');
 // ───────────────────────────── lab-specific content ─────────────────────────────
 const LABS = {
 
+'01': {
+  labTitle: 'Lab 1: Walmart Site Selection',
+  labSubtitle: '',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you were asked to produce and how you went about it — not a retelling of the step-by-step.' },
+
+    { h: 'Your Walmart Point Data',
+      hint: 'Rubric: how you created your Walmart point data and why you trust it — the store finder or map you used, how many stores you found, and which formats you included (1 point). "Which formats" means Supercenter, Neighborhood Market and so on: say which you counted and which you left out, and why.',
+      table: { caption: 'Table 1. How the Walmart points were built.',
+               head: ['Item', 'Your answer'],
+               rows: [['Source (store finder or map)', ''], ['Date you collected it', ''],
+                      ['Number of stores found', ''], ['Formats included, and any you excluded', ''],
+                      ['Why you trust it, and where it may be wrong', '']],
+               widths: [4000, 5360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type and source (2 points). Fill one row per tool, in the order they run.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type and source'],
+               rows: [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']],
+               widths: [1500, 2300, 2300, 1700, 1560] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
+          hint: 'Rubric: a full-page (8.5 × 11) figure of the model — every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2 points).' },
+        { caption: 'Figure 2. The model’s toolbox interface, with the two buffer distances exposed as parameters.', size: 'medium',
+          hint: 'Rubric: a screen capture of the toolbox interface with the two buffer distances exposed as parameters, showing the input and output parameters (2 points).' },
+      ] },
+
+    { h: 'Which Criteria Actually Narrowed the Result',
+      hint: 'Rubric: which of the three spatial criteria actually narrowed your result and which did not, with the counts and areas that show it (1 point). One of the three does almost nothing at its default value in Utah County. Show that with numbers, not an impression.',
+      table: { caption: 'Table 3. What each criterion removed.',
+               head: ['Criterion', 'Candidate polygons after', 'Total area after', 'What it removed'],
+               rows: [['Density over 5,000 per sq mi', '', '', ''],
+                      ['Within 2 miles of a major road', '', '', ''],
+                      ['More than 2 miles from an existing Walmart', '', '', '']],
+               widths: [3000, 1900, 1600, 2860] } },
+
+    { h: 'Your Recommendation',
+      hint: 'Rubric: where the best locations for a new Walmart are, which one site you recommend, and why you selected it (3 points). Name the site, say where it is, and give reasons a reader could argue with — not just that the model returned it.' },
+
+    { h: 'Sensitivity Analysis', pageBreakBefore: true,
+      hint: 'Rubric: a table of at least three additional runs, giving the parameter values, the number of candidate polygons and the total area for each (4 points). Choose your runs deliberately and say why you chose them.',
+      table: { caption: 'Table 4. Sensitivity — the baseline and at least three more runs.',
+               head: ['Run name', 'Density threshold', 'Road buffer', 'Walmart exclusion', 'Candidate polygons', 'Total area', 'Site still suitable?'],
+               rows: [['Baseline', '5,000 / sq mi', '2 miles', '2 miles', '', '', ''],
+                      ['', '', '', '', '', '', ''], ['', '', '', '', '', '', ''], ['', '', '', '', '', '', '']],
+               widths: [1300, 1400, 1150, 1400, 1450, 1200, 1460] },
+      questions: [
+        'Which parameter does your answer depend on most, and which barely matters? Support it with the numbers from your table, not an impression. (2 points)',
+        'Is there a setting at which no suitable site exists at all? If so, what does that tell you about the criteria — or about Utah County? (2 points)',
+        'Does your recommended site survive every scenario you ran, or only some? If only some, is it still your recommendation? Defend your answer either way. (2 points)',
+      ] },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Symbolize the suitability layer the same way on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — the target zones at the criteria as given.', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date and map projection; existing Walmarts with an appropriate symbol and every existing and proposed location labeled; the final suitability layer shown so a reader can see the effect of your intersection and erase; your recommended site or sites clearly marked; close-up data frames or an inset of the spots you selected; a visible basemap at a sensible scale, all text legible in print.' },
+        { caption: 'Map 2. Scenario — one run from Step 12.',
+          hint: 'Everything Map 1 needs except the close-ups, plus: the title and text box say which parameters were changed, to what, and why you chose this run to show.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the census data, the roads, your Walmart source and the basemap.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Field names, expressions, coordinate systems and numbers come from your own data, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '02': {
   labTitle: 'Lab 2: NDVI',
   labSubtitle: 'Classifying Land Based on NDVI',
@@ -153,6 +225,75 @@ const LABS = {
       hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Control points, coordinate systems, measured distances and RMS values come from your own work, never from a model.' },
     { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
       hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the 2 points for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
+'06': {
+  labTitle: 'Lab 6: Lake Depth Explorer',
+  labSubtitle: 'Shorelines at Every Water Level — Looping in ModelBuilder',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to show and how you went about it — not a retelling of the step-by-step.' },
+
+    { h: 'The Surface and Its Metadata',
+      hint: 'Rubric: the three metadata values for the surface and what each means for your result (2 points). The vertical datum matters more than it looks — every elevation you type into the iterator is measured from it.',
+      table: { caption: 'Table 1. Metadata for the surface.',
+               head: ['Metadata value', 'What you found', 'What it means for your result'],
+               rows: [['Survey date', '', ''], ['Vertical datum', '', ''], ['Cell size', '', '']],
+               widths: [2300, 2400, 4660] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from, including how the loop value reaches the tools inside it (2 points). Say what the iterator is, what its three values are, what happens inside the loop, and how the results are collected into one feature class.',
+      table: { caption: 'Table 2. Model description — the iterator, then one row per tool inside the loop.',
+               head: ['Element', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Iterator', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''],
+                      ['', '', '', '', ''], ['Collector / merge', '', '', '', '']],
+               widths: [1700, 2200, 2200, 1700, 1560] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2 points).' },
+        { caption: 'Figure 2. The model’s toolbox interface, with the low, high and step parameters exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the toolbox interface with the low, high, and step parameters exposed (2 points).' },
+      ] },
+
+    { h: 'Shore Features',
+      hint: 'Rubric: the shore-feature table — how you chose the features and the elevation at which each goes dry (2 points). Say in a sentence how you picked them before the table, then fill one row per feature.',
+      table: { caption: 'Table 3. Shore features and the water level at which each goes dry.',
+               head: ['Feature', 'What it is', 'Its elevation', 'Water-surface elevation at which it goes dry'],
+               rows: [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']],
+               widths: [2000, 2600, 1600, 3160] } },
+
+    { h: 'Range and Step Sensitivity', pageBreakBefore: true,
+      hint: 'Rubric: a table of at least three additional runs, giving the range, the step, the number of shorelines, and the areas at the lowest and highest elevations (4 points). Choose your values deliberately and say why.',
+      table: { caption: 'Table 4. Range and step sensitivity — the baseline and at least three more runs.',
+               head: ['Run name', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'What it shows'],
+               rows: [['Baseline', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', ''],
+                      ['', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '']],
+               widths: [1300, 800, 800, 800, 1160, 1250, 1250, 2000] },
+      questions: [
+        'Which shore features go dry, and at what elevation? Does the answer change with the step, and if so, how far? (2 points)',
+        'How much does the lake’s area change per unit of elevation, and is that rate the same at the bottom of the range as at the top? What about the basin’s shape explains the difference? (2 points)',
+        'What is the smallest step that still shows the shape of the basin? What did the finer runs cost? (2 points)',
+      ] },
+
+    { h: 'Where the Shorelines Are Wrong',
+      hint: 'Rubric: where the shorelines are wrong and why, and what data would fix it (2 points). The seam between surveys, the cell size, the depressions you removed — name each one and say what data would fix it.' },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Symbolize the shorelines the same way on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — the nested shorelines at the default range and step.', pageBreakAfter: true,
+          hint: 'Must carry: title stating the elevation range and step; neat line, north arrow and scale bar; a text box with author, date, map projection, and the surface’s source, survey date and vertical datum; the nested shorelines symbolized so each elevation is readable, with a legend; your shore-feature points, labeled; an inset or close-up of one feature at the elevation it goes dry; basemap, scale and legibility appropriate to the lake.' },
+        { caption: 'Map 2. Scenario — a different range or step from Step 7.',
+          hint: 'Everything Map 1 needs except the inset, plus: the title and text box say what changed from Map 1 and why this run was chosen.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the surface and its survey, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Elevations, areas, datums and cell sizes come from your own data, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
   ],
 },
 
