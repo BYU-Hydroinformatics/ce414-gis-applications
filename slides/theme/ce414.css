@@ -80,3 +80,10 @@ section li[data-marpit-fragment]:has(.tryit) { list-style: none; margin: 0.6em 0
 .tryit strong { color: #ffd21f; }
 li[data-bespoke-marp-fragment="active"] .tryit { animation: tryit-pop 0.45s ease-out both; }
 @keyframes tryit-pop { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* Info box: a blue callout that appears on the next key press. Same pattern as .tryit — write it as
+   an asterisk list item containing <span class="infobox">…</span>. */
+section li[data-marpit-fragment]:has(.infobox) { list-style: none; margin: 0.6em 0 0 -1.2em; }
+.infobox { display: block; background: #1f4e8c; color: #fff; border-left: 8px solid #ffd21f; border-radius: 10px; padding: 0.45em 0.9em; line-height: 1.35; font-size: 0.85em; }
+.infobox strong { color: #ffd21f; }
+li[data-bespoke-marp-fragment="active"] .infobox { animation: tryit-pop 0.45s ease-out both; }
