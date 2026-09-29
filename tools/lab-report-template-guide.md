@@ -125,44 +125,41 @@ both the table and every cell. Percentages break in Google Docs.
 
 ## 4. Building the next one
 
-The builder script keeps everything lab-specific in one `LAB` block at the top; the machinery below
-it is generic. To make Lab 3's template:
+All the lab-specific content lives in the `LABS` block at the top of the builder, keyed by lab
+number; the machinery below it is generic. The **rubric is not in that block** — the script reads it
+out of `docs/assignments/lab-NN/README.md` at build time, so a template cannot drift from what is
+graded. Edit a rubric bullet on the page, rebuild, and the template follows.
 
-1. Extract the rubric from the lab page rather than retyping it, so the template cannot drift from
-   what is graded:
+To add Lab 5:
 
-   ```bash
-   python3 - <<'PY'
-   import re, json
-   src = open('docs/assignments/lab-03/README.md').read()
-   rows = re.findall(r'^\| (\*\*.+?)\s*\|\s*(/10|\*\*/50\*\*|up to \+5)\s*\|$', src, re.M)
-   out = []
-   for item, pts in rows:
-       m = re.match(r'\*\*(.+?)\*\*(.*)$', item, re.S)
-       parts = [p.strip() for p in m.group(2).split('<br>') if p.strip()]
-       out.append({'title': m.group(1),
-                   'lead': parts[0] if parts and not parts[0].startswith('•') else '',
-                   'points': pts,
-                   'bullets': [re.sub(r'^•\s*', '', p) for p in parts if p.startswith('•')]})
-   json.dump(out, open('/tmp/lab03_rubric.json', 'w'), indent=1)
-   PY
-   ```
-
-2. Edit the `LAB` block: `outfile`, `labTitle`, `labSubtitle`, and the `sections` array. Point the
-   script's `readFileSync` at the new rubric JSON.
-3. Walk the lab page's **Deliverables** list top to bottom and make sure every bullet has a home in
-   `sections`. That list and the template are the same document in two formats.
-4. Build, render, and **look at it**:
+1. **Read the lab page's Deliverables list top to bottom.** That list and the template are the same
+   document in two formats. Every bullet needs a home — a section, a table column, or a question
+   sub-heading.
+2. **Add a `'05'` entry to `LABS`** with `labTitle`, `labSubtitle` (empty string if the title says
+   it all) and `sections`. Copy the nearest existing lab and edit; the section shapes repeat.
+3. **Build, render, and look at it:**
 
    ```bash
-   node tools/templates/make_lab_report_template.js
-   soffice --headless --convert-to pdf docs/assignments/lab-NN/labNN-report-template.docx --outdir /tmp/tpl
+   node tools/templates/make_lab_report_template.js 05
+   soffice --headless --convert-to pdf docs/assignments/lab-05/lab05-report-template.docx --outdir /tmp/tpl
    ```
 
    Then read the pages. Most template defects are visual — a rubric row split across a page break,
-   a drop zone too short for what goes in it, a table whose columns do not sum.
+   a drop zone too short for what goes in it, a nine-column table that wraps into mush.
 
-5. Validate: the docx skill's `scripts/office/validate.py` should report `All validations PASSED!`.
+4. **Validate:** the docx skill's `scripts/office/validate.py` should report
+   `All validations PASSED!`.
+5. **Link it from the lab page** in two places: a `> [!TIP]` box right after the Deliverables list,
+   and a line under the Rubric heading saying the rubric is already a fillable table at the end of
+   the template.
+
+The builder throws if a table's column widths do not sum to 9360, so a mis-typed width fails the
+build rather than shipping a table that runs off the page.
+
+> [!NOTE]
+> Rebuilding a lab overwrites its `.docx`. If the file has been hand-edited in Word since it was
+> generated — Lab 2's was, to drop a column — reconcile the change into the `LABS` block first, or
+> you will lose it.
 
 ## 5. Definition of done
 
@@ -181,10 +178,13 @@ it is generic. To make Lab 3's template:
 ## 6. Where things live
 
 ```
-tools/lab-report-template-guide.md              this file
-tools/templates/make_lab_report_template.js     the builder (LAB block at top, generic below)
-docs/assignments/lab-NN/labNN-report-template.docx   the artifact MkDocs serves
+tools/lab-report-template-guide.md                    this file
+tools/templates/make_lab_report_template.js           the builder (LABS block at top, generic below)
+docs/assignments/lab-NN/labNN-report-template.docx    the artifact MkDocs serves
 ```
+
+Built so far: Labs 2, 3 and 4. Run `node make_lab_report_template.js` with no argument to see
+which keys exist.
 
 `node_modules/` is git-ignored; run `npm install docx` inside `tools/templates/` once.
 
