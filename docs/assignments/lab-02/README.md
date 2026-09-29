@@ -75,6 +75,15 @@ does not switch its Method to Manual Interval when a break value is edited.
 
 **Site behavior:** external links open in a new tab and every figure opens in a pop-out viewer
 when clicked. Both are site-wide settings. -->
+
+> [!TIP]
+> **Start from the report template.** [`lab02-report-template.docx`](lab02-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for, and the rubric at the end ready to fill in. Open it in Word or upload it to
+> Google Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome
+> to write your report any way you like — the template is a floor, not a ceiling — but if you use
+> it and fill in every section, you will not have left a graded item out.
+
 ## Background
 
 In 1972, NASA launched what is known today as the Landsat (Land + Satellite) program. The Landsat program is the longest continuous enterprise for acquiring satellite imagery of the Earth. The satellite imagery provides data for land assessment, coverage, and usage on a global scale. Landsat satellites collect images in several bands of the electromagnetic spectrum. These bands can be combined in various ways to create "false color" images and other data products. In GIS, Landsat data can be used to calculate the Normalized Difference Vegetation Index (NDVI), a measure of vegetation greenness, and a classified NDVI map is one common way of mapping irrigated cropland. A model for calculating NDVI can be created in ArcGIS Pro ModelBuilder by combining data from the red and near-infrared bands.
@@ -598,14 +607,6 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - optionally, for up to five points of **extra credit**, the Magic Valley results described under *Going further* in the Data section
 
 The rubric at the end of this lab gives the point value of every item above, so read it before you write.
-
-> [!TIP]
-> **Start from the template.** [`lab02-report-template.docx`](lab02-report-template.docx) has the
-> title block, a section for every item in the list above, the tables already set up with the
-> columns the rubric asks for, and the rubric at the end ready to fill in. Open it in Word or
-> upload it to Google Docs, replace every gray italic prompt, and delete the prompts as you go.
-> You are welcome to write your report any way you like — the template is a floor, not a ceiling —
-> but if you use it and fill in every section, you will not have left a graded item out.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against

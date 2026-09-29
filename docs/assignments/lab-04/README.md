@@ -52,6 +52,14 @@ in the ArcGIS Pro 3.7.1 GUI on September 25, 2026 at 175 % display scaling. The 
 by ArcGIS Pro through arcpy.mp from the verification run; Figures A and B and the icons are
 hand-authored SVG with real text. None of the Word-era images is used. -->
 
+> [!TIP]
+> **Start from the report template.** [`lab04-report-template.docx`](lab04-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the sensitivity table with all four parameters), and the rubric
+> at the end ready to fill in. Open it in Word or upload it to Google Docs, replace every gray
+> italic prompt, and delete the prompts as you go. You are welcome to write your report any way
+> you like — the template is a floor, not a ceiling — but if you use it and fill in every section,
+> you will not have left a graded item out.
 
 ## Background
 
@@ -625,15 +633,6 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row, honestly arrived at. The grader will compare it with theirs.
 
 The rubric at the end of this lab gives the point value of every item above, so read it before you write.
-
-> [!TIP]
-> **Start from the template.** [`lab04-report-template.docx`](lab04-report-template.docx) has the
-> title block, a section for every item in the list above, the tables already set up with the
-> columns the rubric asks for — including the sensitivity table with all four parameters — and the
-> rubric at the end ready to fill in. Open it in Word or upload it to Google Docs, replace every
-> gray italic prompt, and delete the prompts as you go. You are welcome to write your report any
-> way you like — the template is a floor, not a ceiling — but if you use it and fill in every
-> section, you will not have left a graded item out.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against

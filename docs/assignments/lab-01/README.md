@@ -63,6 +63,16 @@ the old 2010 example with the misspelled legend is gone, and nothing on this pag
 **Site behavior:** external links on this page open in a new tab, so the lab stays put while a
 download or reference page opens, and every figure opens in a pop-out viewer when clicked. Both
 are site-wide settings, not draft-only. -->
+
+> [!TIP]
+> **Start from the report template.** [`lab01-report-template.docx`](lab01-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including one for what each of the three criteria actually removed), and
+> the rubric at the end ready to fill in. Open it in Word or upload it to Google Docs, replace
+> every gray italic prompt, and delete the prompts as you go. You are welcome to write your report
+> any way you like — the template is a floor, not a ceiling — but if you use it and fill in every
+> section, you will not have left a graded item out.
+
 ## Background
 
 GIS is used by major corporations around the world to help manage shipping, inventory, sales, marketing, facilities, and expansion. Specifically, with respect to expansion, GIS is used extensively to help determine the most appropriate placement of new store locations.
@@ -566,15 +576,6 @@ Write a brief report (2–3 pages) covering:
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row, honestly arrived at. The grader will compare it with theirs.
 
 The rubric at the end of this lab gives the point value of every item above, so read it before you write.
-
-> [!TIP]
-> **Start from the template.** [`lab01-report-template.docx`](lab01-report-template.docx) has the
-> title block, a section for every item in the list above, the tables already set up with the
-> columns the rubric asks for (including one for what each of the three criteria actually
-> removed), and the rubric at the end ready to fill in. Open it in Word or
-> upload it to Google Docs, replace every gray italic prompt, and delete the prompts as you go. You
-> are welcome to write your report any way you like — the template is a floor, not a ceiling — but
-> if you use it and fill in every section, you will not have left a graded item out.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against

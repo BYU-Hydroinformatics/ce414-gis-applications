@@ -22,6 +22,15 @@ migration notes at the bottom say the lab was run and piloted. -->
 > before the lab is assigned in Week 7. Until then, read this page to understand what the lab asks,
 > and do not start work on it.
 
+> [!TIP]
+> **Start from the report template.** [`lab06-report-template.docx`](lab06-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the shore-feature table and the range-and-step table), and the
+> rubric at the end ready to fill in. Open it in Word or upload it to Google Docs, replace every
+> gray italic prompt, and delete the prompts as you go. You are welcome to write your report any
+> way you like — the template is a floor, not a ceiling — but if you use it and fill in every
+> section, you will not have left a graded item out.
+
 ## Background
 
 A reservoir is a valley with a dam across it, and the lake behind the dam is not one shape. It is a
@@ -364,15 +373,6 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 The rubric at the end of this lab gives the point value of every item above, so read it before
 you write.
-
-> [!TIP]
-> **Start from the template.** [`lab06-report-template.docx`](lab06-report-template.docx) has the
-> title block, a section for every item in the list above, the tables already set up with the
-> columns the rubric asks for (including the shore-feature table and the range-and-step
-> table), and the rubric at the end ready to fill in. Open it in Word or
-> upload it to Google Docs, replace every gray italic prompt, and delete the prompts as you go. You
-> are welcome to write your report any way you like — the template is a floor, not a ceiling — but
-> if you use it and fill in every section, you will not have left a graded item out.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against

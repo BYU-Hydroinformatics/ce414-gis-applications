@@ -63,6 +63,15 @@ still the September 3 captures from an older ArcGIS Pro, and there are no exampl
 baseline/scenario pair.
 -->
 
+> [!TIP]
+> **Start from the report template.** [`lab03-report-template.docx`](lab03-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the six metadata questions and the transformation sensitivity
+> table), and the rubric at the end ready to fill in. Open it in Word or upload it to Google Docs,
+> replace every gray italic prompt, and delete the prompts as you go. You are welcome to write
+> your report any way you like — the template is a floor, not a ceiling — but if you use it and
+> fill in every section, you will not have left a graded item out.
+
 ## Background
 
 Old maps and aerial photographs are an unreasonably good source of information for civil,
@@ -573,15 +582,6 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - where your result is wrong and why, and what would fix it
 - a description of your digitized features: what they are, what they were called, and what is there now
 - this rubric pasted in, with your self-assessment in every row
-
-> [!TIP]
-> **Start from the template.** [`lab03-report-template.docx`](lab03-report-template.docx) has the
-> title block, a section for every item in the list above, the tables already set up with the
-> columns the rubric asks for — including the six metadata questions and the transformation
-> sensitivity table — and the rubric at the end ready to fill in. Open it in Word or upload it to
-> Google Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome
-> to write your report any way you like — the template is a floor, not a ceiling — but if you use
-> it and fill in every section, you will not have left a graded item out.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
