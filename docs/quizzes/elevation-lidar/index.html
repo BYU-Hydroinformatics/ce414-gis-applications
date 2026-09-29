@@ -55,7 +55,7 @@ CE414Quiz.start({
       detail: "You need a surface that includes rooftops, for a line-of-sight study in a downtown core.",
       options: ["The bare-earth terrain model", "A surface off the buildings"],
       answer: "A surface off the buildings",
-      explanation: "A bare-earth model is classified to ground returns only, with vegetation and structures removed — so it discards exactly the rooftops the study needs. The city surface in this lecture is extracted from the building returns in the same point cloud, and it is the input to line-of-sight, solar potential, view analysis and flood modeling in an urban core."
+      explanation: "A bare-earth model is classified to ground returns only, with vegetation and structures removed — so it discards exactly the rooftops the study needs. The city surface in this lecture is extracted from the building returns in an airborne point cloud, and it is the input to line-of-sight, solar potential, view analysis and flood modeling in an urban core."
     },
     {
       prompt: "Airborne or terrestrial LiDAR?",
@@ -87,7 +87,7 @@ CE414Quiz.start({
         "1 meter if it exists, otherwise 10 or 30 meters"
       ],
       answer: "1 meter if it exists, otherwise 10 or 30 meters",
-      explanation: "The 3D Elevation Program publishes 1 meter, 1/3 arc-second and 1 arc-second products, and which of them exists depends on where you look. So draw the area of interest, filter to Elevation Products (3DEP), and take what the downloader actually lists — do not plan a workflow around a resolution you assumed was there. Lab 4 needs a DEM for Utah County, and this is where it comes from."
+      explanation: "The 3D Elevation Program publishes 1 meter, 1/3 arc-second and 1 arc-second products, and which of them exists depends on where you look. So draw the area of interest, filter to Elevation Products (3DEP), and take what the downloader actually lists — do not plan a workflow around a resolution you assumed was there. Finest is not always right, though: Lab 4 needs a DEM for all of Utah County and deliberately uses the 1 arc-second (about 30 meter) tiles from this downloader, because 1 meter data for a whole county is a very large download the lab does not need."
     },
     {
       prompt: "The same terrain, symbolized identically, at 30 meter cells and at 100 meter cells. What did the coarser grid cost you?",
