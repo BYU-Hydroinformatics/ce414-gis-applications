@@ -183,7 +183,7 @@ tools/templates/make_lab_report_template.js           the builder (LABS block at
 docs/assignments/lab-NN/labNN-report-template.docx    the artifact MkDocs serves
 ```
 
-Built so far: **Labs 1, 2, 3, 4 and 6.** Run `node make_lab_report_template.js` with no argument to
+Built so far: **Labs 1, 2, 3, 4, 5 and 6.** Run `node make_lab_report_template.js` with no argument to
 see which keys exist.
 
 **Labs 5, 7, 8, 9, 10 and 11 do not have templates yet, and should not until they are revised.**

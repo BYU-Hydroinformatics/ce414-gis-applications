@@ -48,6 +48,15 @@ marked with a TODO(capture) comment. The maps are rendered by ArcGIS Pro through
 verification run; Figures A, B and C and the icons are hand-authored SVG with real text (Figure C
 is a diagram of the model, not a ModelBuilder export). None of the Word-era images is used. -->
 
+> [!TIP]
+> **Start from the report template.** [`lab05-report-template.docx`](lab05-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the two checks and the sensitivity table with the NHD reference
+> row), and the rubric at the end ready to fill in. Open it in Word or upload it to Google Docs,
+> replace every gray italic prompt, and delete the prompts as you go. You are welcome to write your
+> report any way you like — the template is a floor, not a ceiling — but if you use it and fill in
+> every section, you will not have left a graded item out.
+
 ## Background
 
 The extraction of hydrographic features, such as watersheds and stream networks, from digital elevation models is a common first step in geomorphic and hydrologic studies. A watershed boundary and a stream network are what you need before you can estimate flow velocity, discharge or sediment load, route a design storm, or size a culvert. The purpose of this lab is to identify a watershed, its sub-watersheds and its stream network directly from terrain data.
@@ -558,6 +567,10 @@ Two example layouts follow, one for each map the Deliverables ask for. They were
 ## Rubric for Watershed Delineation
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly what to submit.
+
+This rubric is already laid out as a fillable table at the end of
+[`lab05-report-template.docx`](lab05-report-template.docx), so you do not have to copy it out
+of this page.
 
 | Item | Points |
 | --- | --- |

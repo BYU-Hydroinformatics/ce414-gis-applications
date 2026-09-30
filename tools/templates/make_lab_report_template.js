@@ -369,6 +369,86 @@ const LABS = {
   ],
 },
 
+'05': {
+  labTitle: 'Lab 5: Watershed Delineation',
+  labSubtitle: 'Extracting streams and watersheds from a DEM',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you were asked to produce and how you went about it — not a retelling of the step-by-step.' },
+
+    { h: 'Data and Metadata',
+      hint: 'Rubric: the four metadata values from Figure A and what each one means for your result (2 points). Confirm the first three from READ-ME-FIRST.txt and the tile’s metadata file, and the fourth from UGRC’s page for the NHD layer — do not copy them from the figure.',
+      table: { caption: 'Table 1. Metadata for the DEM and the NHD.',
+               head: ['Metadata value', 'What you found', 'What it means for your result'],
+               rows: [['DEM publication date', '', ''],
+                      ['Range of source dates in the DEM', '', ''],
+                      ['DEM vertical datum', '', ''],
+                      ['NHD last update', '', '']],
+               widths: [2700, 2400, 4260] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (point, line, polygon, raster) and source (2 points). Fill one row per tool, in the order they run, starting with Project Raster (run once, outside the model).',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type and source'],
+               rows: [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']],
+               widths: [1500, 2300, 2300, 1700, 1560] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
+          hint: 'Rubric: a full-page (8.5 × 11) figure of the model, exported from ModelBuilder — every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2 points). Export it; do not screen-capture it.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the threshold exposed as a parameter.', size: 'medium',
+          hint: 'Rubric: a screen capture of the tool dialog with the threshold exposed as a parameter (2 points).' },
+      ] },
+
+    { h: 'Checking the Result',
+      hint: 'Rubric: the two checks from Step 13 — your basin area against StreamStats and your stream length against the NHD, with the numbers (2 points). Give both in the same units. Measure the NHD in UTM meters, not Web Mercator.',
+      table: { caption: 'Table 3. Your model against two independent sources.',
+               head: ['Check', 'Your model', 'Independent source', 'Difference'],
+               rows: [['Basin area (km²)', '', 'StreamStats:', ''],
+                      ['Total stream length (km)', '', 'NHD, all lines:', ''],
+                      ['Perennial + intermittent length (km)', '—', 'NHD, FCode 46006 + 46003:', '—']],
+               widths: [2800, 1800, 3000, 1760] } },
+
+    { h: 'Where the Model Is Wrong',
+      hint: 'Rubric: where the model is wrong, why, and what data would fix each problem (Step 13) (2 points). One row per problem. Start from the three places Step 13 names — the Provo bench, the NHD’s ephemeral lines, and culverts — or find your own.',
+      table: { caption: 'Table 4. Where the model is wrong.',
+               head: ['Where', 'Why it is wrong', 'What data would fix it'],
+               rows: [['', '', ''], ['', '', ''], ['', '', '']],
+               widths: [2600, 3400, 3360] } },
+
+    { h: 'Sensitivity Analysis', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and at least three more thresholds, giving for each the threshold in cells and km², the basin area, the segments, the subwatersheds, the stream length, the mean subwatershed area and the drainage density, with the NHD as a reference row (4 points). Contributing area is threshold × 100 ÷ 1,000,000 km². The baseline row is part of the table.',
+      table: { caption: 'Table 5. Sensitivity — the baseline, at least three more thresholds, and the NHD.',
+               head: ['Threshold (cells)', 'Contributing area (km²)', 'Basin area (km²)', 'Segments', 'Subwatersheds', 'Stream length (km)', 'Mean subwatershed (km²)', 'Drainage density (km/km²)'],
+               rows: [['5,000 (baseline)', '0.5', '', '', '', '', '', ''],
+                      ['', '', '', '', '', '', '', ''],
+                      ['', '', '', '', '', '', '', ''],
+                      ['', '', '', '', '', '', '', ''],
+                      ['NHD (reference)', '—', '—', '—', '—', '', '—', '']],
+               widths: [1400, 1150, 1050, 1000, 1150, 1150, 1260, 1200] },
+      questions: [
+        'How do the segment and subwatershed counts depend on the threshold? What happens to them when the threshold doubles, which range of thresholds gives 20–40 subwatersheds, and why are two of your columns always equal? (2 points)',
+        'Which threshold reproduces the NHD’s total length, and which its perennial and intermittent length? What does that say about what the NHD’s lines represent, and about which network a runoff model should use? (2 points)',
+        'What did the threshold not change, and which network would you defend to the engineer who asked for 20–40 subwatersheds? (2 points)',
+      ] },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Symbolize the subwatersheds, your streams and the NHD the same way on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — subwatersheds and streams at 5,000 cells.', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection and data sources; subwatersheds and the basin boundary symbolized with a legend; your streams and the NHD streams, told apart; the outlet marked and a locator map; imagery or hillshade visible, zoomed to the basin, all text legible in print.' },
+        { caption: 'Map 2. Scenario — one threshold from Step 14.',
+          hint: 'The same as Map 1 (the locator is optional), plus: the title and text box say what threshold was used, what it replaced, and why you chose this run to show.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the DEM, the NHD, StreamStats, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Field names, expressions, coordinate systems and numbers come from your own data, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 };
 // ─────────────────────────── end lab-specific content ───────────────────────────
 
