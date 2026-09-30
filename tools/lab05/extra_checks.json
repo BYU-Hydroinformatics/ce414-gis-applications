@@ -1,0 +1,27 @@
+{
+ "unfilled_flowdir_nonpower_cells": 39,
+ "unfilled_flowdir_distinct": 20,
+ "unfilled_flowacc_max": 246640.0,
+ "basin_simplified_km2": 25.213699343090454,
+ "basin_simplified_count": 1,
+ "sub5000_total_km2": 25.212863807412564,
+ "flowacc_max_at": [
+  443457,
+  4456347,
+  40.25567,
+  -111.66489,
+  880,
+  3,
+  [
+   1230,
+   1284
+  ]
+ ],
+ "nhd_webmercator_km": 49.088901617368556,
+ "nhd_geodesic_km": 37.44098839924654,
+ "nhd_utm_km": 37.427143230308076,
+ "offchannel_40m_snap0_cells": 1,
+ "offchannel_40m_snap10_cells": 5,
+ "offchannel_40m_snap50_cells": 252139,
+ "basin_perimeter_km": 29.62
+}

@@ -1,0 +1,187 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 475' width='1000' height='475' role='img' aria-label='A five by five patch of the filled Rock Canyon DEM, its D8 flow direction codes, and the flow accumulation inside the patch'>
+<title>From elevation to flow direction to flow accumulation, on 25 real cells</title>
+<rect width='1000' height='475' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Twenty-five cells of Rock Canyon, three ways</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>A 50 m × 50 m patch of your filled DEM (center UTM 450,007 E, 4,459,047 N). Each cell drains to the neighbor with the steepest drop.</text>
+<text x='20' y='86' font-size='14' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1. Filled elevation (m)</text>
+<rect x='20' y='100' width='56' height='56' fill='rgb(203,205,209)' stroke='#9aa5b1'/>
+<text x='48.0' y='133.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2494.1</text>
+<rect x='76' y='100' width='56' height='56' fill='rgb(196,199,205)' stroke='#9aa5b1'/>
+<text x='104.0' y='133.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2500.0</text>
+<rect x='132' y='100' width='56' height='56' fill='rgb(175,182,195)' stroke='#9aa5b1'/>
+<text x='160.0' y='133.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2517.6</text>
+<rect x='188' y='100' width='56' height='56' fill='rgb(147,158,181)' stroke='#9aa5b1'/>
+<text x='216.0' y='133.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2542.7</text>
+<rect x='244' y='100' width='56' height='56' fill='rgb(125,140,170)' stroke='#9aa5b1'/>
+<text x='272.0' y='133.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2561.9</text>
+<rect x='20' y='156' width='56' height='56' fill='rgb(212,212,213)' stroke='#9aa5b1'/>
+<text x='48.0' y='189.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2486.1</text>
+<rect x='76' y='156' width='56' height='56' fill='rgb(202,204,208)' stroke='#9aa5b1'/>
+<text x='104.0' y='189.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2495.0</text>
+<rect x='132' y='156' width='56' height='56' fill='rgb(178,184,196)' stroke='#9aa5b1'/>
+<text x='160.0' y='189.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2515.8</text>
+<rect x='188' y='156' width='56' height='56' fill='rgb(149,160,182)' stroke='#9aa5b1'/>
+<text x='216.0' y='189.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2540.5</text>
+<rect x='244' y='156' width='56' height='56' fill='rgb(131,145,173)' stroke='#9aa5b1'/>
+<text x='272.0' y='189.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2556.0</text>
+<rect x='20' y='212' width='56' height='56' fill='rgb(223,221,219)' stroke='#9aa5b1'/>
+<text x='48.0' y='245.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2476.5</text>
+<rect x='76' y='212' width='56' height='56' fill='rgb(208,209,211)' stroke='#9aa5b1'/>
+<text x='104.0' y='245.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2489.6</text>
+<rect x='132' y='212' width='56' height='56' fill='rgb(181,186,198)' stroke='#9aa5b1'/>
+<text x='160.0' y='245.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2513.2</text>
+<rect x='188' y='212' width='56' height='56' fill='rgb(155,165,185)' stroke='#9aa5b1'/>
+<text x='216.0' y='245.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2535.3</text>
+<rect x='244' y='212' width='56' height='56' fill='rgb(141,153,178)' stroke='#9aa5b1'/>
+<text x='272.0' y='245.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2547.6</text>
+<rect x='20' y='268' width='56' height='56' fill='rgb(234,231,224)' stroke='#9aa5b1'/>
+<text x='48.0' y='301.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2466.9</text>
+<rect x='76' y='268' width='56' height='56' fill='rgb(205,207,210)' stroke='#9aa5b1'/>
+<text x='104.0' y='301.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2492.0</text>
+<rect x='132' y='268' width='56' height='56' fill='rgb(182,187,198)' stroke='#9aa5b1'/>
+<text x='160.0' y='301.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2512.0</text>
+<rect x='188' y='268' width='56' height='56' fill='rgb(164,172,189)' stroke='#9aa5b1'/>
+<text x='216.0' y='301.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2527.8</text>
+<rect x='244' y='268' width='56' height='56' fill='rgb(154,164,184)' stroke='#9aa5b1'/>
+<text x='272.0' y='301.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2536.7</text>
+<rect x='20' y='324' width='56' height='56' fill='rgb(245,240,230)' stroke='#9aa5b1'/>
+<text x='48.0' y='357.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2457.6</text>
+<rect x='76' y='324' width='56' height='56' fill='rgb(210,210,212)' stroke='#9aa5b1'/>
+<text x='104.0' y='357.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2488.0</text>
+<rect x='132' y='324' width='56' height='56' fill='rgb(186,190,200)' stroke='#9aa5b1'/>
+<text x='160.0' y='357.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2508.8</text>
+<rect x='188' y='324' width='56' height='56' fill='rgb(177,183,196)' stroke='#9aa5b1'/>
+<text x='216.0' y='357.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2516.6</text>
+<rect x='244' y='324' width='56' height='56' fill='rgb(172,179,193)' stroke='#9aa5b1'/>
+<text x='272.0' y='357.0' font-size='13' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2520.9</text>
+<text x='350' y='86' font-size='14' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2. Flow Direction (D8 code)</text>
+<rect x='350' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='378.0' y1='121.0' x2='378.0' y2='149.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='378.0,149.0 375.0,143.8 381.0,143.8' fill='#0062b8'/>
+<text x='378.0' y='117' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<rect x='406' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='443.2' y1='124.8' x2='423.4' y2='144.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='423.4,144.6 424.9,138.8 429.2,143.1' fill='#0062b8'/>
+<text x='434.0' y='117' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='462' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='503.0' y1='134.0' x2='475.0' y2='134.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='475.0,134.0 480.2,131.0 480.2,137.0' fill='#0062b8'/>
+<text x='490.0' y='117' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='518' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='559.0' y1='134.0' x2='531.0' y2='134.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='531.0,134.0 536.2,131.0 536.2,137.0' fill='#0062b8'/>
+<text x='546.0' y='117' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='574' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='615.0' y1='134.0' x2='587.0' y2='134.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='587.0,134.0 592.2,131.0 592.2,137.0' fill='#0062b8'/>
+<text x='602.0' y='117' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='350' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='378.0' y1='177.0' x2='378.0' y2='205.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='378.0,205.0 375.0,199.8 381.0,199.8' fill='#0062b8'/>
+<text x='378.0' y='173' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<rect x='406' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='443.2' y1='180.8' x2='423.4' y2='200.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='423.4,200.6 424.9,194.8 429.2,199.1' fill='#0062b8'/>
+<text x='434.0' y='173' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='462' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='503.0' y1='190.0' x2='475.0' y2='190.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='475.0,190.0 480.2,187.0 480.2,193.0' fill='#0062b8'/>
+<text x='490.0' y='173' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='518' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='559.0' y1='190.0' x2='531.0' y2='190.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='531.0,190.0 536.2,187.0 536.2,193.0' fill='#0062b8'/>
+<text x='546.0' y='173' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='574' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='615.0' y1='190.0' x2='587.0' y2='190.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='587.0,190.0 592.2,187.0 592.2,193.0' fill='#0062b8'/>
+<text x='602.0' y='173' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='350' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='378.0' y1='233.0' x2='378.0' y2='261.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='378.0,261.0 375.0,255.8 381.0,255.8' fill='#0062b8'/>
+<text x='378.0' y='229' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<rect x='406' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='443.2' y1='236.8' x2='423.4' y2='256.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='423.4,256.6 424.9,250.8 429.2,255.1' fill='#0062b8'/>
+<text x='434.0' y='229' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='462' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='503.0' y1='246.0' x2='475.0' y2='246.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='475.0,246.0 480.2,243.0 480.2,249.0' fill='#0062b8'/>
+<text x='490.0' y='229' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='518' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='559.0' y1='246.0' x2='531.0' y2='246.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='531.0,246.0 536.2,243.0 536.2,249.0' fill='#0062b8'/>
+<text x='546.0' y='229' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='574' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='611.2' y1='236.8' x2='591.4' y2='256.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='591.4,256.6 592.9,250.8 597.2,255.1' fill='#0062b8'/>
+<text x='602.0' y='229' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='350' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='378.0' y1='289.0' x2='378.0' y2='317.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='378.0,317.0 375.0,311.8 381.0,311.8' fill='#0062b8'/>
+<text x='378.0' y='285' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<rect x='406' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='447.0' y1='302.0' x2='419.0' y2='302.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='419.0,302.0 424.2,299.0 424.2,305.0' fill='#0062b8'/>
+<text x='434.0' y='285' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='462' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='503.0' y1='302.0' x2='475.0' y2='302.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='475.0,302.0 480.2,299.0 480.2,305.0' fill='#0062b8'/>
+<text x='490.0' y='285' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='518' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='559.0' y1='302.0' x2='531.0' y2='302.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='531.0,302.0 536.2,299.0 536.2,305.0' fill='#0062b8'/>
+<text x='546.0' y='285' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='574' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='602.0' y1='289.0' x2='602.0' y2='317.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='602.0,317.0 599.0,311.8 605.0,311.8' fill='#0062b8'/>
+<text x='602.0' y='285' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<rect x='350' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='387.2' y1='348.8' x2='367.4' y2='368.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='367.4,368.6 368.9,362.8 373.2,367.1' fill='#0062b8'/>
+<text x='378.0' y='341' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='406' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='447.0' y1='358.0' x2='419.0' y2='358.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='419.0,358.0 424.2,355.0 424.2,361.0' fill='#0062b8'/>
+<text x='434.0' y='341' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>16</text>
+<rect x='462' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='499.2' y1='348.8' x2='479.4' y2='368.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='479.4,368.6 480.9,362.8 485.2,367.1' fill='#0062b8'/>
+<text x='490.0' y='341' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='518' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='555.2' y1='348.8' x2='535.4' y2='368.6' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='535.4,368.6 536.9,362.8 541.2,367.1' fill='#0062b8'/>
+<text x='546.0' y='341' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>8</text>
+<rect x='574' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<line x1='602.0' y1='345.0' x2='602.0' y2='373.0' stroke='#0062b8' stroke-width='1.6' opacity='0.55'/><polygon points='602.0,373.0 599.0,367.8 605.0,367.8' fill='#0062b8'/>
+<text x='602.0' y='341' font-size='13' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>4</text>
+<text x='680' y='86' font-size='14' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3. Flow Accumulation (in this patch)</text>
+<rect x='680' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='708.0' y='133.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='736' y='100' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='764.0' y='133.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3</text>
+<rect x='792' y='100' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='820.0' y='133.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2</text>
+<rect x='848' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='876.0' y='133.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text>
+<rect x='904' y='100' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='932.0' y='133.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='680' y='156' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='708.0' y='189.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>5</text>
+<rect x='736' y='156' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='764.0' y='189.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3</text>
+<rect x='792' y='156' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='820.0' y='189.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2</text>
+<rect x='848' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='876.0' y='189.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text>
+<rect x='904' y='156' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='932.0' y='189.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='680' y='212' width='56' height='56' fill='#e8862a' stroke='#9aa5b1'/>
+<text x='708.0' y='245.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>10</text>
+<rect x='736' y='212' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='764.0' y='245.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2</text>
+<rect x='792' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='820.0' y='245.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text>
+<rect x='848' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='876.0' y='245.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='904' y='212' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='932.0' y='245.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='680' y='268' width='56' height='56' fill='#e8862a' stroke='#9aa5b1'/>
+<text x='708.0' y='301.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>18</text>
+<rect x='736' y='268' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='764.0' y='301.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3</text>
+<rect x='792' y='268' width='56' height='56' fill='#fdebd9' stroke='#9aa5b1'/>
+<text x='820.0' y='301.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2</text>
+<rect x='848' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='876.0' y='301.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text>
+<rect x='904' y='268' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='932.0' y='301.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='680' y='324' width='56' height='56' fill='#e8862a' stroke='#9aa5b1'/>
+<text x='708.0' y='357.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>20</text>
+<rect x='736' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='764.0' y='357.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='792' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='820.0' y='357.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='848' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='876.0' y='357.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>0</text>
+<rect x='904' y='324' width='56' height='56' fill='white' stroke='#9aa5b1'/>
+<text x='932.0' y='357.0' font-size='15' font-weight='bold' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text>
+<text x='20' y='408' font-size='12.5' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>D8 codes:  32 NW   64 N   128 NE   16 W   1 E   8 SW   4 S   2 SE</text>
+<text x='20' y='430' font-size='11.5' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Accumulation counts only the cells upstream inside this patch; ArcGIS Pro counts every upstream cell in the DEM, so its numbers here are much larger.</text>
+<text x='20' y='448' font-size='11.5' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>A cell&#39;s own count never includes itself: the headwater cells read 0.</text>
+</svg>

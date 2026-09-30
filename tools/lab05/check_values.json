@@ -1,0 +1,190 @@
+{
+ "dem_utm": {
+  "cols": 1284,
+  "rows": 1230,
+  "cell": 10.0,
+  "min": 1376.66943359375,
+  "max": 3370.60302734375
+ },
+ "dem_src": {
+  "cols": 1620,
+  "rows": 1188,
+  "cellx": 9.259259269220366e-05,
+  "min": null,
+  "max": null,
+  "sr": "GCS_North_American_1983"
+ },
+ "outlet_utm": [
+  446431.9,
+  4457388.4
+ ],
+ "fill": {
+  "cells_raised": 12916,
+  "max_depth": 13.4765625,
+  "filled_min": 1376.66943359375,
+  "filled_max": 3370.60302734375,
+  "max_at": [
+   454727,
+   4456097,
+   40.25411,
+   -111.53235
+  ],
+  "cells_raised_1m": 1916
+ },
+ "flowdir_values": {
+  "-1": 22327,
+  "1": 183554,
+  "2": 141910,
+  "4": 174266,
+  "8": 223921,
+  "16": 308438,
+  "32": 213737,
+  "64": 152386,
+  "128": 158781
+ },
+ "flowacc_max": 430024.0,
+ "snapped_outlet": {
+  "x": 446387.33431329206,
+  "y": 4457397.196698995,
+  "flowacc": 252138.0
+ },
+ "unsnapped_basin_cells": 252116,
+ "basin": {
+  "cells": 252139,
+  "km2": 25.2139,
+  "polygon_km2": 25.2139,
+  "polygons": 1,
+  "elev_min": 1553.3603515625,
+  "elev_max": 3370.60302734375,
+  "fill_cells_raised": 43,
+  "fill_max_depth": 2.349609375
+ },
+ "nhd_basin": {
+  "features": 36,
+  "km": 37.427143230308076,
+  "by_fcode": {
+   "46003": 2.61,
+   "46006": 5.51,
+   "46007": 29.31
+  },
+  "names": [
+   "Dry Fork",
+   "None"
+  ]
+ },
+ "shared_seconds": 44.0,
+ "runs": [
+  {
+   "threshold": 500,
+   "threshold_km2": 0.05,
+   "stream_cells": 7280,
+   "links": 290,
+   "stream_features": 290,
+   "stream_km": 83.19936758077606,
+   "subwatersheds": 290,
+   "single_part_polygons": 664,
+   "sub_cells": 252139,
+   "mean_sub_km2": 0.08693735368272,
+   "min_sub_km2": 0.0001,
+   "max_sub_km2": 0.4988208927324452,
+   "seconds": 15.1,
+   "drainage_density": 3.299742109740106
+  },
+  {
+   "threshold": 1000,
+   "threshold_km2": 0.1,
+   "stream_cells": 4920,
+   "links": 140,
+   "stream_features": 140,
+   "stream_km": 56.09023380808101,
+   "subwatersheds": 140,
+   "single_part_polygons": 294,
+   "sub_cells": 252139,
+   "mean_sub_km2": 0.18008404673640824,
+   "min_sub_km2": 0.0001,
+   "max_sub_km2": 0.7254114215078374,
+   "seconds": 15.1,
+   "drainage_density": 2.22457588108468
+  },
+  {
+   "threshold": 2000,
+   "threshold_km2": 0.2,
+   "stream_cells": 3397,
+   "links": 78,
+   "stream_features": 78,
+   "stream_km": 38.626998605755155,
+   "subwatersheds": 78,
+   "single_part_polygons": 157,
+   "sub_cells": 252139,
+   "mean_sub_km2": 0.3232463905956534,
+   "min_sub_km2": 0.0010343837898412365,
+   "max_sub_km2": 1.4678980727146813,
+   "seconds": 14.9,
+   "drainage_density": 1.5319723884744192
+  },
+  {
+   "threshold": 5000,
+   "threshold_km2": 0.5,
+   "stream_cells": 2031,
+   "links": 29,
+   "stream_features": 29,
+   "stream_km": 22.91335134582769,
+   "subwatersheds": 29,
+   "single_part_polygons": 61,
+   "sub_cells": 252139,
+   "mean_sub_km2": 0.8694090968073298,
+   "min_sub_km2": 0.008311474475802572,
+   "max_sub_km2": 3.520483657850252,
+   "seconds": 14.7,
+   "drainage_density": 0.9087587142737811
+  },
+  {
+   "threshold": 10000,
+   "threshold_km2": 1.0,
+   "stream_cells": 1460,
+   "links": 15,
+   "stream_features": 15,
+   "stream_km": 16.536463140572497,
+   "subwatersheds": 15,
+   "single_part_polygons": 22,
+   "sub_cells": 252139,
+   "mean_sub_km2": 1.680889733329513,
+   "min_sub_km2": 0.008311474475802572,
+   "max_sub_km2": 4.462320416045144,
+   "seconds": 14.7,
+   "drainage_density": 0.655847097853664
+  },
+  {
+   "threshold": 20000,
+   "threshold_km2": 2.0,
+   "stream_cells": 1014,
+   "links": 9,
+   "stream_features": 9,
+   "stream_km": 11.477244139326908,
+   "subwatersheds": 9,
+   "single_part_polygons": 14,
+   "sub_cells": 252139,
+   "mean_sub_km2": 2.801500840622047,
+   "min_sub_km2": 0.04752795487951023,
+   "max_sub_km2": 4.462569436702718,
+   "seconds": 14.8,
+   "drainage_density": 0.4551951161592181
+  },
+  {
+   "threshold": 50000,
+   "threshold_km2": 5.0,
+   "stream_cells": 446,
+   "links": 1,
+   "stream_features": 1,
+   "stream_km": 4.936991614295395,
+   "subwatersheds": 1,
+   "single_part_polygons": 1,
+   "sub_cells": 252139,
+   "mean_sub_km2": 25.21369935677066,
+   "min_sub_km2": 25.21369935677066,
+   "max_sub_km2": 25.21369935677066,
+   "seconds": 14.5,
+   "drainage_density": 0.19580436244672164
+  }
+ ]
+}
