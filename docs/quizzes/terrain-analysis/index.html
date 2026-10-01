@@ -16,8 +16,9 @@
 CE414Quiz.start({
   title: "Slope, Aspect, Viewshed",
   subtitle: "CE 414 &middot; Week 5 &mdash; Terrain Analysis<br>" +
-            "Every surface today is <strong>raster in, raster out</strong>, computed from a moving " +
-            "3 &times; 3 window. Five questions on what each one actually reports.",
+            "Most surfaces today are <strong>raster in, raster out</strong>, computed from a moving " +
+            "3 &times; 3 window; a viewshed is a line-of-sight raster. Five questions on what each " +
+            "one actually reports.",
   badge: "Terrain question",
   deckUrl: "../../slides/week-05/terrain-analysis.html",
   questions: [
@@ -60,7 +61,7 @@ CE414Quiz.start({
     },
     {
       prompt: "A viewshed run from a candidate tower site produces a raster. What does the cell value actually answer?",
-      detail: "The question Lab 4 has to defend a site with.",
+      detail: "A viewshed answers a line-of-sight question; Lab 4's terrain branch uses slope.",
       options: [
         "How far each cell is from the viewpoint",
         "Whether each cell can be seen from the viewpoint",
@@ -68,12 +69,12 @@ CE414Quiz.start({
         "How high above sea level each cell sits"
       ],
       answer: "Whether each cell can be seen from the viewpoint",
-      explanation: "A viewshed is seen or not seen, cell by cell — sweep a line of sight out from the viewer and any cell that falls below the running maximum angle is hidden behind what came before it. It says nothing about distance or signal strength, so a cell can be visible and still be useless to serve; that is the argument Lab 4 asks you to make."
+      explanation: "A viewshed is seen or not seen, cell by cell — sweep a line of sight out from the viewer and any cell that falls below the running maximum angle is hidden behind what came before it. It says nothing about distance or signal strength, so a cell can be visible and still be useless to serve."
     }
   ],
   perfectNote: "A perfect score. You can say what each derived surface reports and what it does not.",
   goodNote: "Solid. Read the explanations on the ones you missed — aspect and the slope algorithms are where the arguments start.",
-  tryAgainNote: "Worth another pass. The short version: every surface here comes from the same 3 × 3 window over the DEM, and each one answers a different question — how steep, which way downhill, how the slope bends, and what can be seen from where."
+  tryAgainNote: "Worth another pass. The short version: most surfaces here come from the same 3 × 3 window over the DEM, while a viewshed answers a line-of-sight question. Each output answers something different — how steep, which way downhill, how the slope bends, or what can be seen from where."
 });
 </script>
 </body>

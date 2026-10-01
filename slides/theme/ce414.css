@@ -31,7 +31,6 @@ section.lead h1 { color: #ffffff; font-size: 1.8em; }
 section.lead h2, section.lead p { color: #c9d8ea; }
 section.lead a { color: #9ec5ee; }
 
-section.quiz h1::before { content: "❓ "; }
 section.activity { background: #eef3f9; }
 
 img { background: transparent; }
