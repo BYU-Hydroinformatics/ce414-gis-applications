@@ -29,7 +29,7 @@ Dr. Dan Ames
 
 # Today's Goals
 
-![bg right:34% w:88%](images/ws-example-model-diagram.png)
+![bg right:34% w:92%](images/ws-lab05-subwatersheds.jpg)
 
 By the end of class you should be able to:
 
@@ -39,7 +39,7 @@ By the end of class you should be able to:
 - Define a **watershed**, an **outlet**, and a **pour point**
 - Delineate a watershed two ways — **by hand** and with **StreamStats** — and compare them
 
-<!-- Set the frame: everything in Part 1 is one raster operation feeding the next. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
+<!-- The map at right is where Lab 5 ends up: Rock Canyon's basin cut into one subwatershed per stream link. Set the frame: everything in Part 1 is one raster operation feeding the next. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
 
 ---
 
@@ -53,13 +53,13 @@ By the end of class you should be able to:
 
 # Watershed Delineation
 
-![bg right:42% w:92%](images/ws-example-model-diagram.png)
-
 **This week's big question:**
 
 ## How do you get a watershed and a stream network from a DEM?
 
-<!-- The diagram on the right is the answer in one picture: a chain of raster tools. We come back to it at the end of Part 1 as the "Example Model" slide. Do not walk through it yet; just let them see that the answer is a pipeline, not a single button. -->
+![w:1000 center](images/ws-lab05-model-diagram.svg)
+
+<!-- The diagram on the right is the answer in one picture: a chain of raster tools. It is the Lab 5 model, and we come back to it at the end of Part 1 as the "Example Model" slide. Do not walk through it yet; just let them see that the answer is a pipeline, not a single button. -->
 
 ---
 
@@ -82,8 +82,8 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
 <!-- This roadmap slide comes back eight more times, each time with the current step in bold. Step 1: get the elevation data, mosaic tiles together if the area of interest spans more than one, and project into a coordinate system with real ground units so cell size means something. -->
@@ -108,8 +108,8 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
 <!-- Step 2. In ArcGIS Pro this is the Fill tool in the Spatial Analyst Hydrology toolset. -->
@@ -144,8 +144,8 @@ By the end of class you should be able to:
 3. **Compute Flow Direction**
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
 <!-- Step 3, the heart of the method, and the step the Excel activity walks through by hand. -->
@@ -237,8 +237,8 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. **Compute Flow Accumulation**
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
 <!-- Step 4. Flow accumulation walks the tree from the previous slide and counts how many cells drain into each cell. -->
@@ -274,11 +274,11 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. **Find cells that exceed a threshold**
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
-<!-- Step 5. This is the step with a judgment call in it: the threshold is chosen, not computed. -->
+<!-- Step 5. This is the step with a judgment call in it: the threshold is chosen, not computed. In ArcGIS Pro it is one Raster Calculator expression on flow accumulation, Con("Flow_Accumulation" > 5000, 1): 1 where the test is true and NoData everywhere else. Lab 5 adds a second test so only cells inside the delineated basin qualify. Leave out the third argument; Con(test, 1, 0) writes 0 instead of NoData and the next tool treats the whole DEM as stream. -->
 
 ---
 
@@ -330,11 +330,11 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. **Convert raster streams to polylines**
-7. Find polyline outlets (points)
+6. **Number the stream links and convert them to lines**
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
-<!-- Step 6. The stream raster becomes vector line features so it can be attributed, measured, and used by hydrologic models. -->
+<!-- Step 6 is two tools. Stream Link gives every segment of the stream raster its own number (the next two slides). Stream to Feature then turns that numbered raster into line features that follow the flow direction, one line per link, so the network can be attributed, measured, and used by hydrologic models. Keep the Stream Link raster: it is also the input for the subwatersheds in step 8. -->
 
 ---
 
@@ -384,11 +384,11 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. **Find polyline outlets (points)**
+6. Number the stream links and convert them to lines
+7. **Choose pour points (snap the outlet to the network)**
 8. Delineate watersheds
 
-<!-- Step 7. Every link's downstream end becomes a point; those points are the pour points for step 8. -->
+<!-- Step 7. A pour point is any cell you ask the Watershed tool to find the drainage area of. For one basin, it is the outlet you care about, moved onto the channel with Snap Pour Point (Lab 5 uses a 50 m snap distance). For subwatersheds you do not extract points at all: the Stream Link raster itself is the pour-point input, and each link, numbered in step 6, acts as the outlet of its own subwatershed. -->
 
 ---
 
@@ -449,8 +449,8 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. **Delineate watersheds**
 
 <!-- Step 8, the payoff. The next three slides show what it looks like on real terrain. -->
@@ -494,8 +494,8 @@ By the end of class you should be able to:
 3. Compute Flow Direction
 4. Compute Flow Accumulation
 5. Find cells that exceed a threshold
-6. Convert raster streams to polylines
-7. Find polyline outlets (points)
+6. Number the stream links and convert them to lines
+7. Choose pour points (snap the outlet to the network)
 8. Delineate watersheds
 
 <!-- All eight, start to finish. Ask the class to name the input and output of each step before moving on. -->
@@ -504,11 +504,12 @@ By the end of class you should be able to:
 
 # Example Model
 
-![h:300 center](images/ws-example-model-diagram.png)
+![w:1150 center](images/ws-lab05-model-diagram.svg)
 
-- The whole workflow, wired together once in **ModelBuilder**, runs end to end on any DEM you give it
+- The whole workflow, wired together once in **ModelBuilder**: this is the Lab 5 model, and it runs end to end on any DEM you give it
 
-<!-- Same diagram as the second slide, now readable because they know every box. Trace the chain: Fill, then Flow Direction, then Flow Accumulation, then Greater Than for the threshold, then Stream Link and Raster to Polyline, then Feature Vertices To Points for the outlets, then Watershed, then Raster to Polygon. Note that the threshold enters at the Greater Than box, operating on flow accumulation, and that the Watershed tool takes flow direction plus pour points. -->
+<!-- Same chain as the eight steps, now readable because they know every box. Trace it row by row. Surface: Fill, then Flow Direction (D8), then Flow Accumulation. Basin: Snap Pour Point moves the outlet up to 50 m onto the highest-accumulation cell, Watershed collects everything that drains to it, and Raster to Polygon turns Basin_Raster into one polygon. Streams: the threshold enters at Raster Calculator, Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), which keeps cells inside the basin whose flow accumulation exceeds the threshold; then Stream Link numbers the segments and Stream to Feature draws them as lines. Subwatersheds: a second Watershed uses the Stream Link raster as its pour points, so every link gets its own subwatershed, and a second Raster to Polygon with Create multipart features checked makes one polygon per link. Two things to point at: the threshold is applied to flow accumulation, never to the Watershed tool, and Flow_Direction feeds four different tools. The P marks are model parameters; students set them in Lab 5 Step 12. This is a drawn diagram, not a ModelBuilder export. -->
+<!-- TODO(capture): replace with a ModelBuilder Export To Graphic of the finished Lab 5 model once it has been built in ArcGIS Pro (see the Lab 5 Figure C TODO). -->
 
 ---
 
@@ -755,7 +756,7 @@ By the end of class you should be able to:
 
 # Next: Lab 5 — Watershed Delineation
 
-![bg right:34% w:95%](images/ws-example-model-diagram.png)
+![bg right:34% w:90%](images/ws-lab05-example-map.png)
 
 Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to finish. What today gives you for it:
 
@@ -766,7 +767,7 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 
 [Lab 5 — Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 
-<!-- The single most common lab failure is an unsnapped pour point producing a two-cell watershed. Say so now. -->
+<!-- The layout at right is the Lab 5 example map, the baseline run of the model. The single most common lab failure is an unsnapped pour point producing a watershed of a few cells. Say so now. -->
 <!-- VERIFY: schedule reconstructed — confirm Lab 5 is the lab that follows this week's lecture. -->
 
 ---
