@@ -41,12 +41,11 @@ The previous page is kept, unlinked, at docs/assignments/lab05-backup/.
 - The dead USGS reference (ga.water.usgs.gov) is replaced by the Water Science School page.
 - No due date problem: the lab is linked from the Week 6 page by tools/build_schedule.py.
 
-**Figures.** Desktop control of ArcGIS Pro was not available when this page was rebuilt, so it has
-no dialog captures yet; the settings are given in text, with the parameter labels read from the
-ArcGIS Pro 3.7.1 tool definitions (arcpy.GetParameterInfo). Each place a capture belongs is
-marked with a TODO(capture) comment. The maps are rendered by ArcGIS Pro through arcpy.mp from the
-verification run; Figures A, B and C and the icons are hand-authored SVG with real text (Figure C
-is a diagram of the model, not a ModelBuilder export). None of the Word-era images is used. -->
+**Figures.** The dialog captures (Figures 0, 1, 3-10 and 12) come from a GUI build of the model in
+ArcGIS Pro 3.7.1 at 175 % display scaling on September 30, 2026, and Figure C is that model's
+ModelBuilder Export To Graphic. The maps are rendered by ArcGIS Pro through arcpy.mp from the
+verification run; Figures A and B and the icons are hand-authored SVG with real text. One capture is
+still owed (TODO(capture) in Step 14). None of the Word-era images is used. -->
 
 > [!TIP]
 > **Start from the report template.** [`lab05-report-template.docx`](lab05-report-template.docx)
@@ -161,12 +160,9 @@ You will use the following new tools, along with Project Raster and Raster Calcu
 
 Your finished model has four rows — the surface, the basin, the streams and the subwatersheds — and every row after the first reuses `Flow_Direction`. The model starts from `DEM_UTM`, an elevation raster you project once, *before* the model, in Step 1, and from `Outlet`, a point you create in Step 2. Make your model "your own": lay it out so it reads left to right, and give every tool and dataset a name that says what it holds. `Stream_Links` tells a reader something; `StreamL_Rast1` does not.
 
-![Diagram of the model in four rows. Surface: DEM_UTM into Fill, Filled_DEM, Flow Direction, Flow_Direction, Flow Accumulation, Flow_Accumulation. Basin: Outlet and Flow_Accumulation into Snap Pour Point, Snapped_Outlet; Snapped_Outlet and Flow_Direction into Watershed, Basin_Raster; Raster to Polygon, Rock_Canyon_Basin. Streams: Threshold (5000, marked P), Basin_Raster and Flow_Accumulation into Raster Calculator, Stream_Cells; Stream_Cells and Flow_Direction into Stream Link, Stream_Links; Stream_Links and Flow_Direction into Stream to Feature, Streams (marked P). Subwatersheds: Stream_Links and Flow_Direction into Watershed (2), Subwatershed_Raster; Raster to Polygon (2), Subwatersheds (marked P).](images/lab05-model-diagram.svg)
+![The finished ModelBuilder model, exported as a vector diagram, in four rows. Surface: DEM_UTM into Fill, Filled_DEM, Flow Direction, Flow_Direction, Flow Accumulation, Flow_Accumulation, with Flow Direction's empty optional Output drop raster above it. Basin: Outlet into Snap Pour Point (which also takes Flow_Accumulation), Snapped_Outlet, Watershed (which also takes Flow_Direction), Basin_Raster, Raster to Polygon, Rock_Canyon_Basin, marked P. Streams: Threshold, marked P, into Raster Calculator (which also takes Basin_Raster and Flow_Accumulation), Stream_Cells, Stream Link, Stream_Links, Stream to Feature, Streams, marked P; Stream Link and Stream to Feature also take Flow_Direction. Subwatersheds: Stream_Links and Flow_Direction into Watershed (2), Subwatershed_Raster, Raster to Polygon (2), Subwatersheds, marked P.](images/lab05-full-model.svg)
 
-**Figure C.** The structure of the finished model — **click it to open it full size**. Your ModelBuilder canvas will hold the same tools and datasets. The elements marked `P` are model parameters; they appear in the tool dialog you build in Step 12.
-
-<!-- TODO(capture): replace or supplement Figure C with a ModelBuilder Export To Graphic (SVG) of the
-     built model once the GUI build is done, as in Lab 4. -->
+**Figure C.** The finished model, exported from ModelBuilder. This is a vector diagram — **click it to open it full size**, where every label is readable. The four elements marked `P` are the model parameters of Step 12; they appear in the tool dialog you build there. The gray oval above Flow Direction is its optional drop raster, which you leave empty.
 
 ## Complete the Lab
 
@@ -191,13 +187,15 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Check the license.** Every hydrology tool in this lab is a **Spatial Analyst** tool. On the **Project** tab choose **Licensing** and confirm that *Spatial Analyst* is listed as licensed. It is on the lab machines.
 
-**Add the DEM to the map**: `RockCanyon_DEM.tif`. When ArcGIS Pro offers to calculate statistics, say **Yes**.
+**Add the DEM to the map**: `RockCanyon_DEM.tif`. When the **Build Pyramids and Calculate Statistics** dialog opens, leave both boxes checked and click **OK**.
 
-**Create the model.** On the **Analysis** tab click **ModelBuilder**. In the **Catalog** pane, under **Toolboxes**, right-click the new model in `Lab05.atbx`, choose **Rename**, and call it `RockCanyon`.
+**Create the model.** On the **Analysis** tab click **ModelBuilder**. A new model named `Model` opens in `Lab05.atbx`. Name it now: on the **ModelBuilder** tab click **Properties**, type `RockCanyon` (no spaces) as the **Name**, and click **OK**. Step 12 comes back to this dialog for the label and the parameters.
 
-**Set the coordinate system for the whole model.** On the **ModelBuilder** tab click **Environments** and set **Output Coordinate System** to **NAD 1983 UTM zone 12N** (search for it; ArcGIS Pro spells *zone* with a lowercase z). Leave **Cell Size** empty: the DEM you build in Step 1 already has the cell size you want, and every tool in the model inherits it.
+**Set the coordinate system for the whole model.** On the **ModelBuilder** tab click **Environments** and set **Output Coordinate System** to **NAD 1983 UTM zone 12N** (search for it; ArcGIS Pro spells *zone* with a lowercase z) (Figure 0). Leave **Cell Size** empty: the DEM you build in Step 1 already has the cell size you want, and every tool in the model inherits it.
 
-<!-- TODO(capture): the model's Environments dialog with Output Coordinate System set (Lab 4 Figure 0 pattern). -->
+![The Environments dialog for the model: Current Workspace and Scratch Workspace both Lab05.gdb; Output Coordinate System NAD_1983_UTM_Zone_12N and Geographic Transformations empty; Processing Extent empty; under Raster Analysis, Cell Size empty and Cell Size Projection Method Convert units.](images/lab05-environments.png)
+
+**Figure 0.** ModelBuilder ▸ Environments with the Output Coordinate System set and the Cell Size left empty.
 
 The first check value is in Step 1.
 
@@ -210,10 +208,12 @@ On the **Analysis** tab click **Tools**, search for **Project Raster** (Data Man
 - **Input Raster**: `RockCanyon_DEM.tif`
 - **Output Raster Dataset**: `DEM_UTM` in your project geodatabase, `Lab05.gdb`
 - **Output Coordinate System**: **NAD 1983 UTM zone 12N**
-- **Resampling Technique**: **Bilinear interpolation** — the default is *Nearest neighbor*
-- **Output Cell Size**: `10` in both the **X** and **Y** boxes, whatever the tool proposes
+- **Resampling Technique**: **Bilinear interpolation** — ArcGIS Pro proposes it for this DEM; if yours reads *Nearest neighbor*, change it
+- **Output Cell Size**: `10` in both the **X** and **Y** boxes, whatever the tool proposes (it proposes about 9.05)
 
-<!-- TODO(capture): the Project Raster pane filled in as above. -->
+![The Project Raster tool in the Geoprocessing pane: Input Raster RockCanyon_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size empty with X 10 and Y 10.](images/lab05-project-raster-dialog.png)
+
+**Figure 1.** Project Raster with bilinear resampling to square 10 m cells. Type the output name after the input: picking the input fills the output box with a default name such as `RockCanyon_DEM_ProjectRaster`.
 
 > [!NOTE]
 > **Why Bilinear, and why 10 m?** Elevation is continuous, so a new cell that falls between old ones
@@ -256,7 +256,9 @@ The outlet is the point whose watershed you want: the **Rock Canyon trailhead**,
 
 Back in your model: add the **Fill** tool and pick the `DEM_UTM` layer as its **Input surface raster** — it becomes a blue input on the canvas. Leave **Z limit** empty, so every pit is filled however deep. Name the output `Filled_DEM`.
 
-<!-- TODO(capture): the Fill dialog from ModelBuilder. -->
+![The Fill tool dialog from ModelBuilder: Input surface raster DEM_UTM, Output surface raster Filled_DEM, Z limit empty.](images/lab05-fill-dialog.png)
+
+**Figure 3.** Fill, with no Z limit.
 
 > [!NOTE]
 > **Why fill?** In the next step every cell sends its water to a lower neighbor. A cell with no lower
@@ -276,9 +278,11 @@ Back in your model: add the **Fill** tool and pick the `DEM_UTM` layer as its **
 
 ### Step 4 — Compute Flow Direction
 
-Add **Flow Direction** with `Filled_DEM` as the **Input surface raster**, and name the output `Flow_Direction`. Leave **Force all edge cells to flow outward** unchecked, leave **Output drop raster** empty, and check that **Flow direction type** is **D8** (the default).
+Add **Flow Direction** with `Filled_DEM` as the **Input surface raster**, and name the output `Flow_Direction`. Leave **Force all edge cells to flow outward** unchecked, leave **Output drop raster** empty, and check that **Flow direction type** is **D8** and **Method** is **Planar** (the defaults). If the dialog opens with a note about the *Geodesic Flow Direction* tool, close the note and carry on: this lab uses Flow Direction.
 
-<!-- TODO(capture): the Flow Direction dialog from ModelBuilder. -->
+![The Flow Direction tool dialog from ModelBuilder: Input surface raster Filled_DEM, Output flow direction raster Flow_Direction, Force all edge cells to flow outward unchecked, Output drop raster empty, Flow direction type D8, Method Planar.](images/lab05-flow-direction-dialog.png)
+
+**Figure 4.** Flow Direction on the filled DEM, D8 and Planar.
 
 > [!TIP]
 > **Check the result:** `Flow_Direction` has exactly **eight values**: 1, 2, 4, 8, 16, 32, 64 and
@@ -291,24 +295,28 @@ Add **Flow Direction** with `Filled_DEM` as the **Input surface raster**, and na
 
 Add **Flow Accumulation** with `Flow_Direction` as the **Input flow direction raster**, and name the output `Flow_Accumulation`. Leave **Input weight raster** empty, so every cell counts as one; **Output data type** is **Float** and **Input flow direction type** is **D8**, the defaults.
 
-<!-- TODO(capture): the Flow Accumulation dialog from ModelBuilder. -->
+![The Flow Accumulation tool dialog from ModelBuilder: Input flow direction raster Flow_Direction, Output accumulation raster Flow_Accumulation, Input weight raster empty, Output data type Float, Input flow direction type D8.](images/lab05-flow-accumulation-dialog.png)
+
+**Figure 5a.** Flow Accumulation with no weight raster: every cell counts as one.
 
 > [!TIP]
 > **Check the result:** `Flow_Accumulation` runs from **0** (ridge tops and every other cell nothing
 > drains into) to **430,024**, at the DEM's west edge on the Provo bench, where several canyons'
-> water has joined. Symbolize it with a strong stretch and the streams appear (Figure 5). A maximum
+> water has joined. Symbolize it with a strong stretch and the streams appear (Figure 5b). A maximum
 > near **246,600** means Flow Direction was run on the unfilled DEM: the pits stop the water before
 > it reaches the edge.
 
 ![The whole DEM as a gray hillshade with the flow accumulation drawn in blue on top, darker where more cells drain through: a branching network of blue lines fills every valley, the Rock Canyon trunk runs west to the outlet point, marked in red at the canyon mouth, and the lines on the flat bench to the west run in straight parallel paths.](images/lab05-check-accumulation.jpg)
 
-**Figure 5.** `Flow_Accumulation` over a hillshade, darker blue for more upstream cells (a logarithmic stretch, cells below 200 hidden). The red point is the outlet. Notice the straight, parallel lines on the city bench at the left — hold that thought until Step 13.
+**Figure 5b.** `Flow_Accumulation` over a hillshade, darker blue for more upstream cells (a logarithmic stretch, cells below 200 hidden). The red point is the outlet. Notice the straight, parallel lines on the city bench at the left — hold that thought until Step 13.
 
 ### Step 6 — Snap the Outlet
 
 Add **Snap Pour Point** with `Outlet` as the **Input raster or feature pour point data** and `Flow_Accumulation` as the **Input accumulation raster**. Set **Snap distance** to `50` — it is in the units of the output coordinate system, meters — and leave **Pour point field** as it fills itself in. Name the output `Snapped_Outlet`.
 
-<!-- TODO(capture): the Snap Pour Point dialog from ModelBuilder with Snap distance 50. -->
+![The Snap Pour Point tool dialog from ModelBuilder: Input raster or feature pour point data Outlet, Pour point field OBJECTID, Input accumulation raster Flow_Accumulation, Output raster Snapped_Outlet, Snap distance 50.](images/lab05-snap-pour-point-dialog.png)
+
+**Figure 6.** Snap Pour Point. The Pour point field filled itself in with `OBJECTID`; only the output name and the 50 were typed.
 
 > [!WARNING]
 > **The snap distance defaults to 0.** At 0 the outlet stays on whatever cell you clicked. A
@@ -326,18 +334,24 @@ Add **Snap Pour Point** with `Outlet` as the **Input raster or feature pour poin
 
 Add **Watershed** with `Flow_Direction` as the **Input D8 flow direction raster** and `Snapped_Outlet` as the **Input raster or feature pour point data**, and name the output `Basin_Raster`. Then add **Raster to Polygon** with `Basin_Raster` as input, and name the output `Rock_Canyon_Basin`.
 
-<!-- TODO(capture): the Watershed dialog and the Raster to Polygon dialog from ModelBuilder. -->
+![The Watershed tool dialog from ModelBuilder: Input D8 flow direction raster Flow_Direction, Input raster or feature pour point data Snapped_Outlet, Pour point field empty, Output raster Basin_Raster.](images/lab05-watershed-dialog.png)
+
+**Figure 7a.** Watershed, with the snapped outlet as the pour point.
+
+![The Raster to Polygon tool dialog from ModelBuilder: Input raster Basin_Raster, Field VALUE, Output polygon features Rock_Canyon_Basin, Simplify polygons checked, Create multipart features unchecked, Maximum vertices per polygon feature empty.](images/lab05-raster-to-polygon-basin-dialog.png)
+
+**Figure 7b.** Raster to Polygon for the basin. The basin is one block of cells, so the defaults are fine here; Step 10 is different.
 
 > [!TIP]
 > **Check the result:** `Basin_Raster` has about **252,100 cells**, so `Rock_Canyon_Basin` is one
 > polygon of about **25.21 km²** (9.73 square miles; `Shape_Area` about 25,210,000 square
-> meters), reaching from the trailhead at about 1,553 m to Provo Peak at 3,371 m (Figure 7). If it
+> meters), reaching from the trailhead at about 1,553 m to Provo Peak at 3,371 m (Figure 7c). If it
 > is **a few cells or a few hundred square meters**, the outlet was not snapped: go back to Step 6.
 > If it is about **43 km²**, your outlet is at the far west edge of the DEM, not at the trailhead.
 
 ![Imagery of Rock Canyon with the delineated basin outlined in yellow: a roughly oval basin about 7 km across, reaching from the canyon mouth on the left, where a red point marks the snapped outlet, east over the ridges of Kyhv Peak (formerly Squaw Peak) and Y Mountain to the high country around Provo Peak on the right.](images/lab05-check-basin.jpg)
 
-**Figure 7.** `Rock_Canyon_Basin` on imagery, with the snapped outlet in red. Yours should match this outline.
+**Figure 7c.** `Rock_Canyon_Basin` on imagery, with the snapped outlet in red. Yours should match this outline.
 
 ### Step 8 — Define the Streams
 
@@ -359,7 +373,9 @@ Name the output `Stream_Cells`. Read it from the inside out: `"%Basin_Raster%" >
 > including cells whose value is 0. `Con(test, 1, 0)` would make the whole DEM one enormous "stream".
 > Leaving out the third argument is what makes the non-stream cells NoData.
 
-<!-- TODO(capture): the Raster Calculator dialog with this expression and the output Stream_Cells. -->
+![The Raster Calculator dialog from ModelBuilder: the Rasters list shows the model's variables, the Map Algebra expression reads Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > 5000), 1), and the Output raster is Stream_Cells.](images/lab05-raster-calc-literal.png)
+
+**Figure 8.** The stream test. In Step 12 the `5000` becomes a model parameter.
 
 > [!TIP]
 > **Check the result:** `Stream_Cells` has about **2,030 cells**, all with the value 1, all inside
@@ -371,7 +387,13 @@ Name the output `Stream_Cells`. Read it from the inside out: `"%Basin_Raster%" >
 
 Add **Stream Link** with `Stream_Cells` as the **Input stream raster** and `Flow_Direction` as the **Input flow direction raster**, and name the output `Stream_Links`. Then add **Stream to Feature** with `Stream_Links` as the **Input stream raster** and `Flow_Direction` again, leave **Simplify polylines** checked, and name the output `Streams`.
 
-<!-- TODO(capture): the Stream Link and Stream to Feature dialogs from ModelBuilder. -->
+![The Stream Link tool dialog from ModelBuilder: Input stream raster Stream_Cells, Input flow direction raster Flow_Direction, Output raster Stream_Links.](images/lab05-stream-link-dialog.png)
+
+**Figure 9a.** Stream Link.
+
+![The Stream to Feature tool dialog from ModelBuilder: Input stream raster Stream_Links, Input flow direction raster Flow_Direction, Output polyline features Streams, Simplify polylines checked.](images/lab05-stream-to-feature-dialog.png)
+
+**Figure 9b.** Stream to Feature, from the numbered links rather than from `Stream_Cells`.
 
 > [!TIP]
 > **Check the result:** `Stream_Links` runs from 1 to **29** — 29 stream segments, each the
@@ -386,7 +408,13 @@ Add a second **Watershed** with `Flow_Direction` as the **Input D8 flow directio
 
 Then add a second **Raster to Polygon** with `Subwatershed_Raster` as input, and **check "Create multipart features"**. Name the output `Subwatersheds`.
 
-<!-- TODO(capture): the Raster to Polygon (2) dialog with Create multipart features checked. -->
+![The Watershed (2) tool dialog from ModelBuilder: Input D8 flow direction raster Flow_Direction, Input raster or feature pour point data Stream_Links, Pour point field VALUE, Output raster Subwatershed_Raster.](images/lab05-watershed-subwatersheds-dialog.png)
+
+**Figure 10a.** The second Watershed, with the stream links as pour points.
+
+![The Raster to Polygon (2) tool dialog from ModelBuilder: Input raster Subwatershed_Raster, Field VALUE, Output polygon features Subwatersheds, Simplify polygons checked, Create multipart features checked.](images/lab05-raster-to-polygon-subwatersheds-dialog.png)
+
+**Figure 10b.** The second Raster to Polygon, with **Create multipart features** checked.
 
 > [!WARNING]
 > **Check "Create multipart features."** It is off by default. A subwatershed's cells are all
@@ -417,20 +445,31 @@ Right-click `Rock_Canyon_Basin`, `Streams` and `Subwatersheds` and choose **Add 
 
 You are about to run this model several times with different thresholds. Expose the threshold as a model parameter now, so each run is "type a number, click Run". It lives inside an expression, so it takes a variable:
 
-1. On the **ModelBuilder** tab, click **Variable** (the *VAR* button), type `Long` into the data-type box and press Enter, and click OK. Right-click the new oval ▸ **Rename** ▸ `Threshold`, double-click it and type `5000`, and right-click it ▸ **Parameter**. A `P` appears beside it.
+1. On the **ModelBuilder** tab, click **Variable** (the *VAR* button), type `Long` into the data-type box and press Enter, and click OK. A new oval named `Long` appears in the middle of the canvas. Right-click **the new oval** ▸ **Rename** ▸ `Threshold`, double-click it and type `5000`, and right-click it ▸ **Parameter**. A `P` appears beside it. (Use the oval's own right-click menu: the **Ctrl+R** shortcut renames whatever is selected, and right after you add a variable that can still be the last tool you added.)
 2. Open the **Raster Calculator** from Step 8 and change the expression to:
 
    ```text
    Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1)
    ```
 
-   The `%name%` syntax means "put this variable's current value here"; the connector from `Threshold` draws itself when you click OK. Check that the output name is still `Stream_Cells`.
+   The `%name%` syntax means "put this variable's current value here"; the connector from `Threshold` draws itself when you click OK. Check that the output name is still `Stream_Cells` (Figure 12a).
 3. Make `Rock_Canyon_Basin`, `Streams` and `Subwatersheds` parameters too (right-click each ▸ **Parameter**), so each run can have its own output names.
 
-Click **Properties** on the ModelBuilder tab: on **General**, give the model a *Name* (`RockCanyon`, no spaces) and a *Label* (`Rock Canyon Watersheds`); on **Parameters**, drag the rows by their numbers so `Threshold` comes first. Click **Save**. Then in the **Catalog** pane, double-click the model in `Lab05.atbx`: the Geoprocessing pane shows a dialog with the threshold and three outputs. **Screen capture it for your report.**
+![The Raster Calculator dialog for the stream test after the change: the expression reads Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), and the output is still Stream_Cells. A small warning icon beside Output raster only says the dataset already exists from the earlier run.](images/lab05-raster-calc-param.png)
 
-<!-- TODO(capture): the model as a tool in the Geoprocessing pane (Lab 4 Figure 12c pattern), and the
-     Raster Calculator with %Threshold% (Lab 4 Figure 12b pattern). -->
+**Figure 12a.** The threshold as an inline variable.
+
+**Save the model** (**Save** on the ModelBuilder tab). Then click **Properties** on the ModelBuilder tab: on **General**, check the *Name* (`RockCanyon`) and give the model a *Label* (`Rock Canyon Watersheds`); on **Parameters**, check that `Threshold` comes first, and drag the rows by their numbers if it does not. Click **OK** and **Save** again. Then in the **Catalog** pane, double-click the model in `Lab05.atbx`: the Geoprocessing pane shows a dialog with the threshold and three outputs (Figure 12b). **Screen capture it for your report.**
+
+> [!WARNING]
+> **If the Parameters list in Properties is empty, click Cancel, not OK.** It can open empty even
+> though the canvas shows the four `P` marks, and **OK** then saves the empty list: the `P` marks
+> stay on the canvas, but the tool has no parameters. If that happens, close the model, right-click
+> it in the **Catalog** pane ▸ **Edit**, make the four parameters again, and save.
+
+![The model opened as a tool in the Geoprocessing pane, titled Rock Canyon Watersheds: Threshold 5000, and the outputs Rock_Canyon_Basin, Streams and Subwatersheds, each with a warning icon because the datasets already exist.](images/lab05-tool-dialog.png)
+
+**Figure 12b.** The model as a tool: one number and three output names. The warning icons only say that those datasets already exist; Step 14 gives every run new names.
 
 > [!WARNING]
 > **Running from the dialog deletes intermediate data.** Everything that is not a parameter or an
@@ -446,7 +485,7 @@ Click **Properties** on the ModelBuilder tab: on **General**, give the model a *
 A model that runs without an error has only proved that it runs. Before you use its answer, compare it with two sources that did not come from your model.
 
 1. **The basin, against the USGS.** Open [USGS StreamStats](https://streamstats.usgs.gov/ss/){ target="_blank" }, type `40.26525, -111.63` into **Find a place**, and choose the coordinate it suggests. Select **Utah** as the state, zoom in to level 15 (the zoom level shows at the lower left of the map), click **Delineate**, and click the blue stream cell at the trailhead. When the basin appears, click **Continue**, open **Basin Characteristics**, check **DRNAREA** (drainage area), and click **Continue** again. StreamStats delineates on its own elevation grid and stream network, independently of yours. How close is its drainage area to your `Rock_Canyon_Basin`? It reports square miles; you have square kilometers (1 mi² = 2.590 km²).
-2. **The streams, against the NHD.** On the **Map** tab click the arrow under **Add Data** ▸ **Data From Path**, paste the feature service URL from the Data section, and click **Add**. Open **Clip** (Analysis Tools) from the Geoprocessing pane with the NHD layer as the input and `Rock_Canyon_Basin` as the clip features, and name the output `NHD_Basin`. **Before you click Run**, open the tool's **Environments** tab and set **Output Coordinate System** to NAD 1983 UTM zone 12N (see the warning below). Then sum `Shape_Length` for all its lines, and separately for each `FCode` (46006 perennial, 46003 intermittent, 46007 ephemeral). Compare the total with your `Streams` (Figure 13).
+2. **The streams, against the NHD.** On the **Map** tab click the arrow under **Add Data** ▸ **From Path**, paste the feature service URL from the Data section, and click **Add**. Open **Clip** (Analysis Tools) from the Geoprocessing pane with the NHD layer as the input and `Rock_Canyon_Basin` as the clip features, and name the output `NHD_Basin`. **Before you click Run**, open the tool's **Environments** tab and set **Output Coordinate System** to NAD 1983 UTM zone 12N (see the warning below). Then sum `Shape_Length` for all its lines, and separately for each `FCode` (46006 perennial, 46003 intermittent, 46007 ephemeral). Compare the total with your `Streams` (Figure 13).
 3. **Look at where they disagree.** With the imagery basemap on, follow your streams and the NHD's up the canyon. Where does one draw a channel the other does not? Which one does the imagery support?
 
 > [!WARNING]
@@ -465,7 +504,7 @@ A model that runs without an error has only proved that it runs. Before you use 
 
 **Figure 13.** Your streams at 5,000 cells (orange) against the NHD (blue: solid perennial or intermittent, dashed ephemeral), clipped to the basin.
 
-Then **write down, for your report, where the model is wrong and why** — the "Where the method breaks" part of the rubric. Three places to start: the straight parallel lines on the Provo bench in Figure 5 (what does a D8 model do on a nearly flat, built-up surface, and why does it matter that your outlet is above the bench?); the NHD's ephemeral lines (who drew them, from what, and is a line on a map proof of a channel?); and Figure A's culvert warning (where in or below Rock Canyon could the real water go somewhere the DEM does not show?). For each, say what data would fix it.
+Then **write down, for your report, where the model is wrong and why** — the "Where the method breaks" part of the rubric. Three places to start: the straight parallel lines on the Provo bench in Figure 5b (what does a D8 model do on a nearly flat, built-up surface, and why does it matter that your outlet is above the bench?); the NHD's ephemeral lines (who drew them, from what, and is a line on a map proof of a channel?); and Figure A's culvert warning (where in or below Rock Canyon could the real water go somewhere the DEM does not show?). For each, say what data would fix it.
 
 > [!NOTE]
 > **Two checks, two different kinds of agreement.** StreamStats checks the *boundary*, which
@@ -575,7 +614,7 @@ of this page.
 | Item | Points |
 | --- | --- |
 | **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The two checks from Step 13: your basin area against StreamStats and your stream length against the NHD, with the numbers (2)<br>• Where the model is wrong, why, and what data would fix each problem (Step 13) (2)<br>• The four metadata values from Figure A and what each one means for your result (2)<br>• Clear, organized writing: figures numbered and referred to in the text, sources credited, and this rubric pasted in with your self-assessment in every row (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog; at the baseline threshold your basin area, segment count and subwatershed count match the Step 7 and Step 11 check values, within the small differences your own outlet can make (4)<br>• A full-page (8.5 × 11) figure of the model, exported from ModelBuilder: every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2)<br>• A screen capture of the tool dialog with the threshold exposed as a parameter (2)<br>• A description of the model a reader could repeat from: each tool, its settings, and every input, intermediate and output dataset with its type and source (2) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, with the threshold and the three outputs as its parameters; at the baseline threshold your basin area, segment count and subwatershed count match the Step 7 and Step 11 check values, within the small differences your own outlet can make (4)<br>• A full-page (8.5 × 11) figure of the model, exported from ModelBuilder and laid out so it reads in rows as Figure C does: every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2)<br>• A screen capture of the tool dialog with the threshold and the three outputs exposed as parameters, like Figure 12b (2)<br>• A description of the model a reader could repeat from: each tool, its settings, and every input, intermediate and output dataset with its type and source (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection and data sources (1)<br>• Subwatersheds and the basin boundary clearly symbolized, with a legend (2)<br>• Your streams and the NHD streams both shown, symbolized so a reader can tell them apart (2)<br>• The outlet marked, and a locator map showing where the basin is (2)<br>• Imagery or hillshade visible, zoomed to the basin, and all text legible when printed (2) | /10 |
 | **Map 2 — one Step 14 threshold** (full page, 8.5 × 11)<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection and data sources (1)<br>• Subwatersheds and streams for this threshold symbolized the same way as on Map 1, with a legend (2)<br>• The NHD streams and the outlet shown (2)<br>• Imagery or hillshade visible, zoomed to the basin, and all text legible when printed (2)<br>• The title and text box say what threshold was used, what it replaced, and why you chose this run to show (2) | /10 |
 | **Sensitivity analysis** (Step 14)<br>• One table with the baseline and at least three more thresholds, giving for each the threshold in cells and km², the basin area, the segments, the subwatersheds, the stream length, the mean subwatershed area and the drainage density, with the NHD as a reference row (4)<br>• How the counts depend on the threshold, the range that gives 20–40 subwatersheds, and why two columns are equal (2)<br>• The thresholds that reproduce the NHD, and what that says about the NHD and about which network to use (2)<br>• What the threshold does not change, and the network you would defend (2) | /10 |
@@ -590,11 +629,11 @@ of this page.
 
 <!-- Migration notes (2026-09-29 rebuild).
 SOURCE: the September 3 migration of "Lab 5 - Watershed Delineation.docx" (kept unlinked at docs/assignments/lab05-backup/README.md, with its 19 Word-era images), rebuilt to the standard of Labs 1-4 per tools/lab-conversion-guide.md and harmonized with Lab 4 (Cell Phone Tower Placement): same section order, Step 0 set-up, one-time data preparation outside the model, check values with failure interpretations in every step, parameter step, check step, sensitivity step with baseline-in-table, two maps, rubric of five tens.
-ARCGIS PRO VERSION: 3.7.1. VERIFIED WITH ARCPY ONLY (tools/lab05/run_model.py, extra_checks.py, arcgispro-py3, Spatial Analyst headless). The GUI build was NOT done: computer-use access to ArcGIS Pro was requested twice on 2026-09-29 and denied (the instructor was away), so no dialog was seen. Dialog labels and defaults on the page come from arcpy.GetParameterInfo for each tool (Fill: Input surface raster / Z limit; Flow Direction: Force all edge cells to flow outward default off, Output drop raster, Flow direction type D8; Flow Accumulation: Input weight raster, Output data type Float, Input flow direction type D8; Snap Pour Point: Input raster or feature pour point data, Input accumulation raster, Snap distance default 0, Pour point field; Watershed: Input D8 flow direction raster, Input raster or feature pour point data; Stream Link; Stream to Feature: Simplify polylines default on; Raster to Polygon: Simplify polygons default on, Create multipart features default off; Project Raster: Resampling Technique default Nearest). GUI claims carried from the Lab 4 GUI session (2026-09-25): Raster Calculator overwrites the output name; the canvas Intermediate button deletes data; running from the dialog deletes intermediates; VAR button + data-type box; Create Variable renaming. NOT SEEN and to verify at a lab machine: Go To XY accepting "111.63W"/"40.26525N" (worked by desktop control in Week 3), Add Data > Data From Path with the UGRC URL, the ModelBuilder Raster Calculator accepting a Long variable inline, total model run time "about a minute" (arcpy: 55 s shared + 15 s per threshold).
+ARCGIS PRO VERSION: 3.7.1. Verified twice. (1) arcpy (tools/lab05/run_model.py, extra_checks.py, arcgispro-py3, Spatial Analyst headless), 2026-09-29. (2) GUI build by desktop control, 2026-09-30, at 175 % display scaling, in C:\Ames\Lab05GUI\Lab05.aprx (model RockCanyon, label Rock Canyon Watersheds): the model was built from the page's steps and reproduced every check value exactly (DEM_UTM 1,284 x 1,230 of 10 m, 1,376.67-3,370.60 m; Flow_Direction the eight D8 codes only; Flow_Accumulation max 430,024; Basin_Raster 252,139 cells, Rock_Canyon_Basin 1 polygon 25.2137 km2; Stream_Cells 2,031; Stream_Links 1-29; Streams 29 lines 22.913 km; Subwatersheds 29 multipart polygons 25.213 km2). Run time 48 s inside ModelBuilder; 1 min 8 s from the tool dialog at threshold 10,000 (15 segments, 16.5 km, 15 subwatersheds, matching SENSITIVITY), and that dialog run deleted every intermediate. SEEN AND CORRECTED ON THE PAGE: the DEM prompt is a 'Build Pyramids and Calculate Statistics' dialog with OK (the page said 'say Yes'); a model's right-click menu in Catalog has no Rename (Step 0 now names it through ModelBuilder > Properties > Name); Project Raster's Resampling Technique opened as Bilinear interpolation for this DEM in the GUI (arcpy reports the tool default as Nearest; the page now says to check it), and it proposed a 9.054 m cell; Flow Direction has a Method parameter (Planar) and may open with a Geodesic Flow Direction note; the Add Data item is 'From Path...', not 'Data From Path'. SEEN AND CONFIRMED: Go To XY accepts 111.63W / 40.26525N (units dd) and centers on the outlet; From Path with the UGRC URL adds the NHD (the dialog detects 'An ArcGIS Server Web Service'); Variable > Long, renamed Threshold, works inline in the Raster Calculator and draws its connector; Raster Calculator overwrites a typed output name (it did so even when the name was typed after the expression, so the name had to be typed twice); Image Analyst's Raster Calculator is the first search hit; Snap Pour Point fills Pour point field with OBJECTID; Watershed (2) fills VALUE; Project Raster fills the output name with RockCanyon_DEM_ProjectRaster when the input is picked. SEEN, NEW WARNING: Properties > Parameters once opened empty after the four parameters were set; OK saved the empty list (the P badges stayed on the canvas, tool.content params empty, GetParameterInfo returned nothing); Cancel, closing the model and Catalog > Edit, re-marking the parameters and saving fixed it. Ctrl+R right after Variable renamed the last-added tool (Raster to Polygon (2)), not the new variable.
 DATA: (1) docs/data/lab05-rock-canyon-dem.zip, 4,188,547 bytes: RockCanyon_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20, metadata title "USGS 1/3 Arc Second n41w112 20260519", source time period 1946-01-01 to 2023-11-05), bounds -111.665 -111.515 40.225 40.335, 1,620 x 1,188 float32 cells, no NoData cells, 1376.36-3371.22 m, GCS NAD83; READ-ME inside. Built by tools/lab05/fetch_dem.py (rasterio /vsicurl/ windowed read) + make_extract.py. (2) UGRC Utah Streams NHD feature service (services1.arcgis.com/99lidPhWCzftIe9K/.../UtahStreamsNHD/FeatureServer/0), Web Mercator (wkid 102100), last update December 2016; queried for the DEM box on 2026-09-29 (285 features). (3) USGS StreamStats, ss-delineate API and the web app, 2026-09-29.
 VERIFIED NUMBERS (threshold 5,000 cells, outlet 40.26525 N 111.63 W = UTM 446,432 E 4,457,388 N, snap 50 m): DEM_UTM 1,284 x 1,230 cells of 10 m, 1,376.67-3,370.60 m, 22,327 NoData corner cells; Fill raised 12,916 cells (1,916 by > 1 m), max 13.48 m at UTM 454,727 4,456,097 (40.2541 N 111.5324 W), outside the basin; inside the basin 43 cells raised, max 2.35 m; Flow_Direction values 1-128 only; unfilled DEM -> 20 distinct values, 39 non-D8 cells, and Flow Accumulation max 246,640; Flow_Accumulation max 430,024 at UTM 443,457 4,456,347 (40.2557 N 111.6649 W, the DEM's west edge); snapped outlet UTM 446,387 4,457,397, accumulation 252,138 (moved 45 m); Basin_Raster 252,139 cells = 25.2139 km2 = 9.735 sq mi, one polygon (simplified or not), elevation 1,553.4-3,370.6 m; unsnapped at the exact coordinate 252,116 cells; a point 40 m north of the channel with snap 0 -> 1 cell, snap 10 -> 5 cells, snap 50 -> 252,139. StreamStats (web app 2026-09-29): DRNAREA 9.8 sq mi; API Shape_Area 25,388,600 m2 (+0.7 %). Baseline: Stream_Cells 2,031; Stream_Links 1-29; Streams 29 lines, 22.913 km; Subwatersheds 29 multipart polygons (61 single-part), total 25.213 km2, mean 0.869, min 0.0083, max 3.520 km2. NHD_Basin: 36 lines, 37.43 km in UTM (37.44 km geodesic, 49.09 km if left in Web Mercator); FCode 46006 perennial 5.51 km, 46003 intermittent 2.61 km, 46007 ephemeral 29.31 km; names Dry Fork and unnamed. Figure B patch: tools/lab05/d8_patch.json (center UTM 450,007 4,459,047).
 SENSITIVITY (measured, for setting expectations; do NOT publish): threshold cells -> segments = subwatersheds / stream km / mean subwatershed km2 / drainage density km per km2 / single-part polygons: 500 -> 290 / 83.2 / 0.087 / 3.30 / 664; 1,000 -> 140 / 56.1 / 0.180 / 2.22 / 294; 2,000 -> 78 / 38.6 / 0.323 / 1.53 / 157; 5,000 -> 29 / 22.9 / 0.869 / 0.91 / 61; 10,000 -> 15 / 16.5 / 1.681 / 0.66 / 22; 20,000 -> 9 / 11.5 / 2.802 / 0.46 / 14; 50,000 -> 1 / 4.9 / 25.21 / 0.20 / 1. The basin area (25.21 km2) is identical in every run. Counts fall roughly in inverse proportion to the threshold (x 2 threshold -> about x 0.5 segments); 20-40 subwatersheds is roughly 3,700-7,400 cells by log-log interpolation. The NHD total (37.4 km) is matched near 2,000 cells; the NHD perennial + intermittent length (8.1 km) falls between 20,000 (11.5 km) and 50,000 (4.9 km). At 50,000 cells only the trunk below the main confluence exceeds 5 km2, so the network is one link and the basin one subwatershed.
-FIGURES: Figures A (lab05-dem-metadata.svg), B (lab05-d8-patch.svg, computed from the filled DEM and ArcGIS Pro's Flow_Direction) and C (lab05-model-diagram.svg, a hand-authored diagram, NOT a ModelBuilder export) and the eight icons by tools/lab05/make_svgs.py; check maps (lab05-check-outlet, -accumulation, -basin, -subwatersheds, -nhd) and the two example layouts by tools/lab05/build_figures.py (arcpy.mp, ArcGIS Pro 3.7.1, 150 dpi). No dialog captures (see TODO(capture) comments). The nineteen Word-era images were removed from this folder; they remain in docs/assignments/lab05-backup/images/.
+FIGURES: Figures A (lab05-dem-metadata.svg) and B (lab05-d8-patch.svg, computed from the filled DEM and ArcGIS Pro's Flow_Direction) and the eight icons by tools/lab05/make_svgs.py; Figure C (lab05-full-model.svg) is the GUI model's ModelBuilder Export To Graphic, laid out by hand in four rows (the earlier hand-drawn lab05-model-diagram.svg is no longer used on this page; the Week 6 deck keeps its own copy); dialog captures lab05-environments, -project-raster-dialog, -fill-dialog, -flow-direction-dialog, -flow-accumulation-dialog, -snap-pour-point-dialog, -watershed-dialog, -raster-to-polygon-basin-dialog, -raster-calc-literal, -stream-link-dialog, -stream-to-feature-dialog, -watershed-subwatersheds-dialog, -raster-to-polygon-subwatersheds-dialog, -raster-calc-param, -tool-dialog (.png) are screen grabs (tools/screenshots/grabwin.py) from the 2026-09-30 session; originals in C:\Ames\Lab05GUI\caps. Check maps (lab05-check-outlet, -accumulation, -basin, -subwatersheds, -nhd) and the two example layouts by tools/lab05/build_figures.py (arcpy.mp, ArcGIS Pro 3.7.1, 150 dpi). The nineteen Word-era images were removed from this folder; they remain in docs/assignments/lab05-backup/images/.
 PILOT (2026-09-29, no-GUI, notes at C:\Ames\Pilot05\PILOT_NOTES.md, about 10 minutes): a fresh agent rebuilt the model from the page alone with its own arcpy scripts; every published check value reproduced (basin 25.2137 km2, 29/29, 22.913 km, NHD 37.438 km, Web Mercator 49.103 km, StreamStats +0.7 %). Its off-channel clicks at snap 0 gave 5, 2 and 16 cells and at snap 10 gave 22, 4 and 16 (the Step 6 warning now says 'a few cells to a few dozen'); unfilled Flow Direction gave 19 distinct codes plus NoData ('about 20'). Fixed from its findings: Example Map 2 re-rendered at 10,000 cells because the 2,000-cell version gave away Step 14 Question 2; a NOTE before Step 3 on running each tool to see its check value; a basin-area column added to the Step 14 table and rubric so the TIP's 'one column never moves' is observable; Figure C now marks Rock_Canyon_Basin as a parameter; the Clip environment moved before Run, and LengthKM warned against; Map 2 deliverable now names the NHD and outlet; the AI-use line added to the deliverables; zip subfolder named; Kyhv Peak; the example maps' scale bar pulled inside the neat line; the naming example includes the basin output.
-TODO(instructor): 1. GUI build and captures owed: build the model in ArcGIS Pro, export Figure C from ModelBuilder, and capture the dialogs marked TODO(capture) (about 14), per tools/screenshots/README.md. 2. GUI-verify the "not seen" items above (Go To XY, Data From Path, Long variable inline, run time). 3. DONE 2026-09-29: no-GUI pilot (see PILOT). 4. DONE 2026-09-30: the Week 6 deck's Example Model slide now shows Figure C (slides/week-06/images/ws-lab05-model-diagram.svg) and teaches the same Stream Link route; its Summary of Steps 6-7 were reworded to match. 5. Decide whether the 50-m snap distance should become a second parameter (it changes nothing at this outlet, which is why it is fixed). 6. Consider a Word report template (see the lab-deliverable-improvements note).
+TODO(instructor): 1. DONE 2026-09-30: GUI build, Figure C exported from ModelBuilder, 15 dialog captures; still owed: the completed-run pop-up from the tool dialog (TODO(capture) in Step 14). 2. DONE 2026-09-30: Go To XY, From Path, Long variable inline, run time (see ARCGIS PRO VERSION). 3. DONE 2026-09-29: no-GUI pilot (see PILOT). 4. DONE 2026-09-30: the Week 6 deck's Example Model slide now shows the model diagram (slides/week-06/images/ws-lab05-model-diagram.svg) and teaches the same Stream Link route; its Summary of Steps 6-7 were reworded to match. 5. Decide whether the 50-m snap distance should become a second parameter (it changes nothing at this outlet, which is why it is fixed). 6. DONE: Word report template (lab05-report-template.docx). 7. Check at a lab machine whether Project Raster also opens with Bilinear there; and whether Properties > Parameters opening empty reproduces (the WARNING in Step 12 rests on one occurrence).
  -->
