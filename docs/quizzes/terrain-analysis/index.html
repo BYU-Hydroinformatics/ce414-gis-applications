@@ -72,16 +72,16 @@ CE414Quiz.start({
       explanation: "A viewshed is seen or not seen, cell by cell — sweep a line of sight out from the viewer and any cell that falls below the running maximum angle is hidden behind what came before it. It says nothing about distance or signal strength, so a cell can be visible and still be useless to serve."
     },
     {
-      prompt: "You want to know which of five stops on a foothill hike can see the most of six temples in the valley. What is the most efficient viewshed workflow?",
+      prompt: "You want to know which of five stops on a foothill hike can see the most of seven temples in the valley. What is the most efficient viewshed workflow?",
       detail: "The Utah County example from class.",
       options: [
-        "Run one viewshed from each temple, add the six rasters, and read the count at each stop",
+        "Run one viewshed from each temple, add the seven rasters, and read the count at each stop",
         "Measure the straight-line distance from each stop to each temple",
         "Compute slope along the trail and pick the steepest stop",
         "Run a hillshade lit from each temple's direction"
       ],
-      answer: "Run one viewshed from each temple, add the six rasters, and read the count at each stop",
-      explanation: "Line of sight works both ways: if a stop can see a temple, the temple can see the stop. Six viewsheds, one from each temple raised to spire height, added together give every cell a count of temples visible, so every stop on the trail is answered at once. Distance and slope say nothing about whether a ridge is in the way, and a hillshade is only a picture."
+      answer: "Run one viewshed from each temple, add the seven rasters, and read the count at each stop",
+      explanation: "Line of sight works both ways: if a stop can see a temple, the temple can see the stop. Seven viewsheds, one from each temple raised to spire height, added together give every cell a count of temples visible, so every stop on the trail is answered at once. Distance and slope say nothing about whether a ridge is in the way, and a hillshade is only a picture."
     }
   ],
   perfectNote: "A perfect score. You can say what each derived surface reports and what it does not.",
