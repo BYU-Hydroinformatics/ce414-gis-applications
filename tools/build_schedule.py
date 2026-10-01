@@ -150,7 +150,7 @@ PRACTICE = {
     5: [("elevation-lidar", "Surfaces and Returns",
          "Eight questions on where an elevation surface comes from: how LiDAR measures one, which DEM to download, and what cell size costs you."),
         ("terrain-analysis", "Slope, Aspect, Viewshed",
-         "Five questions on what you get out of a DEM: what contours and hillshade show, aspect as an azimuth, why the slope method matters, and what a viewshed does not tell you.")],
+         "Six questions on what you get out of a DEM: what contours and hillshade show, aspect as an azimuth, why the slope method matters, what a viewshed answers, and how to count what a hike can see.")],
     6: [("watersheds", "Follow the Water",
          "Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.")],
     8: [("interpolation", "Points Into Surfaces",

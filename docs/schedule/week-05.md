@@ -20,7 +20,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Surfaces and Returns](../quizzes/elevation-lidar/index.html) — Eight questions on where an elevation surface comes from: how LiDAR measures one, which DEM to download, and what cell size costs you.
-- [Slope, Aspect, Viewshed](../quizzes/terrain-analysis/index.html) — Five questions on what you get out of a DEM: what contours and hillshade show, aspect as an azimuth, why the slope method matters, and what a viewshed does not tell you.
+- [Slope, Aspect, Viewshed](../quizzes/terrain-analysis/index.html) — Six questions on what you get out of a DEM: what contours and hillshade show, aspect as an azimuth, why the slope method matters, what a viewshed answers, and how to count what a hike can see.
 
 </div>
 

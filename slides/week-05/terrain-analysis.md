@@ -331,27 +331,11 @@ $$
 
 ---
 
-<!-- _class: lead -->
-
-# Viewsheds
-
-<!-- Divider. Visibility is the last of the standard terrain surfaces and the one with the most direct engineering uses. -->
-
----
-
 # What is a viewshed?
 
 ![h:420 center](images/ta-viewshed-sign.jpg)
 
 <!-- Opening gag before the definition. Ask the room for a one-sentence definition first; the wrong answers are useful. -->
-
----
-
-# Not this
-
-![h:440 center](images/ta-viewshed-not-a-shed.jpg)
-
-<!-- The second half of the joke: a viewshed is not a shed with a view. Then move straight to the real definition on the next slide. -->
 
 ---
 
@@ -371,45 +355,25 @@ $$
 
 # How to use a viewshed
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1fr 1.02fr; gap: 1em; align-items: start;">
+<div style="font-size:0.78em; line-height:1.3;">
+
+Siting **cell towers**, **search and rescue**, **scenic protection**, **security**, wind turbines…
+
+**Example:** a hike along the east bench of Utah County. **Which stops see the most temples?**
+
+- Visibility is **symmetric**: if the stop can see the temple, the temple can see the stop
+- So run **one viewshed from each temple** (raised to spire height) and **add the six rasters**
+- Every cell now holds a **count of temples visible**; read it at each stop
+- The best stop is the one with the **highest count**
+
+</div>
 <div>
-
-- Search and rescue
-- Land development and conservation
-- Park management
-- Solar energy potential
-- Other?
-
-The battles of Saratoga:
-
-</div>
-<div>
-
-![w:420 center](images/ta-saratoga-cannon.jpg)
-
-![w:420 center](images/ta-saratoga-battlefield.jpg)
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" style="height:540px;width:auto;display:block;margin:-20px auto 0;" font-family="Helvetica,Arial,sans-serif"><style>.bespoke-marp-active .vs-l{stroke-dasharray:400;animation:vs-draw 1s ease-out both}.bespoke-marp-active .vs-m{animation:vs-in .4s ease-out both}.bespoke-marp-active .vs-d0{animation-delay:0.6s}.bespoke-marp-active .vs-d1{animation-delay:1.3s}.bespoke-marp-active .vs-d2{animation-delay:2.0s}.bespoke-marp-active .vs-d3{animation-delay:2.7s}.bespoke-marp-active .vs-d4{animation-delay:3.4s}.bespoke-marp-active .vs-d5{animation-delay:4.1s}.bespoke-marp-active .vs-pulse{animation:vs-p 1.6s ease-in-out infinite}@keyframes vs-draw{from{stroke-dashoffset:400}to{stroke-dashoffset:0}}@keyframes vs-in{from{opacity:0}to{opacity:1}}@keyframes vs-p{0%,100%{r:13}50%{r:18}}@media (prefers-reduced-motion:reduce){.bespoke-marp-active .vs-l,.bespoke-marp-active .vs-m,.bespoke-marp-active .vs-pulse{animation:none}}</style><rect x="0" y="0" width="600" height="600" fill="#f4f1ea"/><path d="M400,0 L400,20 L410,90 L395,150 L420,200 L430,260 L445,320 L460,380 L470,440 L480,500 L490,600 L600,600 L600,0 Z" fill="#c9b48a"/><path d="M470,0 L470,20 L480,90 L465,150 L490,200 L500,260 L515,320 L530,380 L540,440 L550,500 L560,600" fill="none" stroke="#8a6a4f" stroke-width="2" stroke-dasharray="1 0" opacity=".5"/><polygon points="418,190 372,203 424,222" fill="#b89f70" stroke="#8a6a4f" stroke-width="1.2"/><polygon points="462,405 400,425 468,445" fill="#b89f70" stroke="#8a6a4f" stroke-width="1.2"/><path d="M190,215 C240,200 290,225 300,265 C310,300 330,330 312,352 C300,368 322,385 300,400 C280,430 250,470 215,460 C180,450 170,400 172,350 C174,300 160,240 190,215 Z" fill="#bcd3ea" stroke="#6f9cc8" stroke-width="1.5"/><path d="M95,250 C120,240 150,265 150,300 C152,340 140,390 112,410 C95,380 85,320 95,250 Z" fill="#c9b48a" stroke="#8a6a4f" stroke-width="1.2"/><text x="232" y="425" font-size="16" font-style="italic" fill="#3b6fa0" text-anchor="middle">Utah Lake</text><text x="118" y="335" font-size="11" fill="#6b5434" text-anchor="middle" transform="rotate(-80 118 335)">Lake Mountains</text><text x="545" y="300" font-size="15" font-weight="700" fill="#6b5434" text-anchor="middle" transform="rotate(80 545 300)">WASATCH RANGE</text><text x="500" y="115" font-size="11" fill="#6b5434">▲ Mt. Timpanogos</text><text x="478" y="300" font-size="11" fill="#6b5434">▲ Y Mountain</text><path d="M424.9,40.0 L426.0,47.8 L427.1,55.6 L428.2,63.4 L429.3,71.2 L430.4,79.0 L431.5,86.8 L430.9,94.6 L428.9,102.4 L427.0,110.2 L425.0,118.0 L423.1,125.8 L421.1,133.6 L419.2,141.4 L417.2,149.2 L420.5,156.9 L424.4,164.7 L428.3,172.5 L432.2,180.3 L436.1,188.1 L440.0,195.9 L442.6,203.7 L443.9,211.5 L445.2,219.3 L446.5,227.1 L447.8,234.9 L449.1,242.7 L450.4,250.5 L451.7,258.3 L453.5,266.1 L455.5,273.9 L457.4,281.7 L459.4,289.5 L461.3,297.3 L463.3,305.1 L465.2,312.9 L467.2,320.7 L469.1,328.5 L471.1,336.3 L473.0,344.1 L475.0,351.9 L476.9,359.7 L478.9,367.5 L480.8,375.3 L482.5,383.1 L483.8,390.8 L485.1,398.6 L486.4,406.4 L487.7,414.2 L489.0,422.0 L490.3,429.8 L491.6,437.6 L492.9,445.4 L494.2,453.2 L495.5,461.0 L496.8,468.8 L498.1,476.6 L499.4,484.4 L500.7,492.2 L502.0,500.0" fill="none" stroke="#7a3e9d" stroke-width="3" stroke-dasharray="7 5"/><text x="490" y="528" font-size="12" font-weight="700" fill="#7a3e9d">bench trail</text><line class="vs-l vs-d0" x1="454.5" y1="270" x2="322" y2="262" stroke="#2e7d32" stroke-width="2.5"/><line class="vs-l vs-d1" x1="454.5" y1="270" x2="410" y2="288" stroke="#2e7d32" stroke-width="2.5"/><line class="vs-l vs-d2" x1="454.5" y1="270" x2="352" y2="322" stroke="#2e7d32" stroke-width="2.5"/><line class="vs-l vs-d3" x1="454.5" y1="270" x2="160" y2="168" stroke="#2e7d32" stroke-width="2.5"/><line class="vs-l vs-d4" x1="454.5" y1="270" x2="408" y2="218" stroke="#b3261e" stroke-width="2.5"/><line class="vs-l vs-d4" x1="408" y1="218" x2="330" y2="110" stroke="#b3261e" stroke-width="1.5" stroke-dasharray="3 5" opacity=".55"/><text class="vs-m vs-d4" x="408" y="224" font-size="18" font-weight="700" fill="#b3261e" text-anchor="middle">✗</text><line class="vs-l vs-d5" x1="454.5" y1="270" x2="425" y2="417" stroke="#b3261e" stroke-width="2.5"/><line class="vs-l vs-d5" x1="425" y1="417" x2="400" y2="548" stroke="#b3261e" stroke-width="1.5" stroke-dasharray="3 5" opacity=".55"/><text class="vs-m vs-d5" x="425" y="423" font-size="18" font-weight="700" fill="#b3261e" text-anchor="middle">✗</text><g transform="translate(160,168)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="149" y="166" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Saratoga Springs</text><g transform="translate(330,110)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="319" y="108" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Mount Timpanogos</text><g transform="translate(322,262)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="311" y="260" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Orem</text><g transform="translate(352,322)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="341" y="336" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Provo City Center</text><g transform="translate(410,288)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="399" y="304" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Provo Rock Canyon</text><g transform="translate(400,548)"><polygon points="0,-17 3,-8 3,-6 -3,-6 -3,-8" fill="#002e5d"/><rect x="-7" y="-6" width="14" height="10" fill="#ffffff" stroke="#002e5d" stroke-width="2"/></g><text x="389" y="546" font-size="12.5" font-weight="700" fill="#002e5d" text-anchor="end" style="paint-order:stroke" stroke="#f4f1ea" stroke-width="4">Payson</text><circle cx="429.1" cy="70" r="10" fill="#7a3e9d" stroke="#fff" stroke-width="2"/><text x="429.1" y="74.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text><circle cx="427.0" cy="170" r="10" fill="#7a3e9d" stroke="#fff" stroke-width="2"/><text x="427.0" y="174.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text><circle class="vs-pulse" cx="454.5" cy="270" r="13" fill="#7a3e9d" opacity=".25"/><circle cx="454.5" cy="270" r="10" fill="#7a3e9d" stroke="#fff" stroke-width="2"/><text x="454.5" y="274.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text><circle cx="479.5" cy="370" r="10" fill="#7a3e9d" stroke="#fff" stroke-width="2"/><text x="479.5" y="374.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text><circle cx="497.0" cy="470" r="10" fill="#7a3e9d" stroke="#fff" stroke-width="2"/><text x="497.0" y="474.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text><g transform="translate(14,486)"><rect width="226" height="100" rx="8" fill="#ffffff" opacity=".92" stroke="#c9d8ea"/><line x1="12" y1="20" x2="40" y2="20" stroke="#2e7d32" stroke-width="3"/><text x="48" y="25" font-size="13" fill="#22262e">visible from stop 3</text><line x1="12" y1="44" x2="40" y2="44" stroke="#b3261e" stroke-width="3"/><text x="48" y="49" font-size="13" fill="#22262e">blocked by a ridge</text><circle cx="26" cy="68" r="8" fill="#7a3e9d"/><text x="48" y="73" font-size="13" fill="#22262e">trail stop</text><text x="12" y="93" font-size="11" font-style="italic" fill="#5b6472">Diagram, not to scale</text></g><g transform="translate(30,40)"><polygon points="0,-22 8,4 0,-2 -8,4" fill="#002e5d"/><text x="0" y="20" font-size="14" font-weight="700" fill="#002e5d" text-anchor="middle">N</text></g></svg>
 </div>
 </div>
 
-<!-- Saratoga is the worked example: the artillery positions on the bluff control the river road because of what they can see, not because of what they can reach. Collect a few more uses from the room — cell towers, wind turbines, billboards, scenic easements, sniper and security siting. -->
-
----
-
-<!-- _class: activity -->
-
-# Where this shows up in Lab 4
-
-![bg right:40% w:88%](images/ta-slope-3d-surface.png)
-
-- **Lab 4 — Cell Phone Tower Placement** puts today's material to work: a 30 m DEM becomes a slope raster, then joins road proximity and tower density in a siting model
-- What this lecture gives you for it: what a DEM cell size means, how slope is computed from a local neighborhood, and how to report the assumptions behind a terrain result
-- A viewshed is a related terrain analysis, but it is not the terrain branch of Lab 4
-- Bring a candidate site and a reason for it
-
-<!-- Preview slide. Point at the lab page and let them read the deliverables before they start. In ArcGIS Pro
-     the terrain branch uses Slope; the full model also uses Raster Calculator, Extract by Mask, Kernel Density,
-     Select, Buffer and Clip. The viewshed material is a transfer example rather than a Lab 4 requirement. -->
+<!-- The diagram is not to scale and the sight lines from stop 3 are illustrative, not the output of a real viewshed run; the point is the workflow. Temples shown are the six dedicated temples in Utah County (Saratoga Springs, Mount Timpanogos, Orem, Provo City Center, Provo Rock Canyon, Payson) at approximate positions — VERIFY the list is current before each offering. The two ridge spurs stand in for foothills that block a line of sight along the bench. In ArcGIS Pro, the Viewshed tool takes an observer offset for the spire height; adding the six outputs with Raster Calculator gives the count. The Visibility tool can also report how many observers see each cell (VERIFY the analysis-type option name). Ask what else would change the answer: trees, buildings, observer eye height, and the DEM's cell size. -->
 
 ---
 
@@ -432,13 +396,13 @@ The battles of Saratoga:
 <div class="columns">
 <div>
 
-Five questions on **what you get out of a DEM** — slope, aspect, hillshade, and what a viewshed will not tell you.
+Six questions on **what you get out of a DEM** — contours, hillshade, aspect, slope, and what a viewshed can and cannot tell you.
 
 **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that it landed
 - Every answer explains itself; read the explanation before you move on
-- The last item is the line-of-sight distinction: a viewshed says seen or not seen, and nothing else
+- The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/terrain-analysis/</span>
 
@@ -450,11 +414,10 @@ Five questions on **what you get out of a DEM** — slope, aspect, hillshade, an
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The aspect pair is
-     where it happens: 359 degrees and 1 degree are two degrees apart, not 358, and a flat cell gets
-     a separate code rather than a bearing - both catch people who have been treating aspect as an
-     ordinary number. The 25.4 versus 22.9 item is the other one; the point is that both answers are
-     right and the method is part of the result. If the room has no signal, put the URL on the board;
+<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The aspect item
+     catches people who read aspect as uphill, or as a compass bearing counterclockwise. The 25.4 versus 22.9 item is the other one; the point is that both answers are
+     right and the method is part of the result. The temple item checks that they saw why visibility
+     is symmetric. If the room has no signal, put the URL on the board;
      the items read aloud just as well. -->
 
 <!-- Conversion notes (2026-09-03): CROP (2026-09-03): the five browser captures (National Map, SRTM/GISGeography, Earthdata, JAXA ALOS, Mars DEMs) had the Chrome tab strip and address bar removed because they showed the capturing user's other open tabs and profile avatar; page content unchanged. source "CE 414 Week 5 - Terrain Analysis.pptx", 28 slides, no hidden slides and no speaker notes in the source — every note in this deck is new. 28 source slides became 35: added a title byline slide, Today's Goals, three section dividers, a Lab 4 preview, and Before Next Class; source slide 22 was split into two slides (four nearest cells / 3rd-order finite difference) because its figure is unreadable at 16:9 on one slide. No slides were dropped. The duplicated sentence on the ASTER slide was removed. Source media1 (a stock tomato photo, unused by any slide) was not carried over. Slides 2, 3, 11 and 26 were built from PowerPoint shapes and are 200 dpi renders of the PDF page, cropped. Stale non-ArcGIS screenshots kept and flagged: The National Map, the SRTM page (a third-party page with an advertisement in the capture), Earthdata Search, and the JAXA portal. There are no ArcMap-era ArcGIS captures in this deck and no ArcGIS UI at all — ArcGIS Pro tool names appear only in speaker notes and carry a VERIFY. Open items: DEM resolution and dataset claims (four VERIFY flags plus a 3DEP terminology TODO; ten VERIFY flags in the deck overall), native-vs-resampled resolution, scale/uncertainty for hillshade, slope, curvature and viewshed, a hand-versus-tool validation exercise, the susceptibility/hazard/risk/exposure distinction, the reading chapter, the Week 5/6 lab schedule, and three TODO(graphic) slides. -->
