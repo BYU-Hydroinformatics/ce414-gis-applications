@@ -3,6 +3,8 @@ marp: true
 theme: ce414
 paginate: true
 footer: "CE 414 · Week 6 — Watershed Delineation"
+style: |
+  strong { color: #0062b8; }
 ---
 
 <!-- _class: lead -->
@@ -10,19 +12,22 @@ footer: "CE 414 · Week 6 — Watershed Delineation"
 
 ![bg right:45% w:95%](images/ws-title-watershed-topo.jpg)
 
+![w:110](../theme/images/byu-medallion.svg)
+
 # Hydrologic Terrain Analysis
 
-Engineering Applications of GIS
-CE 414
+CE 414 Engineering Applications of GIS
+Civil & Construction Engineering
+Brigham Young University
 Dr. Dan Ames
 
-<small>Some slides adapted from David Maidment, Center for Water Resources Research, UT Austin, and Orange County Department of Public Works</small>
+<span style="font-size:0.55em;">Some slides adapted from David Maidment (UT Austin) and Orange County Public Works</span>
 
 <!-- Week 6 opens on Tuesday with a short introduction to Lab 5 (two slides), then runs in three parts: (1) the eight-step terrain-analysis workflow, cell by cell, starting from Thursday's slope and aspect; (2) what a watershed actually is and why we care; (3) a hands-on comparison of hand delineation against USGS StreamStats. Lab 5 applies all of it in ArcGIS Pro. -->
 <!-- VERIFY: source deck credits "Center for Water Resources Research, UT Austin"; confirm the exact center name before publishing. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation<span class="updated">Last Updated: 2026-09-30</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation<span class="updated">Last Updated: 2026-10-01</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -109,16 +114,9 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. **Get DEM (mosaic and project as needed)**
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-1.svg)
 
-<!-- This roadmap slide comes back eight more times, each time with the current step in bold. Step 1: get the elevation data, mosaic tiles together if the area of interest spans more than one, and project into a coordinate system with real ground units so cell size means something. -->
+<!-- This roadmap slide comes back eight more times, each time with the current step highlighted. Step 1: get the elevation data, mosaic tiles together if the area of interest spans more than one, and project into a coordinate system with real ground units so cell size means something. -->
 
 ---
 
@@ -126,8 +124,8 @@ Each one is a step in today's lecture.
 
 ![bg right:45% w:92%](images/ws-dem-elevation-surface.png)
 
-- **Elevation Surface** — the ground surface elevation at each point
-- **Digital Elevation Model** — a digital representation of an elevation surface. Examples include a (square) digital elevation grid, triangular irregular network, set of digital line graph contours, or random points
+- **Elevation surface** — the ground surface elevation at each point
+- **Digital Elevation Model** — a digital representation of an elevation surface: a **square grid** (what this course means by DEM), a **TIN**, **contours**, or **random points**
 
 <!-- Point out that "DEM" in this course almost always means the square grid, but the definition is broader. The distinction matters in step 1: a TIN or a contour set has to be converted to a grid before any of the following steps will run. -->
 
@@ -135,14 +133,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. **Fill Pits**
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-2.svg)
 
 <!-- Step 2. In ArcGIS Pro this is the Fill tool in the Spatial Analyst Hydrology toolset. -->
 
@@ -171,14 +162,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. **Compute Flow Direction**
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-3.svg)
 
 <!-- Step 3, the heart of the method, and the step the Excel activity walks through by hand. -->
 
@@ -250,7 +234,7 @@ Each one is a step in today's lecture.
 
 ![h:340 center](images/ws-flow-direction-grid.png)
 
-- Water flows to one of its neighbor cells according to the direction of the **steepest descent**
+- Water flows to **one** of its neighbor cells: the one in the direction of **steepest descent**
 - Flow direction takes **one out of eight** possible values
 
 <!-- Left panel: the direction as an arrow. Right panel: the same grid as Esri codes. These are the same raster drawn two ways. Have students check one or two cells against the encoding diagram. -->
@@ -275,14 +259,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. **Compute Flow Accumulation**
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-4.svg)
 
 <!-- Step 4. Flow accumulation walks the tree from the previous slide and counts how many cells drain into each cell. -->
 
@@ -312,14 +289,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. **Find cells that exceed a threshold**
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-5.svg)
 
 <!-- Step 5. This is the step with a judgment call in it: the threshold is chosen, not computed. In ArcGIS Pro it is one Raster Calculator expression on flow accumulation, Con("Flow_Accumulation" > 5000, 1): 1 where the test is true and NoData everywhere else. Lab 5 adds a second test so only cells inside the delineated basin qualify. Leave out the third argument; Con(test, 1, 0) writes 0 instead of NoData and the next tool treats the whole DEM as stream. -->
 
@@ -355,12 +325,12 @@ Each one is a step in today's lecture.
 
 # Streams with 200 cell Threshold
 
-## (>18 hectares or 13.5 acres drainage area)
+## (more than 18 hectares, about 44 acres, of drainage area on 30 m cells)
 
 ![h:380 center](images/ws-streams-200-cell-threshold.png)
 
 <!-- Raising the threshold from 5 cells to 200 thins the network dramatically: only channels with substantial drainage area survive. Ask what the "right" answer is; there isn't one, which is why the next question matters. -->
-<!-- TODO(instructor): the source slide states "200 cell Threshold (>18 hectares or 13.5 acres drainage area)". Kept verbatim. On a 30 m DEM, 200 cells = 180,000 m2 = 18 ha, which is about 44.5 acres, not 13.5. Decide whether to correct the acreage, drop it, or state the cell size the figure assumes. -->
+<!-- 200 cells x 900 m2 (30 m cells) = 180,000 m2 = 18 ha = 44.5 acres. -->
 <!-- TODO(instructor): decide whether to add a scale/resolution sensitivity question here — e.g. how the delineated network and watershed change between a 30 m, a 10 m, and a 1 m lidar DEM, and whether the same cell threshold should be used. -->
 <!-- Screenshot is ArcView-era; kept because no ArcGIS Pro equivalent has been captured. -->
 
@@ -368,14 +338,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. **Number the stream links and convert them to lines**
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-6.svg)
 
 <!-- Step 6 is two tools. Stream Link gives every segment of the stream raster its own number (the next two slides). Stream to Feature then turns that numbered raster into line features that follow the flow direction, one line per link, so the network can be attributed, measured, and used by hydrologic models. Keep the Stream Link raster: it is also the input for the subwatersheds in step 8. -->
 
@@ -422,14 +385,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. **Choose pour points (snap the outlet to the network)**
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-7.svg)
 
 <!-- Step 7. A pour point is any cell you ask the Watershed tool to find the drainage area of. For one basin, it is the outlet you care about, moved onto the channel with Snap Pour Point (Lab 5 uses a 50 m snap distance). For subwatersheds you do not extract points at all: the Stream Link raster itself is the pour-point input, and each link, numbered in step 6, acts as the outlet of its own subwatershed. -->
 
@@ -438,9 +394,14 @@ Each one is a step in today's lecture.
 # Watershed / Subwatershed Delineation
 
 - Watershed delineation is the process of identifying the **drainage area of a point or set of points**
+- Move the point downstream and the watershed **grows**; it always contains every watershed upstream of it
+
+<div style="margin-top:8px; text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" style="height:400px;width:auto;" font-family="Helvetica,Arial,sans-serif"><style>.bespoke-marp-active .wsp-a{animation:wsp-in 1s ease-out .6s both}.bespoke-marp-active .wsp-b{animation:wsp-in 1.2s ease-out 2.4s both}.bespoke-marp-active .wsp-ta{animation:wsp-in .6s ease-out 1.2s both}.bespoke-marp-active .wsp-tb{animation:wsp-in .6s ease-out 3.2s both}@keyframes wsp-in{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion:reduce){.bespoke-marp-active .wsp-a,.bespoke-marp-active .wsp-b,.bespoke-marp-active .wsp-ta,.bespoke-marp-active .wsp-tb{animation:none}}</style><rect width="640" height="400" style="height:400px;width:auto;" rx="12" fill="#f4f1ea"/><path class="wsp-b" d="M540,355 C470,380 300,330 200,280 C110,240 60,150 90,80 C120,30 220,20 330,30 C430,40 560,60 590,150 C610,230 600,320 540,355Z" fill="#dbe8f5" stroke="#0062b8" stroke-width="2.5" stroke-dasharray="7 4"/><path class="wsp-a" d="M270,208 C230,240 160,230 120,190 C90,155 88,100 105,72 C135,40 200,38 250,60 C290,85 300,150 290,190 Z" fill="#9fc3e8" stroke="#002e5d" stroke-width="2.5"/><g fill="none" stroke="#0062b8" stroke-linecap="round"><path d="M120,75 C150,120 180,150 210,175 C240,195 270,205 300,230 C350,265 390,285 420,300 C470,325 510,340 540,352" stroke-width="5"/><path d="M190,60 C200,100 205,140 210,175" stroke-width="3"/><path d="M340,55 C330,120 315,180 300,230" stroke-width="3.5"/><path d="M540,110 C500,170 460,240 420,300" stroke-width="3.5"/><path d="M470,70 C480,120 490,140 500,170" stroke-width="2.5"/><path d="M110,150 C140,165 170,175 210,175" stroke-width="2.5"/></g><circle cx="270" cy="208" r="9" fill="#b3261e" stroke="#fff" stroke-width="2"/><text x="252" y="234" font-size="22" font-weight="700" fill="#b3261e">A</text><circle cx="540" cy="352" r="9" fill="#b3261e" stroke="#fff" stroke-width="2"/><text x="556" y="372" font-size="22" font-weight="700" fill="#b3261e">B</text><text class="wsp-ta" x="190" y="125" font-size="17" font-weight="700" fill="#002e5d" text-anchor="middle" style="paint-order:stroke" stroke="#9fc3e8" stroke-width="4">watershed of A</text><text class="wsp-tb" x="460" y="225" font-size="17" font-weight="700" fill="#0062b8" text-anchor="middle">watershed of B</text><text class="wsp-tb" x="460" y="246" font-size="14" fill="#0062b8" text-anchor="middle">(includes all of A's)</text></svg>
+</div>
 
 <!-- Say the definition slowly: a watershed is defined relative to a point. Change the point and you change the watershed. There is no such thing as "the" watershed of an area without an outlet. -->
-<!-- TODO(graphic): a simple figure showing one outlet point on a stream with its contributing area shaded, and a second point further downstream with a larger shaded area, to make "watershed of a point" concrete. -->
+<!-- The figure plays on entry: A's watershed fills first, then B's, which swallows A's. Ask before B appears: if I move the point to B, what happens to the boundary? Diagram, not a real basin. -->
 
 ---
 
@@ -487,14 +448,7 @@ Each one is a step in today's lecture.
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. **Delineate watersheds**
+![w:1060 center](images/ws-steps-8.svg)
 
 <!-- Step 8, the payoff. The next three slides show what it looks like on real terrain. -->
 
@@ -523,23 +477,16 @@ Each one is a step in today's lecture.
 
 # Delineated Subwatersheds and Stream Networks
 
-![h:400 center](images/ws-delineated-subwatersheds-streams.png)
+![h:440 center](images/ws-lab05-subwatersheds.jpg)
 
 <!-- Every link in the network gets its own subwatershed, and together they tile the whole basin with no gaps and no overlaps. This is exactly the input a rainfall-runoff model wants: a set of subbasins, each with an area and a routing connection to the next one downstream. -->
-<!-- TODO(graphic): this figure is only 203 x 161 px in the source deck and is soft on a projector. A replacement export at presentation resolution would help. -->
+<!-- The figure is Lab 5's own result: the basin above Rock Canyon cut into one subwatershed per stream link. It replaces a 203 x 161 px source figure that was soft on a projector. -->
 
 ---
 
 # Summary of Steps
 
-1. Get DEM (mosaic and project as needed)
-2. Fill Pits
-3. Compute Flow Direction
-4. Compute Flow Accumulation
-5. Find cells that exceed a threshold
-6. Number the stream links and convert them to lines
-7. Choose pour points (snap the outlet to the network)
-8. Delineate watersheds
+![w:1060 center](images/ws-steps-0.svg)
 
 <!-- All eight, start to finish. Ask the class to name the input and output of each step before moving on. -->
 
@@ -591,8 +538,8 @@ Each one is a step in today's lecture.
 
 - A watershed is the **area of land where all of the water that drains off of it goes into the same place** (i.e. an "outlet")
 - John Wesley Powell's definition: a bounded hydrologic system within which all living things are linked by their common water course, and around which, as humans settled, communities formed
-- Watersheds come in all shapes and sizes. They cross city, state, and national boundaries
-- No matter where you are, you're in a watershed!
+- Watersheds come in **all shapes and sizes**, and they **cross city, state, and national boundaries**
+- No matter where you are, **you're in a watershed!**
 
 <!-- Powell's definition is quoted in full on the source slide; it is paraphrased here. Read the original aloud if you want it. The engineering definition and Powell's social one describe the same boundary and are worth contrasting. -->
 
@@ -648,7 +595,7 @@ Each one is a step in today's lecture.
 <small>Source: Orange County Watersheds, *Watershed Science for Teachers, Part 1*</small>
 
 <!-- Walk the block diagram from ridge to river mouth: snowpack, tributaries, the watershed divide, the sub-basin, agriculture, town, the lake, percolation to groundwater. Everything inside the divide drains to one place. -->
-<!-- TODO(instructor): the source slide cites http://www.ocwatersheds.com/PublicEducation/images/Watershed_Science_for_Teachers_part_1.ppt — verify whether that link still resolves, or replace the citation. -->
+<!-- The original ocwatersheds.com URL for this figure no longer resolves (403, checked 2026-10-01); the citation is kept as text only. -->
 
 ---
 
@@ -832,7 +779,7 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 <div class="columns">
 <div>
 
-Five questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
+Six questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on

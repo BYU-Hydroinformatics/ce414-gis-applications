@@ -18,7 +18,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Follow the Water](../quizzes/watersheds/index.html) — Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.
+- [Follow the Water](../quizzes/watersheds/index.html) — Six questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.
 
 </div>
 
