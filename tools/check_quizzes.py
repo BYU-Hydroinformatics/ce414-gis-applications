@@ -122,8 +122,8 @@ def check_quiz(slug):
     if qs is None:
         fail(where, "could not find a questions array")
         return 0
-    if not 6 <= len(qs) <= 10:
-        fail(where, f"has {len(qs)} questions; the guide asks for 6-8")
+    if not 5 <= len(qs) <= 10:
+        fail(where, f"has {len(qs)} questions; the guide asks for 5-8")
 
     check_tells(slug, qs)
     for i, q in enumerate(qs, 1):

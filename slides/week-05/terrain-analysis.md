@@ -340,7 +340,7 @@ The battles of Saratoga:
 <div class="columns">
 <div>
 
-Eight questions on **what you get out of a DEM** — slope, aspect, hillshade, and what a viewshed will not tell you.
+Five questions on **what you get out of a DEM** — slope, aspect, hillshade, and what a viewshed will not tell you.
 
 **Scan the code**, or open the link below.
 

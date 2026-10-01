@@ -100,14 +100,14 @@ correct answer, not by padding the distractors: a bloated distractor is its own 
 correct answers should be the shortest thing on the screen. Keep every option in a question
 within about 25% of its siblings, and under about 95 characters so four of them fit a phone.
 
-**The answer is always in the same place.** Vary the index deliberately. Over eight questions use
+**The answer is always in the same place.** Vary the index deliberately. Over the whole quiz use
 at least three of the four positions, including index 0 and index 3 at least once each. If a
 question has only three options, index 3 is unreachable — either give it a fourth or carry the
 spread elsewhere in the quiz.
 
 ## Writing the questions
 
-Six to eight questions. Fewer than six is not worth a QR code; more than eight and the room has
+Five to eight questions, and five is the default: a quick, high-level check at the end of class. Fewer than five is not worth a QR code; more than eight and the room has
 moved on.
 
 The rules below are not style preferences. A quiz that teaches something false is worse than no

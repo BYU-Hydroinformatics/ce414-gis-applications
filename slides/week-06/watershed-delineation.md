@@ -832,7 +832,7 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 <div class="columns">
 <div>
 
-Eight questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
+Five questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
