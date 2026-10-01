@@ -49,7 +49,7 @@ CE414Quiz.start({
       explanation: "Aspect is the downhill direction of the steepest slope, reported as an azimuth clockwise from north: 0 and 360 are north, 90 is east, 180 is south, 270 is west. Note the direction is downhill — a west-facing slope at 270 degrees is the one that catches the afternoon sun."
     },
     {
-      prompt: "Two standard slope methods, run on the same nine elevations, give 25.3 and 22.9 degrees. What does that tell you?",
+      prompt: "Two standard slope methods, run on the same nine elevations, give 25.4 and 22.9 degrees. What does that tell you?",
       options: [
         "One of the two calculations has an arithmetic error",
         "The two methods must have used different cell sizes",
@@ -57,7 +57,7 @@ CE414Quiz.start({
         "One answer is in degrees and the other in percent"
       ],
       answer: "The method alone changes the slope",
-      explanation: "Both are correct, and they disagree by 2.4 degrees. The four-nearest-cells method uses only the four cardinal neighbors and gives the diagonals zero weight; the third-order finite difference method uses all eight neighbors, weighting the cardinal ones double. Slope is not a property you read off the ground — it is what a particular window and weighting return, so record the method along with the number."
+      explanation: "Both are correct, and they disagree by 2.5 degrees. The four-nearest-cells method uses only the four cardinal neighbors and gives the diagonals zero weight; the third-order finite difference method uses all eight neighbors, weighting the cardinal ones double. Slope is not a property you read off the ground — it is what a particular window and weighting return, so record the method along with the number."
     },
     {
       prompt: "A viewshed run from a candidate tower site produces a raster. What does the cell value actually answer?",

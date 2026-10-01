@@ -263,13 +263,25 @@ td img { height: 50px; display: block; }
 
 # Slope: four nearest cells
 
-![w:730 center](images/ta-slope-four-nearest-cells.png)
+![w:1000 center](images/ta-slope-four-nearest-diagram.svg)
 
-<p style="font-size:20px; background:#fff6d6; border-left:6px solid #d9a400; padding:8px 14px; margin-top:12px;">
-<strong>Typo in the original figure:</strong> <code>dZ/dy = (Z2 − Z1)/2C</code> should read <code>dZ/dy = (Z2 − Z7)/2C</code>. The kernel and the arithmetic, (45 − 48)/20, are both correct.
-</p>
+<div style="font-size:0.8em; line-height:1.25; margin-top:4px;">
 
-<!-- Only the four cardinal neighbors are used; the diagonals get weight zero. Two central differences give dZ/dx and dZ/dy, and the slope is the arctangent of the magnitude of that gradient: 25.3 degrees here. -->
+$$
+\frac{dZ}{dx} = \frac{Z_5 - Z_4}{2C} = \frac{49 - 40}{20} = 0.45
+\qquad
+\frac{dZ}{dy} = \frac{Z_2 - Z_7}{2C} = \frac{45 - 48}{20} = -0.15
+$$
+
+$$
+\textbf{slope} = \arctan\sqrt{(0.45)^2 + (-0.15)^2} = \arctan(0.474) = \mathbf{25.4^\circ}
+$$
+
+</div>
+
+<p style="font-size:16px; color:#5b6472; margin-top:6px;">Checking against <em>GIS Fundamentals</em>? Some earlier printings of this figure show dZ/dy = (Z<sub>2</sub> − Z<sub>1</sub>)/2C and 25.3°; it should be (Z<sub>2</sub> − Z<sub>7</sub>)/2C, and the arithmetic gives 25.38°.</p>
+
+<!-- Only the four cardinal neighbors are used; the diagonals get weight zero. Two central differences give dZ/dx and dZ/dy, and the slope is the arctangent of the magnitude of that gradient: 25.4 degrees here (25.38). The book figure this slide replaces had Z1 for Z7 in the dZ/dy formula and printed 25.3; the typo is believed fixed from the 6th edition onward — verify against the edition students own. -->
 
 ---
 
@@ -279,7 +291,7 @@ td img { height: 50px; display: block; }
 
 ![h:475 center](images/ta-slope-third-order.png)
 
-<!-- This is the method ArcGIS Pro's Slope tool uses. All eight neighbors contribute, with the cardinal ones weighted double. Same nine elevations as the previous slide, and the answer comes out 22.9 degrees instead of 25.3 — a 2.4 degree spread from the choice of algorithm alone. Have them reproduce both numbers before moving on. -->
+<!-- This is the method ArcGIS Pro's Slope tool uses. All eight neighbors contribute, with the cardinal ones weighted double. Same nine elevations as the previous slide, and the answer comes out 22.9 degrees instead of 25.4 — a 2.5 degree spread from the choice of algorithm alone. Have them reproduce both numbers before moving on. -->
 
 <!-- TODO(instructor): the plan calls for a validation exercise here — students compute slope by hand and compare against the Slope tool's output for the same cell. Decide whether it belongs in this lecture, in the lab, or on the quiz, and what counts as agreement. -->
 
@@ -441,7 +453,7 @@ Five questions on **what you get out of a DEM** — slope, aspect, hillshade, an
 <!-- Five minutes, in pairs, then a show of hands on the two that split the room. The aspect pair is
      where it happens: 359 degrees and 1 degree are two degrees apart, not 358, and a flat cell gets
      a separate code rather than a bearing - both catch people who have been treating aspect as an
-     ordinary number. The 25.3 versus 22.9 item is the other one; the point is that both answers are
+     ordinary number. The 25.4 versus 22.9 item is the other one; the point is that both answers are
      right and the method is part of the result. If the room has no signal, put the URL on the board;
      the items read aloud just as well. -->
 
