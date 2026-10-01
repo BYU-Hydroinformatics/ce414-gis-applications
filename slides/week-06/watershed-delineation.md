@@ -18,11 +18,11 @@ Dr. Dan Ames
 
 <small>Some slides adapted from David Maidment, Center for Water Resources Research, UT Austin, and Orange County Department of Public Works</small>
 
-<!-- Week 6 runs in three parts: (1) the eight-step terrain-analysis workflow, cell by cell; (2) what a watershed actually is and why we care; (3) a hands-on comparison of hand delineation against USGS StreamStats. Lab 5 applies all of it in ArcGIS Pro. -->
+<!-- Week 6 opens on Tuesday with a short introduction to Lab 5 (two slides), then runs in three parts: (1) the eight-step terrain-analysis workflow, cell by cell, starting from Thursday's slope and aspect; (2) what a watershed actually is and why we care; (3) a hands-on comparison of hand delineation against USGS StreamStats. Lab 5 applies all of it in ArcGIS Pro. -->
 <!-- VERIFY: source deck credits "Center for Water Resources Research, UT Austin"; confirm the exact center name before publishing. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation<span class="updated">Last Updated: 2026-09-30</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -31,15 +31,46 @@ Dr. Dan Ames
 
 ![bg right:34% w:92%](images/ws-lab05-subwatersheds.jpg)
 
-By the end of class you should be able to:
+By the end of the week you should be able to:
 
+- Say what **Lab 5** asks for, and the three settings that decide it
 - Walk through the **eight steps** that turn a DEM into streams and watersheds
-- Compute a **D8 flow direction** by hand and read Esri's direction codes
+- Tell a cell's **aspect** from its **D8 flow direction**, and compute D8 by hand
 - Explain what a **flow accumulation** grid counts, and how a **threshold** turns it into a stream network
 - Define a **watershed**, an **outlet**, and a **pour point**
 - Delineate a watershed two ways — **by hand** and with **StreamStats** — and compare them
 
 <!-- The map at right is where Lab 5 ends up: Rock Canyon's basin cut into one subwatershed per stream link. Set the frame: everything in Part 1 is one raster operation feeding the next. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
+
+---
+
+# This Week's Lab — The Basin Above Rock Canyon
+
+![bg right:34% w:90%](images/ws-lab05-example-map.png)
+
+- **The job:** the basin above the Rock Canyon trailhead, its streams, and **20–40 subwatersheds**
+- **One ModelBuilder model**, from a 10 m DEM and an outlet you place
+- **Two checks:** USGS **StreamStats** and the **NHD**
+- **Then move the stream threshold** and see what changes
+- Due **Saturday 11:59 pm** — start from the report template
+
+[Lab 5 — Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
+
+<!-- Two minutes, not twenty: this is the lab's problem statement in one slide, so that everything in Part 1 has somewhere to land. The map at right is the lab's example baseline layout — 29 subwatersheds at a threshold of 5,000 cells. The three things to say out loud: the outlet is one the student places, the model runs from a DEM extract the lab provides (no download hunt), and the report template has every graded item as a heading. The last part, Step 14, is the one students underestimate: four runs of the model, one table. -->
+
+---
+
+# Three Settings That Decide Lab 5
+
+![bg right:38% w:92%](images/ws-lab05-snap-outlet.jpg)
+
+1. **Fill comes first.** Route water across the unfilled DEM and the pits swallow it: the biggest flow accumulation drops from about 430,000 cells to about 247,000
+2. **Snap the outlet.** The snap distance defaults to **0**; a click beside the creek gives a "basin" of a few cells. At **50 m** the outlet moves onto the channel
+3. **The threshold is a choice.** A cell is a stream when more than **5,000 cells** (0.5 km²) drain through it — nothing in the terrain says so, and Step 14 makes you test it
+
+Each one is a step in today's lecture.
+
+<!-- The image is Lab 5's Figure 2: yellow is where a student clicked, red is where Snap Pour Point moved it, about 45 m west onto the cell with the most flow. The numbers are the lab's own check values (Steps 5 and 6), measured on the lab's DEM. Point forward: Fill is step 2 of today's eight, the snap is step 7, the threshold is step 5. Then: "Before any of that — which way does water go from one cell?" and into Part 1. -->
 
 ---
 
@@ -57,7 +88,7 @@ By the end of class you should be able to:
 
 ## How do you get a watershed and a stream network from a DEM?
 
-![w:1000 center](images/ws-lab05-model-diagram.svg)
+![h:330 center](images/ws-lab05-full-model.svg)
 
 <!-- The diagram on the right is the answer in one picture: a chain of raster tools. It is the Lab 5 model, and we come back to it at the end of Part 1 as the "Example Model" slide. Do not walk through it yet; just let them see that the answer is a pipeline, not a single button. -->
 
@@ -65,11 +96,12 @@ By the end of class you should be able to:
 
 <!-- _class: activity -->
 
-# In Class Activity
+# In Class Activity — Aspect and D8 Flow Direction
 
 ![bg right:40% w:88%](images/ws-student-excel.jpg)
 
 - Let's try doing the key step, **D8 Flow Direction**, in Excel
+- And set it beside **aspect**, the downhill direction from last Thursday's slope window
 
 <!-- Hand out or project a small elevation grid and have students compute the steepest-descent neighbor for each interior cell, then write the Esri direction code. Doing it once by hand is what makes the Flow Direction tool make sense later. -->
 
@@ -168,6 +200,17 @@ By the end of class you should be able to:
 </div>
 
 <!-- This is the ordinary Slope tool: it fits a plane through all eight neighbors of a cell using a 3-by-3 window (a through i) and reports one slope magnitude and one aspect. It is a smoothed, averaged answer. The next slide shows why hydrology needs a different question. -->
+
+---
+
+# Aspect vs. D8 — Which Way Is Downhill?
+
+![h:360 center](images/ws-aspect-vs-d8.svg)
+
+- **Aspect** fits a plane to the window: any angle. **D8** picks one neighbor: eight answers
+- Aspect is closer to **west**; the steepest single drop is **southwest**, so the water goes there
+
+<!-- These are nine real cells of the Lab 5 DEM (after Fill), the top-left corner of the lab's Figure B. The aspect, 250 degrees, is what ArcGIS Pro's Aspect tool reports for the center cell (250.3) — the same 3-by-3 plane fit as last Thursday's slope. D8 asks a different question: which single neighbor has the steepest drop? West falls 8.9 m over 10 m; southwest falls 18.5 m over 14.1 m, which is steeper, so all of this cell's water goes southwest (code 8). Ask the room which D8 direction is closest to 250 degrees: west (270) is 20 degrees away, southwest (225) is 25. D8 still picks southwest, because it compares single drops and the aspect plane smooths over the whole window — the deep cell at the lower left pulls harder on D8 than on the plane. That is why the Excel activity asks for both. -->
 
 ---
 
@@ -504,12 +547,11 @@ By the end of class you should be able to:
 
 # Example Model
 
-![w:1150 center](images/ws-lab05-model-diagram.svg)
+![h:420 center](images/ws-lab05-full-model.svg)
 
 - The whole workflow, wired together once in **ModelBuilder**: this is the Lab 5 model, and it runs end to end on any DEM you give it
 
-<!-- Same chain as the eight steps, now readable because they know every box. Trace it row by row. Surface: Fill, then Flow Direction (D8), then Flow Accumulation. Basin: Snap Pour Point moves the outlet up to 50 m onto the highest-accumulation cell, Watershed collects everything that drains to it, and Raster to Polygon turns Basin_Raster into one polygon. Streams: the threshold enters at Raster Calculator, Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), which keeps cells inside the basin whose flow accumulation exceeds the threshold; then Stream Link numbers the segments and Stream to Feature draws them as lines. Subwatersheds: a second Watershed uses the Stream Link raster as its pour points, so every link gets its own subwatershed, and a second Raster to Polygon with Create multipart features checked makes one polygon per link. Two things to point at: the threshold is applied to flow accumulation, never to the Watershed tool, and Flow_Direction feeds four different tools. The P marks are model parameters; students set them in Lab 5 Step 12. This is a drawn diagram, not a ModelBuilder export. -->
-<!-- TODO(capture): replace with a ModelBuilder Export To Graphic of the finished Lab 5 model once it has been built in ArcGIS Pro (see the Lab 5 Figure C TODO). -->
+<!-- Same chain as the eight steps, now readable because they know every box. Trace it row by row. Surface: Fill, then Flow Direction (D8), then Flow Accumulation. Basin: Snap Pour Point moves the outlet up to 50 m onto the highest-accumulation cell, Watershed collects everything that drains to it, and Raster to Polygon turns Basin_Raster into one polygon. Streams: the threshold enters at Raster Calculator, Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), which keeps cells inside the basin whose flow accumulation exceeds the threshold; then Stream Link numbers the segments and Stream to Feature draws them as lines. Subwatersheds: a second Watershed uses the Stream Link raster as its pour points, so every link gets its own subwatershed, and a second Raster to Polygon with Create multipart features checked makes one polygon per link. Two things to point at: the threshold is applied to flow accumulation, never to the Watershed tool, and Flow_Direction feeds four different tools. The P marks are model parameters; students set them in Lab 5 Step 12. This is the Lab 5 model exported from ModelBuilder (Lab 5 Figure C); the gray oval is Flow Direction's optional drop raster, left empty. -->
 
 ---
 
@@ -754,11 +796,11 @@ By the end of class you should be able to:
 
 ---
 
-# Next: Lab 5 — Watershed Delineation
+# Back to Lab 5 — You Can Read the Whole Model Now
 
 ![bg right:34% w:90%](images/ws-lab05-example-map.png)
 
-Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to finish. What today gives you for it:
+Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to finish. What this week gives you for it:
 
 - Why **Fill** comes first, and what breaks if you skip it
 - How to read a **flow direction** code back to a compass direction
@@ -768,7 +810,6 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 [Lab 5 — Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 
 <!-- The layout at right is the Lab 5 example map, the baseline run of the model. The single most common lab failure is an unsnapped pour point producing a watershed of a few cells. Say so now. -->
-<!-- VERIFY: schedule reconstructed — confirm Lab 5 is the lab that follows this week's lecture. -->
 
 ---
 
