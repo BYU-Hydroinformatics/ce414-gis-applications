@@ -50,8 +50,7 @@ Fall 2026 · Dr. Dan Ames
 An avalanche is a mass of snow sliding fast down a slope. In the United States an average of
 **27 people died in avalanches each winter** over the last ten winters, according to the Colorado
 Avalanche Information Center, which keeps the national accident archive
-([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }). Most
-of them were backcountry skiers, riders, snowmobilers and climbers who chose the slope that slid.
+([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }).
 
 Avalanche centers publish a forecast every morning of the season, and the forecast is partly a map
 of terrain: it rates the danger by **elevation band** and by **aspect** (the compass direction a
@@ -99,25 +98,26 @@ Snowbird ski area. Using them:
 
 Every one of these is a decision somebody made, and every one of them can change the answer.
 
-- **The three factors.** Avalanche centers rate terrain by elevation, slope and aspect because
-  those three are known before the season starts. Slope matters most: most slab avalanches start on
-  slopes between 30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50°
-  shed snow in small loose slides too often to build big slabs
+- **The three factors.** A forecast says where the danger is by elevation band and aspect; slope
+  angle decides whether a slope can avalanche at all. Most slab avalanches start on slopes between
+  30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50° shed snow in small
+  loose slides too often to build big slabs
   ([avalanche.org: slope angle](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/slope-angle/){ target="_blank" }).
-  Aspect matters because wind loads the lee side of a ridge with deep slabs and because the sun
-  heals weak layers on south-facing slopes that survive on shaded ones
+  Aspect matters because wind builds slabs on the slopes downwind of it — a west wind loads east
+  aspects — and because the sun can destroy weak layers on south-facing slopes that survive on
+  shaded ones
   ([avalanche.org: aspect](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/aspect/){ target="_blank" }).
 - **What the model leaves out.** The snowpack's layers and their strength, today's weather, wind
   loading, recent avalanches, and the person who triggers the slide. Also slope shape (convex rolls
   are more dangerous than concave bowls), ground cover (smooth grass and rock slabs slide more than
   boulder fields and forest), and terrain traps below a slope. None of these is in an elevation
   model. Your report says what each one would change.
-- **Table 1.** The class breaks below come from one advisory, issued by the Sawtooth Avalanche
-  Center for central Idaho on one day. Another day's advisory moves the elevation bands, and another
+- **Table 1.** The class breaks below come from the course's original handout, which took them
+  from one advisory issued by the Sawtooth Avalanche Center, in central Idaho, on one day. Another day's advisory moves the elevation bands, and another
   center would use different ones. Step 9 moves them.
 - **How the three ratings combine.** "All three agree", the product, the worst of the three, the
   best of the three — each is a different claim about how the factors interact. Step 6 builds two
-  and Step 9 adds two more.
+  and Step 7 adds two more.
 - **The elevation model.** Bare earth: the ground surface, without trees, lift towers or the
   winter snowpack, which can be meters deep and changes the slope a skier stands on. Cells of about
   10 m, so a gully narrower than that is not in it.
@@ -135,9 +135,10 @@ Every one of these is a decision somebody made, and every one of them can change
 
 **Table 1.** Terrain ratings from a Sawtooth Avalanche Center advisory. A value exactly on a break
 goes to the lower range: 25° is Low and 35° is High, because ArcGIS Pro's Reclassify counts the end
-of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme;
-flat cells are all slope class 1, so it does them little harm, but say in your report whether you
-would rate them differently.
+of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme.
+With slope class 1, a flat cell comes out Considerable under the geometric mean of Step 6 and Extreme
+under the worst-factor rule of Step 7. There are none inside Snowbird, but they show on any map that
+reaches past its boundary. Say in your report whether you would rate them differently.
 
 ## Data
 
@@ -156,7 +157,8 @@ would rate them differently.
 | Table 1 | A Sawtooth Avalanche Center advisory | You type it into the Reclassify and Raster Calculator tools |
 
 - **Download:** [`lab07-little-cottonwood-dem.zip`](../../data/lab07-little-cottonwood-dem.zip)
-  (2.4 MB). Unzip it into your Lab07 folder, and read `READ-ME-FIRST.txt`.
+  (2.4 MB). Unzip it into your Lab07 folder — the files are in a `lab07-little-cottonwood-dem`
+  folder inside it — and read `READ-ME-FIRST.txt`.
 - **Add the ski areas** in Step 0 from this feature service URL:
   `https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0`
   (the same layer as UGRC's [Utah Ski Area Boundaries](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" } page).
@@ -190,10 +192,11 @@ with an inline variable (Labs 2, 4 and 5), and model parameters.
 
 ## Example Model
 
-<!-- TODO(capture): Figure C, the finished model exported from ModelBuilder (Export To Graphic), in rows: DEM -> Project Raster -> DEM_UTM -> Slope -> Slope_Deg -> Reclassify -> Slope_Class; DEM_UTM -> Aspect -> Aspect_Deg -> Reclassify -> Aspect_Class; DEM_UTM + Elevation Shift (P) -> Raster Calculator -> Altitude_Class; the three classes -> Raster Calculator (agree) -> Agree_Class, -> Raster Calculator (geometric mean) -> Hazard_Class (P), -> Cell Statistics MAXIMUM -> Worst_Class, -> Cell Statistics MINIMUM -> Best_Class. -->
+<!-- TODO(capture): Figure C, the finished model exported from ModelBuilder (Export To Graphic), in rows: DEM -> Project Raster -> DEM_UTM -> Slope -> Slope_Deg -> Reclassify -> Slope_Class; DEM_UTM -> Aspect -> Aspect_Deg -> Reclassify -> Aspect_Class; DEM_UTM + Elevation Shift (P) -> Raster Calculator -> Altitude_Class; the three classes -> Raster Calculator (agree) -> Agree_Class, -> Raster Calculator (geometric mean) -> Hazard_Class (P), -> Cell Statistics MAXIMUM -> Worst_Class (P), -> Cell Statistics MINIMUM -> Best_Class (P); Worst_Class and Best_Class -> Raster Calculator -> Rule_Spread (P). -->
 
 The finished model will appear here as **Figure C**: one elevation model in, three rating rasters in
-the middle, and four combined maps out, with the elevation shift and the main output as parameters.
+the middle, and the combined maps out — the geometric mean, the worst and best factor, and where
+those two differ — with the elevation shift and the outputs as parameters.
 
 ## Complete the Lab
 
@@ -252,14 +255,15 @@ Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and ou
 <!-- TODO(capture): the Slope dialog; VERIFY its parameter labels in 3.7.1 (Output measurement, Method, Z unit). -->
 
 > [!TIP]
-> **Check the result:** the steepest cell is **77.8°**, and half the cells are steeper than
-> **27.3°** (the median; read it from the layer's statistics).
+> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (layer
+> **Properties** ▸ **Source** ▸ **Statistics**).
+<!-- VERIFY in the GUI build: where ArcGIS Pro 3.7.1 shows a raster layer's mean (the arcpy Raster.mean is 26.85). -->
 
 > [!WARNING]
 > **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
-> `LittleCottonwood_DEM.tif` itself it reports a median of 24.5° — about 3° too gentle. Its cells
+> `LittleCottonwood_DEM.tif` itself it reports a mean of 24.3° — about 2.6° too gentle. Its cells
 > are 1/3 arc-second, which here is 10.3 m north–south but only 7.8 m east–west; projected cells are
-> square meters. Three degrees moves a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
+> square meters. Two or three degrees move a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
 
 ### Step 3 — Compute Aspect
 
@@ -285,7 +289,7 @@ Two ranges can share a new value; that is how the table says "steep and gentle a
 <!-- TODO(capture): the two Reclassify dialogs. -->
 
 > [!TIP]
-> **Check the result** (inside Snowbird, measured in Step 8): slope class 1 covers **4.986 km²**
+> **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
 > and slope class 5 **2.047 km²**; aspect class 4 (northwest-to-north and northeast-to-east)
 > **3.493 km²**. If any cell of `Slope_Class` is NoData, a range has a gap.
 
@@ -309,7 +313,7 @@ them.
 <!-- TODO(capture): the Raster Calculator dialog. -->
 
 > [!TIP]
-> **Check the result:** at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
+> **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
 > and no cells below 2,200 m. Most of the ski area is "Extreme" on altitude alone — keep that in
 > mind in Step 9.
 
@@ -326,9 +330,9 @@ Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1)
 Output `Agree_Class`. Look at it before you go on.
 
 > [!TIP]
-> **Check the result:** inside Snowbird, **10.345 of 10.782 km²** — 96 % — is 0, unclassified. A
+> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.782 km²** — 96 % — is 0, unclassified. A
 > 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
-> Extreme; the same slope facing east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
+> Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
 
 **Second, the geometric mean.** Multiply the three ratings (1 to 125), take the cube root, and round.
 The cube root of a product of three numbers is their geometric mean, which brings the result back to
@@ -357,7 +361,21 @@ inputs:
 2. **Overlay statistic** Minimum, output `Best_Class` — a cell is only as dangerous as its least
    dangerous factor.
 
-These two bracket the geometric mean. You will compare all three in Step 9.
+These two bracket the geometric mean. Then one more **Raster Calculator**, output `Rule_Spread`:
+
+```text
+"%Worst_Class%" - "%Best_Class%"
+```
+
+`Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
+where the rule you choose matters.
+
+Make `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters, so that every run
+from the tool dialog keeps them and lets you name them.
+
+> [!TIP]
+> **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
+> on **3.309 km²**.
 
 <!-- TODO(capture): the Cell Statistics dialog; VERIFY the parameter labels (Overlay statistic, Ignore NoData in calculations). -->
 
@@ -371,7 +389,10 @@ Run the model. Then add **Tabulate Area** (outside the model is fine) with:
 - **Input raster or feature class data**: `Hazard_Class`, **Class field** `Value`
 - **Output table**: `Snowbird_Hazard`
 
-The table has one column per class, in square meters. Divide by 1,000,000 for km².
+The table has one column per class, in square meters. Divide by 1,000,000 for km². Run Tabulate
+Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Class`, `Worst_Class`,
+`Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
+table for the raster and the run, such as `TA_Hazard_s0`.
 
 <!-- VERIFY in the GUI: that Tabulate Area honors the selection on the service layer (the arcpy check used a layer with a definition query), and its parameter labels. -->
 <!-- TODO(capture): the Tabulate Area dialog and its output table. -->
@@ -391,20 +412,21 @@ The table has one column per class, in square meters. Divide by 1,000,000 for km
 
 The default map is *an* answer, not *the* answer: one day's elevation bands from one advisory, and
 one rule for combining. Run the model at least **three more times** from its tool dialog with a
-different **Shift** — for example −400, −200 and +200 or +400 m — and tabulate `Hazard_Class`,
-`Worst_Class` and `Best_Class` inside Snowbird each time with Tabulate Area.
+different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
+carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
+`Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
 
 Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
 that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
-in one table**, record the shift and, for each of the three rules, the area of Snowbird rated High
-or Extreme. Then answer, in your report:
+in one table**, record the shift, the area of Snowbird in altitude class 5, and, for each of the
+three rules, the area rated High or Extreme. Then answer, in your report:
 
-1. **How much does moving the elevation bands change the map?** Which factor is doing most of the
-   sorting at Snowbird, and why?
+1. **How much does moving the elevation bands change the map,** in each direction? Use the
+   altitude-class column to say why.
 2. **How much does the combination rule change the map?** For the same run, compare the High +
    Extreme area under the three rules. Which rule would you publish, and to whom?
-3. **Where are the three rules in agreement**, and where do they disagree most? What kind of
-   terrain is that?
+3. **Where do the three rules agree, and where do they disagree most?** Map `Rule_Spread` at
+   shift 0 beside the imagery and say what kind of terrain sits at 0 and at 4.
 
 Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
 
@@ -416,9 +438,9 @@ Pick one run, or one rule, for your second map, and say on the map what changed 
 
 Make **two** professional map layouts:
 
-1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, in the danger-scale colors
-   (Figure B) with the labels Low to Extreme, the Snowbird boundary, and an inset locating Little
-   Cottonwood Canyon in Salt Lake County.
+1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, titled with the rule and the
+   bands, in the danger-scale colors (Figure B) with the labels Low to Extreme, the Snowbird boundary
+   and labeled places, and an inset locating Little Cottonwood Canyon in Salt Lake County.
 2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
    the picture. Say on the map what changed and why you chose it.
 
@@ -433,6 +455,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   Graphic**), and **one** screen capture of its toolbox interface with the shift parameter exposed
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
   datum and units, and its cell size — and what each one means for your result
+- your **Step 8 table** of Snowbird's area in each `Hazard_Class` at shift 0, in km²
 - the **"all three agree" result**: its check value and, in your own words, why it is the wrong
   answer
 - your **sensitivity table** from Step 9 and your answers to its three questions
@@ -492,10 +515,10 @@ what to submit.
 | Item | Points |
 | --- | --- |
 | **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• The "all three agree" result and why it is the wrong answer (2)<br>• Where the map is wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Snowbird areas at shift 0 match the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Step 8 table of Snowbird's areas at shift 0 matches the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• An inset locating Little Cottonwood Canyon (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
 | **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map, and which factor does the sorting (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree, and what terrain that is (2) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map in each direction, and why (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree (`Rule_Spread`), and what terrain that is (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -511,4 +534,5 @@ ARCGIS PRO VERSION: 3.7.1 arcpy only (tools/lab07/run_model.py, tool_checks.py, 
 DATA: docs/data/lab07-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab07/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
 VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
 SENSITIVITY (do NOT publish; High + Extreme km2, geometric mean / maximum Extreme / minimum Extreme): shift -400: 3.975 / 10.613 / 0.415; -200: 3.937 / 9.152 / 0.406; 0: 3.760 / 8.203 / 0.336; +200: 3.317 / 6.415 / 0.258; +400: 2.465 / 4.289 / 0.126. The bands move the geometric-mean High + Extreme by -0.4 to +1.3 km2 over 800 m of shift; the rule moves Extreme alone from 0.34 to 8.20 km2 at shift 0.
-TODO(instructor): 1. Decisions 1-7 in tools/lab07/PARITY_PLAN.md. 2. GUI build with captures and Figure C. 3. Figure A, tool icons, example maps. 4. No-GUI pilot. 5. Report template. 6. Promote (README.md -> lab07-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
+PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
+TODO(instructor): 1. Decisions 1-7 in tools/lab07/PARITY_PLAN.md. 2. GUI build with captures and Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. Report template. 6. Promote (README.md -> lab07-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->

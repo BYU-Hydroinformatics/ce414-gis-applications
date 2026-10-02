@@ -58,17 +58,21 @@ promoted until Dan decides the items marked DECISION.** Lab 7 is due Saturday of
 - Slope max 77.8°. Aspect flat cells (−1): 480 in the whole extent.
 - Snowbird (UGRC SkiAreaBoundaries, OBJECTID 13): 10.781 km² by Tabulate Area at 10 m.
   (UGRC's Shape__Area, 18.7 km², is Web Mercator: divide by about 1.73 at this latitude.)
-- Snowbird by class (km²), shift 0:
+- Snowbird by class (km²), shift 0, measured as students will (Tabulate Area against the live
+  Web Mercator layer; `student_route_checks.json` — the page uses these):
 
 | Classes | 1 | 2 | 3 | 4 | 5 |
 | --- | --- | --- | --- | --- | --- |
-| Altitude | 0 | 0.172 | 1.635 | 1.527 | 7.448 |
-| Slope | 4.985 | 1.667 | 0.793 | 1.289 | 2.047 |
-| Aspect | 0.571 | 2.053 | 2.768 | 3.492 | 1.896 |
-| All three agree (0 = not classified: 10.345) | 0 | 0 | 0.010 | 0.090 | 0.336 |
-| Geometric mean (baseline) | 0.167 | 3.162 | 3.692 | 2.673 | 1.087 |
-| Worst factor (maximum) | 0 | 0.082 | 0.756 | 1.738 | 8.205 |
+| Altitude | 0 | 0.172 | 1.638 | 1.527 | 7.445 |
+| Slope | 4.986 | 1.667 | 0.794 | 1.289 | 2.047 |
+| Aspect | 0.571 | 2.054 | 2.768 | 3.493 | 1.896 |
+| All three agree (0 = not classified: 10.346) | 0 | 0 | 0.010 | 0.090 | 0.336 |
+| Geometric mean (baseline) | 0.168 | 3.162 | 3.691 | 2.673 | 1.087 |
+| Worst factor (maximum) | 0 | 0.082 | 0.758 | 1.738 | 8.203 |
 | Best factor (minimum) | 5.116 | 2.363 | 1.663 | 1.303 | 0.336 |
+
+  Rule_Spread (worst − best) 0–4: 0.436 / 1.559 / 2.547 / 2.931 / 3.309. (`check_values.json`
+  and `tool_checks.json` used the boundary projected first and differ in the third decimal.)
 
 - Sensitivity, geometric mean, High + Extreme (km²): −400 m 3.976; −200 m 3.936; 0 3.760;
   +200 m 3.316; +400 m 2.465. Maximum rule Extreme: 10.613, 9.152, 8.205, 6.415, 4.289.
