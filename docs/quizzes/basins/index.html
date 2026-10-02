@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — What Is a Watershed?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what a watershed is, how hydrologic units nest, why water is managed by watershed, the water balance, and what automated delineation buys you.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "What Is a Watershed?",
+  subtitle: "CE 414 &middot; Week 6 &mdash; What Is a Watershed?<br>" +
+            "Five questions on what a watershed is, why we manage water by it, and what a " +
+            "<strong>DEM</strong> can and cannot tell you about it.",
+  badge: "Watershed idea",
+  deckUrl: "../../slides/week-06/what-is-a-watershed.html",
+  questions: [
+    {
+      prompt: "You delineate the watershed above point A, then move the pour point 2 km downstream on the same stream to point B. What happens to the watershed?",
+      options: [
+        "It gets larger and contains all of A's watershed",
+        "It stays the same size and shifts downstream",
+        "It gets smaller, because B is lower",
+        "It becomes a separate basin that does not overlap A's"
+      ],
+      answer: "It gets larger and contains all of A's watershed",
+      explanation: "A watershed is defined by its pour point: every cell whose flow path reaches that point. Everything that drains to A keeps flowing past A to B, so B's watershed includes all of A's plus whatever drains in between. That nesting is also why subwatersheds tile a basin with no gaps and no overlaps."
+    },
+    {
+      prompt: "The Rock Canyon trailhead sits in hydrologic unit 160202030505. What do the first four digits, 1602, tell you?",
+      options: [
+        "It is Utah's 1,602nd mapped watershed",
+        "It drains to the Great Salt Lake subregion",
+        "Its outlet sits at 1,602 m elevation",
+        "It was mapped in version 16.02"
+      ],
+      answer: "It drains to the Great Salt Lake subregion",
+      explanation: "Hydrologic unit codes nest: each level adds two digits to its parent. 16 is the Great Basin Region, 1602 the Great Salt Lake subregion, 160202 the Jordan basin, 16020203 the Provo subbasin, and so on down to the 12-digit subwatershed. The code says where the water goes."
+    },
+    {
+      prompt: "Your hand-drawn divide and the StreamStats basin for the same outlet do not match. What does the automated result buy you?",
+      options: [
+        "It is more accurate; the hand-drawn one is wrong",
+        "The two should match exactly if you were careful",
+        "It is more consistent — it repeats exactly",
+        "It is the standard the hand-drawn one must meet"
+      ],
+      answer: "It is more consistent — it repeats exactly",
+      explanation: "Consistent is not the same as accurate. Two people delineating the same basin by hand will disagree; the algorithm repeats itself exactly. But change the DEM, or move the pour point, and the algorithm's answer changes too. What it returns is where water would go on that surface."
+    },
+    {
+      prompt: "Which term in a watershed's water balance can a DEM tell you about?",
+      detail: "Change in storage = precipitation − evapotranspiration − streamflow − groundwater out.",
+      options: [
+        "How much precipitation falls",
+        "How much water evaporates",
+        "How much groundwater is stored",
+        "Where the runoff will flow"
+      ],
+      answer: "Where the runoff will flow",
+      explanation: "A DEM is a model of the ground surface, so it can tell you which way water on that surface will go: the flow paths, the divide and the outlet. How much rain falls, how much evaporates and how much is stored underground all need other data — gages, weather stations, soil and snow surveys."
+    },
+    {
+      prompt: "Why did John Wesley Powell propose bringing the western states into the union along watershed boundaries?",
+      options: [
+        "So every state would have the same area",
+        "So each state would hold the water it collects",
+        "Because watershed lines were cheaper to survey",
+        "So every state would reach a navigable river"
+      ],
+      answer: "So each state would hold the water it collects",
+      explanation: "Water does not follow straight-line political boundaries: a watershed crosses city, state and national lines. Powell's map of the arid West drew states around drainage basins so that each would govern its own water. Congress drew rectangles instead, and a century of interstate water compacts and litigation followed."
+    }
+  ],
+  perfectNote: "A perfect score. You can say what a watershed is, where it sits, and what the boundary is for.",
+  goodNote: "Solid. Read the explanations on the ones you missed — the watershed of a point is the idea Lab 5's outlet rests on.",
+  tryAgainNote: "Worth another pass. The short version: a watershed is everything that drains to one point; watersheds nest, and their codes say so; the boundary is where water is accounted for and managed; and a DEM tells you only where the runoff goes."
+});
+</script>
+</body>
+</html>

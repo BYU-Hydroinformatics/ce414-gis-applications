@@ -4,7 +4,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- [Watershed Delineation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html) — From a DEM to watersheds and streams: fill, flow direction, flow accumulation, thresholds, and pour points.
+- **Tuesday** — [Watershed Delineation, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html) — From a DEM to streams and watersheds, cell by cell: Lab 5 introduced, then fill, flow direction (aspect against D8), flow accumulation, the stream threshold, stream links, pour points, and the Lab 5 model that runs them all.
+- **Thursday** — [Watershed Delineation, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/what-is-a-watershed.html) — What a watershed is and why water is managed by them: Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance, and a watershed delineated by hand and with USGS StreamStats.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -18,7 +19,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Follow the Water](../quizzes/watersheds/index.html) — Six questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.
+- [Follow the Water](../quizzes/watersheds/index.html) — Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.
+- [What Is a Watershed?](../quizzes/basins/index.html) — Five questions on the watershed of a point, nested hydrologic units, the water balance, why Powell wanted states drawn by watershed, and what automated delineation buys you.
 
 </div>
 

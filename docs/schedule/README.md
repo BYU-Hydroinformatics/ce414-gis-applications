@@ -12,7 +12,7 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [4](week-04.md) | Imagery | Lab 3 — Georectifying and Digitizing Images |
 | [5](week-05.md) | Terrain Analysis | Lab 4 — Cell Phone Tower Placement |
 | [6](week-06.md) | Watershed Delineation | Lab 5 — Watershed Delineation |
-| [7](week-07.md) | Watershed Delineation, Part 3 | Lab 6 — Lake Depth Explorer |
+| [7](week-07.md) | Lake Bathymetry | Lab 6 — Lake Depth Explorer |
 | [8](week-08.md) | Interpolation and Midterm 1 | Lab 7 — Avalanche Hazard |
 | [9](week-09.md) | Interpolation, Part 3, and Web Services | Lab 8 — Big Southern Butte |
 | [10](week-10.md) | Raster-Based Spatial Analysis | Lab 9 — Practicing with Interpolation |

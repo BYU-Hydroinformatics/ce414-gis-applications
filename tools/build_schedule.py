@@ -49,7 +49,8 @@ DECKS = [
     (4,  "remote-sensing",                 "Remote Sensing",                             "How sensors see the Earth: the electromagnetic spectrum, what a digital image stores, splitting images into bands, false color, hyperspectral imagery, and the satellites that take the pictures.", "Thu"),
     (5,  "elevation-data-lidar",           "Elevation Data and LiDAR",                   "What an elevation surface is, how LiDAR measures one, and where to download a DEM — the National Map and 3DEP, SRTM, ASTER GDEM and ALOS, and what cell size costs you.", "Tue"),
     (5,  "terrain-analysis",               "Terrain Analysis",                           "What you compute from a DEM: shaded relief, contours, slope, aspect and curvature from local neighborhoods, plus viewsheds from line of sight.", "Thu"),
-    (6,  "watershed-delineation",          "Watershed Delineation",                      "From a DEM to watersheds and streams: fill, flow direction, flow accumulation, thresholds, and pour points.", None),
+    (6,  "watershed-delineation",          "Watershed Delineation, Part A",              "From a DEM to streams and watersheds, cell by cell: Lab 5 introduced, then fill, flow direction (aspect against D8), flow accumulation, the stream threshold, stream links, pour points, and the Lab 5 model that runs them all.", "Tue"),
+    (6,  "what-is-a-watershed",            "Watershed Delineation, Part B",              "What a watershed is and why water is managed by them: Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance, and a watershed delineated by hand and with USGS StreamStats.", "Thu"),
     (8,  "interpolation",                  "Interpolation",                              "Estimating a surface from points: Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.", None),
     (9,  "ogc-web-services",               "Overview of OGC Web Services",               "Interoperability and open standards for sharing spatial data over the web: WMS, WFS, WCS, and their relatives.", "Thu"),
     (10, "raster-spatial-analysis",        "Raster-Based Spatial Analysis",              "The raster suitability workflow end to end — criteria, data, rasterization, reclassification, overlay, and heat maps.", None),
@@ -63,7 +64,7 @@ LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Imag
         9:"Practicing with Interpolation",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 12)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
-               5:"Terrain Analysis",6:"Watershed Delineation",7:"Watershed Delineation, Part 3",
+               5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
                8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
                10:"Raster-Based Spatial Analysis",11:"Least Cost Path and Coordinate Systems",12:"GPS and the Final Project",
                13:"Final Project Work",14:"Presentations and Midterm 2",15:"Final Project Presentations"}
@@ -74,10 +75,10 @@ FINAL_PROJECT_WEEKS = (12, 13, 14, 15)
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    7:  "Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, "
-        "Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. "
-        "Thursday introduces Lab 6 — Lake Depth Explorer and the ModelBuilder idea it is built on: a model that "
-        "**loops** over a list of water-surface elevations instead of being run once per elevation.",
+    7:  "Week 7 is **lake bathymetry**: how the bottom of a lake is measured and mapped, and how a lake's shoreline, "
+        "area and volume follow from its water level, on the Great Salt Lake. It introduces **Lab 6 — Lake Depth Explorer**, "
+        "a ModelBuilder model that **loops** over a list of water-surface elevations instead of being run once per elevation. "
+        "The slides for this week are being prepared.",
     13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
     14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
         "project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is "
@@ -152,7 +153,9 @@ PRACTICE = {
         ("terrain-analysis", "Slope, Aspect, Viewshed",
          "Six questions on what you get out of a DEM: what contours and hillshade show, aspect as an azimuth, why the slope method matters, what a viewshed answers, and how to count what a hike can see.")],
     6: [("watersheds", "Follow the Water",
-         "Six questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.")],
+         "Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong."),
+        ("basins", "What Is a Watershed?",
+         "Five questions on the watershed of a point, nested hydrologic units, the water balance, why Powell wanted states drawn by watershed, and what automated delineation buys you.")],
     8: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.")],
     9: [("web-services", "What Comes Back?",

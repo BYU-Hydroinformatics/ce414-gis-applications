@@ -16,14 +16,16 @@ style: |
 
 # Hydrologic Terrain Analysis
 
+## Part A — From a DEM to Streams
+
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<span style="font-size:0.55em;">Some slides adapted from David Maidment (UT Austin) and Orange County Public Works</span>
+<span style="font-size:0.55em;">Some slides adapted from D. Maidment (UT Austin) and Orange County Public Works</span>
 
-<!-- Week 6 opens on Tuesday with a short introduction to Lab 5 (two slides), then runs in three parts: (1) the eight-step terrain-analysis workflow, cell by cell, starting from Thursday's slope and aspect; (2) what a watershed actually is and why we care; (3) a hands-on comparison of hand delineation against USGS StreamStats. Lab 5 applies all of it in ArcGIS Pro. -->
+<!-- Week 6 is two decks. This one is Tuesday: a short introduction to Lab 5, then the mechanics — the eight-step terrain-analysis workflow, cell by cell, starting from last Thursday's slope and aspect, ending on the Lab 5 model. Thursday's deck (what-is-a-watershed) is the theory: what a watershed is, why it is the unit we manage water in, and a hand-versus-StreamStats delineation. -->
 <!-- VERIFY: source deck credits "Center for Water Resources Research, UT Austin"; confirm the exact center name before publishing. -->
 
 <!-- stamp:begin -->
@@ -36,14 +38,13 @@ Dr. Dan Ames
 
 ![bg right:34% w:92%](images/ws-lab05-subwatersheds.jpg)
 
-By the end of the week you should be able to:
+By the end of class you should be able to:
 
 - Say what **Lab 5** asks for, and the three settings that decide it
 - Walk through the **eight steps** that turn a DEM into streams and watersheds
 - Tell a cell's **aspect** from its **D8 flow direction**, and compute D8 by hand
 - Explain what a **flow accumulation** grid counts, and how a **threshold** turns it into a stream network
-- Define a **watershed**, an **outlet**, and a **pour point**
-- Delineate a watershed two ways — **by hand** and with **StreamStats** — and compare them
+- Say why a watershed is always the watershed **of a pour point**
 
 <!-- The map at right is where Lab 5 ends up: Rock Canyon's basin cut into one subwatershed per stream link. Set the frame: everything in Part 1 is one raster operation feeding the next. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
 
@@ -122,12 +123,12 @@ Each one is a step in today's lecture.
 
 # Elevation Surface
 
-![bg right:45% w:92%](images/ws-dem-elevation-surface.png)
+![bg right:45% w:92%](images/ws-pro-dem.jpg)
 
 - **Elevation surface** — the ground surface elevation at each point
 - **Digital Elevation Model** — a digital representation of an elevation surface: a **square grid** (what this course means by DEM), a **TIN**, **contours**, or **random points**
 
-<!-- Point out that "DEM" in this course almost always means the square grid, but the definition is broader. The distinction matters in step 1: a TIN or a contour set has to be converted to a grid before any of the following steps will run. -->
+<!-- Point out that "DEM" in this course almost always means the square grid, but the definition is broader. The distinction matters in step 1: a TIN or a contour set has to be converted to a grid before any of the following steps will run. The map is the Lab 5 DEM, 10 m cells around Rock Canyon, colored by elevation over its own hillshade and rendered in ArcGIS Pro. -->
 
 ---
 
@@ -243,9 +244,9 @@ Each one is a step in today's lecture.
 
 # Flow Direction Grid
 
-![h:400 center](images/ws-flow-direction-arcview.jpg)
+![h:430 center](images/ws-pro-flow-direction.png)
 
-<!-- A real flow-direction raster symbolized by its eight code values, with the direction key at left. The point is the texture: neighboring cells often share a direction, and the bands you see are hillslopes draining the same way. This screenshot is from the ArcView era; it is kept for the concept, not for the interface. -->
+<!-- A real flow-direction raster: ArcGIS Pro's Flow Direction on the filled Lab 5 DEM, about 600 m by 400 m of Rock Canyon's slopes, each 10 m cell colored by its D8 code. The point is the texture: neighboring cells share a direction, and the bands are hillslopes draining the same way. The lower right is a slope facing north and northwest (codes 32 and 64). -->
 
 ---
 
@@ -323,16 +324,14 @@ Each one is a step in today's lecture.
 
 ---
 
-# Streams with 200 cell Threshold
+# Streams at Two Thresholds
 
-## (more than 18 hectares, about 44 acres, of drainage area on 30 m cells)
+![w:1000 center](images/ws-pro-thresholds.jpg)
 
-![h:380 center](images/ws-streams-200-cell-threshold.png)
+- Same DEM, same flow accumulation: only the **threshold** changed, ten times over
 
-<!-- Raising the threshold from 5 cells to 200 thins the network dramatically: only channels with substantial drainage area survive. Ask what the "right" answer is; there isn't one, which is why the next question matters. -->
-<!-- 200 cells x 900 m2 (30 m cells) = 180,000 m2 = 18 ha = 44.5 acres. -->
+<!-- Lab 5's own data, rendered in ArcGIS Pro: the Rock Canyon basin with a stream network at 500 cells (0.05 km² of contributing area on 10 m cells) and at 5,000 cells (0.5 km², the Lab 5 baseline). The counts are the lab's measured values: 290 segments and 83.2 km of stream at 500 cells, 29 segments and 22.9 km at 5,000. Nothing about the terrain changed; only the number we compared against. Ask what the "right" answer is; there isn't one, which is what Lab 5 Step 14 makes them test. -->
 <!-- TODO(instructor): decide whether to add a scale/resolution sensitivity question here — e.g. how the delineated network and watershed change between a 30 m, a 10 m, and a 1 m lidar DEM, and whether the same cell threshold should be used. -->
-<!-- Screenshot is ArcView-era; kept because no ArcGIS Pro equivalent has been captured. -->
 
 ---
 
@@ -377,9 +376,9 @@ Each one is a step in today's lecture.
 
 # Vectorized Streams Linked Using Grid Code to Cell Equivalents
 
-![h:400 center](images/ws-vectorized-streams-gridcode.png)
+![h:440 center](images/ws-pro-links-gridcode.jpg)
 
-<!-- Identify the same feature in both layers and the grid code matches: the vector line carries the link ID from the raster. That shared key is what lets you join raster-derived attributes, such as contributing area, to the line features. This screenshot is from the ArcView era. -->
+<!-- Lab 5's Stream_Links raster (one color per link) under its Stream to Feature lines, labeled with their grid_code field, rendered in ArcGIS Pro around a junction in the middle of Rock Canyon. Each line's grid_code is the value of the raster cells it was traced from: the vector line carries the link ID from the raster. That shared key is what lets you join raster-derived attributes, such as contributing area, to the line features. -->
 
 ---
 
@@ -454,33 +453,33 @@ Each one is a step in today's lecture.
 
 ---
 
-# Watershed and Drainage Paths from a 30 m DEM
+# Watershed and Drainage Paths from a 10 m DEM
 
-![bg right:40% w:90%](images/ws-watershed-drainage-paths-30m.png)
+![bg right:45% w:95%](images/ws-pro-basin-topo.jpg)
 
 - The **automated method is more consistent** than hand delineation
 
-<!-- Consistent, not necessarily more accurate. Two analysts hand-delineating the same basin will disagree; the algorithm will give the same answer every time from the same DEM and the same pour point. Change the DEM or move the pour point and the answer changes. -->
+<!-- Consistent, not necessarily more accurate. Two analysts hand-delineating the same basin will disagree; the algorithm will give the same answer every time from the same DEM and the same pour point. Change the DEM or move the pour point and the answer changes. The map is Lab 5's result on the topographic basemap: the basin above the Rock Canyon trailhead (magenta), its streams at 5,000 cells (blue) and the snapped outlet (red), rendered in ArcGIS Pro. Ask them to check the divide against the contours on the basemap. -->
 <!-- TODO(instructor): decide whether to add a validation step here — comparing the delineated network and basin against the NHD or against a StreamStats basin for the same outlet — and what students should report when they disagree. -->
 
 ---
 
 # Subwatersheds for Stream Segments
 
-![h:400 center](images/ws-subwatersheds-stream-segments.png)
+![h:430 center](images/ws-pro-subwatersheds-ids.jpg)
 
 - Cells sharing the **same cell value** belong to the same subwatershed — the one draining to that stream link
 
-<!-- The link identifier from the stream-links raster carries straight through into the watershed raster. That is why "same cell value" is written on the figure: the color of a subwatershed matches the ID of the link it drains to. This screenshot is from the ArcView era. -->
+<!-- The link identifier from the stream-links raster carries straight through into the watershed raster. That is why "same cell value" is written on the figure: the number on each subwatershed is the ID of the link it drains to. The map is Lab 5's 29 subwatersheds at 5,000 cells, each labeled with its gridcode, with the stream links in blue, rendered in ArcGIS Pro. -->
 
 ---
 
 # Delineated Subwatersheds and Stream Networks
 
-![h:440 center](images/ws-lab05-subwatersheds.jpg)
+![h:440 center](images/ws-pro-subwatersheds-imagery.jpg)
 
 <!-- Every link in the network gets its own subwatershed, and together they tile the whole basin with no gaps and no overlaps. This is exactly the input a rainfall-runoff model wants: a set of subbasins, each with an area and a routing connection to the next one downstream. -->
-<!-- The figure is Lab 5's own result: the basin above Rock Canyon cut into one subwatershed per stream link. It replaces a 203 x 161 px source figure that was soft on a projector. -->
+<!-- The figure is Lab 5's own result on imagery: the basin above Rock Canyon (yellow) cut into one subwatershed per stream link, with the streams in orange and the outlet in red, rendered in ArcGIS Pro. -->
 
 ---
 
@@ -499,247 +498,6 @@ Each one is a step in today's lecture.
 - The whole workflow, wired together once in **ModelBuilder**: this is the Lab 5 model, and it runs end to end on any DEM you give it
 
 <!-- Same chain as the eight steps, now readable because they know every box. Trace it row by row. Surface: Fill, then Flow Direction (D8), then Flow Accumulation. Basin: Snap Pour Point moves the outlet up to 50 m onto the highest-accumulation cell, Watershed collects everything that drains to it, and Raster to Polygon turns Basin_Raster into one polygon. Streams: the threshold enters at Raster Calculator, Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), which keeps cells inside the basin whose flow accumulation exceeds the threshold; then Stream Link numbers the segments and Stream to Feature draws them as lines. Subwatersheds: a second Watershed uses the Stream Link raster as its pour points, so every link gets its own subwatershed, and a second Raster to Polygon with Create multipart features checked makes one polygon per link. Two things to point at: the threshold is applied to flow accumulation, never to the Watershed tool, and Flow_Direction feeds four different tools. The P marks are model parameters; students set them in Lab 5 Step 12. This is the Lab 5 model exported from ModelBuilder (Lab 5 Figure C); the gray oval is Flow Direction's optional drop raster, left empty. -->
-
----
-
-<!-- _class: lead -->
-
-# Part 2 — What Is a Watershed, and Why Care?
-
-<!-- Source deck labels this "Hydrologic Terrain Analysis Day 2". Part 1 was the algorithm; Part 2 is what the algorithm is for. -->
-
----
-
-# Hydrologic Terrain Processing
-
-<div class="columns">
-<div>
-
-- Begin with a **Digital Elevation Model (DEM)**
-- **Goal 1:** generate a polyline **stream network** — a "potential flow path network"
-- **Goal 2:** generate polygon **watershed boundaries**
-- **Motive:** generally to create input data sets for hydrologic and watershed modeling tools, i.e. for rainfall-runoff prediction modeling
-
-</div>
-<div>
-
-![w:460 center](images/ws-terrain-processing-panels.jpg)
-
-</div>
-</div>
-
-<!-- "Potential flow path network" is the honest phrase: the algorithm returns where water would go on this surface, which is not the same as where a channel exists. That gap is why validation against mapped hydrography matters. -->
-
----
-
-# What Is a Watershed?
-
-![bg right:40% w:95%](images/ws-canyon-watershed-photo.jpg)
-
-- A watershed is the **area of land where all of the water that drains off of it goes into the same place** (i.e. an "outlet")
-- John Wesley Powell's definition: a bounded hydrologic system within which all living things are linked by their common water course, and around which, as humans settled, communities formed
-- Watersheds come in **all shapes and sizes**, and they **cross city, state, and national boundaries**
-- No matter where you are, **you're in a watershed!**
-
-<!-- Powell's definition is quoted in full on the source slide; it is paraphrased here. Read the original aloud if you want it. The engineering definition and Powell's social one describe the same boundary and are worth contrasting. -->
-
----
-
-# Remember This Map?
-
-![h:400 center](images/ws-states-redivided-map.jpg)
-
-<!-- Some people have proposed that the 50 states be redivided based on population. What's wrong with this from a hydrology point of view? Water doesn't follow straight-line political boundaries. Let them answer before you say it. -->
-
----
-
-# John Wesley Powell
-
-![bg right:33% w:92%](images/ws-powell-map-arid-region.jpg)
-
-- **Major John Wesley Powell**, a Civil War veteran, ethnographer, and second director of the United States Geological Survey from 1881 to 1894
-- Proposed that western states be brought into the union around **watershed boundaries**
-
-<div class="columns">
-<div>
-
-![w:170 center](images/ws-powell-portrait.jpg)
-
-</div>
-<div>
-
-![w:310 center](images/ws-powell-canyon-photo.jpg)
-
-</div>
-</div>
-
-<!-- Powell's 1890 map of the arid region divided the West into drainage basins rather than rectangles. Congress ignored it. A century of interstate water compacts and litigation followed. Background reading: https://brandonletsinger.com/biography/the-united-watershed-states-of-america-a-biography-of-john-wesley-powell/ -->
-
----
-
-# Why Watersheds Are Important
-
-![bg right:40% w:92%](images/ws-watershed-field-visit.jpg)
-
-- Understanding watershed structure and natural processes is crucial to grasping how **human activities can degrade or improve** the condition of a watershed — its water quality, its fish and wildlife, its forests and other vegetation, and the quality of community life for people who live there
-- Knowing these structural and functional characteristics, and how people affect them, sets the stage for **effective watershed management**
-
-<!-- The bridge from "we can compute a boundary" to "the boundary is the unit management decisions get made in." Permits, TMDLs, restoration budgets and stormwater plans are all organized by watershed. -->
-
----
-
-# Watershed Diagram
-
-![h:400 center](images/ws-watershed-diagram-lane.png)
-
-<small>Source: Orange County Watersheds, *Watershed Science for Teachers, Part 1*</small>
-
-<!-- Walk the block diagram from ridge to river mouth: snowpack, tributaries, the watershed divide, the sub-basin, agriculture, town, the lake, percolation to groundwater. Everything inside the divide drains to one place. -->
-<!-- The original ocwatersheds.com URL for this figure no longer resolves (403, checked 2026-10-01); the citation is kept as text only. -->
-
----
-
-# Another Watershed Diagram
-
-![h:410 center](images/ws-watershed-management-units.jpg)
-
-<!-- Nested scale: a catchment sits inside a subwatershed, which sits inside a watershed, which sits inside a river basin. A local watershed plan may cover dozens of subwatersheds. The nesting is exactly what the subwatershed step in Part 1 produced. -->
-
----
-
-# The Hydrologic Cycle
-
-![h:410 center](images/ws-hydrologic-cycle.jpg)
-
-<!-- The watershed is the land-surface piece of this cycle. Everything the terrain analysis computes concerns one arrow on this diagram: surface runoff. Precipitation, evaporation, transpiration and infiltration are the other terms a rainfall-runoff model has to account for. -->
-
----
-
-# What Is a Watershed
-
-![h:410 center](images/ws-watershed-water-balance.jpg)
-
-<!-- The same cycle drawn as a water balance for one hillslope: precipitation in; overland flow, infiltration to the unsaturated zone, percolation to the saturated zone, groundwater flow, evaporation and transpiration out. Ask which of these a DEM can tell you about. Only one: the direction overland flow will take. -->
-
----
-
-# Watershed Processes and Functions
-
-![h:410 center](images/ws-watershed-processes-functions.png)
-
-<small>Source: Orange County Watersheds, *Watershed Science for Teachers, Part 1*</small>
-
-<!-- The chemical budget, the biotic structure and the water budget all use the watershed as their accounting boundary. This is the argument for why the boundary is worth computing carefully. -->
-
----
-
-<!-- _class: lead -->
-
-# Part 3 — Delineate One Yourself
-
-<!-- Part 3 is hands-on: hand-digitize a watershed from contours, then let StreamStats do it, then compare. Bring laptops. -->
-
----
-
-# A Case Study of Hog Pen Creek
-
-![h:400 center](images/ws-hog-pen-creek-topo.jpg)
-
-<!-- A 4 km by 4 km topographic quadrangle with Hog Pen Creek running through it. Before showing the next slide, ask the class where the divide is. Everyone will point at the contour crenulations, which is exactly the right instinct. -->
-
----
-
-# Watershed Delineation by Hand Digitizing
-
-![h:400 center](images/ws-hand-digitized-watershed.png)
-
-<!-- The red line is the watershed divide, drawn by hand along the ridges. The rules: the divide crosses contours at right angles, it runs through high points, it never crosses the stream except at the outlet, and it closes on itself. The 20 ft and 100 ft contours, the stream center line and the outlet are labeled. -->
-
----
-
-<!-- _class: activity -->
-
-# Watershed Delineation by Hand Digitizing — Let's Try It
-
-- Open **ArcGIS Pro**
-- Using your basemap, find **Hogle Zoo** in Salt Lake City — find **Emigration Creek**
-- Create a new blank **polygon** shapefile
-- Manually digitize the watershed that drains to this area by **clicking along ridge lines**
-- **Save** your digitized watershed and compare with your neighbors
-
-<!-- Give this about fifteen minutes. Turn on a hillshade or terrain basemap so ridges are visible. The comparison at the end is the point: five students will produce five different boundaries, which sets up the StreamStats comparison that follows. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot of the Emigration Creek / Hogle Zoo area on a terrain basemap with a partially digitized polygon in progress. Not fabricated here; needs a real capture. -->
-<!-- VERIFY: exact ArcGIS Pro path for creating a new blank polygon shapefile or feature class, so the step can name the pane and menu. -->
-
----
-
-# Automated Watershed Delineation
-
-![bg right:52% w:95%](images/ws-streamstats-home.jpg)
-
-- Let's use an automated tool provided by the U.S. Geological Survey called **StreamStats**
-- Go to [https://streamstats.usgs.gov/ss/](https://streamstats.usgs.gov/ss/)
-
-<!-- StreamStats runs the same eight steps from Part 1 on a pre-processed national DEM, then adds published regression equations for peak flows. Students are about to get in thirty seconds what took them fifteen minutes by hand. -->
-
----
-
-# Automated Watershed Delineation
-
-- Search for **Pioneer Monument State Park**, then click **"Utah"**
-
-![w:1000 center](images/ws-streamstats-select-utah.jpg)
-
-<!-- The state has to be selected first because the regression equations and the pre-processed terrain data are organized by state study area. The red circle marks the state selector. -->
-
----
-
-# Automated Watershed Delineation
-
-- Click **"Delineate"** and then click a point on the stream near Hogle Zoo
-
-![w:1000 center](images/ws-streamstats-delineate-click.jpg)
-
-<!-- Two circled steps: activate the delineation tool, then place the pour point. Emphasize that clicking off the blue line gives a tiny nonsense basin — same snapping problem as the pour points in Part 1. -->
-
----
-
-<!-- _class: quiz -->
-
-# Automated Watershed Delineation
-
-![bg right:52% w:95%](images/ws-streamstats-basin-result.jpg)
-
-- Wait for the magic…
-- **How does it look?**
-- **How does it compare to your manually delineated watershed?**
-
-<!-- Collect answers before moving on. Expect the automated basin to be close on the ridges and different near the outlet, where the pour point placement dominates. Ask what would change if they had clicked 100 m upstream. -->
-
----
-
-# Automated Watershed Delineation
-
-![bg right:45% w:92%](images/ws-streamstats-download-basin.jpg)
-
-- Click **"Download Basin"** and choose **"Shapefile"**
-- This will download a **zipped shapefile** of the watershed to your downloads folder
-
-<!-- The download is a zip containing the basin polygon and, depending on the options chosen, the flow-path lines. Students need this file for the comparison on the next slide. -->
-
----
-
-<!-- _class: activity -->
-
-# Compare the Two
-
-- Let's compare it to the watershed you **manually delineated**
-- **Unzip** the shapefile you downloaded and add it to your map in **ArcGIS Pro**
-- **How does it compare?**
-- Take a snapshot of this map, save it as an image file, and upload it to **Learning Suite** for today's classroom participation points
-
-<!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot showing a hand-digitized polygon and the StreamStats basin overlaid on the Emigration Creek area, as the example of what a good submission looks like. Needs a real capture. -->
 
 ---
 
@@ -762,12 +520,13 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 
 # Before Next Class
 
+- **Thursday:** what a watershed *is*, and why we manage water by them — then delineate one **by hand** and with **StreamStats**. Bring a laptop with **ArcGIS Pro**
+- Start **Lab 5** now: Steps 0–7 use only what today covered — [Lab 5](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 - Read for **Quiz 6** (Watershed Delineation): mostly a Chapter 10 review, plus some web searching
-- Take **Quiz 6** (open book) on Learning Suite — due **Saturday 11:59 pm**
-- **Lab 5 — Watershed Delineation** is due **Saturday 11:59 pm** — [Lab 5](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
-- **Lab 6 — Lake Depth Explorer** is next — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
+- **Quiz 6** and **Lab 5** are both due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
+<!-- Split notes (2026-10-01): the deck was split in two for Tuesday and Thursday. Part 1 (the mechanics) stays here under the same file name, so the Learning Suite link for Tuesday still works; Parts 2 and 3 (the theory and the hand-versus-StreamStats activity) moved to what-is-a-watershed.md. Rebuilt in ArcGIS Pro from Lab 5's data by tools/week06_figures.py: the elevation surface, the flow-direction grid, the threshold comparison (replacing the ArcView 200-cell screenshot), the grid-code link figure, the 10 m drainage-path map (replacing the 30 m scanned-topo figure), the labeled subwatersheds, and the subwatersheds on imagery. -->
 <!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 6 - Watershed Delineation.pptx", 57 slides, none hidden. All 57 source slides are represented; 62 slides here (source slide 1 became the title slide, source slide 38 — a bare "Day 2" text slide — became the Part 2 divider, and five slides were added: Today's Goals, the Part 1 and Part 3 `lead` dividers, a Lab 5 preview, and Before Next Class). No slides dropped. The nine "Summary of Steps" slides are near-duplicates that each highlight a different step; all nine are kept as roadmap markers with the active step in bold, and are intentionally text-only. Source slides 2 and 3 carry the same student-at-a-computer illustration; slide 2 now uses the workflow diagram instead, so the illustration appears once. The workflow diagram appears twice by design (preview on the big-question slide, payoff on "Example Model"). Shape-built slides (D8 grids, flow accumulation grids, slope equations, annotated StreamStats captures) were re-rendered from the PDF at 200 dpi and cropped, since the underlying art is PowerPoint shapes or WMF that browsers cannot display. Stale ArcView-era screenshots kept and flagged: ws-flow-direction-arcview.jpg, ws-streams-200-cell-threshold.png, ws-vectorized-streams-gridcode.png, ws-subwatersheds-stream-segments.png. ws-delineated-subwatersheds-streams.png is only 203x161 px in the source and is soft on a projector. Open instructor decisions are marked TODO(instructor): the 200-cell threshold's "18 hectares or 13.5 acres" unit mismatch (kept verbatim), a scale/resolution sensitivity question, validation against the NHD or StreamStats, the reading chapter, and the ocwatersheds.com citation link. TODO(graphic) marks four slides that need real captures or figures; no images were generated. Schedule links carry VERIFY comments. Software wording: the source already says ArcGIS Pro on the hands-on slides; no ArcGIS 9 / ArcMap / ArcToolbox wording was found in the text, only in the legacy screenshots. -->
 
 ---
@@ -779,7 +538,7 @@ Lab 5 runs the eight steps from Part 1 on a real DEM in **ArcGIS Pro**, start to
 <div class="columns">
 <div>
 
-Six questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
+Five questions on the chain from a DEM to a basin. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
@@ -795,9 +554,8 @@ Six questions on the chain from a DEM to a basin. **Scan the code**, or open the
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the steepest-descent item. That one splits the
-     room every time: a 19 m drop to the diagonal loses to a 15 m drop straight south, because the
-     diagonal run is 30·√2 and slope is rise over run. The flow-direction-code item is the other
-     one worth a word out loud - the value is a label for a direction, and the numbering differs
-     between ArcGIS Pro and TauDEM or QGIS, so a grid moved between them is silently wrong. If the
-     room has no signal, put the URL on the board; the items read aloud just as well. -->
+<!-- Four minutes, in pairs, then a show of hands on the threshold item: raising the threshold
+     thins the network, and nothing about the terrain changed. The flow-direction-code item is the
+     other one worth a word out loud - the value is a label for a direction, not a measurement. The
+     "watershed of a point" question moved to Thursday's quiz with the theory. If the room has no
+     signal, put the URL on the board; the items read aloud just as well. -->

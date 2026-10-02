@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Follow the Water",
   subtitle: "CE 414 &middot; Week 6 &mdash; Watershed Delineation<br>" +
-            "Six questions on the chain that turns a <strong>DEM</strong> into streams and " +
+            "Five questions on the chain that turns a <strong>DEM</strong> into streams and " +
             "watersheds &mdash; and the places it quietly goes wrong.",
   badge: "Delineation decision",
   deckUrl: "../../slides/week-06/watershed-delineation.html",
@@ -80,17 +80,6 @@ CE414Quiz.start({
       ],
       answer: "The point is off the channel — snap it first",
       explanation: "A watershed is always the drainage area of a point, so a point sitting one cell off the channel gets exactly what it asked for: the few cells that drain to that spot on the hillslope. Snap user-supplied points onto the high-accumulation cells before delineating. The same thing happens in StreamStats when you click just off the blue line."
-    },
-    {
-      prompt: "You delineate the watershed above point A, then move the pour point 2 km downstream on the same stream to point B. What happens to the watershed?",
-      options: [
-        "It gets larger and contains all of A's watershed",
-        "It stays the same size and shifts downstream",
-        "It gets smaller, because B is lower",
-        "It becomes a separate basin that does not overlap A's"
-      ],
-      answer: "It gets larger and contains all of A's watershed",
-      explanation: "A watershed is defined by its pour point: every cell whose flow path reaches that point. Everything that drains to A keeps flowing past A to B, so B's watershed includes all of A's plus whatever drains in between. That nesting is also why subwatersheds tile a basin with no gaps and no overlaps."
     }
   ],
   perfectNote: "A clean sweep — you can debug Lab 5 rather than just run it.",

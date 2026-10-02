@@ -36,6 +36,7 @@ QUIZZES = {
     "elevation-lidar":      5,
     "terrain-analysis":     5,
     "watersheds":           6,
+    "basins":               6,
     "interpolation":        8,
     "web-services":         9,
     "suitability":         10,

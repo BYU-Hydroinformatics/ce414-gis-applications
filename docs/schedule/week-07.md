@@ -1,4 +1,4 @@
-# Week 7: Watershed Delineation, Part 3
+# Week 7: Lake Bathymetry
 
 <div class="week-card week-card--slides" markdown>
 
@@ -12,7 +12,7 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday is hands-on practice with the hydrology tools in ArcGIS Pro (Fill, Flow Direction, Flow Accumulation, flow path), a look at USGS StreamStats, and the *Where is my watershed?* activity. Thursday introduces Lab 6 — Lake Depth Explorer and the ModelBuilder idea it is built on: a model that **loops** over a list of water-surface elevations instead of being run once per elevation.
+Week 7 is **lake bathymetry**: how the bottom of a lake is measured and mapped, and how a lake's shoreline, area and volume follow from its water level, on the Great Salt Lake. It introduces **Lab 6 — Lake Depth Explorer**, a ModelBuilder model that **loops** over a list of water-surface elevations instead of being run once per elevation. The slides for this week are being prepared.
 
 - **Practicing Hydrology Tools** (graded, 5 points) — done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class.
 - **Where is my watershed?** (graded, 5 points) — done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class.
