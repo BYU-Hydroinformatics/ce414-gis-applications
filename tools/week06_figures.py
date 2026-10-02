@@ -364,8 +364,107 @@ def hucs(p):
                   "ws-pro-nested-hucs.jpg", cap_h=120)
 
 
+def anatomy_points():
+    """Label points for the watershed-anatomy scene, computed from the Lab 5 data (towns and the lake
+    are placed at their published coordinates)."""
+    import numpy as np, math
+    fc = os.path.join(W6, "Anatomy_Labels")
+    if arcpy.Exists(fc):
+        arcpy.management.Delete(fc)
+    arcpy.management.CreateFeatureclass(W6, "Anatomy_Labels", "POINT", spatial_reference=UTM)
+    arcpy.management.AddField(fc, "Name", "TEXT", field_length=40)
+    pts = []
+    with arcpy.da.SearchCursor(os.path.join(GDB, "Snapped_Outlet_Point"), ["SHAPE@XY"]) as c:
+        pts.append(("Outlet", next(c)[0]))
+    with arcpy.da.SearchCursor(os.path.join(GDB, "Rock_Canyon_Basin"), ["SHAPE@"]) as c:
+        g = next(c)[0]
+    verts = [v for part in g for v in part if v]
+    top = max(verts, key=lambda v: v.Y)
+    pts.append(("Watershed divide", (top.X, top.Y)))
+    dem = arcpy.Raster(os.path.join(GDB, "DEM_UTM"))
+    inb = arcpy.sa.ExtractByMask(dem, os.path.join(GDB, "Basin_Raster"))
+    a = arcpy.RasterToNumPyArray(inb, nodata_to_value=-9999)
+    r, cc = np.unravel_index(np.argmax(a), a.shape)
+    pts.append(("Provo Peak (highest point)", (inb.extent.XMin + (cc + .5) * 10, inb.extent.YMax - (r + .5) * 10)))
+    rows = [(r_[0], r_[1]) for r_ in arcpy.da.SearchCursor(os.path.join(GDB, "Streams_5000"), ["SHAPE@", "grid_code"])]
+    trunk = min(rows, key=lambda t: t[0].extent.XMin)[0]
+    pts.append(("Main stem", (trunk.positionAlongLine(0.5, True).firstPoint.X, trunk.positionAlongLine(0.5, True).firstPoint.Y)))
+    trib = max(rows, key=lambda t: t[0].extent.YMax)[0]
+    pts.append(("Tributary", (trib.positionAlongLine(0.5, True).firstPoint.X, trib.positionAlongLine(0.5, True).firstPoint.Y)))
+    subs = [(r_[0], r_[1]) for r_ in arcpy.da.SearchCursor(os.path.join(GDB, "Subwatersheds_5000"), ["SHAPE@", "SHAPE@AREA"])]
+    big = max(subs, key=lambda t: t[1])[0]
+    pts.append(("Subwatershed", (big.labelPoint.X, big.labelPoint.Y)))
+    for name, lon, lat in (("Provo", -111.6585, 40.2338), ("Utah Lake", -111.76, 40.21)):
+        q = arcpy.PointGeometry(arcpy.Point(lon, lat), arcpy.SpatialReference(4326)).projectAs(UTM).firstPoint
+        pts.append((name, (q.X, q.Y)))
+    with arcpy.da.InsertCursor(fc, ["Name", "SHAPE@XY"]) as cur:
+        for n, xy in pts:
+            cur.insertRow([n, xy])
+    print("anatomy labels:", [(n, round(xy[0]), round(xy[1])) for n, xy in pts])
+    return fc
+
+
+def anatomy(p, dist=10500, head=65, pitch=-30, z=5200):
+    """Oblique 3D view of the Rock Canyon watershed with its parts labeled.
+
+    Scene labels do not export from a layout, so the points are rendered once in pure magenta, found in
+    the image, and labeled there; then the scene is rendered again with white dots and the labels are
+    drawn on top. Points outside the view are left out."""
+    import math
+    import numpy as np
+    from scipy import ndimage
+    fc = anatomy_points()
+    names = [r_[0] for r_ in arcpy.da.SearchCursor(fc, ["Name"])]
+    m = p.createMap("Anatomy", "SCENE")
+    m.addBasemap("Imagery")
+    subs = addp(m, os.path.join(GDB, "Subwatersheds_5000"), "Subwatersheds")
+    sym = subs.symbology; s_ = sym.renderer.symbol; s_.color = rgb(255, 255, 255, 0); s_.outlineColor = rgb(255, 255, 255, 70); s_.outlineWidth = 0.8; subs.symbology = sym
+    basin = addp(m, os.path.join(GDB, "Rock_Canyon_Basin"), "Basin")
+    sym = basin.symbology; s_ = sym.renderer.symbol; s_.color = rgb(255, 210, 0, 12); s_.outlineColor = rgb(255, 215, 0); s_.outlineWidth = 3.0; basin.symbology = sym
+    st = addp(m, os.path.join(GDB, "Streams_5000"), "Streams")
+    sym = st.symbology; sym.renderer.symbol.color = rgb(40, 150, 255); sym.renderer.symbol.size = 3.0; st.symbology = sym
+    lay = p.createLayout(10.0, 5.625, "INCH", "Anatomy")
+    mf = lay.createMapFrame(bf.poly(0, 0, 10.0, 5.625), m, "Frame")
+    e = arcpy.Describe(os.path.join(GDB, "Rock_Canyon_Basin")).extent
+    cx, cy = (e.XMin + e.XMax) / 2, (e.YMin + e.YMax) / 2
+    hx, hy = math.sin(math.radians(head)), math.cos(math.radians(head))
+    cim = mf.getDefinition("V3")
+    cim.autoCamera = None
+    cim.view.viewingMode = "SceneLocal"
+    cam = cim.view.camera
+    cam.x, cam.y, cam.z, cam.pitch, cam.heading, cam.scale = cx - dist * hx, cy - dist * hy, z, pitch, -head, 0
+    mf.setDefinition(cim)
+    found = {}
+    tmp = str(IMG / "_anat_probe.png")
+    for n in names:   # one probe render per point, so each magenta blob is known by name
+        lyr = addp(m, fc, "probe")
+        lyr.definitionQuery = "Name = '" + n.replace("'", "''") + "'"
+        sym = lyr.symbology; s_ = sym.renderer.symbol; s_.applySymbolFromGallery("Circle 1"); s_.color = rgb(255, 0, 255); s_.size = 9; lyr.symbology = sym
+        lay.exportToPNG(tmp, resolution=150)
+        a = np.asarray(Image.open(tmp).convert("RGB")).astype(int)
+        mask = (a[..., 0] > 220) & (a[..., 1] < 60) & (a[..., 2] > 220)
+        if mask.sum() > 5:
+            ys, xs = np.nonzero(mask)
+            found[n] = (xs.mean(), ys.mean())
+        m.removeLayer(lyr)
+    os.remove(tmp)
+    lab = addp(m, fc, "Points")
+    sym = lab.symbology; s_ = sym.renderer.symbol; s_.applySymbolFromGallery("Circle 1"); s_.color = rgb(255, 255, 255); s_.size = 8; lab.symbology = sym
+    out = IMG / "ws-pro-watershed-anatomy.jpg"
+    lay.exportToJPEG(str(out), resolution=150, jpeg_quality=92)
+    im = Image.open(out).convert("RGB"); d = ImageDraw.Draw(im); f = font(44, True)
+    for n, (x, y) in found.items():
+        tw = d.textlength(n, font=f)
+        tx = min(max(x + 16, 10), im.width - tw - 10); ty = y - 56
+        for dx in (-2, -1, 0, 1, 2):
+            for dy in (-2, -1, 0, 1, 2):
+                d.text((tx + dx, ty + dy), n, font=f, fill=(0, 30, 60))
+        d.text((tx, ty), n, font=f, fill=(255, 255, 255))
+    im.save(out, quality=92)
+    print("ws-pro-watershed-anatomy.jpg; labeled:", list(found))
+
 ALL = dict(dem=dem, flowdir=flowdir, thresholds=thresholds, links=links, subwatersheds=subwatersheds,
-           topo=topo, panels=panels, hucs=hucs)
+           topo=topo, panels=panels, hucs=hucs, anatomy=anatomy)
 
 if __name__ == "__main__":
     names = sys.argv[1:] or list(ALL)

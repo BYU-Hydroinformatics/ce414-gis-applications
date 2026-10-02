@@ -142,22 +142,20 @@ Each one is a step in today's lecture.
 
 # Filling in the Pits
 
-![bg right:38% w:95%](images/ws-pit-fill-profile.png)
+![h:300 center](images/ws-pit-fill-concept.svg)
 
-- DEM creation results in **artificial pits** in the landscape
-- A pit is a set of one or more cells which has **no downstream cells** around it
-- Unless these pits are filled they become **sinks** and isolate portions of the watershed
-- **Pit filling** is the first thing done with a DEM
+- A **pit** is one or more cells with **no downstream cell** around them; unfilled, it is a **sink** that stops the flow
+- **Fill** raises each pit to its **spill level**, so water can continue downhill — it is the first thing done with a DEM
 
-<!-- Most pits are artifacts of how the DEM was made, not real closed depressions. Water routed into an unfilled pit has nowhere to go, so flow accumulation downstream of it collapses and the stream network breaks into disconnected pieces. Real closed basins exist too, which is why Fill has an optional z-limit. -->
+<!-- Most pits are artifacts of how the DEM was made, not real closed depressions. Water routed into an unfilled pit has nowhere to go, so flow accumulation downstream of it collapses and the stream network breaks into disconnected pieces. Real closed basins exist too, which is why Fill has an optional z-limit. The figure is a real 650 m west-east profile of the Lab 5 DEM through the deepest pit Fill found, a closed hollow high in the mountains east of Rock Canyon: its bottom at 2,677.5 m is raised to the spill level, 2,691.0 m, 13.5 m deep (tools/week06_pit_fill_figures.py). -->
 
 ---
 
 # Effect of Pit Filling on Elevation
 
-![h:420 center](images/ws-pit-fill-elevation-chart.png)
+![w:1080 center](images/ws-pit-fill-profile-map.jpg)
 
-<!-- The profile shows the filled surface sitting slightly above the original in exactly the places where the original dipped. Filling raises elevations; it never lowers them. The map at right shows how small the affected area usually is relative to the whole DEM. -->
+<!-- Left: the same transect as a chart, original against filled. The filled surface sits above the original exactly where the original dipped, and nowhere else: Fill raises elevations, it never lowers them. Right: every cell Fill raised around Rock Canyon, in ArcGIS Pro. Across the whole Lab 5 DEM Fill raised about 12,900 cells, most by less than a meter; inside the Rock Canyon basin only 43 cells changed, the deepest by 2.35 m. The deepest pit, 13.5 m, is the red patch at the transect, outside the basin. (Lab 5 check values.) -->
 
 ---
 

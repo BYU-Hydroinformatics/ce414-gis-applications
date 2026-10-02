@@ -135,14 +135,11 @@ By the end of class you should be able to:
 
 ---
 
-# Watershed Diagram
+# Anatomy of a Watershed — Rock Canyon
 
-![h:400 center](images/ws-watershed-diagram-lane.png)
+![h:460 center](images/ws-pro-watershed-anatomy.jpg)
 
-<small>Source: Orange County Watersheds, *Watershed Science for Teachers, Part 1*</small>
-
-<!-- Walk the block diagram from ridge to river mouth: snowpack, tributaries, the watershed divide, the sub-basin, agriculture, town, the lake, percolation to groundwater. Everything inside the divide drains to one place. -->
-<!-- The original ocwatersheds.com URL for this figure no longer resolves (403, checked 2026-10-01); the citation is kept as text only. -->
+<!-- An oblique 3D view of Rock Canyon in ArcGIS Pro, looking east from above Provo, with Lab 5's basin (yellow), stream links (blue) and subwatersheds (thin white lines) draped on imagery. Walk it from the outlet: the outlet at the trailhead, the main stem up the canyon, the tributaries, one subwatershed, up to the divide along the ridgeline and the highest point at Provo Peak. Everything inside the yellow line drains to the one red point at the bottom; everything outside it, even a few meters over the ridge, goes somewhere else. Labels are placed from the Lab 5 data (tools/week06_figures.py, anatomy). -->
 
 ---
 
@@ -166,13 +163,11 @@ By the end of class you should be able to:
 
 ---
 
-# Watershed Processes and Functions
+# What a Watershed Does
 
-![h:410 center](images/ws-watershed-processes-functions.png)
+![w:1100 center](images/ws-watershed-functions.svg)
 
-<small>Source: Orange County Watersheds, *Watershed Science for Teachers, Part 1*</small>
-
-<!-- The chemical budget, the biotic structure and the water budget all use the watershed as their accounting boundary. This is the argument for why the boundary is worth computing carefully. -->
+<!-- Three things a watershed does, drawn on the same real basin: it collects, stores and releases water; it carries sediment and dissolved chemistry downstream, so the channel carries more the closer it gets to the outlet (line width is drawn from each link's real contributing area); and its streams and their banks are the habitat network. The water budget, the sediment and chemical budget and the biotic structure all use the watershed as their accounting boundary — the argument for computing the boundary carefully (tools/week06_processes_svg.py). -->
 
 ---
 
