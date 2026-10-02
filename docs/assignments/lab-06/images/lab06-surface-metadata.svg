@@ -1,0 +1,57 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500' width='1000' height='500' role='img' aria-label='The six metadata questions applied to the Lake Powell surface'>
+<title>The six metadata questions, applied to the Lake Powell surface</title>
+<rect width='1000' height='500' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Reading the surface&#39;s metadata: the six questions from CCE 114</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Every answer comes from the USGS release&#39;s metadata (doi:10.5066/P9XX0J1Y) and READ-ME-FIRST.txt. Check them yourself.</text>
+<rect x='20' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHAT</text>
+<text x='102' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What do the data represent?</text>
+<text x='32' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>A topobathymetric DEM: the lake bed and the</text>
+<text x='32' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>land around it in one surface. Elevation in</text>
+<text x='32' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>METERS above NAVD88 (geoid 12B). Your copy:</text>
+<text x='32' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>30 m cells, each the mean of 900 one-meter cells.</text>
+<rect x='345' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHERE</text>
+<text x='427' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Where, and in what coordinate system?</text>
+<text x='357' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Lake Powell, Arizona and Utah, the whole</text>
+<text x='357' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>reservoir. NAD83(2011) UTM zone 12N, meters.</text>
+<text x='357' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Your copy: 4,340 x 4,331 cells, mostly NoData;</text>
+<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>the surveyed area hugs the canyons.</text>
+<rect x='670' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHEN</text>
+<text x='752' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When were the data collected?</text>
+<text x='682' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Lake bed: multibeam sonar, Oct 8 - Nov 15, 2017.</text>
+<text x='682' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Dry shore: lidar, April 2-3, 2018. Gaps: maps</text>
+<text x='682' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>surveyed 1947-1959, before the dam closed.</text>
+<text x='682' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Published by USGS June 3, 2020.</text>
+<rect x='20' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHY</text>
+<text x='102' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Why were they created?</text>
+<text x='32' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>To support the USGS Utah Water Science Center&#39;s</text>
+<text x='32' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>new area-capacity tables for the reservoir, with</text>
+<text x='32' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>the Bureau of Reclamation: the published areas</text>
+<text x='32' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>you check your answer against in Step 6.</text>
+<rect x='345' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>HOW</text>
+<text x='427' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How were they collected and processed?</text>
+<text x='357' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Boat sonar, airborne lidar and digitized old</text>
+<text x='357' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>surveys, put on one datum and mosaicked at 1 m,</text>
+<text x='357' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>blended along 5 m seamlines. Where neither boat</text>
+<text x='357' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>nor lidar reached, gaps were interpolated.</text>
+<rect x='670' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHO</text>
+<text x='752' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Who made them, and may you use them?</text>
+<text x='682' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>USGS EROS (Poppenga, Danielson and Tyler) with</text>
+<text x='682' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Reclamation. Public domain. The metadata says:</text>
+<text x='682' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>not for navigation, and conditions may have</text>
+<text x='682' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>changed since. Credit the USGS in your maps.</text>
+<rect x='20' y='420' width='960' height='62' rx='8' fill='#e8862a'/>
+<text x='32' y='446' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>For shorelines, WHEN matters most: the bed is as it was in fall 2017 and the shore as in spring 2018.</text>
+<text x='32' y='468' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Sediment settled since, and every ramp extended since, are not in it — and the datum must be converted before Step 3.</text>
+</svg>
