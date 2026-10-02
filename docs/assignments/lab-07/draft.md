@@ -166,7 +166,12 @@ would rate them differently.
 > cells, values **2,176.4 to 3,500.5** (meters above NAVD 88), GCS North American 1983, no NoData
 > cells. The ski-area layer has 14 polygons; Snowbird's is named `Snowbird Ski and Summer Resort`.
 
-<!-- TODO(figure): Figure A, the six metadata questions for the DEM extract (copy tools/lab05/make_svgs.py metadata_card; same tile as Lab 5, so most answers carry over: published 2026-05-20, sources 1946-2023, bare earth, NAVD 88 meters, public domain), plus one line on the ski-area layer (UGRC, Web Mercator, last update). -->
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Little Cottonwood Canyon DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.8 m east-west; a box over upper Little Cottonwood Canyon with Snowbird and Alta, stored in latitude and longitude, to be projected in Step 1; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, not made for avalanche terrain; lidar, contour-based and radar sources resampled to one grid, bare earth without trees, lift towers or snowpack; USGS, public domain. A footer says the model sees the ground, not the snow a skier stands on.](images/lab07-dem-metadata.svg)
+
+**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
+in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
+[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
+— and say in your report what each one does to your result.
 
 ## ModelBuilder Tools
 
@@ -174,15 +179,14 @@ New in this lab:
 
 | Tool | What it does |
 | --- | --- |
-| **Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
-| **Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
-| **Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
-| **Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
+| ![Slope icon: a hillside with its angle, 38 degrees, marked](images/icon-slope.svg){ .tool-icon }<br>**Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
+| ![Aspect icon: a compass with an arrow pointing northeast](images/icon-aspect.svg){ .tool-icon }<br>**Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
+| ![Cell Statistics icon: three stacked grids combined into one holding their maximum](images/icon-cell-statistics.svg){ .tool-icon }<br>**Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
+| ![Tabulate Area icon: a zone outlined over classed cells and the table of class areas it produces](images/icon-tabulate-area.svg){ .tool-icon }<br>**Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
 
 Tools you already know: **Project Raster** (Lab 5), **Reclassify** (Lab 2), **Raster Calculator**
 with an inline variable (Labs 2, 4 and 5), and model parameters.
 
-<!-- TODO(figure): tool icons for Slope, Aspect, Cell Statistics, Tabulate Area (tools/lab07/make_svgs.py). -->
 
 ## Example Model
 
@@ -405,8 +409,8 @@ or Extreme. Then answer, in your report:
 Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
 
 > [!TIP]
-> One of these two choices barely moves the map at Snowbird and the other changes it completely.
-> Look at Step 5's check value before you guess which.
+> At Snowbird one of these two choices moves the map far more than the other. Look at Step 5's
+> check value before you guess which.
 
 ## Deliverables
 
@@ -467,7 +471,18 @@ Utah Geospatial Resource Center. *Utah Ski Area Boundaries.*
 
 ## Example Maps
 
-<!-- TODO(figure): two example layouts by arcpy.mp from the run_model.py outputs (copy tools/lab06/build_figures.py): Hazard_Class at shift 0, and one scenario. -->
+These are examples, not templates. Your maps carry your name, and your second map shows the run you
+chose.
+
+![Example baseline layout titled "Avalanche Terrain at Snowbird: Geometric Mean, Advisory Bands": the terrain hazard classes over imagery in the danger-scale colors, green Low through yellow, orange and red to black Extreme, with the Snowbird boundary in cyan and Alta's in gray; Extreme and High follow the steep walls and gullies, Moderate and Considerable cover the broader slopes, and Low appears only on the canyon floor. Below, a Salt Lake County locator, a legend, north arrow, scale bar in kilometers, and a text box: of Snowbird's 10.8 sq km, 3.8 rate High or Extreme and 1.1 Extreme.](images/lab07-example-map-baseline.png)
+
+**Figure 10.** The baseline map. Two things to do better than this example: label the peaks and the
+lifts so a reader can find their way around, and mark one slope you checked against imagery.
+
+![Example scenario layout titled "Avalanche Terrain at Snowbird: Elevation Bands Raised 400 m": the same design with less red and black on the lower slopes, and a text box saying High or Extreme falls from 3.8 to 2.5 sq km and Extreme from 1.1 to 0.47 sq km, chosen to show what a warm spell that pushes the problem up the mountain does to the map.](images/lab07-example-map-scenario.png)
+
+**Figure 11.** The kind of second map Step 9 asks for. Your own second map should be the run that most
+changes what a reader would conclude, which may not be this one.
 
 ## Rubric for Avalanche Hazard
 
