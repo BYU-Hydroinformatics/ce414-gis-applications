@@ -230,10 +230,10 @@ const LABS = {
 
 '06': {
   labTitle: 'Lab 6: Lake Depth Explorer',
-  labSubtitle: 'Shorelines at Every Water Level — Looping in ModelBuilder',
+  labSubtitle: 'Shorelines at Every Water Level — Looping in ModelBuilder, at Lake Powell',
   sections: [
     { h: 'Requirements and Approach',
-      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to show and how you went about it — not a retelling of the step-by-step.' },
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to show and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
 
     { h: 'The Surface and Its Metadata',
       hint: 'Rubric: the three metadata values for the surface and what each means for your result (2 points). The vertical datum matters more than it looks — every elevation you type into the iterator is measured from it.',
@@ -246,30 +246,32 @@ const LABS = {
       hint: 'Rubric: a description a reader could repeat from, including how the loop value reaches the tools inside it (2 points). Say what the iterator is, what its three values are, what happens inside the loop, and how the results are collected into one feature class.',
       table: { caption: 'Table 2. Model description — the iterator, then one row per tool inside the loop.',
                head: ['Element', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
-               rows: [['Iterator', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''],
-                      ['', '', '', '', ''], ['Collector / merge', '', '', '', '']],
+               rows: [['For (iterator)', '', '', '', ''], ['Con', '', '', '', ''], ['Raster to Polygon', '', '', '', ''],
+                      ['Select Layer By Location', '', '', '', ''], ['Copy Features', '', '', '', ''],
+                      ['Calculate Field (Elevation)', '', '', '', ''], ['Calculate Field (AreaSqMi)', '', '', '', ''],
+                      ['Collect Values', '', '', '', ''], ['Merge', '', '', '', '']],
                widths: [1700, 2200, 2200, 1700, 1560] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
           hint: 'Rubric: a full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2 points).' },
-        { caption: 'Figure 2. The model’s toolbox interface, with the low, high and step parameters exposed.', size: 'medium',
+        { caption: 'Figure 2. The model’s toolbox interface, showing its parameters (at least From, To and By).', size: 'medium',
           hint: 'Rubric: a screen capture of the toolbox interface with the low, high, and step parameters exposed (2 points).' },
       ] },
 
     { h: 'Shore Features',
-      hint: 'Rubric: the shore-feature table — how you chose the features and the elevation at which each goes dry (2 points). Say in a sentence how you picked them before the table, then fill one row per feature.',
-      table: { caption: 'Table 3. Shore features and the water level at which each goes dry.',
-               head: ['Feature', 'What it is', 'Its elevation', 'Water-surface elevation at which it goes dry'],
-               rows: [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']],
-               widths: [2000, 2600, 1600, 3160] } },
+      hint: 'Rubric: the shore-feature table — how you chose the features and the elevation at which each goes dry (2 points). Say in a sentence how you picked them before the table, then fill one row per feature. Its elevation is what you sampled; the goes-dry level is the pair of shorelines from your model that it falls between.',
+      table: { caption: 'Table 3. Shore features, their elevations, and the water level at which each goes dry (ft NGVD29).',
+               head: ['Feature', 'What it is', 'Surface sampled', 'Its elevation', 'Goes dry between', 'NPS cutoff'],
+               rows: [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']],
+               widths: [1700, 2000, 1300, 1200, 1900, 1260] } },
 
     { h: 'Range and Step Sensitivity', pageBreakBefore: true,
-      hint: 'Rubric: a table of at least three additional runs, giving the range, the step, the number of shorelines, and the areas at the lowest and highest elevations (4 points). Choose your values deliberately and say why.',
+      hint: 'Rubric: one table with the baseline and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each (4 points). Choose your values deliberately and say why. The run time is the Elapsed Time in the pop-up when a run finishes.',
       table: { caption: 'Table 4. Range and step sensitivity — the baseline and at least three more runs.',
-               head: ['Run name', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'What it shows'],
-               rows: [['Baseline', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', ''],
-                      ['', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '']],
-               widths: [1300, 800, 800, 800, 1160, 1250, 1250, 2000] },
+               head: ['Run name', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'Run time', 'What it shows'],
+               rows: [['Baseline', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''],
+                      ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+               widths: [1200, 700, 700, 650, 1000, 1100, 1100, 960, 1950] },
       questions: [
         'Which shore features go dry, and at what elevation? Does the answer change with the step, and if so, how far? (2 points)',
         'How much does the lake’s area change per unit of elevation, and is that rate the same at the bottom of the range as at the top? What about the basin’s shape explains the difference? (2 points)',
@@ -277,7 +279,7 @@ const LABS = {
       ] },
 
     { h: 'Where the Shorelines Are Wrong',
-      hint: 'Rubric: where the shorelines are wrong and why, and what data would fix it (2 points). The seam between surveys, the cell size, the depressions you removed — name each one and say what data would fix it.' },
+      hint: 'Rubric: where the shorelines are wrong and why, and what data would fix it (2 points). The seam between surveys, the 30 m cells in narrow canyons, the hollows removed in Step 4, the 2017 survey date against sediment and construction since — name each one and say what data would fix it.' },
 
     { h: 'Maps', pageBreakBefore: true,
       hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Symbolize the shorelines the same way on both, so a reader can compare them.',

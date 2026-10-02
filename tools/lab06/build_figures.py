@@ -130,9 +130,9 @@ if __name__ == "__main__":
               "resampled to 30 m and converted from meters NAVD88 to feet NGVD29. Imagery: Esri."]
     layout(p, "shorelines_default", "Lake Powell Shorelines, 3,500 to 3,700 ft by 10 ft",
            "21 shorelines from one looping ModelBuilder model; main pool only (connected to the seed point near the dam)",
-           ["Result: 75.6 sq mi at 3,500 ft (just below the Sept 2026 record low of 3,516.6 ft) to 247.4 sq mi at full pool, 3,700 ft."] + common,
+           ["Result: 75.7 sq mi at 3,500 ft (just below the Sept 2026 record low of 3,516.6 ft) to 247.4 sq mi at full pool, 3,700 ft."] + common,
            "lab06-example-map-baseline.png")
-    layout(p, "shorelines_deadpool", "Lake Powell Shorelines Down to Dead Pool, 3,370 to 3,700 ft",
+    layout(p, "shorelines_deadpool", "Lake Powell Shorelines Down to Dead Pool, 3,370 to 3,700 ft by 10 ft",
            "Changed: the low end moved from 3,500 ft to dead pool, 3,370 ft; same 10 ft step (34 shorelines)",
            ["Result: at dead pool the main pool is 28.2 sq mi, about 11% of the lake at full pool. Chosen to show how much of the lake is left at the levels operators plan around."] + common,
            "lab06-example-map-scenario.png")

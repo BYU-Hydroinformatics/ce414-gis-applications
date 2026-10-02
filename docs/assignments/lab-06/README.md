@@ -76,8 +76,9 @@ older topography. Using that surface:
    `Elevation` field.
 2. Report the surface area of the lake at each elevation.
 3. Map the nested shorelines.
-4. Identify the elevation at which at least three named shore features go dry — for example a
-   launch ramp, a marina, and the dam's intakes.
+4. Identify the elevation at which at least three named shore features go dry — launch ramps are
+   the clearest case; a marina entrance or a landmark at the water's edge also works if you say what
+   "dry" means for it.
 
 ## Analysis Considerations
 
@@ -127,7 +128,7 @@ Every one of these is a decision somebody made, and every one of them can change
 | File | What it is |
 | --- | --- |
 | `powell_tbdem_30m.tif` | The whole lake, 30 m cells, elevation in **meters NAVD88**. Your main input. |
-| `powell_wahweap_10m.tif` | The south end of the lake — Glen Canyon Dam, Wahweap, Lone Rock, Antelope Point — at 10 m, **meters NAVD88**. Use it for the optional cell-size comparison at the end of Step 7. |
+| `powell_wahweap_10m.tif` | The south end of the lake — Glen Canyon Dam, Wahweap, Lone Rock, Antelope Point — at 10 m, **meters NAVD88**. Sample ramp toes on it (see *Shore features you create*), and use it for the optional cell-size comparison at the end of Step 7. |
 | `main_pool_seed.shp` | One point in the old river channel about 2.1 km upstream of Glen Canyon Dam, under water at every elevation in this lab. It is how your model knows which water is "the lake." |
 | `powell_elevation_usbr.csv` | Reclamation's daily Lake Powell water-surface elevation, December 28, 1963 to September 30, 2026, in **feet NGVD29**. Recent values are provisional. |
 | `READ-ME-FIRST.txt` | Sources, processing, datums, and the credit line for your maps. |
@@ -149,12 +150,17 @@ Basemaps and imagery come from ArcGIS Online; you do not download them.
 
 ### Shore features you create
 
-Choose at least three named features on the shore and digitize a point for each — a launch ramp, a
-marina, the dam, a landmark. Give the layer a `Name` field and an `Elevation` field, and fill
-`Elevation` with the surface elevation at the point, in feet NGVD29, from your converted surface in
-Step 1. For a launch ramp the elevation that matters is the **bottom (toe)** of the ramp: find it on
-the imagery and the surface, and do not click the parking lot. State in your report how you chose
-your features.
+Choose at least three named features on the shore and digitize a point for each — launch ramps
+are the clearest case. You do this at the end of Step 1, once the surface is in feet. For a launch
+ramp the elevation that matters is the **bottom (toe)** of the ramp: find it on the imagery and the
+surface, and do not click the parking lot. State in your report how you chose your features.
+
+Two numbers per feature, and they are not the same:
+
+- **Its elevation** — what you sample from the surface at the point, in feet NGVD29.
+- **The level at which it goes dry** — read from your model's output: the two shorelines it falls
+  between. With a 10 ft step that is a bracket such as "between 3,540 and 3,550 ft"; Step 7 asks how
+  the bracket changes with the step.
 
 > [!TIP]
 > **Sample a ramp on the 10 m close-up**, `wahweap_ft`. A ramp is 20–30 m wide and ends at a
@@ -164,8 +170,9 @@ your features.
 
 The National Park Service publishes the elevation below which each Lake Powell ramp is unusable,
 on its [Changing Lake Levels](https://www.nps.gov/glca/learn/changing-lake-levels.htm){ target="_blank" }
-page. Compare your elevations with theirs; expect yours to come out within a few feet, because the
-Park Service's cutoff includes a depth margin for launching.
+page. Compare your elevations with theirs; expect yours within a few feet either way. The Park
+Service's cutoff includes a margin for launching, reflects ramp work done since the survey, and your
+click on a 10 m cell is not exact.
 
 > [!TIP]
 > **Check the result** on the three ramps inside the close-up:
@@ -177,8 +184,10 @@ Park Service's cutoff includes a depth margin for launching.
 > | Wahweap Stateline Auxiliary (the ramp with courtesy docks between the Stateline and Wahweap Main ramps) | about **3,530** ft, where its steady grade levels onto a bench | 3,515 |
 >
 > The Stateline Auxiliary gap is not a mistake. The surface was surveyed in 2017 and 2018; the Park
-> Service rehabilitated that ramp in 2021 and has extended it since as the lake fell
-> ([NPS, July 15, 2021](https://www.nps.gov/glca/learn/news/20210715.htm){ target="_blank" }). A
+> Service rehabilitated that ramp in 2021
+> ([NPS, July 15, 2021](https://www.nps.gov/glca/learn/news/20210715.htm){ target="_blank" }) and has
+> extended it since as the lake fell
+> ([NPS, September 30, 2021](https://www.nps.gov/glca/learn/news/20210930.htm){ target="_blank" }). A
 > surface cannot show concrete poured after it was made. Say in your report what that means for any
 > feature you sample, and what data would fix it.
 
@@ -209,7 +218,9 @@ iterator that hands out one elevation at a time, a chain of tools that turns tha
 labeled shoreline, and a collector that gathers the shorelines into one dataset. With an iterator in
 a model, ModelBuilder runs *every* tool once per value, so even Merge runs 21 times; see Step 6. The five elements marked `P` are the model
 parameters; they become the tool dialog of Step 6. `Output Layer Names`, `Count` and `Output
-Table` are extra outputs the tools always draw; you do not use them.
+Table` are extra outputs the tools always draw; you do not use them. The oval under Surface is
+Con's true value: typing `1` in the dialog draws it. The green `Elevation` oval has no arrows
+because `%Elevation%` reaches the tools by name, not by a connector — do not try to connect it.
 
 ## Complete the Lab
 
@@ -220,13 +231,13 @@ without the step-by-step instructions below, say so in your report.
 ## Step-by-Step Solution
 
 > [!NOTE]
-> **Test on a short loop first.** A full run takes about four minutes, on either surface. While you
+> **Test on a short loop first.** A full run takes about 4½ minutes, on either surface. While you
 > are building and debugging, set the loop to a few levels — From `3500`, To `3520`, By `10` is
 > three — and check the result before you run all 21. Real modelers work this way: get the logic
 > right on a small piece, then scale up.
 
 > [!NOTE]
-> **Every check value on this page** was measured on the files you download, with the steps below,
+> **Every model check value on this page** was measured on the files you download, with the steps below,
 > both in ArcGIS Pro 3.7's arcpy and by running the model shown in the figures. Your numbers should
 > match to the last digit shown.
 
@@ -240,7 +251,7 @@ without the step-by-step instructions below, say so in your report.
 4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
    **Properties**, set **Name** to `ShorelineLoop` and **Label** to `Shoreline Loop`, and save.
 5. On the **ModelBuilder** tab click **Environments**. Check that **Current Workspace** and
-   **Scratch Workspace** are your project geodatabase, and leave everything else empty.
+   **Scratch Workspace** are your project geodatabase, and leave everything else at its default.
 
 > [!IMPORTANT]
 > **Leave Cell Size and Processing Extent empty.** With only one raster going into Con, ArcGIS Pro
@@ -258,7 +269,7 @@ vertical units. Then open `powell_elevation_usbr.csv`. The surface reads about 9
 record reads about 3,500–3,700. They are not in the same units, and they are not in the same datum
 either.
 
-Convert the surface with **Raster Calculator** (from the Geoprocessing pane, once, outside the model)
+Convert the surface with **Raster Calculator** (from the Geoprocessing pane, not as a step in the model)
 so it matches the Reclamation record:
 
 ```text
@@ -280,8 +291,18 @@ and Jones, 2022), and NOAA's VERTCON gives the same 2.9 ft at the dam.
 > **3,129.5 to 4,322.4** ft. If your maximum is about 4,726.8, you forgot the datum shift. If it is
 > about 1,441, you did not convert at all.
 
-Now find on the map the dam, the old river channel, and your three shore features, and record each
-feature's elevation from `powell_ft` with the **Explore** tool or **Extract Values to Points**.
+Now find on the map the dam, the old river channel, and your shore features, and digitize the
+features:
+
+1. In the **Catalog** pane, under **Databases**, right-click your project geodatabase, then
+   **New ▸ Feature Class**. Name it `shore_features`, choose **Point**, and give it the surface's
+   coordinate system, NAD 1983 (2011) UTM zone 12N.
+2. Add two fields: `Name`, type **Text**, and `Elevation`, type **Double**.
+3. Select the layer in the **Contents** pane, open the **Edit** tab, click **Create** in the
+   **Features** group, and click once on each feature. Click **Save** in the **Manage Edits** group.
+4. Type each feature's name, and its elevation in feet NGVD29 read with the **Explore** tool: from
+   `wahweap_ft` for anything inside the 10 m close-up, otherwise from `powell_ft`. Say in your
+   report which surface each one came from.
 
 > [!WARNING]
 > **The datum trap.** If you skip this step and run the loop in feet on the meters surface, Step 3
@@ -383,7 +404,9 @@ leaves the loop now carries its elevation and its area.
 
 ![The Calculate Field dialog from ModelBuilder, with a banner saying the tool modifies the Input Table: Input Table pool_%Elevation%, Field Name (Existing or New) Elevation, Field Type Long (32-bit integer), Expression Type Python, and the expression Elevation = %Elevation%.](images/lab06-calc-elevation.png)
 
-**Figure 5a.** The first Calculate Field writes the loop value into a new Long field.
+**Figure 5a.** The first Calculate Field writes the loop value into a new Long field. The warning
+icon beside Field Name appears because the field is not there yet; Calculate Field adds it when it
+runs (hover over the icon to read the message).
 
 ![The Calculate Field (2) dialog from ModelBuilder: Input Table Pool with Elevation, Field Name (Existing or New) AreaSqMi, Field Type Double (64-bit floating point), Expression Type Python, and the expression AreaSqMi = !shape.area@squaremiles!.](images/lab06-calc-area.png)
 
@@ -429,17 +452,19 @@ already exists from an earlier run.
 >
 > | Elevation (ft) | Your area (sq mi) | USGS published area (sq mi) |
 > | --- | --- | --- |
-> | 3,500 | 75.65 | 77.0 |
-> | 3,550 | 103.93 | 105.2 |
-> | 3,600 | 140.37 | 141.5 |
-> | 3,650 | 192.05 | 193.5 |
-> | 3,700 | 247.36 | 248.7 (at 3,699.8 ft) |
+> | 3,500 | 75.65 | 76.65 |
+> | 3,550 | 103.93 | 105.02 |
+> | 3,600 | 140.37 | 141.54 |
+> | 3,650 | 192.05 | 193.52 |
+> | 3,700 | 247.36 | 248.82 |
 >
-> The published areas are interpolated from the USGS area–capacity table (Root and Jones, 2022).
-> Yours run 0.4 to 1.8 % below them at every level. Your report should say why — think about
-> narrow canyon arms and 30 m cells, and about Step 4.
+> The published areas are from the USGS area–capacity table for the 2017–18 survey (Root and
+> Jones, 2022; the table itself is the
+> [data release](https://doi.org/10.5066/P9O3IPG3){ target="_blank" }), converted from acres. Yours
+> run 0.2 to 1.3 % below them at every level. Your report should say why — think about narrow canyon
+> arms and 30 m cells, and about Step 4.
 
-The whole run took about **4½ minutes** in our test (about 12 seconds a level); expect longer on
+The whole run took about **4½ minutes** in our test (about 13 seconds a level); expect longer on
 the lab machines.
 
 ![Lake Powell's south end, Glen Canyon Dam to Antelope Point, on imagery, with 21 nested shorelines from 3,500 to 3,700 ft on the 10 m close-up, dark blue at the lowest level fading to light blue at full pool; the lowest levels follow the old river channel and the upper levels spread far up Wahweap Bay and the side canyons.](images/lab06-check-wahweap.jpg)
@@ -455,8 +480,8 @@ times** from its tool dialog:
 1. A **finer step** — 5 ft or 2 ft — over a narrower range around today's level.
 2. A **coarser step**, such as 25 ft.
 3. A **different range** — only the elevations the lake has reached in the last ten years (read
-   them from `powell_elevation_usbr.csv`: 3,610.9 ft on October 1, 2016, and as low as 3,516.6 ft
-   since), or all the way down to dead pool, 3,370 ft.
+   them from `powell_elevation_usbr.csv`: since October 1, 2016, as high as 3,635.8 ft on July 11,
+   2017, and as low as 3,516.6 ft on September 15, 2026), or all the way down to dead pool, 3,370 ft.
 
 > [!IMPORTANT]
 > **Give every run a new Shorelines name** that states its range and step, such as
@@ -514,7 +539,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   intermediate and output dataset with its type
 - **one** full-page figure of your model — export it from ModelBuilder (**Export ▸ Export To
   Graphic**) rather than screen-capturing it — and **one** screen capture of its toolbox interface
-  showing the three parameters
+  showing its parameters (at least From, To and By)
 - **the three metadata values** for the surface — the survey date (2017 multibeam for the lake
   bed), the vertical datum (NAVD88, converted to NGVD29), and the cell size (30 m) — and what each
   one means for your result
@@ -522,7 +547,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   goes dry, and the Park Service cutoff where one is published
 - your **range-and-step table** from Step 7 and your answers to its three questions
 - **where the shorelines are wrong and why** — the seam between surveys, the 30 m cells in narrow
-  canyons, the hollows removed in Step 4, the 2017 survey date against sediment deposited since —
+  canyons, the hollows removed in Step 4, the 2017 survey date against sediment deposited since, construction since the survey —
   and what additional data would fix each
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
@@ -558,13 +583,13 @@ Bureau of Reclamation, Upper Colorado Region, Lake Powell (site 919).
 
 ![Example baseline layout titled "Lake Powell Shorelines, 3,500 to 3,700 ft by 10 ft": the whole lake on imagery with 21 nested shorelines in five classes of blue, darkest for the lowest levels, the main-pool seed point near the dam, a legend in feet NGVD29, a scale bar in miles, a north arrow, and a text box with the result and the data sources.](images/lab06-example-map-baseline.png)
 
-**Figure 15.** The baseline map. Two things to do better than this example: add your shore-feature
+**Figure 8.** The baseline map. Two things to do better than this example: add your shore-feature
 points and the close-up the rubric asks for, and label a few levels on the map itself so a reader
 does not have to match colors to the legend.
 
 ![Example scenario layout titled "Lake Powell Shorelines Down to Dead Pool, 3,370 to 3,700 ft": the same design with 34 shorelines, the darkest classes now confined to the old river channel, and a text box stating what changed and that at dead pool the main pool is 28.2 sq mi, about 11 percent of the lake at full pool.](images/lab06-example-map-scenario.png)
 
-**Figure 16.** The kind of second map Step 7 asks for: the low end moved to dead pool, everything
+**Figure 9.** The kind of second map Step 7 asks for: the low end moved to dead pool, everything
 else unchanged. The title and text box say what changed and why this run was chosen.
 
 ## Rubric for the Lake Depth Explorer
@@ -582,7 +607,7 @@ out of this page.
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, loops over the elevations, and produces one merged feature class with one labeled shoreline per elevation; the shoreline count and the areas at the default values match the check values (4)<br>• A full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2)<br>• A screen capture of the toolbox interface with the low, high, and step parameters exposed (2)<br>• A description of the model a reader could repeat from, including how the loop value reaches the tools inside it (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• An inset or close-up of one feature at the elevation it goes dry (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
 | **Map 2 — one Step 7 scenario** (full page, 8.5 × 11)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
-| **Range and step sensitivity** (Step 7)<br>• A table of at least three additional runs, giving the range, the step, the number of shorelines, and the areas at the lowest and highest elevations for each (4)<br>• Which features go dry and whether the step changes that answer (2)<br>• How the area changes per unit elevation and what the basin's shape has to do with it (2)<br>• The smallest step that still shows the basin's shape, and what the finer runs cost (2) | /10 |
+| **Range and step sensitivity** (Step 7)<br>• One table with the baseline and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each (4)<br>• Which features go dry and whether the step changes that answer (2)<br>• How the area changes per unit elevation and what the basin's shape has to do with it (2)<br>• The smallest step that still shows the basin's shape, and what the finer runs cost (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -597,4 +622,5 @@ DATA: docs/data/lab06-powell-data.zip (5,315,608 bytes; files at the zip root): 
 VERIFIED IN ARCPY (ArcGIS Pro 3.7, 2026-10-01): raster properties as stated; seed at UTM 458,886 E 4,088,928 N on bed 973.62 m = 3,191.3 ft NGVD29; the package's verify_in_arcgis.py ran unchanged and reproduced instructor/powell_check_values.csv main_pool_sqmi_4conn and regions_4conn exactly at all 21 levels (so Raster to Polygon is 4-connected, as the key expected); tools/lab06/run_model.py runs: default 21 rows 87.8 s; 25 ft step 9 rows; 5 ft step 3,500-3,540 9 rows; 3,370-3,700 by 10 34 rows 143.7 s, 28.19 sq mi at 3,370; 10 m close-up 21 rows, 7.34-35.54 sq mi; wet cells at 3,550 ft 303,538 (30 m) and 295,745 (10 m). Converted surfaces 3,132.6-4,723.9 and 3,129.5-4,322.4 ft. Area per foot 0.539 (3,500-3,510) and 1.11 (3,690-3,700). SIR 2022-5017 authors confirmed on pubs.usgs.gov: Jonathan Casey Root and Daniel K. Jones. NOAA NCAT/VERTCON 3.0 at 36.94 N 111.48 W: NGVD29 to NAVD88 +0.885 m = 2.90 ft, consistent with the 2.91 ft in SIR 2022-5017.
 VERIFIED IN THE GUI (ArcGIS Pro 3.7.1, 2026-10-01/02, C:\Ames\Lab06GUI\Lab06.aprx, model ShorelineLoop): ModelBuilder tab Insert group has Iterators ▸ For and Utilities ▸ Collect Values; For's labels are From Value / To Value / By Value and To is inclusive (21 levels); Create Variable ▸ From Parameter ▸ From/To/By Value; Con's Expression takes Value <= %Elevation% with SQL Editor on (switching it off and on cleared the expression); Select Layer By Location takes the Raster to Polygon output variable directly (its output layer is auto-named wetpoly_3500_Layer, renamed Main Pool); Calculate Field's "Field Name (Existing or New)" + Field Type replaces Add Field (the page used to say Add Field + Calculate Field); Merge's Input Datasets list does not offer Collect Values' output, connect by dragging; Merge executes on EVERY iteration (GpMessages for the 21-level run: 21 Merge executions; Esri: all tools in a model with an iterator iterate), final output correct, page now says so in Step 6; the For run on the 30 m surface reproduced all 21 areas, 602 polygons and 303,538 wet cells at 3,550 exactly (4 min 27 s from ModelBuilder); from the tool dialog, 25 ft step 9 rows in 1 min 30 s; 10 m close-up (Surface = wahweap_ft) 7.34 / 35.54 sq mi and 295,745 wet cells, 4 min 20 s. Environments: the page used to tell students to set Output Coordinate System, Cell Size and Extent to the input surface; with Cell Size = powell_ft a 10 m run would silently resample to 30 m, so Step 0 now sets only the workspaces (the 10 m run above was with the others empty). Inline %From Value%_%To Value%_%By Value% in the Merge output name wrote the right dataset but the tool added the previous run's layer (stale name) to the map, so Step 7 has students type each name. Run time on lab machines not yet measured.
 FIGURES: Figure A (lab06-surface-metadata.svg) and the seven tool icons by tools/lab06/make_svgs.py, every metadata statement from the USGS FGDC metadata (ScienceBase 5c6c1e4be4b0fe48cb3e59e1, read 2026-10-02) or READ-ME-FIRST.txt. lab06-check-wahweap.jpg and the two example layouts by tools/lab06/build_figures.py (arcpy.mp, from run_model.py outputs). Dialog captures lab06-environments, -raster-calc, -for, -con, -raster-to-polygon, -select-by-location, -copy-features, -calc-elevation, -calc-area (both stitched from two scrolled grabs), -collect-values, -merge, -tool-dialog, -run-complete (.png) are screen grabs (tools/screenshots/cap.py) at 175 % from the 2026-10-01/02 session; Figure C (lab06-full-model.svg) is the model's Export To Graphic, laid out by hand in four rows. Originals in C:\Ames\Lab06GUI\caps.
-TODO(instructor): (1) DONE 2026-10-02: GUI build, captures and Figure C; (2) DONE 2026-10-02: ramp toes (tools/lab06/ramp_toes.py; OSM ramp locations, Esri imagery, profiles of wahweap_ft): Wahweap Main ~3,548 (NPS 3,545), Stateline Auxiliary ~3,530 (NPS 3,515; rehabilitated 2021 and extended after the survey; it is OSM node 11882429534, NOT OSM way 'Stateline Launch Ramp'), Antelope Point ~3,580-3,590 (NPS 3,588; steep there); 30 m surface reads 6-13 ft low at the toes, so the page sends students to wahweap_ft; (3) DONE 2026-10-02: Figure A and tool icons; (4) no-GUI pilot; (5) Learning Suite due date to October 17; (6) report template check against the rewritten deliverables. -->
+PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot06\PILOT-REPORT.md): a fresh agent read the page as a student and re-ran every number from the student zip in arcpy; every model value matched to the last digit (raster properties, converted ranges, wet cells, 602 polygons, 21 areas, 10 m areas, dead pool, run counts, rates, ramp toes). Fixed from its findings: the USGS published-area column was 77.0/248.7 at 3,500/3,700 and the range 0.4-1.8 %; the USGS data release (doi:10.5066/P9O3IPG3, Lake_Powell_2018_ElevAreaCap_interp.csv, NGVD29 column) gives 76.65, 105.02, 141.54, 193.52, 248.82 and our areas are 0.19-1.31 % below at all 21 levels; the ten-year range's high is 3,635.8 ft on 2017-07-11, not 3,610.9; feature digitizing moved into Step 1 with field types and which surface to sample; 'its elevation' vs 'goes dry between' defined; NPS cutoff sign explanation; run-time statements reconciled (4.5 min, 13 s a level); deliverable asks for the tool's parameters, not three; rubric sensitivity bullet now requires the baseline row and run time; Figure C caption explains the true-value oval and the unconnected Elevation oval; Figure 5a explains the warning icon; example maps renumbered 8 and 9, Map 1 text 75.7 and Map 2 title gains 'by 10 ft' (layouts rebuilt); zip READ-ME no longer calls the 10 m surface the quick one to debug on; report template rebuilt (NPS cutoff, surface sampled and run time columns, tool rows pre-filled). Open Tool on the ModelBuilder tab verified in the GUI build. GUI pilot by a person on a lab machine still owed.
+TODO(instructor): (1) DONE 2026-10-02: GUI build, captures and Figure C; (2) DONE 2026-10-02: ramp toes (tools/lab06/ramp_toes.py; OSM ramp locations, Esri imagery, profiles of wahweap_ft): Wahweap Main ~3,548 (NPS 3,545), Stateline Auxiliary ~3,530 (NPS 3,515; rehabilitated 2021 and extended after the survey; it is OSM node 11882429534, NOT OSM way 'Stateline Launch Ramp'), Antelope Point ~3,580-3,590 (NPS 3,588; steep there); 30 m surface reads 6-13 ft low at the toes, so the page sends students to wahweap_ft; (3) DONE 2026-10-02: Figure A and tool icons; (4) DONE 2026-10-02: no-GUI pilot (see PILOT); (5) Learning Suite due date to October 17; (6) DONE 2026-10-02: report template rebuilt to the rewritten deliverables. -->
