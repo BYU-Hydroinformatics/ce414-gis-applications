@@ -95,15 +95,14 @@ By the end of class you should be able to:
 
 # How the Great Salt Lake's Bottom Was Mapped
 
-![bg right:45% w:95%](images/lb-todo-dem.svg)
+![bg right:45% h:92%](images/lb-gsl-tbdem.jpg)
 
 - USGS sonar surveys of the **south arm (2002–04)** and **north arm (2006)**, drawn as depth contours
 - Contours turned into a surface with **Topo to Raster — in ArcGIS Pro**
 - Merged with **2016 lidar** of the dry shore into one 0.5 m **topobathymetric DEM** (Root, 2023)
 
 <!-- From the metadata of the USGS data release: Root, J.C., 2023, Half-meter topobathymetric elevation model and elevation-area-volume tables for Great Salt Lake, Utah, 2002-2016, doi:10.5066/P9DGG75W. The bathymetric contours are from Baskin's USGS surveys; the shore is UGRC's 2016 lidar. The full DEM is about 34 GB; Lab 6 uses a resampled extract. The point for students: a real federal product was built in the software they are using. -->
-<!-- TODO(capture): replace the placeholder with the Lab 6 DEM extract rendered in ArcGIS Pro once it is built. -->
-<!-- VERIFY: which arm's survey years and the lidar year against the final metadata text before class. -->
+<!-- The image is the release's own thumbnail of the 0.5 m DEM (Great_Salt_Lake_TBDEM_Thumbnail.jpg, ScienceBase item 646d0ed2d34ee02593fb50a7, public domain), downsized: purple is deepest; the railroad causeway is the straight line across the middle; Antelope and Stansbury islands stand up in the south arm. Checked against the release metadata on October 2, 2026: south arm surveyed 2002-2004 and north arm 2006 (Baskin 2005, 2006), contours interpolated with Topo to Raster in ArcGIS Pro 2.9.5, mosaicked (Mosaic to New Raster) with lidar flown September 3 to November 30, 2016; the elevation-area-volume tables were computed with the Storage Capacity tool. -->
 
 ---
 
@@ -123,8 +122,7 @@ By the end of class you should be able to:
 
 - A lake level is a **height above a datum** — say which one, or the number means nothing
 
-<!-- The USGS gage, the news and this course report NGVD29 (the 1929 datum). The USGS lake-bottom DEM is in NAVD88 (the 1988 datum). At the Great Salt Lake, a height in NAVD88 is 3.48 ft larger than the same height in NGVD29: the USGS elevation-area-volume table carries both columns, and the difference is 3.48 ft on every row. Lab 6 gives you the surface already in feet NGVD29 so that your levels match the gage. -->
-<!-- VERIFY: once the Lab 6 extract is built, confirm the units and datum it ships in. -->
+<!-- The USGS gage, the news and this course report NGVD29 (the 1929 datum). The USGS lake-bottom DEM is in NAVD88 (the 1988 datum). At the Great Salt Lake, a height in NAVD88 is 3.48 ft larger than the same height in NGVD29: the USGS elevation-area-volume table carries both columns, and the difference is 3.48 ft on every row. Lab 6 has the same problem at Lake Powell: its surface ships in meters NAVD88 and Reclamation's lake record is in feet NGVD29, 2.91 ft apart there (USGS SIR 2022-5017), and Step 1 converts it — the 3.48 ft here and 2.91 ft there are a good reminder that the offset between the datums changes from place to place. The 3.48 ft was re-checked on every row of the hosted CSV, October 2, 2026. -->
 
 ---
 
@@ -181,13 +179,13 @@ By the end of class you should be able to:
 
 ![bg right:42% w:95%](images/lb-eav-curves.png)
 
-- Open the **USGS elevation–area–volume table** for the whole lake (CSV)
+- Open the **USGS elevation–area–volume table** for the whole lake — [download the CSV](https://byu-hydroinformatics.github.io/ce414-gis-applications/data/week07-gsl-elevation-area-volume.csv) and open it in Excel
 - Plot **area** and **volume** against elevation (ft NGVD29)
 - How much lakebed is exposed between **4,200 ft** and the **2022 low, 4,188.5 ft**?
 - At today's level, how many feet of drop expose another **100 sq mi**?
 
 <!-- The table is in the USGS data release (doi:10.5066/P9DGG75W), file for the whole lake; it has both NAVD88 and NGVD29 columns. Answers from the table: 1,602.4 − 894.2 = 708.2 sq mi exposed between 4,200 and 4,188.5 ft; from 4,189.7 ft (929.7 sq mi) a further 100 sq mi is exposed by about 4,186.4 ft (829.5 sq mi), a drop of about 3.3 ft — have students find it themselves (checked against the CSV, October 1, 2026). -->
-<!-- TODO(instructor): this activity replaces the old Week 7 "Practicing Hydrology Tools" item; create the matching Learning Suite activity, and decide whether to host the CSV on the course site (it is public domain, about 0.5 MB). -->
+<!-- The CSV is the release's Great_Salt_Lake_2023_ElevAreaVolume_total.csv, hosted unchanged as docs/data/week07-gsl-elevation-area-volume.csv (public domain, 481 KB, 4,501 rows at 0.01 ft from 4,170 to 4,215 ft NAVD88; NGVD29 = NAVD88 - 3.48 ft). Answers re-checked against it October 2, 2026: 1,602.35 sq mi at 4,200 ft and 894.20 at 4,188.5 ft NGVD29. TODO(instructor): create the matching Learning Suite activity (replaces the old Week 7 "Practicing Hydrology Tools" item). -->
 
 ---
 

@@ -77,7 +77,7 @@ By the end of class you should be able to:
 - **ModelBuilder** tab ▸ **Insert** ▸ **Iterators** — **For** counts from a start to an end by a step
 
 <!-- Captured in ArcGIS Pro 3.7.1 on October 2, 2026 (C:\Ames\Lab06GUI\caps\iterators-menu.png, the area left of the menu blanked). Fifteen iterators, For to Iterate Workspaces. The menu is grayed out unless a model view is active. -->
-<!-- Point out that only one iterator is allowed per model, and that iterators exist only in ModelBuilder — they are why ModelBuilder is more than a diagram of tools. VERIFY that one-iterator rule in 3.7. -->
+<!-- Point out that only one iterator is allowed per model, and that iterators exist only in ModelBuilder — they are why ModelBuilder is more than a diagram of tools. Esri's Iterators for looping page (checked October 2, 2026): "Only one iterator can be used per model", and "If an iterator is added to a model, all tools in the model iterate for each value in the iterator." -->
 
 ---
 
@@ -111,7 +111,7 @@ By the end of class you should be able to:
 
 - **Collect Values** (ModelBuilder ▸ Utilities) gathers every run's output; **Merge** joins them
 
-<!-- The Lab 6 model as built in ArcGIS Pro 3.7.1, exported with Export To Graphic and laid out in four rows (same file as the lab page's Figure C). Merge's Input Datasets list does not offer Collect Values' output: drag a connector from Output Values to Merge and choose Input Datasets. -->
+<!-- The Lab 6 model as built in ArcGIS Pro 3.7.1, exported with Export To Graphic and laid out in four rows (same file as the lab page's Figure C). Merge's Input Datasets list does not offer Collect Values' output: drag a connector from Output Values to Merge and choose Input Datasets. Tell students the honest version: with an iterator in a model, every tool runs once per value, Merge included, so Merge rewrites the merged output on every pass with one more shoreline (21 Merge executions in the 21-level run's messages); the last pass leaves them all. Esri's way to run Merge once is a nested model (the loop in its own model, used as a tool in a second model) - an aside, not needed for Lab 6. -->
 
 ---
 
@@ -163,7 +163,7 @@ By the end of class you should be able to:
 
 - About **0.54 sq mi per foot** near 3,500 ft, **1.11** near 3,700 ft — a 10 ft step says only "somewhere in these ten feet"
 
-<!-- The range-and-step test is Lab 6 Step 7, the same pattern as Lab 5's threshold test. Measured on the 30 m surface: 0.54 sq mi per foot between 3,500 and 3,510 ft, 1.11 between 3,690 and 3,700 — the canyon widens upward, so a step that is fine near full pool hides detail lower down. A ramp that goes dry between two levels is only known to the step. Run times measured in arcpy: the default 21 levels in about 90 s; 34 levels down to dead pool in about 145 s. -->
+<!-- The range-and-step test is Lab 6 Step 7, the same pattern as Lab 5's threshold test. Measured on the 30 m surface: 0.54 sq mi per foot between 3,500 and 3,510 ft, 1.11 between 3,690 and 3,700 — the canyon widens upward, so a step that is fine near full pool hides detail lower down. A ramp that goes dry between two levels is only known to the step. Run times: in arcpy the default 21 levels took about 90 s and 34 levels down to dead pool about 145 s; the same model in ModelBuilder took about 4.5 minutes for the 21 levels (about 12 s a level), which is what students will see. -->
 
 ---
 
@@ -173,11 +173,11 @@ By the end of class you should be able to:
 
 ![bg right:42% h:96%](images/lb-powell-wahweap.jpg)
 
-- Build the loop on the **10 m Wahweap close-up**: For › Con › Raster to Polygon
-- Run it for **three levels** of your choice
-- Map them nested, and screen-capture the map for Learning Suite
+- Convert the **10 m Wahweap close-up** to feet NGVD29 first (Lab 6 Step 1)
+- Build the loop: **For** › **Con** › **Raster to Polygon** — three levels, e.g. From 3520, To 3600, By 40
+- Map the three nested, and screen-capture the map for Learning Suite
 
-<!-- TODO(instructor): this activity replaces the old Week 7 "Where is my watershed?" item; create the matching Learning Suite activity. Data: the Lab 6 package, docs/data/lab06-powell-data.zip. -->
+<!-- Timing from the Lab 6 GUI build: one level of the full model takes about 12 s on either surface, so three levels of this shorter loop run in well under a minute; most of the activity time goes to the conversion and wiring the iterator. Without the Select Layer By Location step the polygons include every pothole below the level, which is the motivation for Lab 6 Step 4. Data: the Lab 6 package, docs/data/lab06-powell-data.zip. TODO(instructor): create the matching Learning Suite activity (replaces the old Week 7 "Where is my watershed?" item). -->
 
 ---
 
@@ -187,7 +187,7 @@ By the end of class you should be able to:
 - Next week: **interpolation** — turning scattered points into a surface, which is how every bathymetry grid is made
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:Amesab06guips); lb-todo-dem.svg on the tuesday deck is still a placeholder. -->
+<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:\Ames\Lab06GUI\caps); lb-todo-dem.svg on the Tuesday deck is still a placeholder. -->
 
 ---
 
