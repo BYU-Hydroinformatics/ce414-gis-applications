@@ -91,11 +91,11 @@ def loop():
 
     b = ["<defs><marker id='a' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='#5b6770'/></marker></defs>"]
     b.append(t(40, 40, "One model, run once per water level", 26, weight="bold", anchor="start"))
-    b.append(box(40, 110, 200, 90, "#fff4e0", "For", "4,190 to 4,210 by 2", ORANGE))
-    b.append(box(300, 110, 150, 90, "#e3eef8", "Value", "this run's level"))
-    b.append(box(510, 110, 220, 90, "#fff8d6", "Raster Calculator", "Con(surface ≤ %Value%, 1)"))
-    b.append(box(790, 110, 170, 90, "#fff8d6", "Raster to", "Polygon"))
-    b.append(box(1010, 110, 160, 90, "#e7f3e3", "Lake_%Value%", "one per level", GREEN))
+    b.append(box(40, 110, 200, 90, "#fff4e0", "For", "3,500 to 3,700 by 10", ORANGE))
+    b.append(box(300, 110, 150, 90, "#e3eef8", "Elevation", "this run's level"))
+    b.append(box(510, 110, 220, 90, "#fff8d6", "Con", "Value &lt;= %Elevation%"))
+    b.append(box(790, 110, 170, 90, "#fff8d6", "Polygon, keep", "the main pool"))
+    b.append(box(1010, 110, 160, 90, "#e7f3e3", "pool_%Elevation%", "one per level", GREEN))
     b.append(box(510, 320, 220, 90, "#fff8d6", "Collect Values"))
     b.append(box(820, 320, 300, 90, "#e7f3e3", "Merge → Shorelines", "all levels, one feature class", GREEN))
     for x1, x2 in ((240, 300), (450, 510), (730, 790), (960, 1010)):
@@ -115,17 +115,17 @@ if __name__ == "__main__":
 
 PLACEHOLDERS = {
     "lb-todo-dem.svg": ("The Great Salt Lake surface in ArcGIS Pro",
-                        "the student DEM extract, symbolized by elevation over a hillshade"),
+                        "the Great Salt Lake lake-bottom surface, symbolized by elevation"),
     "lb-todo-iterators-menu.svg": ("ModelBuilder ▸ Iterators",
                                    "the Iterators menu on the ModelBuilder tab, For highlighted"),
     "lb-todo-for-dialog.svg": ("The For iterator dialog",
                                "From value, To value, By value, and the Value output"),
-    "lb-todo-rastercalc-value.svg": ("Raster Calculator with %Value%",
-                                     "the flood expression and the output name Lake_%Value%"),
+    "lb-todo-rastercalc-value.svg": ("Con with %Elevation%",
+                                     "the expression Value &lt;= %Elevation% and the output name wet_%Elevation%"),
     "lb-todo-model.svg": ("The finished Lab 6 model",
-                          "ModelBuilder Export To Graphic: For, Raster Calculator, Raster to Polygon, Collect Values, Merge"),
+                          "ModelBuilder Export To Graphic: For, Con, Raster to Polygon, Select Layer By Location, Collect Values, Merge"),
     "lb-todo-run-result.svg": ("A run of the model",
-                               "the merged Shorelines layer on the map, one polygon per level"),
+                               "the merged shorelines and their Elevation and AreaSqMi fields"),
 }
 
 
@@ -136,7 +136,7 @@ def placeholders():
              + t(W / 2, H / 2 - 50, "ArcGIS Pro screenshot to come", 40, GRAY, "bold")
              + t(W / 2, H / 2 + 10, title, 30, NAVY, "bold")
              + t(W / 2, H / 2 + 56, what, 20, GRAY)
-             + t(W / 2, H - 50, "Placeholder — captured from the real Lab 6 model once the DEM extract is ready", 17, ORANGE))
+             + t(W / 2, H - 50, "Placeholder — to be captured from the real model once it is built in ArcGIS Pro", 17, ORANGE))
         (IMG / name).write_text(svg(W, H, b, "Placeholder: " + title), encoding="utf-8")
     print("wrote", len(PLACEHOLDERS), "placeholders")
 

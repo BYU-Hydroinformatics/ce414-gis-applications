@@ -64,20 +64,20 @@ CE414Quiz.start({
       explanation: "Collect Values gathers one output from every run of the loop; Merge combines them into a single feature class, one polygon per level, which is what you map and measure."
     },
     {
-      prompt: "Your model's area at 4,200 ft is about 350 sq mi off the USGS table's 1,602 sq mi. What is the likeliest cause?",
+      prompt: "Every shoreline your Lake Powell model draws is the same, at every level from 3,500 to 3,700 ft. What is the likeliest cause?",
       options: [
-        "The USGS table is wrong",
-        "A datum mix-up",
-        "The For iterator ran too many times",
-        "Raster to Polygon always loses that much"
+        "The For iterator ran only once",
+        "The surface is still in meters",
+        "The step is too large",
+        "Merge combined the levels wrongly"
       ],
-      answer: "A datum mix-up",
-      explanation: "A 3.48 ft datum mix-up on the steep part of the area curve (up to about 100 sq mi per foot near 4,200 ft) is worth a few hundred square miles. The USGS table was computed from the same DEM, so a miss that size points at your setup, not theirs."
+      answer: "The surface is still in meters",
+      explanation: "The Lab 6 surface arrives in meters NAVD88, from about 955 to 1,441. Every one of those is below 3,500, so if you skip the conversion to feet NGVD29, every cell floods at every level and nothing moves. A shoreline that does not change with the elevation is the giveaway; Step 1 converts the surface first."
     }
   ],
   perfectNote: "A perfect score. You can build the loop and say whether its answer is right.",
   goodNote: "Solid. Read the explanations on the ones you missed — the output-name one silently wipes out a run.",
-  tryAgainNote: "Worth another pass. The short version: an iterator runs the model once per value; %Value% puts the value into expressions and output names; Collect Values and Merge gather the runs; and the USGS table tells you whether the areas are right."
+  tryAgainNote: "Worth another pass. The short version: an iterator runs the model once per value; %Value% puts the value into expressions and output names; Collect Values and Merge gather the runs; and the published area table tells you whether the areas are right."
 });
 </script>
 </body>

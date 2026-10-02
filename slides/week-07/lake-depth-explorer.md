@@ -10,20 +10,20 @@ style: |
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:45% w:95%](images/lb-shoreline-falling.gif)
+![bg right:45% h:96%](images/lb-powell-wahweap.jpg)
 
 ![w:110](../theme/images/byu-medallion.svg)
 
 # Lake Depth Explorer
 
-## Part B — Looping in ModelBuilder, and Lab 6
+## Part B — Looping in ModelBuilder, and Lab 6 at Lake Powell
 
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 7. Tuesday gave the lake, its bathymetry, the datum, and the elevation-area-volume table. Today: a ModelBuilder model that runs once per water level instead of once, and Lab 6, which uses it on the Great Salt Lake. Slides marked "ArcGIS Pro screenshot to come" are placeholders: they are captured from the real Lab 6 model once the DEM extract is built. Until then, demo live. -->
+<!-- Thursday of Week 7. Tuesday gave the lake, its bathymetry, the datum, and the elevation-area-volume table. Today: a ModelBuilder model that runs once per water level instead of once, and Lab 6, which uses it on Lake Powell. The lab is Lake Powell, not the Great Salt Lake: Powell is one connected pool behind a dam, so the main-pool step works cleanly; the Great Salt Lake's railroad causeway splits it in two below about 4,200 ft. The title image is the Lab 6 default run on the 10 m Wahweap close-up: 21 shorelines, 3,500 to 3,700 ft. Slides marked "ArcGIS Pro screenshot to come" are placeholders: they are captured from the real Lab 6 model once the DEM extract is built. Until then, demo live. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 7 — Lake Depth Explorer<span class="updated">Last Updated: 2026-10-01</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -52,13 +52,13 @@ By the end of class you should be able to:
 
 # The Problem With Running a Model Once
 
-![bg right:42% h:96%](images/lb-shorelines-nested-map.jpg)
+![bg right:40% w:95%](images/lb-powell-example-map.png)
 
-- One water level → one Raster Calculator → one shoreline
+- One water level → one Con → one shoreline
 - Twenty levels → **twenty runs**, twenty names to type, twenty chances to mistype one
 - What you want: say the **list of levels once**, and let the model do the rest
 
-<!-- The map is the answer we are after: shorelines at several levels in one layer. Ask how long it took them to run the Lab 5 model four times for Step 14, and what went wrong. -->
+<!-- The map is the answer we are after, the Lab 6 example map: 21 Lake Powell shorelines in one layer. Ask how long it took them to run the Lab 5 model four times for Step 14, and what went wrong. -->
 
 ---
 
@@ -66,7 +66,7 @@ By the end of class you should be able to:
 
 ![h:420 center](images/lb-iterator-loop.svg)
 
-<!-- Walk the loop: the For iterator produces one value per run (4,190, 4,192, ... 4,210); every tool after it runs once with that value; the outputs are collected and merged at the end. The iterator is the only new idea in Lab 6 — Raster Calculator, Con(), and Raster to Polygon are all from earlier labs. -->
+<!-- Walk the loop with Lab 6's real values: the For iterator produces one value per run (3,500, 3,510, ... 3,700 ft); every tool after it runs once with that value; the outputs are collected and merged at the end. The iterator is the only new idea in Lab 6 — Con, Raster to Polygon and Select Layer By Location are tools students have met. -->
 <!-- VERIFY: the sketch's tool names and where Collect Values sits against the real model when it is built. -->
 
 ---
@@ -87,23 +87,23 @@ By the end of class you should be able to:
 
 ![h:430 center](images/lb-todo-for-dialog.svg)
 
-- **From** 4,190 · **To** 4,210 · **By** 2 → eleven runs; its output, **Value**, is this run's level
+- **From** 3,500 · **To** 3,700 · **By** 10 → 21 runs; rename its output from **Value** to **Elevation**
 
 <!-- TODO(capture): the For iterator's dialog filled in for the Lab 6 default range. -->
-<!-- VERIFY: the parameter labels in ArcGIS Pro 3.7, and whether To is inclusive (it determines whether 4,210 runs). -->
+<!-- VERIFY: the parameter labels in ArcGIS Pro 3.7, and whether To is inclusive (21 runs, not 20). The arcpy verification ran 21 levels. -->
 
 ---
 
-# %Value% — the Value Goes Inside the Expression
+# %Elevation% — the Value Goes Inside the Expression
 
-![h:400 center](images/lb-todo-rastercalc-value.svg)
+![h:330 center](images/lb-todo-rastercalc-value.svg)
 
-- `Con("Lake_Surface" <= %Value%, 1)` — 1 below the water, NoData above
-- Output name **Lake_%Value%** — a different name every run, or each run overwrites the last
+- **Con** on `powell_ft`, expression `Value <= %Elevation%`, true value `1`, false left **empty** — NoData above the water
+- Output name **wet_%Elevation%** — a different name every run, or each run overwrites the last
 
 <!-- The same inline-variable idea as Lab 4 and Lab 5 (%Threshold%), now fed by the iterator. The Lab 5 lesson about Con with no third argument carries over: NoData outside the water, not 0, or Raster to Polygon draws the land as lake too. -->
-<!-- TODO(capture): the Raster Calculator dialog in the Lab 6 model with this expression and output name. -->
-<!-- VERIFY: the surface's layer name in the extract, and that %Value% substitutes in both the expression and the output name. -->
+<!-- TODO(capture): the Con dialog in the Lab 6 model with this expression and output name. -->
+<!-- VERIFY in ArcGIS Pro 3.7: the Con dialog labels, and that %Elevation% substitutes in both the expression and the output name. Check value at 3,550 ft: 303,538 wet cells on the 30 m surface. -->
 
 ---
 
@@ -122,9 +122,9 @@ By the end of class you should be able to:
 
 ![h:420 center](images/lb-todo-run-result.svg)
 
-- **Shorelines** — one polygon per level, each with its level and its area
+- **Shorelines** — one polygon per level, each with its **Elevation** and its **AreaSqMi**
 
-<!-- TODO(capture): the merged Shorelines layer from the real model, symbolized by level. Until then, show the Tuesday maps (lb-shorelines-nested.jpg) — they are the same kind of output, from the same USGS DEM. -->
+<!-- TODO(capture): the merged layer and its attribute table from the GUI-built model. The slide after next shows the same result from the arcpy run. -->
 
 ---
 
@@ -136,38 +136,36 @@ By the end of class you should be able to:
 
 # Lab 6 at a Glance
 
-![bg right:42% w:95%](images/lb-shoreline-falling.gif)
+![bg right:42% h:96%](images/lb-powell-wahweap.jpg)
 
-- **The question:** at a given water level, where is the Great Salt Lake's shoreline, and how big is the lake?
-- **The data:** a resampled extract of the USGS lake-bottom DEM, in **feet NGVD29**
-- **The model:** For › Raster Calculator › Raster to Polygon › Collect Values › Merge
-- **The check:** your areas against the **USGS table** from Tuesday
+- **The lake:** **Lake Powell** — record low **3,516.6 ft on Sept 15, 2026**; full pool 3,700 ft
+- **The data:** the USGS lake-bottom DEM (2017 sonar) at 30 m, plus a 10 m close-up of Wahweap — in **meters NAVD88**
+- **Step 1:** convert to **feet NGVD29**: ÷ 0.3048, then − 2.91 ft
+- **The model:** For › Con › Raster to Polygon › keep the main pool › label › Collect Values › Merge
 
 [Lab 6 — Lake Depth Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
 
-<!-- The lab page is still being rebuilt for the Great Salt Lake; the data package and check values arrive with the DEM extract. -->
-<!-- TODO(instructor): confirm the default range and step (plan: 4,190 to 4,210 ft by 2 ft) once the run time on a lab machine is known. -->
+<!-- The map is the default run on the 10 m Wahweap close-up: 21 shorelines, darkest at 3,500 ft. Build and debug on this surface — a full run takes about a minute — then switch to the 30 m whole lake. Tuesday's datum lesson comes back here: Lake Powell's surface is in meters NAVD88 and Reclamation's record is in feet NGVD29, 2.91 ft apart (USGS SIR 2022-5017; NOAA VERTCON gives 2.90 ft at the dam). Skip Step 1 and every cell (955-1,441) is below 3,500, so the whole surface floods at every level. -->
 
 ---
 
 # How You Will Know You Are Right
 
-![h:400 center](images/lb-eav-curves.png)
+![h:400 center](images/lb-powell-area.png)
 
-- The USGS computed the area at every 0.01 ft from the same DEM — your area at each level should **match it**
+- The USGS published Lake Powell's area at every level from the same survey — yours should run **0.4–1.8 % below** it
 
-<!-- The elevation-area-volume table is an answer key students did not make: same DEM, independent calculation. At 4,190 ft it gives 937.6 sq mi; at 4,200 ft, 1,602.4 sq mi; at 4,210 ft, 2,211.5 sq mi. A coarse extract will differ slightly; the lab will state the tolerance once it is measured. A big miss usually means a datum mix-up (3.48 ft is worth up to a few hundred sq mi in the 4,195–4,205 ft band) or Con() with a third argument. -->
-<!-- TODO(instructor): set the tolerance from the verification run on the extract. -->
+<!-- Blue: the Lab 6 model run in arcpy on the 30 m surface, 3,370 to 3,700 ft by 10 (tools/lab06). Dashed: the USGS published areas (SIR 2022-5017). Check values: 75.65 sq mi at 3,500 ft (USGS 77.0), 140.37 at 3,600 (141.5), 247.36 at 3,700 (248.7). The model runs a little low everywhere because 30 m cells drop narrow canyon arms and Step 4 drops arms the coarse cells disconnect. Dead pool, 3,370 ft, leaves 28.19 sq mi. -->
 
 ---
 
 # Choosing the Range and the Step
 
-![h:400 center](images/lb-area-per-foot.png)
+![h:400 center](images/lb-powell-area.png)
 
-- A **2 ft step** can step right over the level where a bay disconnects — the step is a choice, and Lab 6 makes you test it
+- About **0.54 sq mi per foot** near 3,500 ft, **1.11** near 3,700 ft — a 10 ft step says only "somewhere in these ten feet"
 
-<!-- The range-and-step test is the sensitivity step of Lab 6, the same pattern as Lab 5's threshold test. The chart is from the USGS table: area changes slowly per foot in the 4,170s–4,190s and fast in the 4,195–4,205 band, so a step that is fine at one end of the range hides detail at the other. -->
+<!-- The range-and-step test is Lab 6 Step 7, the same pattern as Lab 5's threshold test. Measured on the 30 m surface: 0.54 sq mi per foot between 3,500 and 3,510 ft, 1.11 between 3,690 and 3,700 — the canyon widens upward, so a step that is fine near full pool hides detail lower down. A ramp that goes dry between two levels is only known to the step. Run times measured in arcpy: the default 21 levels in about 90 s; 34 levels down to dead pool in about 145 s. -->
 
 ---
 
@@ -175,23 +173,23 @@ By the end of class you should be able to:
 
 # In Class Activity — Three Levels
 
-![bg right:42% w:95%](images/lb-todo-run-result.svg)
+![bg right:42% h:96%](images/lb-powell-wahweap.jpg)
 
-- Build the loop on the **Lab 6 surface**: For › Raster Calculator › Raster to Polygon
+- Build the loop on the **10 m Wahweap close-up**: For › Con › Raster to Polygon
 - Run it for **three levels** of your choice
 - Map them nested, and screen-capture the map for Learning Suite
 
-<!-- TODO(instructor): this activity replaces the old Week 7 "Where is my watershed?" item; create the matching Learning Suite activity. It needs the Lab 6 data package, so it waits on the DEM extract. -->
+<!-- TODO(instructor): this activity replaces the old Week 7 "Where is my watershed?" item; create the matching Learning Suite activity. Data: the Lab 6 package, docs/data/lab06-powell-data.zip. -->
 
 ---
 
 # Before Next Class
 
-- **Lab 6 — Lake Depth Explorer** — see the lab page for the due date — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
+- **Lab 6 — Lake Depth Explorer** (Lake Powell) — due **Saturday, October 17** — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
 - Next week: **interpolation** — turning scattered points into a surface, which is how every bathymetry grid is made
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 7 decks drafted October 1, 2026, from the plan in tools/week07-lake-bathymetry-plan.md. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). Every lb-todo-*.svg is a placeholder for a real ArcGIS Pro capture from the Lab 6 model. -->
+<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). Every lb-todo-*.svg is a placeholder for a real ArcGIS Pro capture from the Lab 6 model. -->
 
 ---
 
