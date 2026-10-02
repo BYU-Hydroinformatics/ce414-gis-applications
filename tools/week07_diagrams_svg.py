@@ -104,7 +104,7 @@ def loop():
     b.append(f"<line x1='730' y1='365' x2='820' y2='365' stroke='{GRAY}' stroke-width='3' marker-end='url(#a)'/>")
     b.append(f"<path d='M140,200 C140,300 300,300 360,220' fill='none' stroke='{ORANGE}' stroke-width='3' stroke-dasharray='7 5' marker-end='url(#a)'/>")
     b.append(t(150, 330, "next level, until the list is done", 17, ORANGE, anchor="start"))
-    b.append(t(40, 450, "A sketch of the Lab 6 model; the tool names and settings are confirmed in ArcGIS Pro when the model is built.", 15, GRAY, anchor="start"))
+    b.append(t(40, 450, "A sketch of the Lab 6 model. The model as built in ArcGIS Pro is on the Collect Values slide.", 15, GRAY, anchor="start"))
     (IMG / "lb-iterator-loop.svg").write_text(svg(W, H, "".join(b), "A ModelBuilder loop over water levels"), encoding="utf-8")
 
 

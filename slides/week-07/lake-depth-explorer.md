@@ -67,64 +67,62 @@ By the end of class you should be able to:
 ![h:420 center](images/lb-iterator-loop.svg)
 
 <!-- Walk the loop with Lab 6's real values: the For iterator produces one value per run (3,500, 3,510, ... 3,700 ft); every tool after it runs once with that value; the outputs are collected and merged at the end. The iterator is the only new idea in Lab 6 — Con, Raster to Polygon and Select Layer By Location are tools students have met. -->
-<!-- VERIFY: the sketch's tool names and where Collect Values sits against the real model when it is built. -->
 
 ---
 
 # Where the Iterators Live
 
-![h:430 center](images/lb-todo-iterators-menu.svg)
+![h:470 center](images/lb-iterators-menu.png)
 
-- **ModelBuilder** tab ▸ **Iterators** — **For** counts from a start to an end by a step
+- **ModelBuilder** tab ▸ **Insert** ▸ **Iterators** — **For** counts from a start to an end by a step
 
-<!-- TODO(capture): the Iterators menu on the ModelBuilder tab in ArcGIS Pro 3.7, For highlighted. -->
-<!-- VERIFY: the menu's name and location on the ModelBuilder tab in ArcGIS Pro 3.7, and the list of iterators shown, before writing them on the slide. -->
+<!-- Captured in ArcGIS Pro 3.7.1 on October 2, 2026 (C:\Ames\Lab06GUI\caps\iterators-menu.png, the area left of the menu blanked). Fifteen iterators, For to Iterate Workspaces. The menu is grayed out unless a model view is active. -->
 <!-- Point out that only one iterator is allowed per model, and that iterators exist only in ModelBuilder — they are why ModelBuilder is more than a diagram of tools. VERIFY that one-iterator rule in 3.7. -->
 
 ---
 
 # The For Iterator
 
-![h:430 center](images/lb-todo-for-dialog.svg)
+![h:330 center](images/lb-for-dialog.png)
 
-- **From** 3,500 · **To** 3,700 · **By** 10 → 21 runs; rename its output from **Value** to **Elevation**
+- **From Value** 3,500 · **To Value** 3,700 · **By Value** 10 → **21** runs (To is included); rename its output from **Value** to **Elevation**
 
-<!-- TODO(capture): the For iterator's dialog filled in for the Lab 6 default range. -->
-<!-- VERIFY: the parameter labels in ArcGIS Pro 3.7, and whether To is inclusive (21 runs, not 20). The arcpy verification ran 21 levels. -->
+<!-- Captured from the Lab 6 GUI build, October 1, 2026. The 21-run count was confirmed by running the model: 21 shorelines. -->
+<!-- Show the parameter route too: right-click For > Create Variable > From Parameter > From Value (and To, By), then right-click each new oval > Parameter. -->
+
 
 ---
 
 # %Elevation% — the Value Goes Inside the Expression
 
-![h:330 center](images/lb-todo-rastercalc-value.svg)
+![bg right:40% h:86%](images/lb-con-dialog.png)
 
-- **Con** on `powell_ft`, expression `Value <= %Elevation%`, true value `1`, false left **empty** — NoData above the water
+- **Con** on `powell_ft`, expression `Value <= %Elevation%` (typed with **SQL Editor** on), true value `1`, false left **empty** — NoData above the water
 - Output name **wet_%Elevation%** — a different name every run, or each run overwrites the last
 
 <!-- The same inline-variable idea as Lab 4 and Lab 5 (%Threshold%), now fed by the iterator. The Lab 5 lesson about Con with no third argument carries over: NoData outside the water, not 0, or Raster to Polygon draws the land as lake too. -->
-<!-- TODO(capture): the Con dialog in the Lab 6 model with this expression and output name. -->
-<!-- VERIFY in ArcGIS Pro 3.7: the Con dialog labels, and that %Elevation% substitutes in both the expression and the output name. Check value at 3,550 ft: 303,538 wet cells on the 30 m surface. -->
+<!-- Captured from the Lab 6 GUI build, October 1, 2026. Verified there: %Elevation% substitutes in both the expression and the output name (wet_3500, wet_3510, ...), and the 3,550 ft raster has 303,538 wet cells on the 30 m surface. Warn students not to switch the SQL Editor off after typing: switching it off and on cleared the expression. -->
 
 ---
 
 # Collect Values, Then Merge
 
-![h:420 center](images/lb-todo-model.svg)
+![h:455 center](images/lb-full-model.svg)
 
-- **Collect Values** gathers one output from every run; **Merge** makes them one feature class
+- **Collect Values** (ModelBuilder ▸ Utilities) gathers every run's output; **Merge** joins them
 
-<!-- TODO(capture): the finished Lab 6 model, ModelBuilder Export To Graphic, laid out in rows as Lab 5's Figure C. -->
-<!-- VERIFY: Collect Values' location (ModelBuilder ▸ Utilities in recent versions) and how it connects to Merge in ArcGIS Pro 3.7. -->
+<!-- The Lab 6 model as built in ArcGIS Pro 3.7.1, exported with Export To Graphic and laid out in four rows (same file as the lab page's Figure C). Merge's Input Datasets list does not offer Collect Values' output: drag a connector from Output Values to Merge and choose Input Datasets. -->
 
 ---
 
 # What One Run Gives You
 
-![h:420 center](images/lb-todo-run-result.svg)
+![h:400 center](images/lb-run-result.png)
 
-- **Shorelines** — one polygon per level, each with its **Elevation** and its **AreaSqMi**
+- **Shorelines** — one polygon per level, each with its **Elevation** and its **AreaSqMi**: 21 rows at the default range
 
-<!-- TODO(capture): the merged layer and its attribute table from the GUI-built model. The slide after next shows the same result from the arcpy run. -->
+<!-- The attribute table of powell_shorelines_3500_3700_10 from the GUI-built model (October 2, 2026): 75.65 sq mi at 3,500 ft, 103.93 at 3,550, the same as the arcpy run on the slide after next. A full run took about 4.5 minutes in ModelBuilder on the build machine. -->
+
 
 ---
 
@@ -145,7 +143,7 @@ By the end of class you should be able to:
 
 [Lab 6 — Lake Depth Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
 
-<!-- The map is the default run on the 10 m Wahweap close-up: 21 shorelines, darkest at 3,500 ft. Build and debug on this surface — a full run takes about a minute — then switch to the 30 m whole lake. Tuesday's datum lesson comes back here: Lake Powell's surface is in meters NAVD88 and Reclamation's record is in feet NGVD29, 2.91 ft apart (USGS SIR 2022-5017; NOAA VERTCON gives 2.90 ft at the dam). Skip Step 1 and every cell (955-1,441) is below 3,500, so the whole surface floods at every level. -->
+<!-- The map is the default run on the 10 m Wahweap close-up: 21 shorelines, darkest at 3,500 ft. A full run takes about four minutes on either surface in ModelBuilder, so debug on a short loop (3,500 to 3,520 by 10) first. Tuesday's datum lesson comes back here: Lake Powell's surface is in meters NAVD88 and Reclamation's record is in feet NGVD29, 2.91 ft apart (USGS SIR 2022-5017; NOAA VERTCON gives 2.90 ft at the dam). Skip Step 1 and every cell (955-1,441) is below 3,500, so the whole surface floods at every level. -->
 
 ---
 
@@ -189,7 +187,7 @@ By the end of class you should be able to:
 - Next week: **interpolation** — turning scattered points into a surface, which is how every bathymetry grid is made
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). Every lb-todo-*.svg is a placeholder for a real ArcGIS Pro capture from the Lab 6 model. -->
+<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:Amesab06guips); lb-todo-dem.svg on the tuesday deck is still a placeholder. -->
 
 ---
 
