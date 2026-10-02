@@ -6,7 +6,7 @@
   <title>CE 414 — Line It Up</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: which images can be georectified, where control points belong, and what an RMS error is really measuring.">
+  <meta name="description" content="CE 414 in-class quiz: why you georectify before you digitize, where control points belong, and what an RMS error is really measuring.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -16,31 +16,17 @@
 CE414Quiz.start({
   title: "Line It Up",
   subtitle: "CE 414 &middot; Week 4 &mdash; Georectifying Images<br>" +
-            "Eight judgment calls you have to make when you put a scanned image " +
+            "Five judgment calls you have to make when you put a scanned image " +
             "in its place on the earth &mdash; and the software makes none of them for you.",
   badge: "Georeferencing call",
   deckUrl: "../../slides/week-04/georectifying-images.html",
   questions: [
-    {
-      prompt: "An 1870s bird's-eye lithograph of Salt Lake City",
-      detail: "The city is drawn as if from the air at an angle: foreground streets are large, the mountains behind are small.",
-      options: ["Not georectifiable", "Georectifiable as is"],
-      answer: "Not georectifiable",
-      explanation: "It is drawn in oblique perspective, so the scale changes continuously from the foreground to the background. No two-dimensional transformation can stretch that into agreement with a map. What you need is a plan view at a constant scale — an orthographic map, or an orthophoto shot straight down."
-    },
     {
       prompt: "You are handed a paper earthquake fault map and you want to buffer the fault traces",
       detail: "Georectify and digitize are two of the three steps. Which comes first, and does the order really matter?",
       options: ["Digitize first — tracing is easier before the image warps", "Either order works; the features follow the image later", "Analyze first, to see whether the sheet is worth placing", "Georectify first — otherwise every trace lands in the wrong place"],
       answer: "Georectify first — otherwise every trace lands in the wrong place",
       explanation: "The sequence is georectify → digitize → analyze, and it is not a matter of taste. A scan has no coordinates, so place it; the fault traces are then still only pixels, so digitize them; only after that can you buffer, intersect or measure anything. Digitize first and every feature lands in the wrong place, permanently."
-    },
-    {
-      prompt: "Georeferencing and rectification are not the same word",
-      detail: "One of the two actually resamples the image. Which?",
-      options: ["Both resample the image, just at different stages of the work", "Rectification resamples the image; georeferencing does not", "Georeferencing resamples the image; rectification does not", "Neither resamples the image; digitizing is what changes it"],
-      answer: "Rectification resamples the image; georeferencing does not",
-      explanation: "Georeferencing gives an image real-world coordinates so the software knows where it is, and the pixels do not move. Rectification resamples the image onto that coordinate system, so the pixels really are square on the ground — they do move. Digitizing is a third thing again: drawing vector features off the image once it is in place."
     },
     {
       prompt: "All eight of your control points are on street corners in the town at the center of the sheet",
@@ -52,16 +38,9 @@ CE414Quiz.start({
     {
       prompt: "Which of these makes the worst control point?",
       detail: "You are matching a 1990 map sheet against current satellite imagery.",
-      options: ["A road intersection", "A section corner", "A bend in the river", "A rail line crossing"],
+      options: ["A bend in the river", "A road intersection", "A section corner", "A rail line crossing"],
       answer: "A bend in the river",
       explanation: "A control point has to be a thing that has not moved between the two sources. Road intersections, section corners and rail crossings hold still for decades. A riverbank, a shoreline, a field edge or a tree does not — the river bends on a 1990 sheet are the most tempting features on it and the worst, because that is not today's river."
-    },
-    {
-      prompt: "Three control points, a first-order polynomial, and a total RMS error of zero",
-      detail: "Your neighbor is delighted with the number. Should you be?",
-      options: ["No — a first-order polynomial fits three points exactly", "Yes — zero error means the sheet is placed perfectly", "Yes — zero means more points have nothing to add", "No — three points is below the minimum to compute it"],
-      answer: "No — a first-order polynomial fits three points exactly",
-      explanation: "Giving a transformation exactly its minimum number of points is a trap: the equation reproduces those points exactly no matter where they are, and reports nothing. A zero is not a good fit — it is an exact fit of too few points, and it says nothing about the rest of the sheet."
     },
     {
       prompt: "Spline will always give you the best-looking error on the list",
@@ -77,7 +56,7 @@ CE414Quiz.start({
       explanation: "Every control point helped solve the transformation, so its residual only describes how well the equation reproduces its own input. Check somewhere you did not fit: that distance is your georeferencing accuracy, and the RMS error is a fit statistic. It is the same hold-out logic as validating any model — and it is what Lab 3 Step 8 asks you to do three times over."
     }
   ],
-  perfectNote: "A perfect score — and the eight items were the judgment half, the half the software will not do for you.",
+  perfectNote: "A perfect score — and the five items were the judgment half, the half the software will not do for you.",
   goodNote: "Solid. Read the explanations on the ones you missed; the error questions are the ones Lab 3 Step 8 will hand back to you.",
   tryAgainNote: "Worth another pass. The short version: georectify before you digitize, spread the control points out to the corners and onto things that have not moved, and check the fit somewhere you did not fit."
 });

@@ -729,7 +729,7 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 <div class="columns">
 <div>
 
-Eight questions: what your coordinates **measure**, what your map **gives up**, and what both are **measured from**.
+Five questions: what your coordinates **measure**, what your map **gives up**, and what both are **measured from**.
 
 **Scan the code**, or open the link below.
 

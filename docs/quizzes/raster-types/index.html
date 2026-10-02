@@ -22,39 +22,11 @@ CE414Quiz.start({
   deckUrl: "../../slides/week-03/raster-analysis-a.html",
   questions: [
     {
-      prompt: "Digital Elevation Model (DEM)",
-      detail: "Each cell stores the terrain elevation above sea level in meters.",
-      options: ["Categorical", "Continuous"],
-      answer: "Continuous",
-      explanation: "Elevation forms a continuous surface. Between any two elevations there is a smooth gradient of real-numbered values, and averaging two of them means something."
-    },
-    {
       prompt: "National Land Cover Database (NLCD)",
       detail: "Cells are classified into categories like Deciduous Forest, Developed High Intensity, or Open Water.",
       options: ["Categorical", "Continuous"],
       answer: "Categorical",
       explanation: "The values are discrete classes. The numbers stored (41 for forest, 11 for water) are nominal codes, not quantities — the average of 41 and 11 is not a land cover type."
-    },
-    {
-      prompt: "Euclidean distance to major highways",
-      detail: "Each cell value is the straight-line distance in meters to the closest interstate.",
-      options: ["Categorical", "Continuous"],
-      answer: "Continuous",
-      explanation: "Proximity changes smoothly as you move away from a feature, which is what a distance surface measures."
-    },
-    {
-      prompt: "USDA SSURGO soil survey",
-      detail: "Cells identify named soil series and taxonomic soil orders across a county.",
-      options: ["Categorical", "Continuous"],
-      answer: "Categorical",
-      explanation: "Soil map units are discrete named classes with mapped boundaries, even though the transition in a real field is gradual."
-    },
-    {
-      prompt: "Land surface temperature",
-      detail: "Thermal infrared readings from satellite imagery, in degrees Celsius.",
-      options: ["Categorical", "Continuous"],
-      answer: "Continuous",
-      explanation: "Temperature varies smoothly across space. Nothing in the data imposes a boundary; any edges you see are real gradients."
     },
     {
       prompt: "Watershed identifier (HUC)",
@@ -69,13 +41,6 @@ CE414Quiz.start({
       options: ["Categorical", "Continuous"],
       answer: "Continuous",
       explanation: "NDVI is a ratio of measurements, so it is continuous. Note what happens in Lab 2: the moment you apply the threshold table, the continuous index becomes a categorical vegetation map."
-    },
-    {
-      prompt: "City zoning map",
-      detail: "Parcels classified as Single-Family Residential (R-1), General Commercial (C-2), Light Industrial, and so on.",
-      options: ["Categorical", "Continuous"],
-      answer: "Categorical",
-      explanation: "Zoning classes are legal designations with sharp jurisdictional boundaries that someone drew on purpose."
     },
     {
       prompt: "Slope in degrees, straight from the Slope tool",

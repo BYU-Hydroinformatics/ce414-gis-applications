@@ -576,7 +576,7 @@ A spline drives the total RMS to zero by construction, and can distort the map b
 <div class="columns">
 <div>
 
-Eight questions on **putting a scanned map in its place** — control points, and what RMS error is not.
+Five questions on **putting a scanned map in its place** — control points, and what RMS error is not.
 
 **Scan the code**, or open the link below.
 
@@ -594,7 +594,7 @@ Eight questions on **putting a scanned map in its place** — control points, an
 </div>
 </div>
 
-<!-- Four or five minutes, individually, then a show of hands on the spline item. That is the one that splits the room: students read "lowest error" as "best fit" and pick spline, and the explanation only lands if you say out loud that spline drives the RMS to zero by construction and can wreck the map between the points. The hold-out item behind it is the idea worth the whole hour. If the room has no signal, put the URL on the board; the items read aloud just as well, and the spline and three-point items are worth arguing through together anyway. -->
+<!-- Four or five minutes, individually, then a show of hands on the spline item. That is the one that splits the room: students read "lowest error" as "best fit" and pick spline, and the explanation only lands if you say out loud that spline drives the RMS to zero by construction and can wreck the map between the points. The hold-out item behind it is the idea worth the whole hour. If the room has no signal, put the URL on the board; the items read aloud just as well, and the spline and hold-out items are worth arguing through together anyway. -->
 
 <!-- Conversion notes (2026-09-03): Source "CE 414 Week 4 - Georectifying Images.pptx", 19 slides → 19 slides here (no slide dropped; source slides 11+12 merged into one, 13+14 merged into one, and three slides added: Today's Goals, In ArcGIS Pro, Before Next Class).
 

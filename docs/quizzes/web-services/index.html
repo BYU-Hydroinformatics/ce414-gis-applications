@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "What Comes Back?",
   subtitle: "CE 414 &middot; Week 9 &mdash; Overview of OGC Web Services<br>" +
-            "Eight decisions about what a service actually hands you &mdash; " +
+            "Five decisions about what a service actually hands you &mdash; " +
             "a <strong>picture</strong>, the <strong>features</strong>, the <strong>values</strong>, " +
             "or only a pointer to somebody else&rsquo;s server.",
   badge: "OGC web services",
@@ -38,9 +38,9 @@ CE414Quiz.start({
       badge: "Choosing a service",
       options: [
         "Web Map Service (WMS)",
-        "Web Feature Service (WFS)",
         "Web Coverage Service (WCS)",
-        "Catalog Service for the Web (CSW)"
+        "Catalog Service for the Web (CSW)",
+        "Web Feature Service (WFS)"
       ],
       answer: "Web Feature Service (WFS)",
       explanation: "WFS returns the features themselves — geometry plus attributes, encoded as GML — so the client holds the values and can query them. A WMS would put the same countries on screen as a picture with nothing left to interrogate; WCS serves coverages; CSW serves metadata about where services live."
@@ -58,17 +58,6 @@ CE414Quiz.start({
       explanation: "A WMS response is a symbolized picture, rendered on the fly from whichever bands you requested. It still supports GetFeatureInfo, because a pixel location on the returned image corresponds to a point in the data on the server — the deck's example comes back with an elevation of 237 meters. But the numbers in the image are display colors, not measurements, and there are no features inside it to select. For the values you would ask a WCS; for editable features, a WFS."
     },
     {
-      prompt: "Why can a tiled map service (WMTS) be cached when a plain Web Map Service really cannot?",
-      badge: "Tiling",
-      options: [
-        "Tiles are small enough to fit in a browser cache; a full map image is not",
-        "WMTS serves a fixed pyramid of tiles, so requests repeat; a WMS request never does",
-        "WMTS uses a compressed image format that a WMS is not allowed to return"
-      ],
-      answer: "WMTS serves a fixed pyramid of tiles, so requests repeat; a WMS request never does",
-      explanation: "The trade is generality for speed. A WMS request names a coordinate system, a bounding box and a pixel width and height, so almost every request is unique and has to be drawn fresh. A WMTS request names a tile matrix, a row and a column, so a popular tile is drawn once and served forever. That is why every web basemap you have ever panned around is tiled."
-    },
-    {
       prompt: "A triangulated irregular network (TIN) of ground elevations",
       detail: "Does it count as a coverage?",
       badge: "Coverages",
@@ -81,38 +70,15 @@ CE414Quiz.start({
       explanation: "A coverage associates positions within a bounded space with attribute values — a space-varying phenomenon — and nothing in that definition demands square cells. The deck's four examples run from a brightness grid through land cover and multi-spectral imagery to a TIN, which also settles the third option: land cover is categories, brightness is magnitudes, and the coverage does not care which."
     },
     {
-      prompt: "Which of these is an encoding rather than a service?",
-      badge: "Service or encoding",
-      options: [
-        "Web Coverage Service (WCS)",
-        "Catalog Service for the Web (CSW)",
-        "Geography Markup Language (GML)",
-        "Web Processing Service (WPS)"
-      ],
-      answer: "Geography Markup Language (GML)",
-      explanation: "GML is an XML encoding for features, their geometry and their attributes — it is what arrives on the wire, not something you send a request to. The other three are services you ask. The same split puts KML, SLD and NetCDF on the encoding side and WMS, WFS and SOS on the service side, and it is why the service and the format are two separate choices."
-    },
-    {
       prompt: "What does a catalog service actually serve?",
       badge: "Publish, find, bind",
       options: [
         "A copy of the features held by every server it knows about",
-        "Metadata about other data and services, so a client can find them",
-        "Pre-rendered maps of everything in its holdings"
+        "Pre-rendered maps of everything in its holdings",
+        "Metadata about other data and services, so a client can find them"
       ],
       answer: "Metadata about other data and services, so a client can find them",
       explanation: "A catalog is a service whose data is metadata about other services — the GEOSS registry in the deck is a list of published components, not a copy of their data. It carries the publish and find steps of publish / find / bind: a provider advertises there, a client discovers what it needs, and then binds straight to the provider that holds the data."
-    },
-    {
-      prompt: "An agency wants other people's applications to discover and run its flood model over the web, rather than download its data.",
-      badge: "Publishing a process",
-      options: [
-        "Web Feature Service (WFS)",
-        "Web Coverage Service (WCS)",
-        "Web Processing Service (WPS)"
-      ],
-      answer: "Web Processing Service (WPS)",
-      explanation: "WPS applies publish / find / bind to a verb instead of a noun: it publishes a process — any algorithm, calculation or model that operates on spatially referenced data, from subtracting two sets of numbers to a global climate model — so a client can discover it and run it where the data already is. It is the ancestor of the geoprocessing services you meet in ArcGIS Pro, and chaining several of them together is how the deck's wildfire example gets from raw imagery to a decision."
     }
   ],
   perfectNote: "A perfect score — you can read a service listing now and know what will land in your hands.",

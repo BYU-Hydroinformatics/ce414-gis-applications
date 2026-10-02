@@ -20,8 +20,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Ready to Pitch?](../quizzes/final-project/index.html) — Eight questions on what the final project asks of you: what counts as a big enough project, what the proposal meeting is for, and how the work is judged.
-- [Where Am I?](../quizzes/gps/index.html) — Eight questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, and what differential correction cannot remove.
+- [Ready to Pitch?](../quizzes/final-project/index.html) — Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.
+- [Where Am I?](../quizzes/gps/index.html) — Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.
 
 </div>
 

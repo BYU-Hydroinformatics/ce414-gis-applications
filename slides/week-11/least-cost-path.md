@@ -286,7 +286,7 @@ Nothing outside slides/week-11/ was created or modified. -->
 <div class="columns">
 <div>
 
-Eight questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link below.
+Five questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
@@ -307,8 +307,5 @@ Eight questions on what a **cost surface** stores, and why the cheapest line is 
      cost of the cheapest route to that cell", because that is the raster they just watched get
      built - so name the difference out loud. A cell of the cost surface is a price for crossing
      that one cell; the accumulated cost raster is the running total of the cheapest way to reach
-     it. Everything else in the hour hangs off that distinction. The diagonal item is the other one
-     worth ten seconds: diagonal steps are legal and the back link raster codes all eight
-     neighbors, they simply cost about the square root of 2 more, which is why the path comes out
-     stepped. If the room has no signal, put the URL on the board; the items read aloud just as
+     it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
      well. -->

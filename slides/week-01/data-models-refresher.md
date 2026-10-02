@@ -559,7 +559,7 @@ The reading chapters, Quiz 1, and its due date were filled in from the Fall 2026
 <div class="columns">
 <div>
 
-Eight questions on **what the computer actually stores** for a point, a line, a polygon and a grid.
+Five questions on **what the computer actually stores** for a point, a line, a polygon and a grid.
 
 **Scan the code**, or open the link below.
 
@@ -577,4 +577,4 @@ Eight questions on **what the computer actually stores** for a point, a line, a 
 </div>
 </div>
 
-<!-- Speaker note: four minutes, individually, then a show of hands on the two that split the room. The first is "shapefile vs. polyline" - half the class has used shapefiles for a year without ever separating the format from the model, and this is the item that makes the distinction stick. The second is the stream gage question: somebody always argues for a raster because the gages measure a flowing river, so name the difference out loud - the river is continuous, the gages are not, and you can only store what was actually measured. If the room has no signal, put the URL on the board; the items read aloud just as well, and the eight of them take about the same four minutes. -->
+<!-- Speaker note: four minutes, individually, then a show of hands on the two that split the room. The first is "shapefile vs. polyline" - half the class has used shapefiles for a year without ever separating the format from the model, and this is the item that makes the distinction stick. The second is the stream gage question: somebody always argues for a raster because the gages measure a flowing river, so name the difference out loud - the river is continuous, the gages are not, and you can only store what was actually measured. If the room has no signal, put the URL on the board; the items read aloud just as well, and the five of them take about the same four minutes. -->

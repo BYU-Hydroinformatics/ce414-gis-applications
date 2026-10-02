@@ -21,7 +21,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Points Into Surfaces](../quizzes/interpolation/index.html) — Eight questions on estimating a surface from points: Thiessen polygons, IDW, splines and kriging, and how you would judge which one to trust.
+- [Points Into Surfaces](../quizzes/interpolation/index.html) — Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.
 
 </div>
 

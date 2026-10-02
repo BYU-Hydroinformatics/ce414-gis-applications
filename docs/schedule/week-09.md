@@ -16,7 +16,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [What Comes Back?](../quizzes/web-services/index.html) — Eight questions on what each OGC service actually hands you: a picture, the features themselves, the coverage values, or somewhere to find them.
+- [What Comes Back?](../quizzes/web-services/index.html) — Five questions on what each OGC service actually hands you (a picture, the features themselves, the coverage values, or somewhere to find them) and why a standard is a document, not software.
 
 </div>
 

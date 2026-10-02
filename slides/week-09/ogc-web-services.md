@@ -1296,7 +1296,7 @@ TODO(instructor) for the reading chapter; and VERIFY on the Lab 7 pairing in Bef
 <div class="columns">
 <div>
 
-Eight questions, one each: **what does the service actually hand you** — a picture, the features, the values, or a pointer to somebody else's server?
+Five questions: **what does the service actually hand you** — a picture, the features, the values, or a pointer to somebody else's server?
 
 **Scan the code**, or open the link below.
 

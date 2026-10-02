@@ -680,7 +680,7 @@ The example map is not a template: yours will differ, because your stores and yo
 <div class="columns">
 <div>
 
-Eight questions on **turning a canvas into a tool** someone else can run.
+Five questions on **turning a canvas into a tool** someone else can run.
 
 **Scan the code**, or open the link below.
 

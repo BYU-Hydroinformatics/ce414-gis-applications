@@ -19,8 +19,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Line It Up](../quizzes/georectifying/index.html) — Eight questions on putting a scanned image in its place: which sources can be georectified at all, where control points belong, and why a small RMS error is not an accuracy figure.
-- [Light and Bands](../quizzes/remote-sensing/index.html) — Eight questions on where near-infrared, thermal infrared and radar sit on the spectrum, what a band is, and whether an image shows reflected light or emitted heat.
+- [Line It Up](../quizzes/georectifying/index.html) — Five questions on putting a scanned image in its place: why you georectify before you digitize, where control points belong, and why a small RMS error is not an accuracy figure.
+- [Light and Bands](../quizzes/remote-sensing/index.html) — Five questions on what a band is, why vegetation is bright in reflected near-infrared, what makes a display false color, and why no one satellite does everything.
 
 </div>
 

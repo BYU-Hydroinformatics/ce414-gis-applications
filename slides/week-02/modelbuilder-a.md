@@ -679,7 +679,7 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 <div class="columns">
 <div>
 
-Eight questions on **reading a canvas** — and the projection, unit and dissolve calls inside Cities Near Rivers.
+Five questions on **reading a canvas** — and the projection and dissolve calls inside Cities Near Rivers.
 
 **Scan the code**, or open the link below.
 
@@ -697,7 +697,7 @@ Eight questions on **reading a canvas** — and the projection, unit and dissolv
 </div>
 </div>
 
-<!-- Four minutes, phones out, then a show of hands on the buffer-unit item - that is the one that splits the room, because a number with no unit looks finished. The dissolve question is the other one worth a sentence out loud: without it, Intersect returns a city twice wherever two river buffers overlap, and 256 stops being a count of cities. If the room has no signal, put the URL on the board; the items read aloud just as well, and the buffer item works as a straight show of hands. -->
+<!-- Four minutes, phones out, then a show of hands on the dissolve item - that is the one worth a sentence out loud: without it, Intersect returns a city twice wherever two river buffers overlap, and 256 stops being a count of cities. If the room has no signal, put the URL on the board; the items read aloud just as well, and the dissolve item works as a straight show of hands. -->
 
 <!--
 Revision notes (2026-09-07): Part A revised against slides/week-02/LECTURE_PLAN.md. 28 slides -> 35.

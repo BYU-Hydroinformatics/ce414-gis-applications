@@ -6,7 +6,7 @@
   <title>CE 414 — Light and Bands</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: hex colors, the bands inside a color image, false color, and the satellites that take the pictures.">
+  <meta name="description" content="CE 414 in-class quiz: the bands inside a color image, near-infrared, false color, and the satellites that take the pictures.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -16,35 +16,11 @@
 CE414Quiz.start({
   title: "Light and Bands",
   subtitle: "CE 414 &middot; Week 4 &mdash; Remote Sensing<br>" +
-            "Eight questions on <strong>hex colors</strong>, the <strong>bands</strong> inside a color " +
-            "image, <strong>false color</strong>, and the <strong>satellites</strong> that take the pictures.",
+            "Five questions on the <strong>bands</strong> inside a color image, " +
+            "<strong>near-infrared</strong>, <strong>false color</strong>, and the <strong>satellites</strong> that take the pictures.",
   badge: "Remote sensing",
   deckUrl: "../../slides/week-04/remote-sensing.html",
   questions: [
-    {
-      prompt: "What color is #FFFF00?",
-      badge: "Hex colors",
-      options: [
-        "Green",
-        "Yellow",
-        "White",
-        "Pure red"
-      ],
-      answer: "Yellow",
-      explanation: "Read it in pairs: FF red, FF green, 00 blue. Full red plus full green with no blue is yellow. White would need blue at FF too (#FFFFFF). It is the same reason the yellow state lines vanished from the blue band of the snow image: yellow has nothing in the blue band."
-    },
-    {
-      prompt: "Two hexadecimal digits per band give 256 levels each of red, green and blue. Why is that enough?",
-      badge: "Hex colors",
-      options: [
-        "About 16.8 million colors, far more than the eye can resolve",
-        "Exactly as many colors as the eye can resolve, none to spare",
-        "Only 256 colors in all, which is what one pixel can store",
-        "Hexadecimal has no upper limit, so it covers every color"
-      ],
-      answer: "About 16.8 million colors, far more than the eye can resolve",
-      explanation: "Each band runs 00 to FF, which is 0 to 255, so the combinations are 256 × 256 × 256 = 16,777,216. The working figure for how many colors the eye can tell apart is about a million, so neighboring hex colors that differ by one step in one band are mostly invisible."
-    },
     {
       prompt: "You split a color photo into its red, green and blue bands. What does each band hold?",
       badge: "Bands",
@@ -58,25 +34,13 @@ CE414Quiz.start({
       explanation: "Every band covers every pixel. It is one sheet of grid paper, holding one number per cell: how much red, or green, or blue light came back from that spot, from 0 to 255. Stack the three sheets and each pixel has three numbers, which is its hex color."
     },
     {
-      prompt: "An orange pixel is #FFA500. What is its value in the blue band, and how does it look there?",
-      badge: "Hex and bands",
-      options: [
-        "255, so it shows bright blue",
-        "165, so it shows medium blue",
-        "A5, so it shows medium blue",
-        "0, so it shows as black"
-      ],
-      answer: "0, so it shows as black",
-      explanation: "The pairs are FF red, A5 green and 00 blue. A5 is the green band's value (165), not the blue band's. The blue pair is 00, so this pixel sends back no blue at all and is black in the blue band. That is why the orange city lights nearly vanished from the blue band of the Europe-at-night image."
-    },
-    {
       prompt: "Healthy vegetation is bright in a reflected near-infrared image. Why?",
       badge: "Reflected or emitted",
       options: [
         "The leaves are warmer than the bare ground surrounding them",
         "Chlorophyll emits near-infrared during photosynthesis",
-        "Leaf structure reflects near-infrared back to the sensor",
-        "The sensor brightens vegetation so that it stands out"
+        "The sensor brightens vegetation so that it stands out",
+        "Leaf structure reflects near-infrared back to the sensor"
       ],
       answer: "Leaf structure reflects near-infrared back to the sensor",
       explanation: "Reflected near-infrared is sunlight bouncing off a surface, exactly like visible light — it is not heat. Thermal infrared, farther along the spectrum, is energy a surface emits because of its own temperature. Plants are bright in the near-infrared because leaves reflect it, not because they are warm."
@@ -111,16 +75,16 @@ CE414Quiz.start({
       options: [
         "Each satellite can carry only one band at a time",
         "Only one space agency is allowed to launch them",
-        "Sharper pixels cost coverage and time between visits",
+        "Sharper pixels cost coverage and revisit time",
         "Clouds block every sensor, whatever its band"
       ],
-      answer: "Sharper pixels cost coverage and time between visits",
+      answer: "Sharper pixels cost coverage and revisit time",
       explanation: "Every satellite trades detail against coverage and revisit. A sub-meter commercial image shows one torn roof but covers a few blocks; a weather satellite sees the whole storm every few minutes with pixels kilometers wide; Landsat sits in between. Satellites carry many bands, many agencies launch them, and radar sees through cloud."
     }
   ],
-  perfectNote: "A perfect score — you can read a hex color, pull an image apart into bands, and say what any display of those bands means.",
-  goodNote: "Solid. Read the explanations for the ones you missed; the hex-and-bands pair is the one to get solid before Quiz 4.",
-  tryAgainNote: "Worth another pass. The short version: a hex color is three pairs, one per band; a band is one grid of numbers from 0 to 255; and any colors you put on a band make a false-color display."
+  perfectNote: "A perfect score — you can pull an image apart into bands, and say what any display of those bands means.",
+  goodNote: "Solid. Read the explanations for the ones you missed; the bands question is the one to get solid before Quiz 4.",
+  tryAgainNote: "Worth another pass. The short version: a band is one grid of numbers from 0 to 255, one brightness per pixel; any colors you put on a band make a false-color display; and sharper pixels cost a satellite coverage and revisit time."
 });
 </script>
 </body>

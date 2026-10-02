@@ -461,7 +461,7 @@ Utah County, July 2025, cells at or above the threshold:
 <div class="columns">
 <div>
 
-Ten real datasets, one question each: **is that cell value a label, or a measurement?**
+Five real datasets, one question each: **is that cell value a label, or a measurement?**
 
 **Scan the code**, or open the link below.
 

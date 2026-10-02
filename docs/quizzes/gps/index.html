@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Where Am I?",
   subtitle: "CE 414 &middot; Week 12 &mdash; GPS and Positioning<br>" +
-            "Eight questions on how a receiver turns a radio signal into a <strong>position</strong> " +
+            "Five questions on how a receiver turns a radio signal into a <strong>position</strong> " +
             "&mdash; and on why that position is never exactly where you are standing.",
   badge: "Positioning question",
   deckUrl: "../../slides/week-12/gps-triangulation.html",
@@ -27,23 +27,11 @@ CE414Quiz.start({
       options: [
         "The angle between the receiver and the satellite",
         "The satellite's bearing and its height above the horizon",
-        "The distance to the satellite, from the signal's travel time",
-        "The strength of the signal arriving from the satellite"
+        "The strength of the signal arriving from the satellite",
+        "The distance to the satellite, from the signal's travel time"
       ],
       answer: "The distance to the satellite, from the signal's travel time",
       explanation: "Distance = speed of light x travel time, the D = R x T line from part B. Because what is measured is a distance and not an angle, the method is trilateration. Triangulation — fixing a position from measured angles to known points — is the classical surveying technique, and a GPS receiver never measures an angle at all."
-    },
-    {
-      prompt: "Where does the travel time come from?",
-      detail: "The receiver has no way to ask the satellite how long the trip took.",
-      options: [
-        "It times a pulse it sends up to the satellite and waits for the return",
-        "It slides its copy of the satellite's pseudorandom code until they line up",
-        "It measures how much the signal has weakened on the way down",
-        "It compares the frequency it receives with the frequency the satellite transmits"
-      ],
-      answer: "It slides its copy of the satellite's pseudorandom code until they line up",
-      explanation: "Satellite and receiver each run the same pseudorandom sequence, started together by synchronized clocks. The receiver slides its own copy along in time until it matches the code that arrived, and the size of that shift is the travel time. A pseudorandom code is transmitted rather than a plain tone precisely because it lines up in exactly one place. Note also that GPS is one-way: the receiver only listens, and sends nothing up."
     },
     {
       prompt: "Three ranges already narrow you to two points, and knowing you are on the earth rules one of them out. So why does a receiver want a further measurement?",
@@ -57,18 +45,6 @@ CE414Quiz.start({
       explanation: "Until the receiver's clock error is solved for, every measurement is a pseudorange rather than a true range. A receiver's clock is nothing like as good as the ones on the satellites, and at the speed of light a very small timing error becomes a large distance error — so the extra measurement is spent on the clock, not on redundancy. Further readings beyond that go toward atmospheric and other errors."
     },
     {
-      prompt: "You take a fix standing against the glass face of a downtown building, and part of the signal reaches you after bouncing off the wall.",
-      detail: "Multipath. What does the bounce do to the range the receiver computes?",
-      options: [
-        "Makes it too short",
-        "Leaves it alone — the direct signal always arrives first and wins",
-        "Makes it too long or too short, depending on the angle of the wall",
-        "Makes it too long"
-      ],
-      answer: "Makes it too long",
-      explanation: "A reflected signal travels a longer path than the direct one, so it arrives late and the computed travel time — and with it the range — is too long. A reflection can only lengthen a path, never shorten it. That is why the same receiver can be good in an open field and close to useless between two buildings, and why the advice is simply to stay away from structures."
-    },
-    {
       prompt: "A canyon wall takes four of your satellites out of view — all of them low in the sky on one side.",
       detail: "You still have enough satellites for a fix. What is the main cost?",
       options: [
@@ -79,13 +55,6 @@ CE414Quiz.start({
       ],
       answer: "Bunched satellites make the range bands cross at shallow angles",
       explanation: "This is dilution of precision, and it is about geometry rather than signal strength. A measured range is not a line but a band of uncertainty; where the bands cross at a wide angle they leave a small area the receiver cannot distinguish within, and where they cross shallow they leave a long thin one. Same receiver, same signals, worse fix. It is also why losing the low satellites first hurts more than losing the same number overhead — the coverage problem under canopy or in an urban canyon and the geometry problem are the same problem."
-    },
-    {
-      prompt: "On the error table for civilian Standard Positioning Service, which entry is the largest?",
-      detail: "Not the hardest to remove — the biggest.",
-      options: ["Ionospheric delay", "Satellite clocks", "User error", "Multipath"],
-      answer: "User error",
-      explanation: "Every system source on that slide is a few meters or less, and the ionosphere is the largest of them. User error is listed at up to a kilometer or more: standing in the wrong place, recording the wrong feature, mistyping a point ID. The system is better than its users, and no amount of differential correction touches that line of the table. Remember too that the errors are cumulative, and that poor geometry multiplies whatever is left."
     },
     {
       prompt: "A base station sits on a point whose coordinates are already known. At this moment the satellites place it a little north and east of where it truly is.",

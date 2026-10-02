@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Cheapest or Shortest?",
   subtitle: "CE 414 &middot; Week 11 &mdash; Least Cost Path Analysis<br>" +
-            "Eight questions on the &quot;virtual terrain&quot;: what a cost surface really stores, " +
+            "Five questions on the &quot;virtual terrain&quot;: what a cost surface really stores, " +
             "what the two routing rasters each hold, and why the cheapest route is almost never " +
             "the shortest one.",
   badge: "Routing question",
@@ -57,17 +57,6 @@ CE414Quiz.start({
       explanation: "Length counts cells; cost sums what those cells charge. Detouring adds cells, but at 1 each instead of 4, so the longer route wins on price. That gap between shortest and cheapest is the entire reason for the analysis — if they were the same line you would just draw it."
     },
     {
-      prompt: "Stepping diagonally to a neighboring cell, compared with stepping straight across to the cell beside it",
-      options: [
-        "Costs the same — a neighbor is a neighbor",
-        "Costs less — it advances in two directions at once",
-        "Costs more — the diagonal covers more ground",
-        "Is not allowed; paths run along rows and columns"
-      ],
-      answer: "Costs more — the diagonal covers more ground",
-      explanation: "A diagonal step crosses about the square root of 2 times the ground of an orthogonal one, so it is charged roughly that much more. Diagonal moves are perfectly legal — the back link raster codes all eight neighbors — they are just priced higher, which is why a least-cost path often comes out stepped instead of running clean diagonals."
-    },
-    {
       prompt: "What does each cell of the accumulated cost (cost distance) raster store?",
       options: [
         "The cheapest total cost of reaching that cell",
@@ -88,28 +77,6 @@ CE414Quiz.start({
       ],
       answer: "It records which neighbor to step to next",
       explanation: "The accumulated cost raster says how much; the back link raster says which way, as a code from 0 to 8 naming a neighbor. Starting at the destination and following those codes cell by cell until you arrive at the source is the whole path-finding step — which is why the route is traced backward, destination to source."
-    },
-    {
-      prompt: "The routing tool hands you a path that is one cell wide. What does the workflow do with it before you can symbolize and map it?",
-      options: [
-        "Reclassify the path raster first",
-        "Convert the path into a polyline",
-        "Add it back to the cost surface",
-        "Nothing — map the raster as it is"
-      ],
-      answer: "Convert the path into a polyline",
-      explanation: "The answer arrives as a raster, one cell wide, and a raster has no line symbology to give it — you cannot set a width, a color and a line style on it the way a map needs. Raster to Polyline is the last step of the Lab 11 model for exactly that reason."
-    },
-    {
-      prompt: "Cost Distance, Cost Back Link, and Cost Path still run in ArcGIS Pro, but Esri has deprecated them. What are the current replacements?",
-      options: [
-        "Reclassify, then run the Raster Calculator",
-        "Euclidean Distance, followed by Raster to Polyline",
-        "Distance Accumulation, then Optimal Path As Line",
-        "There is no replacement; they are the only option"
-      ],
-      answer: "Distance Accumulation, then Optimal Path As Line",
-      explanation: "Distance Accumulation produces the accumulative cost raster and the back direction raster in one run, and Optimal Path As Line can hand you a polyline directly. Only names and a few parameters moved — the idea is unchanged. Lab 11's steps and rubric assume the legacy tools, so confirm in class which set to use before you start."
     }
   ],
   perfectNote: "Every one. You have the distinction the whole lab rests on: the algorithm is exact, but only about the cost surface you gave it.",

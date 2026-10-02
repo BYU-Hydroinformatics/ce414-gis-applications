@@ -6,7 +6,7 @@
   <title>CE 414 — Points Into Surfaces</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: what each sampling design and interpolation method actually does with a scatter of measured points.">
+  <meta name="description" content="CE 414 in-class quiz: what each interpolation method actually does with a scatter of measured points.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -22,17 +22,6 @@ CE414Quiz.start({
   deckUrl: "../../slides/week-08/interpolation.html",
   questions: [
     {
-      prompt: "A systematic grid over a ridge-and-valley landscape",
-      detail: "Samples are spaced at fixed X, Y intervals, and the spacing happens to be close to the spacing of the ridges.",
-      options: [
-        "It may be biased — the spacing matches the ridge spacing",
-        "Fixed spacing makes the design unbiased by construction",
-        "The design puts extra points where the surface varies most"
-      ],
-      answer: "It may be biased — the spacing matches the ridge spacing",
-      explanation: "A systematic design can line up with a repeating pattern in the terrain and land on ridge tops every time, so the valleys never enter the sample. Random sampling is less prone to that; adaptive sampling is the one that concentrates effort where the variable changes fastest, and it needs prior knowledge of where that is."
-    },
-    {
       prompt: "A Thiessen surface is flat inside each polygon and jumps at every boundary. Why?",
       options: [
         "Each cell averages every sample inside a search radius",
@@ -44,17 +33,6 @@ CE414Quiz.start({
       explanation: "Thiessen is the zero-weighting case: the nearest point takes all of the weight and every other point takes none, so the estimate cannot change until you cross into another point's polygon. That suits a discrete variable such as soil type, and misrepresents a continuous one such as elevation or temperature."
     },
     {
-      prompt: "You keep enlarging the search radius on a fixed-radius local average",
-      detail: "Same sample points, same output grid — only the circle centered over each cell gets bigger.",
-      options: [
-        "The surface sharpens, showing more detail near each sample",
-        "The surface smooths out, flattening toward one average value",
-        "The surface starts passing exactly through the measured values"
-      ],
-      answer: "The surface smooths out, flattening toward one average value",
-      explanation: "Each circle ends up holding most of the samples, so neighboring cells average nearly the same list of points and the detail disappears. Shrinking the radius is the opposite failure: some circles contain no points at all, and those cells come out empty."
-    },
-    {
       prompt: "You raise the IDW exponent from 1 to 3 and change nothing else",
       options: [
         "All sample points move toward equal weight",
@@ -63,17 +41,6 @@ CE414Quiz.start({
       ],
       answer: "Closer sample points take more of the weight",
       explanation: "The weights are one over distance raised to that exponent, so a larger exponent concentrates weight on the nearest points and pushes the surface toward the nearest-sample answer. The number of neighbors is a separate knob: using more of them smooths the surface but does not remove the bull's-eye rings around isolated points, because the exponent, not the neighbor count, is what concentrates the weight."
-    },
-    {
-      prompt: "The trend surface fitted to your points looks nothing like the original surface",
-      detail: "The regional slope is there, but the drainage detail is gone. Is something wrong?",
-      options: [
-        "No — a trend surface drops local detail on purpose",
-        "Yes — the search radius has been set much too large",
-        "Yes — the distance exponent needs to be raised"
-      ],
-      answer: "No — a trend surface drops local detail on purpose",
-      explanation: "A trend surface is a regression: one polynomial fit through every measured point at once, so each sample influences the entire surface instead of only its own neighborhood. It has no search radius and no distance exponent, and it typically does not pass through the measured values."
     },
     {
       prompt: "Kriging is described as similar to IDW. Where does it differ?",

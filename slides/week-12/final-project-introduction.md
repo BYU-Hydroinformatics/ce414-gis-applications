@@ -339,13 +339,13 @@ wording, whether to keep the "two new tools" rule, meeting booking method. -->
 <div class="columns">
 <div>
 
-Eight calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result?
+Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result?
 
 **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that the assignment landed
 - Every answer explains itself; read the explanation before you move on
-- Item 5 is the proposal meeting in miniature — bring the feasibility table
+- Item 4 is the proposal meeting in miniature — bring the feasibility table
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/final-project/</span>
 

@@ -433,7 +433,7 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 <div class="columns">
 <div>
 
-Eight questions on what a receiver actually measures, and on why the position it reports is never exactly where you are.
+Five questions on what a receiver actually measures, and on why the position it reports is never exactly where you are.
 
 **Scan the code**, or open the link below.
 

@@ -21,8 +21,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Models and ModelBuilder](../quizzes/modelbuilder-basics/index.html) — Eight questions on what a model is, how to read the ModelBuilder canvas, and the projection, unit and dissolve decisions inside the Cities Near Rivers model.
-- [Canvas to Tool](../quizzes/model-parameters/index.html) — Eight questions on turning a canvas into a tool someone else can run: getting output onto the map, gray elements, parameters, renaming, and metadata.
+- [Models and ModelBuilder](../quizzes/modelbuilder-basics/index.html) — Five questions on what a model is, how to read the ModelBuilder canvas, and the projection and dissolve decisions inside the Cities Near Rivers model.
+- [Canvas to Tool](../quizzes/model-parameters/index.html) — Five questions on turning a canvas into a tool someone else can run: why every tool needs its output drawn, parameters, why two right models can disagree, and metadata.
 
 </div>
 

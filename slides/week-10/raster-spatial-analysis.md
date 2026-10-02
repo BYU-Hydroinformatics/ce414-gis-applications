@@ -263,7 +263,7 @@ These are content decisions for the instructor, not conversion fixes, so nothing
 <div class="columns">
 <div>
 
-Eight decisions from today's workflow: criteria, **reclassify**, overlay, and reading the surface.
+Five decisions from today's workflow: criteria, **reclassify**, overlay, and reading the surface.
 
 **Scan the code**, or open the link below.
 

@@ -16,7 +16,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Criteria to Surface](../quizzes/suitability/index.html) — Eight questions on the suitability workflow: criteria, reclassifying onto a common scale, weighting, overlay, and reading the surface you get.
+- [Criteria to Surface](../quizzes/suitability/index.html) — Five questions on the suitability workflow: framing the question, reclassifying criteria onto a common scale, ruling land out, and reading the surface you get.
 
 </div>
 

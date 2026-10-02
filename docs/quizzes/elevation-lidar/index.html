@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Surfaces and Returns",
   subtitle: "CE 414 &middot; Week 5 &mdash; Elevation Data and LiDAR<br>" +
-            "Eight calls on where a surface <strong>comes from</strong> &mdash; how it is measured, " +
+            "Five calls on where a surface <strong>comes from</strong> &mdash; how it is measured, " +
             "which one to download, and what the cell size costs you.",
   badge: "Elevation question",
   deckUrl: "../../slides/week-05/elevation-data-lidar.html",
@@ -56,38 +56,6 @@ CE414Quiz.start({
       options: ["The bare-earth terrain model", "A surface off the buildings"],
       answer: "A surface off the buildings",
       explanation: "A bare-earth model is classified to ground returns only, with vegetation and structures removed — so it discards exactly the rooftops the study needs. The city surface in this lecture is extracted from the building returns in an airborne point cloud, and it is the input to line-of-sight, solar potential, view analysis and flood modeling in an urban core."
-    },
-    {
-      prompt: "Airborne or terrestrial LiDAR?",
-      detail: "You need a very dense scan of a single quarry face to monitor whether it is moving.",
-      options: [
-        "A terrestrial, tripod-mounted scanner",
-        "Airborne LiDAR, flown over the site"
-      ],
-      answer: "A terrestrial, tripod-mounted scanner",
-      explanation: "The trade is extent against density. Airborne LiDAR gets you a whole county; a terrestrial scanner gets you one slope, one bridge or one quarry face at far higher point density — the same reason a monument like Mount Rushmore is scanned from the ground for documentation and change monitoring. Civil engineering uses both, and the job picks one."
-    },
-    {
-      prompt: "A global DEM has a cell size of 3 arc-seconds. Roughly how many meters is that on the ground?",
-      options: [
-        "About 3 meters",
-        "About 30 meters",
-        "About 90 meters",
-        "About 300 meters"
-      ],
-      answer: "About 90 meters",
-      explanation: "One arc-second of latitude is about 30.9 meters, so 3 arc-seconds is about 90 meters — the cell size of the original global SRTM release. Arc-seconds of longitude shrink toward the poles with the cosine of latitude, so in Provo, at about 40° north, a 3 arc-second cell is about 90 meters north to south but only about 70 meters east to west. That is why a DEM in geographic coordinates has to be projected before you measure distance or slope on it."
-    },
-    {
-      prompt: "You open The National Map downloader for a site in Utah County and want the finest DEM available. What should you expect?",
-      options: [
-        "1 meter coverage everywhere in the United States",
-        "Only 1 arc-second, about 30 meters, nationwide",
-        "The same 1 meter coverage over the whole world",
-        "1 meter if it exists, otherwise 10 or 30 meters"
-      ],
-      answer: "1 meter if it exists, otherwise 10 or 30 meters",
-      explanation: "The 3D Elevation Program publishes 1 meter, 1/3 arc-second and 1 arc-second products, and which of them exists depends on where you look. So draw the area of interest, filter to Elevation Products (3DEP), and take what the downloader actually lists — do not plan a workflow around a resolution you assumed was there. Finest is not always right, though: Lab 4 needs a DEM for all of Utah County and deliberately uses the 1 arc-second (about 30 meter) tiles from this downloader, because 1 meter data for a whole county is a very large download the lab does not need."
     },
     {
       prompt: "The same terrain, symbolized identically, at 30 meter cells and at 100 meter cells. What did the coarser grid cost you?",

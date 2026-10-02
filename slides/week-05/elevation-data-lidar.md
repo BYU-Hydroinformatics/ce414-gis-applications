@@ -514,7 +514,7 @@ oldest, leads them; every portal capture re-shot and every fact and link re-veri
 <div class="columns">
 <div>
 
-Eight questions on the hour: where a surface comes from, how LiDAR measures one, and which DEM to download. **Scan the code**, or open the link below.
+Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
@@ -534,6 +534,6 @@ Eight questions on the hour: where a surface comes from, how LiDAR measures one,
 echo from a single pulse comes back last. Half the room says the treetop, because it is the first
 thing the pulse hits - the answer is the ground, because it is the farthest thing the pulse reaches
 and its echo makes the longest round trip. That is the whole basis of a bare-earth model under
-forest, so it is worth ten seconds at the board. The resolution item is the other one to watch: they
-expect 1 m everywhere, and The National Map will not give it to them in the lab. If the room has no
+forest, so it is worth ten seconds at the board. The resolution item is the other one to watch: a coarser
+grid looks the same until you look for the small drainages. If the room has no
 signal, put the URL on the board; every item reads aloud just as well. -->

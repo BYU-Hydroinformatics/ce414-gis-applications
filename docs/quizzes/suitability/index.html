@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Criteria to Surface",
   subtitle: "CE 414 &middot; Week 10 &mdash; Raster-Based Spatial Analysis<br>" +
-            "Eight decisions from the workflow we just walked: what a criterion is, why " +
+            "Five decisions from the workflow we just walked: what a criterion is, why " +
             "everything gets <strong>reclassified</strong> before it gets added, and what the " +
             "finished surface does and does not tell you.",
   badge: "Suitability workflow",
@@ -31,18 +31,6 @@ CE414Quiz.start({
       ],
       answer: "Two different questions — only the second is a site analysis",
       explanation: "Choosing the city is a regional question about who is served. Choosing the spot is a site question about the ground itself — parcel size, access, slope. Raster suitability answers the second one, and criteria borrowed from the first will not score a parcel."
-    },
-    {
-      prompt: "You rasterize a parcel boundary and a stream centerline, and the curves come out as stair steps.",
-      detail: "You accepted that when you picked the cell size. What else did picking it decide?",
-      options: [
-        "The coordinate system for later layers",
-        "How many classes a reclassification can hold",
-        "Nothing else — it only changes the drawing",
-        "The resolution of the answer you produce"
-      ],
-      answer: "The resolution of the answer you produce",
-      explanation: "Converting to raster trades detail for the ability to do arithmetic on the layers. The cell size is the size of the smallest thing your suitability surface can distinguish, so it is a statement about the answer, not about the drawing."
     },
     {
       prompt: "Three criteria, three units: elevation in meters, slope in degrees, distance to a road in meters.",
@@ -69,18 +57,6 @@ CE414Quiz.start({
       explanation: "The reclassification table is where your judgment enters the model: the class breaks are a choice, not a measurement. Two people with the same data and different tables get different maps. Addition order is not a candidate — a sum does not care what order you add in."
     },
     {
-      prompt: "Two criteria, each reclassified to 1 = suitable and 0 = not, are added cell by cell. A cell comes out as 2.",
-      detail: "What have you learned about that cell?",
-      options: [
-        "It meets one criterion twice as strongly",
-        "It is missing data in both of the inputs",
-        "It satisfies both of the criteria",
-        "It covers twice the ground its neighbors do"
-      ],
-      answer: "It satisfies both of the criteria",
-      explanation: "On a 1/0 scale the sum counts how many criteria a location passes, so 2 out of two inputs means both. This is the raster version of the vector operation that cuts polygons against each other: same question, done as arithmetic on a stack of grids instead of on boundaries."
-    },
-    {
       prompt: "One rule is absolute: land the city will not permit to be built on is out, however well it scores everywhere else.",
       detail: "Step 6 lists three things combining the rasters does. Which one is this rule?",
       options: [
@@ -101,18 +77,6 @@ CE414Quiz.start({
       ],
       answer: "Not yet — every cell has a score; where to draw the line is yours",
       explanation: "The output is a continuous surface, not a verdict. A color ramp is stretched across whatever range the data happens to have, so it can make a weak result look strong. Read the legend and the underlying values before you believe the color."
-    },
-    {
-      prompt: "A density map built from reported service outages burns brightest over the largest cities.",
-      detail: "What is that pattern mostly showing you?",
-      options: [
-        "That outages really do concentrate in the largest cities",
-        "That the density surface used too coarse a cell size",
-        "Where reports are filed, as much as where outages are",
-        "That the color ramp was applied back to front"
-      ],
-      answer: "Where reports are filed, as much as where outages are",
-      explanation: "The input is reports, not outages per person, so the map partly maps population. A suitability model has the same trap: a criterion whose input layer is dense wherever people are will pull the result toward populated ground no matter what you meant it to measure."
     }
   ],
   perfectNote: "Every one. You can defend each step of the workflow, which is exactly what the write-up for a suitability analysis has to do.",

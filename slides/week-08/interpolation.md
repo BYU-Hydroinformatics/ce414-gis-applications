@@ -822,7 +822,7 @@ Is there a difference at the sample locations?
 <div class="columns">
 <div>
 
-Eight items on the same question we spent the session on: **what is this method actually doing with the points?**
+Five items on the same question we spent the session on: **what is this method actually doing with the points?**
 
 **Scan the code**, or open the link below.
 
@@ -840,4 +840,4 @@ Eight items on the same question we spent the session on: **what is this method 
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. The trend-surface item is the other reliable argument - "it looks wrong" is exactly what a trend surface is supposed to look like. If the room has no signal, put the URL on the board; the items read aloud just as well, and the two class-vote slides are still on screen behind you. -->
+<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. If the room has no signal, put the URL on the board; the items read aloud just as well, and the two class-vote slides are still on screen behind you. -->

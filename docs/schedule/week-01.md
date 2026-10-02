@@ -18,7 +18,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Storing the World](../quizzes/data-models/index.html) — Eight questions on vector, raster and TIN: what the computer actually stores for a point, a line, a polygon or a grid, and why a shapefile is not a data model.
+- [Storing the World](../quizzes/data-models/index.html) — Five questions on vector, raster and TIN: what each model actually stores, what a grid costs you, and why a shapefile is not a data model.
 
 </div>
 

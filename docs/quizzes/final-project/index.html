@@ -6,7 +6,7 @@
   <title>CE 414 — Ready to Pitch?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: eight judgment calls about the final project — scope, requirements, the proposal meeting, and how the work is judged.">
+  <meta name="description" content="CE 414 in-class quiz: five judgment calls about the final project — scope, requirements, the proposal meeting, and checking the result.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "Ready to Pitch?",
   subtitle: "CE 414 &middot; Week 12 &mdash; The Final Project<br>" +
-            "Eight calls you have to make before you propose: is the idea the right " +
+            "Five calls you have to make before you propose: is the idea the right " +
             "<strong>size</strong>, does it meet the <strong>requirements</strong>, and could you " +
             "<strong>defend the result</strong> if someone pushed back?",
   badge: "Project decision",
@@ -43,17 +43,6 @@ CE414Quiz.start({
       ],
       answer: "No — a project must use both raster and vector data",
       explanation: "Using both raster and vector is a stated requirement, and it is there for a reason: most real engineering questions mix measured surfaces with mapped features. Slope or land cover from a raster, combined with those parcels, is usually the cheapest way to satisfy it honestly."
-    },
-    {
-      prompt: "A model is proposed that uses Buffer, Clip, Intersect and Reclassify — all tools the labs already used.",
-      detail: "The workflow is correct and it answers the question. What is missing?",
-      options: [
-        "Nothing — using tools you already know well is the point",
-        "At least two tools that no lab this semester used",
-        "A raster output, which none of those tools produce"
-      ],
-      answer: "At least two tools that no lab this semester used",
-      explanation: "The requirement list asks for at least two tools we have not used in a lab, so the project teaches you something the course did not hand you: reading a tool's documentation, checking its assumptions, and deciding whether it fits your data. Pick them because the question needs them, not for novelty."
     },
     {
       prompt: "Which of these best shows that your model \"exposes a tool interface\"?",
@@ -87,29 +76,6 @@ CE414Quiz.start({
       ],
       answer: "It cannot be checked, so it is a picture, not an analysis",
       explanation: "A model with no validation or sensitivity check cannot be wrong, which means it also cannot be right. The cheapest check is to move one threshold and show what moves with it — if the same sites survive, you have an argument; if they do not, you have learned where your recommendation actually comes from."
-    },
-    {
-      prompt: "A team downloads streams and roads in latitude and longitude, buffers them straight away, and reports the buffered area.",
-      detail: "The tools run without complaint and the map looks plausible. What went wrong?",
-      options: [
-        "Distances and areas are in degrees, not ground units",
-        "Nothing — ArcGIS Pro converts the units behind the scenes",
-        "Buffer cannot be run on line features, only polygons"
-      ],
-      answer: "Distances and areas are in degrees, not ground units",
-      explanation: "A degree of longitude is not a fixed distance on the ground, so a buffer in geographic coordinates is wider in the south of your study area than in the north, and a \"square degree\" of area means nothing to a client. Pick a projected coordinate system on purpose and project everything into it before you measure."
-    },
-    {
-      prompt: "Your classmates fill in a scoresheet while you present. Which of these does it NOT ask them to judge?",
-      detail: "Everyone in the room scores every other team.",
-      options: [
-        "How clearly the problem was described",
-        "Whether the basic requirements were met",
-        "How engaging the presentation was",
-        "How many hours the team spent on it"
-      ],
-      answer: "How many hours the team spent on it",
-      explanation: "The sheet scores what the room can see: the problem, the map, the explanation of the model and workflow, the requirements, and how engaging the presentation is. Effort is invisible from the back row, which is why you lead with the map, show the model, and explain one decision you had to make."
     }
   ],
   perfectNote: "A clean sweep — you know what you are being asked for. Now go find the data.",

@@ -20,8 +20,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Categorical or Continuous?](../quizzes/raster-types/index.html) — Ten real datasets, one question each: is that cell value a label, or a measurement?
-- [Which Family?](../quizzes/raster-functions/index.html) — Eight questions on the four families of raster function, what a moving window does to an edge, and why the Lab 2 threshold lives in a Con() expression as a parameter.
+- [Categorical or Continuous?](../quizzes/raster-types/index.html) — Five real datasets, one question each: is that cell value a label, or a measurement?
+- [Which Family?](../quizzes/raster-functions/index.html) — Five questions on the four families of raster function, what a moving window does to an edge, what a zone costs you, and why the Lab 2 threshold lives in a Con() expression as a parameter.
 
 </div>
 

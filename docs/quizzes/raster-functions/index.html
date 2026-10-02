@@ -30,25 +30,6 @@ CE414Quiz.start({
       explanation: "One cell in, one cell out: a cell's new value depends only on that same cell's old value. Every tool in the Lab 2 model — Float, Minus, Plus, Divide, Con, Reclassify — is local for the same reason."
     },
     {
-      prompt: "Euclidean Distance",
-      detail: "Every cell comes out holding its straight-line distance to the nearest source feature.",
-      options: ["Local", "Focal", "Global", "Zonal"],
-      answer: "Global",
-      explanation: "To know the distance to the nearest source, a cell has to be measured against the whole grid, not just against its neighbors. Flow Accumulation and Distance Accumulation are global for the same reason, which is why Week 6's watersheds land in this family."
-    },
-    {
-      prompt: "A 3 by 3 window carrying 1/9 in every cell steps across a raster. What does the tool write at each stop?",
-      badge: "Moving window",
-      options: [
-        "The largest of the nine values",
-        "The center cell's own value, unchanged",
-        "How many of the nine cells match the center",
-        "The mean of the nine cells"
-      ],
-      answer: "The mean of the nine cells",
-      explanation: "Nine values each weighted 1/9 add up to their average, so those weights are the 3 by 3 mean. The kernel is only the weights: keep the same window and change the function and you get something else entirely — range finds edges, majority cleans speckle off a classified map."
-    },
-    {
       prompt: "You run a 5 by 5 mean over the NDVI at the center pivots. What happens to the sharp boundary between a green field and the bare ground around it?",
       badge: "Moving window",
       options: [
@@ -84,19 +65,6 @@ CE414Quiz.start({
       ],
       answer: "A number in an expression can become a model parameter",
       explanation: "The threshold has to be reachable from the tool dialog. Mark the variable as a parameter, exactly as in Week 2, and the sweep becomes five runs of a tool instead of five edits of an expression. Con is local, not focal, and Reclassify sits in the Reclass toolset of Spatial Analyst."
-    },
-    {
-      prompt: "Con(\"NDVI\" >= 0.6, 1, 0)",
-      badge: "Threshold",
-      detail: "You run this in the Raster Calculator on the Lab 2 NDVI raster. What does the output hold?",
-      options: [
-        "1 where NDVI is below 0.6, and 0 everywhere else",
-        "1 where NDVI is 0.6 or greater, and 0 everywhere else",
-        "The NDVI value itself where it is 0.6 or greater, and 0 elsewhere",
-        "0.6 where the condition is true, and NoData elsewhere"
-      ],
-      answer: "1 where NDVI is 0.6 or greater, and 0 everywhere else",
-      explanation: "Con reads: where the condition is true, the first value; otherwise the second. The output's attribute table then has exactly two rows, and the Count on the class 1 row is what you turn into area."
     },
     {
       prompt: "In the sweep, as the threshold is raised from 0.3 to 0.7, the area classified as vegetated...",

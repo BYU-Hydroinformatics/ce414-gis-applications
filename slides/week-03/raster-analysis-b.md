@@ -353,7 +353,7 @@ Same model, same data, five runs of the tool dialog:
 <div class="columns">
 <div>
 
-Eight questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link below.
+Five questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
@@ -369,7 +369,7 @@ Eight questions: **which family a tool belongs to**, what a window does to an ed
 </div>
 </div>
 
-<!-- Four or five minutes, in pairs, then a show of hands on the ones that split. Zonal Statistics as Table is the item that splits the room: half the class expects a raster back, because every other tool today returned one, and the point is that a zone writes one row rather than one cell. The Con-versus-Reclassify item is the other one worth talking through out loud, since it is the reason Lab 2 is built the way it is. If the room has no signal, put the URL on the board; the items read aloud just as well, and the family questions work as a show of four fingers. -->
+<!-- Four or five minutes, in pairs, then a show of hands on the ones that split. Zonal Statistics as Table is the item that splits the room: half the class expects a raster back, because every other tool today returned one, and the point is that a zone writes one row rather than one cell. The Con-versus-Reclassify item is the other one worth talking through out loud, since it is the reason Lab 2 is built the way it is. If the room has no signal, put the URL on the board; the items read aloud just as well, and the family question works as a show of four fingers. -->
 
 <!--
 Authoring notes (2026-09-09): Part B of the Week 3 pair, for the Thursday session. It combines
