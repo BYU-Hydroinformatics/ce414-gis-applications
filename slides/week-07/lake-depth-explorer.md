@@ -151,9 +151,9 @@ By the end of class you should be able to:
 
 ![h:400 center](images/lb-powell-area.png)
 
-- The USGS published Lake Powell's area at every level from the same survey — yours should run **0.4–1.8 % below** it
+- The USGS published Lake Powell's area at every level from the same survey — between 3,500 and 3,700 ft yours should run **0.2–1.3 % below** it, and further below near dead pool
 
-<!-- Blue: the Lab 6 model run in arcpy on the 30 m surface, 3,370 to 3,700 ft by 10 (tools/lab06). Dashed: the USGS published areas (SIR 2022-5017). Check values: 75.65 sq mi at 3,500 ft (USGS 77.0), 140.37 at 3,600 (141.5), 247.36 at 3,700 (248.7). The model runs a little low everywhere because 30 m cells drop narrow canyon arms and Step 4 drops arms the coarse cells disconnect. Dead pool, 3,370 ft, leaves 28.19 sq mi. -->
+<!-- Blue: the Lab 6 model run in arcpy on the 30 m surface, 3,370 to 3,700 ft by 10 (tools/lab06). Dashed: the USGS published areas from the area-capacity data release behind SIR 2022-5017 (doi:10.5066/P9O3IPG3; corrected October 2, 2026 - the first version of this figure and the lab page used an interpolation from the Lab 6 package key that was 0.35 sq mi high at 3,500 ft). Check values: 75.65 sq mi at 3,500 ft (USGS 76.65), 140.37 at 3,600 (141.54), 247.36 at 3,700 (248.82): 0.2-1.3 % low at every level from 3,500 to 3,700, and 1.3-6.8 % low from 3,490 down to 3,370, where the pool is mostly narrow canyon. The model runs low because 30 m cells drop narrow canyon arms and Step 4 drops arms the coarse cells disconnect - a good question for the class: why does the gap grow as the lake falls? Dead pool, 3,370 ft, leaves 28.19 sq mi (USGS 29.55). -->
 
 ---
 
