@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Lake Depth Explorer</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: ModelBuilder iterators, %Value% substitution, collecting a loop's outputs, and checking the answer.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Lake Depth Explorer",
+  subtitle: "CE 414 &middot; Week 7 &mdash; Lake Depth Explorer<br>Five questions on running one model once per water level, and knowing the answer is right.",
+  badge: "Model question",
+  deckUrl: "../../slides/week-07/lake-depth-explorer.html",
+  questions: [
+    {
+      prompt: "What does an iterator in ModelBuilder do?",
+      options: [
+        "Runs the model once per value",
+        "Makes every tool in the model run faster",
+        "Checks the model for errors before it runs",
+        "Adds a parameter to the model's dialog"
+      ],
+      answer: "Runs the model once per value",
+      explanation: "An iterator turns one model into many runs: For counts from a start to an end by a step, and every tool after it runs once per value. You state the list once instead of running the model twenty times by hand."
+    },
+    {
+      prompt: "In the expression Con(\"Lake_Surface\" <= %Value%, 1), what is %Value%?",
+      options: [
+        "A field in the lake surface's table",
+        "This run's value from the iterator",
+        "A fixed number you type once",
+        "The name of the output raster"
+      ],
+      answer: "This run's value from the iterator",
+      explanation: "%name% means put this variable's current value here — the same idea as %Threshold% in Lab 5. Fed by the For iterator, it is a different water level on every run."
+    },
+    {
+      prompt: "Your loop writes every run's output to the same name, Lake. What do you get at the end?",
+      options: [
+        "One feature class with every level in it",
+        "An error on the second run, every time",
+        "Every level, renamed automatically",
+        "Only the last level survives"
+      ],
+      answer: "Only the last level survives",
+      explanation: "Each run of the loop writes its output; with one fixed name, each run replaces the one before, and nothing tells you. Putting %Value% in the output name (Lake_%Value%) gives every run its own dataset."
+    },
+    {
+      prompt: "What are Collect Values and Merge for in the Lab 6 model?",
+      options: [
+        "Gathering all runs into one layer",
+        "Choosing which water levels the loop runs",
+        "Converting the shoreline raster to polygons",
+        "Checking each area against the USGS table"
+      ],
+      answer: "Gathering all runs into one layer",
+      explanation: "Collect Values gathers one output from every run of the loop; Merge combines them into a single feature class, one polygon per level, which is what you map and measure."
+    },
+    {
+      prompt: "Your model's area at 4,200 ft is about 350 sq mi off the USGS table's 1,602 sq mi. What is the likeliest cause?",
+      options: [
+        "The USGS table is wrong",
+        "A datum mix-up",
+        "The For iterator ran too many times",
+        "Raster to Polygon always loses that much"
+      ],
+      answer: "A datum mix-up",
+      explanation: "A 3.48 ft datum mix-up on the steep part of the area curve (up to about 100 sq mi per foot near 4,200 ft) is worth a few hundred square miles. The USGS table was computed from the same DEM, so a miss that size points at your setup, not theirs."
+    }
+  ],
+  perfectNote: "A perfect score. You can build the loop and say whether its answer is right.",
+  goodNote: "Solid. Read the explanations on the ones you missed — the output-name one silently wipes out a run.",
+  tryAgainNote: "Worth another pass. The short version: an iterator runs the model once per value; %Value% puts the value into expressions and output names; Collect Values and Merge gather the runs; and the USGS table tells you whether the areas are right."
+});
+</script>
+</body>
+</html>

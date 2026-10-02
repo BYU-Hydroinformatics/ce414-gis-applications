@@ -37,6 +37,8 @@ QUIZZES = {
     "terrain-analysis":     5,
     "watersheds":           6,
     "basins":               6,
+    "bathymetry":           7,
+    "iterators":            7,
     "interpolation":        8,
     "web-services":         9,
     "suitability":         10,

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Lake Bathymetry</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: a terminal lake's level, how lake bottoms are measured, vertical datums, and elevation-area-volume curves.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Lake Bathymetry",
+  subtitle: "CE 414 &middot; Week 7 &mdash; Lake Bathymetry<br>Five questions on a lake with no outlet, the bottom you cannot see, and what a water level does to area.",
+  badge: "Lake question",
+  deckUrl: "../../slides/week-07/lake-bathymetry.html",
+  questions: [
+    {
+      prompt: "The Great Salt Lake has no outlet. What does that make its water level a record of?",
+      options: [
+        "The basin's water balance",
+        "Only the rain that falls on the lake itself",
+        "The depth of the deepest point in the lake",
+        "How much water the gage station pumps"
+      ],
+      answer: "The basin's water balance",
+      explanation: "Water leaves a terminal lake only by evaporation, so its level rises when inflow beats evaporation and diversions, and falls when it does not. The gage at Saltair records that balance for the whole basin, Rock Canyon included."
+    },
+    {
+      prompt: "Which method gives a full swath of depths under a boat rather than a single line of points?",
+      options: [
+        "A lead line",
+        "Single-beam sonar",
+        "A tide gage",
+        "Multibeam sonar"
+      ],
+      answer: "Multibeam sonar",
+      explanation: "Multibeam sonar sends a fan of beams and records a swath of the bottom on each pass. Single-beam sonar gives one point straight down, so a line along the boat's track; a lead line gives one point per drop."
+    },
+    {
+      prompt: "The gage reads the lake in NGVD29 and the lake-bottom DEM is in NAVD88. What happens if you flood the DEM at the gage's number without converting?",
+      options: [
+        "Nothing — the two datums are the same",
+        "Every shoreline is 3.48 ft off",
+        "Only the volume is wrong, not the area",
+        "The DEM refuses to load"
+      ],
+      answer: "Every shoreline is 3.48 ft off",
+      explanation: "A height is only meaningful above a stated datum. At the Great Salt Lake a NAVD88 height is 3.48 ft larger than the NGVD29 height of the same surface, so using one datum's number on the other's DEM floods the lake 3.48 ft wrong everywhere."
+    },
+    {
+      prompt: "Near 4,190 ft one foot of level covers about 30 sq mi of lakebed; near 4,200 ft it covers up to about 100. Why?",
+      options: [
+        "The gage is less accurate at higher levels",
+        "The bowl is flatter at those higher shores",
+        "Evaporation is faster when the lake is high",
+        "The USGS table uses a different step there"
+      ],
+      answer: "The bowl is flatter at those higher shores",
+      explanation: "Area added per foot depends on how gently the shore rises. Where the bottom is nearly flat, a small rise or drop in level moves the shoreline a long way, which is why a lake falling through the 4,190s and 4,200s exposes lakebed so quickly."
+    },
+    {
+      prompt: "What does an elevation–area–volume table let you do?",
+      options: [
+        "Turn a level into area and volume",
+        "Measure the depth of the lake directly",
+        "Convert between NGVD29 and NAVD88",
+        "Find where the lake's inflow comes from"
+      ],
+      answer: "Turn a level into area and volume",
+      explanation: "The USGS computed the lake's area and volume at every 0.01 ft from its lake-bottom DEM, so a level read off the gage becomes an area and a volume. In Lab 6 the same table is your check: your own areas should match it."
+    }
+  ],
+  perfectNote: "A perfect score. You can read a lake level, say what it is measured from, and say what it does to the lake.",
+  goodNote: "Solid. Read the explanations on the ones you missed — the datum question is the one Lab 6 depends on.",
+  tryAgainNote: "Worth another pass. The short version: a terminal lake's level is its water balance; bathymetry is a DEM of the bottom; a level needs a datum; and the shape of the bowl decides how much lakebed one foot covers."
+});
+</script>
+</body>
+</html>

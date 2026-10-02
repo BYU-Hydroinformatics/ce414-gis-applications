@@ -51,6 +51,8 @@ DECKS = [
     (5,  "terrain-analysis",               "Terrain Analysis",                           "What you compute from a DEM: shaded relief, contours, slope, aspect and curvature from local neighborhoods, plus viewsheds from line of sight.", "Thu"),
     (6,  "watershed-delineation",          "Watershed Delineation, Part A",              "From a DEM to streams and watersheds, cell by cell: Lab 5 introduced, then fill, flow direction (aspect against D8), flow accumulation, the stream threshold, stream links, pour points, and the Lab 5 model that runs them all.", "Tue"),
     (6,  "what-is-a-watershed",            "Watershed Delineation, Part B",              "What a watershed is and why water is managed by them: Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance, and a watershed delineated by hand and with USGS StreamStats.", "Thu"),
+    (7,  "lake-bathymetry",                "Lake Bathymetry, Part A",                    "A lake with no outlet: the Great Salt Lake's level as its water balance, how lake bottoms are measured, the USGS lake-bottom DEM, two vertical datums, and elevation-area-volume curves.", "Tue"),
+    (7,  "lake-depth-explorer",            "Lake Bathymetry, Part B",                    "One model, many runs: ModelBuilder iterators, %Value% in expressions and output names, Collect Values and Merge, and Lab 6 — Lake Depth Explorer on the Great Salt Lake.", "Thu"),
     (8,  "interpolation",                  "Interpolation",                              "Estimating a surface from points: Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.", None),
     (9,  "ogc-web-services",               "Overview of OGC Web Services",               "Interoperability and open standards for sharing spatial data over the web: WMS, WFS, WCS, and their relatives.", "Thu"),
     (10, "raster-spatial-analysis",        "Raster-Based Spatial Analysis",              "The raster suitability workflow end to end — criteria, data, rasterization, reclassification, overlay, and heat maps.", None),
@@ -75,10 +77,6 @@ FINAL_PROJECT_WEEKS = (12, 13, 14, 15)
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    7:  "Week 7 is **lake bathymetry**: how the bottom of a lake is measured and mapped, and how a lake's shoreline, "
-        "area and volume follow from its water level, on the Great Salt Lake. It introduces **Lab 6 — Lake Depth Explorer**, "
-        "a ModelBuilder model that **loops** over a list of water-surface elevations instead of being run once per elevation. "
-        "The slides for this week are being prepared.",
     13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
     14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
         "project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is "
@@ -104,8 +102,8 @@ DUE = {
     6:  dict(reading="Chapter 10 review; some of this quiz needs a web search", quiz=(6, "Watershed Delineation"), lab=5,
              other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     7:  dict(reading=None, quiz=None, lab=6,   # Lab 6 (Lake Depth Explorer) is introduced Thursday and due the same Saturday; see ROADMAP item 4
-             other=[("In-class activity: Practicing Hydrology Tools", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class"),
-                    ("In-class activity: Where is my watershed?", "done in class Tuesday; upload a screen capture by 9:30 am, fifteen minutes after class")]),
+             other=[("In-class activity: Read the USGS Lake Table (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class"),
+                    ("In-class activity: Three Lake Levels", "done in class Thursday; upload a screen capture by 9:30 am, fifteen minutes after class")]),  # Oct 1: replaces the two old Week 7 activities; Learning Suite still has the old ones
     8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=7,
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class"),
                     ("**Midterm 1** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
@@ -156,6 +154,10 @@ PRACTICE = {
          "Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong."),
         ("basins", "What Is a Watershed?",
          "Five questions on the watershed of a point, nested hydrologic units, the water balance, why Powell wanted states drawn by watershed, and what automated delineation buys you.")],
+    7: [("bathymetry", "Lake Bathymetry",
+         "Five questions on a terminal lake's level, measuring the bottom, vertical datums, and what one foot of level does to area."),
+        ("iterators", "Lake Depth Explorer",
+         "Five questions on iterators, %Value% in expressions and output names, collecting a loop's outputs, and checking the areas against the USGS table.")],
     8: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.")],
     9: [("web-services", "What Comes Back?",
