@@ -45,6 +45,8 @@ By the end of these sessions you should be able to:
 
 # Activity: Estimate the Temperature in Provo
 
+![bg right:38% h:92%](images/ip-utah-activity-map.png)
+
 - Consider three cities in Utah: **Moab**, **American Fork**, and **Cedar City**
 - Look up the current air temperature for those three cities on weather.com or an equivalent site
 - Given those three temperatures, **estimate the current temperature in Provo**
@@ -52,7 +54,7 @@ By the end of these sessions you should be able to:
 
 <!-- Give them three or four minutes. Collect several answers and, more importantly, several rules: nearest city, plain average, distance-weighted average, adjust for elevation. Those four answers are Thiessen, a global mean, IDW, and a trend surface. Name them now, then spend the rest of the session making each one precise. -->
 
-<!-- TODO(graphic): a simple Utah location map showing Moab, American Fork, Cedar City, and Provo. No suitable image exists in the source deck. -->
+<!-- Map: Utah from UGRC's state boundary, cities at the centroids of their UGRC municipal boundaries (tools/week08_interpolation_figures.py). Point out before anyone answers: American Fork is 20 km from Provo, Moab and Cedar City are over 250 km away and 1,000 m lower and higher than each other - the map is why nearest-city and distance-weighted answers win. -->
 
 ---
 
@@ -565,9 +567,11 @@ A statistically based estimator of spatial variables. It separates the data into
 
 Kriging creates a mathematical model, which is then used to estimate values across the surface.
 
+![w:1100 center](images/ip-trend-autocorrelated-random.png)
+
 <!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
 
-<!-- TODO(graphic): a three-panel figure separating a surface into trend, autocorrelated, and random components. Nothing in the source deck illustrates this slide. -->
+<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 7 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
 
 ---
 
@@ -666,23 +670,13 @@ Semi-variance is usually small at small lag distances and increases to a constan
 
 # Nugget, Sill, and Range
 
-![bg right:42% w:92%](images/ip-variogram-idealized.png)
+![bg right:48% w:95%](images/ip-semivariogram-model.png)
 
-- A **nugget** is the initial semi-variance when the autocorrelation typically is highest
-- The **sill** is the point where the variogram levels off; background noise; where there is little autocorrelation
-- The **range** is the lag distance at which the sill is reached
+- **Range** — the distance where the model levels out; points closer than the range are autocorrelated, points farther apart are not
+- **Sill** — the semivariance the model reaches at the range
+- **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
 
-<!-- These three numbers are the parameters you set when you fit a variogram model in ArcGIS Pro, so students should be able to point at each one on the plot. -->
-
-<!-- VERIFY: "A nugget is the initial semi-variance when the autocorrelation typically is highest" — the nugget is conventionally described as the non-zero intercept at h = 0, attributed to measurement error and micro-scale variation; the source's phrasing about autocorrelation being highest is loose. -->
-
-<!-- VERIFY: "The sill is the point where the variogram levels off; background noise; where there is little autocorrelation" — "the point" conflates the semi-variance value at the plateau with the lag distance at which it is reached, which is the range. -->
-
-<!-- VERIFY: "The range is the lag distance at which the sill is reached" — usually stated as the distance beyond which pairs are no longer correlated; for models that approach the sill asymptotically (exponential, Gaussian) the practical range is defined at 95% of the sill. -->
-
-<!-- VERIFY: the red X and red arrow drawn on Figure 9-14 are hand annotations carried over from the source slide. Their intent is unclear — they appear to cross out one measurement of the sill height and substitute another. Confirm what they mean or remove them. -->
-
-<!-- TODO(instructor): the nugget / sill / range wording on this slide came straight from the source deck and has not been rewritten. Settle the three definitions above, then reword the bullets to match; do not let students take notes from the current text until then. -->
+<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: 150 random elevation samples from Little Cottonwood Canyon, 11,175 pairs binned every 300 m, a spherical model fitted - range about 3,360 m, sill about 63,000 m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Ask: what would put a nugget here? (GPS elevations with a few meters of error, or samples much farther apart than the gullies.) The source deck's idealized Figure 9-14 with hand-drawn red marks is no longer used on this slide. -->
 
 ---
 
@@ -696,7 +690,9 @@ Semi-variance is usually small at small lag distances and increases to a constan
 
 <!-- Combined two consecutive text-only slides from the source. The comparison in the second half is the sentence worth remembering: IDW's weights come from a rule you picked, kriging's weights come from the data's own spatial structure. -->
 
-<!-- TODO(graphic): a two-panel figure showing a cloud of semi-variance points on the left and the fitted model on the right. The source deck illustrates neither of these two slides. -->
+![w:820 center](images/ip-semivariogram-real.png)
+
+<!-- Left: the semivariogram cloud, every pair of the 150 samples. Right: the pairs binned every 300 m and a spherical model fitted to the bins. The model, not the cloud, sets kriging's weights. -->
 
 ---
 
@@ -716,36 +712,33 @@ Semi-variance is usually small at small lag distances and increases to a constan
 
 ---
 
+# Same Points, Six Methods
+
+![w:1180 center](images/ip-six-methods.png)
+
+<!-- Optional slide; it answers "how would you judge which one to trust" with a test students can run. 150 random points of a real 30 m DEM (Little Cottonwood Canyon, 2,180-3,490 m) interpolated by six ArcGIS Pro tools, and each surface checked at 60 hold-out points the methods never saw. Root-mean-square error at the hold-out points: kriging with a 300 m lag 87 m, natural neighbor 98, IDW 101, spline 108, Thiessen 114, kriging with the default lag 142, 2nd-order trend 228 - and just using the mean of the samples 218. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting (kriging's default lag here) can do worse than a much simpler one. tools/week08_interpolation_figures.py; numbers in tools/week08_interpolation_numbers.json. This addresses the earlier TODO about teaching train/test validation; Dan to decide whether it stays. -->
+
+---
+
+# Which One to Trust?
+
+![w:960 center](images/ip-holdout-error.png)
+
+- Hold some points out, interpolate without them, and **measure the error** where you know the answer
+
+<!-- Optional, with the slide before it. The orange bar is the lowest error. Kriging with a sensible lag wins here; kriging with the tool's default lag loses to every method but the trend. The dotted line is the error of ignoring location entirely and guessing the mean of the 150 samples (218 m). -->
+
+---
+
 # Exact and Non-exact Methods
 
-Is there a difference at the sample locations?
+Read each surface back at its own sample points:
 
-<div class="columns" style="align-items:start">
-<div>
+![w:780 center](images/ip-exactness-test.png)
 
-**Exact**
+**Exact:** Thiessen, natural neighbor, IDW, spline, kriging with no nugget · **Not exact:** trend, kriging with a large nugget
 
-- Thiessen polygons
-- IDW
-
-</div>
-<div>
-
-**Non-exact**
-
-- Fixed-radius — averages several points near the sample location
-- Trend surface — the surface typically does not pass through the measured points
-- Spline
-- Kriging
-
-</div>
-</div>
-
-<!-- This is the practical test: interpolate, then sample the output raster at your input point locations. If the values come back unchanged, the method is exact. -->
-
-<!-- VERIFY: the source deck lists spline and kriging as non-exact. Splines as normally implemented are exact interpolators — they are defined to pass through the data points — and ordinary kriging is exact when the variogram model has no nugget. Confirm which convention this deck intends before students are quizzed on it. -->
-
-<!-- TODO(graphic): a small inset showing a profile through two sample points under an exact and a non-exact method. Nothing in the source deck illustrates this slide. -->
+<!-- The test, run in ArcGIS Pro on 150 samples snapped to 30 m cell centers (tools/week08_interpolation_figures.py): Thiessen, Natural Neighbor, IDW and kriging with a 300 m lag give the sample value back exactly; the regularized spline is off by 0.01 m on average (it is built to pass through the points, the regularization relaxes that slightly); the 2nd-order trend misses by 166 m on average; and Kriging with the tool's default lag fitted a model that is almost all nugget (nugget 39,666 m2 of a 42,459 m2 sill, range 30 m) and misses by 95 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. Fixed-radius averaging (earlier in the deck) is also not exact: it averages several samples near each point. -->
 
 ---
 
@@ -774,6 +767,23 @@ Is there a difference at the sample locations?
 ![h:390 center](images/ip-original-surface.png)
 
 <!-- Same points, six methods, one truth to compare against. Push the class past "which is prettiest" to "which one reproduces the drainage pattern on the left." Then note that in a real project you cannot run this comparison, because you never have the left panel — which is why withholding sample points matters. -->
+
+---
+
+# The Methods in ArcGIS Pro
+
+| Method | ArcGIS Pro tool — what you set |
+| --- | --- |
+| Thiessen polygons | **Create Thiessen Polygons**, then Polygon to Raster |
+| Natural neighbor | **Natural Neighbor** |
+| IDW | **IDW** — power, how many neighbors |
+| Spline | **Spline** — regularized or tension |
+| Kriging | **Kriging** — model, lag size |
+| Trend surface | **Trend** — polynomial order |
+
+All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
+
+<!-- Every tool in this table produced a surface in tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the parameters named are the ones the six-methods slide varies. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 9. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
 
 ---
 
@@ -807,7 +817,7 @@ Is there a difference at the sample locations?
 
 <!-- Point them at Lab 9 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
 
-<!-- TODO(instructor): consider adding a slide mapping each method in this deck to its ArcGIS Pro tool (Create Thiessen Polygons, IDW, Kriging, Spline, Trend, Natural Neighbor) once the tool names and toolbox locations have been checked in Pro. The source deck names no software at all. -->
+<!-- The method-to-tool slide asked for here now precedes this one. -->
 
 <!-- TODO(instructor): the plan notes a Big Southern Butte example. Decide where it belongs in the sequence — the note is that it should be taught only after the methods above are established — and whether it replaces or supplements the class-vote slides. -->
 

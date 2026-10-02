@@ -1,0 +1,84 @@
+{
+ "n_samples": 150,
+ "n_holdout": 60,
+ "cell_m": 30,
+ "methods": {
+  "Thiessen polygons": {
+   "rmse_all_m": 119.5,
+   "rmse_holdout_m": 113.6,
+   "max_abs_at_samples_m": 0.0,
+   "mean_abs_at_samples_m": 0.0
+  },
+  "Natural neighbor": {
+   "rmse_all_m": 99.9,
+   "rmse_holdout_m": 97.8,
+   "max_abs_at_samples_m": 0.0,
+   "mean_abs_at_samples_m": 0.0
+  },
+  "IDW (power 2, 12 points)": {
+   "rmse_all_m": 104.6,
+   "rmse_holdout_m": 101.3,
+   "max_abs_at_samples_m": 0.0,
+   "mean_abs_at_samples_m": 0.0
+  },
+  "Spline (regularized)": {
+   "rmse_all_m": 89.8,
+   "rmse_holdout_m": 108.0,
+   "max_abs_at_samples_m": 0.11,
+   "mean_abs_at_samples_m": 0.01
+  },
+  "Kriging, default lag": {
+   "rmse_all_m": 145.1,
+   "rmse_holdout_m": 142.0,
+   "max_abs_at_samples_m": 325.69,
+   "mean_abs_at_samples_m": 95.15
+  },
+  "Kriging (spherical, 300 m lag)": {
+   "rmse_all_m": 84.0,
+   "rmse_holdout_m": 86.6,
+   "max_abs_at_samples_m": 0.0,
+   "mean_abs_at_samples_m": 0.0
+  },
+  "Trend (2nd order)": {
+   "rmse_all_m": 219.1,
+   "rmse_holdout_m": 227.5,
+   "max_abs_at_samples_m": 560.95,
+   "mean_abs_at_samples_m": 166.22
+  }
+ },
+ "truth_range_m": [
+  2178.0,
+  3499.1
+ ],
+ "mean_only_rmse_holdout_m": 218.2,
+ "semivariogram": {
+  "nugget_m2": 0,
+  "sill_m2": 62834,
+  "range_m": 3357,
+  "pairs": 11175,
+  "lag_bin_m": 300
+ },
+ "decomposition_std_m": {
+  "trend": 97.3,
+  "autocorrelated": 209.7,
+  "random": 17.0
+ },
+ "cities_lonlat": {
+  "Cedar City": [
+   -113.096,
+   37.684
+  ],
+  "American Fork": [
+   -111.795,
+   40.378
+  ],
+  "Provo": [
+   -111.646,
+   40.246
+  ],
+  "Moab": [
+   -109.548,
+   38.57
+  ]
+ }
+}
