@@ -299,6 +299,80 @@ const LABS = {
   ],
 },
 
+'07': {
+  labTitle: 'Lab 7: Avalanche Hazard',
+  labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to show and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
+
+    { h: 'The DEM and Its Metadata',
+      hint: 'Rubric: the three metadata values for the DEM and what each means for your result (2 points). Confirm them yourself from READ-ME-FIRST.txt, the raster’s properties and the tile’s metadata file — do not copy them from Figure A.',
+      table: { caption: 'Table 1. Metadata for the DEM.',
+               head: ['Metadata value', 'What you found', 'What it means for your result'],
+               rows: [['Publication date and source dates', '', ''], ['Vertical datum and units', '', ''], ['Cell size', '', '']],
+               widths: [2600, 2400, 4360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Project Raster', '', '', '', ''], ['Slope', '', '', '', ''], ['Aspect', '', '', '', ''],
+                      ['Reclassify (slope)', '', '', '', ''], ['Reclassify (aspect)', '', '', '', ''],
+                      ['Raster Calculator (altitude, with Shift)', '', '', '', ''], ['Raster Calculator (all three agree)', '', '', '', ''],
+                      ['Raster Calculator (geometric mean)', '', '', '', ''], ['Cell Statistics (maximum)', '', '', '', ''],
+                      ['Cell Statistics (minimum)', '', '', '', ''], ['Raster Calculator (rule spread)', '', '', '', '']],
+               widths: [2300, 2100, 2000, 1700, 1260] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the Shift parameter exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the toolbox interface with the shift parameter exposed (2 points).' },
+      ] },
+
+    { h: 'Snowbird by Hazard Class',
+      hint: 'Rubric: the model runs end to end from its tool dialog and its Step 8 table of Snowbird’s areas at shift 0 matches the check values (part of the 4 points for a working model). Tabulate Area reports square meters; divide by 1,000,000.',
+      table: { caption: 'Table 3. Snowbird’s area in each hazard class at shift 0 (km²), geometric mean.',
+               head: ['Low', 'Moderate', 'Considerable', 'High', 'Extreme', 'Total'],
+               rows: [['', '', '', '', '', '']],
+               widths: [1560, 1560, 1560, 1560, 1560, 1560] } },
+
+    { h: 'All Three Agree',
+      hint: 'Rubric: the “all three agree” result and why it is the wrong answer (2 points). Give its check value — how much of Snowbird it leaves unclassified — and explain, with one cell as an example, what the rule throws away.' },
+
+    { h: 'Elevation Bands and Combination Rules', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4 points). Choose your shifts deliberately and say why.',
+      table: { caption: 'Table 4. Sensitivity — the baseline and at least three more runs (km² of Snowbird).',
+               head: ['Run', 'Shift (m)', 'Altitude class 5', 'High + Extreme, geometric mean', 'High + Extreme, worst factor', 'High + Extreme, best factor'],
+               rows: [['Baseline', '0', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']],
+               widths: [1200, 1000, 1500, 1900, 1880, 1880] },
+      questions: [
+        'How much does moving the elevation bands change the map, in each direction? Use the altitude-class column to say why. (2 points)',
+        'How much does the combination rule change the map? For the same run, compare the three rules. Which would you publish, and to whom? (2 points)',
+        'Where do the three rules agree, and where do they disagree most? Map Rule_Spread at shift 0 beside the imagery and say what terrain sits at 0 and at 4. (2 points)',
+      ] },
+
+    { h: 'Where the Map Is Wrong',
+      hint: 'Rubric: where the map is wrong and why, and what data would fix it (2 points). What the terrain-only model leaves out (snowpack, weather, wind loading, triggering, slope shape, ground cover, terrain traps), what a bare-earth 10 m DEM cannot show, and what Table 1 assumes — name each and the data that would fix it.' },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Use the danger-scale colors on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — the geometric mean at shift 0.', pageBreakAfter: true,
+          hint: 'Must carry: title stating the rule and the elevation bands; neat line, north arrow and scale bar; a text box with author, date, map projection, and the DEM’s source and date; the hazard classes in the danger-scale colors, labeled Low to Extreme in a legend; the Snowbird boundary and labeled places; an inset locating Little Cottonwood Canyon; basemap, scale and legibility appropriate to the ski area.' },
+        { caption: 'Map 2. Scenario — a different shift or rule from Step 9.',
+          hint: 'Everything Map 1 needs except the inset, plus: the title and text box say what changed from Map 1 and why this run was chosen.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the DEM, the ski-area layer, the advisory behind Table 1, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Expressions, class breaks, coordinate systems and areas come from your own work, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '04': {
   labTitle: 'Lab 4: Cell Phone Tower Placement',
   labSubtitle: '',

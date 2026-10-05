@@ -21,7 +21,7 @@ promoted until Dan decides the items marked DECISION.** Lab 7 is due Saturday of
 | Report template | None | To build with `tools/templates/make_lab_report_template.js` after the decisions |
 | GUI build and captures | Word-era screenshots from two model versions | Owed (Step figures marked TODO(capture)) |
 
-## Decisions for Dan
+## Decisions for Dan — all accepted as recommended, October 5, 2026; page promoted
 
 1. **Drop the second ski area** (the conversion guide says no required second study area). The
    draft drops it; the sensitivity step replaces it.

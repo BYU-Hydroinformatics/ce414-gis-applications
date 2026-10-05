@@ -4,268 +4,523 @@
 
 Fall 2026 · Dr. Dan Ames
 
+*Terrain-based avalanche hazard screening from slope, aspect, and elevation*
+
+<!-- **Revision notes.** Drafted October 2, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab07-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab07/PARITY_PLAN.md. It follows `tools/lab-conversion-guide.md` and the pattern of Labs 4–6.
+
+**Changes to what the lab asks students to do:** one study area (Snowbird), not two; two maps
+(baseline and one scenario), not three; the "all three agree" Con method becomes a step with a
+check value and a report question rather than a map; the multiply method's 1–125 scale is grouped
+into five classes by a stated rule (the cube root of the product); an **Elevation shift**
+parameter and two more combination rules (worst factor, best factor) make the sensitivity step;
+class areas inside the Snowbird boundary are measured with Tabulate Area and checked; the rubric
+is five parts of ten.
+
+**Corrections:** "Project Raster to the NAD 1983 projection" (a datum) is now NAD 1983 UTM zone 12N
+at 10 m; slope's Low band starts at 0, not −1; "Project" in the tool list is Project Raster; the
+uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002" are replaced by sourced
+statements; the dead Sawtooth link is replaced.
+
+**Figures:** none of the dialog captures exist yet; each step marks the capture owed. Figure B
+(the danger scale) is the image the assigned page already uses. Nothing on this page is a
+fabricated screenshot. The Word-era captures and the Snowbird example map are in the archived copy.
+
+**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 2, 2026
+(`tools/lab07/run_model.py`, `tool_checks.py`) against the hosted extract; the GUI build is owed. -->
+
 > [!WARNING]
 > **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
 > terrain-based screening of slope, aspect, and elevation, produced for the purpose of learning
 > raster analysis and ModelBuilder. It does not account for snowpack, weather, wind loading,
 > recent avalanche activity, or human triggering, and it is **not suitable for operational
-> avalanche safety decisions**. For real trip planning, use the current advisory from the
-> responsible avalanche center.
+> avalanche safety decisions**. For real trip planning, use the current forecast from the
+> [Utah Avalanche Center](https://utahavalanchecenter.org/){ target="_blank" } or the avalanche
+> center responsible for where you are going.
 
-<!-- TODO(instructor): the recommended plan asks that the lab's output be renamed
-     "terrain-based avalanche susceptibility screening" (rather than "avalanche hazard" /
-     "avalanche risk"). Renaming the lab and its deliverables is an instructor decision, so the
-     original wording is kept throughout this page. -->
+> [!TIP]
+> **Start from the report template.** [`lab07-report-template.docx`](lab07-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the Snowbird class-area table and the sensitivity table with all
+> three rules), and the rubric at the end ready to fill in. Open it in Word or upload it to Google
+> Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome to write
+> your report any way you like — the template is a floor, not a ceiling — but if you use it and fill
+> in every section, you will not have left a graded item out.
 
 ## Background
 
-An avalanche is defined as a large mass of snow, ice, earth, rock, or other material in swift motion down a mountainside or over a precipice (Webster, 2012). The possibility of an avalanche occurring is a risk that outdoor adventurers take every time they venture into the backwoods during the winter. Numerous avalanche risk centers operate extensive programs every winter to help analyze and predict avalanche hazard. These avalanche centers typically assess risk in terms of terrain variables combined with climate/weather conditions. Based on these factors, it is possible to create a map showing areas that fall under specific risk categories. This exercise involves creating an ArcGIS Pro ModelBuilder model that takes risk categories as input factors and generates an output map highlighting areas based on an established risk coloring scheme. See the Utah Avalanche Center website here: [https://utahavalanchecenter.org/](https://utahavalanchecenter.org/).
+An avalanche is a mass of snow sliding fast down a slope. In the United States an average of
+**27 people died in avalanches each winter** over the last ten winters, according to the Colorado
+Avalanche Information Center, which keeps the national accident archive
+([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }).
 
-<!-- TODO(instructor): the recommended plan asks that this section define and distinguish
-     susceptibility, hazard, exposure, vulnerability, and risk, which the handout currently uses
-     interchangeably. That is a content/pedagogy change, so it is flagged rather than written. -->
-
-![Utah Avalanche Center home page showing the Current Danger Ratings list for each Utah forecast region beside a map of the regions](images/lab07-utah-avalanche-center-ratings.png)
-
-**Figure 1.** A sample advisory: the Utah Avalanche Center home page, listing the current danger rating for each forecast region.
-
-## Problem Statement
-
-Winter backwoods adventures can include awesome activities such as cross-country skiing, snowshoeing, and snowmobiling. It is a common pastime for many people in mountainous areas, including Utah, Idaho, and Wyoming. There are specific risks to these activities, such as hypothermia and getting caught in an avalanche. In the world, more than 150 people are killed per year by an avalanche (National Geographic). Backwoods enthusiasts need to be aware of the potential avalanche hazard in the area they are going to visit. They also need to know that avalanche hazard is continually changing due to weather and ground conditions.
-
-<!-- VERIFY: the "more than 150 people per year" figure above is attributed only to "National
-     Geographic", with no citation, year, or link, and National Geographic does not appear in the
-     References section. Kept verbatim. -->
-
-Avalanche information centers such as the Northwest Weather and Avalanche Center and the Sawtooth National Forest Avalanche Center publish advisories throughout the avalanche season to help warn people about avalanche-prone areas. The American Avalanche Association describes avalanche hazards and provides safety information for North America. They provide a "North American Danger Scale" which describes the likelihood of an avalanche occurring and the expected size of the avalanche (see Figure 3).
-
-- Northwest Avalanche Center: [https://nwac.us/get-the-forecast/](https://nwac.us/get-the-forecast/)
-- Wyoming State Trails avalanche map: [http://www.jhavalanche.org/statetrailmaps/index.php](http://www.jhavalanche.org/statetrailmaps/index.php)
-- American Avalanche Association: [http://www.avalanche.org/](http://www.avalanche.org/)
-
-<!-- VERIFY: the Word original labeled the jhavalanche.org URL above "Sawtooth Avalanche Center",
-     but the same URL is described later in the handout as the Wyoming State Trails Website, so
-     the label was corrected to match the handout's own description. No URL for the Sawtooth
-     Avalanche Center appears in this list in the original; the References section gives one. -->
-
-![Avalanche.org current conditions page showing forecast zones across the western United States with a danger-level color legend along the bottom](images/lab07-avalanche-org-danger-map.png)
-
-**Figure 2.** A second sample advisory: the avalanche.org current-conditions map, with the five danger levels shown in the legend.
-
-It should be relatively clear from these sample advisories (Figures 1 and 2) that it is possible to identify the rough aspect, slope, and elevation associated with the various warning levels. Note that not every advisory includes every hazard level. Nor does each advisory provide information on the full range of terrain factors that influence avalanche potential. Most avalanche advisory sites give tabular data only. However, some sites are beginning to show maps of avalanche hazard areas, such as the Wyoming State Trails Website: [http://www.jhavalanche.org/statetrailmaps/index.php](http://www.jhavalanche.org/statetrailmaps/index.php)
-
-In this lab, you will use ArcGIS Pro ModelBuilder to develop a model that is flexible enough to generate any hazard level for any combination of terrain parameters in any location. Your approach should include calculating slope and aspect for the input digital elevation model (DEM); then using a Raster Calculator to return only those cells that meet the specified requirements. You will then create a map from the output to show the locations that have avalanche hazard, the degree of the hazard (i.e., low to extreme), and the corresponding color as described by the American Avalanche Association. The North American Danger Scale describes the danger levels, ranging from low to extreme, for the United States and Canada. It can be found on several avalanche awareness websites, including the American Avalanche Association's website.
+Avalanche centers publish a forecast every morning of the season, and the forecast is partly a map
+of terrain: it rates the danger by **elevation band** and by **aspect** (the compass direction a
+slope faces), on the five-level North American Public Avalanche Danger Scale — Low, Moderate,
+Considerable, High, Extreme (Figure B). The snowpack and the weather decide *how* dangerous today
+is; the terrain decides *where* that danger lives. A slope steeper than about 30°, facing the
+direction the wind loaded with snow, high enough to hold the cold weak layers, is where an avalanche
+starts on a dangerous day.
 
 ![The North American Public Avalanche Danger Scale table, listing the five danger levels from 1 Low (green) to 5 Extreme (black) with travel advice, likelihood of avalanches, and avalanche size and distribution](images/lab07-north-american-danger-scale.jpeg)
 
-**Figure 3.** Table showing the different hazards and other stats on avalanches.
+**Figure B.** The North American Public Avalanche Danger Scale. Its five colors are the colors your
+maps use.
 
-## Spatial Considerations
+This lab builds the terrain half of that picture for one ski area, Snowbird, in Little Cottonwood
+Canyon east of Salt Lake City. A ModelBuilder model computes slope and aspect from an elevation
+model, rates every 10 m cell on elevation, slope and aspect from a table taken from a real
+avalanche advisory, and combines the three ratings into one map of **terrain-based hazard**. The
+result is a screening: it says which terrain *could* be dangerous when the snowpack is, not whether
+it is dangerous today.
 
-Many factors contribute to avalanches. However, it is generally accepted that terrain is the most significant factor. For this project, you will assume that this set of terrain factors is reduced to a three-parameter set called the "three A's of avalanches." Altitude, slope, and aspect.
+The interesting part is the combining. Three ratings from 1 to 5 can be turned into one in several
+defensible ways, and they do not agree. In Step 9 you will vary the elevation bands and compare
+three ways of combining, see how far the map moves, and use what moves to say how much of the
+answer is the terrain and how much is your choice of rule.
 
-<!-- TODO(instructor): the recommended plan asks for an explicit statement here of the dynamic
-     variables this model omits — snowpack structure and stability, weather, wind loading, and
-     triggering (natural and human). The handout mentions weather only in passing, and adding a
-     substantive discussion changes the content, so it is flagged rather than written. -->
+> [!IMPORTANT]
+> **Your job — see the deliverables below.** Build one ModelBuilder model that rates Snowbird's
+> terrain on elevation, slope and aspect and combines the three into a hazard class; measure how
+> much of the ski area falls in each class; test the elevation bands and the combination rule; and
+> make two maps.
 
-Altitude refers to the elevation above mean sea level. Generally, higher altitudes tend to have a greater avalanche risk. Angle refers to the slope of the terrain. As one would expect, higher slopes tend to have a higher risk of an avalanche. This factor is also known as steepness. Aspect, or direction, refers to the compass direction the slope is facing. As noted above, shady slopes with north and northeastern aspects tend to have a greater risk of avalanches. The key terrain hazard factors for an avalanche are as follows:
+## Problem Statement
 
-- **Slope:** The constrained distribution of slope in degrees (values must fall within the range 0 to 90 degrees). Slopes under 25 degrees and over 60 degrees typically have a low avalanche risk because of the angle of repose for snow. Snow does not accumulate significantly on steep slopes and does not easily flow on flat slopes. Distribution of avalanches by slope has a sharp peak between 35 to 45 degrees. That peak hazard lies at around 38 degrees. Unfortunately, the steepest slopes are favored for skiing. (Clark et al. 2002, p 11)
-- **Aspect:** The constrained distribution of Aspect is a constrained circular distribution (values go from 0 to 360 and then back to 0 degrees). The three primary variables that influence snowpack evolution are temperature, precipitation, and wind. In medium latitudes of the Northern Hemisphere, more accidents occur on shady slopes with northern and northeastern aspects. Slopes in the lee of the wind accumulate more snow, presenting locally deep areas and wind slabs. Cornices also accumulate on the downwind side of ridges and can contribute to avalanche danger. (Clark et al. 2002, p 11)
-- **Profile:** Convex slopes are statistically more dangerous than concave slopes. The reasons lie partly in human behavior and the tensile strength of snow layers compared to their compression strength.
-- **Surface:** Full-depth avalanches are more common on slopes with smooth ground cover, such as grass or a rock slab. Vegetation coverage is important for anchoring the snowpack; however, boulders or buried vegetation may create weak areas within the snowpack.
+You are given a 10 m elevation model of upper Little Cottonwood Canyon and the boundary of the
+Snowbird ski area. Using them:
 
-<!-- VERIFY: "Clark et al. 2002, p 11" is cited twice above but does not appear in the References
-     section. The full citation could not be reconstructed, so the in-text citation is kept as
-     written. -->
+1. Rate every cell on **altitude**, **slope** and **aspect** with Table 1.
+2. Combine the three ratings into one terrain hazard class from 1 (Low) to 5 (Extreme), by a rule
+   you can state and defend.
+3. Report how much of Snowbird, in square kilometers, falls in each class.
+4. Map the result in the danger-scale colors.
+
+## Analysis Considerations
+
+Every one of these is a decision somebody made, and every one of them can change the answer.
+
+- **The three factors.** A forecast says where the danger is by elevation band and aspect; slope
+  angle decides whether a slope can avalanche at all. Most slab avalanches start on slopes between
+  30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50° shed snow in small
+  loose slides too often to build big slabs
+  ([avalanche.org: slope angle](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/slope-angle/){ target="_blank" }).
+  Aspect matters because wind builds slabs on the slopes downwind of it — a west wind loads east
+  aspects — and because the sun can destroy weak layers on south-facing slopes that survive on
+  shaded ones
+  ([avalanche.org: aspect](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/aspect/){ target="_blank" }).
+- **What the model leaves out.** The snowpack's layers and their strength, today's weather, wind
+  loading, recent avalanches, and the person who triggers the slide. Also slope shape (convex rolls
+  are more dangerous than concave bowls), ground cover (smooth grass and rock slabs slide more than
+  boulder fields and forest), and terrain traps below a slope. None of these is in an elevation
+  model. Your report says what each one would change.
+- **Table 1.** The class breaks below come from the course's original handout, which took them
+  from one advisory issued by the Sawtooth Avalanche Center, in central Idaho, on one day. Another day's advisory moves the elevation bands, and another
+  center would use different ones. Step 9 moves them.
+- **How the three ratings combine.** "All three agree", the product, the worst of the three, the
+  best of the three — each is a different claim about how the factors interact. Step 6 builds two
+  and Step 7 adds two more.
+- **The elevation model.** Bare earth: the ground surface, without trees, lift towers or the
+  winter snowpack, which can be meters deep and changes the slope a skier stands on. Cells of about
+  10 m, so a gully narrower than that is not in it.
+- **The coordinate system.** Slope and Aspect need cells and elevations in the same linear unit.
+  The extract arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in
+  meters.
 
 |  | Altitude (meters) | Slope (degrees) | Aspect (degrees) |
 | --- | --- | --- | --- |
-| Low (1) | 0 – 2200 | -1 – 25<br>60 – 90 | 180 – 225 |
-| Moderate (2) | 2200 – 2400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
-| Considerable (3) | 2400 – 2600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
-| High (4) | 2600 – 2800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
-| Extreme (5) | 2800 – 10000 | 35 – 45 | -1 – 45 |
+| Low (1) | 0 – 2,200 | 0 – 25<br>60 – 90 | 180 – 225 |
+| Moderate (2) | 2,200 – 2,400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
+| Considerable (3) | 2,400 – 2,600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
+| High (4) | 2,600 – 2,800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
+| Extreme (5) | above 2,800 | 35 – 45 | −1 – 45 |
 
-**Table 1.** The ratings on the left should be applied to the different altitudes, slopes, and aspects.
-
-<!-- VERIFY: the Low slope range begins at -1. Slope output from the Slope tool is 0-90 degrees;
-     -1 is the flat-aspect NoData-style code used by the Aspect tool, not a slope value. The
-     threshold is left exactly as the instructor wrote it. -->
-
-Table 1 is an example of avalanche risk hazard ranges for the altitude, slope, and aspect of the terrain. These values were obtained from an actual avalanche advisory posted on the Sawtooth National Forest Avalanche website.
+**Table 1.** Terrain ratings from a Sawtooth Avalanche Center advisory. A value exactly on a break
+goes to the lower range: 25° is Low and 35° is High, because ArcGIS Pro's Reclassify counts the end
+of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme.
+With slope class 1, a flat cell comes out Considerable under the geometric mean of Step 6 and Extreme
+under the worst-factor rule of Step 7. There are none inside Snowbird, but they show on any map that
+reaches past its boundary. Say in your report whether you would rate them differently.
 
 ## Data
 
-Avalanche Risk Values: The numeric ranges of aspect, elevation, and slope associated with low, moderate, considerable, high, and extreme avalanche risk are generally posted on specific avalanche center websites and are updated daily throughout the avalanche season. The values shown in Table 1 were extracted from the Sawtooth National Forest Avalanche website and will be used for this laboratory exercise.
+> [!IMPORTANT]
+> **Set up your folder before you download anything.** On the lab machines, work on the **D:
+> drive**: one folder for this class named after you, `D:\Smith\`, and one folder per lab inside
+> it, `D:\Smith\Lab07\`. The **C: drive is locked**, and a **network drive** is slow enough to make
+> ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
+> them without saying why. **Back up your lab folder at the end of every session.** The full set of
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-- **National Elevation Dataset:** [http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/](http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/)
-    - Download the elevation dataset for Utah provided by the USGS. You should either download the 10 m or 30 m NED for Salt Lake County using any of the methods on the page. The Snowbird Ski Resort is in Salt Lake County.
-    - Download data for another ski resort area of your choosing. It can be in Utah or another state.
-- **Utah Ski Area Boundaries:** [http://gis.utah.gov/data/recreation/ski-areas/](http://gis.utah.gov/data/recreation/ski-areas/)
-    - Download the boundaries (or locations) for this exercise. Use the Utah Ski Area Boundaries link to find and download the shapefile.
+| Layer | Where it comes from | How you get it |
+| --- | --- | --- |
+| `LittleCottonwood_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM | Prepared extract, hosted here |
+| Snowbird ski area boundary | Utah Geospatial Resource Center (UGRC), *Utah Ski Area Boundaries* | Live web layer, added by URL |
+| Table 1 | A Sawtooth Avalanche Center advisory | You type it into the Reclassify and Raster Calculator tools |
+
+- **Download:** [`lab07-little-cottonwood-dem.zip`](../../data/lab07-little-cottonwood-dem.zip)
+  (2.4 MB). Unzip it into your Lab07 folder — the files are in a `lab07-little-cottonwood-dem`
+  folder inside it — and read `READ-ME-FIRST.txt`.
+- **Add the ski areas** in Step 0 from this feature service URL:
+  `https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0`
+  (the same layer as UGRC's [Utah Ski Area Boundaries](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" } page).
+
+> [!TIP]
+> **Check the data:** `LittleCottonwood_DEM.tif` is **1,296 columns × 864 rows** of 1/3 arc-second
+> cells, values **2,176.4 to 3,500.5** (meters above NAVD 88), GCS North American 1983, no NoData
+> cells. The ski-area layer has 14 polygons; Snowbird's is named `Snowbird Ski and Summer Resort`.
+
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Little Cottonwood Canyon DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.8 m east-west; a box over upper Little Cottonwood Canyon with Snowbird and Alta, stored in latitude and longitude, to be projected in Step 1; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, not made for avalanche terrain; lidar, contour-based and radar sources resampled to one grid, bare earth without trees, lift towers or snowpack; USGS, public domain. A footer says the model sees the ground, not the snow a skier stands on.](images/lab07-dem-metadata.svg)
+
+**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
+in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
+[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
+— and say in your report what each one does to your result.
 
 ## ModelBuilder Tools
 
-You will use the following new tools in this exercise, along with tools from previous labs:
+New in this lab:
 
-- **Project:** Changes the projection of the input feature class, layer, or raster to one you define.
-- **Slope:** Identifies the slope of each cell within a raster and creates a new raster.
-- **Aspect:** Identifies the aspect of the steepest slope in each cell within a raster and creates a new raster.
-- **Times:** Takes input rasters and multiplies cell values where they overlap.
+| Tool | What it does |
+| --- | --- |
+| ![Slope icon: a hillside with its angle, 38 degrees, marked](images/icon-slope.svg){ .tool-icon }<br>**Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
+| ![Aspect icon: a compass with an arrow pointing northeast](images/icon-aspect.svg){ .tool-icon }<br>**Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
+| ![Cell Statistics icon: three stacked grids combined into one holding their maximum](images/icon-cell-statistics.svg){ .tool-icon }<br>**Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
+| ![Tabulate Area icon: a zone outlined over classed cells and the table of class areas it produces](images/icon-tabulate-area.svg){ .tool-icon }<br>**Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
 
-<!-- VERIFY: Step 1 and the example model both use Project Raster, which is the raster tool;
-     Project operates on feature classes. The tool list is left as the instructor wrote it. -->
+Tools you already know: **Project Raster** (Lab 5), **Reclassify** (Lab 2), **Raster Calculator**
+with an inline variable (Labs 2, 4 and 5), and model parameters.
+
 
 ## Example Model
 
-![ModelBuilder canvas showing a DEM feeding Project Raster to produce a Projected DEM, which branches into Slope and Aspect tools and a Reclassify Altitude tool; the Slope, Aspect, and Altitude class rasters all feed a Raster Calculator that outputs Hazard Zones](images/lab07-example-model-overview.png)
+<!-- TODO(capture): Figure C, the finished model exported from ModelBuilder (Export To Graphic), in rows: DEM -> Project Raster -> DEM_UTM -> Slope -> Slope_Deg -> Reclassify -> Slope_Class; DEM_UTM -> Aspect -> Aspect_Deg -> Reclassify -> Aspect_Class; DEM_UTM + Elevation Shift (P) -> Raster Calculator -> Altitude_Class; the three classes -> Raster Calculator (agree) -> Agree_Class, -> Raster Calculator (geometric mean) -> Hazard_Class (P), -> Cell Statistics MAXIMUM -> Worst_Class (P), -> Cell Statistics MINIMUM -> Best_Class (P); Worst_Class and Best_Class -> Raster Calculator -> Rule_Spread (P). -->
 
-**Figure 4.** The complete example model, from the input DEM through Project Raster, Slope, Aspect, three Reclassify operations, and the Raster Calculator that produces the Hazard Zones output.
+The finished model will appear here as **Figure C**: one elevation model in, three rating rasters in
+the middle, and the combined maps out — the geometric mean, the worst and best factor, and where
+those two differ — with the elevation shift and the outputs as parameters.
 
 ## Complete the Lab
 
-For an advanced GIS student, the information up to this point is all you need to complete the assignment and create an output map from the results. Feel free to try conducting the analysis using only the information provided above. If you need extra help, follow the step-by-step solution below. Make sure to conduct the lab for 2 study areas. Also, make sure to read Step 5 and Step 6 and the deliverables section because you need to make three maps using two methods.
-
-> [!TIP]
-> If you complete the lab only using the information provided above (without using the
-> step-by-step instructions below), make sure to indicate this in your lab report to be
-> considered for extra credit.
+For an advanced GIS student, the information up to this point is all you need to complete the
+assignment. Feel free to try the analysis using only the information above. If you complete the lab
+without the step-by-step instructions below, say so in your report.
 
 ## Step-by-Step Solution
 
-You will notice in the example ModelBuilder model that there are groupings of functions. This is done to illustrate the separate considerations that were given in the instructions; specifically, altitude, slope, and aspect. The parameters are classified into ranges that correspond to the five avalanche hazards described. The last step is combining the three raster layers into one output raster, indicating each of the individual avalanche hazards.
-
-### Step 1
-
-Use the Project Raster tool to transform the raster to the NAD 1983 projection. This will result in a new raster layer, assuming it is not already in that projection. This will ensure that all DEMs are projected into NAD 1983 for future projects as well.
-
-<!-- VERIFY: "NAD 1983" names a datum, not a projection. Slope and Aspect need a projected
-     coordinate system with linear units (and z-units matching x/y units) to return correct
-     degrees. The specific projected CRS the instructor intends is not stated anywhere in the
-     handout, so nothing has been substituted. -->
-
-![ModelBuilder canvas detail: a blue DEM oval connected to the yellow Project Raster tool, which outputs a green Projected DEM oval](images/lab07-model-project-raster.png)
-
-**Figure 5.** Using the Project Raster tool in ModelBuilder.
-
-### Step 2
-
-Use the Slope tool to calculate the slope of the projected raster layer from Step 1.
-
-![ModelBuilder canvas detail: the Projected DEM oval connected to the Slope tool, which outputs a Slope Raster oval](images/lab07-model-slope.png)
-
-**Figure 6.** Using the Slope tool in ModelBuilder.
-
-### Step 3
-
-Use the Aspect tool to calculate the aspect of the projected raster layer from Step 1.
+> [!NOTE]
+> **Build it once, build it to be changed.** The steps walk through Snowbird at the default
+> elevation bands. Step 9 re-runs the same model with the bands moved, so give every dataset a
+> readable name as you go.
 
 > [!NOTE]
-> Flat aspects are given the value of **-1**. Remember this when you use the Reclassify tool.
+> **Every check value on this page** was measured on the files you download, with the steps below,
+> in ArcGIS Pro 3.7.1. Your numbers should match to the last digit shown.
 
-![ModelBuilder canvas detail: a raster variable connected to the Aspect tool, which outputs an Aspect Raster oval](images/lab07-model-aspect.png)
+### Step 0 — Set Up the Project
 
-**Figure 7.** Using the Aspect tool in ModelBuilder.
+1. Create a new project in `D:\Smith\Lab07\` with the **Map** template; if you already made the
+   folder, uncheck **Create a folder for this local project**.
+2. Add `LittleCottonwood_DEM.tif`. When the **Build Pyramids and Calculate Statistics** dialog
+   opens, click **OK**.
+3. On the **Map** tab click the arrow under **Add Data** ▸ **From Path**, paste the ski-area URL
+   from the Data section, and click **Add**. Add an imagery or topographic basemap.
+4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
+5. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
+   **Properties**, set **Name** to `AvalancheTerrain` and **Label** to `Avalanche Terrain`, and save.
+6. On the **ModelBuilder** tab click **Environments** and check that **Current Workspace** and
+   **Scratch Workspace** are your project geodatabase.
 
-<!-- VERIFY: in this screenshot the upstream variable is labeled "Raster Coordinate System", while
-     the same variable is labeled "Projected DEM" in Figure 4. The two captures appear to come
-     from different versions of the model. Screenshot not re-shot for this migration. -->
+<!-- TODO(capture): the Environments dialog. -->
 
-### Step 4
+### Step 1 — Project the DEM
 
-Use the Reclassify tool to reclassify the different values that are required for the parameters in Table 1. Note that different ranges can be reclassified to the same new value. An example of this is shown in Figure 9.
+Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input:
 
-![ModelBuilder canvas detail: three parallel branches in which the Slope Raster, the altitude raster, and the Aspect Raster each pass through a Reclassify tool to produce Slope Class, Altitude Class, and Aspect Class rasters](images/lab07-model-reclassify-three.png)
+- **Output Coordinate System**: NAD 1983 UTM Zone 12N
+- **Resampling Technique**: Bilinear interpolation (elevations are continuous; nearest neighbor
+  leaves stair steps that become stripes in Slope)
+- **Output Cell Size**: 10
+- **Output Raster Dataset**: `DEM_UTM`
 
-**Figure 8.** Using the Reclassify tool on the Aspect, Slope, and Elevation rasters.
+<!-- VERIFY in the GUI build: whether Project Raster opens with Bilinear for this DEM, as it did in Lab 5, and the cell size it proposes. -->
+<!-- TODO(capture): the Project Raster dialog. -->
 
-![The ArcGIS Pro Reclassify tool pane for the Aspect raster, with a reclassification table mapping start and end aspect values to new class values from 1 through 5](images/lab07-reclassify-aspect-window.png)
+> [!TIP]
+> **Check the result:** `DEM_UTM` is **1,023 × 896** cells of 10 m, values **2,178.0 to 3,499.4**
+> m. If the cell size reads about 0.0001, you are looking at the unprojected DEM.
 
-**Figure 9.** The Reclassify window for Aspect.
+### Step 2 — Compute Slope
 
-Add and edit the rows directly in the table. Enter the previous ranges given in Table 1 and then insert the values associated with their appropriate hazard level.
+Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and output `Slope_Deg`.
 
-### Step 5
+<!-- TODO(capture): the Slope dialog; VERIFY its parameter labels in 3.7.1 (Output measurement, Method, Z unit). -->
 
-Use the Raster Calculator tool to combine the classification layers to create a map of the different hazard levels. There are multiple ways you can combine these raster layers to identify the hazard areas. One option would be to use a series of "con" statements (similar to "if then" statements in programming) to identify areas that meet specific classes. For example, the code below in Raster Calculator will mark all areas that meet class "1" in slope, aspect, and altitude as "1". And all areas that meet class "2" would be marked as class "2". Try using this expression in the Raster Calculator and explore the results. Make sure to label your risk zones and follow the symbology on Table 1 for the risk levels Low, Moderate, Considerable, High, and Extreme. Explore your mapped results. Are these results realistic? What is the problem with these results? Please include this map in your report and an explanation, in your own words, of the problem with this map. (Hint… what about an area that is class 5 warning on elevation, class 5 on slope, and class 4 on aspect? What would it be marked as in your final map?)
+> [!TIP]
+> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (layer
+> **Properties** ▸ **Source** ▸ **Statistics**).
+<!-- VERIFY in the GUI build: where ArcGIS Pro 3.7.1 shows a raster layer's mean (the arcpy Raster.mean is 26.85). -->
 
+> [!WARNING]
+> **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
+> `LittleCottonwood_DEM.tif` itself it reports a mean of 24.3° — about 2.6° too gentle. Its cells
+> are 1/3 arc-second, which here is 10.3 m north–south but only 7.8 m east–west; projected cells are
+> square meters. Two or three degrees move a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
+
+### Step 3 — Compute Aspect
+
+Add **Aspect** with `DEM_UTM` as the input and output `Aspect_Deg`.
+
+> [!TIP]
+> **Check the result:** values run from 0 to 360, plus **−1 on 480 flat cells** in the whole
+> projected DEM.
+
+<!-- TODO(capture): the Aspect dialog. -->
+
+### Step 4 — Rate Slope and Aspect
+
+Add **Reclassify** twice, with the slope and aspect rows of Table 1.
+
+1. **Reclassify** `Slope_Deg`, field **Value**, nine rows: 0–25 → 1, 25–30 → 2, 30–32 → 3,
+   32–35 → 4, 35–45 → 5, 45–50 → 4, 50–55 → 3, 55–60 → 2, 60–90 → 1. Output `Slope_Class`.
+2. **Reclassify** `Aspect_Deg`, eight rows: −1–45 → 5, 45–90 → 4, 90–135 → 3, 135–180 → 2,
+   180–225 → 1, 225–270 → 2, 270–315 → 3, 315–360 → 4. Output `Aspect_Class`.
+
+Two ranges can share a new value; that is how the table says "steep and gentle are both Low."
+
+<!-- TODO(capture): the two Reclassify dialogs. -->
+
+> [!TIP]
+> **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
+> and slope class 5 **2.047 km²**; aspect class 4 (northwest-to-north and northeast-to-east)
+> **3.493 km²**. If any cell of `Slope_Class` is NoData, a range has a gap.
+
+### Step 5 — Rate Altitude, With a Shift
+
+Reclassify cannot take a parameter, and Step 9 needs to move the elevation bands. So rate altitude
+with **Raster Calculator**, with the bands written out and an inline variable added to each break:
+
+1. Right-click the canvas ▸ **Create Variable**, choose **Long**, name it `Shift`, and set its value
+   to `0`. Right-click it ▸ **Parameter**.
+2. Add **Raster Calculator** with this expression, and output `Altitude_Class`:
+
+```text
+Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5))))
 ```
-Con(("%Altitude Class%" == 1) & ("%Slope Class%" == 1) & ("%Aspect Class%" == 1), 1, Con(("%Altitude Class%" == 2) & ("%Slope Class%" == 2) & ("%Aspect Class%" == 2), 2, Con(("%Altitude Class%" == 3) & ("%Slope Class%" == 3) & ("%Aspect Class%" == 3), 3, Con(("%Altitude Class%" == 4) & ("%Slope Class%" == 4) & ("%Aspect Class%" == 4), 4, Con(("%Altitude Class%" == 5) & ("%Slope Class%" == 5) & ("%Aspect Class%" == 5), 5, 0)))))
+
+A positive shift raises every band (less of the mountain counts as high); a negative shift lowers
+them.
+
+<!-- VERIFY in the GUI build: the Variable data type list name (Long) and that %Shift% draws its connector to the Raster Calculator, as %Threshold% did in Lab 5. -->
+<!-- TODO(capture): the Raster Calculator dialog. -->
+
+> [!TIP]
+> **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
+> and no cells below 2,200 m. Most of the ski area is "Extreme" on altitude alone — keep that in
+> mind in Step 9.
+
+### Step 6 — Combine the Ratings
+
+Two ways, both in Raster Calculator.
+
+**First, "all three agree."** A cell gets a class only where all three ratings are that class:
+
+```text
+Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1), 1, Con(("%Altitude_Class%" == 2) & ("%Slope_Class%" == 2) & ("%Aspect_Class%" == 2), 2, Con(("%Altitude_Class%" == 3) & ("%Slope_Class%" == 3) & ("%Aspect_Class%" == 3), 3, Con(("%Altitude_Class%" == 4) & ("%Slope_Class%" == 4) & ("%Aspect_Class%" == 4), 4, Con(("%Altitude_Class%" == 5) & ("%Slope_Class%" == 5) & ("%Aspect_Class%" == 5), 5, 0)))))
 ```
 
-![The ArcGIS Pro Raster Calculator tool pane inside ModelBuilder, showing the Rasters and Tools lists and the nested Con expression in the Map Algebra expression box, with the Slope Class, Aspect Class, and Altitude Class ovals connected to the Raster Calculator element](images/lab07-raster-calculator-con.png)
+Output `Agree_Class`. Look at it before you go on.
 
-**Figure 10.** Raster Calculator window in ModelBuilder.
+> [!TIP]
+> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.782 km²** — 96 % — is 0, unclassified. A
+> 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
+> Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
 
-Check the Parameter and Add to Display options on the Hazard Level raster layer.
+**Second, the geometric mean.** Multiply the three ratings (1 to 125), take the cube root, and round.
+The cube root of a product of three numbers is their geometric mean, which brings the result back to
+the 1–5 scale:
 
-### Step 6
+```text
+Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5)
+```
 
-Use the Raster Calculator again, but with a different calculation that will give more realistic or reliable results. Specifically, what if you multiply all of the classes together? Then your final range would be 0 to 125 (i.e., the highest risk areas would be class 5 slope, class 5 elevation, and class 5 aspect = 5 × 5 × 5 = 125). The problem with this approach is that now you have 125 results. But this is better because the 5,5,4 class will appear on your map as risk 100, which is much better than a map that shows it as risk 0. Does that make sense? Run this "multiply the values" calculation in Raster Calculator and then, in your risk map, divide the ranges 0-125 into five categories, Low, Moderate, Considerable, High, and Extreme, and apply the correct symbology (based on Table 1). Make a map of these results and include it in your report. Identify areas in your second map that show significantly different results than in your first map. Discuss why these differences exist and which results you are more confident in, and why.
+Output `Hazard_Class`, and make it a model parameter. Rated 5, 5, 4, a cell's product is 100, its
+geometric mean 4.6, and its class 5. In product terms the classes are 1–3 Low, 4–15 Moderate, 16–42
+Considerable, 43–91 High, 92–125 Extreme.
 
-<!-- TODO(instructor): the recommended plan asks for a validation/reflection step here — compare
-     the model output against published avalanche-terrain information (for example a forecast
-     center's terrain or avalanche-path mapping for the same area) and discuss where and why they
-     disagree. Adding a task changes the deliverables, so it is flagged rather than written. -->
+<!-- TODO(capture): both Raster Calculator dialogs. -->
+
+> [!NOTE]
+> **Why `+ 0.5` and `Int`.** `Int` drops the fraction, so adding 0.5 first rounds to the nearest
+> class: a geometric mean of 3.48 (product 42) is Considerable, 3.50 (product 43) is High.
+
+### Step 7 — Add Two More Rules
+
+Add **Cell Statistics** twice, each with `Altitude_Class`, `Slope_Class` and `Aspect_Class` as the
+inputs:
+
+1. **Overlay statistic** Maximum, output `Worst_Class` — a cell is as dangerous as its worst factor.
+2. **Overlay statistic** Minimum, output `Best_Class` — a cell is only as dangerous as its least
+   dangerous factor.
+
+These two bracket the geometric mean. Then one more **Raster Calculator**, output `Rule_Spread`:
+
+```text
+"%Worst_Class%" - "%Best_Class%"
+```
+
+`Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
+where the rule you choose matters.
+
+Make `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters, so that every run
+from the tool dialog keeps them and lets you name them.
+
+> [!TIP]
+> **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
+> on **3.309 km²**.
+
+<!-- TODO(capture): the Cell Statistics dialog; VERIFY the parameter labels (Overlay statistic, Ignore NoData in calculations). -->
+
+### Step 8 — Measure Snowbird
+
+Run the model. Then add **Tabulate Area** (outside the model is fine) with:
+
+- **Input raster or feature zone data**: the ski-area layer, with **only Snowbird selected** (select
+  it with **Select By Attributes**, `NAME` begins with `Snowbird`)
+- **Zone field**: `NAME`
+- **Input raster or feature class data**: `Hazard_Class`, **Class field** `Value`
+- **Output table**: `Snowbird_Hazard`
+
+The table has one column per class, in square meters. Divide by 1,000,000 for km². Run Tabulate
+Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Class`, `Worst_Class`,
+`Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
+table for the raster and the run, such as `TA_Hazard_s0`.
+
+<!-- VERIFY in the GUI: that Tabulate Area honors the selection on the service layer (the arcpy check used a layer with a definition query), and its parameter labels. -->
+<!-- TODO(capture): the Tabulate Area dialog and its output table. -->
+
+> [!TIP]
+> **Check the result** (km², Snowbird, shift 0):
+>
+> | Rule | Low | Moderate | Considerable | High | Extreme |
+> | --- | --- | --- | --- | --- | --- |
+> | Geometric mean (`Hazard_Class`) | 0.168 | 3.162 | 3.691 | 2.673 | 1.087 |
+>
+> The five add to **10.782 km²**, Snowbird's area. UGRC's own `Shape__Area` field says 18.7 million
+> square meters: that is the area in the layer's Web Mercator coordinates, which stretch areas by
+> about 1.73 at this latitude. Your table measures in the raster's UTM meters.
+
+### Step 9 — Test the Assumptions
+
+The default map is *an* answer, not *the* answer: one day's elevation bands from one advisory, and
+one rule for combining. Run the model at least **three more times** from its tool dialog with a
+different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
+carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
+`Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
+
+Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
+that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
+in one table**, record the shift, the area of Snowbird in altitude class 5, and, for each of the
+three rules, the area rated High or Extreme. Then answer, in your report:
+
+1. **How much does moving the elevation bands change the map,** in each direction? Use the
+   altitude-class column to say why.
+2. **How much does the combination rule change the map?** For the same run, compare the High +
+   Extreme area under the three rules. Which rule would you publish, and to whom?
+3. **Where do the three rules agree, and where do they disagree most?** Map `Rule_Spread` at
+   shift 0 beside the imagery and say what kind of terrain sits at 0 and at 4.
+
+Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
+
+> [!TIP]
+> At Snowbird one of these two choices moves the map far more than the other. Look at Step 5's
+> check value before you guess which.
 
 ## Deliverables
 
-For the Snowbird Ski Resort near Alta, Utah, construct a ModelBuilder model that prepares all your input data for a terrain analysis, conducts the analysis, and creates a map showing the avalanche hazard levels. Use the colors shown in Table 1 to symbolize the raster cells. You will need to prepare the map coloring/symbology outside of ModelBuilder. Assign the legend with the appropriate labels from Table 1. Include the legend on your map, labeling the levels from low to high, rather than using numbers. Duplicate these results for a second Ski Resort area of your choosing.
+Make **two** professional map layouts:
 
-Your project report should show 3 maps:
+1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, titled with the rule and the
+   bands, in the danger-scale colors (Figure B) with the labels Low to Extreme, the Snowbird boundary
+   and labeled places, and an inset locating Little Cottonwood Canyon in Salt Lake County.
+2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
+   the picture. Say on the map what changed and why you chose it.
 
-1. A map of Snowbird, showing the "con statement method" results where we only color areas that specifically meet specific criteria,
-2. A map of Snowbird showing the "multiply method" where we multiply the risk values to get a range of 1-125 and then reclassify these in the symbology tab.
-3. A map of an area of your choosing where you use the multiply method to identify the risk areas in this newly selected area.
+Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
-Write a brief report that presents your final model and clearly shows all elements of the model. Describe the steps and tools in your model and display your final map. Include any changes you made to the reclassifications or analysis and why you chose those methods. Make sure to review the rubric at the end of this chapter for the full requirements for the laboratory exercise.
+- a title block — assignment title, your name, the date and the course — and the name of your
+  peer reviewer
+- the requirements of the project and your approach to solving it
+- **a description of your model** a reader could repeat from: each tool and its settings, and every
+  input, intermediate and output dataset with its type
+- **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
+  Graphic**), and **one** screen capture of its toolbox interface with the shift parameter exposed
+- **the three metadata values** for the DEM — its publication date and source dates, its vertical
+  datum and units, and its cell size — and what each one means for your result
+- your **Step 8 table** of Snowbird's area in each `Hazard_Class` at shift 0, in km²
+- the **"all three agree" result**: its check value and, in your own words, why it is the wrong
+  answer
+- your **sensitivity table** from Step 9 and your answers to its three questions
+- **where the map is wrong and why** — what the terrain-only model leaves out (snowpack, weather,
+  wind loading, triggering, slope shape, ground cover, terrain traps), what the bare-earth 10 m
+  DEM cannot show, and what Table 1 assumes — and what data would fix each
+- **a copy of the rubric below with your self-assessment filled in** — a score in every row,
+  honestly arrived at. The grader will compare it with theirs.
+
+> [!IMPORTANT]
+> **Peer review before you submit.** Have another student in the class read your report against
+> the rubric and give you feedback, then act on that feedback before the deadline. Name your
+> reviewer in the report and say in a sentence what you changed because of them.
+
+**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
+n41w112 (May 2026). Ski areas: Utah Geospatial Resource Center. Ratings: Sawtooth Avalanche Center
+advisory, via CE 414.
 
 ## References
 
-American Avalanche Association website: (http://www.avalanche.org/, 2011).
+avalanche.org. *North American Public Avalanche Danger Scale.* [avalanche.org](https://avalanche.org/avalanche-encyclopedia/human/resources/north-american-public-avalanche-danger-scale/){ target="_blank" }.
 
-Northwest Weather and Avalanche Center (http://www.nwac.us/, 2011)
+avalanche.org. *Avalanche Encyclopedia: Slope Angle* and *Aspect.* Accessed October 2, 2026.
 
-Sawtooth National Forest Avalanche Center: (http://www.sawtoothavalanche.com/index.html, 2011)
+Colorado Avalanche Information Center. *Statistics and Reporting.*
+[avalanche.state.co.us](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }. Accessed October 2, 2026.
 
-Wikipedia: (http://en.wikipedia.org/wiki/Avalanche, 2011)
+Sawtooth Avalanche Center. [sawtoothavalanche.com](https://www.sawtoothavalanche.com/){ target="_blank" }.
 
-Merriam-Webster Dictionary: (http://www.merriam-webster.com/dictionary/avalanche, 2012).
+Utah Avalanche Center. [utahavalanchecenter.org](https://utahavalanchecenter.org/){ target="_blank" }.
 
-<!-- TODO(instructor): the recommended plan asks that these references be updated (they are dated
-     2011-2012) and that the lab point students at a current avalanche-information authority.
-     The existing links were tested during migration: the Sawtooth "/index.html" page now returns
-     404, though the site root responds; the others resolve. No links were added or replaced,
-     since choosing the authority to cite is an instructor decision. -->
+U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20, 2026.
 
-## Example Map
+Utah Geospatial Resource Center. *Utah Ski Area Boundaries.*
+[opendata.gis.utah.gov](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" }.
 
-> [!NOTE]
-> This is an example of the "con statement method" from Step 5. This is the first of 3 maps you
-> will produce in this lab. Remember that this is **not** a great result, and we would not want to
-> share this with the public. Read Step 5 and Step 6 carefully and generate all three requested
-> maps (2 for Snowbird and one for an area of your choosing).
+## Example Maps
 
-![Example student map titled Avalanche Hazard Map, Snowbird Area, Utah: an inset locator map of the Salt Lake Valley with the study area outlined in red, and a main map of the Snowbird and Alta ski areas showing scattered hazard cells colored by level, with a legend, north arrow, and scale bars](images/lab07-example-map-snowbird.png)
+These are examples, not templates. Your maps carry your name, and your second map shows the run you
+chose.
 
-**Figure 11.** Example output map for the Snowbird area using the con statement method.
+![Example baseline layout titled "Avalanche Terrain at Snowbird: Geometric Mean, Advisory Bands": the terrain hazard classes over imagery in the danger-scale colors, green Low through yellow, orange and red to black Extreme, with the Snowbird boundary in cyan and Alta's in gray; Extreme and High follow the steep walls and gullies, Moderate and Considerable cover the broader slopes, and Low appears only on the canyon floor. Below, a Salt Lake County locator, a legend, north arrow, scale bar in kilometers, and a text box: of Snowbird's 10.8 sq km, 3.8 rate High or Extreme and 1.1 Extreme.](images/lab07-example-map-baseline.png)
 
-## Rubric for Mapping Avalanche Risk using Slope, Aspect, Elevation
+**Figure 10.** The baseline map. Two things to do better than this example: label the peaks and the
+lifts so a reader can find their way around, and mark one slope you checked against imagery.
+
+![Example scenario layout titled "Avalanche Terrain at Snowbird: Elevation Bands Raised 400 m": the same design with less red and black on the lower slopes, and a text box saying High or Extreme falls from 3.8 to 2.5 sq km and Extreme from 1.1 to 0.47 sq km, chosen to show what a warm spell that pushes the problem up the mountain does to the map.](images/lab07-example-map-scenario.png)
+
+**Figure 11.** The kind of second map Step 9 asks for. Your own second map should be the run that most
+changes what a reader would conclude, which may not be this one.
+
+## Rubric for Avalanche Hazard
+
+Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
+what to submit.
 
 | Item | Points |
 | --- | --- |
-| Assignment Title, Name, Date, Course, Summary of the requirements of the project | /5 |
-| Show and describe your model:<br>List each of the tools used<br>List tool settings applied for the analysis (could someone repeat the assignment using your lab report?)<br>List all input, intermediate, and output datasets<br>Describe each input dataset, including type (point, line, polygon, raster) and the source of the data<br>Describe each output dataset (point, line, polygon, raster)<br>Model is shown on one full page (8.5 × 11)<br>All text is readable (10 pt. font minimum)<br>All tools and data sets are shown<br>Show a Toolbox User Interface for your model that allows a user to select any input DEM and run the Avalanche analysis. | /10 |
-| Discussion of Results:<br>Carefully read Step 5, Step 6, and the Deliverables section and make sure to show and discuss the 3 requested maps.<br>Discuss the two methods we used and answer the questions posed in those sections.<br>Is there a third possible way to combine aspect, slope, and elevation classes? We tried identifying unique areas with con statements and multiplying the risk areas, but what other options could we use? | /5 |
-| Make THREE full-page (8.5 × 11) maps showing the results as requested in Step 5, Step 6, and the deliverables section. Be sure to include all of the map elements and standard map design techniques learned in class so far.<br>Map 1: Snowbird area using the con statement classification approach<br>Map 2: Snowbird area using the "multiply classes" method (make sure to classify your final results using symbology as shown in Table 1)<br>Map 3: Your selected study area, using the "multiply classes" method. | /30<br>(10/map) |
-| Self-assessment | /50 |
-
-<!-- TODO(instructor): the four scored rows above sum to exactly 50 (5 + 10 + 5 + 30), which
-     matches the "/50" on the last row — so that row reads as the assignment total rather than a
-     separately scored "Self-assessment" item. If self-assessment is meant to be scored on its
-     own, the lab is worth 100 and a total row is missing. Point values were not changed. -->
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• The "all three agree" result and why it is the wrong answer (2)<br>• Where the map is wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Step 8 table of Snowbird's areas at shift 0 matches the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• An inset locating Little Cottonwood Canyon (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
+| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map in each direction, and why (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree (`Rule_Spread`), and what terrain that is (2) | /10 |
+| **Total** | **/50** |
 
 > [!NOTE]
 > **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
@@ -274,55 +529,11 @@ Merriam-Webster Dictionary: (http://www.merriam-webster.com/dictionary/avalanche
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Migration notes (2026-09-03): CROP (2026-09-03): the two browser captures (Figures 1 and 2) had the Chrome tab strip and address bar removed (they showed the capturing user's other open tabs and profile avatar); the page content is unchanged.
-     source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 6 - Avalanche Hazard.docx
-     (Word title: "Lab 6 – Mapping Avalanche Risk using Slope, Aspect, and Elevation"; the page
-     header follows the site-wide "Lab 6: Avalanche Hazard" pattern and the full descriptive title
-     is preserved in the rubric heading.)
-     ArcGIS Pro version verified against: NOT VERIFIED in this migration.
-     images renamed from fig-NN:
-       fig-01.png  -> lab07-utah-avalanche-center-ratings.png
-       fig-02.png  -> lab07-avalanche-org-danger-map.png
-       fig-03.jpeg -> lab07-north-american-danger-scale.jpeg
-       fig-04.png  -> lab07-example-model-overview.png
-       fig-05.png  -> lab07-model-project-raster.png
-       fig-06.png  -> lab07-model-slope.png
-       fig-07.png  -> lab07-model-aspect.png
-       fig-08.png  -> lab07-model-reclassify-three.png
-       fig-09.png  -> lab07-reclassify-aspect-window.png
-       fig-10.png  -> lab07-raster-calculator-con.png
-       fig-11.png  -> lab07-example-map-snowbird.png
-     (Two further images in the .docx are header logos, referenced only from header1.xml, and were
-     not extracted. Nothing in the body text refers to them.)
-     figure renumbering: all 11 body images are now numbered in document order. Source captions
-     Figure 1-7 map to Figures 3, 5, 6, 7, 8, 9, 10; Figures 1, 2, 4 and 11 are newly captioned
-     images that the Word original left uncaptioned. In-text cross references were updated:
-     "(see Figure 1)" -> "(see Figure 3)" and "shown in Figure 6" -> "shown in Figure 9".
-     stale/unverified screenshots: Figure 7 (model-aspect) shows the upstream variable as "Raster
-     Coordinate System" while Figure 4 shows "Projected DEM" — captures appear to be from
-     different model versions. Figures 1 and 2 are live-website captures and will drift as those
-     sites change. Figure 11 is a student example carrying placeholder text ("Avalanche Lab /
-     Date / Projection"). No screenshot was re-shot or altered.
-     TODO(instructor): rename output to "terrain-based avalanche susceptibility screening";
-     define susceptibility vs hazard vs exposure vs vulnerability vs risk; state the dynamic
-     variables the model omits (snowpack, weather, wind loading, triggering); add a
-     validation/reflection comparison against published avalanche-terrain information; update the
-     2011-2012 references and point at a current avalanche-information authority; resolve whether
-     the rubric's "/50" row is the total or a separately scored self-assessment.
-     VERIFY: "more than 150 people killed per year (National Geographic)" is uncited; "Clark et
-     al. 2002, p 11" is cited twice but missing from References; Table 1's Low slope range starts
-     at -1 although slope is 0-90; Step 1 calls NAD 1983 a "projection" and no projected CRS is
-     specified; the ModelBuilder Tools list names "Project" while the steps use "Project Raster".
-     dead/redirected links:
-       http://www.sawtoothavalanche.com/index.html -> 404 (site root https://www.sawtoothavalanche.com/ returns 200)
-       http://gis.utah.gov/data/elevation-terrain-data/10-30-meter-elevation-models-usgs-ned/ -> 200 but redirects to https://gis.utah.gov/products/sgid/elevation/
-       http://gis.utah.gov/data/recreation/ski-areas/ -> 200 but redirects to https://gis.utah.gov/products/sgid/recreation/ski-areas/
-       http://www.avalanche.org/ -> 200, redirects to https://avalanche.org/
-       http://www.nwac.us/ -> 200, redirects to https://nwac.us/
-       http://en.wikipedia.org/wiki/Avalanche -> 200, redirects to https
-       https://utahavalanchecenter.org/ and http://www.merriam-webster.com/dictionary/avalanche
-         -> 403 to curl (bot protection); both appear live in a browser
-       http://www.jhavalanche.org/statetrailmaps/index.php -> 200 with a browser user agent;
-         a plain HEAD request returns 406 and redirects to https://bridgertetonavalanchecenter.org/
-       https://nwac.us/get-the-forecast/ -> 200
-     No source paragraph or table was dropped. -->
+<!-- Migration notes (rebuild drafted 2026-10-02, promoted 2026-10-05).
+SOURCE: the September 3 migration of "Lab 6 - Avalanche Hazard.docx" (docs/assignments/lab-07/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab07/PARITY_PLAN.md.
+ARCGIS PRO VERSION: 3.7.1 arcpy only (tools/lab07/run_model.py, tool_checks.py, and a Tabulate Area run against the live UGRC service layer, tools/lab07/student_route_checks.json). GUI build owed: every TODO(capture) and VERIFY above.
+DATA: docs/data/lab07-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab07/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
+VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
+SENSITIVITY (do NOT publish; High + Extreme km2, geometric mean / maximum Extreme / minimum Extreme): shift -400: 3.975 / 10.613 / 0.415; -200: 3.937 / 9.152 / 0.406; 0: 3.760 / 8.203 / 0.336; +200: 3.317 / 6.415 / 0.258; +400: 2.465 / 4.289 / 0.126. The bands move the geometric-mean High + Extreme by -0.4 to +1.3 km2 over 800 m of shift; the rule moves Extreme alone from 0.34 to 8.20 km2 at shift 0.
+PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
+TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab07/PARITY_PLAN.md, all as recommended; page promoted, old page at lab07-backup. 2. GUI build with captures and Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab07-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
