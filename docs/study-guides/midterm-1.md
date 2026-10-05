@@ -1,20 +1,8 @@
----
-search:
-  exclude: true
----
-
-# DRAFT — Midterm 1 Study Guide
-
-> [!WARNING]
-> **Draft for the instructor** (October 2, 2026), not linked from the site. Built from each week's
-> "Today's Goals" slide, readings and self-check quizzes. **Assumes Midterm 1 covers Weeks 1–7**,
-> since it opens Tuesday of Week 8 at 8:00 am, before that week's lecture. Confirm the scope, cut
-> anything not on the exam, then link it from the Week 8 page (add a line to `DUE[8]` in
-> `tools/build_schedule.py`) and remove this box and the front matter.
+# Midterm 1 Study Guide
 
 **Midterm 1** is a closed-book, concept-based exam in the Testing Center, 100 points. It opens
 **Tuesday of Week 8 at 8:00 am** and closes **Thursday at 9:00 pm**; the Testing Center charges a late
-fee from 2:00 pm Thursday, so go earlier.
+fee from 2:00 pm Thursday, so go earlier. It covers **Weeks 1–7**.
 
 **How to use this page.** Each week lists what you should be able to do. Turn every line into a
 question and answer it out loud without notes. If you cannot, open that week's slides (press

@@ -1,7 +1,7 @@
 # Week 8: Interpolation and Midterm 1
 
 > [!IMPORTANT] Also this week
-> - **Midterm 1** — closed book, concept based, in the Testing Center — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
+> - **Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md)) — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
 
 <div class="week-card week-card--slides" markdown>
 
