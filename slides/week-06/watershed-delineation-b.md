@@ -23,7 +23,7 @@ Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 6. Tuesday (Part A, watershed-delineation-a.md) covered what a watershed is and why water is managed by them, then the first three of the eight steps, ending on the flow direction grid. Today picks up at flow accumulation: the stream threshold, stream links, pour points and watersheds, the Lab 5 model that runs all eight, and then a watershed delineated by hand and with USGS StreamStats. -->
+<!-- Thursday of Week 6. Tuesday (Part A, watershed-delineation-a.md) covered what a watershed is and why water is managed by them, then the first three of the eight steps, ending on the flow direction grid. Today runs in three movements: how watersheds used to be delineated by hand, the same job done by USGS StreamStats, and then the rest of the eight steps (flow accumulation, the stream threshold, stream links, pour points and watersheds) finished in the Lab 5 ArcGIS Pro model. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-05</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -37,21 +37,127 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
+- Delineate a watershed **by hand** and with **StreamStats**, and say what the automated result buys you
 - Put the **eight steps** in order, and say why each needs the one before
 - Explain what a **flow accumulation** grid counts, and how a **threshold** turns it into a stream network
 - Say why a watershed is always the watershed **of a pour point**
 - Say why a pour point must be **snapped** onto the channel
-- Delineate a watershed **by hand** and with **StreamStats**, and say what the automated result buys you
 
-<!-- One goal per question on the closing quiz (Follow the Water), in the same order. The map at right is where Lab 5 ends up: Rock Canyon's basin cut into one subwatershed per stream link. Set the frame: every step today is one raster operation reading the flow direction grid Tuesday built. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
+<!-- One goal per question on the closing quiz (Follow the Water), in the same order. The map at right is where Lab 5 ends up: Rock Canyon's basin cut into one subwatershed per stream link. Set the frame: first by hand, then StreamStats, then every remaining step as one raster operation reading the flow direction grid Tuesday built. Students who understand the chain can debug Lab 5; students who only memorize tool names cannot. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Part 1 — From Flow Direction to Watersheds
+# Part 1 — Manual Watershed Delineation
 
-<!-- Steps 4 to 8, then the Lab 5 model that wires all eight together. -->
+<!-- Part 1 is hands-on and comes first: how watersheds were delineated before GIS — by hand, from contours — then the same basin from USGS StreamStats in thirty seconds, then the two compared, on the lab computers. Part 2 then opens the box StreamStats is: the rest of the eight steps, finished in the Lab 5 ArcGIS Pro model. -->
+
+---
+
+# Hog Pen Creek — Delineation by Hand
+
+<div style="position:relative; display:flex; gap:18px; justify-content:center; align-items:flex-start;">
+<img src="images/ws-hog-pen-creek-topo.jpg" style="height:400px;" alt="Topographic quadrangle with Hog Pen Creek running through it">
+<div data-marpit-fragment="1"><img src="images/ws-hand-digitized-watershed.png" style="height:400px;" alt="The same area with the watershed divide drawn by hand in red along the ridges"></div>
+</div>
+
+<!-- One click. First the quadrangle alone: a 4 km by 4 km topographic map with Hog Pen Creek running through it. Ask the class where the divide is. Everyone will point at the contour crenulations, which is exactly the right instinct. Then click to show the hand-drawn answer: the red line is the watershed divide, drawn by hand along the ridges. The rules: the divide crosses contours at right angles, it runs through high points, it never crosses the stream except at the outlet, and it closes on itself. The 20 ft and 100 ft contours, the stream center line and the outlet are labeled. This is how every watershed was delineated before GIS. -->
+<!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
+
+---
+
+<!-- _class: activity -->
+
+# Watershed Delineation by Hand Digitizing — Let's Try It
+
+- Open **ArcGIS Pro**
+- Using your basemap, find **Hogle Zoo** in Salt Lake City — find **Emigration Creek**
+- Create a new blank **polygon** shapefile
+- Manually digitize the watershed that drains to this area by **clicking along ridge lines**
+- **Save** your digitized watershed and compare with your neighbors
+
+<!-- Give this about fifteen minutes. Turn on a hillshade or terrain basemap so ridges are visible. The comparison at the end is the point: five students will produce five different boundaries, which sets up the StreamStats comparison that follows. -->
+<!-- TODO(graphic): an ArcGIS Pro screenshot of the Emigration Creek / Hogle Zoo area on a terrain basemap with a partially digitized polygon in progress. Not fabricated here; needs a real capture. -->
+<!-- VERIFY: exact ArcGIS Pro path for creating a new blank polygon shapefile or feature class, so the step can name the pane and menu. -->
+
+---
+
+# Automated Watershed Delineation
+
+![bg right:52% w:95%](images/ws-streamstats-home.jpg)
+
+- Let's use an automated tool provided by the U.S. Geological Survey called **StreamStats**
+- Go to [https://streamstats.usgs.gov/ss/](https://streamstats.usgs.gov/ss/)
+
+<!-- StreamStats runs this week's same eight steps on a pre-processed national DEM, then adds published regression equations for peak flows. Students are about to get in thirty seconds what took them fifteen minutes by hand. -->
+
+---
+
+# Automated Watershed Delineation
+
+- Search for **Pioneer Monument State Park**, then click **"Utah"**
+
+![w:1000 center](images/ws-streamstats-select-utah.jpg)
+
+<!-- The state has to be selected first because the regression equations and the pre-processed terrain data are organized by state study area. The red circle marks the state selector. -->
+
+---
+
+# Automated Watershed Delineation
+
+- Click **"Delineate"** and then click a point on the stream near Hogle Zoo
+
+![w:1000 center](images/ws-streamstats-delineate-click.jpg)
+
+<!-- Two circled steps: activate the delineation tool, then place the pour point. Emphasize that clicking off the blue line gives a tiny nonsense basin. Part 2 meets the same problem with pour points in ArcGIS Pro, and fixes it by snapping. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Automated Watershed Delineation
+
+![bg right:52% w:95%](images/ws-streamstats-basin-result.jpg)
+
+- Wait for the magic…
+- **How does it look?**
+- **How does it compare to your manually delineated watershed?**
+
+<!-- Collect answers before moving on. Expect the automated basin to be close on the ridges and different near the outlet, where the pour point placement dominates. Ask what would change if they had clicked 100 m upstream. -->
+
+---
+
+# Automated Watershed Delineation
+
+![bg right:45% w:92%](images/ws-streamstats-download-basin.jpg)
+
+- Click **"Download Basin"** and choose **"Shapefile"**
+- This will download a **zipped shapefile** of the watershed to your downloads folder
+
+<!-- The download is a zip containing the basin polygon and, depending on the options chosen, the flow-path lines. Students need this file for the comparison on the next slide. -->
+
+---
+
+<!-- _class: activity -->
+
+# Compare the Two
+
+- Let's compare it to the watershed you **manually delineated**
+- **Unzip** the shapefile you downloaded and add it to your map in **ArcGIS Pro**
+- **How does it compare?** The automated basin is **more consistent** — it repeats exactly — not necessarily more accurate
+- Take a snapshot of this map, save it as an image file, and upload it to **Learning Suite** for today's classroom participation points
+
+<!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. -->
+<!-- TODO(graphic): an ArcGIS Pro screenshot showing a hand-digitized polygon and the StreamStats basin overlaid on the Emigration Creek area, as the example of what a good submission looks like. Needs a real capture. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 2 — Finish the Model in ArcGIS Pro
+
+<!-- What StreamStats just did, opened up: steps 4 to 8 on the flow direction grid from Tuesday, then the Lab 5 ArcGIS Pro model that wires all eight together. -->
 
 ---
 
@@ -324,118 +430,6 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 ---
 
-<!-- _class: lead -->
-
-# Part 2 — Delineate One Yourself
-
-<!-- Part 2 is hands-on: hand-digitize a watershed from contours, then let StreamStats do it, then compare, on the lab computers. -->
-
----
-
-# A Case Study of Hog Pen Creek
-
-![h:400 center](images/ws-hog-pen-creek-topo.jpg)
-
-<!-- A 4 km by 4 km topographic quadrangle with Hog Pen Creek running through it. Before showing the next slide, ask the class where the divide is. Everyone will point at the contour crenulations, which is exactly the right instinct. -->
-<!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
-
----
-
-# Watershed Delineation by Hand Digitizing
-
-![h:400 center](images/ws-hand-digitized-watershed.png)
-
-<!-- The red line is the watershed divide, drawn by hand along the ridges. The rules: the divide crosses contours at right angles, it runs through high points, it never crosses the stream except at the outlet, and it closes on itself. The 20 ft and 100 ft contours, the stream center line and the outlet are labeled. -->
-<!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
-
----
-
-<!-- _class: activity -->
-
-# Watershed Delineation by Hand Digitizing — Let's Try It
-
-- Open **ArcGIS Pro**
-- Using your basemap, find **Hogle Zoo** in Salt Lake City — find **Emigration Creek**
-- Create a new blank **polygon** shapefile
-- Manually digitize the watershed that drains to this area by **clicking along ridge lines**
-- **Save** your digitized watershed and compare with your neighbors
-
-<!-- Give this about fifteen minutes. Turn on a hillshade or terrain basemap so ridges are visible. The comparison at the end is the point: five students will produce five different boundaries, which sets up the StreamStats comparison that follows. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot of the Emigration Creek / Hogle Zoo area on a terrain basemap with a partially digitized polygon in progress. Not fabricated here; needs a real capture. -->
-<!-- VERIFY: exact ArcGIS Pro path for creating a new blank polygon shapefile or feature class, so the step can name the pane and menu. -->
-
----
-
-# Automated Watershed Delineation
-
-![bg right:52% w:95%](images/ws-streamstats-home.jpg)
-
-- Let's use an automated tool provided by the U.S. Geological Survey called **StreamStats**
-- Go to [https://streamstats.usgs.gov/ss/](https://streamstats.usgs.gov/ss/)
-
-<!-- StreamStats runs this week's same eight steps on a pre-processed national DEM, then adds published regression equations for peak flows. Students are about to get in thirty seconds what took them fifteen minutes by hand. -->
-
----
-
-# Automated Watershed Delineation
-
-- Search for **Pioneer Monument State Park**, then click **"Utah"**
-
-![w:1000 center](images/ws-streamstats-select-utah.jpg)
-
-<!-- The state has to be selected first because the regression equations and the pre-processed terrain data are organized by state study area. The red circle marks the state selector. -->
-
----
-
-# Automated Watershed Delineation
-
-- Click **"Delineate"** and then click a point on the stream near Hogle Zoo
-
-![w:1000 center](images/ws-streamstats-delineate-click.jpg)
-
-<!-- Two circled steps: activate the delineation tool, then place the pour point. Emphasize that clicking off the blue line gives a tiny nonsense basin — same snapping problem as the pour points in Part 1. -->
-
----
-
-<!-- _class: quiz -->
-
-# Automated Watershed Delineation
-
-![bg right:52% w:95%](images/ws-streamstats-basin-result.jpg)
-
-- Wait for the magic…
-- **How does it look?**
-- **How does it compare to your manually delineated watershed?**
-
-<!-- Collect answers before moving on. Expect the automated basin to be close on the ridges and different near the outlet, where the pour point placement dominates. Ask what would change if they had clicked 100 m upstream. -->
-
----
-
-# Automated Watershed Delineation
-
-![bg right:45% w:92%](images/ws-streamstats-download-basin.jpg)
-
-- Click **"Download Basin"** and choose **"Shapefile"**
-- This will download a **zipped shapefile** of the watershed to your downloads folder
-
-<!-- The download is a zip containing the basin polygon and, depending on the options chosen, the flow-path lines. Students need this file for the comparison on the next slide. -->
-
----
-
-<!-- _class: activity -->
-
-# Compare the Two
-
-- Let's compare it to the watershed you **manually delineated**
-- **Unzip** the shapefile you downloaded and add it to your map in **ArcGIS Pro**
-- **How does it compare?** The automated basin is **more consistent** — it repeats exactly — not necessarily more accurate
-- Take a snapshot of this map, save it as an image file, and upload it to **Learning Suite** for today's classroom participation points
-
-<!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot showing a hand-digitized polygon and the StreamStats basin overlaid on the Emigration Creek area, as the example of what a good submission looks like. Needs a real capture. -->
-
----
-
 # Next Week — Where Rock Canyon's Water Ends Up
 
 ![bg right:40% w:95%](images/ws-pro-nested-hucs.jpg)
@@ -455,6 +449,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 - **Lab 6 — Lake Depth Explorer** is next — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
+<!-- Revision notes (2026-10-05, later): the two parts were swapped so class runs manual delineation, then StreamStats, then the ArcGIS Pro steps. Part 1 is now "Manual Watershed Delineation" (the two Hog Pen Creek slides merged into one, the hand-drawn divide revealed on a click, then the Emigration Creek activity and the StreamStats slides); Part 2 is steps 4 to 8, the Example Model and Back to Lab 5. The StreamStats goal moved to the top of Today's Goals, and its question moved to the top of the Follow the Water quiz, so goals and questions stay in the same order. -->
 <!-- Restructure notes (2026-10-05): this deck now opens at step 4 (flow accumulation), carrying steps 4 to 8, the Example Model and the Back to Lab 5 slide over from Part A, and keeps the hand-versus-StreamStats delineation. Its old Part 1 (what a watershed is, Powell, anatomy, nesting, water balance, functions) moved to the start of Part A. See the restructure notes in watershed-delineation-a.md. -->
 <!-- Split notes (2026-10-01): this deck is Parts 2 and 3 of the original Week 6 deck (source "CE 414 Week 6 - Watershed Delineation.pptx"; its conversion notes stay in watershed-delineation.md). New here: the title and goals, the "Watersheds Nest" map (USGS WBD units around Rock Canyon, replacing a 490 px management-units diagram), the water-balance figure (on Lab 5's basin outline, replacing two small hydrologic-cycle images), the terrain-processing panels rebuilt from Lab 5's data (replacing a 584 px nine-panel figure), and the bridge to Week 7. Figures from tools/week06_figures.py and tools/week06_water_balance_svg.py. Still third-party and small: the Orange County watershed diagram (450 px) and the processes-and-functions diagram (600 px); kept because they are sourced illustrations, flagged for replacement. -->
 
@@ -467,7 +462,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 <div class="columns">
 <div>
 
-Five questions, one for each of today's goals: the order of the steps, the threshold, the watershed of a point, snapping, and what StreamStats buys you. **Scan the code**, or open the link below.
+Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link below.
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on

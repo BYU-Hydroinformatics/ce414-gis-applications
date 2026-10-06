@@ -289,9 +289,33 @@ $$
 
 # Slope: 3rd-order finite difference — try it
 
-![h:475 center](images/ta-slope-third-order.png)
+![w:900 center](images/ta-slope-third-order.svg)
 
-<!-- This is the method ArcGIS Pro's Slope tool uses. All eight neighbors contribute, with the cardinal ones weighted double. Same nine elevations as the previous slide, and the answer comes out 22.9 degrees instead of 25.4 — a 2.5 degree spread from the choice of algorithm alone. Have them reproduce both numbers before moving on. -->
+<div style="font-size:0.72em; line-height:1.2; margin-top:2px;">
+
+$$
+\frac{dZ}{dx} = \frac{(Z_3 - Z_1) + 2(Z_5 - Z_4) + (Z_8 - Z_6)}{8C}
+\qquad
+\frac{dZ}{dy} = \frac{(Z_1 - Z_6) + 2(Z_2 - Z_7) + (Z_3 - Z_8)}{8C}
+$$
+
+</div>
+
+<div data-marpit-fragment="1" style="font-size:0.72em; line-height:1.2;">
+
+$$
+\frac{dZ}{dx} = \frac{(47 - 42) + 2(49 - 40) + (52 - 44)}{80} = 0.3875
+\qquad
+\frac{dZ}{dy} = \frac{(42 - 44) + 2(45 - 48) + (47 - 52)}{80} = -0.1625
+$$
+
+$$
+\textbf{slope} = \arctan\sqrt{(0.3875)^2 + (-0.1625)^2} = \arctan(0.420) = \mathbf{22.8^\circ}
+$$
+
+</div>
+
+<!-- This is the method ArcGIS Pro's Slope tool uses. All eight neighbors contribute, with the cardinal ones weighted double. Same nine elevations as the previous slide, and the answer comes out 22.8 degrees instead of 25.4 — a 2.6 degree spread from the choice of algorithm alone. The worked numbers appear on one click: let pairs try it first. Have them reproduce both numbers before moving on. Students who round dZ/dx and dZ/dy to 0.39 and −0.16 before the arctangent get 22.9; that is rounding, not a different answer. Figure: tools/week05_slope_third_order_svg.py, which replaced a scanned figure whose dZ/dy formula was mislabeled "dZ/dx" and whose worked dZ/dy listed the three differences in the reverse order of its formula. -->
 
 <!-- TODO(instructor): the plan calls for a validation exercise here — students compute slope by hand and compare against the Slope tool's output for the same cell. Decide whether it belongs in this lecture, in the lab, or on the quiz, and what counts as agreement. -->
 
@@ -407,7 +431,7 @@ Six questions on **what you get out of a DEM** — contours, hillshade, aspect, 
 </div>
 
 <!-- Five minutes, in pairs, then a show of hands on the two that split the room. The aspect item
-     catches people who read aspect as uphill, or as a compass bearing counterclockwise. The 25.4 versus 22.9 item is the other one; the point is that both answers are
+     catches people who read aspect as uphill, or as a compass bearing counterclockwise. The 25.4 versus 22.8 item is the other one; the point is that both answers are
      right and the method is part of the result. The temple item checks that they saw why visibility
      is symmetric. If the room has no signal, put the URL on the board;
      the items read aloud just as well. -->

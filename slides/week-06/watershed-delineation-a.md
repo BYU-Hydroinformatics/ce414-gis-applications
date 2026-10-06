@@ -100,17 +100,8 @@ By the end of class you should be able to:
 - A watershed is the **area of land where all of the water that drains off of it goes into the same place** (i.e. an "outlet")
 - John Wesley Powell's definition: a bounded hydrologic system within which all living things are linked by their common water course, and around which, as humans settled, communities formed
 - Watersheds come in **all shapes and sizes**, and they **cross city, state, and national boundaries**
-- No matter where you are, **you're in a watershed!**
 
 <!-- Powell's definition is quoted in full on the source slide; it is paraphrased here. Read the original aloud if you want it. The engineering definition and Powell's social one describe the same boundary and are worth contrasting. -->
-
----
-
-# Remember This Map?
-
-![h:400 center](images/ws-states-redivided-map.jpg)
-
-<!-- Some people have proposed that the 50 states be redivided based on population. What's wrong with this from a hydrology point of view? Water doesn't follow straight-line political boundaries. Let them answer before you say it. -->
 
 ---
 
@@ -124,46 +115,78 @@ By the end of class you should be able to:
 <div class="columns">
 <div>
 
-![w:170 center](images/ws-powell-portrait.jpg)
+![w:125 center](images/ws-powell-portrait.jpg)
 
 </div>
 <div>
 
-![w:310 center](images/ws-powell-canyon-photo.jpg)
+![w:230 center](images/ws-powell-canyon-photo.jpg)
 
 </div>
 </div>
 
-<!-- Powell's 1890 map of the arid region divided the West into drainage basins rather than rectangles. Congress ignored it. A century of interstate water compacts and litigation followed. Background reading: https://brandonletsinger.com/biography/the-united-watershed-states-of-america-a-biography-of-john-wesley-powell/ -->
+* <span class="tryit">Why would he propose this? What political or other problems would it have alleviated?</span>
+
+<!-- One click shows the question. Let them answer before you offer any of these: a river shared by two or three states is a river they fight over, so basin-shaped states would have kept most allocation disputes inside one government; the people who use a stream would also govern the land that feeds it, so upstream grazing, logging or diversion would be the same community's problem as downstream supply; and settlement would have followed the water that could support it, which in the arid West is the binding limit. Powell's 1890 map of the arid region divided the West into drainage basins rather than rectangles. Congress ignored it. A century of interstate water compacts and litigation followed — the Colorado River is the example students will know. Background reading: https://brandonletsinger.com/biography/the-united-watershed-states-of-america-a-biography-of-john-wesley-powell/ -->
 
 ---
 
 # Why Watersheds Are Important
 
-![bg right:40% w:92%](images/ws-watershed-field-visit.jpg)
+- People live, work and play in **every kind of watershed**
+- **Human activity** can **degrade** or **improve** a watershed's condition:
+  - **water quality**, **fish and wildlife**, **forests and vegetation**, **community life**
+- Knowing how a watershed works is the basis for **effective watershed management**
 
-- Understanding watershed structure and natural processes is crucial to grasping how **human activities can degrade or improve** the condition of a watershed — its water quality, its fish and wildlife, its forests and other vegetation, and the quality of community life for people who live there
-- Knowing these structural and functional characteristics, and how people affect them, sets the stage for **effective watershed management**
+<div style="display:flex; gap:14px; justify-content:center; margin-top:10px;">
+<figure style="margin:0; text-align:center;"><img src="images/ws-people-mountain-mt-olympus.jpg" style="height:225px;" alt="A trail crew member on the Mount Olympus trail above the Salt Lake Valley"><figcaption style="font-size:17px; color:#5b6472;">Mountain — Mt. Olympus trail</figcaption></figure>
+<figure style="margin:0; text-align:center;"><img src="images/ws-people-valley-jordan-river.jpg" style="height:225px;" alt="Students paddling a large canoe on the Jordan River"><figcaption style="font-size:17px; color:#5b6472;">Valley — Jordan River</figcaption></figure>
+<figure style="margin:0; text-align:center;"><img src="images/ws-people-desert-indian-creek.jpg" style="height:225px;" alt="A family hiking across slickrock at Indian Creek in southeastern Utah"><figcaption style="font-size:17px; color:#5b6472;">Desert — Indian Creek</figcaption></figure>
+</div>
 
-<!-- The bridge from "we can compute a boundary" to "the boundary is the unit management decisions get made in." Permits, TMDLs, restoration budgets and stormwater plans are all organized by watershed. -->
+<p style="font-size:13px; color:#7d8ba0; text-align:right; margin-top:4px;">Photos: USDA Forest Service; Bureau of Land Management – Utah (public domain), via Wikimedia Commons</p>
+
+<!-- The bridge from "we can compute a boundary" to "the boundary is the unit management decisions get made in." Permits, TMDLs, restoration budgets and stormwater plans are all organized by watershed. The three photos are three kinds of Utah watershed with people in them: a Wasatch mountain headwater (a National Trails Day crew on the Mount Olympus trail, Salt Lake Valley below), a valley river through the cities (canoeing the Jordan River, which carries Utah Lake's outflow — and so Rock Canyon's water — to the Great Salt Lake), and a desert canyon (slickrock at Indian Creek in southeastern Utah, Colorado River basin). Ask what a person does in each one that changes the water downstream. Sources, all public domain: https://commons.wikimedia.org/wiki/File:National_Trails_Day_2012_along_the_Mt._Olympus_Trail_on_the_Uinta-Wasatch-Cache_National_Forest_(11955210566).jpg (USDA Forest Service, Intermountain Region); https://commons.wikimedia.org/wiki/File:Canoeing_on_the_Jordan_River_(34395055581).jpg and https://commons.wikimedia.org/wiki/File:Hike_-_Indian_Creek_(30848535156).jpg (Bureau of Land Management – Utah). -->
 
 ---
 
 # Anatomy of a Watershed — Rock Canyon
 
-![h:460 center](images/ws-pro-watershed-anatomy.jpg)
+![h:410 center](images/ws-pro-watershed-anatomy.jpg)
 
-<!-- An oblique 3D view of Rock Canyon in ArcGIS Pro, looking east from above Provo, with Lab 5's basin (yellow), stream links (blue) and subwatersheds (thin white lines) draped on imagery. Walk it from the outlet: the outlet at the trailhead, the main stem up the canyon, the tributaries, one subwatershed, up to the divide along the ridgeline and the highest point at Provo Peak. Everything inside the yellow line drains to the one red point at the bottom; everything outside it, even a few meters over the ridge, goes somewhere else. Labels are placed from the Lab 5 data (tools/week06_figures.py, anatomy). -->
+* <span class="tryit">Do you live in a watershed?</span>
+
+<!-- One click shows the question; ask it after walking the figure. The answer is yes, everyone does: every point on land drains somewhere, so every address sits inside some watershed. The next slide shows how to name the one you live in. An oblique 3D view of Rock Canyon in ArcGIS Pro, looking east from above Provo, with Lab 5's basin (yellow), stream links (blue) and subwatersheds (thin white lines) draped on imagery. Walk it from the outlet: the outlet at the trailhead, the main stem up the canyon, the tributaries, one subwatershed, up to the divide along the ridgeline and the highest point at Provo Peak. Everything inside the yellow line drains to the one red point at the bottom; everything outside it, even a few meters over the ridge, goes somewhere else. Labels are placed from the Lab 5 data (tools/week06_figures.py, anatomy). -->
 
 ---
 
 # Watersheds Nest — From Rock Canyon to the Great Salt Lake
 
-![h:390 center](images/ws-pro-nested-hucs.jpg)
+<div class="columns">
+<div>
 
-- Each code adds two digits to its parent: **16** Great Basin › **1602** Great Salt Lake › **160202** Jordan › **16020203** Provo › … › **160202030505** Rock Canyon
+![w:540 center](images/ws-pro-nested-hucs.jpg)
 
-<!-- These are the USGS Watershed Boundary Dataset units that contain the Rock Canyon trailhead, pulled live from the WBD map service and drawn in ArcGIS Pro: Great Basin Region (HUC2 16), Great Salt Lake subregion (HUC4 1602, about 74,300 km²), Jordan basin (HUC6 160202), Provo subbasin (HUC8 16020203, about 1,770 km²), Outlet Provo River watershed (HUC10 1602020305, about 332 km²), and Rock Canyon-Provo River subwatershed (HUC12 160202030505, about 50 km²). The Lab 5 basin, 25.2 km², sits inside that HUC12. Each code extends its parent by two digits — the nesting is in the number. The point to land: Rock Canyon's water ends up in the Great Salt Lake, which is where next week starts. -->
+</div>
+<div style="font-size:0.66em;">
+
+- **USGS** — the **U.S. Geological Survey**, the federal science agency that maps the nation's water, land and hazards
+- Its **Watershed Boundary Dataset** divides the U.S. into **hydrologic units**, each with a **Hydrologic Unit Code (HUC)**
+- **Six levels**; each adds **two digits** to its parent
+
+| Digits | Level | Rock Canyon's unit |
+|:--|:--|:--|
+| 2 | Region | **16** Great Basin |
+| 4 | Subregion | **1602** Great Salt Lake |
+| 6 | Basin | **160202** Jordan |
+| 8 | Subbasin | **16020203** Provo |
+| 10 | Watershed | **1602020305** Outlet Provo River |
+| 12 | Subwatershed | **160202030505** Rock Canyon-Provo River |
+
+</div>
+</div>
+
+<!-- The numbers are HUCs, hydrologic unit codes. The USGS (U.S. Geological Survey, part of the Department of the Interior) maintains the Watershed Boundary Dataset with the USDA Natural Resources Conservation Service; it is the national standard set of drainage boundaries, and the same layer StreamStats and the National Hydrography Dataset are built against. The code is read left to right like an address: the first two digits are the region, and every further pair narrows it down, so you can tell from the number alone that 160202030505 sits inside 16020203. The level names (region, subregion, basin, subbasin, watershed, subwatershed) are the WBD's own; "HUC8" or "HUC12" is how practitioners usually say them. Powell, earlier in this deck, was the USGS's second director. These are the USGS Watershed Boundary Dataset units that contain the Rock Canyon trailhead, pulled live from the WBD map service and drawn in ArcGIS Pro: Great Basin Region (HUC2 16), Great Salt Lake subregion (HUC4 1602, about 74,300 km²), Jordan basin (HUC6 160202), Provo subbasin (HUC8 16020203, about 1,770 km²), Outlet Provo River watershed (HUC10 1602020305, about 332 km²), and Rock Canyon-Provo River subwatershed (HUC12 160202030505, about 50 km²). The Lab 5 basin, 25.2 km², sits inside that HUC12. Each code extends its parent by two digits — the nesting is in the number. The point to land: Rock Canyon's water ends up in the Great Salt Lake, which is where next week starts. -->
 
 ---
 
@@ -266,47 +289,43 @@ Some pits are <strong>real sinks</strong> in the landscape, and some are <strong
 
 <div style="font-size:0.85em;">
 
-- This is the **standard slope** method from last week
+- This is the **3rd-order finite difference** from last week, with the same cell numbers
 - **Slope** is the steepest slope of the plane fitted to the nine-cell window
-- **Aspect** is the 360° compass direction of that steepest slope
+- **Aspect** is the compass direction (0–360°) of that steepest slope
 
 </div>
 
 </div>
-<div style="font-size:0.72em;">
+<div style="font-size:0.85em;">
 
 $$
-\frac{dz}{dx} = \frac{(c + 2f + i) - (a + 2d + g)}{8 \cdot \text{cell size}}
-$$
-
-$$
-\frac{dz}{dy} = \frac{(g + 2h + i) - (a + 2b + c)}{8 \cdot \text{cell size}}
+\frac{dZ}{dx} = \frac{(Z_3 - Z_1) + 2(Z_5 - Z_4) + (Z_8 - Z_6)}{8C}
 $$
 
 $$
-\text{slope} = \arctan \sqrt{\left(\frac{dz}{dx}\right)^2 + \left(\frac{dz}{dy}\right)^2}
+\frac{dZ}{dy} = \frac{(Z_1 - Z_6) + 2(Z_2 - Z_7) + (Z_3 - Z_8)}{8C}
 $$
 
 $$
-\theta = \mathrm{atan2}\!\left(\frac{dz}{dy},\; -\frac{dz}{dx}\right)
-\qquad
-\text{aspect} =
-\begin{cases}
-90^\circ - \theta & \theta \le 90^\circ \\
-450^\circ - \theta & \theta > 90^\circ
-\end{cases}
+\text{slope} = \arctan \sqrt{\left(\frac{dZ}{dx}\right)^2 + \left(\frac{dZ}{dy}\right)^2}
 $$
+
+$$
+\text{aspect} = 180 - \arctan\!\left(\frac{dZ/dy}{dZ/dx}\right) + 90\left(\frac{dZ/dx}{|dZ/dx|}\right)
+$$
+
+<p style="font-size:0.85em; color:#5b6472; margin-top:4px;"><em>C</em> is the cell size</p>
 
 </div>
 </div>
 
-<!-- This is the ordinary Slope and Aspect pair in ArcGIS Pro: the third-order finite difference (Horn's method) from last week, written with Esri's a-to-i window. Cardinal neighbors count double; the center cell e is never used. Slope is the magnitude of the gradient; aspect is its direction, turned from a math angle (counterclockwise from east, theta) into a compass bearing (clockwise from north): 90 minus theta, wrapping past north as 450 minus theta. Last week's aspect slide wrote the same result in the textbook's form. The formulas are Esri's published ones for the Slope and Aspect tools; run on the nine cells on the next slide they give 250.3 degrees aspect and 57.8 degrees slope, the values ArcGIS Pro 3.7.1's Aspect and Slope tools reported for that cell (checked against tools/lab05/d8_patch.json). The window figure is tools/week06_d8_svgs.py. Next slide: why hydrology does not use this answer. -->
+<!-- This is the ordinary Slope and Aspect pair in ArcGIS Pro: the third-order finite difference (Horn's method), written exactly as on last week's "Slope: 3rd-order finite difference" and "Aspect" slides — Z1 to Z8 around the center Z0, C the cell size, dZ/dy positive toward the top of the window (north). Cardinal neighbors count double; the center cell Z0 is never used. Slope is the magnitude of the gradient; aspect is its direction as a compass bearing, clockwise from north. Run on the nine cells on the next slide (C = 10 m), dZ/dx = 1.495 and dZ/dy = 0.535, which give 57.8 degrees slope and 250.3 degrees aspect: the values ArcGIS Pro 3.7.1's Slope and Aspect tools reported for that cell (checked against tools/lab05/d8_patch.json). Esri's documentation writes the same formulas with the cells lettered a to i and dz/dy taken toward the south; the answer is identical. The window figure is tools/week06_d8_svgs.py. Next slide: why hydrology does not use this answer. -->
 
 ---
 
 # Aspect vs. D8 — Which Way Is Downhill?
 
-![h:290 center](images/ws-aspect-vs-d8.svg)
+![h:255 center](images/ws-aspect-vs-d8.svg)
 
 - For flow paths, hydrologists use a **simplified aspect**: **D8 flow direction**. Aspect can be any of 360°; D8 just picks the steepest of **8** neighbors, so it is simpler and faster to compute
 - Aspect is closer to **west**; the steepest single drop is **southwest**, so the water goes there
@@ -318,13 +337,15 @@ $$
 
 # Hydrologic Slope — Direction of Steepest Descent
 
-![h:330 center](images/ws-hydrologic-slope-steepest-descent.png)
+![h:290 center](images/ws-hydrologic-slope-steepest-descent.png)
 
 - Keeps the **steepest** of the eight neighbors — it does not average them
 - The run to a **diagonal** neighbor is longer: divide by `30·√2`, not by `30`
 - Diagonal: 19 / 42.4 = **0.45**. Straight down: 15 / 30 = **0.50**. Flow goes **south**
 
-<!-- Work this one live. The trap students fall into is comparing raw elevation differences and picking the diagonal because 19 is bigger than 15. Slope is rise over run, and the run is longer on the diagonal. The 30 here is the cell size in meters. -->
+* <span class="infobox">How is <strong>hydrologic slope</strong> different from <strong>standard slope</strong>?</span>
+
+<!-- One click shows the question; ask it after working the example. What to draw out: standard slope fits a plane to all eight neighbors (weighted, the center never used) and reports the steepness of that plane in any of 360 directions; hydrologic slope is the single steepest drop from the center cell to one of its eight neighbors, so it uses the center cell, keeps one neighbor instead of averaging, and can only point in eight directions. On the same cell the two can give different steepness and different directions, as the previous slide showed. Work this one live. The trap students fall into is comparing raw elevation differences and picking the diagonal because 19 is bigger than 15. Slope is rise over run, and the run is longer on the diagonal. The 30 here is the cell size in meters. -->
 <!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
 
 ---
@@ -404,6 +425,7 @@ $$
 - **Quiz 6** and **Lab 5** are both due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
+<!-- Revision notes (2026-10-05, later): dropped the "Remember This Map?" population-cartogram slide (too much of a diversion before Powell); added click-to-reveal questions on Powell (why basin-shaped states), on the Rock Canyon anatomy slide (do you live in a watershed?) and on hydrologic slope (how it differs from standard slope); cut "Why Watersheds Are Important" to bullets and replaced the field-visit photo with three public-domain Utah photos (mountain, valley, desert); added the USGS, Watershed Boundary Dataset and HUC-level explanation to the nesting slide; rewrote the standard slope and aspect slide in Week 5's notation (Z0 to Z8, dZ/dx and dZ/dy kernels, the textbook aspect formula), which reproduces ArcGIS Pro's 57.8 and 250.3 degrees on the Lab 5 cells. -->
 <!-- Restructure notes (2026-10-05): Week 6 was re-cut so both decks carry half of the eight steps. Part A now opens with the watershed theory (Parts 1 of the old Thursday deck: what a watershed is, Powell, why they matter, anatomy, nesting, water balance, functions) and runs steps 1 to 3, the DEM to flow direction. Part B opens at flow accumulation, finishes the steps and the Lab 5 model, then does the hand-versus-StreamStats delineation. Dropped from Part A: the "Three Settings That Decide Lab 5" slide (it leaned on Fill, snapping and the threshold before any were taught), the "Watershed Delineation" big-question slide, and the non-Esri (TauDEM, QGIS, GRASS) D8 encoding slide (and, from Part B, the TauDEM flow-accumulation convention slide); the title slide's "adapted from" credit line was removed, and slides whose figures were traced from D. Maidment's (UT Austin) course materials now carry a Credit note instead. The decks were renamed watershed-delineation-a and -b to match the other two-part weeks. Rebuilt: the slope-and-aspect slide (crisp window figure plus the slope and aspect formulas as MathJax), the pour-point figure (a center cell with a question mark and eight coded arrows), the pit-fill map (zoomed on the pit), and the two flow-direction grid slides combined into one. The Excel activity moved to just before the flow direction grid. -->
 <!-- Split notes (2026-10-01): the deck was split in two for Tuesday and Thursday. Part 1 (the mechanics) stays here under the same file name, so the Learning Suite link for Tuesday still works; Parts 2 and 3 (the theory and the hand-versus-StreamStats activity) moved to what-is-a-watershed.md. Rebuilt in ArcGIS Pro from Lab 5's data by tools/week06_figures.py: the elevation surface, the flow-direction grid, the threshold comparison (replacing the ArcView 200-cell screenshot), the grid-code link figure, the 10 m drainage-path map (replacing the 30 m scanned-topo figure), the labeled subwatersheds, and the subwatersheds on imagery. -->
 <!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 6 - Watershed Delineation.pptx", 57 slides, none hidden. All 57 source slides are represented; 62 slides here (source slide 1 became the title slide, source slide 38 — a bare "Day 2" text slide — became the Part 2 divider, and five slides were added: Today's Goals, the Part 1 and Part 3 `lead` dividers, a Lab 5 preview, and Before Next Class). No slides dropped. The nine "Summary of Steps" slides are near-duplicates that each highlight a different step; all nine are kept as roadmap markers with the active step in bold, and are intentionally text-only. Source slides 2 and 3 carry the same student-at-a-computer illustration; slide 2 now uses the workflow diagram instead, so the illustration appears once. The workflow diagram appears twice by design (preview on the big-question slide, payoff on "Example Model"). Shape-built slides (D8 grids, flow accumulation grids, slope equations, annotated StreamStats captures) were re-rendered from the PDF at 200 dpi and cropped, since the underlying art is PowerPoint shapes or WMF that browsers cannot display. Stale ArcView-era screenshots kept and flagged: ws-flow-direction-arcview.jpg, ws-streams-200-cell-threshold.png, ws-vectorized-streams-gridcode.png, ws-subwatersheds-stream-segments.png. ws-delineated-subwatersheds-streams.png is only 203x161 px in the source and is soft on a projector. Open instructor decisions are marked TODO(instructor): the 200-cell threshold's "18 hectares or 13.5 acres" unit mismatch (kept verbatim), a scale/resolution sensitivity question, validation against the NHD or StreamStats, the reading chapter, and the ocwatersheds.com citation link. TODO(graphic) marks four slides that need real captures or figures; no images were generated. Schedule links carry VERIFY comments. Software wording: the source already says ArcGIS Pro on the hands-on slides; no ArcGIS 9 / ArcMap / ArcToolbox wording was found in the text, only in the legacy screenshots. -->

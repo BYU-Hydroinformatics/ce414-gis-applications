@@ -1,7 +1,8 @@
 """Week 6 Part A: two drawn figures for the flow-direction slides.
 
-  ws-slope-window.svg   the 3 x 3 window (a to i) that ArcGIS Pro's Slope and Aspect tools read,
-                        with the center cell e marked as unused: both use only the eight neighbors
+  ws-slope-window.svg   the 3 x 3 window that ArcGIS Pro's Slope and Aspect tools read, numbered as in
+                        Week 5 (Z1 to Z8 around the center Z0), with Z0 marked as unused: both use
+                        only the eight neighbors
   ws-d8-pour-point.svg  the D8 question for one cell: eight arrows out of the center cell, each
                         carrying the Esri code that would be written into that center cell
 
@@ -22,7 +23,7 @@ def slope_window():
     S, X0, Y0 = 92, 30, 50
     W, H = X0 * 2 + 3 * S, Y0 + 3 * S + 56
     o = [f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}' role='img' "
-         "aria-label='A three by three window of cells labeled a to i, with the center cell e grayed out as unused'>",
+         "aria-label='A three by three window of cells labeled Z1 to Z8 around a center cell Z0, grayed out as unused'>",
          f"<rect width='{W}' height='{H}' fill='white'/>",
          "<defs><pattern id='h' width='10' height='10' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'>"
          f"<line x1='0' y1='0' x2='0' y2='10' stroke='#c3cad1' stroke-width='3'/></pattern></defs>",
@@ -32,10 +33,11 @@ def slope_window():
             x, y = X0 + c * S, Y0 + r * S
             centre = r == c == 1
             o.append(f"<rect x='{x}' y='{y}' width='{S}' height='{S}' fill='{'url(#h)' if centre else LIGHT}' stroke='{NAVY}' stroke-width='2.5'/>")
-            o.append(f"<text x='{x + S / 2}' y='{y + S / 2 + 13}' text-anchor='middle' font-family='Cambria Math, Georgia, serif' "
-                     f"font-style='italic' font-size='38' fill='{GRAY if centre else NAVY}'>{'abcdefghi'[r * 3 + c]}</text>")
+            o.append(f"<text x='{x + S / 2 - 6}' y='{y + S / 2 + 13}' text-anchor='middle' font-family='Cambria Math, Georgia, serif' "
+                     f"font-style='italic' font-size='38' fill='{GRAY if centre else NAVY}'>Z<tspan font-size='24' dy='8' font-style='normal'>"
+                     f"{'123405678'[r * 3 + c]}</tspan></text>")
     o.append(f"<text x='{W / 2}' y='{Y0 + 3 * S + 30}' text-anchor='middle' font-family='{FONT}' font-size='17' fill='{GRAY}'>"
-             "the center cell <tspan font-style='italic'>e</tspan> is never used</text>")
+             "the center cell <tspan font-style='italic'>Z</tspan><tspan font-size='12' dy='4'>0</tspan><tspan dy='-4'> is never used</tspan></text>")
     o.append("</svg>")
     (IMG / "ws-slope-window.svg").write_text("\n".join(o), encoding="utf-8")
 

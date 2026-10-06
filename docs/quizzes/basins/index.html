@@ -16,11 +16,22 @@
 CE414Quiz.start({
   title: "Follow the Water",
   subtitle: "CE 414 &middot; Week 6 &mdash; Watershed Delineation, Part B<br>" +
-            "Five questions, one per goal: the order of the steps, the threshold, the watershed " +
-            "of a point, snapping, and what <strong>StreamStats</strong> buys you.",
+            "Five questions, one per goal: what <strong>StreamStats</strong> buys you, the order of the " +
+            "steps, the threshold, the watershed of a point, and snapping.",
   badge: "Delineation decision",
   deckUrl: "../../slides/week-06/watershed-delineation-b.html",
   questions: [
+    {
+      prompt: "Your hand-drawn divide and the StreamStats basin for the same outlet do not match. What does the automated result buy you?",
+      options: [
+        "It is more accurate; the hand-drawn one is wrong",
+        "The two should match exactly if you were careful",
+        "It is more consistent — it repeats exactly",
+        "It is the standard the hand-drawn one must meet"
+      ],
+      answer: "It is more consistent — it repeats exactly",
+      explanation: "Consistent is not the same as accurate. Two people delineating the same basin by hand will disagree; the algorithm repeats itself exactly. But change the DEM, or move the pour point, and the algorithm's answer changes too. What it returns is where water would go on that surface."
+    },
     {
       prompt: "You have a projected DEM and a point you care about. What order do the core steps run in?",
       detail: "Name the chain from raw elevation to a basin polygon.",
@@ -67,17 +78,6 @@ CE414Quiz.start({
       ],
       answer: "The point is off the channel — snap it first",
       explanation: "A watershed is always the drainage area of a point, so a point sitting one cell off the channel gets exactly what it asked for: the few cells that drain to that spot on the hillslope. Snap user-supplied points onto the high-accumulation cells before delineating. The same thing happens in StreamStats when you click just off the blue line."
-    },
-    {
-      prompt: "Your hand-drawn divide and the StreamStats basin for the same outlet do not match. What does the automated result buy you?",
-      options: [
-        "It is more accurate; the hand-drawn one is wrong",
-        "The two should match exactly if you were careful",
-        "It is more consistent — it repeats exactly",
-        "It is the standard the hand-drawn one must meet"
-      ],
-      answer: "It is more consistent — it repeats exactly",
-      explanation: "Consistent is not the same as accurate. Two people delineating the same basin by hand will disagree; the algorithm repeats itself exactly. But change the DEM, or move the pour point, and the algorithm's answer changes too. What it returns is where water would go on that surface."
     }
   ],
   perfectNote: "A clean sweep — you can debug Lab 5 rather than just run it.",
