@@ -8,3 +8,6 @@ venv/
 node_modules/
 # built slide decks - the workflow builds these
 slides/**/*.html
+
+# built Learning Suite quiz packages - regenerate with tools/learning-suite-quizzes/*.py
+tools/learning-suite-quizzes/*.zip
