@@ -373,6 +373,77 @@ const LABS = {
   ],
 },
 
+'08': {
+  labTitle: 'Lab 8: Big Southern Butte',
+  labSubtitle: 'Measuring the volume of a volcanic dome by rebuilding the plain beneath it',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to measure and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
+
+    { h: 'The DEM and Its Metadata',
+      hint: 'Rubric: the three metadata values for the DEM and what each means for your result (2 points). Confirm them yourself from READ-ME-FIRST.txt, the raster’s properties and the two tiles’ metadata files — do not copy them from Figure A.',
+      table: { caption: 'Table 1. Metadata for the DEM.',
+               head: ['Metadata value', 'What you found', 'What it means for your result'],
+               rows: [['Publication date and source dates', '', ''], ['Vertical datum and units', '', ''], ['Cell size', '', '']],
+               widths: [2600, 2400, 4360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Project Raster', '', '', '', ''], ['Buffer', '', '', '', ''], ['Create Random Points', '', '', '', ''],
+                      ['Extract Values to Points', '', '', '', ''], ['Erase', '', '', '', ''], ['IDW', '', '', '', ''],
+                      ['Extract by Mask (DEM)', '', '', '', ''], ['Extract by Mask (plain)', '', '', '', ''],
+                      ['Raster Calculator (height)', '', '', '', ''], ['Raster Calculator (volume)', '', '', '', ''],
+                      ['Zonal Statistics', '', '', '', '']],
+               widths: [2300, 2100, 2000, 1700, 1260] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the outline and the number of points exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the tool dialog with the outline and the number of points exposed as parameters (2 points).' },
+      ] },
+
+    { h: 'Check Values',
+      hint: 'Rubric: your check values from Steps 4 to 8 (2 points), and the model’s baseline volume matching the check value (part of the 4 points for a working model). Use the random seed of Step 0.',
+      table: { caption: 'Table 3. Baseline check values (IDW, 1,000 points, seed 1, reference outline).',
+               head: ['Points kept after Erase', 'Tallest cell (m)', 'Mean height (m)', 'Volume (km³)'],
+               rows: [['', '', '', '']],
+               widths: [2340, 2340, 2340, 2340] } },
+
+    { h: 'Testing the Assumptions', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and the four Step 9 runs, with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4 points). Step 9 says where to read each value.',
+      table: { caption: 'Table 4. Sensitivity — the baseline and the four Step 9 runs.',
+               head: ['Run', 'What changed', 'Points kept', 'Outline area (km²)', 'Volume (km³)', 'Tallest cell (m)', 'Cells below the plain'],
+               rows: [['Baseline', 'Nothing', '', '', '', '', ''], ['250 points', '', '', '', '', '', ''], ['4,000 points', '', '', '', '', '', ''],
+                      ['Your own outline', '', '', '', '', '', ''], ['Spline', '', '', '', '', '', '']],
+               widths: [1250, 1600, 1100, 1350, 1250, 1300, 1510] },
+      questions: [
+        'Which choice moves the volume most, and which least? Rank them with your numbers. (3 points)',
+        'What did the spline do that IDW cannot? Map its cells below the plain and explain them with what you learned about the methods in Week 8. (3 points)',
+      ] },
+
+    { h: 'What the Volume Measures',
+      hint: 'Rubric: what the volume measures and what the model cannot see (2 points). Step 9, question 3: is it the volume of the lava dome? Say what part of the dome the model cannot see, and what data would let you measure it.' },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Use the same color scale for height on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — height above the plain, IDW, reference outline.', pageBreakAfter: true,
+          hint: 'Must carry: title with the volume in it or in a text box; neat line, north arrow and scale bar; a text box with author, date, map projection, and the DEM’s source and date; height above the plain in a clear color scale with a legend in meters; the outline over a hillshade or imagery; an inset locating the butte in Idaho; scale and legibility appropriate to the butte.' },
+        { caption: 'Map 2. Scenario — your own outline or the spline, from Step 9.',
+          hint: 'Everything Map 1 needs except the inset, with the same color scale, plus: the title and text box say what changed from Map 1 and by how much.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the DEM (both tiles), the reference outline, the USGS article, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Expressions, coordinate systems, volumes and counts come from your own work, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '04': {
   labTitle: 'Lab 4: Cell Phone Tower Placement',
   labSubtitle: '',

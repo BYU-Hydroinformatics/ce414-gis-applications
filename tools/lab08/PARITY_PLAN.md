@@ -19,7 +19,7 @@ Dan decides the items marked DECISION.** Lab 8 is due Saturday of Week 9 (Octobe
 | Report template | None | To build with `make_lab_report_template.js 08` after the decisions |
 | GUI build and captures | Word-era captures, a pre-renumbering geodatabase name, an illegible model overview | Owed (Step figures marked TODO(capture)) |
 
-## Decisions for Dan
+## Decisions for Dan — all accepted as recommended, October 5, 2026; page promoted
 
 1. **Drop Part 2** (the second DEM of the student's choosing). The conversion guide says no
    required second study area, and Part 2 is unbounded (any DEM, any feature, any volume) and
@@ -91,10 +91,10 @@ spline numbers a student gets will only match if they leave Processing Extent at
 
 ## Still owed
 
-1. Dan's decisions above.
+1. DONE October 5: all decisions accepted; draft promoted (old page at docs/assignments/lab08-backup/).
 2. GUI build in ArcGIS Pro 3.7.1 at 175 %: captures for every step, Figure C (Export To Graphic),
    confirm the seed environment and the tool-dialog run.
 3. Figure A (metadata infographic) and tool icons (`make_svgs.py`, the Lab 7 pattern); example
    maps (`build_figures.py`).
 4. DONE October 5: no-GUI pilot — every check value reproduced; text fixes applied (see the draft's notes).
-5. Report template (`make_lab_report_template.js 08`), then promote.
+5. DONE October 5: report template (`make_lab_report_template.js 08`) and promotion.
