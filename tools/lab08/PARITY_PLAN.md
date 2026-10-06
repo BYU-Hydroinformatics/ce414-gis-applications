@@ -96,5 +96,5 @@ spline numbers a student gets will only match if they leave Processing Extent at
    confirm the seed environment and the tool-dialog run.
 3. Figure A (metadata infographic) and tool icons (`make_svgs.py`, the Lab 7 pattern); example
    maps (`build_figures.py`).
-4. No-GUI pilot by a subagent.
+4. DONE October 5: no-GUI pilot — every check value reproduced; text fixes applied (see the draft's notes).
 5. Report template (`make_lab_report_template.js 08`), then promote.

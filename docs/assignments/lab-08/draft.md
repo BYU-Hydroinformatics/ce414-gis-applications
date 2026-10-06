@@ -38,7 +38,7 @@ nobody can weigh a mountain. They measure it from an elevation model.
 
 ![Ground-level photograph of Big Southern Butte, a broad dome rising above the flat Snake River Plain with mountains on the horizon](images/lab08-big-southern-butte-photo.jpg)
 
-**Figure 1.** Big Southern Butte from the plain. The plain looks flat; it falls gently to the north.
+**Figure B.** Big Southern Butte from the plain. The plain looks flat; it falls gently to the north.
 
 The trick is the ground *under* the butte. You cannot see it, so you rebuild it: sample elevations
 on the plain all around the butte, interpolate a surface across the gap, and subtract that surface
@@ -135,8 +135,9 @@ New in this lab:
 | ![IDW icon: a cell joined to five points by lines, thicker for nearer points, labeled 1 over d squared](images/icon-idw.svg){ .tool-icon }<br>**IDW** (Spatial Analyst) | Interpolates a raster surface from points, each cell a weighted average of its nearest points, the nearest weighted most. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/idw.htm){ target="_blank" } |
 | ![Zonal Statistics icon: the cells inside a zone summed into one value](images/icon-zonal-statistics.svg){ .tool-icon }<br>**Zonal Statistics** (Spatial Analyst) | A statistic of a raster's cells inside each zone — here, the sum of the cell volumes inside the outline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics.htm){ target="_blank" } |
 
-Tools you already know: **Project Raster** (Labs 5 and 7), **Buffer** (Labs 1 and 4), **Extract by Mask**
-(Lab 4), **Raster Calculator** (Labs 2, 4, 5 and 7), and model parameters.
+Tools you already know: **Project Raster** (Labs 4, 5 and 7), **Buffer** (Labs 1 and 4), **Extract by
+Mask** (Lab 4), **Raster Calculator** (Labs 2 and 4–7), **Hillshade**, and model parameters. Step 9 also
+uses **Spline** (Spatial Analyst), the smooth interpolator from Week 8.
 
 ## Example Model
 
@@ -177,8 +178,8 @@ without the step-by-step instructions below, say so in your report.
 
 > [!NOTE]
 > **Why fix the seed?** Create Random Points draws from a random number generator. With the same seed
-> it draws the same points every time, so your volume can be checked against this page. Step 9 shows
-> how little the seed matters.
+> it draws the same points every time, so your volume can be checked against this page. Another seed
+> gives other points and a slightly different volume; Step 9 tests the choices that matter more.
 
 ### Step 1 — Project the DEM
 
@@ -192,9 +193,10 @@ Add **Project Raster** with `BigSouthernButte_DEM.tif` as the input:
 <!-- TODO(capture): Figure 1, Project Raster. -->
 
 > [!TIP]
-> **Check the result:** `DEM_UTM` is **2,314 × 1,944** cells of 10 m, values **1,499.8 to
-> 2,306.8** m. The summit cell is about 0.3 m lower than in the original because bilinear
-> resampling averages neighbors.
+> **Check the result:** `DEM_UTM` is **2,314 columns × 1,944 rows** of 10 m cells, values
+> **1,499.8 to 2,306.8** m. The summit cell is about 0.3 m lower than in the original because
+> bilinear resampling averages neighbors. The thin wedges along the edges are NoData: a latitude and
+> longitude rectangle is slightly tilted in UTM.
 
 ### Step 2 — Draw the Sampling Ring
 
@@ -222,7 +224,7 @@ This polygon covers the butte and a ring of plain 1,500 m wide around it. The ra
 
 > [!TIP]
 > **Check the result:** 1,000 points, `RASTERVALU` from **1,531.2 to 2,277.2** m. With seed 1, the
-> first point (`OBJECTID` 1) is at about **337,632.6 E, 4,806,349.7 N** — on the butte's southeast
+> first point (`OBJECTID` 1) is at about **337,632.6 E, 4,806,349.7 N** — on the butte's east-southeast
 > flank.
 
 ### Step 4 — Keep the Plain Points
@@ -263,24 +265,31 @@ Add **Extract by Mask** twice, each with `Butte_Boundary` as the mask:
 > **Check the result:** each is **280,311** cells — 28.03 km² of 10 m cells, the outline's area.
 > `DEM_Butte` runs from **1,554.8 to 2,306.8** m.
 
-### Step 7 — Compute Each Cell's Volume
+### Step 7 — Compute Height and Volume
 
-Add **Raster Calculator**, output `Volume_Cell`:
+Add **Raster Calculator** twice, both in the model:
 
-```text
-("%DEM_Butte%" - "%Plain_Butte%") * 10 * 10 / (1000 ** 3)
-```
+1. The height of the butte above the plain, in meters, output `Height_Above_Plain`:
 
-The difference is the height of the butte above the plain, in meters. Times the cell's 10 m × 10 m
-it is cubic meters; divided by 1,000³ it is cubic kilometers. `**` is Python's power operator.
+    ```text
+    "%DEM_Butte%" - "%Plain_Butte%"
+    ```
 
-<!-- TODO(capture): Figure 7, Raster Calculator. -->
+2. Each cell's volume, output `Volume_Cell`:
+
+    ```text
+    "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3)
+    ```
+
+    Height times the cell's 10 m × 10 m is cubic meters; divided by 1,000³ it is cubic kilometers.
+    `**` is Python's power operator.
+
+<!-- TODO(capture): Figures 7a and 7b, the two Raster Calculators. -->
 
 > [!TIP]
-> **Check the result:** the tallest cell is **729.1 m** above the plain, a volume of about
-> **0.0000729 km³**. A few dozen cells at the edge are a fraction of a meter *below* the plain; they
-> subtract a negligible amount. For the maps, also save the height alone,
-> `"%DEM_Butte%" - "%Plain_Butte%"`, as `Height_Above_Plain`: its mean is **183.5 m**.
+> **Check the result:** in `Height_Above_Plain` (**Properties** ▸ **Source** ▸ **Statistics**) the
+> tallest cell is **729.1 m** above the plain and the mean is **183.5 m**. **53** cells at the edge
+> are a fraction of a meter *below* the plain; they subtract a negligible amount.
 
 ### Step 8 — Add Up the Volume
 
@@ -289,8 +298,9 @@ Add **Zonal Statistics**: **Input raster or feature zone data** `Butte_Boundary`
 Every cell of the output holds the same number: the sum. Read it in the layer's **Properties** ▸
 **Source** ▸ **Statistics** or by clicking a cell.
 
-Make the DEM, `Butte_Boundary`, the number of points and `Butte_Volume` model parameters; name the
-parameters so the tool dialog reads well.
+Make these model parameters, and name them so the tool dialog reads well: the DEM, `Butte_Boundary`
+and the number of points (inputs), and `Plain_Points`, `Height_Above_Plain` and `Butte_Volume`
+(outputs). Step 9 and your maps need all three outputs.
 
 <!-- TODO(capture): Figure 8, Zonal Statistics, and the tool dialog. -->
 
@@ -299,26 +309,40 @@ parameters so the tool dialog reads well.
 > of 183.5 m is 5.14 km³.
 
 > [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw it).
-> Do Steps 1–8 from inside ModelBuilder first and record the check values before any dialog run.
+> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw it),
+> including `DEM_UTM`. Do Steps 1–8 from inside ModelBuilder first and record the check values before
+> any dialog run. <!-- VERIFY in the GUI: a dialog run with Snap Raster and Cell Size set to DEM_UTM, after DEM_UTM has been deleted -->
 
 ### Step 9 — Test the Assumptions
 
 The volume rests on three choices: the outline, the number of points, and the interpolation method.
-Run the model from its tool dialog at least **three more times**, giving each output a name that
-says what changed (`Butte_Volume_n250`):
+Run the model from its tool dialog **four more times**, giving each output a name that says what
+changed (`Butte_Volume_n250`, `Height_Above_Plain_n250`):
 
-1. **Fewer and more points:** 250 and 4,000.
+1. **Fewer and more points:** 250 and 4,000 (two runs).
 2. **Your own outline:** in your project geodatabase, create a polygon feature class
-   `My_Butte_Boundary` in NAD 1983 UTM Zone 12N and digitize the base of the butte against the
-   imagery and a hillshade of `DEM_UTM`, without looking at the reference outline. Run the tool with
-   it. Report its area beside the reference's.
+   `My_Butte_Boundary` in NAD 1983 UTM Zone 12N. Turn off the reference outline layer, make a
+   hillshade of `DEM_UTM` with the **Hillshade** tool, and digitize the base of the butte against it
+   and the imagery as **one polygon** — Zonal Statistics sums each feature separately, so a second
+   feature gives a second volume. Run the tool with it at 1,000 points.
 3. **Another method:** save a copy of the model (**Save As**), replace IDW with **Spline**
-   (Regularized, weight 0.1, 12 points, cell size 10), and run it once at 1,000 points.
+   (Regularized, weight 0.1, 12 points, cell size 10), and run it once at 1,000 points with the
+   reference outline. Leave the Processing Extent environment at its default: the spline's result
+   depends on it.
 
 For **the baseline and every run, in one table**, record what changed, the points kept after the
-erase, the outline's area, the volume, the tallest cell, and the number of cells below the plain
-(Height_Above_Plain less than 0). Then answer, in your report:
+erase, the outline's area, the volume, the tallest cell, and the number of cells below the plain.
+Where to read each:
+
+- **Points kept:** the record count of that run's `Plain_Points` (open its attribute table).
+- **Outline area:** the outline's `Shape_Area` field, in square meters.
+- **Tallest cell:** that run's `Height_Above_Plain`, **Properties** ▸ **Source** ▸ **Statistics**,
+  maximum.
+- **Cells below the plain:** Raster Calculator, `Con("Height_Above_Plain_n250" < 0, 1)` (use the
+  run's own raster), then the **Count** of value 1 in the output's attribute table. No output, or
+  an empty table, means zero.
+
+Then answer, in your report:
 
 1. **Which choice moves the volume most,** and which least? Rank them with your numbers.
 2. **What did the spline do that IDW cannot?** Map its cells below the plain and explain them with
@@ -334,9 +358,10 @@ erase, the outline's area, the volume, the tallest cell, and the number of cells
 
 Make **two** professional map layouts:
 
-1. **Your baseline result** — `Height_Above_Plain` from the baseline run, over a hillshade or
-   imagery, with the reference outline, the volume in the title or a text box, and an inset locating
-   the butte in Idaho.
+1. **Your baseline result** — `Height_Above_Plain` from the baseline run in a clear color scale
+   with a legend in meters, over a hillshade or imagery, with the reference outline, the volume in
+   the title or a text box, a neat line, north arrow and scale bar, a text box with your name, the
+   date, the map projection and the DEM's source and date, and an inset locating the butte in Idaho.
 2. **One scenario from Step 9** — your own outline or the spline, whichever changes the picture
    more, with the same color scale as Map 1 so the two can be compared. Say on the map what changed
    and by how much.
@@ -409,7 +434,7 @@ what to submit.
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its baseline volume matches the check value (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the outline and the number of points exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in a clear color scale with a legend in meters (2)<br>• The outline over a hillshade or imagery (1)<br>• An inset locating the butte in Idaho (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
 | **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend (2)<br>• The outline used, over a hillshade or imagery (1)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs (250 and 4,000 points, your own outline, the spline), with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4)<br>• Which choice moves the volume most and least, ranked with your numbers (3)<br>• What the spline did that IDW cannot, mapped and explained (3) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and the four Step 9 runs (250 and 4,000 points, your own outline, the spline), with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4)<br>• Which choice moves the volume most and least, ranked with your numbers (3)<br>• What the spline did that IDW cannot, mapped and explained (3) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -424,4 +449,5 @@ SOURCE: the September 3 migration of "Lab 7 - Big Southern Butte.docx" (docs/ass
 CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
 DATA: docs/data/lab08-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab08.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab08/fetch_dem.py, make_outline.py, make_extract.py.
 SENSITIVITY (do NOT publish): IDW 5.145; Natural Neighbor 5.029; Spline 4.481 (11,963 cells below the plain); Kriging 4.988; Trend 5.312; 250 pts 5.229; 500 5.199; 2,000 5.103; 4,000 5.062; seeds 2-6 5.146-5.161; outline -200/-100/+100/+200 m: 4.846/5.008/5.236/5.322.
+PILOT (no-GUI, 2026-10-05, C:\Ames\Pilot08\PILOT-REPORT.md): every check value reproduced from the student zip (volume 5.14502), and the Step 9 runs (250: 146 kept, 5.2288; 4,000: 2,302 kept, 5.0617; Spline 4.4811, 11,963 below) match. Fixed from its findings: Height_Above_Plain is now a model output (Step 7 split in two) and Plain_Points/Height_Above_Plain are output parameters so dialog runs keep what Step 9 and Map 2 need; Step 9 says where to read each table value (Con < 0 count verified: 53 baseline, 11,963 spline); four runs, not 'at least three'; own outline must be one polygon, reference layer turned off; seed promise removed; photo is Figure B; tools-you-know lab numbers corrected; columns x rows, edge NoData, ESE; Map 1 deliverable lists the rubric's elements. Still open: template link (build after review), the draft box citing PARITY_PLAN.md (removed at promotion).
 GUI facts owed: the Random Numbers environment label and reach; exposing Number of Points; IDW's default cell size; dialog-run deletion of intermediates. -->
