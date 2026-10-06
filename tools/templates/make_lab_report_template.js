@@ -36,11 +36,11 @@ const LABS = {
                widths: [4000, 5360] } },
 
     { h: 'The Model',
-      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type and source (2 points). Fill one row per tool, in the order they run.',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type and source (2 points). Fill one row per tool, in the order they run, and fill both the Type and the Source column.',
       table: { caption: 'Table 2. Model description — one row per tool.',
-               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type and source'],
-               rows: [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']],
-               widths: [1500, 2300, 2300, 1700, 1560] },
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type', 'Source'],
+               rows: [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']],
+               widths: [1400, 2100, 2100, 1500, 1000, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
           hint: 'Rubric: a full-page (8.5 × 11) figure of the model — every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2 points).' },
@@ -61,9 +61,9 @@ const LABS = {
       hint: 'Rubric: where the best locations for a new Walmart are, which one site you recommend, and why you selected it (3 points). Name the site, say where it is, and give reasons a reader could argue with — not just that the model returned it.' },
 
     { h: 'Sensitivity Analysis', pageBreakBefore: true,
-      hint: 'Rubric: a table of at least three additional runs, giving the parameter values, the number of candidate polygons and the total area for each (4 points). Choose your runs deliberately and say why you chose them.',
+      hint: 'Rubric: a table of at least three additional runs, giving the parameter values, the number of candidate polygons and the total area for each (4 points). Choose your runs deliberately and say why you chose them. Change one number at a time from the baseline, so your table can show which one matters.',
       table: { caption: 'Table 4. Sensitivity — the baseline and at least three more runs.',
-               head: ['Run name', 'Density threshold', 'Road buffer', 'Walmart exclusion', 'Candidate polygons', 'Total area', 'Site still suitable?'],
+               head: ['Run (what changed)', 'Density threshold', 'Road buffer', 'Walmart exclusion', 'Candidate polygons', 'Total area', 'Site still suitable?'],
                rows: [['Baseline', '5,000 / sq mi', '2 miles', '2 miles', '', '', ''],
                       ['', '', '', '', '', '', ''], ['', '', '', '', '', '', ''], ['', '', '', '', '', '', '']],
                widths: [1300, 1400, 1150, 1400, 1450, 1200, 1460] },
@@ -104,7 +104,7 @@ const LABS = {
                rows: [['DATE_ACQUIRED', '', ''], ['CLOUD_COVER', '', ''], ['Reflectance offset', '', '']],
                widths: [2200, 2400, 4760] } },
     { h: 'The Model',
-      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type; for each input, the satellite and band, acquisition date, cloud cover and source (2 points). Fill one row per tool, in the order they run.',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type; for each input, the satellite and band, acquisition date, cloud cover and source (2 points). Fill one row per tool, in the order they run, and fill both the Type and the Source column.',
       table: { caption: 'Table 2. Model description — one row per tool.',
                head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Output type'],
                rows: [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']],
@@ -268,7 +268,7 @@ const LABS = {
     { h: 'Range and Step Sensitivity', pageBreakBefore: true,
       hint: 'Rubric: one table with the baseline and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each (4 points). Choose your values deliberately and say why. The run time is the Elapsed Time in the pop-up when a run finishes.',
       table: { caption: 'Table 4. Range and step sensitivity — the baseline and at least three more runs.',
-               head: ['Run name', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'Run time', 'What it shows'],
+               head: ['Run (what changed)', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'Run time', 'What it shows'],
                rows: [['Baseline', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''],
                       ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
                widths: [1200, 700, 700, 650, 1000, 1100, 1100, 960, 1950] },
@@ -461,11 +461,11 @@ const LABS = {
                widths: [2700, 2400, 4260] } },
 
     { h: 'The Model',
-      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (point, line, polygon, raster) and source (2 points). Fill one row per tool, in the order they run.',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (point, line, polygon, raster) and source (2 points). Fill one row per tool, in the order they run, and fill both the Type and the Source column.',
       table: { caption: 'Table 2. Model description — one row per tool.',
-               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type and source'],
-               rows: [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']],
-               widths: [1500, 2300, 2300, 1700, 1560] },
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type', 'Source'],
+               rows: [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']],
+               widths: [1400, 2100, 2100, 1500, 1000, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
           hint: 'Rubric: a full-page (8.5 × 11) figure of the model, exported from ModelBuilder — every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2 points). Export it; do not screen-capture it.' },
@@ -484,9 +484,9 @@ const LABS = {
                widths: [2600, 3400, 3360] } },
 
     { h: 'Sensitivity Analysis', pageBreakBefore: true,
-      hint: 'Rubric: one table with the baseline and at least three more runs, giving for each the four parameter values, the cells and area in km², the percentage of the county, and whether your recommended site is still suitable (4 points). Area is cells × 900 ÷ 1,000,000; the county is 5,545 km². The baseline row is part of the table.',
+      hint: 'Rubric: one table with the baseline and at least three more runs, giving for each the four parameter values, the cells and area in km², the percentage of the county, and whether your recommended site is still suitable (4 points). Area is cells × 900 ÷ 1,000,000; the county is 5,545 km². The baseline row is part of the table. Change one number at a time from the baseline, so your table can answer the first question below.',
       table: { caption: 'Table 4. Sensitivity — the baseline and at least three more runs.',
-               head: ['Run name', 'Slope (°)', 'Road (km)', 'Density', 'Radius (m)', 'Cells', 'Area (km²)', '% of county', 'Site still suitable?'],
+               head: ['Run (what changed)', 'Slope (°)', 'Road (km)', 'Density', 'Radius (m)', 'Cells', 'Area (km²)', '% of county', 'Site still suitable?'],
                rows: [['Baseline', '5', '1', '20', '20000', '', '', '', ''],
                       ['', '', '', '', '', '', '', '', ''],
                       ['', '', '', '', '', '', '', '', ''],
@@ -534,22 +534,22 @@ const LABS = {
                widths: [2700, 2400, 4260] } },
 
     { h: 'The Model',
-      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (point, line, polygon, raster) and source (2 points). One row per tool, in the order they run; the tool names are filled in for you, starting with Project Raster (run once, outside the model).',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (point, line, polygon, raster) and source (2 points). One row per tool, in the order they run; the tool names are filled in for you, starting with Project Raster (run once, outside the model). Fill both the Type and the Source column.',
       table: { caption: 'Table 2. Model description — one row per tool.',
-               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type and source'],
-               rows: [['Project Raster (once, outside the model)', '', '', '', ''],
-                      ['Fill', '', '', '', ''],
-                      ['Flow Direction', '', '', '', ''],
-                      ['Flow Accumulation', '', '', '', ''],
-                      ['Snap Pour Point', '', '', '', ''],
-                      ['Watershed', '', '', '', ''],
-                      ['Raster to Polygon', '', '', '', ''],
-                      ['Raster Calculator', '', '', '', ''],
-                      ['Stream Link', '', '', '', ''],
-                      ['Stream to Feature', '', '', '', ''],
-                      ['Watershed (2)', '', '', '', ''],
-                      ['Raster to Polygon (2)', '', '', '', '']],
-               widths: [1500, 2300, 2300, 1700, 1560] },
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type', 'Source'],
+               rows: [['Project Raster (once, outside the model)', '', '', '', '', ''],
+                      ['Fill', '', '', '', '', ''],
+                      ['Flow Direction', '', '', '', '', ''],
+                      ['Flow Accumulation', '', '', '', '', ''],
+                      ['Snap Pour Point', '', '', '', '', ''],
+                      ['Watershed', '', '', '', '', ''],
+                      ['Raster to Polygon', '', '', '', '', ''],
+                      ['Raster Calculator', '', '', '', '', ''],
+                      ['Stream Link', '', '', '', '', ''],
+                      ['Stream to Feature', '', '', '', '', ''],
+                      ['Watershed (2)', '', '', '', '', ''],
+                      ['Raster to Polygon (2)', '', '', '', '', '']],
+               widths: [1400, 2100, 2100, 1500, 1000, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
           hint: 'Rubric: a full-page (8.5 × 11) figure of the model, exported from ModelBuilder and laid out so it reads in rows as Figure C does — every tool and dataset shown, labels informative, all text readable at 10 pt or larger (2 points). Export it; do not screen-capture it.' },
@@ -647,6 +647,7 @@ const rubric = extractRubric(README);
 
 const INK = '1F3864', GRAY = '767171', RULE = 'BFBFBF', HEADFILL = 'D9E2F3', ZEBRA = 'F2F2F2';
 const CONTENT_W = 9360; // 6.5in at 1440 DXA/in
+const LAND_W = 12960;   // 9in: the content width of a landscape Letter page with 1in margins
 
 const clean = (s) => s.replace(/`/g, '').replace(/\*\*/g, '').replace(/\*/g, '');
 
@@ -655,9 +656,12 @@ const hint = (t) => new Paragraph({
   children: [new TextRun({ text: t, italics: true, color: GRAY, size: 19 })],
 });
 
+// Placeholders are highlighted yellow so one left behind is obvious on the page, to the student
+// before they submit and to the grader after. (Lab 4, Fall 2026: a third of the reports kept one.)
+const MARK = 'yellow';
 const placeholder = (t = '[Add your content here.]') => new Paragraph({
   spacing: { before: 0, after: 260 },
-  children: [new TextRun({ text: t, italics: true, color: GRAY })],
+  children: [new TextRun({ text: t, italics: true, color: GRAY, highlight: MARK })],
 });
 
 const caption = (t) => new Paragraph({
@@ -666,24 +670,30 @@ const caption = (t) => new Paragraph({
 });
 
 const DASH = { style: BorderStyle.DASHED, size: 6, color: RULE };
-const imageDrop = (size = 'tall') => new Table({
-  columnWidths: [CONTENT_W],
-  width: { size: CONTENT_W, type: WidthType.DXA },
-  borders: { top: DASH, bottom: DASH, left: DASH, right: DASH,
-             insideHorizontal: DASH, insideVertical: DASH },
-  rows: [new TableRow({
-    cantSplit: true,
-    height: { value: size === 'tall' ? 8640 : 4320, rule: HeightRule.ATLEAST },
-    children: [new TableCell({
-      width: { size: CONTENT_W, type: WidthType.DXA },
-      verticalAlign: 'center',
-      children: [new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: '[ Insert image here — delete this box ]', italics: true, color: GRAY, size: 19 })],
+// tall = full portrait page; medium = screen capture; landscape = full page on a landscape page
+// (9 in wide), used for the model figure so a wide model is not squeezed into an unreadable strip.
+const DROP = { tall: [CONTENT_W, 8640], medium: [CONTENT_W, 4320], landscape: [LAND_W, 7500] };
+const imageDrop = (size = 'tall') => {
+  const [w, h] = DROP[size];
+  return new Table({
+    columnWidths: [w],
+    width: { size: w, type: WidthType.DXA },
+    borders: { top: DASH, bottom: DASH, left: DASH, right: DASH,
+               insideHorizontal: DASH, insideVertical: DASH },
+    rows: [new TableRow({
+      cantSplit: true,
+      height: { value: h, rule: HeightRule.ATLEAST },
+      children: [new TableCell({
+        width: { size: w, type: WidthType.DXA },
+        verticalAlign: 'center',
+        children: [new Paragraph({
+          alignment: AlignmentType.CENTER, keepNext: true,
+          children: [new TextRun({ text: '[ Insert image here — delete this box ]', italics: true, color: GRAY, size: 19, highlight: MARK })],
+        })],
       })],
     })],
-  })],
-});
+  });
+};
 
 function cell(children, { width, head = false, shade = null }) {
   return new TableCell({
@@ -715,9 +725,11 @@ function simpleTable({ head, rows, widths }) {
 
 function rubricTable() {
   const W = [7200, 900, 1260]; // = 9360
+  // "Max" rather than "Points", and a printed "___ / 10" in the score cell: with "/10" in a column
+  // headed Points, students wrote their score there or left Your score blank (Lab 4, Fall 2026).
   const rows = [new TableRow({
     tableHeader: true, cantSplit: true,
-    children: ['Item', 'Points', 'Your score'].map((h, i) => cell(
+    children: ['Item', 'Max', 'Your score'].map((h, i) => cell(
       [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 19, color: INK })] })],
       { width: W[i], head: true })),
   })];
@@ -735,13 +747,15 @@ function rubricTable() {
         children: [new TextRun({ text: clean(b), size: 17 })],
       }));
     }
+    const max = r.points.replace(/^\//, '');                       // "/10" -> "10", "up to +5" kept
+    const blank = r.points.startsWith('/') ? `___ / ${max}` : '___';
     rows.push(new TableRow({
       cantSplit: true,
       children: [
         cell(itemParas, { width: W[0], shade: isTotal ? HEADFILL : null }),
-        cell([new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.points, bold: isTotal, size: 19 })] })],
+        cell([new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: max, bold: isTotal, size: 19 })] })],
           { width: W[1], shade: isTotal ? HEADFILL : null }),
-        cell([new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: ' ', size: 19 })] })],
+        cell([new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: blank, bold: isTotal, size: 19, highlight: MARK })] })],
           { width: W[2], shade: isTotal ? HEADFILL : null }),
       ],
     }));
@@ -759,39 +773,89 @@ const fillIn = (label, hintText) => new Paragraph({
   alignment: AlignmentType.CENTER, spacing: { before: 0, after: 120 },
   children: [
     new TextRun({ text: label + '  ', bold: true, size: 21, color: INK }),
-    new TextRun({ text: hintText, italics: true, color: GRAY, size: 21 }),
+    new TextRun({ text: hintText, italics: true, color: GRAY, size: 21, highlight: MARK }),
   ],
 });
 
-const body = [];
-body.push(new Paragraph({ spacing: { before: 2200 } }));
+// Does this lab have a ModelBuilder figure? (Lab 3 is digitized by hand and has none.)
+const hasModel = LAB.sections.some((s) => (s.figures || []).some((f) => /ModelBuilder/.test(f.caption)));
+
+// A checklist at the very top, in its own yellow box the student deletes. Each line is a miss that
+// cost points across Labs 1 to 4; none is a new requirement — they are rubric items and cleanup.
+function checklistBox() {
+  const items = [
+    'Delete every yellow placeholder and every gray instruction line, and this box.',
+    'Name your reviewer, add the sentence on what you changed, and paste their stamp image below.',
+    ...(hasModel ? ['Figure 1 is the model exported from ModelBuilder (Export ▸ Export To Graphic, as PNG) — not a screen capture, and not redrawn or “enhanced” by AI.'] : []),
+    'Every number in your tables and text comes from your own work in ArcGIS Pro.',
+    'Put a score in every row of the Self-Graded Rubric, and the total.',
+    'Save as PDF, then open the PDF and check that every figure and map came through readable.',
+  ];
+  const BOX = { style: BorderStyle.SINGLE, size: 8, color: 'BF9000' };
+  const paras = [new Paragraph({
+    spacing: { after: 80 },
+    children: [new TextRun({ text: 'Before you submit — then delete this box', bold: true, size: 20, color: INK })],
+  })];
+  for (const t of items) {
+    paras.push(new Paragraph({
+      numbering: { reference: 'checklist', level: 0 }, spacing: { after: 40 },
+      children: [new TextRun({ text: t, size: 19 })],
+    }));
+  }
+  return new Table({
+    columnWidths: [CONTENT_W], width: { size: CONTENT_W, type: WidthType.DXA },
+    borders: { top: BOX, bottom: BOX, left: BOX, right: BOX, insideHorizontal: BOX, insideVertical: BOX },
+    rows: [new TableRow({ cantSplit: true, children: [new TableCell({
+      width: { size: CONTENT_W, type: WidthType.DXA },
+      shading: { type: ShadingType.CLEAR, fill: 'FFF2CC', color: 'auto' },
+      margins: { top: 120, bottom: 120, left: 160, right: 160 },
+      children: paras,
+    })] })],
+  });
+}
+
+// The document is a list of sections so the model figure can sit on its own landscape page.
+const sections = [];
+let body = [];
+const newSection = (landscape = false) => {
+  body = [];
+  sections.push({ landscape, children: body });
+};
+newSection();
+
+body.push(checklistBox());
+body.push(new Paragraph({ spacing: { before: 900 } }));
 body.push(titleLine(LAB.labTitle, { bold: true, size: 48, color: INK }, { after: LAB.labSubtitle ? 100 : 420 }));
 if (LAB.labSubtitle) body.push(titleLine(LAB.labSubtitle, { size: 32, color: INK }, { after: 420 }));
 body.push(titleLine(COURSE, { size: 24 }, { after: 60 }));
-body.push(titleLine(TERM, { size: 24, color: GRAY }, { after: 700 }));
+body.push(titleLine(TERM, { size: 24, color: GRAY }, { after: 600 }));
 body.push(fillIn('Your name:', '[your name]'));
 body.push(fillIn('Date submitted:', '[date]'));
 body.push(fillIn('Peer reviewer:', '[reviewer’s name]'));
 body.push(new Paragraph({
-  alignment: AlignmentType.CENTER, spacing: { before: 60, after: 500 },
-  children: [new TextRun({ text: '[One sentence on what you changed because of your reviewer’s feedback.]', italics: true, color: GRAY, size: 21 })],
+  alignment: AlignmentType.CENTER, spacing: { before: 60, after: 400 },
+  children: [new TextRun({ text: '[One sentence on what you changed because of your reviewer’s feedback.]', italics: true, color: GRAY, size: 21, highlight: MARK })],
 }));
 body.push(new Paragraph({
   alignment: AlignmentType.CENTER,
-  children: [new TextRun({ text: '[ Peer-review stamp here ]', italics: true, color: GRAY, size: 19 })],
+  children: [new TextRun({ text: '[ Paste your reviewer’s stamp image here ]', italics: true, color: GRAY, size: 19, highlight: MARK })],
 }));
 body.push(new Paragraph({ children: [new PageBreak()] }));
+
+// Generic advice appended to every lab's hints, so it does not have to be repeated in LABS.
+const MODEL_FIG_ADVICE = ' Insert the exported PNG file itself. Do not screen-capture it, redraw it, or run it through an AI “enhancer” — that changes what the figure shows. This page is landscape so a wide model stays readable.';
+const AI_ADVICE = ' You do the work in ArcGIS Pro yourself: AI may not run it for you, put facts in your report you did not find, or redraw or “enhance” your figures (see the course AI policy).';
 
 // ── sections ──
 let sectionNo = 0;
 for (const s of LAB.sections) {
   sectionNo += 1;
-  if (s.pageBreakBefore && sectionNo > 1) body.push(new Paragraph({ children: [new PageBreak()] }));
+  if (s.pageBreakBefore && sectionNo > 1 && body.length) body.push(new Paragraph({ children: [new PageBreak()] }));
   body.push(new Paragraph({
     heading: HeadingLevel.HEADING_1, spacing: { before: 280, after: 80 },
     children: [new TextRun({ text: `${sectionNo}.  ${s.h}`, bold: true, size: 28, color: INK })],
   }));
-  if (s.hint) body.push(hint(s.hint));
+  if (s.hint) body.push(hint(s.h === 'AI Use Statement' ? s.hint + AI_ADVICE : s.hint));
   if (s.rubric) { body.push(rubricTable()); continue; }
   if (!s.table && !s.figures && !s.questions) body.push(placeholder());
   for (const t of [s.table, s.table2].filter(Boolean)) {
@@ -801,10 +865,14 @@ for (const s of LAB.sections) {
   }
   if (s.figures) {
     for (const f of s.figures) {
-      if (f.hint) body.push(hint(f.hint));
-      body.push(imageDrop(f.size || 'tall'));
+      const isModel = /ModelBuilder/.test(f.caption);
+      if (isModel) newSection(true);                 // the model figure gets a landscape page
+      const fh = isModel ? (f.hint || '').replace(/ Export it; do not screen-capture it\./, '') + MODEL_FIG_ADVICE : f.hint;
+      if (fh) body.push(hint(fh));
+      body.push(imageDrop(isModel ? 'landscape' : (f.size || 'tall')));
       body.push(caption(f.caption));
-      if (f.pageBreakAfter) body.push(new Paragraph({ children: [new PageBreak()] }));
+      if (isModel) newSection(false);               // and the report goes back to portrait
+      else if (f.pageBreakAfter) body.push(new Paragraph({ children: [new PageBreak()] }));
     }
   }
   if (s.questions) {
@@ -821,7 +889,7 @@ for (const s of LAB.sections) {
 const doc = new Document({
   creator: COURSE,
   title: `${LAB.labTitle} report template`,
-  description: 'Fillable lab report template. Replace every gray italic prompt.',
+  description: 'Fillable lab report template. Replace every yellow placeholder and delete the gray instructions.',
   styles: {
     default: {
       document: { run: { font: 'Calibri', size: 22, color: '000000' }, paragraph: { spacing: { line: 276, after: 140 } } },
@@ -839,18 +907,23 @@ const doc = new Document({
       reference: 'rubric-bullets',
       levels: [{ level: 0, format: LevelFormat.BULLET, text: '•', alignment: AlignmentType.LEFT,
                  style: { paragraph: { indent: { left: 240, hanging: 160 } } } }],
+    }, {
+      reference: 'checklist',
+      levels: [{ level: 0, format: LevelFormat.BULLET, text: '☐', alignment: AlignmentType.LEFT,
+                 style: { paragraph: { indent: { left: 360, hanging: 280 } } } }],
     }],
   },
-  sections: [{
+  sections: sections.filter((sec) => sec.children.length).map((sec) => ({
     properties: {
       page: {
-        size: { width: 12240, height: 15840, orientation: PageOrientation.PORTRAIT },
+        size: { width: 12240, height: 15840,
+                orientation: sec.landscape ? PageOrientation.LANDSCAPE : PageOrientation.PORTRAIT },
         margin: { top: convertInchesToTwip(1), bottom: convertInchesToTwip(1),
                   left: convertInchesToTwip(1), right: convertInchesToTwip(1) },
       },
     },
-    children: body,
-  }],
+    children: sec.children,
+  })),
 });
 
 Packer.toBuffer(doc).then((buf) => {

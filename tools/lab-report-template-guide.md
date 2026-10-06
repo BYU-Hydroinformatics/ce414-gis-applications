@@ -29,6 +29,15 @@ for, and they should keep doing that.
 
 In order. Anything marked *(generic)* is the same in every lab; the rest comes from the lab page.
 
+### Before-you-submit box *(generic)*
+
+The first thing on the page: a yellow box the student deletes, with a short checklist — delete every
+yellow placeholder and gray instruction line; reviewer, sentence and stamp image; (labs with a model)
+Figure 1 exported from ModelBuilder as PNG, not screen-captured and not redrawn or "enhanced" by AI;
+every number from their own work in ArcGIS Pro; a score in every rubric row and the total; save as
+PDF and open the PDF to check it. Every line is a miss that cost points in Labs 1 to 4 of Fall 2026,
+and none is a new requirement — they are rubric items and cleanup.
+
 ### Title page *(generic)*
 
 Lab title, subtitle, course line, term and instructor line. Then, centered and labeled:
@@ -37,7 +46,7 @@ Lab title, subtitle, course line, term and instructor line. Then, centered and l
 - **Date submitted:** `[date]`
 - **Peer reviewer:** `[reviewer's name]`
 - one italic line: `[One sentence on what you changed because of your reviewer's feedback.]`
-- `[ Peer-review stamp here ]`
+- `[ Paste your reviewer's stamp image here ]`
 
 That last pair exists because the peer-review bullet is worth a point in every lab and is the most
 commonly half-done item in the set — students name a reviewer and never say what changed. Putting
@@ -58,11 +67,19 @@ Each section carries, in this order:
    when there is a common way to get it wrong ("Export it; do not screen-capture it").
 2. **A seeded structure** where the rubric asks for one — a table with the right column headings,
    a figure drop zone, or bold sub-headings for the numbered questions.
-3. **`[Add your content here.]`** in gray italic, so an unfilled section is obvious at a glance.
+3. **`[Add your content here.]`** in gray italic **with a yellow highlight**, so an unfilled or
+   forgotten placeholder is obvious at a glance — to the student before they submit and to the
+   grader after. Every placeholder in the template carries the highlight: title-page fill-ins, the
+   stamp line, drop-zone text and the rubric's score blanks. (In Lab 4, Fall 2026, about a third of
+   reports kept a gray placeholder the student never noticed.)
 
 ### Tables
 
-Seed the table, with the columns the rubric names, and leave the rows empty. This is where most of
+Seed the table, with the columns the rubric names, and leave the rows empty. **One fact per
+column**: a combined "Type and source" column got only the type filled in, so the model table has
+separate `Type` and `Source` columns. Sensitivity tables open with a `Run (what changed)` column,
+and where runs are free choices (Labs 1 and 4) the hint says to change one number at a time from
+the baseline — reports that changed two or three at once could not then say which mattered. This is where most of
 the value is. Lab 2's sensitivity table exists because "threshold, cells in class 1, area" is a
 three-point bullet and reports kept arriving with two of the three. Lab 3's would seed
 `Transformation | Control points | Total RMS error | Error at check feature | What the sheet looks like`
@@ -83,7 +100,20 @@ dropping a 2-inch thumbnail of a model diagram and calling it a full-page figure
 text says `[ Insert image here — delete this box ]` because otherwise the box survives into the
 submission.
 
-Maps get `pageBreakAfter` so each lands on its own page.
+Maps get `pageBreakAfter` so each lands on its own page. The drop-zone paragraph is `keepNext`, so
+the caption stays with its image.
+
+**The model figure gets its own landscape page**, automatically: any figure whose caption mentions
+ModelBuilder is put in a landscape section (drop zone 9 × 5.2 in) and the report returns to
+portrait after it. Most models are wide; in a portrait box they were shrunk into an unreadable
+strip, and one student "fixed" that by having AI redraw the screenshot, which changed the model
+(Lab 4, Fall 2026). The builder appends generic advice to that figure's hint — insert the exported
+PNG itself; do not screen-capture, redraw or AI-"enhance" it — so it need not be repeated in `LABS`.
+PNG also avoids the PDF font-embedding problem that turned some exported models into rows of dots.
+
+Likewise, the **AI Use Statement** hint gets one generic sentence appended: the student does the
+work in ArcGIS Pro; AI may not run it, put facts in the report they did not find, or redraw figures.
+That is the course AI policy's "you personally do the work in ArcGIS Pro" line, not a new rule.
 
 ### Self-graded rubric — always last
 
@@ -92,8 +122,12 @@ A three-column Word table:
 | Column | Width (DXA) | Why |
 | --- | ---: | --- |
 | Item | 7200 | Row title in bold, then every bullet with its point value |
-| Points | 900 | `/10`, `/50`, `up to +5` |
-| Your score | 1260 | Empty. The student fills it |
+| Max | 900 | `10`, `50`, `up to +5` |
+| Your score | 1260 | A yellow `___ / 10` (`___ / 50` in the Total row) the student fills in |
+
+Headed "Max", not "Points", and with the blank printed in the score cell: when the middle column
+read `/10` under "Points", students wrote their score there, or left "Your score" empty, or deleted
+the column (Lab 4, Fall 2026).
 
 Keep it to these three. An "evidence" or "where is this in your report" column is tempting — the
 strongest self-assessments have volunteered one — but it is not a graded item, and section 3 says
@@ -183,10 +217,18 @@ tools/templates/make_lab_report_template.js           the builder (LABS block at
 docs/assignments/lab-NN/labNN-report-template.docx    the artifact MkDocs serves
 ```
 
-Built so far: **Labs 1, 2, 3, 4, 5 and 6.** Run `node make_lab_report_template.js` with no argument to
-see which keys exist.
+Built so far: **Labs 1 to 8.** Run `node make_lab_report_template.js` with no argument to
+see which keys exist. After a change to the generic machinery, rebuild every lab so all templates
+stay identical in everything but content:
 
-**Labs 5, 7, 8, 9, 10 and 11 do not have templates yet, and should not until they are revised.**
+```bash
+for k in 01 02 03 04 05 06 07 08; do node tools/templates/make_lab_report_template.js $k; done
+```
+
+LibreOffice is not installed on the Windows machine; render through Word instead (COM
+`SaveAs` with format 17 = PDF) and look at the pages.
+
+**Labs 9, 10 and 11 do not have templates yet, and should not until they are revised.**
 Their rubrics are still the Word-era ones — a handful of rows with no per-bullet point values, and
 in some cases no `## Deliverables` list to build sections from. The builder reads the rubric out of
 the lab page, so it would either find nothing or reproduce a rubric that does not match how the five
