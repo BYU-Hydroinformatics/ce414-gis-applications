@@ -1,0 +1,64 @@
+{
+ "dem_utm": {
+  "cols": 2314,
+  "rows": 1944,
+  "min": 1499.8,
+  "max": 2306.8,
+  "cell": 10.0
+ },
+ "butte_km2": 28.03,
+ "points_boundary_km2": 65.411,
+ "random_points": {
+  "n": 1000,
+  "min": 1531.2,
+  "max": 2277.2,
+  "mean": 1649.9
+ },
+ "not_butte": {
+  "n": 560,
+  "min": 1531.2,
+  "max": 1597.0,
+  "mean": 1559.4
+ },
+ "first_points": [
+  [
+   1,
+   337632.6,
+   4806349.7
+  ],
+  [
+   2,
+   333222.7,
+   4810511.4
+  ],
+  [
+   3,
+   334270.6,
+   4804693.1
+  ]
+ ],
+ "plain": {
+  "cols": 891,
+  "rows": 912,
+  "min": 1531.2,
+  "max": 1597.0
+ },
+ "dem_butte": {
+  "min": 1554.8,
+  "max": 2306.8,
+  "mean": 1749.7
+ },
+ "plain_butte": {
+  "min": 1547.1,
+  "max": 1585.9,
+  "mean": 1566.2
+ },
+ "height": {
+  "min": -0.5,
+  "max": 729.1,
+  "mean": 183.5
+ },
+ "volume_cell_max_km3": 7.290843495866284e-05,
+ "volume_km3_default_extent": 5.145,
+ "volume_cells": 280311
+}

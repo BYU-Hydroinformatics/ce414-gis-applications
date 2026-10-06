@@ -1,0 +1,57 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500' width='1000' height='500' role='img' aria-label='The six metadata questions applied to the Big Southern Butte DEM'>
+<title>The six metadata questions, applied to the Big Southern Butte DEM</title>
+<rect width='1000' height='500' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Reading the DEM&#39;s metadata: the six questions from CCE 114</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Every answer comes from the tiles&#39; metadata files and READ-ME-FIRST.txt in the extract. Check them yourself.</text>
+<rect x='20' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHAT</text>
+<text x='102' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What do the data represent?</text>
+<text x='32' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Bare-earth ground elevation in METERS above</text>
+<text x='32' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>NAVD 88, 32-bit floating point. Cells of</text>
+<text x='32' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1/3 arc-second: about 10.3 m north-south</text>
+<text x='32' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>and 7.5 m east-west at 43.4° N.</text>
+<rect x='345' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHERE</text>
+<text x='427' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Where, and in what coordinate system?</text>
+<text x='357' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Big Southern Butte and the plain around it:</text>
+<text x='357' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>113.17° to 112.89° W, 43.32° to 43.49° N.</text>
+<text x='357' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Stored in latitude/longitude (GCS NAD 1983):</text>
+<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>project it before measuring volume (Step 1).</text>
+<rect x='670' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHEN</text>
+<text x='752' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When were the data collected?</text>
+<text x='682' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Tiles n44w114 and n44w113, both published</text>
+<text x='682' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>April 7, 2026. Mosaics of sources collected</text>
+<text x='682' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1957–2024 and 2019–2024; the metadata does</text>
+<text x='682' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>not say which one covers the butte.</text>
+<rect x='20' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHY</text>
+<text x='102' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Why were they created?</text>
+<text x='32' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>The 3D Elevation Program&#39;s national seamless</text>
+<text x='32' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>layer: general-purpose &#39;best available&#39;</text>
+<text x='32' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>elevation for science, mapping and resource</text>
+<text x='32' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>management. Not made to measure volcanoes.</text>
+<rect x='345' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>HOW</text>
+<text x='427' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How were they collected and processed?</text>
+<text x='357' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Sources of diverse origin resampled to one</text>
+<text x='357' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>grid and one datum. The butte straddles the</text>
+<text x='357' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>113° W tile edge, so the extract joins two</text>
+<text x='357' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>tiles edge to edge, values unchanged.</text>
+<rect x='670' y='245' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='245' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='268' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHO</text>
+<text x='752' y='268' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Who maintains them, and may you use them?</text>
+<text x='682' y='305' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>U.S. Geological Survey, The National Map.</text>
+<text x='682' y='324' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Public domain; no use restrictions.</text>
+<text x='682' y='343' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Credit the USGS 3D Elevation Program</text>
+<text x='682' y='362' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>and name both tiles in your report.</text>
+<rect x='20' y='420' width='960' height='62' rx='8' fill='#e8862a'/>
+<text x='32' y='446' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>For a volume, the cell size and the vertical unit matter most: each cell&#39;s height times its area is its volume.</text>
+<text x='32' y='468' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Degrees by meters is not a volume. Project to meters first, and say in your report what one meter of error does to the total.</text>
+</svg>
