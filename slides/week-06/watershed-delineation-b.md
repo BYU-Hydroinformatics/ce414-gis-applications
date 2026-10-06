@@ -328,7 +328,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 # Part 2 — Delineate One Yourself
 
-<!-- Part 2 is hands-on: hand-digitize a watershed from contours, then let StreamStats do it, then compare. Bring laptops. -->
+<!-- Part 2 is hands-on: hand-digitize a watershed from contours, then let StreamStats do it, then compare, on the lab computers. -->
 
 ---
 

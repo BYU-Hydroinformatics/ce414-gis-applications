@@ -398,7 +398,7 @@ $$
 
 # Before Next Class
 
-- **Thursday:** the rest of the eight steps — flow accumulation, the stream threshold, stream links, pour points and watersheds — then delineate one **by hand** and with **StreamStats**. Bring a laptop with **ArcGIS Pro**
+- **Thursday:** the rest of the eight steps — flow accumulation, the stream threshold, stream links, pour points and watersheds — then delineate one **by hand** in **ArcGIS Pro** and with **StreamStats**
 - Start **Lab 5** now: Steps 0–4 use only what today covered — [Lab 5](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 - Read for **Quiz 6** (Watershed Delineation): mostly a Chapter 10 review, plus some web searching
 - **Quiz 6** and **Lab 5** are both due **Saturday 11:59 pm**
