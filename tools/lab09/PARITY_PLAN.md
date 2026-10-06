@@ -109,6 +109,6 @@ deliverable vs rubric, "largest error" defined, citation question graded, Figure
    size, and what Identify returns there; whether Kriging's semivariogram can be a model parameter;
    whether a changed model seed reaches Create Random Points from a tool-dialog run; which outputs a
    dialog run deletes.
-2. Example maps (`build_figures.py`): the comparison sheet at seed 1 and a 250-point scenario.
-3. No-GUI pilot (`C:\Ames\Pilot09\`).
-4. Report template, Week 9 deck alignment, Learning Suite due date (November 7).
+2. Promotion, then the report template (`node make_lab_report_template.js 09` reads README.md), the
+   Week 9 deck alignment, and the Learning Suite due date (November 7). Example maps and the no-GUI
+   pilot are done.
