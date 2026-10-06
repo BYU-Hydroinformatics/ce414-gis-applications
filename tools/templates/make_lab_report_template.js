@@ -444,6 +444,85 @@ const LABS = {
   ],
 },
 
+'09': {
+  labTitle: 'Lab 9: Interpolation Explorer',
+  labSubtitle: 'Rebuilding a mountain from samples, three ways, and measuring how wrong each one is',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (1 point). One or two paragraphs. Say what you set out to measure and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
+
+    { h: 'The DEM, the Service and Their Metadata',
+      hint: 'Rubric: the three metadata values for the DEM and what the service returned in Step 1, and what each means for your result (2 points). Confirm the values yourself from READ-ME-FIRST.txt, the raster’s properties and the tile’s metadata file — do not copy them from Figure A.',
+      table: { caption: 'Table 1. Metadata for the DEM, and what the 3DEP image service returned.',
+               head: ['Value', 'What you found', 'What it means for your result'],
+               rows: [['Publication date and source dates', '', ''], ['Vertical datum and units', '', ''], ['Cell size', '', ''],
+                      ['Service: spatial reference and cell size', '', ''], ['Service vs extract at the highest cell (m)', '', '']],
+               widths: [2600, 2400, 4360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run; one row can cover a tool used once per method if the settings are the same.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Project Raster', '', '', '', ''], ['Extract by Mask', '', '', '', ''], ['Create Random Points', '', '', '', ''],
+                      ['Extract Values to Points', '', '', '', ''], ['Create Thiessen Polygons', '', '', '', ''], ['Polygon to Raster', '', '', '', ''],
+                      ['IDW', '', '', '', ''], ['Kriging', '', '', '', ''], ['Raster Calculator (error, ×3)', '', '', '', ''],
+                      ['Raster Calculator (square, ×3)', '', '', '', ''], ['Zonal Statistics as Table (×3)', '', '', '', ''],
+                      ['Calculate Field (×3)', '', '', '', '']],
+               widths: [2300, 2100, 2000, 1700, 1260] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (.atbx) with the report as well.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the number of points, the IDW power and the semivariogram exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the tool dialog with the number of points, the IDW power and the semivariogram exposed as parameters (2 points).' },
+      ] },
+
+    { h: 'Check Values',
+      hint: 'Rubric: your check values from Steps 4 to 9 at seed 1 (2 points), and the three RMSEs matching the check values (part of the 4 points for a working model). These come from the course seed, 1, not your own.',
+      table: { caption: 'Table 3. Check values at seed 1, 2,500 points, default parameters.',
+               head: ['Value', 'Thiessen', 'IDW', 'Kriging'],
+               rows: [['First point (E, N)', '', '', ''], ['Surface minimum and maximum (m)', '', '', ''],
+                      ['Error minimum and maximum (m)', '', '', ''], ['Mean of squared error (m²)', '', '', ''], ['RMSE (m)', '', '', '']],
+               widths: [3360, 2000, 2000, 2000] } },
+
+    { h: 'Where the Methods Break',
+      hint: 'Rubric: the largest error on your own baseline error maps, its coordinates and size, and why the ground there defeats the interpolators (3 points). Read the location and value from your own raster and include a cropped figure of that spot. A general paragraph about interpolation earns nothing here.',
+      figures: [
+        { caption: 'Figure 3. The largest error on my baseline error maps, close up.', size: 'medium',
+          hint: 'A crop of your error map around the largest error, with its coordinates and value labeled.' },
+      ] },
+
+    { h: 'Testing the Choices', pageBreakBefore: true,
+      hint: 'Rubric: one table with your seed, the baseline and the four Step 10 runs, the RMSE of all three methods in every row, and the three checkpoint RMSEs on the baseline row (4 points).',
+      table: { caption: 'Table 4. Sensitivity at my seed: ______ (the last four digits of my BYU ID).',
+               head: ['Run', 'What changed', 'Thiessen RMSE (m)', 'IDW RMSE (m)', 'Kriging RMSE (m)'],
+               rows: [['Baseline', 'Nothing (2,500 points, power 2, spherical)', '', '', ''], ['Baseline, 200 checkpoints', 'RMSE at the checkpoints', '', '', ''],
+                      ['250 points', '', '', '', ''], ['10,000 points', '', '', '', ''],
+                      ['IDW power 1, Kriging exponential', '', '', '', ''], ['IDW power 3, Kriging Gaussian', '', '', '', '']],
+               widths: [2200, 2560, 1540, 1500, 1560] },
+      questions: [
+        'Which method wins, and does the ranking survive? Rank the methods at each number of points, with your numbers. (2 points)',
+        'Which parameter mattered, and which barely did? Compare the IDW power and the semivariogram model with the number of points. (2 points)',
+        'Could you have known without the truth? Compare each checkpoint RMSE with the RMSE over all 67,337 cells. (2 points)',
+      ] },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full sheets; landscape is easiest. Use the same elevation scale and the same error scale and breaks on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline comparison sheet at my seed — the true DEM, three surfaces and three error maps.', size: 'landscape', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, the DEM’s source and date, and your seed; the true DEM with your sample points and the three surfaces on one elevation scale with a legend; the three error maps on one diverging scale with the same breaks, with a legend; every panel labeled with method, parameters and RMSE.' },
+        { caption: 'Map 2. One Step 10 scenario — its three error maps on Map 1’s error scale.', size: 'landscape',
+          hint: 'Must carry: the scenario’s three error maps on Map 1’s error scale with a legend and the true DEM for reference; every panel labeled with method, parameters and RMSE; title and text box saying what changed from Map 1 and by how much; plus the title, neat line, north arrow, scale bar and text box items of Map 1.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the DEM tile, the 3DEP image service, the textbook chapter and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Expressions, coordinate systems, RMSEs and coordinates come from your own work, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '04': {
   labTitle: 'Lab 4: Cell Phone Tower Placement',
   labSubtitle: '',

@@ -1,0 +1,83 @@
+{
+ "kriging_se_rms": 79.59,
+ "kriging_real_rmse": 14.46,
+ "corr_se_abs_err": 0.253,
+ "var_range": [
+  22.8,
+  26138.9
+ ],
+ "rmse_by_slope_Thiessen": {
+  "0-10": {
+   "cells": 30756,
+   "rmse": 5.0
+  },
+  "10-25": {
+   "cells": 9626,
+   "rmse": 25.7
+  },
+  "25-35": {
+   "cells": 15343,
+   "rmse": 37.7
+  },
+  "35-90": {
+   "cells": 10572,
+   "rmse": 47.7
+  }
+ },
+ "rmse_by_slope_IDW": {
+  "0-10": {
+   "cells": 30756,
+   "rmse": 5.3
+  },
+  "10-25": {
+   "cells": 9626,
+   "rmse": 25.2
+  },
+  "25-35": {
+   "cells": 15343,
+   "rmse": 26.8
+  },
+  "35-90": {
+   "cells": 10572,
+   "rmse": 30.6
+  }
+ },
+ "rmse_by_slope_Kriging": {
+  "0-10": {
+   "cells": 30756,
+   "rmse": 3.9
+  },
+  "10-25": {
+   "cells": 9626,
+   "rmse": 17.7
+  },
+  "25-35": {
+   "cells": 15343,
+   "rmse": 17.8
+  },
+  "35-90": {
+   "cells": 10572,
+   "rmse": 22.4
+  }
+ },
+ "true_max": {
+  "utm": [
+   449909.8730079448,
+   4451692.050409702
+  ],
+  "latlon": [
+   40.21415,
+   -111.58865
+  ],
+  "z": 2896.5
+ },
+ "worst_idw_kriging_latlon": [
+  40.2586,
+  -111.61655
+ ],
+ "worst_thiessen_latlon": [
+  40.2316,
+  -111.60996
+ ],
+ "service_value_at_max": "2896.7"
+}
