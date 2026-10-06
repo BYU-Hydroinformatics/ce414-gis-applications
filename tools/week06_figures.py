@@ -180,11 +180,11 @@ def flowdir(p):
     unique_raster(m, "Flow_Direction", "Flow direction (D8 code)", D8C, D8, 0)
     x, y = 450007, 4459047
     ext = box(x, y, 300, 200)
-    lay = p.createLayout(9.0, 4.0, "INCH", "FlowDir layout")
+    lay = p.createLayout(7.75, 4.0, "INCH", "FlowDir layout")   # legend sits tight against the map
     mf = lay.createMapFrame(bf.poly(0, 0, 6.0, 4.0), m, "Frame")
     mf.camera.setExtent(ext)
     style = (p.listStyleItems("ArcGIS 2D", "LEGEND", "Legend 1") or [None])[0]
-    leg = lay.createMapSurroundElement(bf.poly(6.15, 0.2, 8.95, 3.8), "LEGEND", mf, style, "Legend")
+    leg = lay.createMapSurroundElement(bf.poly(6.15, 0.2, 7.7, 3.8), "LEGEND", mf, style, "Legend")
     leg.title = "D8 code and direction"
     d = leg.getDefinition("V3")
     for it in d.items:

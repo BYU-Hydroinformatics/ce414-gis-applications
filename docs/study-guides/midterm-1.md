@@ -58,7 +58,7 @@ there, and what the sensitivity step showed.
 
 ## Week 6 — Watersheds
 
-*Reading:* Chapter 10 review. *Slides:* [Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html), [Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/what-is-a-watershed.html). *Self-check:* [Follow the Water](../quizzes/watersheds/index.html), [What Is a Watershed?](../quizzes/basins/index.html). *Lab:* [Lab 5](../assignments/lab-05/README.md).
+*Reading:* Chapter 10 review. *Slides:* [Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-a.html), [Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-b.html). *Self-check:* [Which Way Does Water Go?](../quizzes/watersheds/index.html), [Follow the Water](../quizzes/basins/index.html). *Lab:* [Lab 5](../assignments/lab-05/README.md).
 
 - Walk through the steps that turn a DEM into streams and watersheds: fill, flow direction, flow accumulation, threshold, stream links, pour point
 - Tell a cell's **aspect** from its **D8 flow direction**, and compute D8 by hand

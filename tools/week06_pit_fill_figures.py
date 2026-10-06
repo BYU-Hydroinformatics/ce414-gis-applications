@@ -6,7 +6,7 @@ transect through it gives both figures:
 
   ws-pit-fill-concept.svg       before and after Fill, as two drawn profiles of the real transect
   ws-pit-fill-profile-map.jpg   the transect as a chart (original vs filled) beside an ArcGIS Pro map
-                                of every cell Fill raised in the whole DEM
+                                zoomed on the pit, showing every cell Fill raised around it
 
 Needs C:\\Ames\\Lab05\\Check.gdb (DEM_UTM, Filled_DEM, Hillshade, Rock_Canyon_Basin) from
 tools/lab05/run_model.py and build_figures.py. Run with the ArcGIS Pro Python.
@@ -138,8 +138,8 @@ def fill_map():
     bf.poly_layer(m, "Rock_Canyon_Basin", "Basin", fill=bf.rgb(0, 0, 0, 0), outline=bf.rgb(0, 46, 93), width=2.0)
     t = m.addDataFromPath(os.path.join(W6, "Pit_Transect"))
     sym = t.symbology; sym.renderer.symbol.color = bf.rgb(0, 98, 184); sym.renderer.symbol.size = 3.5; t.symbology = sym
-    e = arcpy.Describe(os.path.join(GDB, "Rock_Canyon_Basin")).extent
-    bf.export_map(p, m, "_pit_map.jpg", arcpy.Extent(e.XMin - 300, e.YMin - 500, PX + 900, e.YMax + 300, spatial_reference=UTM), w_in=5.6)
+    # zoomed on the pit and its transect so the individual raised cells read on a projector
+    bf.export_map(p, m, "_pit_map.jpg", arcpy.Extent(PX - 800, PY - 620, PX + 1000, PY + 580, spatial_reference=UTM), w_in=5.6, dpi=200)
     p.save()
     return IMG / "_pit_map.jpg"
 
@@ -154,8 +154,8 @@ def combine(ch, mp):
     dr = ImageDraw.Draw(out)
     dr.rectangle([2 * pad + a.width, pad, 2 * pad + a.width + b.width - 1, pad + b.height - 1], outline=(150, 160, 170), width=2)
     f = ImageFont.truetype("C:/Windows/Fonts/segoeuib.ttf", 24)
-    dr.text((2 * pad + a.width, pad + b.height + 12), "Cells Fill raised (yellow to red, 0–3+ m)", fill=(0, 46, 93), font=f)
-    dr.text((2 * pad + a.width, pad + b.height + 42), "Rock Canyon basin in navy; the transect in blue", fill=(91, 103, 112),
+    dr.text((2 * pad + a.width, pad + b.height + 12), "Cells Fill raised around the pit (yellow to red, 0–3+ m)", fill=(0, 46, 93), font=f)
+    dr.text((2 * pad + a.width, pad + b.height + 42), "The transect in blue; 10 m cells", fill=(91, 103, 112),
             font=ImageFont.truetype("C:/Windows/Fonts/segoeui.ttf", 22))
     out.save(IMG / "ws-pit-fill-profile-map.jpg", quality=90)
     os.remove(ch); os.remove(mp)

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CE 414 — Follow the Water</title>
+  <title>CE 414 — Which Way Does Water Go?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the chain of steps that turns a DEM into stream networks and watersheds, and the places it quietly goes wrong.">
+  <meta name="description" content="CE 414 in-class quiz: what a watershed is, how watersheds nest, the water balance, why Fill comes first, and aspect against D8 flow direction.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -14,77 +14,75 @@
 <script src="../lib/quiz.js"></script>
 <script>
 CE414Quiz.start({
-  title: "Follow the Water",
-  subtitle: "CE 414 &middot; Week 6 &mdash; Watershed Delineation<br>" +
-            "Five questions on the chain that turns a <strong>DEM</strong> into streams and " +
-            "watersheds &mdash; and the places it quietly goes wrong.",
-  badge: "Delineation decision",
-  deckUrl: "../../slides/week-06/watershed-delineation.html",
+  title: "Which Way Does Water Go?",
+  subtitle: "CE 414 &middot; Week 6 &mdash; Watershed Delineation, Part A<br>" +
+            "Five questions, one per goal: what a watershed is, how they nest, the water balance, " +
+            "why <strong>Fill</strong> comes first, and <strong>aspect</strong> against <strong>D8</strong>.",
+  badge: "Watershed idea",
+  deckUrl: "../../slides/week-06/watershed-delineation-a.html",
   questions: [
     {
-      prompt: "You have a projected DEM and a point you care about. What order do the core steps run in?",
-      detail: "Name the chain from raw elevation to a basin polygon.",
+      prompt: "Why did John Wesley Powell propose bringing the western states into the union along watershed boundaries?",
       options: [
-        "Flow direction, fill, accumulation, watershed, pour point",
-        "Fill, accumulation, flow direction, pour point, watershed",
-        "Fill, flow direction, accumulation, pour point, watershed",
-        "Pour point, fill, flow direction, watershed, accumulation"
+        "So every state would have the same area",
+        "So each state would hold the water it collects",
+        "Because watershed lines were cheaper to survey",
+        "So every state would reach a navigable river"
       ],
-      answer: "Fill, flow direction, accumulation, pour point, watershed",
-      explanation: "Each step is the input to the next. Fill repairs the surface, flow direction turns the surface into a tree of cell-to-cell links, flow accumulation counts how many cells drain through each cell along that tree, and only then can you place a pour point and ask the Watershed step which cells drain to it. Accumulation cannot be computed before direction, because it is counted along the direction grid."
+      answer: "So each state would hold the water it collects",
+      explanation: "A watershed is the land that drains to one outlet, and water does not follow straight-line political boundaries: a watershed crosses city, state and national lines. Powell's map of the arid West drew states around drainage basins so that each would govern its own water. Congress drew rectangles instead, and a century of interstate water compacts and litigation followed."
     },
     {
-      prompt: "Why is filling pits the first thing done with a DEM?",
-      detail: "A pit is a cell, or a set of cells, with no downstream cell around it.",
+      prompt: "The Rock Canyon trailhead sits in hydrologic unit 160202030505. What do the first four digits, 1602, tell you?",
       options: [
-        "Filling smooths the surface so the Slope tool returns cleaner values",
-        "Filling is the step that assigns each cell its flow direction code",
-        "A DEM cannot be projected into ground units until it is filled",
-        "Pits act as sinks; flow stops there and the network below breaks up"
+        "It is Utah's 1,602nd mapped watershed",
+        "Its outlet sits at 1,602 m elevation",
+        "It was mapped in version 16.02",
+        "Its water reaches the Great Salt Lake"
       ],
-      answer: "Pits act as sinks; flow stops there and the network below breaks up",
-      explanation: "Most pits are artifacts of how the DEM was built, not real closed depressions. Water routed into one has nowhere to go, so it never reaches the cells below and the stream network arrives in fragments. Filling raises elevations in exactly those places; it never lowers them. Real closed basins do exist, which is why Fill offers a z-limit."
+      answer: "Its water reaches the Great Salt Lake",
+      explanation: "Hydrologic unit codes nest: each level adds two digits to its parent. 16 is the Great Basin Region, 1602 the Great Salt Lake subregion, 160202 the Jordan basin, 16020203 the Provo subbasin, and so on down to the 12-digit subwatershed. The code says where the water goes."
     },
     {
-      prompt: "What is the value stored in a cell of a flow direction grid?",
-      detail: "Think about what you could and could not do with that number.",
+      prompt: "Which term in a watershed's water balance can a DEM tell you about?",
+      detail: "Change in storage = precipitation − evapotranspiration − streamflow − groundwater out.",
       options: [
-        "A code for which of eight neighbors it drains to",
-        "The slope, in percent, toward the steepest neighbor",
-        "The count of upstream cells draining through it",
-        "The compass bearing of the flow, in degrees"
+        "How much precipitation falls",
+        "How much water evaporates",
+        "How much groundwater is stored",
+        "Where the runoff will flow"
       ],
-      answer: "A code for which of eight neighbors it drains to",
-      explanation: "Flow direction takes one out of eight possible values, and that value is a label for a direction, not a measurement of anything. Averaging two of them, or subtracting one from another, is meaningless. The count of upstream cells is flow accumulation, a separate grid computed from this one."
+      answer: "Where the runoff will flow",
+      explanation: "A DEM is a model of the ground surface, so it can tell you which way water on that surface will go: the flow paths, the divide and the outlet. How much rain falls, how much evaporates and how much is stored underground all need other data — gages, weather stations, soil and snow surveys."
     },
     {
-      prompt: "You raise the stream threshold from 5 cells to 200 cells",
-      detail: "Same DEM, same flow direction, same flow accumulation grid.",
+      prompt: "Your DEM has a closed hollow where, in the field, there is a real pond with no outlet. What does Fill do to it?",
+      detail: "Some pits are real sinks in the landscape; some are artifacts of how the DEM was made.",
       options: [
-        "The network thins — fewer cells clear the higher bar",
-        "The network densifies, because more cells now qualify",
-        "Nothing changes until you rerun Fill on the DEM",
-        "The delineated watershed boundary moves outward"
+        "Raises it to its spill level",
+        "Leaves it alone, because Fill detects real sinks",
+        "Lowers the rim so that the pond can drain",
+        "Sets the hollow's cells to NoData"
       ],
-      answer: "The network thins — fewer cells clear the higher bar",
-      explanation: "The threshold is compared against flow accumulation, and a higher bar means fewer cells clear it, so the drainage density of the mapped network drops. Nothing about the terrain changed — only the number you compared against. The threshold is a judgment call you make, not something the Watershed step decides for you, and there is no single right value."
+      answer: "Raises it to its spill level",
+      explanation: "Fill cannot tell a real sink from an artifact: it raises every pit to the level where it would spill, so water can keep moving downhill. That is the right thing for most pits, which are artifacts, and the wrong thing for a real closed basin — which is why you need to know your landscape. Fill only ever raises cells; it never lowers a rim."
     },
     {
-      prompt: "Your pour point returns a watershed of a handful of cells",
-      detail: "You placed it at a stream gage location you digitized from a report, and the Watershed result is a tiny blob instead of a basin.",
+      prompt: "A cell's aspect is 250°, but its D8 flow direction code is 8. What does the 8 mean?",
+      detail: "Esri codes: 1 east, 2 southeast, 4 south, 8 southwest, 16 west, 32 northwest, 64 north, 128 northeast.",
       options: [
-        "The DEM needs filling again before this works",
-        "The point is off the channel — snap it first",
-        "The stream threshold was set much too high",
-        "Pour points have to be digitized as polygons"
+        "Its slope toward the west is 8 degrees",
+        "Eight upstream cells drain into it",
+        "Its water all goes southwest",
+        "Its water is split among 8 neighbors"
       ],
-      answer: "The point is off the channel — snap it first",
-      explanation: "A watershed is always the drainage area of a point, so a point sitting one cell off the channel gets exactly what it asked for: the few cells that drain to that spot on the hillslope. Snap user-supplied points onto the high-accumulation cells before delineating. The same thing happens in StreamStats when you click just off the blue line."
+      answer: "Its water all goes southwest",
+      explanation: "D8 is a simplified aspect: instead of any of 360 degrees, it picks the one of eight neighbors with the steepest drop from the center cell and writes that direction's code into the cell. The code is a label for a direction, not a measurement, so it cannot be averaged or compared as a size. Counting upstream cells is flow accumulation, the next step."
     }
   ],
-  perfectNote: "A clean sweep — you can debug Lab 5 rather than just run it.",
-  goodNote: "Solid. Read the explanations on the ones you missed; they are the ones that cost people an afternoon in the lab.",
-  tryAgainNote: "Worth another pass. The short version: each step feeds the next, Fill comes first so nothing swallows the flow, the threshold is your choice applied to flow accumulation, and a watershed is always the watershed of a pour point that sits on the channel."
+  perfectNote: "A clean sweep — you know what a watershed is and which way water leaves every cell.",
+  goodNote: "Solid. Read the explanations on the ones you missed; Thursday builds every step on the flow direction grid.",
+  tryAgainNote: "Worth another pass. The short version: a watershed is everything that drains to one outlet, and the boundary is where water is managed and accounted for; Fill raises every pit, real or not; and D8 writes into each cell the code of the one neighbor its water goes to."
 });
 </script>
 </body>

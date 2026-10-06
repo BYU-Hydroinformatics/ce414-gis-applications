@@ -67,6 +67,18 @@
         "127.0.0.1"
       ],
       "port": 8416
+    },
+    {
+      "name": "slides-static-pro",
+      "runtimeExecutable": "C:/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8416",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 8416
     }
   ]
 }

@@ -4,8 +4,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Watershed Delineation, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation.html) — From a DEM to streams and watersheds, cell by cell: Lab 5 introduced, then fill, flow direction (aspect against D8), flow accumulation, the stream threshold, stream links, pour points, and the Lab 5 model that runs them all.
-- **Thursday** — [Watershed Delineation, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/what-is-a-watershed.html) — What a watershed is and why water is managed by them: Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance, and a watershed delineated by hand and with USGS StreamStats.
+- **Tuesday** — [Watershed Delineation, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-a.html) — What a watershed is and why water is managed by them — Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance — then Lab 5 and the first three steps from a DEM: the elevation surface, Fill, slope and aspect against D8, and the flow direction grid.
+- **Thursday** — [Watershed Delineation, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-b.html) — From flow direction to watersheds: flow accumulation, the stream threshold, stream links, pour points and subwatersheds, the Lab 5 model that runs all eight steps, and a watershed delineated by hand and with USGS StreamStats.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -19,8 +19,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Follow the Water](../quizzes/watersheds/index.html) — Five questions on the chain that turns a DEM into streams and watersheds, and the places it quietly goes wrong.
-- [What Is a Watershed?](../quizzes/basins/index.html) — Five questions on the watershed of a point, nested hydrologic units, the water balance, why Powell wanted states drawn by watershed, and what automated delineation buys you.
+- [Which Way Does Water Go?](../quizzes/watersheds/index.html) — Five questions on what a watershed is, how watersheds nest, the water balance, why Fill comes first, and aspect against D8 flow direction.
+- [Follow the Water](../quizzes/basins/index.html) — Five questions on the order of the delineation steps, the stream threshold, the watershed of a pour point, snapping, and what StreamStats buys you.
 
 </div>
 

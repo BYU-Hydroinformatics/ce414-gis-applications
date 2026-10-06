@@ -108,7 +108,7 @@ including a **gap**: the removed `fileId` GUIDs were captured for only two of th
 | Tue Sep 22 | Image Georeferencing and Georectification | `414 - Georectifying Images.pptx` | `slides/week-04/georectifying-images.html` | deck contains no ArcGIS UI; needs new Pro captures |
 | Thu Sep 24 | Satellite and Imagery Data | `414 - Remote Sensing and 3D Imaging.pptx` | `slides/week-04/remote-sensing-3d-imaging.html` | one broken external image link |
 | Tue Sep 29 | Terrain Analysis Part 1 | `Terrain Analysis.pptx` | `slides/week-05/terrain-analysis.html` | — |
-| Tue Oct 6 | Hydrologic Analysis - Part 1 | `414 - Watershed Delineation.pptx` | `slides/week-06/watershed-delineation.html` | — |
+| Tue Oct 6 | Hydrologic Analysis - Part 1 | `414 - Watershed Delineation.pptx` | `slides/week-06/watershed-delineation-a.html` | — |
 | Tue Oct 20 | Sampling and Interpolation Part 1 | `414 - Interpolation.pptx` | `slides/week-08/interpolation.html` | — |
 | Thu Oct 29 | Data Services and Data Quality | `Overview_of_OGC_Web_Services.pptx` | `slides/week-09/ogc-web-services.html` | — |
 | Tue Nov 3 | Raster-Based Site Suitability - Part 1 | `414 - Raster Based Spatial Analysis.pptx` | `slides/week-10/raster-spatial-analysis.html` | conceptual diagrams only |
