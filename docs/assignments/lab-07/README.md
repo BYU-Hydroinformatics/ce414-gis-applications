@@ -21,12 +21,13 @@ at 10 m; slope's Low band starts at 0, not −1; "Project" in the tool list is P
 uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002" are replaced by sourced
 statements; the dead Sawtooth link is replaced.
 
-**Figures:** none of the dialog captures exist yet; each step marks the capture owed. Figure B
-(the danger scale) is the image the assigned page already uses. Nothing on this page is a
-fabricated screenshot. The Word-era captures and the Snowbird example map are in the archived copy.
+**Figures:** the dialog captures (Figures 0-9) and Figure C come from a GUI build of the model in
+ArcGIS Pro 3.7.1 at 175 % display scaling on October 5, 2026 (C:\Ames\Lab07GUI\Lab07.aprx, model
+AvalancheTerrain); Figure B is the danger-scale image the Word-era page used. The Word-era captures
+and the Snowbird example map are in the archived copy.
 
 **Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 2, 2026
-(`tools/lab07/run_model.py`, `tool_checks.py`) against the hosted extract; the GUI build is owed. -->
+(`tools/lab07/run_model.py`, `tool_checks.py`) against the hosted extract, and reproduced by the GUI build. -->
 
 > [!WARNING]
 > **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
@@ -193,11 +194,13 @@ with an inline variable (Labs 2, 4 and 5), and model parameters.
 
 ## Example Model
 
-<!-- TODO(capture): Figure C, the finished model exported from ModelBuilder (Export To Graphic), in rows: DEM -> Project Raster -> DEM_UTM -> Slope -> Slope_Deg -> Reclassify -> Slope_Class; DEM_UTM -> Aspect -> Aspect_Deg -> Reclassify -> Aspect_Class; DEM_UTM + Elevation Shift (P) -> Raster Calculator -> Altitude_Class; the three classes -> Raster Calculator (agree) -> Agree_Class, -> Raster Calculator (geometric mean) -> Hazard_Class (P), -> Cell Statistics MAXIMUM -> Worst_Class (P), -> Cell Statistics MINIMUM -> Best_Class (P); Worst_Class and Best_Class -> Raster Calculator -> Rule_Spread (P). -->
+![The finished ModelBuilder model, exported as a vector diagram. LittleCottonwood_DEM.tif into Project Raster, DEM_UTM. DEM_UTM feeds Slope (Slope_Deg, Reclassify, Slope_Class), Aspect (Aspect_Deg, Reclassify (2), Aspect_Class), and with Shift, marked P, a Raster Calculator that makes Altitude_Class, marked P. The three class rasters feed Raster Calculator (2), Agree_Class; Raster Calculator (3), Hazard_Class, marked P; Cell Statistics, Worst_Class, marked P; and Cell Statistics (2), Best_Class, marked P; Worst_Class and Best_Class feed Raster Calculator (4), Rule_Spread, marked P.](images/lab07-full-model.svg)
 
-The finished model will appear here as **Figure C**: one elevation model in, three rating rasters in
-the middle, and the combined maps out — the geometric mean, the worst and best factor, and where
-those two differ — with the elevation shift and the outputs as parameters.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. One
+elevation model in, three rating rasters in the middle, and the combined maps out: all three agree,
+the geometric mean, the worst and best factor, and where those two differ. The six elements marked
+`P` are the model parameters — the shift, the altitude classes and the four combined maps — and they
+become the tool dialog of Step 9.
 
 ## Complete the Lab
 
@@ -230,7 +233,9 @@ without the step-by-step instructions below, say so in your report.
 6. On the **ModelBuilder** tab click **Environments** and check that **Current Workspace** and
    **Scratch Workspace** are your project geodatabase.
 
-<!-- TODO(capture): the Environments dialog. -->
+![The model's Environments dialog: Current Workspace and Scratch Workspace both Lab07.gdb; Output Coordinate System, Geographic Transformations and Processing Extent empty; under Raster Analysis, Cell Size empty and Cell Size Projection Method Convert units.](images/lab07-environments.png)
+
+**Figure 0.** ModelBuilder ▸ Environments: the two workspaces, everything else at its default.
 
 ### Step 1 — Project the DEM
 
@@ -242,8 +247,11 @@ Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input
 - **Output Cell Size**: 10
 - **Output Raster Dataset**: `DEM_UTM`
 
-<!-- VERIFY in the GUI build: whether Project Raster opens with Bilinear for this DEM, as it did in Lab 5, and the cell size it proposes. -->
-<!-- TODO(capture): the Project Raster dialog. -->
+
+![The Project Raster dialog from ModelBuilder: Input Raster LittleCottonwood_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10.](images/lab07-project-raster.png)
+
+**Figure 1.** Project Raster. It opens with Nearest neighbor, switches itself to Bilinear when you
+pick this DEM, and proposes cells of about 9.04 m; type 10 in both X and Y.
 
 > [!TIP]
 > **Check the result:** `DEM_UTM` is **1,023 × 896** cells of 10 m, values **2,178.0 to 3,499.4**
@@ -253,12 +261,15 @@ Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input
 
 Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and output `Slope_Deg`.
 
-<!-- TODO(capture): the Slope dialog; VERIFY its parameter labels in 3.7.1 (Output measurement, Method, Z unit). -->
+![The Slope dialog from ModelBuilder, with a banner suggesting the Surface Parameters tool: Input raster DEM_UTM, Output raster Slope_Deg, Output measurement Degree, Method Planar, Z factor 1, Target device for analysis GPU then CPU.](images/lab07-slope.png)
+
+**Figure 2.** Slope, in degrees, Planar. Ignore the banner; Surface Parameters does more than this
+lab needs.
 
 > [!TIP]
-> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (layer
-> **Properties** ▸ **Source** ▸ **Statistics**).
-<!-- VERIFY in the GUI build: where ArcGIS Pro 3.7.1 shows a raster layer's mean (the arcpy Raster.mean is 26.85). -->
+> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (the
+> layer's **Properties** ▸ **Source** ▸ **Statistics** list both).
+
 
 > [!WARNING]
 > **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
@@ -274,7 +285,9 @@ Add **Aspect** with `DEM_UTM` as the input and output `Aspect_Deg`.
 > **Check the result:** values run from 0 to 360, plus **−1 on 480 flat cells** in the whole
 > projected DEM.
 
-<!-- TODO(capture): the Aspect dialog. -->
+![The Aspect dialog from ModelBuilder: Input raster DEM_UTM, Output raster Aspect_Deg, Method Planar, Target device for analysis GPU then CPU.](images/lab07-aspect.png)
+
+**Figure 3.** Aspect.
 
 ### Step 4 — Rate Slope and Aspect
 
@@ -287,7 +300,19 @@ Add **Reclassify** twice, with the slope and aspect rows of Table 1.
 
 Two ranges can share a new value; that is how the table says "steep and gentle are both Low."
 
-<!-- TODO(capture): the two Reclassify dialogs. -->
+![The Reclassify dialog for slope: Input raster Slope_Deg, Reclass field VALUE, nine rows 0 to 25 is 1, 25 to 30 is 2, 30 to 32 is 3, 32 to 35 is 4, 35 to 45 is 5, 45 to 50 is 4, 50 to 55 is 3, 55 to 60 is 2, 60 to 90 is 1, then a NODATA row; Output raster Slope_Class; Change missing values to NoData unchecked.](images/lab07-reclass-slope.png)
+
+**Figure 4a.** The slope ratings. ArcGIS Pro adds the NODATA row itself.
+
+![The Reclassify (2) dialog for aspect: Input raster Aspect_Deg, Reclass field VALUE, eight rows -1 to 45 is 5, 45 to 90 is 4, 90 to 135 is 3, 135 to 180 is 2, 180 to 225 is 1, 225 to 270 is 2, 270 to 315 is 3, 315 to 360 is 4, then a NODATA row; Output raster Aspect_Class.](images/lab07-reclass-aspect.png)
+
+**Figure 4b.** The aspect ratings.
+
+> [!WARNING]
+> **Type −1 by editing, not in the blank row.** In our build, a new row whose Start was typed as
+> `-1` vanished when the row was committed. Type `0` for the first Start, finish the table, then
+> double-click that cell and change it to `-1`. Check that the first row reads −1 before you click
+> OK; without it the 480 flat cells come out NoData.
 
 > [!TIP]
 > **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
@@ -299,8 +324,9 @@ Two ranges can share a new value; that is how the table says "steep and gentle a
 Reclassify cannot take a parameter, and Step 9 needs to move the elevation bands. So rate altitude
 with **Raster Calculator**, with the bands written out and an inline variable added to each break:
 
-1. Right-click the canvas ▸ **Create Variable**, choose **Long**, name it `Shift`, and set its value
-   to `0`. Right-click it ▸ **Parameter**.
+1. On the canvas toolbar click **Variable**, choose **Long** in the data type list, and click
+   **OK**. Right-click the new oval ▸ **Rename**, type `Shift`, double-click it and set its value to
+   `0`, then right-click it ▸ **Parameter**.
 2. Add **Raster Calculator** with this expression, and output `Altitude_Class`:
 
 ```text
@@ -310,8 +336,12 @@ Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con(
 A positive shift raises every band (less of the mountain counts as high); a negative shift lowers
 them.
 
-<!-- VERIFY in the GUI build: the Variable data type list name (Long) and that %Shift% draws its connector to the Raster Calculator, as %Threshold% did in Lab 5. -->
-<!-- TODO(capture): the Raster Calculator dialog. -->
+
+![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class and Aspect_Class; the expression reads Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5)))); Output raster Altitude_Class.](images/lab07-rc-altitude.png)
+
+**Figure 5.** The altitude rating, with `%Shift%` in every break. On the canvas, Shift draws a
+connector to this tool. Type the output name last: Raster Calculator replaces a typed name with a
+default such as `RasterC_1` when the expression changes.
 
 > [!TIP]
 > **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
@@ -331,7 +361,7 @@ Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1)
 Output `Agree_Class`. Look at it before you go on.
 
 > [!TIP]
-> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.782 km²** — 96 % — is 0, unclassified. A
+> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.781 km²** — 96 % — is 0, unclassified. A
 > 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
 > Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
 
@@ -347,7 +377,13 @@ Output `Hazard_Class`, and make it a model parameter. Rated 5, 5, 4, a cell's pr
 geometric mean 4.6, and its class 5. In product terms the classes are 1–3 Low, 4–15 Moderate, 16–42
 Considerable, 43–91 High, 92–125 Extreme.
 
-<!-- TODO(capture): both Raster Calculator dialogs. -->
+![The Raster Calculator (2) dialog, widened: the full nested Con expression testing Altitude_Class, Slope_Class and Aspect_Class for equality at each class from 1 to 5, else 0; Output raster Agree_Class.](images/lab07-rc-agree.png)
+
+**Figure 6a.** "All three agree." Widen the dialog to read the whole expression.
+
+![The Raster Calculator (3) dialog: the expression Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5); Output raster Hazard_Class.](images/lab07-rc-geomean.png)
+
+**Figure 6b.** The geometric mean, rounded to the nearest class.
 
 > [!NOTE]
 > **Why `+ 0.5` and `Int`.** `Int` drops the fraction, so adding 0.5 first rounds to the nearest
@@ -371,14 +407,27 @@ These two bracket the geometric mean. Then one more **Raster Calculator**, outpu
 `Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
 where the rule you choose matters.
 
-Make `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters, so that every run
-from the tool dialog keeps them and lets you name them.
+Make `Altitude_Class`, `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters,
+so that every run from the tool dialog keeps them and lets you name them.
+
+> [!WARNING]
+> **A run from the tool dialog deletes everything that is not a parameter.** In our build, the first
+> dialog run removed `DEM_UTM`, `Slope_Deg`, `Aspect_Deg`, `Slope_Class` and `Aspect_Class` from the
+> geodatabase — including the copies the earlier ModelBuilder run had made. Do Step 8 from a run
+> inside ModelBuilder, before any dialog run.
 
 > [!TIP]
 > **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
 > on **3.309 km²**.
 
-<!-- TODO(capture): the Cell Statistics dialog; VERIFY the parameter labels (Overlay statistic, Ignore NoData in calculations). -->
+![The Cell Statistics dialog from ModelBuilder: Input rasters or constant values Altitude_Class, Slope_Class and Aspect_Class; Output raster Worst_Class; Overlay statistic Maximum; Ignore NoData in calculations checked; Process as multiband unchecked.](images/lab07-cellstats-max.png)
+
+**Figure 7a.** Cell Statistics, Maximum: the worst factor. The second one is the same with
+**Minimum** and `Best_Class`.
+
+![The Raster Calculator (4) dialog: the expression "%Worst_Class%" - "%Best_Class%"; Output raster Rule_Spread.](images/lab07-rc-spread.png)
+
+**Figure 7b.** Where the rules disagree.
 
 ### Step 8 — Measure Snowbird
 
@@ -395,17 +444,25 @@ Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Cla
 `Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
 table for the raster and the run, such as `TA_Hazard_s0`.
 
-<!-- VERIFY in the GUI: that Tabulate Area honors the selection on the service layer (the arcpy check used a layer with a definition query), and its parameter labels. -->
-<!-- TODO(capture): the Tabulate Area dialog and its output table. -->
+
+![The Tabulate Area tool in the Geoprocessing pane: Input raster or feature zone data SkiAreaBoundaries, with Use the selected records: 1 switched on; Zone field NAME; Input raster or feature class data Hazard_Class; Class field Value; Output table TA_Hazard_s0; Classes as rows in output table unchecked.](images/lab07-tabulate-area.png)
+
+**Figure 8a.** Tabulate Area on the selected Snowbird polygon. The switch **Use the selected records:
+1** confirms that only Snowbird is used.
+
+![The TA_Hazard_s0 table: one row, NAME Snowbird Ski and Summer Resort, VALUE_1 167400, VALUE_2 3161700, VALUE_3 3692400, VALUE_4 2673200, VALUE_5 1086600, in square meters.](images/lab07-ta-table.png)
+
+**Figure 8b.** The output: one column per class, in square meters.
 
 > [!TIP]
 > **Check the result** (km², Snowbird, shift 0):
 >
 > | Rule | Low | Moderate | Considerable | High | Extreme |
 > | --- | --- | --- | --- | --- | --- |
-> | Geometric mean (`Hazard_Class`) | 0.168 | 3.162 | 3.691 | 2.673 | 1.087 |
+> | Geometric mean (`Hazard_Class`) | 0.167 | 3.162 | 3.692 | 2.673 | 1.087 |
 >
-> The five add to **10.782 km²**, Snowbird's area. UGRC's own `Shape__Area` field says 18.7 million
+> The five add to **10.781 km²**, Snowbird's area. Your figures may differ from any check value on
+> this page by 0.001 km² — one 10 m cell on the boundary. UGRC's own `Shape__Area` field says 18.7 million
 > square meters: that is the area in the layer's Web Mercator coordinates, which stretch areas by
 > about 1.73 at this latitude. Your table measures in the raster's UTM meters.
 
@@ -416,6 +473,15 @@ one rule for combining. Run the model at least **three more times** from its too
 different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
 carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
 `Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
+
+![The model as a tool in the Geoprocessing pane, titled Avalanche Terrain: Shift 0, then the outputs Hazard_Class, Worst_Class, Best_Class, Rule_Spread and Altitude_Class, the first four with warning icons because those datasets already exist.](images/lab07-tool-dialog.png)
+
+**Figure 9a.** The model as a tool. The warning icons only say the datasets exist from an earlier
+run; give every output a new name for each run.
+
+![The completed-run pop-up for Avalanche Terrain: elapsed time 1 minute 34 seconds; parameters Shift 400, Hazard_Class, Worst_Class, Best_Class and Rule_Spread written to Lab07.gdb with the suffix _p400.](images/lab07-run-p400.png)
+
+**Figure 9b.** A run at Shift 400, finished in about a minute and a half.
 
 Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
 that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
@@ -531,9 +597,9 @@ what to submit.
 
 <!-- Migration notes (rebuild drafted 2026-10-02, promoted 2026-10-05).
 SOURCE: the September 3 migration of "Lab 6 - Avalanche Hazard.docx" (docs/assignments/lab-07/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab07/PARITY_PLAN.md.
-ARCGIS PRO VERSION: 3.7.1 arcpy only (tools/lab07/run_model.py, tool_checks.py, and a Tabulate Area run against the live UGRC service layer, tools/lab07/student_route_checks.json). GUI build owed: every TODO(capture) and VERIFY above.
+ARCGIS PRO VERSION: 3.7.1. (1) arcpy (tools/lab07/run_model.py, tool_checks.py, student_route_checks.json), 2026-10-02. (2) GUI build 2026-10-05 at 175 % in C:\Ames\Lab07GUI\Lab07.aprx, model AvalancheTerrain (label Avalanche Terrain), built from the page: run inside ModelBuilder 1 min 1 s; every class-area check value reproduced (Tabulate Area in the GUI: Hazard 0.167 / 3.162 / 3.692 / 2.673 / 1.087, total 10.781 - one cell off the arcpy 0.168 / 3.691 / 10.782, so the page now quotes the GUI values and a one-cell tolerance); Shift 400 run from the tool dialog 1 min 34 s, Hazard 0.870 / 4.095 / 3.353 / 1.990 / 0.475, Worst 5 4.288, Best 5 0.126, matching SENSITIVITY. GUI FACTS: Project Raster opens Nearest neighbor and switches to Bilinear once this DEM is chosen, proposing 9.04 m cells; Slope and Aspect show a Surface Parameters banner, Method Planar, Target device GPU then CPU; Reclassify drops a newly typed row whose Start is -1 (edit an existing row to -1 instead) and appends a NODATA row; the Variable button opens Variable Data Type, Long is in the list; %Shift% draws its connector; Raster Calculator overwrote a typed output name (RasterC_1) once; Cell Statistics labels Input rasters or constant values / Overlay statistic / Ignore NoData in calculations; Tabulate Area shows "Use the selected records: 1" for a selected service layer and honors it; a tool-dialog run deleted DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class, Aspect_Class and Altitude_Class (Altitude_Class is now a parameter; Step 7 warns); the tool dialog showed an empty parameter list until the model tab was closed (Lab 5 saw the same).
 DATA: docs/data/lab07-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab07/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
 VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
 SENSITIVITY (do NOT publish; High + Extreme km2, geometric mean / maximum Extreme / minimum Extreme): shift -400: 3.975 / 10.613 / 0.415; -200: 3.937 / 9.152 / 0.406; 0: 3.760 / 8.203 / 0.336; +200: 3.317 / 6.415 / 0.258; +400: 2.465 / 4.289 / 0.126. The bands move the geometric-mean High + Extreme by -0.4 to +1.3 km2 over 800 m of shift; the rule moves Extreme alone from 0.34 to 8.20 km2 at shift 0.
 PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
-TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab07/PARITY_PLAN.md, all as recommended; page promoted, old page at lab07-backup. 2. GUI build with captures and Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab07-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
+TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab07/PARITY_PLAN.md, all as recommended; page promoted, old page at lab07-backup. 2. DONE 2026-10-05: GUI build, 16 captures, Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab07-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
