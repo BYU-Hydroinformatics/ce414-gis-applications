@@ -2,1290 +2,573 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 9 — Overview of OGC Web Services"
+footer: "CE 414 · Week 9 — OGC Web Services"
+style: |
+  strong { color: #0062b8; }
+  pre { font-size: 0.56em; line-height: 1.25; }
+  table { font-size: 0.72em; }
 ---
-
-<!-- TODO(instructor): plan says retire this 2011 conference deck and build a 12–18 slide modern lesson
-     (WMS/WFS vs OGC API Features/Tiles/Maps/Records, ArcGIS REST, JSON/OpenAPI, STAC, COG, and a live
-     service-inspection activity). Everything below is a faithful conversion of the 2011 original, not a
-     rewrite: version numbers, status lists, and URLs are as they stood in January 2011 and were
-     deliberately NOT updated. Read the conversion notes at the foot of this file before teaching it. -->
 
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:42% w:92%](images/ogc-mission-forum.jpg)
+![bg right:45% h:70%](images/ws9-s2-byu-cog.png)
 
-# Overview of OGC Web Services
+![w:110](../theme/images/byu-medallion.svg)
+
+# OGC Web Services
+
+## Data you ask for instead of download
 
 CE 414 Engineering Applications of GIS
+Civil & Construction Engineering
+Brigham Young University
 Dr. Dan Ames
 
-Adapted from *Overview of OGC Web Services*,
-Open Geospatial Consortium, January 2011
+<!-- Thursday of Week 9. This deck replaces the 2011 OGC conference deck (archived beside it as ogc-web-services-2011.md). Every request in it was run live on October 5, 2026, and the URL is in the speaker notes. The title image is one of those requests: a STAC search found a Sentinel-2 scene from September 20, 2026, and GDAL read only the BYU window out of a 349 MB cloud-optimized GeoTIFF on Amazon S3: 2.6 MB came over the network. Figures: tools/week09_web_services_figures.py (run with the ArcGIS Pro Python; it re-fetches everything and prints the numbers quoted here). -->
 
-<!-- The source is a conference presentation given by Luis Bermudez, then OGC Director of Interoperability Certification, in Washington DC on January 18, 2011. The presenter contact block and the event date/location were dropped from the slide face during conversion. Everything technical in this deck is the 2011 standards baseline; say so out loud at the start of class. -->
+<!-- Slides marked OPTIONAL in their notes can be skipped if the activity runs long. The core path is: why services, what a standard is, the four classic answers, OGC API, ArcGIS REST, COG + STAC, ArcGIS Pro, the activity. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 9 — Overview of OGC Web Services<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 9 — OGC Web Services<span class="updated">Last Updated: 2026-10-05</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
 
 # Today's Goals
 
-- By the end of class you should be able to:
-  - Say what the **Open Geospatial Consortium** is, and what an "open standard" buys you
-  - Name the core **OGC web services** and what each one returns: **WMS**, **WMTS**, **WFS**, **WCS**, **WPS**, **CSW**
-  - Read a **GetCapabilities** document and explain the publish / find / bind pattern
-  - Tell the difference between a **map** (a picture), a **feature** (data), and a **coverage** (a space-varying phenomenon)
-  - Recognize **GML**, **KML**, **SLD**, and **NetCDF** as encodings rather than services
+![bg right:36% w:92%](images/ws9-four-answers.png)
 
-<!-- TODO(graphic): text-only slide — needs a figure. Image generation was off for this conversion pass. -->
+By the end of class you should be able to:
 
-<!-- Frame the hour: the OGC standards baseline is a small vocabulary plus one repeated request pattern. If students learn GetCapabilities and the map/feature/coverage split, the rest of the alphabet soup follows. -->
+- Say what a web service hands you: **a picture, the features, the values, or a pointer**
+- Explain why an OGC **standard is a document**, not a piece of software
+- Read a service from its URL: **GetCapabilities**, **/collections**, **?f=pjson**
+- Run a **/query** on an ArcGIS feature service and say what came back
+- Explain why a **COG** listed in a **STAC** catalog never has to be downloaded whole
 
----
-
-# OGC Mission
-
-![bg right:45% w:90%](images/ogc-mission-forum.jpg)
-
-To serve as a **global forum** for the collaboration of developers and users of spatial data products and services, and to **advance the development of international standards for geospatial interoperability**.
-
-<!-- Copyright © 2011, Open Geospatial Consortium. -->
-
----
-
-# OGC at a Glance
-
-<div style="font-size:0.72em">
-
-- A non-profit, international voluntary consensus standards organization that is leading the development of standards for geospatial and location based services
-- Founded in 1994
-- 438 members and growing
-- 35 implementation standards
-- Hundreds of product implementations in the market
-- Broad user community implementation worldwide
-- Alliances and collaborative activities with ISO and many other SDOs
-
-</div>
-
-<div style="display:flex; gap:2em; justify-content:center; align-items:center; margin-top:0.3em">
-<img src="images/ogc-members-by-sector.png" style="height:225px">
-<img src="images/ogc-members-by-region.png" style="height:225px">
-</div>
-
-<p style="font-size:0.5em; text-align:center; margin:0.2em 0 0 0">Members by sector and by region, January 2011</p>
-
-<!-- TODO(graphic): missing linked Excel object — both pie charts are PowerPoint charts linked to an external
-     workbook named "Book1" that did not travel with the file. The charts render from cached values only, so
-     the numbers here cannot be edited or refreshed; the images above are page renders of the cached charts. -->
-
-<!-- TODO(instructor): source slide 3 says "35 implementation standards" while source slide 12 says "33 total
-     as of January 2011". The inconsistency is in the original; it was not resolved. -->
-
-<!-- Source slides 3 and 4 carried identical text and differed only in the chart, so they were merged here.
-     Members by sector: Commercial 41%, University 24%, Government 18%, NGO 9%. By region: Europe 203,
-     North America 163, Asia Pacific 59, Middle East 7, Africa 4, South America 2 — 438 total. All 2011 figures. -->
-
----
-
-# Standards development is not easy
-
-![bg right:40% w:88%](images/ogc-standards-consensus.jpg)
-
-- → Requires understanding of differences
-- → Requires cooperation on a global basis
-- → Requires consensus by many organizations
-- → Requires give and take
-- → Requires certified, repeatable process
-
-<!-- The point of the photograph is conversation across difference. Consensus standards are slow because agreement is the product. -->
-
----
-
-![bg contain](images/ogc-alliance-partners.png)
-
-<!-- Source slide 6: "Making location count... and does not exist in isolation. Alliance Partners: Critical
-     Resource for Advancing Standards." The logo wall shows OGC's alliance partners — W3C, ISO, IETF, OASIS,
-     OSGeo, IEEE, WMO, OMG, ISPRS, Open Grid Forum, Open Mobile Alliance, buildingSMART, GSDI, AGILE, web3D,
-     NCOIC, OSCRE and others. Full list at http://www.opengeospatial.org/ogc/alliancepartners (2011 URL). -->
-
----
-
-![bg contain](images/ogc-standards-landscape.png)
-
-<!-- Source slide 7: "Where does OGC fit in the 'standards' world?" Three overlapping domains, de jure on the
-     left through de facto on the right: ISO/CEN owns domain object and abstract models, content and
-     vocabulary; OASIS/IETF/W3C own infrastructure — TCP, HTTP, XML, SAML; OGC sits between them, defining the
-     software interfaces and encodings that instantiate the domain models into that infrastructure. -->
-
----
-
-# What is an OGC standard?
-
-- A document, established by consensus, approved by the OGC membership (balance of interest, all members have an equal vote)
-- Provides rules, guidelines, or characteristics
-- Implementable (testable) in software
-- Is **not** open source software — `http://wiki.osgeo.org/wiki/Open_Source_and_Open_Standards`
-- OGC standards are ***open standards***
-  - Freely and publicly available
-  - No license fees
-  - Vendor neutral
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- The open-source / open-standards distinction is the one students most often collapse. A standard is a document anyone may implement; open source is an implementation anyone may read. GeoServer is open source software implementing open standards; ArcGIS Server is proprietary software implementing the same open standards. -->
-
----
-
-# Why open standards?
-
-![bg right:35% w:92%](images/ogc-open-standards-innovation.jpg)
-
-- Prevents a single, self-interested party from controlling a standard
-- Lower systems and life cycle costs
-- Encourage market competition
-  - Choose based on functionality desired
-  - Avoid "lock in" to a proprietary architecture
-- Stimulates innovation beyond the standard by companies that seek to differentiate themselves
-
-<p style="font-size:0.55em">Source: <em>Open Standards, Open Source, and Open Innovation: Harnessing the Benefits of Openness</em>, April 2006. Committee For Economic Development. www.ced.org</p>
-
-<!-- Source speaker note: "Standards are like parachutes: they work best when they're open." — Mary McRae, OASIS. -->
-
----
-
-# Example worldwide standard: KML
-
-![bg right:33% w:80%](images/ogc-kml-google-quote-portrait.jpg)
-
-> "What OGC brings to the table is… everyone has confidence we won't take advantage of the format or change it in a way that will harm anyone… Governments like to say they can publish to OGC KML instead of Google KML."
-
-**Michael Weiss-Malik**, Google KML product manager
-
-<!-- KML started inside Keyhole, then Google, and was handed to OGC in 2008. This is the argument for handing a successful proprietary format to a standards body: it stops being a vendor's asset and starts being infrastructure. The Google wordmark on the source slide was not carried over. -->
-
----
-
-# OGC specifications
-
-`http://www.opengeospatial.org/standards`
-
-- **Implementation Specifications — Standards**
-  - Basis for working software; detail the interface structure between software components
-- **Abstract Specifications**
-  - Conceptual foundation / reference model for spec development
-- **Best Practices**
-  - Describe use of specifications
-- **Engineering Reports**
-  - Results from OGC Interoperability Program
-- **Discussion Papers**
-  - Forum for public review of concepts
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Only the first category is normative and testable. Everything below it is documentation of practice. When someone says "we are OGC compliant," ask which implementation specification, and which version. -->
-
----
-
-# Approved OGC® standards
-
-<div class="columns" style="font-size:0.72em">
-<div>
-
-**Web Services**
-- Web Map Service (WMS) {ISO}
-- Web Feature Service (WFS) {ISO}
-- Web Coverage Service (WCS)
-- Catalog Services for the Web (CS/W)
-- Coordinate Transformation
-
-**Encodings**
-- Geography Markup Language (GML) {ISO}
-- KML
-- Web Map Context
-- NetCDF
-
-</div>
-<div>
-
-**Sensor Web Enablement**
-- SensorML
-- TransducerML
-- Sensor Observation Service (SOS)
-- Sensor Planning Service (SPS)
-- Sensor Alert Service (SAS)
-- PUCK
-
-**Open Location Services (OpenLS) {ISO}**
-
-**Tightly coupled**
-- Simple Feature Access — OLE, SQL, CORBA {ISO}
-- Grid Coverages
-
-</div>
-</div>
-
-<p style="font-size:0.6em">Others (33 total as of January 2011, plus profiles, best practices, discussion papers, white papers, etc.). Available free of charge at <code>http://opengeospatial.org/standards</code></p>
-
-<!-- TODO(instructor): this is the January 2011 standards baseline and was deliberately not updated. The OGC API
-     family (Features, Tiles, Maps, Records), WMTS 1.0 as a separate line item, and later SWE revisions are all
-     absent because they are later than the source. -->
-
-<!-- Source speaker note: "I won't spend a great deal of time today going through the intricacies of each of our specifications, but I do want you to visit our site and review the OpenGIS Implementation Specifications that have been formally approved for adoption by our membership. These specifications represent a solid reference architecture for geoprocessing interoperability, focused heavily on Web Services, and experiencing substantial implementation in the market. But first, let me summarize how some of these specifications empower the processes of geospatial discovery, access, integration and application." -->
-
----
-
-# OGC architecture
-
-![bg right:40% w:85%](images/ogc-publish-find-bind.png)
-
-OGC standards can be integrated into a web services architecture / platform so that:
-
-- Resource providers can advertise their resources (**publish**)
-- End users can discover resources that they need at run-time (**find**)
-- End users and their applications can access and exercise resources at run-time (**bind**)
-
-<!-- Publish / find / bind is the whole architecture in three words: a service provider publishes to a broker (a catalog), a requester finds it there, then binds directly to the provider. Every OGC service below is one of those three roles. -->
-
----
-
-![bg contain](images/ogc-ws-pattern.png)
-
-<!-- Source slide 14: the OGC Web Services ("W*S") pattern. Client asks "what can you do?" with GetCapabilities;
-     server answers "here… read this" with a Capabilities document listing <Service>, <Capabilities> and
-     <Layer> elements. Client then asks "give me data" with GetMap, GetFeature, or GetCoverage, and the server
-     returns it. Every OGC web service in this deck is that same two-step handshake. The source diagram
-     contains a typo in the XML, "<Capabilitiess>"; it is left as drawn. -->
+<!-- The four panels are four real answers from October 5, 2026, one per kind of service; the rest of the hour fills them in. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Catalog Services for the Web
-
-<!-- First of the service families: how you find a service at all. -->
+# Part 1 — Why Services
 
 ---
 
-# Publishing and discovery
+# You Have Already Used Web Services
 
-![bg right:42% w:92%](images/ogc-catalog-service.png)
+![bg right:42% w:92%](images/ws9-ski-areas-query.png)
 
-**OGC Catalog Service**
+- **Lab 5** — UGRC's **Utah Streams NHD**: **541,604** stream lines, added by URL, never downloaded
+- **Lab 7** — UGRC's **ski area boundaries**: **14** polygons, added by URL with **Add Data ▸ From Path**
+- **Labs 4 and 7** — USGS **3DEP** elevation tiles, which you *did* download whole
 
-- Catalog Service for the Web (CSW)
-- ISO 19119 Metadata Profile
-- Z39.50 Profile
-- OASIS ebRIM Profile
-- OpenSearch
+Today: what was happening behind those URLs, and why the third one did not have to be a download either.
 
-Support publishing and discovery of distributed geospatial data and associated services
-
-<!-- A catalog is a service whose data is metadata about other services. The profiles are alternative query languages over the same registry. -->
+<!-- The map is one of today's requests: the UGRC ski-area feature service from Lab 7, queried as GeoJSON, drawn over a hillshade that a USGS WMS rendered on request. Two services, two standards, one map, nothing downloaded. (7 of the 14 resorts fall in this window.) -->
+<!-- Counts measured October 5, 2026 with returnCountOnly queries: UtahStreamsNHD/FeatureServer/0/query?where=1=1&returnCountOnly=true&f=json returned {"count":541604}; the same query on SkiAreaBoundaries returned {"count":14}. Lab 7's DEM was cut from USGS_13_n41w112.tif (lab-07 migration notes); Lab 4 used four USGS_1_n4Xw11X.tif tiles. Both kinds of tile are cloud-optimized GeoTIFFs (checked by reading their headers: GDAL reports LAYOUT=COG), which is Part 5 of today. -->
 
 ---
 
-![bg contain](images/ogc-geo-portal.jpg)
+# Download vs. Request
 
-<!-- Source slide 17: an untitled full-slide screenshot of the GEO Portal (geoportal.org), the Group on Earth
-     Observations entry point for browsing GEOSS resources by societal benefit area — disasters, health,
-     energy, climate, water, weather, ecosystems, agriculture, biodiversity. 2011 screenshot; the portal has
-     changed since. -->
+![h:300 center](images/ws9-bytes-moved.png)
 
----
+- A download moves **the whole file** before you can see any of it
+- A service moves **what you asked for** — a window, a layer, the rows that match — and the data stays where its owner keeps it current
 
-# GEOSS Registry
-
-![bg right:55% w:95%](images/ogc-geoss-registry.png)
-
-**396 entries**
-
-<span style="font-size:0.62em"><code>http://geossregistries.info/holdings.htm</code></span>
-
-<!-- TODO(instructor): the source titled this "GEOOS Registry"; corrected to GEOSS (Global Earth Observation
-     System of Systems), which is what the screenshot and the URL both show. The count (396) and the screenshot
-     are dated January 2012 in the source and are certainly stale. -->
-
-<!-- The registry is the concrete example of a catalog: every row is a component or service instance someone published, with the societal benefit areas it serves. -->
+<!-- All four bars measured on October 5, 2026 by tools/week09_web_services_figures.py with GDAL's network statistics. 3DEP tile USGS_13_n41w112.tif: 403,454,436 bytes; reading a 100 x 100-cell window at BYU moved 720,896 bytes in 2 GET requests (0.18 %). Sentinel-2 true-color TCI.tif for September 20, 2026: 349,318,194 bytes; the BYU window moved 2,605,056 bytes. -->
+<!-- The second bullet is the reason agencies publish services: UGRC updates the stream layer once, and every map that points at the URL is current. Ask: what is the downside? (The server can be down, slow, or changed under you; a downloaded copy is frozen but yours.) -->
 
 ---
 
-<!-- _class: lead -->
+# A Service Is a URL That Answers Questions
 
-# Web Map Service
+![bg right:40% w:92%](images/ogc-ws-pattern.png)
 
-<!-- WMS: the server does the drawing and sends you a picture. -->
+```text
+https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer
+  ?SERVICE=WMS
+  &VERSION=1.3.0
+  &REQUEST=GetMap
+  &LAYERS=0
+  &CRS=CRS:84
+  &BBOX=-111.68,40.235,-111.60,40.2655
+  &WIDTH=1000&HEIGHT=500
+  &FORMAT=image/png
+```
 
----
+- **Base URL** = which server; after the **?** come **key=value** pairs = the question
+- Every service starts with the same first question: **"what can you do?"**
 
-![bg contain](images/ogc-wms-multiple-maps.png)
-
-<!-- Source slide 20: one GetMap request, multiple overlaid maps. Four independent servers hold Cities,
-     Elevation, Cloud Cover and Borders; a single GetMap URL of the form
-     http://.../process.cgi?REQUEST=GetMap&FORMAT=image/gif&WIDTH=... returns one composited image.
-     Source speaker note: "WMS essentially converts any supported data encoding into a symbolized image (JPEG,
-     TIFF, PNG, etc.) and sends it to the client. A server might host multiple services such as WFS and WMS for
-     the same datasets, where WMS returns a picture of a dataset, and WFS returns the vector content of that
-     dataset as GML." -->
-
----
-
-![bg contain](images/ogc-web-mapping-sources.png)
-
-<!-- Source slide 21: OGC web mapping. Three sources — Land, Water, Boundaries — each answering a GetMap
-     request, composited into one map by the client. The client also holds "data about digital resources",
-     the metadata that told it where to ask. Figure source: Jeff de La Beaujardiere, NASA. -->
+<!-- This is a real request (run October 5, 2026); its answer is the topo map two slides from now. Read it as a sentence: "WMS server, version 1.3.0, draw me a map of layer 0, in longitude/latitude, of this box, 1000 by 500 pixels, as a PNG." The client chooses the coordinate system and the size; the server only draws. The diagram (from the 2011 OGC deck) is the pattern every OGC service follows: ask for the capabilities document, read it, then ask for data. -->
 
 ---
 
-# OGC Web Map Service
+# What a Standard Is
 
-![bg right:38% w:92%](images/ogc-wms-spatial-context.png)
+![bg right:40% w:90%](images/ws9-standards-docs.png)
 
-**Spatial context**
-- Spatial Reference System (EPSG)
-- Corners of map (geographic extent)
-- Image width and height
+- An OGC standard is a **document**: a free, consensus specification of the requests and responses
+- It is **not software**. Anyone can implement it — open source or proprietary — and the two interoperate
+- Today's servers: **ArcGIS Server** (USGS, UGRC), **deegree** and **pygeoapi** (open source), **STAC API** on Amazon S3 data
 
-**List of "layers"**
-- Layer name
-- Symbolization style
-
-**Return format**
-- GIF | JPEG | WebCGM | SVG, etc.
-- Background info (color, transparency)
-- Exception Type = InImage | Encoded/Parseable
-
-<!-- This is the parameter list of a GetMap request, and it is worth reading as one: a coordinate system, a bounding box, a pixel size, a layer list, and a format. That is all a map server needs to draw. Note that the client, not the server, chooses the projection — the EPSG code is a request parameter. -->
-
----
-
-![bg contain](images/ogc-wms-getfeatureinfo.png)
-
-<!-- Source slide 23: WMS can query by pointing. GetFeatureInfo returns attribute data for a feature or
-     coverage at a specified point — here, elevation 237 m. Source speaker note: "The Web Map Server
-     specification enables WMS applications to optionally provide one other useful capability. Pixel location
-     on a returned image corresponds to a point in the data on the server, and thus the server can be asked to
-     return information about the feature represented at that point." -->
-
----
-
-# WMS tiling (WMTS) builds on WMS
-
-![bg right:38% w:88%](images/ogc-wmts-tile-pyramid.png)
-
-- WMTS designed for high performance: anticipates high volume of **identical** requests
-  - Pre-render data as tiles
-  - Supports caching
-- WMS request by bbox and h/w **vs.** WMTS request by tiles
-  - TileMatrixSet (CRS)
-  - TileCol
-  - TileRow
-- Bindings: KVP, SOAP/WSDL, RESTful
-
-<!-- The trade is generality for speed. WMS will draw any bounding box you ask for, which means no two requests are alike and nothing can be cached. WMTS answers only from a fixed pyramid of tiles, so every request is a cache hit. This is why every web basemap you have ever used is tiled. -->
-
----
-
-# WMS Global Mosaic
-
-![bg right:45% w:95%](images/ogc-wms-global-mosaic.jpg)
-
-<div style="font-size:0.82em">
-
-- Mosaic of Landsat 7
-  - 8600 georectified scenes
-  - 30 and 15 m resolution
-- OpenGIS WMS — Web Map Service
-  - `Onearth.jpl.nasa.gov`
-  - On-the-fly pan-sharpening
-  - Client selected false-color rendering from 9 bands
-  - Server development managed and funded by NASA GIO
-  - Accessed by many different WMS clients
-- ~200,000 Landsat images daily average served as WMS layers
-
-</div>
-
-<!-- TODO(instructor): 2011 figures and a 2011 URL, both left as written. -->
-
-<!-- The scale argument for WMS: nobody downloads 8600 Landsat scenes. The server holds the archive and ships pictures of whatever window you asked for, rendered from whichever bands you chose. -->
+<!-- The document numbers on the right are from the Open Geospatial Consortium's standards pages, checked October 5, 2026 (ogc.org/standards/wms, /wfs, /wcs, /cat, /ogcapi-features, /ogcapi-tiles, /ogcapi-maps, /ogcapi-records, /ogcapi-processes, /stac, /ogc-cloud-optimized-geotiff). STAC is an OGC Community Standard (adopted from an outside community), the others are OGC Implementation Standards. -->
+<!-- This is the first quiz item: closed-source software can be fully compliant, because compliance is about following the document. The ArcGIS Server that runs USGSTopo answers WMS requests, and the open-source deegree server we will query next answers WFS requests the same way. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Web Feature Service
+# Part 2 — The Classic OGC Services
 
-<!-- WFS: the server sends you the data, not a picture of it. -->
-
----
-
-![bg contain](images/ogc-wfs-multiple-servers.png)
-
-<!-- Source slide 27: WFS gets operable feature data from multiple servers. One GetFeature request pulls
-     multiple thematic data layers — Cities, Borders, Elevation. Each layer is data, not merely a view:
-     Country is { Name: Italy, Population: 57,500,000, Area: 301,325 sq km, ... }. Contrast directly with the
-     WMS slide: same picture on screen, but here the client holds the attributes and can query them. -->
+## WMS · WFS · WCS · CSW
 
 ---
 
-![bg contain](images/ogc-wfs-getcapabilities.png)
+# Four Services, Four Different Answers
 
-<!-- Source slide 28: WFS GetCapabilities. The client asks; the Web Feature Server, sitting over an opaque
-     feature store, returns a Capabilities document: a <Service> block (name, title, abstract, online
-     resource), a <Capability> block, a <FeatureTypeList> naming each feature type with its SRS
-     (EPSG:4326), its LatLongBoundingBox, and the operations allowed on it (Query, Insert, Update, Delete),
-     and an <ogc:Filter_Capabilities> block declaring which spatial operators the server supports.
-     Source speaker note (Spanish, from an earlier version of this deck): "El estándar Web Feature Service
-     (WFS) permite el acceso a datos vectoriales en formato GML." -->
+![w:1150 center](images/ws9-what-comes-back.png)
 
----
+| | **WMS** | **WFS** | **WCS** | **CSW** |
+|---|---|---|---|---|
+| Ask with | GetMap | GetFeature | GetCoverage | GetRecords |
+| You get | a **picture** | the **features** | the **values** | a **pointer** |
 
-![bg contain](images/ogc-wfs-describefeaturetype.png)
-
-<!-- Source slide 29: WFS DescribeFeatureType. The client names a type — ns01:Roads — and the server returns
-     its XML Schema: a complexType extending gml:AbstractFeatureType, with a geometry element
-     (WKB_GEOM, gml:LineStringPropertyType) and attribute elements (SURFACE_TYPE, NLANES restricted to a
-     2-digit integer). This is the step that has no equivalent in WMS: the client learns the schema before
-     asking for data. -->
+<!-- All four panels are real responses from October 5, 2026: WMS = USGSTopo GetMap of BYU; WFS = the deegree Utah demo WFS 2.0 GetFeature for Cedar Hills (GML, UTM zone 12 coordinates); WCS = the USGS 3DEPElevation WCS GetCoverage for the same box (Float32 meters, the 5 x 5 cells around the center); catalog = a metadata record ("Kaartboeck 1635", a Dutch historical dataset) from the pygeoapi demo's OGC API - Records collection, which plays the role CSW plays in the classic family. -->
+<!-- The whole lesson is this table. Every later slide is one column of it. -->
 
 ---
 
-![bg contain](images/ogc-wfs-getfeature.png)
+# Ask First: GetCapabilities
 
-<!-- Source slide 30: WFS GetFeature. The request names a typeName (myns:ROADS), the properties wanted
-     (PATH, LANES), and an <ogc:Filter> — here ogc:Within a gml:Box of 50,40 to 100,60. The response is a
-     wfs:FeatureCollection of gml:featureMember elements, each a ROADS feature with an fid, a
-     gml:LineString of coordinates in EPSG:4326, and its NLANES value. Point out that the filter is the
-     spatial query: this is a SELECT ... WHERE over the web. -->
+```xml
+<WMS_Capabilities version="1.3.0" xmlns="http://www.opengis.net/wms" ...>
+  <Service> <MaxWidth>4096</MaxWidth> <MaxHeight>4096</MaxHeight> </Service>
+  <Capability>
+    <Request>
+      <GetMap>
+        <Format>image/jpeg</Format> <Format>image/png</Format>
+        <Format>image/tiff</Format> <Format>image/svg+xml</Format> ...
+      </GetMap>
+      <GetFeatureInfo> ... </GetFeatureInfo>
+    </Request>
+    <Layer> <Name>0</Name>
+      <CRS>CRS:84</CRS> <CRS>EPSG:4326</CRS> <CRS>EPSG:3857</CRS> ...
+```
 
----
+- The capabilities document lists the **layers**, **coordinate systems**, **formats** and **size limits** — everything you need to write the GetMap
 
-<!-- _class: lead -->
-
-# Geography Markup Language
-
-<!-- From services to encodings: what the data looks like on the wire. -->
-
----
-
-# OGC Geography Markup Language (GML)
-
-- GML is an application of e**X**tensible **M**arkup **L**anguage (XML)
-  - XML specified by World Wide Web Consortium (W3C)
-- GML specifies XML Schemas that specify XML encoding of geographic features, their geometry, and their attributes
-- GML encodes digital feature data
-  - Encodes features, attributes, geometries, collections, etc.
-  - Basis for specifying Application Schemas
-- GML v3 supports 2½ and 3D geometry as well as complex geometry and topology
-- GML 3 is also ISO 19136
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Source speaker note: "Historically, the task of moving geographic data from one format to another has been difficult. As a result, many users with large data stores have been locked into a single vendor's format and have been restricted to using one vendor's analysis and decision support tools. The Geography Markup Language (GML) attempts to alleviate these difficulties by increasing organizations' ability to share geographic information. GML, which is based on the eXtensible Markup Language (XML), is an open and non-proprietary specification used for the transport and storage of geographic information. As with the OpenGIS Simple Feature Specification, GML utilizes the OpenGIS Abstract Specification geometry model. However, unlike the Simple Features Specification, the GML Specification includes the ability to handle complex properties." -->
+<!-- Trimmed from the real response, October 5, 2026: https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer?request=GetCapabilities&service=WMS (HTTP 200, text/xml, 6,410 bytes). Its one layer is named "0". This is the document ArcGIS Pro reads when you make a WMS server connection; it is how ArcGIS Pro knows what to list in the Catalog pane. -->
 
 ---
 
-![bg contain](images/ogc-gml-feature-schemas.png)
+# WMS GetMap → a Picture
 
-<!-- Source slide 33: GML representing geographic features. Two information communities describe the same
-     world with different schemas — one calls it a Road (width, lanes, pavement type) and a Cell tower
-     (owner, height, licensees); the other calls it a Highway (pavement thickness, right of way, width) and a
-     Cell transmission platform (location, number of antennas, elevation). Mayberry Road is an instance of
-     Road in one community's schema; Mayberry's Cell Tower is an instance of Cell Transmission Platform in
-     the other. GML defines a data encoding in XML that lets geographic data and its attributes move between
-     those disparate systems: complex geometries, spatial and temporal reference systems, topology, units of
-     measure, metadata, feature and coverage visualization, and it is backward compatible. The slide asserts
-     "Version 3.2 advances interoperability on all fronts."
-     Source speaker note adds: "GML is more than just a mechanism for encoding spatial data. It also provides
-     the ability to define application schemas that are specific to a given domain, such as transportation or
-     cadastral, and capture both the geometry and topology relationships but also the semantics of the
-     specific domain being modeled." The remainder of that note is in Spanish, carried over from an earlier
-     version of the deck. -->
+![h:340 center](images/ws9-wms-topo-provo.png)
+
+- The request from three slides back: **1000 × 500 pixels**, PNG, BYU and Y Mountain
+- Every pixel is a **display color**. There is no stream, road or contour line *in* it to select
+
+<!-- The unmodified response to https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=0&STYLES=&CRS=CRS:84&BBOX=-111.68,40.235,-111.60,40.2655&WIDTH=1000&HEIGHT=500&FORMAT=image/png (October 5, 2026, HTTP 200, image/png). The latitude span is chosen so the image is not stretched at 40 degrees north. -->
 
 ---
 
-# GML application activities
+# Pointing at a WMS Picture
 
-<div class="columns" style="font-size:0.78em">
-<div>
+![bg right:40% w:92%](images/ogc-wms-getfeatureinfo.png)
 
-**Profiles**
-- GML Point Profile
-- GML Simple Features Profile
-- GML GeoShape for use in IETF
-- GML in JPEG2000
-- GeoRSS: GML Serialization
+- **GetFeatureInfo** asks the server, "what is at this pixel?"
+- What comes back is **whatever that server decides**. The USGS topo server, asked about the center of our map:
 
-US NSDI GML Schemas for Framework Datasets
+```text
+@USGSTopoRGB.Red;RGB.Green;RGB.Blue;RGB.Alpha;247;247;247;255;
+```
 
-European INSPIRE Data Specifications
+- A **color**, not an elevation — this map was drawn from cached tiles, and the colors are all it has
 
-</div>
-<div>
-
-**Community application schemas**
-- Aeronautical Information Exchange Model (AIXM)
-- Climate Science Modeling Language (CSML)
-- CityGML
-- CleanSeaNet
-- NcML/GML (NetCDF and GML)
-- TDWG Biodiversity GML
-- GeoSciML — Geological Sciences ML
-- MarineXML
-- Ground Water Modeling Language
-- WaterML
-- Weather Information Exchange Model (WXXM)
-
-</div>
-</div>
-
-<p style="font-size:0.6em">Further information on OGC Network: <code>http://www.ogcnetwork.net/node/210</code></p>
-
-<!-- This is the payoff of "basis for specifying Application Schemas" on the previous slide. Each of these is a domain community agreeing on names and structures inside GML, so that aviation, hydrology, and geology can each be specific without inventing a new encoding. WaterML is the one this course touches most directly. -->
+<!-- Real response, October 5, 2026: GetFeatureInfo with I=500, J=250 on the GetMap request above, INFO_FORMAT=text/plain. The diagram (from the 2011 OGC deck) shows the ideal case, where the server has the data behind the map and answers with an elevation of 237 m; the self-check quiz uses that example. -->
+<!-- For the curious: the 3DEP elevation WMS answers GetFeatureInfo with the footprint record of the source tile (OBJECTID 137162, a 150 m overview), not the elevation either. The general lesson holds: a map service gives you a picture; for the numbers, ask a coverage service. -->
 
 ---
 
-![bg contain](images/ogc-citygml-3d-urban-models.png)
+# WCS GetCoverage → the Values
 
-<!-- Source slide 35: 3D urban models with OGC CityGML — a Stuttgart, Germany city model in a municipal
-     3D viewer (source: GTA Geoinformatik GmbH) and Atlanta, GA (source: Thomas Kolbe, TU Berlin).
-     CityGML is a GML application schema, so the buildings carry semantics — a wall is a wall, a roof is a
-     roof, at a declared level of detail — not just triangles. -->
+![w:1120 center](images/ws9-wms-vs-wcs.png)
+
+- Same USGS 3DEP data, same box. The **WMS** sends colors; the **WCS** sends a **GeoTIFF of Float32 meters**: 200 × 100 cells, **1,383 to 2,708 m**
+- At the center: **1,430.6 m** — a number you can do map algebra on
+
+<!-- Left: https://elevation.nationalmap.gov/arcgis/services/3DEPElevation/ImageServer/WMSServer?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=3DEPElevation:Hillshade Elevation Tinted&STYLES=&CRS=CRS:84&BBOX=-111.68,40.235,-111.60,40.2655&WIDTH=1000&HEIGHT=500&FORMAT=image/png. Right: https://elevation.nationalmap.gov/arcgis/services/3DEPElevation/ImageServer/WCSServer?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&COVERAGE=DEP3Elevation&CRS=EPSG:4326&BBOX=-111.68,40.235,-111.60,40.2655&WIDTH=200&HEIGHT=100&FORMAT=GeoTIFF. Both October 5, 2026, HTTP 200. The WCS GetCapabilities lists versions 2.0.1, 1.1.2, 1.1.1, 1.1.0 and 1.0.0; 1.0.0 is used because its GetCoverage is the easiest to read. -->
+<!-- Cross-check: the ArcGIS REST identify on the same image service at -111.64, 40.25 returned 1429.99 m, and reading the 1/3 arc-second COG at the same point returned 1430.04 m. Three interfaces, one ground surface, agreement within a meter (they resample differently). -->
+
+---
+
+# Coverages Are Not Just Images
+
+![w:1150 center](images/ws9-coverages-four.png)
+
+A **coverage** gives a value at every position in a space: brightness, land-cover classes, a whole spectrum per pixel, or a **TIN**. The geometry does not have to be square cells.
+
+<!-- OPTIONAL. Four examples from the 2011 OGC deck (copyright 2003 Global Science & Technology, Inc., and the UCSC Remote Sensing Group; used there by permission): visible brightness, land use/land cover, multi-spectral imagery, and a TIN. The quiz asks whether a TIN counts: it does, because every position inside the triangulation has a value. -->
+
+---
+
+# WFS GetFeature → the Features
+
+```xml
+<wfs:FeatureCollection ... numberMatched="unknown" numberReturned="0">
+  <wfs:member>
+    <app:SGID93_LOCATION_UDOTMap_CityLocations gml:id="SGID93_LOCATION_UDOTMAP_CITYLOCATIONS_0">
+      <app:NAME>Cedar Hills</app:NAME>
+      <app:CO_SEAT>no</app:CO_SEAT>
+      <app:POP_2000>3094</app:POP_2000>
+      <app:STATE>Utah</app:STATE>
+      <app:geometry>
+        <gml:Point srsName="EPSG:26912">
+          <gml:pos>436512.400 4472748.000</gml:pos>
+        </gml:Point> ...
+```
+
+![bg right:30% w:90%](images/ogc-wfs-multiple-servers.png)
+
+- **Geometry plus attributes**, in **GML** (XML) — you can query, select, re-symbolize
+- Coordinates in the server's default CRS: here **UTM zone 12N** (EPSG:26912)
+
+<!-- Trimmed from the real response, October 5, 2026: https://demo.deegree.org/utah-workspace/services/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=app:SGID93_LOCATION_UDOTMap_CityLocations&COUNT=1 (HTTP 200). Lines dropped: POP_1999, POP_SYM_99, POP_SYM_00 and the gml:id of the point. The layer is an old copy of a Utah SGID layer (city locations from the UDOT map) on the open-source deegree demo server; a RESULTTYPE=hits request reports numberMatched="31". The numberReturned="0" quirk is the server's own, documented in a comment in its response (a WFS 2.0 schema issue). The diagram is from the 2011 OGC deck: a WFS client can pull features from several servers and hold them all as data. -->
+
+---
+
+# Catalogs: a Pointer, Not the Data
+
+![bg right:42% w:92%](images/ogc-publish-find-bind.png)
+
+- A catalog's data is **metadata about other data**: titles, extents, dates, and the **URL** of the service that holds it
+- **Publish** (a provider registers) → **find** (you search) → **bind** (you connect straight to the provider)
+- Classic: **CSW**. Now: **OGC API – Records**, and **STAC** for imagery (Part 5)
+
+<!-- The quiz's last item. The 2011 deck's example was the GEOSS registry; today's examples are the pygeoapi demo's dutch-metadata Records collection (309 records, October 5, 2026) and the Earth Search STAC API at the end of class. In ArcGIS Pro, ArcGIS Online and the Living Atlas are themselves a catalog: searching there is the "find" step. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Feature Portrayal
+# Part 3 — The OGC API Generation
 
-<!-- If the client holds the data, who decides what it looks like? -->
-
----
-
-![bg contain](images/ogc-feature-portrayal-symbols.png)
-
-<!-- Source slide 37: displaying the same feature data with different symbols. Emergency management data
-     sources (regional, international, national, state, local) — transportation, cadastral, incidents,
-     critical infrastructure, population, cultural features, environmental conditions, intelligence — are
-     served through WFS (features as GML), WMS (maps as GIF/PNG/JPG), and CSW (metadata as XML), with styles
-     as SLD and symbols as CGM or SVG. Two user communities, A and Y, apply different emergency management
-     symbol sets to the same incidents: one draws a fire incident taxonomy (commercial facility fire, forest
-     fire, grassland fire, hotspot, unknown), the other a friendly/neutral/hostile violent-activities set
-     (arson fire). Same data, different portrayal. -->
+## JSON, plain URLs, and an API that describes itself
 
 ---
 
-![bg contain](images/ogc-sld-one-file-many-maps.png)
+# What Changed
 
-<!-- Source slide 38: OpenGIS Styled Layer Descriptor — one data file, many different maps, and non-graphic
-     portrayals too. Source speaker note: "The image on the handheld might be a Web Map Service JPEG map
-     created by the server to portrayal specifications encoded in a Styled Layer Description file provided by
-     the application running on the handheld. The image on the laptop might be a simple portrayal of GML
-     encoded roads data provided by the server. The portrayal, guided by the Styled Layer Description file,
-     might have taken place entirely on the laptop. The image on the desktop system might be a similar
-     portrayal of GML encoded roads, but here it is overlaid on raster data obtained by a Web Coverage Server
-     query. The visual coloring of the raster image was specified by a Style Layer Description file referenced
-     in the query to the server. The Web-based in-car navigation system is not graphically portraying the
-     roads data. It is using it instead to provide synthesized speech driving instructions." -->
+- Classic: one URL, many **?REQUEST=** verbs, **XML** answers. OGC API: every thing has **its own URL**, answers in **JSON** (HTML in a browser), and the server publishes an **OpenAPI** description of itself
+- Five approved parts: **Features, Tiles, Maps, Records, Processes** — all on one demo server:
+
+![w:720 center](images/ws9-ogcapi-tree.png)
+
+<!-- The tree is the real pygeoapi demo server (https://demo.pygeoapi.io/master), read on October 5, 2026 from its own landing page, /collections, /conformance, /openapi and /processes: 17 collections, 44 conformance classes, an OpenAPI 3.0.2 document with 100 paths, 6 processes. Its /conformance list includes the core class of all five parts named on the slide (plus Coverages and EDR, which are newer). -->
+<!-- Approved: OGC API - Features Part 1 (17-069r4), Tiles Part 1 (20-057), Maps Part 1 (20-058), Records Part 1 (20-004r1), Processes Part 1 (18-062r2), all "IS" (Implementation Standard) on ogc.org, checked October 5, 2026. -->
 
 ---
 
-<!-- _class: lead -->
+# OGC API – Features, Live
 
-# OGC KML
+```text
+GET https://demo.pygeoapi.io/master/collections/utah_city_locations/items?f=json&limit=2
+```
 
-<!-- The format everyone already has, brought into the standards process. -->
+```json
+{ "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature", "id": "Cedar Hills",
+      "geometry": { "type": "Point",
+                    "coordinates": [-111.74817810768609, 40.402923255649355] },
+      "properties": { "CO_SEAT": "no", "POP_2000": 3094.0, "STATE": "Utah", ... } },
+    { "type": "Feature", "id": "Cedar Fort", ... } ],
+  "links": [ { "rel": "next", "type": "application/geo+json", ... }, ... ] }
+```
 
----
+![bg right:30% w:94%](images/ws9-utah-cities-oaf.png)
 
-![bg contain](images/ogc-kml-globe.jpg)
+- **GeoJSON** — a browser, Python or ArcGIS Pro can read it
+- The server hands out **10 at a time** and a **next** link: all 31 cities took 4 pages
 
-<!-- Source slide 40: an untitled globe rendered in a KML viewer (Google Earth, imagery © 2007 DigitalGlobe /
-     © 2009 TerraMetrics per the source image). -->
-
-<!-- TODO(instructor): source slides 40 and 41 both carry the GML speaker note verbatim, apparently pasted by
-     mistake when the KML section was added. The note is not reproduced on these slides. -->
-
----
-
-# OGC KML
-
-- Annotate the Earth
-- Specify icons and labels to identify locations on the surface of the planet
-- Create different camera positions to define unique views for KML features
-- Define image overlays to attach to the ground or screen
-- Define styles to specify KML feature appearance
-- Write HTML descriptions of KML features, including hyperlinks and embedded images
-- Organize KML features into hierarchies
-- Locate and update retrieved KML documents from local or remote network locations
-- Define the location and orientation of textured 3D objects
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Read this list against the GML list two sections back. GML describes what a feature *is*; KML describes what a viewer should *show* and where the camera should stand. That is why KML carries styles and camera positions and GML does not. -->
+<!-- Trimmed from the real response, October 5, 2026 (HTTP 200): properties POP_1999, POP_SYM_99, POP_SYM_00 and gml_id dropped; the links list also offers JSON-LD, HTML and CSV versions. Open the same URL without ?f=json in a browser and pygeoapi answers with an HTML page: one URL, a format per audience. Paging measured October 5, 2026: asking for limit=100 still returned 10 features per page, and following the next links gave 31 features in 4 pages (the demo's configured limit). The map plots all 31 (they are Utah County towns) over a USGS 3DEP WMS hillshade, Cedar Hills in red. -->
+<!-- Code font: the pre blocks here are about 0.56 em; if they are hard to read from the back, zoom the browser or open the URL live. -->
 
 ---
 
-<!-- _class: lead -->
-
-# Web Coverage Service
-
-<!-- Third data type: not a picture, not a feature — a field. -->
-
----
-
-![bg contain](images/ogc-wcs-operations-subsetting.png)
-
-<!-- Source slide 43: OGC Web Coverage Service (WCS) — a service for access to coverages. Domain: grids,
-     polygons, points, etc. Range components: vector- or scalar-valued. Operations similar to WFS but tuned
-     to coverages: GetCapabilities (inquire about a WCS server), DescribeCoverage (fetch details about a
-     coverage), GetCoverage (fetch data from a coverage). The cube figures illustrate subsetting — taking a
-     slice, a slab, or a trim out of a multidimensional coverage. -->
-
----
-
-![bg contain](images/ogc-coverages-overview.png)
-
-<!-- Source slide 44: OGC coverages. A coverage is a "space-time varying phenomenon", ISO 19123 (= OGC
-     Abstract Topic 6). Today typically raster, but more is defined — curved grids, TINs, meshes. Historically
-     constrained to x/y, then x/y/t, then x/y/z/t... then what about pressure? WCS is the coverage access
-     service: get the original data, or a subset of it, suitable for further processing (www.ogcnetwork.net/wcs).
-     Coverage-related working groups within OGC: WCS.SWG and Coverages.DWG. -->
-
----
-
-![bg contain](images/ogc-coverage-value-grid.png)
-
-<!-- Source slide 45: "A coverage is a feature that associates positions within a bounded space to feature
-     attribute values" — that is to say, a collection of features that share a common regular geometry.
-     Examples: raster image, polygon overlay, digital elevation matrix. The figure is a latitude/longitude
-     grid of cells carrying values 80, 95, 100, 85, 50, 30, 55, 90, 85. -->
-
----
-
-# Coverages represent space-varying phenomena
-
-![h:430 center](images/ogc-coverage-grid-brightness.jpg)
-
-Grid (e.g., visible brightness)
-
-<p style="font-size:0.55em">Copyright 2003 Global Science &amp; Technology, Inc.</p>
-
-<!-- Four examples follow, one per slide: brightness, land cover, multi-spectral, and TIN. The point of the series is that "coverage" is not a synonym for "image" — it is any function from position to value. -->
-
----
-
-# Coverages represent space-varying phenomena
-
-![h:430 center](images/ogc-coverage-landcover.png)
-
-Grid (land use / land cover)
-
-<p style="font-size:0.55em">Copyright 2003 Global Science &amp; Technology, Inc.</p>
-
-<!-- Same structure as the brightness grid, but the values are categories rather than magnitudes. The coverage does not care which. -->
-
----
-
-# Coverages represent space-varying phenomena
-
-![h:420 center](images/ogc-coverage-multispectral.jpg)
-
-Grid (multi-spectral imagery)
-
-<p style="font-size:0.55em">Graphic copyright © UCSC Remote Sensing Group. Used by permission. http://www.es.ucsc.edu/~hyperwww/chevron</p>
-
-<!-- Here the value at each position is a vector, not a scalar — a whole reflectance spectrum per pixel. This is what "range components: vector- or scalar-valued" meant on the WCS slide. -->
-
----
-
-# Coverages represent space-varying phenomena
-
-![h:430 center](images/ogc-coverage-tin.jpg)
-
-Triangulated irregular network (TIN)
-
-<p style="font-size:0.55em">Copyright 2003 Global Science &amp; Technology, Inc.</p>
-
-<!-- And here the geometry is irregular. Still a coverage: every position inside the triangulation has a value. -->
-
----
-
-# Coverage encodings
+# Same City, Two Generations
 
 <div class="columns">
 <div>
 
-**OGC specifications**
-- GeoJPG
-- GML
-- GML in JPEG2000 (GMLJP2)
-- SWE Common
-- Network Common Data Form (NetCDF)
+**WFS 2.0** (deegree)
+
+```xml
+<app:NAME>Cedar Hills</app:NAME>
+<app:POP_2000>3094</app:POP_2000>
+<gml:Point srsName="EPSG:26912">
+  <gml:pos>436512.400 4472748.000</gml:pos>
+</gml:Point>
+```
+
+XML · UTM zone 12N meters · asked with **GetFeature**
 
 </div>
 <div>
 
-**Other specifications**
-- GeoTIFF
-- National Imagery Transfer Format / BIIF
-- HDF and HDF-EOS
+**OGC API – Features** (pygeoapi)
+
+```json
+"id": "Cedar Hills",
+"properties": { "POP_2000": 3094.0 },
+"geometry": { "type": "Point",
+  "coordinates": [-111.748178, 40.402923] }
+```
+
+GeoJSON · longitude, latitude · asked with **/collections/…/items**
 
 </div>
 </div>
 
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- The service and the encoding are separate choices: WCS is how you ask, these are what comes back. The source slide wrote "Network Common Data Format"; NetCDF is Network Common Data *Form*, as source slide 63 has it, and it is corrected here. -->
+<!-- OPTIONAL. Not a coincidence: the pygeoapi collection is titled "Cities in Utah via OGR WFS", and its description says the backend is the deegree WFS. So this is one feature, served once by a 2.0 WFS and re-served by an OGC API server sitting in front of it. Both responses fetched October 5, 2026; coordinates trimmed to six decimals on the right. The two positions are the same point: UTM 12N 436512.4 E, 4472748.0 N is the WFS's native CRS, and pygeoapi reprojects to CRS84 longitude/latitude, the OGC API default. -->
 
 ---
 
-# WCS operations
+# Tiles, Maps, Records, Processes
 
-| Operation | Returns |
+![bg right:40% w:92%](images/ws9-ogcapi-map.png)
+
+- **Tiles** — pre-cut pieces at fixed zoom levels: `/collections/lakes/tiles`
+- **Maps** — the WMS idea with a plain URL: `/collections/mapserver_world_map/map?bbox=-125,24,-66,50`
+- **Records** — catalog entries: `/collections/dutch-metadata/items`
+- **Processes** — run a tool on the server: `/processes`
+
+<!-- OPTIONAL. All four on the same pygeoapi demo server, October 5, 2026. The picture is the real OGC API - Maps response to https://demo.pygeoapi.io/master/collections/mapserver_world_map/map?f=png&bbox=-125,24,-66,50&width=900&height=450 (the demo backs it with a low-resolution world image served by MapServer's WMS, hence the blur). Processes is the modern WPS: the demo's six processes include hello-world and five pygeometa metadata tools. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 4 — The ArcGIS REST API
+
+## What UGRC's feature services actually are
+
+---
+
+# ArcGIS REST: FeatureServer, MapServer, ImageServer
+
+- **Not an OGC standard** — Esri's own published API, used by ArcGIS Online and ArcGIS Server
+- **FeatureServer** → features (UGRC ski areas, NHD) · **MapServer** → map images (USGSTopo) · **ImageServer** → raster values (3DEP)
+- One ArcGIS Server can also speak **WMS, WFS, WCS** for the same data:
+
+![w:800 center](images/ws9-rest-vs-wms.png)
+
+<!-- The figure: the same USGSTopo map service asked through REST (MapServer/export, f=image) and through WMS (WMSServer, GetMap), October 5, 2026. The two renders differ in label density because the REST export adjusts the extent to the image shape in Web Mercator and draws at a different scale; both are pictures. The 3DEP ImageServer likewise answers ArcGIS REST, WMS and WCS (we used all three). -->
+<!-- REST endpoints used today: https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0 and .../UtahStreamsNHD/FeatureServer/0 (ArcGIS Online, current version 12); https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer; https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer (ArcGIS Server 11.3, Float32, values -60.3 to 3,922.5 m). Esri's reference: https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/ -->
+
+---
+
+# Reading a Layer: ?f=pjson
+
+```text
+.../rest/services/SkiAreaBoundaries/FeatureServer/0?f=pjson
+```
+
+```json
+{ "name" : "SkiAreaBoundaries",
+  "type" : "Feature Layer",
+  "geometryType" : "esriGeometryPolygon",
+  "maxRecordCount" : 2000,
+  "supportedQueryFormats" : "JSON, geoJSON, PBF",
+  "capabilities" : "Query,Extract",
+  "fields" : [ { "name" : "OBJECTID", "type" : "esriFieldTypeOID" },
+               { "name" : "NAME", "type" : "esriFieldTypeString", "length" : 50 },
+               { "name" : "COLOR4", ... }, { "name" : "Shape__Area", ... },
+               { "name" : "Shape__Length", ... } ], ... }
+```
+
+- **pjson** = "pretty JSON". Leave `?f=pjson` off and the same URL gives an HTML page
+
+<!-- Trimmed from the real response, October 5, 2026 (HTTP 200, 11,152 bytes). Fields shown with only name, type and length; the full entry adds alias, sqlType, nullable, editable, domain and defaultValue. Watch for the trap in the activity: the word "name" also appears under uniqueIdField and under indexes (a primary-key index and a spatial index), which are not fields. The HTML page lists the same five fields under "Fields:". This is the layer's capabilities document: the ArcGIS equivalent of GetCapabilities. -->
+
+---
+
+# The /query Endpoint
+
+```text
+.../FeatureServer/0/query?where=1=1&returnCountOnly=true&f=pjson
+→ {"count":14}
+
+.../FeatureServer/0/query?where=NAME='Snowbird Ski and Summer Resort'
+                          &outFields=NAME&outSR=4326&f=geojson
+→ {"type":"FeatureCollection", "features":[{"type":"Feature",
+     "geometry":{"type":"Polygon","coordinates":[[[-111.6564,40.5834], ...
+     "properties":{"NAME":"Snowbird Ski and Summer Resort"} } ] }
+```
+
+![bg right:35% w:92%](images/ws9-ski-areas-query.png)
+
+- **where** = an SQL expression, **outFields** = which attributes, **f** = the format
+- Back comes **features**: a polygon of 238 coordinate pairs and its attribute — not a picture
+
+<!-- Both run October 5, 2026 (HTTP 200). The second also had geometryPrecision=4 (4 decimals, about 10 m) to keep it short: 4,931 bytes, one polygon ring of 238 coordinate pairs. Note the full name: where=NAME='Snowbird' returns an empty FeatureCollection, because the stored value is "Snowbird Ski and Summer Resort". That is the Lab 1 lesson again: read the values from the data before you write the expression. The 14 names, sorted: Alta Ski Area, Beaver Mountain Resort, Brian Head Resort, Brighton Ski Resort, Cherry Peak Resort, Deer Valley Resort, Eagle Point, Nordic Valley, Park City, Powder Mountain, Snowbasin, Snowbird Ski and Summer Resort, Solitude Mountain Resort, Sundance Resort. -->
+
+---
+
+# A Query Returns at Most 2,000
+
+![bg right:42% w:94%](images/ws9-provo-river-query.png)
+
+- **maxRecordCount = 2000** on both UGRC layers
+- Ask **UtahStreamsNHD** for everything: **2,000** lines back and `"exceededTransferLimit": true` — of **541,604**
+- A client has to **page** (`resultOffset`) or, better, **ask a narrower question**: `where=GNIS_Name='Provo River'` → **229** segments
+
+<!-- OPTIONAL. Measured October 5, 2026: UtahStreamsNHD/FeatureServer/0/query?where=1=1&outFields=OBJECTID&returnGeometry=false&f=json returned 2,000 features with exceededTransferLimit true; returnCountOnly with where=GNIS_Name='Provo River' returned {"count":229}. 541,604 / 2,000 = 271 requests to page through the whole layer. -->
+<!-- VERIFY before saying it as fact: ArcGIS Pro requests features from a feature service by display extent and pages for you, which is why Lab 5's NHD layer drew without hitting the limit. This matches how feature layers are documented to behave, but it was not observed (for example with Fiddler) for this deck. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 5 — Cloud-Native: COG and STAC
+
+## Files that behave like services
+
+---
+
+# Cloud-Optimized GeoTIFF (COG)
+
+![bg right:40% w:92%](images/ws9-cog-blocks.png)
+
+- An ordinary GeoTIFF, **arranged** for the web: internal **tiles**, **overviews**, and the index **at the front**
+- A client reads the index, then asks for **only the bytes** of the tiles it needs (HTTP range requests)
+- The **3DEP tile behind Lab 7**: 10,812² cells in 512 × 512 tiles, 5 overviews — a window at BYU moved **0.72 MB of 403 MB**
+
+<!-- Measured October 5, 2026 with GDAL in the ArcGIS Pro Python: https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.tif, 403,454,436 bytes, LAYOUT=COG, LZW, 512 x 512 blocks, overviews 5406, 2703, 1351, 675, 337 columns wide. A 100 x 100-cell read at -111.64, 40.25 took 1 HEAD and 2 GETs (the first 16 KB header, then one block) = 720,896 bytes; the center value was 1430.04 m. The server answers Accept-Ranges: bytes. The 1 arc-second tiles of Lab 4 (USGS_1_n40w112.tif checked) carry the same COG header. -->
+<!-- arcpy.Raster() opened the plain https:// URL of this tile directly in ArcGIS Pro 3.7.1's Python (10812 x 10812 cells). VERIFY in the GUI: that Map ▸ Add Data ▸ From Path accepts the same https://...tif URL and draws it. -->
+<!-- OGC Cloud Optimized GeoTIFF Standard 1.0, OGC 21-026 (ogc.org, checked October 5, 2026). -->
+
+---
+
+# STAC: a Catalog of Files
+
+```text
+GET https://earth-search.aws.element84.com/v1/search
+      ?collections=sentinel-2-l2a&bbox=-111.70,40.22,-111.60,40.28
+      &datetime=2026-09-01T00:00:00Z/2026-10-04T23:59:59Z&limit=2
+```
+
+```json
+{ "context": { "limit": 2, "matched": 17, "returned": 2 },
+  "features": [ { "id": "S2A_12TVK_20261003_1_L2A",
+      "properties": { "datetime": "2026-10-03T18:33:15.655000Z", "eo:cloud_cover": 32.6 },
+      "assets": { "visual": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/.../TCI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized" }, ... } }, ... ] }
+```
+
+- **S**patio**T**emporal **A**sset **C**atalog: search by place and time; each item's **assets** are links to **COGs**
+
+<!-- Real request and response, October 5, 2026 (HTTP 200), heavily trimmed: each item also carries its bbox, geometry, 43 properties and 38 assets (every band as a COG and as JPEG 2000, plus metadata and a thumbnail). 17 Sentinel-2 L2A scenes over BYU between September 1 and October 4, 2026. The full href is https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/12/T/VK/2026/10/S2A_12TVK_20261003_1_L2A/TCI.tif. The same search also works against Microsoft's Planetary Computer STAC API (https://planetarycomputer.microsoft.com/api/stac/v1, HTTP 200 October 5, 2026). STAC 1.1.0 and STAC API 1.0.0 are OGC Community Standards 25-004 and 25-005. -->
+
+---
+
+# Search → COG → Picture
+
+![h:350 center](images/ws9-s2-byu-cog.png)
+
+- The clearest of the 17 (**September 20, 2026**, 0.68 % cloud): **only the BYU window** came over — **2.6 MB of a 349 MB file**
+- Swap the true-color asset for the **red** and **near-infrared** bands (also COGs) and the same read gives **NDVI**
+
+<!-- Item S2A_12TVK_20260920_0_L2A, eo:cloud_cover 0.676915, asset "visual" = https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/12/T/VK/2026/9/S2A_12TVK_20260920_0_L2A/TCI.tif (10,980 x 10,980 cells of 10 m, DEFLATE, LAYOUT=COG, 349,318,194 bytes). gdal.Translate with a projWin for the BYU box moved 2,605,056 bytes; the window is 684 x 334 cells, shown here at 2x. TCI itself is the 8-bit true-color product, already scaled for display, so it is a picture-like product even though it arrives as a COG; for NDVI read the red (B04.tif) and nir (B08.tif) assets of the same item, which are COGs of surface reflectance; Week 3's NDVI lesson applies directly. -->
+<!-- If time is short, this slide and the STAC slide can be shown as one: the picture is the answer to the search. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 6 — In ArcGIS Pro
+
+---
+
+# How ArcGIS Pro Consumes Each
+
+| You have | In ArcGIS Pro |
 |---|---|
-| **GetCapabilities** | What service extensions? What coverages? |
-| **DescribeCoverage** | Coverage metadata |
-| **GetCoverage** | Coverage, or subset thereof |
+| ArcGIS REST URL (FeatureServer, MapServer, ImageServer) | **Map** tab ▸ arrow under **Add Data** ▸ **From Path** — paste, **Add** |
+| WMS | **Insert** ▸ **Connections** ▸ **Server** ▸ **New WMS Server** |
+| WFS | **Insert** ▸ **Connections** ▸ **Server** ▸ **New WFS Server** |
+| OGC API (Features, Tiles) | **Insert** ▸ **Connections** ▸ **Server** ▸ **New OGC API Server** |
+| STAC API | **Insert** ▸ **Connections** ▸ **STAC Connection** ▸ **New STAC Connection** |
 
-<!-- TODO(graphic): text-only slide — needs a figure. -->
+Server connections then appear in the **Catalog** pane under **Servers**; drag a layer onto the map.
 
-<!-- Three operations, and they line up one-for-one with WFS: capabilities, schema, data. Once students see that all of these services are the same three questions, the acronym count stops mattering. -->
+![bg right:24% w:92%](images/ogc-wms-multiple-maps.png)
 
----
-
-# Operational OWS implementations for imagery
-
-- **ESA Heterogeneous Missions Accessibility (HMA)**
-  - WCS Application Profile for Earth Observation
-- **Spot Image** — WMS, WCS
-  - WCS for the International Charter on Space and Major Disasters
-  - Catalogue and multisatellite in data portal projects
-- **GeoEye Geofuse** — KML, WMS, WFS and WCS
-  - Imagery holdings with less than 20% cloud cover
-- **Intermap NEXTMap** — WMS, WCS
-  - 1-meter vertically accurate digital elevation models and geometric images
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- TODO(instructor): a January 2011 list of operational deployments. Several of these organizations have since
-     been acquired or renamed; the list was deliberately not updated. -->
+<!-- From Path was used in the Lab 5 and Lab 7 GUI builds (ArcGIS Pro 3.7.1, September 30 and October 5, 2026), worded exactly as in those labs. The four Insert ▸ Connections paths are quoted from Esri's ArcGIS Pro documentation ("latest"), read October 5, 2026: help/data/services/add-wms-services.htm, add-wfs-services.htm, add-ogc-api-services.htm, and help/data/imagery/create-a-stac-connection.htm. Esri's OGC API page says ArcGIS Pro supports OGC API - Features and OGC API - Tiles (map tiles) through that connection; Maps, Records and Processes are not listed. -->
+<!-- VERIFY in ArcGIS Pro 3.7.1 before class: the four Insert ▸ Connections menu paths have been checked in the documentation only, not seen in the GUI. TODO(capture): a real ArcGIS Pro capture of the Insert ▸ Connections ▸ Server menu would replace the side figure (the 2011 OGC diagram of one client overlaying maps from several servers, which is what ArcGIS Pro does with these connections); no capture exists yet. Good demo order if there is time: New WMS Server with https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer, then New OGC API Server with https://demo.pygeoapi.io/master and add utah_city_locations. Neither has been tried in the GUI for this deck. -->
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: activity -->
 
-# Web Processing Service
-
-<!-- Not data this time — analysis, delivered as a service. -->
-
----
-
-# Geo-processing
-
-- Hundreds of types of algorithms for geodata
-- How can we scale to interoperable geo-processing?
-- **OGC Web Processing Service (WPS)**
-  - Interface that facilitates the publishing of geospatial processes, and the discovery of and binding to those processes by clients
-  - Processes include any algorithm, calculation or model that operates on spatially referenced data
-  - WPS may offer calculations as simple as subtracting one set of spatially referenced numbers from another, or as complicated as a global climate change model
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Note the publish / find / bind language returning: WPS applies the same architecture to a verb instead of a noun. This is the ancestor of what students now meet as ArcGIS geoprocessing services. -->
-
----
-
-![bg contain](images/ogc-wps-architecture.png)
-
-<!-- Source slide 55: OGC Web Processing Service architecture. A WPS client communicates over the web using
-     HTTP with a Web Processing Service exposing three operations — GetCapabilities, DescribeProcess, Execute
-     — backed by an algorithms repository and a data handler repository. Same three-question shape as WFS and
-     WCS: what have you got, what does it need, run it. -->
-
----
-
-![bg contain](images/ogc-service-chaining-wildfire.png)
-
-<!-- Source slide 56: chaining web services for decision support — assessing wildfire activity. A WCS supplies
-     imagery, a WPS performs coordinate transformation (WCTS), a second WPS performs classification, and a WFS
-     supplies vector context; the products flow left to right over the internet through OGC interfaces into a
-     decision support client. Geoprocessing workflow developed in OGC testbeds since 2004.
-     Source speaker note: "How do we reliably and repeatedly combine results from several distributed services
-     on the web to produce a result for a user? Service chaining is the term commonly used for the process of
-     organizing disparate web based services into an orderly process. For instance, a raw image is sent to a
-     service that performs a coordinate transformation. This service sends the transformed image to a
-     classifier service that processes the image to highlight areas of active fire. The result of this service
-     is sent to a user's client along with other geospatial data such as vegetation overlays, transportation."
-     The source slide spells "workflow" as "worklow"; corrected in this conversion. -->
-
----
-
-<!-- _class: lead -->
-
-# Sensor Web Enablement
-
-<!-- Data that has not been collected yet. -->
-
----
-
-# OGC Sensor Web Enablement (SWE)
-
-![bg right:42% w:95%](images/ogc-swe-sensor-web.jpg)
-
-Discovery and tasking of sensors. Access, fusion and application of sensor observations for enhanced situational awareness.
-
-- Sensor Model Language (SensorML)
-- Observations & Measurements (O&M)
-- Sensor Planning Service (SPS)
-- Sensor Observation Service (SOS)
-- Catalogue Service
-- Sensor Alert Service (SAS)
-- Web Notification Service (WNS)
-
-<!-- Source speaker note, condensed: quickly discover sensors (secure or public) that meet a need and learn what they can do — location, observables, quality, ability to task; obtain sensor information in a standard encoding understandable by user and software; readily access observations in a common manner; task sensors where possible; request and receive alerts when a sensor measures a particular phenomenon or completes a task. SensorML models the observation process — sensor components, georegistration, response models, post-measurement processing. O&M models the observations themselves. TransducerML adds system integration and real-time streaming clusters of observations. -->
-
----
-
-# Basic requirements for a sensor web
-
-- Quickly **discover** sensors and sensor data (secure or public) that can meet my needs — location, observables, quality, ability to task
-- **Obtain sensor information** in a standard encoding that is understandable by me and my software
-- Readily **access sensor observations** in a common manner, and in a form specific to my needs
-- **Task sensors**, when possible, to meet my specific needs
-- Subscribe to and **receive alerts** when a sensor measures a particular phenomenon
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Five verbs: discover, obtain, access, task, subscribe. The next slide gives each one a service. -->
-
----
-
-# Sensor Web Enablement technologies
+# In Class Activity — Inspect a Live Service
 
 <div class="columns">
 <div>
 
-**Information models and schema**
-- Sensor Model Language (SensorML)
-- Observations and Measurements (O&M)
-- SweCommon
+Open the **UGRC ski-area layer** on your phone or laptop (scan the code):
+
+1. On the page: **geometry type**? which **fields**? **max record count**?
+2. Add the first ending below — **how many** ski areas?
+3. Try the second — **what came back**: a picture or features? Which resort is first?
+
+```text
+/query?where=1=1&returnCountOnly=true&f=pjson
+/query?where=1=1&outFields=NAME&f=geojson
+```
+
+<span style="font-size: 0.5em; color: #4a5568;">services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0</span>
 
 </div>
 <div>
 
-**Web services**
-- Sensor Observation Service (SOS)
-- Sensor Alert Service (SAS)
-- Sensor Planning Service (SPS)
+![w:300 center](images/ws9-ski-layer-qr.png)
 
 </div>
 </div>
 
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Encodings on the left, services on the right — the same division this deck has been making since GML. -->
-
----
-
-![bg contain](images/ogc-swe-web-services.png)
-
-<!-- Source slide 61: SWE web services. A catalog service lets clients discover services, sensors, providers
-     and data; SOS gives access to sensor description and data; SPS commands and tasks sensor systems; SAS
-     dispatches sensor alerts to registered users. Accessible from various client types, from PDAs and cell
-     phones to high-end workstations. Steps: services register in one or more catalogs; the client discovers
-     services, providers, sensors and datasets through the catalog; the client then accesses data from SOS,
-     controls sensors through SPS, and receives alerts from SAS. -->
+<!-- Answers, measured October 5, 2026: (1) Geometry Type esriGeometryPolygon; five fields: OBJECTID, NAME, COLOR4, Shape__Area, Shape__Length; Max Record Count 2000. The HTML page lists them under "Fields:"; with ?f=pjson, students must look under "fields", not "indexes" or "uniqueIdField". (2) {"count":14}. (3) a GeoJSON FeatureCollection of 14 Polygon features, each with only its NAME property; the first is Brighton Ski Resort (server order, not alphabetical); about 88.6 KB with outFields=* instead. In a phone browser the GeoJSON shows as text; that is the point: coordinates and attributes, not pixels. Fast finishers: add &outSR=4326 and read off a longitude near -111.6, or change the where to NAME LIKE '%Snow%' (typed as is in the browser; run October 5, 2026: count 2, Snowbasin and Snowbird Ski and Summer Resort). The QR code (37 modules) encodes the layer URL and was made with the local qrcode package. -->
+<!-- TODO(instructor): this activity has no Learning Suite item. If it is to be graded, add a matching activity on Learning Suite (e.g. upload a screenshot of the count and the GeoJSON) and a row in the DUE table for Week 9. -->
 
 ---
 
-![bg contain](images/ogc-puck-ieee1451-sos.png)
+# The Whole Lesson on One Slide
 
-<!-- Source slide 62: IEEE 1451 — Smart Transducer Interface Standard, and PUCK — plug-and-work standard for
-     ocean systems (a candidate OGC standard at the time). The stack runs from PUCK-enabled RS-232
-     instruments through an observatory node holding drivers, SensorML and TEDS, up through a 1451.0 server
-     and STWS to an SOS client speaking the SWE protocol. Lead by Tom O'Reilly (MBARI). This is the bottom of
-     the sensor web: how an instrument on the sea floor announces what it is. -->
+![h:280 center](images/ws9-what-comes-back.png)
 
----
+- **WMS / OGC API – Maps / MapServer** → a **picture** · **WFS / OGC API – Features / FeatureServer** → the **features**
+- **WCS / ImageServer / COG** → the **values** · **CSW / OGC API – Records / STAC** → a **pointer** to the data
+- Before you use a service, ask the same question as the quiz: **what comes back?**
 
-# NetCDF
-
-Network Common Data Form (NetCDF) Core Encoding Standard defines an encoding for geospatial data, specifically digital geospatial information representing space and time-varying phenomena.
-
-NetCDF is a data model for array-oriented scientific data.
-
-The CF-netCDF Core and Extensions Primer provides an overview of the OGC CF-netCDF standards suite by describing the CF-netCDF core and extensions.
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- NetCDF is where the hydrology and atmospheric science students will actually meet OGC standards: nearly every climate and weather dataset they download is CF-netCDF. -->
-
----
-
-# Current status of SWE standards
-
-<div style="font-size:0.86em">
-
-- SensorML — 1.0.1 approved in 2007 (V2.0 anticipated by September 2011)
-- SWE Common Data — V2.0 approved
-- SWE Common Services — V2.0 approved
-- Observations & Measurement — V2.0 approved
-- SOS — V2.0 in final stages
-- SPS — V2.0 approved
-- SAS — being folded into Pub Sub (based on OASIS WS-N)
-- PUCK — V1.0 approved
-
-Approved SWE standards can be downloaded:
-- Specification documents: `http://www.opengeospatial.org/standards`
-- Specification schema: `http://schemas.opengis.net/`
-- `http://www.ogcnetwork.net/standardtracker`
-
-</div>
-
-<!-- TODO(instructor): this is a January 2011 status snapshot — "V2.0 anticipated by September 2011" and "in
-     final stages" are fifteen years stale. Left as written per the conversion brief; this slide is the
-     clearest single argument for replacing the deck. -->
-
----
-
-<!-- _class: lead -->
-
-# Geosynchronization
-
-<!-- What happens when the client wants to write back. -->
-
----
-
-![bg contain](images/ogc-geosynchronization-services.png)
-
-<!-- Source slide 66: GeoSynchronization Services (GSS), three roles and six numbered steps. (1) A Publisher
-     reads features from a WFS managed by the GSS and proposes changes to those features, which may include
-     proposing creation of new features. (2) The Publisher submits the change request; the proposals enter the
-     Change Feed. (3) The GSS notifies a Reviewer, perhaps in a separate location, of pending change
-     proposals. (4) The Reviewer approves or rejects; approved changes are applied to features via OGC WFS-T.
-     (5) The Resolution Feed notifies the Publisher whether the proposed changes were approved or rejected.
-     (6) The Replication Feed notifies Followers of changes to features. Geographic features throughout are
-     accessible via WFS. -->
-
----
-
-![bg contain](images/ogc-geosync-vs-wfs-requests.png)
-
-<!-- Source slide 67: "Big" data requests vs. update requests. A WFS client asks a WFS adapter over a spatial
-     database: "give me all the parcels in town X" — and gets the whole grid back. A GeoSync client asks a
-     GeoSync adapter over the same database: "give me all changes to the parcels in town X since time T" — and
-     gets only the change log. The difference between re-downloading a dataset and subscribing to it. -->
-
----
-
-<!-- _class: lead -->
-
-# GeoSMS
-
-<!-- Location on the lowest-bandwidth channel there is. -->
-
----
-
-# Location-enabling SMS messaging: GeoSMS
-
-![bg right:42% w:95%](images/ogc-geosms-alert.jpg)
-
-Significant potential for many applications
-
-**Characteristics**
-- Multilingual
-- Multi-device
-- Harmonized with many existing applications
-- Incorporates relevant ISO standards
-- OGC adoption expected in 2011
-
-<!-- Source speaker note: "Open GeoSMS is an open-coordinate short message service (SMS) standard to allow transmission of map information and communications among different platforms of digital maps. The goal is to share location information across operating systems and applications." The figure shows an emergency real-time alert or update pushed to a phone, a car navigation unit and a handheld. -->
-
----
-
-# OGC Open GeoSMS
-
-- Defines a short messaging service (SMS) encoding to exchange lightweight location information between different mobile devices or applications
-- Open GeoSMS encoding for location is compatible with other OGC standards, such as those for sensor webs and earth imaging
-- It is also compatible with standards such as the OASIS Common Alerting Protocol (CAP) standard and the IETF RFC Presence Information Data Format Location Object (PIDF-LO)
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Source speaker note: a candidate OGC standard at the time. The argument was reach — more than 6.1 trillion SMS messages were sent in 2010, and SMS works indoors where GPS does not. Open GeoSMS was brought into OGC by ITRI of Taiwan, where it was already widely used. -->
-
----
-
-![bg contain](images/ogc-geosms-taiwan-vendors.png)
-
-<!-- Source slide 71: "Real practice in Taiwan" — the carriers, handset makers and navigation vendors that had
-     adopted Open GeoSMS as an enabled service. Kept because it is the evidence for the previous slide's
-     claim: the standard was in production use before OGC adopted it. -->
-
----
-
-![bg contain](images/ogc-geosmser-app.png)
-
-<!-- Source slide 72: Open GeoSMSer, a free app from the Android Marketplace. Get GPS data and send an Open
-     GeoSMS to a contact; receive an Open GeoSMS and bring up the map and POI info. Developed with the Open
-     GeoSMS SDK from ITRI. The three screenshots show the message list with coordinates, a received location
-     on a map with a POI card, and the send-location control. 2011 app; not expected to still exist. -->
-
----
-
-<!-- _class: lead -->
-
-# Security
-
-<!-- Who is allowed to ask? -->
-
----
-
-# OGC and security
-
-- The OGC does **not** develop authentication, authorization and security standards
-- We define best practices and extensions to existing standards from other standards organizations, such as OASIS
-  - **XACML** (OASIS): access control policy language in XML and a processing model to interpret the policies
-  - **GeoXACML** (OGC): geographic access control rules for distributed geographic content
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- This is the same "does not exist in isolation" argument as slide 6, made concrete. OGC extends OASIS's XACML with geometry rather than inventing a competing access-control language. XACML = eXtensible Access Control Markup Language. -->
-
----
-
-![bg contain](images/ogc-ows8-aixm-access-control.png)
-
-<!-- Source slide 75: OWS-8 AIXM authoritative data source architecture. A subject issues a request through an
-     Access Control System to a WFS-T sitting over several feature stores. XACML-based access control systems
-     support the enforcement of complex, fine-grained rights; the GeoXACML extension of XACML supports
-     geometry and spatial functions. Examples from the slide: deny if the user interacts with a service on IP
-     123.123.123.123; permit if Alice has activated role xyz and interacts with services of type WFS 2.0;
-     permit if GetFeature requests refer to features of type Runway within a certain area; permit if the
-     request is a valid (de-)commissioning for features of type RadarSystem. The third example is the one
-     worth pausing on — the permission itself is a polygon. -->
-
----
-
-# Geospatial Digital Rights Management
-
-OGC members are leveraging broader standards-based Digital Rights Management (DRM) approaches with OGC standards:
-
-<div class="columns">
-<div>
-
-- **Authentication**
-- **Licensing**
-
-</div>
-<div>
-
-- **Pricing**
-- **Copyright**
-
-</div>
-</div>
-
-GeoDRM Reference Model: `http://portal.opengeospatial.org/files/?artifact_id=14085`
-
-<!-- TODO(graphic): the source slide drew these four terms in cloud shapes whose text overflowed the shapes
-     ("Authenticati / on", "Pricin / g", "Licensin / g", "Copyrig / ht"). The broken graphic was replaced with
-     the plain list above rather than reproduced. -->
-
-<!-- Source speaker note, condensed: as geodata and services become widely available over ubiquitous networks, data becomes easier to distribute, share, copy and alter. Producers want to specify, manage, control and track distribution within secure, open and trusted environments, which needs both operating agreements and interoperable technologies. Direct monetary reward is often secondary to control of intellectual property assets; the note cites Harlan Onsrud of the GeoData Alliance arguing that library systems are the better model, balancing public access and equity against the rights of authors and publishers. -->
-
----
-
-<!-- _class: lead -->
-
-# How do you make sense of all of this?
-
-<!-- The deck's own answer to the acronym problem. -->
-
----
-
-# Understanding OGC standards — the ORM*
-
-![bg right:42% w:95%](images/ogc-reference-model-page.jpg)
-
-**OGC Reference Model** — `www.opengeospatial.org/standards/orm`
-
-What is the purpose of the ORM?
-
-- Overview of OGC Standards Baseline
-- Insight into the current state of the work of the OGC
-- Basis for coordination and understanding of the OGC documents
-- Resource for defining architectures for specific applications
-
-<p style="font-size:0.55em">* Do not confuse with the ORM in Walter Moers's <em>The City of Dreaming Books</em>.</p>
-
-<!-- The ORM is the one document to hand someone who asks "where do I start with OGC?" — it is the map of the standards baseline rather than any single standard. -->
-
----
-
-# Interoperability Program — emphasis on testing and validation
-
-![bg right:38% w:95%](images/ogc-ccip-plugfest.jpg)
-
-- OGC testbeds, pilots, experiments and plugfests
-- Join technology providers and users
-- Driven by user community scenarios
-- Produce:
-  - Tested and validated draft standards
-  - Architectural recommendations
-  - Industry technology implementations
-  - Live demonstrations to validate utility of standards in user context
-
-<p style="font-size:0.55em">Climate Challenge Integration Plugfest, 2009 — CCIP experimented with ways to share the world's meteorological and weather forecast data through open standards for geospatial information sharing.</p>
-
-<!-- The source title ran two lines together as "Interoperability ProgramEmphasis On Testing and Validation"; split here. This is how a draft standard earns approval: several vendors implement it against each other in a testbed before it becomes a standard, which is why OGC standards tend to actually interoperate. -->
-
----
-
-# OGC Interoperability Program
-
-![bg right:52% w:95%](images/ogc-interoperability-initiatives.png)
-
-<div style="font-size:0.78em">
-
-Active OGC initiatives at the time of the source deck included 3D Portrayal (3DPIE), EO2HEAVEN, the GEOSS Architecture Implementation Pilot, hydrology domain working group forecasting and surface-water interoperability experiments, Mobile Internet, OGC Water Information Services Concept Development, OGC Web Services Phases 8 and 9, OWS Shibboleth IE, and the SAA Pilot.
-
-Past initiatives:
-<span style="font-size:0.72em"><code>http://www.opengeospatial.org/projects/initiatives/past</code></span>
-
-</div>
-
-<!-- TODO(instructor): names of the individual initiative leads were on the source slide and are not reproduced
-     here, per the no-contact-details rule for this conversion. -->
-
----
-
-![bg contain](images/ogc-compliance-program.png)
-
-<!-- Source slide 81: the OGC Compliance Program. More than 10 years providing certification; open source web
-     testing engine operational since 2007; more than 650 implementing products in the market. The screenshots
-     show the implementing-products database (ESRI, Oracle, Rolta and others, with the specification and
-     compliance status of each), the TEAM Engine test harness on SourceForge, and its license page.
-     Source speaker note adds that about one third of the 650 registered products had actually followed the
-     certification procedure and were compliant. -->
-
-<!-- TODO(instructor): the products table in this screenshot lists ArcGIS Server 9.2-era and ArcIMS products.
-     It is a 2011 historical artifact, not current ArcGIS Pro guidance, and was left as-is. -->
-
----
-
-# OGC public resources
-
-<div style="font-size:0.86em">
-
-- Adopted standards — `http://www.opengeospatial.org/standards`
-- OGC Reference Model — `http://www.opengeospatial.org/standards/orm`
-- OGC demonstrations — `http://www.opengeospatial.org/resource/demos`
-- Compliance testing and certification — `http://www.opengeospatial.org/compliance`
-- List of registered products using OGC standards — `http://www.opengeospatial.org/resource`
-- OGC Network, the member-contributed OGC "encyclopedia" — `http://www.ogcnetwork.net`
-- OGC User, case studies of OGC implementations in the global community — `http://www.opengeospatial.org`, click on "Press Room"
-
-</div>
-
-<!-- TODO(instructor): every URL on this slide is a January 2011 path. They are shown as plain text rather than
-     as links because most have moved (OGC's site is now ogc.org) and none were re-verified for this
-     conversion — do not present them as live without checking. -->
-
-<!-- TODO(graphic): text-only slide — needs a figure. -->
+<!-- The wrap-up maps every interface met today onto the four answers. The OGC API - Tiles row is left off on purpose: tiles can be map images or vector data, so "what comes back" depends on the tileset. -->
 
 ---
 
 # Before Next Class
 
-- **Lab 8 — Big Southern Butte** is due **Saturday 11:59 pm**: [assignments/lab-08](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
-- **Lab 9 — Practicing with Interpolation** is next: [assignments/lab-09](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
-- Read **Chapter 14** of *GIS Fundamentals* (Data Standards and Data Quality)
-- Take **Quiz 8** (open book) on Learning Suite — due **Saturday 11:59 pm**
+![bg right:35% w:90%](images/ws9-s2-byu-cog.png)
+
+- **Lab 8 — Big Southern Butte** is due **Saturday 11:59 pm**: [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
+- **Reading** — Chapter 14 of *GIS Fundamentals* (Data Standards and Data Quality); **Quiz 8** on Learning Suite, open book, due **Saturday 11:59 pm**
+- Next week: **raster-based spatial analysis**, and **Lab 9 — Practicing with Interpolation**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- TODO(graphic): text-only slide — needs a figure. -->
-
-<!-- Conversion notes (2026-09-03):
-
-SOURCE: "CE 414 Week 9 - Review - Overview_of_OGC_Web_Services.pptx" (Lectures/2026/) — 83 slides, 146
-embedded images, no hidden slides. The file is an adapted January 2011 Open Geospatial Consortium conference
-presentation (Luis Bermudez, Washington DC).
-
-THE BIG ONE: the course plan calls for this deck to be RETIRED and replaced with a 12–18 slide modern lesson
-covering WMS/WFS alongside OGC API Features / Tiles / Maps / Records, ArcGIS REST, JSON and OpenAPI, STAC,
-COG, and a live service-inspection activity. That rebuild is an instructor decision and was explicitly out of
-scope here. What follows is a faithful conversion of the 2011 material so that nothing is lost when the
-rebuild happens.
-
-DELIBERATELY NOT UPDATED: every version number, status list, membership count, product list and URL is as it
-stood in January 2011. Nothing was "modernized" and no newer standard was added. The most conspicuously stale
-slides are "Current status of SWE standards" (source slide 64), "Approved OGC® standards" (12), "GEOSS
-Registry — 396 entries" (18), "Operational OWS implementations for imagery" (52), "Location-enabling SMS
-messaging" (69, "OGC adoption expected in 2011"), and "OGC public resources" (82, whose links all predate the
-move to ogc.org).
-
-SLIDES DROPPED OR MERGED (2 of 83):
-- Source slide 4 ("OGC At A Glance", second copy) — merged into the converted "OGC at a Glance" slide. Its
-  text was character-for-character identical to slide 3; the two differed only in the pie chart, and both
-  charts are shown on the merged slide.
-- Source slide 83 ("The End", "OGC standards are there waiting for you!!" over a stock photograph) —
-  conference closing slide, replaced by the Before Next Class slide.
-Also dropped, without dropping a slide: the presenter's email address and the event date and location from
-the face of source slide 1 (moved to a speaker note and an attribution line), the Google wordmark on source
-slide 10, and the individual initiative-lead names on source slide 80.
-
-MISSING EMBEDDED OBJECTS: the two pie charts on source slides 3 and 4 are PowerPoint chart objects linked to
-an external workbook named "Book1" that did not travel with the file (ppt/charts/_rels/chart{1,2}.xml.rels
-point at Target="Book1" TargetMode="External"). They still render from cached values, so the figures in this
-deck are page renders of those cached charts — but the numbers cannot be edited or refreshed until the
-workbook is found or the charts are rebuilt. Flagged on the slide as TODO(graphic).
-
-TYPOS AND OBJECTIVE ERRORS FIXED (nothing else was rewritten):
-- "GEOOS Registry" → "GEOSS Registry" (source 18; the screenshot and the URL both say GEOSS)
-- "Geoprocessing worklow" → "workflow" (source 56)
-- "Geoeye Geofuse" → "GeoEye Geofuse" (source 52)
-- "Provides, rules, guidelines or characteristics" → "Provides rules, guidelines, or characteristics" (8)
-- "SDO's" → "SDOs" (3/4)
-- "Network Common Data Format (NetCDF)" → "Network Common Data Form" (50), matching source slide 63
-- "On-fly pan-sharpening" → "On-the-fly pan-sharpening" (25)
-- Titles unrun: "OGC Specificationshttp://..." → title + URL (11); "Interoperability ProgramEmphasis On
-  Testing and Validation" → title with a dash (79); source slide 22's template banner text replaced with its
-  real subject, "OGC Web Map Service"
-- Left uncorrected on purpose: the "<Capabilitiess>" typo inside the W*S diagram (source 14) is part of a page
-  render and was not repainted.
-
-ARCGIS WORDING: this deck contains no ArcGIS instructions, so no ArcGIS 9 / ArcMap → ArcGIS Pro substitutions
-were needed. The one ArcGIS appearance is inside the compliance-program screenshot (source 81), which lists
-ArcGIS Server 9.2-era and ArcIMS products; it is a 2011 historical artifact and is flagged on the slide.
-
-IMAGES: 50 files in images/, about 5.6 MB. Twenty-six slides are diagrams built from PowerPoint shapes
-(architecture diagrams, request/response walkthroughs, logo walls); per the conversion guide those were not
-rebuilt — the PDF page was rendered at 200 dpi and used whole as a `bg contain` figure, which is why those
-slides carry the original 4:3 layout and no Marp heading, and why their content is written out in full in the
-speaker notes. Twenty-one images were copied from the source media and three are crops of page renders (the
-two pie charts and the WMTS tile pyramid). Renders were downscaled to 1500 px and palette-quantized; photos
-were converted to JPEG. Of the 146 source images, 85 are tiny icons and logos, and those were skipped —
-the logo-wall slides (6, 71) use one page render each instead of 20+ fragments.
-
-SPEAKER NOTES: every source note was carried over. Two are worth knowing about — source slides 28 and 33 carry
-notes partly in Spanish, left over from an earlier Spanish-language version of the presentation, and source
-slides 40 and 41 (both KML) carry the GML note verbatim, which is clearly a paste error; that note is not
-reproduced on the KML slides and the error is flagged there.
-
-STILL OPEN — the full list of markers in this file: one TODO(instructor) at the top of the file (retire and
-rebuild); TODO(graphic) for the missing Book1 workbook; TODO(instructor) on the 35-vs-33 standards-count
-inconsistency between source slides 3 and 12; TODO(instructor) on the 2011 standards baseline, the stale
-GEOSS Registry count, the 2011 imagery-deployment list, the 2011 SWE status list, the 2011 URL set, the
-ArcGIS-9-era compliance screenshot, the dropped initiative-lead names, and the KML/GML note paste error;
-TODO(graphic) on the GeoDRM cloud graphic whose text overflowed its shapes and was replaced with a plain
-list; TODO(graphic) on sixteen text-only slides that want a figure (image generation was off for this pass);
-TODO(instructor) for the reading chapter; and VERIFY on the Lab 7 pairing in Before Next Class.
--->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 8, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 9. -->
 
 ---
 
@@ -1302,7 +585,7 @@ Five questions: **what does the service actually hand you** — a picture, the f
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
-- The same distinction runs through this week's reading and open-book quiz
+- The WMS-picture question is the one that bites in practice
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/web-services/</span>
 
@@ -1314,4 +597,6 @@ Five questions: **what does the service actually hand you** — a picture, the f
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: what you can do with a returned WMS map image. Half the room will want to run map algebra on the pixels of the Landsat mosaic, which is exactly the confusion worth having out loud - the image is symbolized display color, and the only way back to the data is to ask the server about a point, or to ask a WCS instead. The open-standard item is the other reliable split: closed-source software can be fully compliant, because the standard is the document, not the implementation. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: what you can do with a returned WMS map image. Today's GetFeatureInfo answer from the USGS topo server (a color, 247/247/247) is the best argument against running map algebra on the pixels. The open-standard item is the other reliable split: closed-source software can be fully compliant, because the standard is the document, not the implementation. If the room has no signal, put the URL on the board. -->
+
+<!-- Rebuild notes (2026-10-05): replaces the faithful conversion of the January 2011 OGC conference deck, now archived unlinked as slides/week-09/ogc-web-services-2011.md. Same filename, so the Learning Suite and schedule links still work; the schedule title in tools/build_schedule.py still reads "Overview of OGC Web Services" with the 2011 description and should be updated by the maintainer (that file has another session's uncommitted edits, so it was not touched). Every request in the deck was run with curl and/or tools/week09_web_services_figures.py on October 5, 2026; URLs are in each slide's notes. Reused from the 2011 deck: ogc-ws-pattern, ogc-wms-getfeatureinfo, ogc-wfs-multiple-servers, ogc-publish-find-bind, and the four ogc-coverage-* images. No ArcGIS Pro screenshots appear (none were taken for this deck); the ArcGIS Pro menu paths are from the Lab 5/7 GUI builds (From Path) and Esri's documentation (the Insert ▸ Connections paths, marked VERIFY). The quiz still says "the deck's example comes back with an elevation of 237 meters"; that example survives as the diagram on the GetFeatureInfo slide, but the live server in the deck returns a color, which is a stronger version of the quiz's point. -->

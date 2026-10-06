@@ -4,7 +4,7 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Thursday** — [Overview of OGC Web Services](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/ogc-web-services.html) — Interoperability and open standards for sharing spatial data over the web: WMS, WFS, WCS, and their relatives.
+- **Thursday** — [OGC Web Services](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/ogc-web-services.html) — Data you ask for instead of download: WMS, WFS, WCS and catalogs, the OGC API generation, ArcGIS REST queries, and cloud-native COG and STAC, all on live Utah services.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
