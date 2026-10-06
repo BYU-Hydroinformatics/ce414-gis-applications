@@ -7,8 +7,18 @@ Fall 2026 · Dr. Dan Ames
 *Measuring the volume of a volcanic dome by rebuilding the plain beneath it*
 
 <!-- **Revision notes.** Drafted October 5, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab08-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab08/PARITY_PLAN.md. The decisions
-it rests on are in `tools/lab08/PARITY_PLAN.md`. Step figures marked TODO(capture) are owed from a
-GUI build in ArcGIS Pro.
+it rests on are in `tools/lab08/PARITY_PLAN.md`. The dialog captures (Figures 0-8) and Figure C come
+from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab08GUI\Lab08.aprx, model
+ButteVolume, set up by tools/lab08/gui_project.py). ModelBuilder run 32 s; every check value
+reproduced (first point 337,632.58 E 4,806,349.71 N, 560 kept, 280,311 cells, 729.1 / 183.5 m, 53
+below, 5.145018 km3). A tool-dialog run at 250 points (1 min 10 s) gave 146 kept, 735.7 m, 0 below,
+5.2288 km3, matching check_values.json, and deleted every non-parameter output except Random_Points.
+GUI facts: the environment is "Random Number Generator" (Seed, Generator = ACM collected algorithm 599)
+and the model-level seed reaches Create Random Points; the Cell Size list offers only map layers;
+choosing the outline map layer in Erase added a duplicate variable (model variable reads
+Butte_Boundary:1); IDW takes cell size 10 from the environment; Extract by Mask fills Analysis Extent
+from the mask; Raster Calculator (2) replaced the typed name with RasterC_1; Zonal Statistics opens
+at Mean with OBJECTID filled in.
 
 **Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 5, 2026
 (`tools/lab08/run_model.py`, `step_checks.py`) against the hosted data. -->
@@ -135,10 +145,13 @@ uses **Spline** (Spatial Analyst), the smooth interpolator from Week 8.
 
 ## Example Model
 
-<!-- TODO(capture): Figure C, the finished model exported with Export ▸ Export To Graphic from the GUI build. -->
+![The finished ModelBuilder model, exported as a vector diagram. Butte_Boundary, marked P, feeds Buffer (Points_Boundary), Erase, both Extract by Mask tools and Zonal Statistics. Points_Boundary, Lab08.gdb and Number of Points, marked P, feed Create Random Points (Random_Points), then Extract Values to Points with DEM_UTM (Points_Values), Erase (Plain_Points, marked P), IDW (Plain_Surface) and Extract by Mask (2) (Plain_Butte). BigSouthernButte_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask (DEM_Butte). DEM_Butte and Plain_Butte feed Raster Calculator (Height_Above_Plain, marked P), then Raster Calculator (2) (Volume_Cell), then Zonal Statistics (Butte_Volume, marked P).](images/lab08-full-model.svg)
 
-The finished model has two inputs — the DEM and the outline — and one number out. The upper branch rebuilds the plain from points around the butte; the lower branch cuts the real surface
-to the outline; Raster Calculator and Zonal Statistics turn the difference into a volume.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Two
+inputs, the DEM and the outline, and one number out. The upper branch rebuilds the plain from points
+around the butte; the lower branch cuts the real surface to the outline; two Raster Calculators and
+Zonal Statistics turn the difference into a volume. The six elements marked `P` are the model
+parameters and become the tool dialog of Step 9.
 
 ## Complete the Lab
 
@@ -164,10 +177,16 @@ without the step-by-step instructions below, say so in your report.
    **Properties**, set **Name** to `ButteVolume` and **Label** to `Butte Volume`, and save.
 5. On the **ModelBuilder** tab click **Environments** and set:
     - **Current Workspace** and **Scratch Workspace**: your project geodatabase
-    - **Random number generator**: **Seed** `1`, **Generator Type** ACM599 <!-- VERIFY in the GUI: the environment's label and that a model-level setting reaches Create Random Points -->
-    - after Step 1 has run once: **Snap Raster** and **Cell Size**: `DEM_UTM`
+    - **Random Number Generator**: **Seed** `1`; leave **Generator** at ACM collected algorithm 599
+    - after Step 1 has run once: **Cell Size** `10`, and **Snap Raster** `DEM_UTM` — it is not in
+      the list until it is on a map, so browse to it in your project geodatabase or type its path
 
-<!-- TODO(capture): Figure 0, the Environments dialog. -->
+    Type an environment's name in the dialog's search box to find it.
+
+![The model's Environments dialog, two searches combined: Current Workspace and Scratch Workspace Lab08.gdb; Output Coordinate System empty; Cell Size 10; Mask empty; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab08-environments.png)
+
+**Figure 0.** ModelBuilder ▸ Environments, from two searches (`workspace` and `random`). Leave
+Output Coordinate System empty: Step 1 projects the DEM itself.
 
 > [!NOTE]
 > **Why fix the seed?** Create Random Points draws from a random number generator. With the same seed
@@ -183,7 +202,10 @@ Add **Project Raster** with `BigSouthernButte_DEM.tif` as the input:
 - **Output Cell Size**: 10 (X and Y)
 - **Output Raster Dataset**: `DEM_UTM`
 
-<!-- TODO(capture): Figure 1, Project Raster. -->
+![The Project Raster dialog from ModelBuilder: Input Raster BigSouthernButte_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10, Registration Point empty.](images/lab08-project-raster.png)
+
+**Figure 1.** Project Raster. It switches itself to Bilinear when you pick this DEM and proposes
+cells of about 9.0 m; type 10 in both X and Y.
 
 > [!TIP]
 > **Check the result:** `DEM_UTM` is **2,314 columns × 1,944 rows** of 10 m cells, values
@@ -198,7 +220,9 @@ Dissolve all output features into a single feature, output `Points_Boundary`.
 
 This polygon covers the butte and a ring of plain 1,500 m wide around it. The random points go here.
 
-<!-- TODO(capture): Figure 2, Buffer. -->
+![The Buffer dialog from ModelBuilder, with a banner suggesting Pairwise Buffer: Input Features Butte_Boundary, Output Feature Class Points_Boundary, Distance 1500 Meters, Side Type Full, Method Planar, Dissolve Type Dissolve all output features into a single feature.](images/lab08-buffer.png)
+
+**Figure 2.** Buffer. Pairwise Buffer does the same job; either is fine.
 
 > [!TIP]
 > **Check the result:** `Points_Boundary` is **65.411 km²**; `Butte_Boundary` is **28.030 km²** of
@@ -208,12 +232,19 @@ This polygon covers the butte and a ring of plain 1,500 m wide around it. The ra
 
 1. Add **Create Random Points**: **Output Location** your project geodatabase, **Output Point
    Feature Class** `Random_Points`, **Constraining Feature Class** `Points_Boundary`, **Number of
-   Points [value or field]** `1000`. Right-click the number of points
-   in the model ▸ **Create Variable** ▸ **From Parameter** ▸ **Number of Points**, and make that
-   variable a model parameter. <!-- VERIFY the GUI path to expose Number of Points -->
+   Points [value or field]** `1000` (leave its type at Long). Then right-click the tool in the
+   model ▸ **Create Variable** ▸ **From Parameter** ▸ **Number of Points [value or field]**,
+   right-click the new oval ▸ **Rename** it `Number of Points`, and right-click it ▸ **Parameter**.
 2. Add **Extract Values to Points** with `Random_Points` and `DEM_UTM`, output `Points_Values`.
 
-<!-- TODO(capture): Figures 3a and 3b, Create Random Points and Extract Values to Points. -->
+![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab08.gdb, Output Point Feature Class Random_Points, Constraining Feature Class Points_Boundary, Number of Points Long 1000, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab08-create-random-points.png)
+
+**Figure 3a.** Create Random Points. Once a constraining feature class is set, the Constraining
+Extent box disappears.
+
+![The Extract Values to Points dialog from ModelBuilder: Input point features Random_Points, Input raster DEM_UTM, Output point features Points_Values, both checkboxes unchecked.](images/lab08-extract-values.png)
+
+**Figure 3b.** Extract Values to Points.
 
 > [!TIP]
 > **Check the result:** 1,000 points, `RASTERVALU` from **1,531.2 to 2,277.2** m. With seed 1, the
@@ -225,6 +256,18 @@ This polygon covers the butte and a ring of plain 1,500 m wide around it. The ra
 Add **Erase**: **Input Features** `Points_Values`, **Erase Features** `Butte_Boundary`, output
 `Plain_Points`.
 
+> [!WARNING]
+> **Pick the outline from Model Variables.** The Erase Features list shows `Butte_Boundary` twice:
+> the map layer at the top, and the model's own variable under **Model Variables**, where it reads
+> `Butte_Boundary:1`. Choose the second. In our build, choosing the map layer added a second
+> `Butte_Boundary` oval to the model; the tool dialog would then ask for the outline twice and a
+> Step 9 run with your own outline would use both. The same goes for the masks in Steps 6 and 8.
+> If an extra oval appears, delete it and reconnect.
+
+![The Erase dialog from ModelBuilder, with a banner suggesting Pairwise Erase: Input Features Points_Values, Erase Features Butte_Boundary:1, Output Feature Class Plain_Points.](images/lab08-erase.png)
+
+**Figure 4.** Erase, with the outline chosen from Model Variables.
+
 > [!TIP]
 > **Check the result:** **560** points remain, `RASTERVALU` **1,531.2 to 1,597.0** m (mean
 > 1,559.4). If any point is above 1,600 m, the erase used the wrong polygon.
@@ -234,12 +277,15 @@ Add **Erase**: **Input Features** `Points_Values`, **Erase Features** `Butte_Bou
 Add **IDW**: **Input point features** `Plain_Points`, **Z value field** `RASTERVALU`, **Output
 cell size** `10`, **Power** 2, **Search radius** Variable with 12 points, output `Plain_Surface`.
 
-<!-- TODO(capture): Figure 5, IDW. -->
+![The IDW dialog from ModelBuilder: Input point features Plain_Points, Z value field RASTERVALU, Output raster Plain_Surface with a warning icon, Output cell size 10, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab08-idw.png)
+
+**Figure 5.** IDW. The warning icon only says `Plain_Surface` already exists from an earlier run.
 
 > [!WARNING]
-> **Set the cell size.** IDW's default cell size comes from the extent of the points, not from the
-> DEM, and is far coarser than 10 m. Type 10, and keep the Snap Raster environment on `DEM_UTM` so
-> the plain's cells line up with the DEM's. <!-- VERIFY the GUI default cell size -->
+> **Check the cell size.** With the Cell Size environment of Step 0, IDW fills in 10. Without it,
+> IDW picks a cell size from the extent of the points, much coarser than the DEM's. Keep the Snap
+> Raster environment on `DEM_UTM` so the plain's cells line up with the DEM's. The Z value field list
+> stays empty until the model has run once; type `RASTERVALU`.
 
 > [!TIP]
 > **Check the result** (after Step 6): inside the outline the rebuilt plain runs from **1,547.1 to
@@ -252,7 +298,10 @@ Add **Extract by Mask** twice, each with `Butte_Boundary` as the mask:
 1. `DEM_UTM` → `DEM_Butte`
 2. `Plain_Surface` → `Plain_Butte`
 
-<!-- TODO(capture): Figure 6, Extract by Mask. -->
+![The Extract by Mask dialog from ModelBuilder: Input raster DEM_UTM, Input raster or feature mask data Butte_Boundary:1, Output raster DEM_Butte, Extraction Area Inside, and the Analysis Extent filled in from the mask: top 4810897.26, left 332575.20, right 338592.05, bottom 4804664.22, NAD 1983 UTM Zone 12N.](images/lab08-extract-mask.png)
+
+**Figure 6.** The first Extract by Mask. The Analysis Extent fills itself in from the mask; leave it.
+Type the output name last: this tool replaces a typed name when its inputs change.
 
 > [!TIP]
 > **Check the result:** each is **280,311** cells — 28.03 km² of 10 m cells, the outline's area.
@@ -277,7 +326,14 @@ Add **Raster Calculator** twice, both in the model:
     Height times the cell's 10 m × 10 m is cubic meters; divided by 1,000³ it is cubic kilometers.
     `**` is Python's power operator.
 
-<!-- TODO(capture): Figures 7a and 7b, the two Raster Calculators. -->
+![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, BigSouthernButte_DEM.tif, Number of Points, Plain_Surface and DEM_Butte; the expression reads "%DEM_Butte%" - "%Plain_Butte%"; Output raster Height_Above_Plain.](images/lab08-rc-height.png)
+
+**Figure 7a.** The height above the plain.
+
+![The Raster Calculator (2) dialog: the expression reads "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3); Output raster Volume_Cell.](images/lab08-rc-volume.png)
+
+**Figure 7b.** Each cell's volume, in cubic kilometers. Raster Calculator replaced the typed output
+name with `RasterC_1` when the expression went in; type the name last and check it before OK.
 
 > [!TIP]
 > **Check the result:** in `Height_Above_Plain` (**Properties** ▸ **Source** ▸ **Statistics**) the
@@ -295,7 +351,15 @@ Make these model parameters, and name them so the tool dialog reads well: the DE
 and the number of points (inputs), and `Plain_Points`, `Height_Above_Plain` and `Butte_Volume`
 (outputs). Step 9 and your maps need all three outputs.
 
-<!-- TODO(capture): Figure 8, Zonal Statistics, and the tool dialog. -->
+![The Zonal Statistics dialog from ModelBuilder: Input Raster or Feature Zone Data Butte_Boundary:1, Zone Field OBJECTID, Input Value Raster Volume_Cell, Output Raster Butte_Volume, Statistics Type Sum, Ignore NoData in Calculations checked, Process as Multidimensional unchecked.](images/lab08-zonal.png)
+
+**Figure 8a.** Zonal Statistics. Zone Field fills in `OBJECTID` by itself; Statistics Type opens at
+Mean — change it to Sum, near the bottom of the list.
+
+![The model as a tool in the Geoprocessing pane, titled Butte Volume: Number of Points, Long, 1000; Butte_Boundary; BigSouthernButte_DEM.tif; then the outputs Plain_Points, Height_Above_Plain and Butte_Volume, each with a warning icon because those datasets already exist.](images/lab08-tool-dialog.png)
+
+**Figure 8b.** The model as a tool. The warning icons only say the outputs exist from an earlier run;
+give every output a new name for each Step 9 run.
 
 > [!TIP]
 > **Check the result:** **5.145 km³**. As a sanity check: 28.03 km² of outline times a mean height
@@ -304,7 +368,9 @@ and the number of points (inputs), and `Plain_Points`, `Height_Above_Plain` and 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw it),
 > including `DEM_UTM`. Do Steps 1–8 from inside ModelBuilder first and record the check values before
-> any dialog run. <!-- VERIFY in the GUI: a dialog run with Snap Raster and Cell Size set to DEM_UTM, after DEM_UTM has been deleted -->
+> any dialog run. In our build, a dialog run at 250 points took 1 minute 10 seconds and left only its
+> three outputs and `Random_Points`. The model makes `DEM_UTM` again at the start of every run, so
+> the Snap Raster setting still works.
 
 ### Step 9 — Test the Assumptions
 
