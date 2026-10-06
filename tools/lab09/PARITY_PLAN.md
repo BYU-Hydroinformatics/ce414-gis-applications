@@ -62,7 +62,7 @@ method behaves. The revision keeps that design and gives it the course spine.
 
 - Extract: 1,188 × 756 cells of 1/3″, 1,368.0–2,896.9 m, no NoData.
 - Project Raster (UTM 12N, bilinear, 30 m): 314 × 262 cells, 1,368.1–2,896.5 m.
-- Study_Area 8.67 × 6.99 km = 60.6 km²; True_DEM 67,337 cells, 1,368.5–2,896.5 m, mean 1,819.8 m.
+- Study_Area 8.67 × 6.99 km = 60.6 km²; True_DEM 289 × 234 (one empty row), 67,337 cells, 1,368.5–2,896.5 m, mean 1,819.8 m.
 - Create Random Points, 2,500, seed 1: first point 444,603.3 E 4,453,723.7 N; `RASTERVALU`
   1,368.7–2,886.7 m; a repeat run is identical.
 - Thiessen: 2,500 polygons; surface 1,368.7–2,886.7 (exactly the samples'); error −234.1 to +214.3,
@@ -92,6 +92,15 @@ method behaves. The revision keeps that design and gives it the course spine.
 - RMSE by slope (Thiessen / IDW / Kriging): <10° 5.0 / 5.3 / 3.9; 10–25° 25.7 / 25.2 / 17.7;
   25–35° 37.7 / 26.8 / 17.8; >35° 47.7 / 30.6 / 22.4.
 - Personal seed 4321 (oracle test): baseline row and checkpoints reproduced in one call.
+
+## Pilot (no-GUI, October 6, 2026)
+
+`C:\Ames\Pilot09\PILOT_NOTES.md`. Every seed-1 number reproduced from the page and the zip. The serious
+finding: without an **Extent** environment, IDW and Kriging at 250 points cover only 66,297 of 67,337
+cells (RMSE 69.47 / 50.24 vs 69.46 / 50.38), and coverage depends on the seed, so personal-seed tables
+would not match the oracle. Extent = True_DEM is now in Step 0 (the oracle always set it). Also fixed:
+Step 10 order (Map 1 and checkpoints before any dialog run), semivariogram parameter path, Map 2
+deliverable vs rubric, "largest error" defined, citation question graded, Figure A names its values.
 
 ## Still owed
 

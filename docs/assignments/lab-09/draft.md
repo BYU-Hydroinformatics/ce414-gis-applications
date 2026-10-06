@@ -132,6 +132,7 @@ Every one of these is a decision somebody made, and every one of them can change
 ![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Y Mountain DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.9 m east-west; Provo and the mountain front east of it, stored in latitude and longitude and projected in Step 2; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, playing the truth in this lab; a window cut from the tile with values unchanged; USGS, public domain. A footer says the DEM's own errors never show up in the RMSE.](images/lab09-dem-metadata.svg)
 
 **Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
+the publication and source dates, the vertical datum and units, and the cell size —
 in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
 [metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
 — and say in your report what each one does to your result.
@@ -194,8 +195,9 @@ without the step-by-step instructions below, say so in your report.
 5. On the **ModelBuilder** tab click **Environments** and set:
     - **Current Workspace** and **Scratch Workspace**: your project geodatabase
     - **Random Number Generator**: **Seed** `1`; leave **Generator** at ACM collected algorithm 599
-    - after Step 3 has run once: **Cell Size** `30`, and **Snap Raster** `True_DEM` — browse to it
-      in your project geodatabase or type its path
+    - after Step 3 has run once: **Cell Size** `30`, **Snap Raster** `True_DEM` and **Extent** (under
+      Processing Extent) `True_DEM` — browse to it in your project geodatabase or type its path
+      <!-- VERIFY in the GUI: how Processing Extent accepts a dataset that is not on the map. -->
 
     Type an environment's name in the dialog's search box to find it.
 
@@ -259,18 +261,20 @@ Add **Extract by Mask**: **Input raster** `DEM_UTM`, **Input raster or feature m
 `Study_Area`, output `True_DEM`. Type the output name last: this tool replaces a typed name when its
 inputs change.
 
-Run the model this far, then set the **Cell Size** and **Snap Raster** environments of Step 0.
+Run the model this far, then set the **Cell Size**, **Snap Raster** and **Extent** environments of Step 0.
 
 <!-- TODO(capture): Figure 3, the Extract by Mask dialog. -->
 
 > [!TIP]
-> **Check the result:** `True_DEM` has **67,337** cells with values (289 × 233), from **1,368.5 to
+> **Check the result:** `True_DEM` has **67,337** cells with values, from **1,368.5 to
 > 2,896.5** m, mean **1,819.8** m. This is the truth every rebuilt surface is measured against.
 
 > [!WARNING]
-> **Set the Snap Raster.** Without it, the interpolators place their cells wherever their points'
-> extent puts them, and the subtraction in Step 8 compares cells that are offset by part of a cell.
-> Nothing reports an error; every RMSE is simply a little wrong.
+> **Set the Snap Raster and the Extent.** Without the Snap Raster, the interpolators place their
+> cells wherever their points' extent puts them, and the subtraction in Step 8 compares cells offset
+> by part of a cell. Without the Extent, IDW and Kriging fill only the box around the sample points;
+> with few points that box misses strips along the edges, and those cells drop out of the RMSE. In
+> neither case does anything report an error.
 
 ### Step 4 — Sample the Surface
 
@@ -328,8 +332,10 @@ right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power*
 Add **Kriging**: **Input point features** `Sample_Points`, **Z value field** `RASTERVALU`, output
 `Kriging_Surface`, **Kriging method** Ordinary, **Semivariogram model** Spherical, **Output cell
 size** `30`, **Search radius** Variable with 12 points. Leave the optional output variance raster
-empty. Then make the semivariogram properties a model variable and a parameter, named
-`Semivariogram`.
+empty. Then right-click the tool in the model ▸ **Create Variable** ▸ **From Parameter** ▸
+**Semivariogram properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool
+dialog it shows the same controls as here: in Step 10 you pick another model from its
+**Semivariogram model** list.
 <!-- VERIFY in the GUI: that Semivariogram properties can be exposed with Create Variable > From Parameter, and what its dialog control looks like in the tool dialog. Fallback: a Save As copy of the model per semivariogram model, as Lab 8 did for Spline. -->
 
 <!-- TODO(capture): Figure 7, the Kriging dialog. -->
@@ -386,7 +392,8 @@ Then make the parameters: the DEM and `Study_Area` (inputs) and `Number of Point
 <!-- TODO(capture): Figure 9a, Zonal Statistics as Table; Figure 9b, Calculate Field; Figure 9c, the model as a tool in the Geoprocessing pane. -->
 
 > [!TIP]
-> **Check the result:** each table has one row with **COUNT 67,337** and **AREA 60,603,300** (m²).
+> **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
+> **COUNT 67,337** and **AREA 60,603,300** (m²).
 >
 > | Table | MEAN (m²) | RMSE (m) |
 > | --- | --- | --- |
@@ -394,8 +401,8 @@ Then make the parameters: the DEM and `Study_Area` (inputs) and `Number of Point
 > | `RMSE_IDW` | 428.9 | **20.71** |
 > | `RMSE_Kriging` | 209.0 | **14.46** |
 >
-> If COUNT is smaller, an interpolator's output does not cover the whole rectangle — check the Cell
-> Size and Snap Raster environments.
+> If COUNT is smaller, an interpolator's output does not cover the whole rectangle — check the
+> **Extent** environment of Step 0. At 2,500 points it can look right without it; at 250 it does not.
 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter** (Labs 5, 7 and 8 saw it).
@@ -417,7 +424,7 @@ report: the grader re-runs your model with it.
 measured points and test against them. Do that once, on your baseline surfaces:
 
 1. Run **Create Random Points** from the Geoprocessing pane (not in the model): constraining feature
-   class `Study_Area`, **200** points, output `Checkpoints`, and on its **Environments** tab
+   class `Study_Area`, **200** points, output `Checkpoints` in your project geodatabase, and on its **Environments** tab
    **Random Number Generator** seed `99`. Everyone uses the same 200 checkpoints.
 2. **Extract Multi Values to Points** on `Checkpoints` with `True_DEM` (output field name `TRUE_Z`),
    `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface` (`KR_Z`).
@@ -425,6 +432,13 @@ measured points and test against them. Do that once, on your baseline surfaces:
    `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
 4. **Summary Statistics** on `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and `SQ_KR`. The
    square root of each mean is that method's **checkpoint RMSE**.
+
+> [!WARNING]
+> **Finish Map 1 and the checkpoints before the first dialog run.** Map 1 draws your baseline's sample
+> points, surfaces and `True_DEM`, and the checkpoints read them; none of those are parameters, so the
+> first run from the tool dialog deletes them. Export Map 1 to PDF and record the checkpoint RMSEs
+> first. (The model rebuilds `True_DEM` early in every run, so the Snap Raster and Extent settings
+> still work.) <!-- VERIFY: that a dialog run deletes True_DEM and the surfaces and rebuilds True_DEM before the interpolators run. -->
 
 **Then four more runs**, from the model's tool dialog, giving every output a name that says what
 changed (`RMSE_Kriging_n250`, `Error_IDW_n250`):
@@ -464,8 +478,10 @@ Make **two** professional map layouts (letter size, landscape is easiest):
    line, north arrow and scale bar; and a text box with your name, the date, the map projection, the
    DEM's source and date, and your seed.
 2. **One scenario from Step 10** — whichever run most changes the picture: its three error rasters
-   on Map 1's error scale, each with its RMSE, and the true DEM for reference (the surfaces are
-   optional). Say on the map what changed and by how much.
+   on Map 1's error scale with a legend, each labeled with its method, parameters and RMSE (the true
+   DEM and the surfaces are optional); a title, neat line, north arrow and scale bar; and a text box
+   with your name, the date, the map projection, the DEM's source and date, and your seed. Say in
+   the title and the text box what changed from Map 1 and by how much.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
@@ -479,12 +495,16 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   and the semivariogram exposed; and **upload your project's toolbox** (`Lab09.atbx`, in your project
   folder) with the report — the grader opens it and runs it at your seed
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
-  datum and units, and its cell size — and **what the service returned** in Step 1, and what each
-  means for your result
+  datum and units, and its cell size — and **what the service returned** in Step 1, what each
+  means for your result, and which of the two you would cite in an engineering report
 - your **check values from Steps 4 to 9** at seed 1: the first point, each surface's range, and the
   three RMSEs
-- **where the methods break**: the largest error on your own baseline error maps — its coordinates
-  and size, read from your raster — and why the ground there defeats the interpolators
+- **where the methods break**: on the error map of your best method (lowest RMSE), the cell with the
+  largest error in either direction — its coordinates and size — and why the ground there defeats
+  the interpolators, with a cropped figure of the spot. Its value is the raster's minimum or maximum
+  (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
+  the layer a two-class symbology with the break just short of that value, so that one cell stands
+  out, and click it with **Explore** to read its coordinates
 - your **sensitivity table** from Step 10, with your seed, and your answers to its three questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
@@ -516,13 +536,13 @@ numbers will differ a little from these.
 ![Example comparison sheet titled "Rebuilding Y Mountain from 2,500 Points: Kriging Comes Closest". Top row: the true DEM with 2,500 black sample points, then the Thiessen, IDW and Kriging surfaces, all on one green-to-brown-to-white elevation scale over a hillshade; the Thiessen surface is visibly faceted. Second row: the three error maps on one red-to-blue scale, labeled Thiessen error RMSE 28.29 m, IDW error RMSE 20.71 m, Kriging error RMSE 14.46 m; the valley floor is pale everywhere, and the mountain front is a mottle of red and blue, finest-grained for Thiessen and palest for Kriging. Legends, north arrow, scale bar and a text box at the bottom.](images/lab09-example-map-baseline.png)
 
 **Figure 10.** A baseline comparison sheet at seed 1. Two things to do better than this example:
-mark and label the largest error on each error map, and use the empty band below the error maps for
-a sentence on what the reader should notice.
+mark and label the largest error on the best method's error map, and use the empty band below the
+error maps for a sentence on what the reader should notice.
 
 ![Example scenario sheet titled "The Same Surfaces from 250 Points: Every Error Grows", with the same layout and color scales: far fewer sample points; blurred, blocky surfaces; and error maps dominated by dark red and dark blue across the mountain, labeled RMSE 80.73, 69.46 and 50.38 m. The text box says the run was chosen because whole ridges are missed, not just the cliff bands.](images/lab09-example-map-scenario.png)
 
-**Figure 11.** The kind of second map Step 10 asks for. Yours needs only the error maps and the true
-DEM, and should be the run that most changes what a reader would conclude, which may not be this one.
+**Figure 11.** The kind of second map Step 10 asks for. Yours needs only the error maps, and should
+be the run that most changes what a reader would conclude, which may not be this one.
 
 ## Rubric for Interpolation Explorer
 
@@ -531,7 +551,7 @@ what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, and what each means for your result (2)<br>• Your check values from Steps 4 to 9 at seed 1 (2)<br>• Where the methods break: the largest error on your own error maps, its coordinates and size, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 4 to 9 at seed 1 (2)<br>• Where the methods break: the largest error on your best method's error map, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, at seed 1, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the number of points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, the DEM's source and date, and your seed (1)<br>• The true DEM with your sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
 | **Map 2 — one Step 10 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, the DEM's source and date, and your seed (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
@@ -549,7 +569,8 @@ what to submit.
 SOURCE: "Lab 8 - Practicing with Interpolation.docx" (instructor's copy in Downloads, saved 2026-10-06), whose September 3 migration is the live docs/assignments/lab-09/README.md; rebuilt to tools/lab-conversion-guide.md per tools/labs-09-11-plan.md section 4 (accepted 2026-10-06) and tools/lab09/PARITY_PLAN.md.
 ARCGIS PRO: 3.7.1, arcpy only (tools/lab09/run_model.py, extra_checks.py, chain_check.py, extent_check.py). GUI build OWED: desktop control denied 2026-10-06.
 DATA: docs/data/lab09-y-mountain.zip, 1,885,312 bytes: YMountain_DEM.tif (window -111.68 -111.57 40.20 40.27 of USGS_13_n41w112, published 2026-05-20, source dates 1946-2023; 1,188 x 756 float32, 1,368.03-2,896.92 m, no NoData) and Lab09.gdb\Study_Area (442,514.873-451,184.873 E, 4,450,507.050-4,457,497.050 N, on DEM_UTM's 30 m grid). Built by tools/lab09/fetch_dem.py, run_model.py, make_extract.py.
-VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 with or without a Processing Extent environment (snap raster set); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
+VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 (at seed 1 / 2,500 points also without an Extent environment, but NOT in general: the pilot found IDW and Kriging at 250 points cover only 66,297 cells without Extent = True_DEM, RMSE 69.47 / 50.24 instead of 69.46 / 50.38; Extent now set in Step 0); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
 SENSITIVITY (do NOT publish): see tools/lab09/PARITY_PLAN.md. Points 250/1,000/2,500/10,000: Kriging 50.38/24.90/14.46/6.90; IDW power 1/2/3/5: 23.98/20.71/20.20/21.60; Kriging Gaussian 24.81, other models 14.46; checkpoints within 2-3 m of the full-grid RMSE, same ranking; seeds 2-5 never change the ranking.
 GRADING ORACLE: run_model.py --seed NNNN reproduces a student's Step 10 table (all five rows plus the checkpoint RMSEs) in about two minutes.
+PILOT (no-GUI, 2026-10-06, C:\Ames\Pilot09\PILOT_NOTES.md): every seed-1 number reproduced; checkpoint recipe works as written (seed 1: 30.38 / 23.16 / 17.12, deliberately not published). Fixed from its findings: Extent environment added (Step 0, Step 3 warning, Step 9 tip); Step 10 warning to finish Map 1 and the checkpoints before dialog runs; semivariogram parameter path spelled out; Map 2 deliverable matches its rubric row, true DEM optional; 'largest error' defined (best method, either direction) with a way to find it; True_DEM cell count without the wrong 289 x 233; citation question added to deliverables and rubric; Figure A names the three values; checkpoint output location; OBJECTID_1 zone field noted.
 TODO(instructor): 1. GUI build and captures (Figures 0-9, Figure C). 2. Lab machines' license level (Thiessen). 3. Exposing the semivariogram as a parameter. 4. Report template. 5. Week 9 deck alignment. 6. Learning Suite due date November 7. -->

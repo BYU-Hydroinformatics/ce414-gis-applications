@@ -456,7 +456,8 @@ const LABS = {
       table: { caption: 'Table 1. Metadata for the DEM, and what the 3DEP image service returned.',
                head: ['Value', 'What you found', 'What it means for your result'],
                rows: [['Publication date and source dates', '', ''], ['Vertical datum and units', '', ''], ['Cell size', '', ''],
-                      ['Service: spatial reference and cell size', '', ''], ['Service vs extract at the highest cell (m)', '', '']],
+                      ['Service: spatial reference and cell size', '', ''], ['Service vs extract at the highest cell (m)', '', ''],
+                      ['Which you would cite in an engineering report', '', '']],
                widths: [2600, 2400, 4360] } },
 
     { h: 'The Model',
@@ -485,7 +486,7 @@ const LABS = {
                widths: [3360, 2000, 2000, 2000] } },
 
     { h: 'Where the Methods Break',
-      hint: 'Rubric: the largest error on your own baseline error maps, its coordinates and size, and why the ground there defeats the interpolators (3 points). Read the location and value from your own raster and include a cropped figure of that spot. A general paragraph about interpolation earns nothing here.',
+      hint: 'Rubric: on your best method’s error map, the cell with the largest error in either direction — its coordinates and size, with a cropped figure — and why the ground there defeats the interpolators (3 points). The deliverables say how to find it. A general paragraph about interpolation earns nothing here.',
       figures: [
         { caption: 'Figure 3. The largest error on my baseline error maps, close up.', size: 'medium',
           hint: 'A crop of your error map around the largest error, with its coordinates and value labeled.' },
@@ -511,7 +512,7 @@ const LABS = {
         { caption: 'Map 1. Baseline comparison sheet at my seed — the true DEM, three surfaces and three error maps.', size: 'landscape', pageBreakAfter: true,
           hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, the DEM’s source and date, and your seed; the true DEM with your sample points and the three surfaces on one elevation scale with a legend; the three error maps on one diverging scale with the same breaks, with a legend; every panel labeled with method, parameters and RMSE.' },
         { caption: 'Map 2. One Step 10 scenario — its three error maps on Map 1’s error scale.', size: 'landscape',
-          hint: 'Must carry: the scenario’s three error maps on Map 1’s error scale with a legend and the true DEM for reference; every panel labeled with method, parameters and RMSE; title and text box saying what changed from Map 1 and by how much; plus the title, neat line, north arrow, scale bar and text box items of Map 1.' },
+          hint: 'Must carry: the scenario’s three error maps on Map 1’s error scale with a legend (the true DEM and surfaces are optional); every panel labeled with method, parameters and RMSE; title and text box saying what changed from Map 1 and by how much; plus the title, neat line, north arrow, scale bar and text box items of Map 1.' },
       ] },
 
     { h: 'References', pageBreakBefore: true,
