@@ -29,10 +29,8 @@ Fall 2026 · Dr. Dan Ames
 > textbook figure) is replaced by a measured profile.
 >
 > *Figures:* Figures A and B are generated from the data (`tools/lab09/make_svgs.py`); the example
-> maps are real ArcGIS Pro layouts (`build_figures.py`). **The dialog captures and Figure C are owed:**
-> desktop control of ArcGIS Pro was not available when this draft was written, so every step figure
-> is a `TODO(capture)` comment, and every GUI detail not carried over from the Lab 8 build is marked
-> `VERIFY`.
+> maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
+> GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab09GUI\Lab09.aprx`).
 
 ## Background
 
@@ -154,13 +152,13 @@ Step 10 also uses **Extract Multi Values to Points** and **Summary Statistics**.
 
 ## Example Model
 
-<!-- TODO(capture): Figure C, the finished model exported from ModelBuilder as SVG (Export ▸ Export To Graphic, nothing selected), images/lab09-full-model.svg, from the GUI build. -->
+![The finished ModelBuilder model, exported as a vector diagram. YMountain_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask with Study_Area, marked P, giving True_DEM. Number of Points and Random Seed, both marked P, feed Create Random Points (Random_Points), then Extract Values to Points with True_DEM (Sample_Points). Three branches follow: Create Thiessen Polygons and Polygon to Raster (Thiessen_Surface); IDW with IDW Power, marked P (IDW_Surface); Kriging with Semivariogram, marked P (Kriging_Surface). Each surface goes to a Raster Calculator that subtracts it from True_DEM (Error_Thiessen, Error_IDW, Error_Kriging, all marked P), a second Raster Calculator that squares it, Zonal Statistics as Table over Study_Area, and Calculate Field, ending in RMSE Thiessen, RMSE IDW and RMSE Kriging, all marked P.](images/lab09-full-model.svg)
 
-*Figure C, the finished model exported from ModelBuilder, will be added after the ArcGIS Pro build.*
-It reads left to right: the DEM is projected and cut to the rectangle (`True_DEM`); random points
-sample it; three branches rebuild it (Thiessen polygons then Polygon to Raster; IDW; Kriging); each
-rebuild is subtracted from `True_DEM`, squared, averaged over the rectangle and square-rooted. The
-elements marked `P` become the tool dialog you use in Step 10.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. The
+DEM is projected and cut to the rectangle (`True_DEM`); random points sample it; three branches
+rebuild it (Thiessen polygons then Polygon to Raster; IDW; Kriging); each rebuild is subtracted from
+`True_DEM`, squared, averaged over the rectangle and square-rooted. The twelve elements marked `P`
+become the tool dialog of Step 10.
 
 ## Complete the Lab
 
@@ -178,8 +176,8 @@ without the step-by-step instructions below, say so in your report.
 > [!NOTE]
 > **Important Note #2.** Every check value on this page was measured on the files you download, with
 > the steps below, in ArcGIS Pro 3.7.1. With the random seed of Step 0, your numbers should match to
-> the last digit shown. Screenshots were captured in the same version and may differ slightly from
-> what you see.
+> the last digit shown. The screenshots were captured in the same version, building this model, and
+> their paths start with `C:\` because they were made on an instructor machine.
 
 ### Step 0 — Set Up the Project
 
@@ -195,13 +193,24 @@ without the step-by-step instructions below, say so in your report.
 5. On the **ModelBuilder** tab click **Environments** and set:
     - **Current Workspace** and **Scratch Workspace**: your project geodatabase
     - **Random Number Generator**: **Seed** `1`; leave **Generator** at ACM collected algorithm 599
-    - after Step 3 has run once: **Cell Size** `30`, **Snap Raster** `True_DEM` and **Extent** (under
-      Processing Extent) `True_DEM` — browse to it in your project geodatabase or type its path
-      <!-- VERIFY in the GUI: how Processing Extent accepts a dataset that is not on the map. -->
+    - **Cell Size**: `30`
+    - **Extent**: click the second button above the boxes, which lists the map's layers, and choose
+      `YMountain_DEM.tif`. The box fills with the DEM's corners in latitude and longitude.
+    - after Step 2 has run once: **Snap Raster** `DEM_UTM` — type its path,
+      `D:\Smith\Lab09\Lab09.gdb\DEM_UTM` (with your own folder)
 
     Type an environment's name in the dialog's search box to find it.
 
-<!-- TODO(capture): Figure 0, the model Environments dialog (workspace, random, cell size, snap raster). -->
+![The model's Environments dialog, two searches combined: Extent from YMountain_DEM.tif, Top 40.27, Left -111.68, Right -111.57, Bottom 40.20 in GCS North American 1983; Current Workspace Lab09.gdb; Output Coordinate System empty; Cell Size 30; Mask empty; Cell Alignment Default; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab09-environments.png)
+
+**Figure 0.** ModelBuilder ▸ Environments, from two searches (`extent` and `random`). Leave Output
+Coordinate System empty: Step 2 projects the DEM itself.
+
+> [!WARNING]
+> **Snap to `DEM_UTM`, not to `True_DEM`.** Snapping to the surface you are about to cut looks
+> natural, and it works inside ModelBuilder, but the first run from the tool dialog in Step 10 stops
+> with *ERROR 010654: The output True_DEM is the same as the snap raster*. `True_DEM` is cut from
+> `DEM_UTM`, so the cells line up either way.
 
 > [!NOTE]
 > **Why fix the seed?** Create Random Points draws from a random number generator. With the same seed
@@ -213,42 +222,65 @@ without the step-by-step instructions below, say so in your report.
 The same elevations are served live on the web. Before you use the prepared file, look at what the
 service gives you.
 
-1. On the **Map** tab click **Add Data** ▸ **From Path**, paste
+1. On the **Map** tab, in the **Layer** group, click **Add Data From Path** (the yellow button
+   beside the basemap gallery), paste
    `https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer`, and click
    **Add**. It is slow; give it a minute.
-2. Right-click the new layer ▸ **Properties** ▸ **Source**, and record its **spatial reference** and
-   **cell size**. Do the same for `YMountain_DEM.tif`.
-3. On the **Map** tab click **Go To XY**, enter longitude **−111.58865** and latitude **40.21415**
-   (decimal degrees), and pan there. This is the highest cell of the extract. Click it with
-   **Explore** and read the value of both layers.
-4. Remove the service layer. You will not use it again: the rest of the lab runs on the extract.
+2. Right-click the new `3DEPElevation` layer ▸ **Properties** ▸ **Source**. Expand **Raster
+   Information** and **Spatial Reference** and record the columns and rows, the cell size, the pixel
+   type and the coordinate system. Look at the layer's legend in the Contents pane, too.
+3. On the **Map** tab click **Go To XY**, enter longitude **−111.58865** and latitude **40.21415**,
+   and drop a marker there. This is the highest cell of the extract. Click the marker with
+   **Explore**: the pop-up reports the service. Turn the service layer off and click again to read the
+   extract.
+4. Remove the service layer and the marker's graphics layer. The rest of the lab runs on the extract.
 
-<!-- TODO(capture): Figure 1, the service layer's Properties > Source showing its spatial reference and cell size. -->
+![The Add Data From Path dialog: Path set to https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer and Service type An ArcGIS Server Web Service.](images/lab09-add-from-path.png)
+
+**Figure 1a.** Add Data From Path, with the 3DEP elevation service.
+
+![The service layer's Properties, Source page: Data Type Raster, Location the 3DEP ImageServer URL, Vertical Units Meter; Raster Information: Columns 40075015, Rows 20498394, 1 band, Cell Size X 1 and Y 1, Uncompressed Size 747.13 TB, Format Image Service, Source Type Elevation, Pixel Type unsigned char, Pixel Depth 8 Bit.](images/lab09-service-raster-info.png)
+
+**Figure 1b.** What came back: 1 m cells covering the whole country — 747 TB if you could download it
+— in **8-bit unsigned** pixels.
+
+![The Spatial Reference section of the same page: Projected Coordinate System WGS 1984 Web Mercator (auxiliary sphere), Projection Mercator Auxiliary Sphere, WKID 3857.](images/lab09-service-spatial-reference.png)
+
+**Figure 1c.** The service's coordinate system: Web Mercator, not the latitude and longitude of the
+extract, and not UTM.
+
+![The Explore pop-up for the service at the marker: 3DEPElevation (2), item n41w112; Service Pixel Value 154, Stretch.Pixel Value 154, Name n41w112, MinPS 0, MaxPS 27, LowPS 10.30736, HighPS 16.](images/lab09-service-popup.png)
+
+**Figure 1d.** The service at the highest cell of the extract. The value is **154**, not an
+elevation; the source item is tile `n41w112`, the same tile the extract was cut from.
 
 > [!TIP]
-> **Check the result:** the service comes back in **WGS 1984 Web Mercator (auxiliary sphere)**, not
-> in the latitude and longitude of the extract, with cells of about **1 m**. At the highest cell the
-> extract reads **2,896.9 m** and the service within a few tenths of a meter of it (we measured
-> **2,896.7 m**).
-> <!-- VERIFY in the GUI: the wording of the spatial reference in Properties > Source, the cell size it shows, and what Explore returns at 40.21415 N, 111.58865 W (REST identify gave 2,896.7; the extract's cell there is 2,896.92, its maximum). -->
+> **Check the result:** the service arrives drawn as a **hillshade**, with a legend from 0 to 255.
+> That is the service's default *raster function*: the server turns elevations into a picture before
+> sending them, and that is why the pixel type is 8-bit and the pop-up reads **154** at the marker.
+> The extract reads about **2,893 to 2,897 m** there, depending on exactly which cell your click lands
+> in (the highest cell is 2,896.9 m).
 
 > [!NOTE]
 > **Why not just use the service?** A service is convenient and always current, but what comes back
-> depends on the request: it is reprojected, resampled to the screen, and can change when the USGS
-> updates it. An analysis that others must check needs a fixed copy with a known date, which is why
-> the course hosts one. Say in your report which of the two you would cite in an engineering report,
-> and why.
+> depends on the request: here a shaded picture in Web Mercator rather than elevations in meters, and
+> it can change whenever the USGS updates it. An analysis that others must check needs a fixed copy
+> with a known date, which is why the course hosts one. Say in your report which of the two you would
+> cite in an engineering report, and why.
 
 ### Step 2 — Project the DEM
 
 Add **Project Raster** with `YMountain_DEM.tif` as the input:
 
-- **Output Coordinate System**: NAD 1983 UTM Zone 12N
+- **Output Coordinate System**: NAD 1983 UTM Zone 12N (the globe button, then search for `26912`)
 - **Resampling Technique**: Bilinear interpolation
 - **Output Cell Size**: 30 (X and Y)
 - **Output Raster Dataset**: `DEM_UTM`
 
-<!-- TODO(capture): Figure 2, the Project Raster dialog from ModelBuilder. -->
+![The Project Raster dialog from ModelBuilder: Input Raster YMountain_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 30 and Y 30, Registration Point empty.](images/lab09-project-raster.png)
+
+**Figure 2.** Project Raster. It switches itself to Bilinear when you pick this DEM and proposes
+cells of about 9.06 m; type 30 in both X and Y.
 
 > [!TIP]
 > **Check the result:** `DEM_UTM` is **314 columns × 262 rows** of 30 m cells, values **1,368.1 to
@@ -261,9 +293,11 @@ Add **Extract by Mask**: **Input raster** `DEM_UTM`, **Input raster or feature m
 `Study_Area`, output `True_DEM`. Type the output name last: this tool replaces a typed name when its
 inputs change.
 
-Run the model this far, then set the **Cell Size**, **Snap Raster** and **Extent** environments of Step 0.
+Run the model this far, then set the **Snap Raster** environment of Step 0.
 
-<!-- TODO(capture): Figure 3, the Extract by Mask dialog. -->
+![The Extract by Mask dialog from ModelBuilder: Input raster DEM_UTM, mask Study_Area, Output raster True_DEM, Extraction Area Inside, and the Analysis Extent filled in from the mask: Top 4457497.05, Left 442514.873, Right 451184.873, Bottom 4450507.05, NAD 1983 UTM Zone 12N.](images/lab09-extract-by-mask.png)
+
+**Figure 3.** Extract by Mask. The Analysis Extent fills itself in from the rectangle; leave it.
 
 > [!TIP]
 > **Check the result:** `True_DEM` has **67,337** cells with values, from **1,368.5 to
@@ -279,13 +313,30 @@ Run the model this far, then set the **Cell Size**, **Snap Raster** and **Extent
 ### Step 4 — Sample the Surface
 
 1. Add **Create Random Points**: **Output Location** your project geodatabase, **Output Point
-   Feature Class** `Random_Points`, **Constraining Feature Class** `Study_Area`, **Number of Points
-   [value or field]** `2500` (leave its type at Long). Then right-click the tool in the model ▸
-   **Create Variable** ▸ **From Parameter** ▸ **Number of Points [value or field]**, right-click the
-   new oval ▸ **Rename** it `Number of Points`, and right-click it ▸ **Parameter**.
-2. Add **Extract Values to Points** with `Random_Points` and `True_DEM`, output `Sample_Points`.
+   Feature Class** `Random_Points`, **Constraining Feature Class** `Study_Area` — choose it under
+   **Model Variables**, where it reads `Study_Area:1` — and **Number of Points [value or field]**
+   `2500` (leave its type at Long).
+2. Right-click the tool in the model ▸ **Create Variable** ▸ **From Parameter** ▸ **Number of
+   Points [value or field]**. Right-click the new oval ▸ **Rename** it `Number of Points`, and
+   right-click it ▸ **Parameter**.
+3. Right-click the tool again ▸ **Create Variable** ▸ **From Environment** ▸ **Random Number
+   Generator**. Rename the oval `Random Seed` and make it a parameter too. It carries the seed of
+   Step 0, and in Step 10 it is how you change it.
+4. Add **Extract Values to Points** with `Random_Points` and `True_DEM`, output `Sample_Points`.
 
-<!-- TODO(capture): Figure 4a, Create Random Points; Figure 4b, Extract Values to Points. -->
+> [!WARNING]
+> **New ovals land on top of the tool's other inputs.** After each Create Variable, drag the new oval
+> clear (click it, then drag) before you right-click it, or the menu you open belongs to the oval
+> underneath.
+
+![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab09.gdb, Output Point Feature Class Random_Points, Constraining Feature Class Study_Area:1, Number of Points Long 2500, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab09-create-random-points.png)
+
+**Figure 4a.** Create Random Points. Once a constraining feature class is set, the Constraining
+Extent box disappears.
+
+![The Extract Values to Points dialog from ModelBuilder: Input point features Random_Points, Input raster True_DEM, Output point features Sample_Points, both checkboxes unchecked.](images/lab09-extract-values.png)
+
+**Figure 4b.** Extract Values to Points.
 
 > [!TIP]
 > **Check the result:** 2,500 points, `RASTERVALU` from **1,368.7 to 2,886.7** m. With seed 1, the
@@ -301,13 +352,22 @@ Run the model this far, then set the **Cell Size**, **Snap Raster** and **Extent
 1. Add **Create Thiessen Polygons**: **Input Features** `Sample_Points`, output
    `Thiessen_Polygons`, **Output Fields** **All fields**.
 2. Add **Polygon to Raster**: **Input Features** `Thiessen_Polygons`, **Value field**
-   `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30, output `Thiessen_Surface`.
+   `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30 (it fills in from the
+   environment), output `Thiessen_Surface`.
 
-<!-- TODO(capture): Figure 5a, Create Thiessen Polygons with Output Fields = All fields; Figure 5b, Polygon to Raster. -->
+![The Create Thiessen Polygons dialog from ModelBuilder: Input Features Sample_Points, Output Feature Class Thiessen_Polygons, Output Fields All fields.](images/lab09-thiessen-polygons.png)
+
+**Figure 5a.** Create Thiessen Polygons, with **All fields**.
+
+![The Polygon to Raster dialog from ModelBuilder: Input Features Thiessen_Polygons, Value field RASTERVALU, Output Raster Dataset Thiessen_Surface, Cell assignment type Cell center, Priority field NONE, Cellsize 30, Build raster attribute table checked.](images/lab09-polygon-to-raster.png)
+
+**Figure 5b.** Polygon to Raster, with the value field changed to `RASTERVALU`.
 
 > [!WARNING]
-> **Output Fields defaults to "Only feature ID".** Left there, the polygons carry no elevation —
-> only `Input_FID` — and Polygon to Raster has no `RASTERVALU` to offer. Choose **All fields**.
+> **Two defaults here give a surface with no elevations in it.** Create Thiessen Polygons opens at
+> **Output Fields: Only feature ID**, which leaves the polygons with no `RASTERVALU` at all. Polygon
+> to Raster then fills **Value field** with `OBJECTID` by itself — a surface of polygon numbers, and
+> no error. Choose **All fields** in the first, and `RASTERVALU` in the second.
 
 > [!TIP]
 > **Check the result:** **2,500** polygons, one per point. `Thiessen_Surface` runs from **1,368.7 to
@@ -316,12 +376,19 @@ Run the model this far, then set the **Cell Size**, **Snap Raster** and **Extent
 
 ### Step 6 — Build the IDW Surface
 
-Add **IDW**: **Input point features** `Sample_Points`, **Z value field** `RASTERVALU`, **Output
+Add **IDW** (the Spatial Analyst tool; the search also offers a 3D Analyst and a Geostatistical
+Analyst one): **Input point features** `Sample_Points`, **Z value field** `RASTERVALU`, **Output
 cell size** `30`, **Power** 2, **Search radius** Variable with 12 points, output `IDW_Surface`. Then
 right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power**, rename the oval
 `IDW Power`, and make it a parameter.
 
-<!-- TODO(capture): Figure 6, the IDW dialog. -->
+![The IDW dialog from ModelBuilder: Input point features Sample_Points, Z value field RASTERVALU, Output raster IDW_Surface, Output cell size 30, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab09-idw.png)
+
+**Figure 6.** IDW.
+
+> [!WARNING]
+> **Z value field fills in `CID`**, a field Create Random Points adds to every point, all with the
+> same value. Change it to `RASTERVALU`. Kriging in Step 7 does the same.
 
 > [!TIP]
 > **Check the result:** `IDW_Surface` runs from **1,368.7 to 2,885.5** m. IDW is a weighted average,
@@ -329,24 +396,29 @@ right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power*
 
 ### Step 7 — Build the Kriging Surface
 
-Add **Kriging**: **Input point features** `Sample_Points`, **Z value field** `RASTERVALU`, output
-`Kriging_Surface`, **Kriging method** Ordinary, **Semivariogram model** Spherical, **Output cell
-size** `30`, **Search radius** Variable with 12 points. Leave the optional output variance raster
-empty. Then right-click the tool in the model ▸ **Create Variable** ▸ **From Parameter** ▸
+Add **Kriging** (Spatial Analyst): **Input point features** `Sample_Points`, **Z value field**
+`RASTERVALU`, output `Kriging_Surface`, **Kriging method** Ordinary, **Semi-variogram model**
+Spherical, **Output cell size** `30`, **Search radius** Variable with 12 points. Leave **Lag size**
+at the 30 it fills in, the range, sill and nugget empty, and the optional variance raster empty.
+Then right-click the tool in the model ▸ **Create Variable** ▸ **From Parameter** ▸
 **Semivariogram properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool
 dialog it shows the same controls as here: in Step 10 you pick another model from its
-**Semivariogram model** list.
-<!-- VERIFY in the GUI: that Semivariogram properties can be exposed with Create Variable > From Parameter, and what its dialog control looks like in the tool dialog. Fallback: a Save As copy of the model per semivariogram model, as Lab 8 did for Spline. -->
+**Semi-variogram model** list.
 
-<!-- TODO(capture): Figure 7, the Kriging dialog. -->
+![The Kriging dialog from ModelBuilder: Input point features Sample_Points, Z value field RASTERVALU, Output surface raster Kriging_Surface, Kriging method Ordinary, Semi-variogram model Spherical, Lag size 30, Major range, Partial sill and Nugget empty, Output cell size 30, Search radius Variable with Number of points 12, Output variance of prediction raster empty.](images/lab09-kriging.png)
+
+**Figure 7.** Kriging. The range, sill and nugget stay empty: Kriging fits them to your points.
 
 > [!TIP]
-> **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
-> its samples; here it does not, and it pulls the top down a little further than IDW.
+> **Check the result:** `Kriging_Surface` runs from **1,368.5 to 2,884.3** m. Unlike IDW, Kriging
+> *can* go beyond its samples, and it does, just: its lowest cells, outside the rectangle where it
+> extrapolates, are 0.2 m below the lowest sample. At the top it pulls the peak down a little further
+> than IDW.
 
 ### Step 8 — Map the Errors
 
-Add **Raster Calculator** three times, one per surface, each the truth minus the rebuild:
+Add **Raster Calculator** (Spatial Analyst) three times, one per surface, each the truth minus the
+rebuild:
 
 | Expression | Output |
 | --- | --- |
@@ -354,11 +426,16 @@ Add **Raster Calculator** three times, one per surface, each the truth minus the
 | `"%True_DEM%" - "%IDW_Surface%"` | `Error_IDW` |
 | `"%True_DEM%" - "%Kriging_Surface%"` | `Error_Kriging` |
 
-A positive error means the surface came out too **low** there; a negative error, too **high**. Give
-all three the same diverging color scheme with the same class breaks (the example maps use −100,
-−50, −20, −5, 5, 20, 50, 100 m), so that the same color means the same error on every map.
+The quickest way to the second and third: select the first Raster Calculator, **Ctrl+C**, click
+empty canvas, **Ctrl+V**, drag the copy clear, and edit its expression and output. A positive error
+means the surface came out too **low** there; a negative error, too **high**. Give all three the same
+diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
+50, 100 m), so that the same color means the same error on every map.
 
-<!-- TODO(capture): Figure 8, one Raster Calculator dialog. -->
+![The Raster Calculator dialog from ModelBuilder, widened: the Rasters list shows DEM_UTM, YMountain_DEM.tif, True_DEM, Number of Points and Thiessen_Surface; the expression reads "%True_DEM%" - "%Thiessen_Surface%"; Output raster Error_Thiessen.](images/lab09-rc-error.png)
+
+**Figure 8.** The Thiessen error. Type the output name last and check it before **OK**: Raster
+Calculator puts back the old name when the expression changes.
 
 > [!TIP]
 > **Check the result:**
@@ -375,21 +452,42 @@ all three the same diverging color scheme with the same class breaks (the exampl
 
 The root-mean-square error is the typical size of an error, whatever its sign: **square** every
 cell's error, take the **mean** of the squares over the rectangle, and take the **square root**.
-For each of the three error rasters:
+Build the chain once for Thiessen, then copy it twice:
 
-1. **Raster Calculator**: `Square("%Error_Thiessen%")`, output `SqError_Thiessen` (likewise IDW and
-   Kriging).
-2. **Zonal Statistics as Table**: **Input raster or feature zone data** `Study_Area`, **Zone field**
-   `OBJECTID`, **Input value raster** `SqError_Thiessen`, **Statistics type** Mean, output table
-   `RMSE_Thiessen`.
-3. **Calculate Field** on `RMSE_Thiessen`: **Field Name** `RMSE` (a new field, type Double),
-   **Expression Type** Python 3, **Expression** `math.sqrt(!MEAN!)`.
+1. **Raster Calculator**: `Square("%Error_Thiessen%")`, output `SqError_Thiessen`.
+2. **Zonal Statistics as Table**: **Input raster or feature zone data** `Study_Area:1`, **Zone
+   field** `OBJECTID`, **Input value raster** `SqError_Thiessen`, **Statistics type** Mean (it opens
+   at All), output table `RMSE_Thiessen`.
+3. **Calculate Field**: **Input Table** `RMSE_Thiessen`, **Field Name** `RMSE`, **Field Type**
+   Double (it opens at Text), **Expression Type** Python, and in the box under `RMSE =`,
+   `math.sqrt(!MEAN!)`. Rename its output oval `RMSE Thiessen`.
 
-Then make the parameters: the DEM and `Study_Area` (inputs) and `Number of Points`, `IDW Power` and
-`Semivariogram` (from Steps 4, 6 and 7), and as outputs the three error rasters and the three
-`RMSE_` tables (the outputs of the Calculate Field tools). Step 10 and your second map need them.
+Then select the Zonal Statistics as Table and Calculate Field tools and their outputs, copy and
+paste them twice, and in each copy change only the value raster and the output table (`SqError_IDW`
+and `RMSE_IDW`; `SqError_Kriging` and `RMSE_Kriging`): the copied Calculate Field follows its table
+by itself. Rename the outputs `RMSE IDW` and `RMSE Kriging`.
 
-<!-- TODO(capture): Figure 9a, Zonal Statistics as Table; Figure 9b, Calculate Field; Figure 9c, the model as a tool in the Geoprocessing pane. -->
+Finally make the parameters: the DEM and `Study_Area` (inputs), and as outputs the three error
+rasters and the three `RMSE` ovals. With `Number of Points`, `Random Seed`, `IDW Power` and
+`Semivariogram` from Steps 4, 6 and 7, that is twelve. Save, close the model, and open it from the
+**Catalog** pane (**Toolboxes** ▸ `Lab09.atbx` ▸ **Interpolation Explorer**) to see its dialog.
+
+![The Raster Calculator dialog from ModelBuilder: the expression reads Square("%Error_Thiessen%"); Output raster SqError_Thiessen.](images/lab09-rc-square.png)
+
+**Figure 9a.** Squaring the Thiessen error.
+
+![The Zonal Statistics as Table dialog from ModelBuilder: Input Raster or Feature Zone Data Study_Area:1, Zone Field OBJECTID, Input Value Raster SqError_Thiessen, Output Table RMSE_Thiessen, Ignore NoData in Calculations checked, Statistics Type Mean, Calculate Circular Statistics and Process as Multidimensional unchecked, Output Join Layer empty.](images/lab09-zonal-table.png)
+
+**Figure 9b.** Zonal Statistics as Table, with **Mean**.
+
+![The Calculate Field dialog from ModelBuilder: Input Table RMSE_Thiessen, Field Name RMSE with a warning that it is a new field, Field Type Double (64-bit floating point), Expression Type Python, Fields list OBJECTID, OBJECTID_1, COUNT, AREA, MEAN, and the expression RMSE = math.sqrt(!MEAN!).](images/lab09-calculate-field.png)
+
+**Figure 9c.** Calculate Field. The warning beside Field Name only says the field will be added.
+
+![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer and set up for a Step 10 run: Number of Points Long 250; Random Seed 1 with ACM collected algorithm 599; IDW Power 2; Semivariogram Ordinary, Spherical, with Lag size empty and Major range 10950, Partial sill 513125.896396 and Nugget 0 carried over from the last run; outputs RMSE_Thiessen_n250, RMSE_Kriging_n250, RMSE_IDW_n250, Error_Thiessen_n250, Error_IDW_n250 and Error_Kriging_n250, each with a warning icon; Study_Area; YMountain_DEM.tif.](images/lab09-tool-dialog.png)
+
+**Figure 9d.** The model as a tool, set up for the first run of Step 10. The warning icons only say
+the outputs exist from an earlier run.
 
 > [!TIP]
 > **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
@@ -405,27 +503,29 @@ Then make the parameters: the DEM and `Study_Area` (inputs) and `Number of Point
 > **Extent** environment of Step 0. At 2,500 points it can look right without it; at 250 it does not.
 
 > [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5, 7 and 8 saw it).
-> Do Steps 2–9 from inside ModelBuilder first and record the check values before any dialog run.
-> <!-- VERIFY: which outputs a dialog run of this model keeps, and its run time. -->
+> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5, 7 and 8 saw
+> it): `DEM_UTM`, `True_DEM`, `Sample_Points` and the three surfaces. Do Steps 2–9 from inside
+> ModelBuilder first and record the check values before any dialog run. In our build a full run took
+> about 1½ minutes in ModelBuilder and 2 minutes from the dialog.
 
 ### Step 10 — Test the Choices
 
 The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
 and three sets of default parameters. Find out how much of it survives a change.
 
-**First, your own points.** In **ModelBuilder** ▸ **Environments**, change the **Random Number
-Generator** seed to the **last four digits of your BYU ID** as a number (`0042` is `42`; if that
-gives 0, use `9999`). Save, and run the model **inside ModelBuilder** at the defaults. This is your
-**baseline**: Map 1 is made from it, and it is the first row of your table. Write your seed in your
-report: the grader re-runs your model with it.
+**First, your own points.** In ModelBuilder, double-click the `Random Seed` oval and set **Seed** to
+the **last four digits of your BYU ID** as a number (`0042` is `42`; if that gives 0, use `9999`).
+Save, and run the model **inside ModelBuilder** at the defaults. This is your **baseline**: Map 1 is
+made from it, and it is the first row of your table. Write your seed in your report: the grader
+re-runs your model with it.
 
 **Then the checkpoints.** In real work you would not have a true DEM; you would hold back some
 measured points and test against them. Do that once, on your baseline surfaces:
 
 1. Run **Create Random Points** from the Geoprocessing pane (not in the model): constraining feature
-   class `Study_Area`, **200** points, output `Checkpoints` in your project geodatabase, and on its **Environments** tab
-   **Random Number Generator** seed `99`. Everyone uses the same 200 checkpoints.
+   class `Study_Area`, **200** points, output `Checkpoints` in your project geodatabase, and on its
+   **Environments** tab **Random Number Generator** seed `99`. Everyone uses the same 200
+   checkpoints.
 2. **Extract Multi Values to Points** on `Checkpoints` with `True_DEM` (output field name `TRUE_Z`),
    `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface` (`KR_Z`).
 3. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
@@ -437,16 +537,19 @@ measured points and test against them. Do that once, on your baseline surfaces:
 > **Finish Map 1 and the checkpoints before the first dialog run.** Map 1 draws your baseline's sample
 > points, surfaces and `True_DEM`, and the checkpoints read them; none of those are parameters, so the
 > first run from the tool dialog deletes them. Export Map 1 to PDF and record the checkpoint RMSEs
-> first. (The model rebuilds `True_DEM` early in every run, so the Snap Raster and Extent settings
-> still work.) <!-- VERIFY: that a dialog run deletes True_DEM and the surfaces and rebuilds True_DEM before the interpolators run. -->
+> first. The model rebuilds `DEM_UTM` at the start of every run, so the Snap Raster still works.
 
-**Then four more runs**, from the model's tool dialog, giving every output a name that says what
-changed (`RMSE_Kriging_n250`, `Error_IDW_n250`):
+**Then four more runs**, from the model's tool dialog, with **Random Seed** still at your own seed,
+giving every output a name that says what changed (`RMSE_Kriging_n250`, `Error_IDW_n250`):
 
 1. **250 points** (everything else at the defaults).
 2. **10,000 points**.
 3. **IDW power 1 and Kriging exponential** (one run changes both: they are in different branches).
 4. **IDW power 3 and Kriging Gaussian**.
+
+After a run the Semivariogram boxes show the range and sill Kriging fitted last time. Each run fits
+them again; to be safe when you change the model, empty **Major range**, **Partial sill** and
+**Nugget** first. <!-- VERIFY: a 250-point dialog run with the fitted values left in gave Kriging RMSE 50.38, the arcpy refit value; not yet tested with the model changed to Gaussian. -->
 
 For **the baseline and every run, in one table**, record your seed, what changed, and the RMSE of all
 three methods; add the three checkpoint RMSEs to the baseline row.
@@ -567,10 +670,11 @@ what to submit.
 
 <!-- Draft notes (2026-10-06).
 SOURCE: "Lab 8 - Practicing with Interpolation.docx" (instructor's copy in Downloads, saved 2026-10-06), whose September 3 migration is the live docs/assignments/lab-09/README.md; rebuilt to tools/lab-conversion-guide.md per tools/labs-09-11-plan.md section 4 (accepted 2026-10-06) and tools/lab09/PARITY_PLAN.md.
-ARCGIS PRO: 3.7.1, arcpy only (tools/lab09/run_model.py, extra_checks.py, chain_check.py, extent_check.py). GUI build OWED: desktop control denied 2026-10-06.
+ARCGIS PRO: 3.7.1, arcpy (tools/lab09/run_model.py, extra_checks.py, chain_check.py, extent_check.py) and a GUI build on 2026-10-07 at 175 % (C:\Ames\Lab09GUI\Lab09.aprx, model InterpolationExplorer, set up by tools/lab09/gui_project.py; captures in caps\). Every check value reproduced in the GUI: first point, sample range, surface ranges, error table, ZSaT COUNT/AREA/MEAN and RMSE 28.29 / 20.71 / 14.46; a tool-dialog run at 250 points gave 80.73 / 69.46 / 50.38 (the oracle values) in 1 min 54 s; a full ModelBuilder run 1 min 34 s.
+GUI FACTS (2026-10-07): Snap Raster True_DEM breaks every tool-dialog run (ERROR 010654, the output True_DEM is the same as the snap raster) - environments are now Snap Raster DEM_UTM and Extent = YMountain_DEM.tif from the layer list (fills in degrees; Study_Area from the layer list also fills in degrees; browsing to True_DEM gives UTM but True_DEM is a model output); with these the surfaces cover all of DEM_UTM, so Kriging's minimum is 1,368.5 (outside the rectangle) while the RMSEs are unchanged. Create Variable > From Environment > Random Number Generator exposes the seed as a parameter (Random Seed). Semivariogram properties can be a parameter; after a run its dialog shows the fitted range/sill (10950 / 513125.9) but a 250-point dialog run still refit (50.38). Defaults that silently give wrong surfaces: Thiessen Output Fields Only feature ID; Polygon to Raster Value field OBJECTID; IDW and Kriging Z value field CID; Zonal Statistics as Table Statistics All; Calculate Field Field Type Text. Kriging writes one extra cell on each side of the extent. Project Raster proposes 9.06 m. The service arrives through its Hillshade raster function: 40,075,015 x 20,498,394 cells of 1 m, 747.13 TB, unsigned char 8 bit, WGS 1984 Web Mercator (auxiliary sphere) WKID 3857; Explore at the highest cell reads Service Pixel Value 154, item n41w112, LowPS 10.30736. Dialog runs delete DEM_UTM, True_DEM, Sample_Points and the three surfaces. Copying a Zonal Statistics + Calculate Field chain keeps the Calculate Field wired to its own table. The copied blank project pre-filled Output Coordinate System in the model environments (cleared) and carried Lab01.atbx and Lab01.gdb.
 DATA: docs/data/lab09-y-mountain.zip, 1,885,312 bytes: YMountain_DEM.tif (window -111.68 -111.57 40.20 40.27 of USGS_13_n41w112, published 2026-05-20, source dates 1946-2023; 1,188 x 756 float32, 1,368.03-2,896.92 m, no NoData) and Lab09.gdb\Study_Area (442,514.873-451,184.873 E, 4,450,507.050-4,457,497.050 N, on DEM_UTM's 30 m grid). Built by tools/lab09/fetch_dem.py, run_model.py, make_extract.py.
 VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 (at seed 1 / 2,500 points also without an Extent environment, but NOT in general: the pilot found IDW and Kriging at 250 points cover only 66,297 cells without Extent = True_DEM, RMSE 69.47 / 50.24 instead of 69.46 / 50.38; Extent now set in Step 0); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
 SENSITIVITY (do NOT publish): see tools/lab09/PARITY_PLAN.md. Points 250/1,000/2,500/10,000: Kriging 50.38/24.90/14.46/6.90; IDW power 1/2/3/5: 23.98/20.71/20.20/21.60; Kriging Gaussian 24.81, other models 14.46; checkpoints within 2-3 m of the full-grid RMSE, same ranking; seeds 2-5 never change the ranking.
 GRADING ORACLE: run_model.py --seed NNNN reproduces a student's Step 10 table (all five rows plus the checkpoint RMSEs) in about two minutes.
 PILOT (no-GUI, 2026-10-06, C:\Ames\Pilot09\PILOT_NOTES.md): every seed-1 number reproduced; checkpoint recipe works as written (seed 1: 30.38 / 23.16 / 17.12, deliberately not published). Fixed from its findings: Extent environment added (Step 0, Step 3 warning, Step 9 tip); Step 10 warning to finish Map 1 and the checkpoints before dialog runs; semivariogram parameter path spelled out; Map 2 deliverable matches its rubric row, true DEM optional; 'largest error' defined (best method, either direction) with a way to find it; True_DEM cell count without the wrong 289 x 233; citation question added to deliverables and rubric; Figure A names the three values; checkpoint output location; OBJECTID_1 zone field noted.
-TODO(instructor): 1. GUI build and captures (Figures 0-9, Figure C). 2. Lab machines' license level (Thiessen). 3. Exposing the semivariogram as a parameter. 4. Report template. 5. Week 9 deck alignment. 6. Learning Suite due date November 7. -->
+TODO(instructor): 1. Lab machines' license level (Thiessen). 2. A dialog run with Kriging Gaussian and the fitted range/sill left in (the page tells students to clear them). 3. Report template. 4. Week 9 deck alignment. 5. Learning Suite due date November 7. -->

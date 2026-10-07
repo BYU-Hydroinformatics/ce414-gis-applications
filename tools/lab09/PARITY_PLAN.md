@@ -104,11 +104,14 @@ deliverable vs rubric, "largest error" defined, citation question graded, Figure
 
 ## Still owed
 
-1. **GUI build** at 175 % (`C:\Ames\Lab09GUI\`): every dialog capture, Figure C as SVG, snippets.
-   VERIFY items it must settle: how ArcGIS Pro shows the image service's coordinate system and cell
-   size, and what Identify returns there; whether Kriging's semivariogram can be a model parameter;
-   whether a changed model seed reaches Create Random Points from a tool-dialog run; which outputs a
-   dialog run deletes.
+1. ~~GUI build~~ **Done October 7, 2026** (`C:\Ames\Lab09GUI\Lab09.aprx`, captures in `caps\`): every
+   check value reproduced in the GUI; 18 figures and Figure C in the draft. Settled there: the service
+   arrives as an 8-bit **hillshade** (Explore reads 154, not an elevation) in Web Mercator at 1 m;
+   the semivariogram and the random seed (Create Variable ▸ From Environment) can both be model
+   parameters; **Snap Raster `True_DEM` breaks dialog runs** (ERROR 010654), so the environments are
+   now Snap Raster `DEM_UTM` + Extent from `YMountain_DEM.tif`; four silent wrong defaults (Thiessen
+   Output Fields, Polygon to Raster Value field, IDW/Kriging Z field `CID`, ZSaT Statistics All, and
+   Calculate Field Type Text) are now WARNING boxes. Still to try: a dialog run with Kriging Gaussian.
 2. Promotion, then the report template (`node make_lab_report_template.js 09` reads README.md), the
    Week 9 deck alignment, and the Learning Suite due date (November 7). Example maps and the no-GUI
    pilot are done.
