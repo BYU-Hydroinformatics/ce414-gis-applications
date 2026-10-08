@@ -69,7 +69,7 @@ def metadata_card():
          ["Provo and the mountain front east of it:",
           "111.68° to 111.57° W, 40.20° to 40.27° N.",
           "Stored in latitude/longitude (GCS NAD 1983):",
-          "Step 2 projects it to UTM Zone 12N."]),
+          "True_DEM is the same, projected to UTM 12N."]),
         ("WHEN", "When were the data collected?",
          ["Tile n41w112, published May 20, 2026.",
           "A mosaic of sources collected 1946–2023;",

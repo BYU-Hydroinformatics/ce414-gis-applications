@@ -18,7 +18,7 @@
 <text x='357' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Provo and the mountain front east of it:</text>
 <text x='357' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>111.68° to 111.57° W, 40.20° to 40.27° N.</text>
 <text x='357' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Stored in latitude/longitude (GCS NAD 1983):</text>
-<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Step 2 projects it to UTM Zone 12N.</text>
+<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>True_DEM is the same, projected to UTM 12N.</text>
 <rect x='670' y='75' width='310' height='155' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
 <rect x='670' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
 <text x='682' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHEN</text>

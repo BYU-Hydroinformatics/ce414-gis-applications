@@ -155,15 +155,13 @@ def main():
     # checkpoints: 200 independent points, seed 99, never used to interpolate (Step 10, question 3)
     arcpy.env.randomGenerator = "99 ACM599"
     arcpy.management.CreateRandomPoints(GDB, "Checkpoints", "Study_Area", "", 200)
-    if a.seed is not None:   # grading oracle: a student's Step 10 table at their personal seed
+    if a.seed is not None:   # grading oracle: a student's own rows of the Step 8 table (2,500 points at their seed)
         s = a.seed
-        table = {"baseline": run(2500, s, tag=f"p{s}", checkpoints="Checkpoints"),
-                 "250 points": run(250, s, tag=f"p{s}_n250"),
-                 "10,000 points": run(10000, s, tag=f"p{s}_n10000"),
+        table = {"baseline (my points)": run(2500, s, tag=f"p{s}", checkpoints="Checkpoints"),
                  "IDW power 1, Kriging exponential": run(2500, s, power=1, model="EXPONENTIAL", tag=f"p{s}_a"),
                  "IDW power 3, Kriging Gaussian": run(2500, s, power=3, model="GAUSSIAN", tag=f"p{s}_b")}
         print(json.dumps({k: {m: v[m]["rmse"] for m in ("Thiessen", "IDW", "Kriging")} for k, v in table.items()}, indent=1))
-        print("checkpoint RMSE:", {m: table["baseline"][m]["checkpoint_rmse"] for m in ("Thiessen", "IDW", "Kriging")})
+        print("checkpoint RMSE:", {m: table["baseline (my points)"][m]["checkpoint_rmse"] for m in ("Thiessen", "IDW", "Kriging")})
         return
     res["baseline"] = run(2500, 1, checkpoints="Checkpoints")
     res["repeat_identical"] = run(2500, 1, tag="repeat", which=("IDW",))["IDW"]["rmse"] == res["baseline"]["IDW"]["rmse"]

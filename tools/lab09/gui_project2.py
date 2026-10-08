@@ -1,0 +1,52 @@
+"""Set up C:\\Ames\\Lab09GUI for the Lab 9 GUI build, as a student would after Step 0 items 1-2:
+the student zip unzipped, a project Lab09.aprx with a project geodatabase and toolbox, and a map
+holding True_DEM, Study_Area, the three sample-point sets and YMountain_DEM.tif, with an imagery basemap. ModelBuilder work is done in the GUI.
+ArcGIS Pro Python."""
+import json
+import os
+import shutil
+import zipfile
+
+import arcpy
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab09-y-mountain.zip")
+ROOT = r"C:\Ames\Lab09GUI2"
+BLANK = r"C:\Ames\Lab01\_probe.aprx"
+
+if os.path.exists(ROOT):
+    shutil.rmtree(ROOT)
+os.makedirs(ROOT)
+zipfile.ZipFile(ZIP).extractall(ROOT)
+data = os.path.join(ROOT, "lab09-y-mountain")
+arcpy.management.CreateFileGDB(ROOT, "Lab09.gdb")
+# an empty .atbx (a zip holding toolbox.content), the same layout ArcGIS Pro writes
+with zipfile.ZipFile(os.path.join(ROOT, "Lab09.atbx"), "w", zipfile.ZIP_DEFLATED) as z:
+    z.writestr("toolbox.content", json.dumps({"version": "1.0", "alias": "Lab09", "displayname": "$rc:title",
+                                              "toolsets": {}}, indent=4))
+    z.writestr("toolbox.content.rc", json.dumps({"map": {"title": "Lab09"}}, indent=4))
+p = arcpy.mp.ArcGISProject(BLANK)
+p.saveACopy(os.path.join(ROOT, "Lab09.aprx"))
+p = arcpy.mp.ArcGISProject(os.path.join(ROOT, "Lab09.aprx"))
+for x in p.listLayouts() + p.listMaps():
+    p.deleteItem(x)
+p.defaultGeodatabase = os.path.join(ROOT, "Lab09.gdb")
+p.defaultToolbox = os.path.join(ROOT, "Lab09.atbx")
+m = p.createMap("Map", "MAP")
+for l in m.listLayers():
+    m.removeLayer(l)
+m.addBasemap("Imagery")
+gdb = os.path.join(data, "Lab09.gdb")
+m.addDataFromPath(os.path.join(data, "YMountain_DEM.tif"))
+m.addDataFromPath(os.path.join(gdb, "True_DEM"))
+for n in (10000, 2500, 250):
+    m.addDataFromPath(os.path.join(gdb, f"Sample_Points_{n}"))
+bb = m.addDataFromPath(os.path.join(gdb, "Study_Area"))
+sym = bb.symbology
+sym.renderer.symbol.color = {"RGB": [0, 0, 0, 0]}
+sym.renderer.symbol.outlineColor = {"RGB": [255, 40, 40, 100]}
+sym.renderer.symbol.outlineWidth = 2
+bb.symbology = sym
+p.updateFolderConnections([{"connectionString": ROOT, "alias": "", "isHomeFolder": True}])
+p.save()
+print("ok", p.defaultGeodatabase, p.defaultToolbox, [l.name for l in m.listLayers()])

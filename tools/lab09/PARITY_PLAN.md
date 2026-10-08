@@ -102,6 +102,37 @@ would not match the oracle. Extent = True_DEM is now in Step 0 (the oracle alway
 Step 10 order (Map 1 and checkpoints before any dialog run), semivariogram parameter path, Map 2
 deliverable vs rubric, "largest error" defined, citation question graded, Figure A names its values.
 
+
+## Simplification (October 7, 2026, instructor's request)
+
+Students now receive `Lab09.gdb\True_DEM` (projected, 30 m, clipped) and three hosted point sets
+(`Sample_Points_250`, `_2500`, `_10000`; seed 1, `RASTERVALU` only) instead of projecting, clipping
+and sampling the DEM themselves; the page explains what we did for them. Measured effect:
+
+| | Before | After |
+| --- | --- | --- |
+| Tools in the model | 20 | 16 |
+| Model parameters | 12 | 9 (sample points, IDW power, semivariogram, 3 errors, 3 RMSEs) |
+| Steps | 0-10 | 0-8 |
+| ModelBuilder run | about 1.5 min | 7 s |
+
+Pain points removed (all found in the first GUI build or the pilot): the Snap Raster / ERROR 010654
+trap (True_DEM is now an input), Project Raster's 9.06 m proposal and coordinate picker, the
+`Study_Area:1` model-variable choice and two Create Variable steps for points and seed, IDW/Kriging
+defaulting to the `CID` field (gone: the hosted points have no `CID`), and dialog runs deleting the
+truth and the points (inputs are never deleted).
+
+Kept: the sample-count comparison (three hosted sets, same seed) and the personal seed, which moved
+out of the model into two tool runs in Step 8 (Create Random Points with the BYU ID digits, Extract
+Values to Points). `run_model.py --seed` now reproduces the student's three own rows.
+
+Verified from the zip (`verify_package.py` -> `package_checks.json`) and in a second GUI build
+(`C:\Ames\Lab09GUI2\`): course points 250 / 2,500 / 10,000 give 80.73 / 69.46 / 50.38,
+28.29 / 20.71 / 14.46 and 15.71 / 10.39 / 6.90; seed 4321 gives 27.32 / 19.10 / 12.79 and, with IDW 3
+and Kriging Gaussian from the tool dialog, 18.54 / 25.45 — all exactly the oracle.
+
+Note: `check_values.json` is from the pre-simplification run (course baseline, its own checkpoints); `package_checks.json` is current. Pilot 2 (October 7, `C:\Ames\Pilot09b\`) reproduced every number from the zip and found ten text issues, all fixed.
+
 ## Still owed
 
 1. ~~GUI build~~ **Done October 7, 2026** (`C:\Ames\Lab09GUI\Lab09.aprx`, captures in `caps\`): every

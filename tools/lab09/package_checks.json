@@ -1,0 +1,389 @@
+{
+ "true_dem": {
+  "cells": 67337,
+  "min": 1368.5,
+  "max": 2896.5,
+  "mean": 1819.83
+ },
+ "Sample_Points_250": {
+  "n": 250,
+  "min": 1368.7,
+  "max": 2844.6,
+  "first": [
+   442596.2,
+   4451621.6
+  ],
+  "fields": [
+   "OBJECTID",
+   "Shape",
+   "RASTERVALU"
+  ],
+  "runs": {
+   "Thiessen": {
+    "rmse": 80.73,
+    "mean_sq": 6517.3,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -615.1,
+     "max": 436.8,
+     "mean": -0.57
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.7,
+     "max": 2844.6,
+     "mean": 1820.2
+    }
+   },
+   "IDW": {
+    "rmse": 69.46,
+    "mean_sq": 4825.2,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -350.3,
+     "max": 343.5,
+     "mean": 2.82
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.7,
+     "max": 2844.4,
+     "mean": 1816.85
+    }
+   },
+   "Kriging": {
+    "rmse": 50.38,
+    "mean_sq": 2538.1,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -314.1,
+     "max": 260.4,
+     "mean": -0.31
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1368.7,
+     "max": 2843.6,
+     "mean": 1819.83
+    }
+   }
+  }
+ },
+ "Sample_Points_2500": {
+  "n": 2500,
+  "min": 1368.7,
+  "max": 2886.7,
+  "first": [
+   444603.3,
+   4453723.7
+  ],
+  "fields": [
+   "OBJECTID",
+   "Shape",
+   "RASTERVALU"
+  ],
+  "runs": {
+   "Thiessen": {
+    "rmse": 28.29,
+    "mean_sq": 800.3,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -234.1,
+     "max": 214.3,
+     "mean": -0.39
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.7,
+     "max": 2886.7,
+     "mean": 1819.91
+    }
+   },
+   "IDW": {
+    "rmse": 20.71,
+    "mean_sq": 428.9,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -136.8,
+     "max": 169.9,
+     "mean": -0.84
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.7,
+     "max": 2885.5,
+     "mean": 1820.39
+    }
+   },
+   "Kriging": {
+    "rmse": 14.46,
+    "mean_sq": 209.0,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -104.0,
+     "max": 164.4,
+     "mean": -0.31
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1368.7,
+     "max": 2884.3,
+     "mean": 1819.79
+    }
+   }
+  }
+ },
+ "Sample_Points_10000": {
+  "n": 10000,
+  "min": 1368.9,
+  "max": 2891.3,
+  "first": [
+   450131.3,
+   4454946.9
+  ],
+  "fields": [
+   "OBJECTID",
+   "Shape",
+   "RASTERVALU"
+  ],
+  "runs": {
+   "Thiessen": {
+    "rmse": 15.71,
+    "mean_sq": 246.8,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -185.2,
+     "max": 110.1,
+     "mean": -0.05
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2891.3,
+     "mean": 1819.53
+    }
+   },
+   "IDW": {
+    "rmse": 10.39,
+    "mean_sq": 108.0,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -67.7,
+     "max": 78.2,
+     "mean": -0.14
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2882.5,
+     "mean": 1819.63
+    }
+   },
+   "Kriging": {
+    "rmse": 6.9,
+    "mean_sq": 47.5,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -71.9,
+     "max": 75.8,
+     "mean": -0.04
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1368.9,
+     "max": 2887.1,
+     "mean": 1819.47
+    }
+   }
+  }
+ },
+ "personal": {
+  "seed": 4321,
+  "baseline": {
+   "Thiessen": {
+    "rmse": 27.32,
+    "mean_sq": 746.2,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -223.4,
+     "max": 197.4,
+     "mean": -0.34
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2866.6,
+     "mean": 1819.83
+    }
+   },
+   "IDW": {
+    "rmse": 19.1,
+    "mean_sq": 364.8,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -141.5,
+     "max": 123.5,
+     "mean": -0.46
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2865.6,
+     "mean": 1819.98
+    }
+   },
+   "Kriging": {
+    "rmse": 12.79,
+    "mean_sq": 163.5,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -71.2,
+     "max": 103.2,
+     "mean": -0.32
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1368.9,
+     "max": 2865.5,
+     "mean": 1819.74
+    }
+   }
+  },
+  "IDW 1 / exponential": {
+   "Thiessen": {
+    "rmse": 27.32,
+    "mean_sq": 746.2,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -223.4,
+     "max": 197.4,
+     "mean": -0.34
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2866.6,
+     "mean": 1819.83
+    }
+   },
+   "IDW": {
+    "rmse": 22.65,
+    "mean_sq": 512.9,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -139.1,
+     "max": 135.5,
+     "mean": -0.54
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1369.0,
+     "max": 2859.8,
+     "mean": 1820.08
+    }
+   },
+   "Kriging": {
+    "rmse": 12.79,
+    "mean_sq": 163.5,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -71.2,
+     "max": 102.4,
+     "mean": -0.32
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1368.9,
+     "max": 2865.5,
+     "mean": 1819.74
+    }
+   }
+  },
+  "IDW 3 / Gaussian": {
+   "Thiessen": {
+    "rmse": 27.32,
+    "mean_sq": 746.2,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -223.4,
+     "max": 197.4,
+     "mean": -0.34
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2866.6,
+     "mean": 1819.83
+    }
+   },
+   "IDW": {
+    "rmse": 18.54,
+    "mean_sq": 343.8,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -145.8,
+     "max": 132.8,
+     "mean": -0.41
+    },
+    "surface": {
+     "cells": 67626,
+     "min": 1368.9,
+     "max": 2866.3,
+     "mean": 1819.92
+    }
+   },
+   "Kriging": {
+    "rmse": 25.45,
+    "mean_sq": 647.7,
+    "count": 67337,
+    "area": 60603300,
+    "error": {
+     "cells": 67337,
+     "min": -136.7,
+     "max": 143.0,
+     "mean": -0.55
+    },
+    "surface": {
+     "cells": 68676,
+     "min": 1369.1,
+     "max": 2829.5,
+     "mean": 1820.07
+    }
+   }
+  }
+ }
+}
