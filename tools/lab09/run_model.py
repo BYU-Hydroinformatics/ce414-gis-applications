@@ -11,7 +11,9 @@ Zonal Statistics as Table (MEAN, Study_Area) -> Calculate Field RMSE = sqrt(MEAN
 Environments: snap raster and extent True_DEM, cell size 30.
 
 ArcGIS Pro Python. Needs C:\Ames\Lab09\Data\YMountain_DEM.tif; builds C:\Ames\Lab09\Check.gdb.
-Usage: run_model.py [--seed N] [--points N]   (a personal run; default runs everything)
+Usage: run_model.py   (the original reference run). Since October 7, 2026 the lab uses only the hosted
+point sets and a personal IDW power; the grading table for every power is verify_package.py ->
+package_checks.json['personal_power']. The --seed mode is kept for a possible future personal-seed version.
 """
 import argparse
 import json

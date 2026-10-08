@@ -133,6 +133,24 @@ and Kriging Gaussian from the tool dialog, 18.54 / 25.45 — all exactly the ora
 
 Note: `check_values.json` is from the pre-simplification run (course baseline, its own checkpoints); `package_checks.json` is current. Pilot 2 (October 7, `C:\Ames\Pilot09b\`) reproduced every number from the zip and found ten text issues, all fixed.
 
+## Second simplification (October 7, 2026, instructor's request)
+
+No personal point set: Step 8 is five tool-dialog runs on the course's sets (250 and 10,000 points;
+IDW 1 + exponential and IDW 3 + Gaussian on 2,500; and run 5). The per-student element is run 5's
+**IDW power = 1 + (last two digits of the nine-digit BYU ID number) / 40**, 1.000 to 3.475: 100
+possible values instead of the 10 a last-digit rule gives, for the same effort. `Checkpoints`
+(seed 99, 200 points) is hosted in the zip, so no student runs Create Random Points at all. Grading
+table for every power: `package_checks.json['personal_power']`. GUI-checked: power 3.225 from the
+tool dialog gives IDW RMSE 20.29 (Thiessen 28.29 and Kriging 14.46 unchanged).
+
+Limitation accepted: every other number, including the largest-error coordinates, is now the same
+for every student; the IDW-power row, the `.atbx` submission and spot-check vivas are the checks.
+
+**Future customization (instructor's idea):** the student's NetID (self-chosen letters and numbers)
+could seed a personal point set or another personal parameter in a later version; turn it into a
+number with a stated rule (for example the sum of its characters' positions in the alphabet and
+digit values) so the grader can reproduce it. `run_model.py --seed` already reproduces seeded runs.
+
 ## Still owed
 
 1. ~~GUI build~~ **Done October 7, 2026** (`C:\Ames\Lab09GUI\Lab09.aprx`, captures in `caps\`): every

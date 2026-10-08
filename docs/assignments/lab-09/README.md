@@ -24,9 +24,13 @@ textbook figure) is replaced by a measured profile.
 30 m, clipped) and three hosted point sets (250, 2,500, 10,000; seed 1) instead of projecting,
 clipping and sampling the DEM themselves. The model shrinks from 20 tools to 16 and from 12
 parameters to 9; the sample points are the parameter instead of a number of points and a random
-seed. The personal seed survives outside the model (Step 8: Create Random Points + Extract Values to
+seed. The personal seed survived outside the model at first (Step 8: Create Random Points + Extract Values to
 Points with the BYU ID digits). The Snap Raster / ERROR 010654 trap is gone (True_DEM is an input),
 and IDW/Kriging now fill RASTERVALU by themselves (the CID default came from Create Random Points).
+
+*Simplified again October 7, 2026 (instructor's request):* no personal point set; Step 8 is five
+tool-dialog runs on the course's sets, and the per-student element is run 5's IDW power = 1 + (last
+two digits of the nine-digit BYU ID) / 40. Checkpoints (seed 99) are hosted in the zip.
 
 *Figures:* Figures A and B are generated from the data (`tools/lab09/make_svgs.py`); the example
 maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
@@ -96,8 +100,8 @@ Every one of these is a decision somebody made, and every one of them can change
   errors bigger.
 - **The samples.** 250, 2,500 or 10,000 random points in a 60.6 km² rectangle; at 2,500, about one
   point for every 27 cells. Random points cluster in some places and leave gaps in others, and the
-  gaps are where the errors are. The course's three sets were drawn with one random seed, so your
-  numbers can match this page; in Step 8 you draw a set of your own.
+  gaps are where the errors are. The course's three sets were drawn once, with a fixed random seed,
+  so everyone's numbers match this page.
 - **The method and its parameters.** Thiessen has none. IDW has a **power** (how fast a sample's
   influence falls off with distance; 2 is the default) and a number of neighbors (12). Kriging has a
   **semivariogram model** (spherical is the default) fitted to the points, and a number of neighbors
@@ -122,6 +126,7 @@ Every one of these is a decision somebody made, and every one of them can change
 | --- | --- | --- |
 | `lab09-y-mountain\Lab09.gdb\True_DEM` | The DEM projected to UTM 12N at 30 m and cut to the study rectangle: the truth | Prepared for you, in the zip |
 | `lab09-y-mountain\Lab09.gdb\Sample_Points_250`, `_2500`, `_10000` | Random points in the rectangle, each with the `True_DEM` value under it in `RASTERVALU` | Prepared for you, in the zip |
+| `lab09-y-mountain\Lab09.gdb\Checkpoints` | 200 more random points in the rectangle, never used to interpolate; Step 8 tests the surfaces at them | Prepared for you, in the zip |
 | `lab09-y-mountain\Lab09.gdb\Study_Area` | The study rectangle, on `True_DEM`'s 30 m grid | Prepared for you, in the zip |
 | `YMountain_DEM.tif` | The source: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 | In the zip, for its metadata and for Step 1 |
 | 3DEP elevation image service | The same elevations, served live | A web service you add in Step 1 |
@@ -142,8 +147,7 @@ them once, carefully, and handed you the results; your model starts where the in
 4. **Extract Values to Points** (Lab 8): the `True_DEM` value under each point, written to
    `RASTERVALU`.
 
-You will run Create Random Points and Extract Values to Points yourself once, in Step 8, to draw a
-set of points nobody else has.
+We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.
 
 > [!TIP]
 > **Check the data:** `True_DEM` has **67,337** cells with values, from **1,368.5 to 2,896.5** m
@@ -175,9 +179,8 @@ New in this lab:
 | ![Zonal Statistics as Table icon: the cells inside a zone summarized into a table row labeled MEAN](images/icon-zonal-statistics-as-table.svg){ .tool-icon }<br>**Zonal Statistics as Table** (Spatial Analyst) | Like Zonal Statistics, but writes the statistics of each zone to a table instead of a raster — here, the mean of the squared errors inside the study rectangle. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics-as-table.htm){ target="_blank" } |
 
 Tools you already know: **IDW** (Lab 8), **Polygon to Raster**, **Raster Calculator** (Labs 2 and
-4–8), **Calculate Field** (Lab 6), and model parameters. Step 8 also uses **Create Random Points**
-and **Extract Values to Points** (Lab 8), **Extract Multi Values to Points** and **Summary
-Statistics**.
+4–8), **Calculate Field** (Lab 6), and model parameters. Step 8 also uses **Extract Multi Values to
+Points** and **Summary Statistics**.
 
 ## Example Model
 
@@ -213,7 +216,7 @@ without the step-by-step instructions below, say so in your report.
    made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes a project
    geodatabase and toolbox beside it, `Lab09.gdb` and `Lab09.atbx`. The downloaded data stay in their
    own `lab09-y-mountain\Lab09.gdb`; this page always says which of the two it means.
-2. Add `True_DEM`, `Study_Area` and the three `Sample_Points_` layers from
+2. Add `True_DEM`, `Study_Area`, `Checkpoints` and the three `Sample_Points_` layers from
    `lab09-y-mountain\Lab09.gdb`, and `YMountain_DEM.tif` (click **OK** to build pyramids and
    statistics).
 3. Confirm Spatial Analyst is licensed and that your license level is **Advanced** (**Project** ▸
@@ -309,9 +312,8 @@ list, not the map layer of the same set — so that changing this one input in S
 methods at once.
 
 > [!NOTE]
-> **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points and on a
-> set of your own. With the points as a parameter, each of those runs is one choice in the tool
-> dialog.
+> **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points as well.
+> With the points as a parameter, each of those runs is one choice in the tool dialog.
 
 ### Step 3 — Build the Thiessen Surface
 
@@ -461,83 +463,82 @@ ModelBuilder.
 ### Step 8 — Test the Choices
 
 The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
-and three sets of default parameters. Find out how much of it survives a change. Save the model,
-close it, and open it from the **Catalog** pane (**Toolboxes** ▸ `Lab09.atbx` ▸ **Interpolation
-Explorer**) to get its tool dialog.
+and three sets of default parameters. Find out how much of it survives a change.
 
-![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer: Sample Points My_Sample_Points; IDW Power 2; Semivariogram Ordinary, Spherical, with Lag size, Major range, Partial sill and Nugget empty; outputs RMSE_IDW_mine, RMSE_Kriging_mine, RMSE_Thiessen_mine, Error_IDW_mine, Error_Kriging_mine and Error_Thiessen_mine.](images/lab09-tool-dialog.png)
+**First, the checkpoints and Map 1.** Your Step 7 run is your **baseline**, and its surfaces are
+still on disk because you ran it inside ModelBuilder. Use them now, before any run from the tool
+dialog (see the warning below). In real work you would not have a true DEM; you would hold back some
+measured points and test against them. `Checkpoints` is 200 such points, drawn separately from the
+samples and never used to interpolate:
 
-**Figure 8a.** The model as a tool, here on your own points. Lag size may show empty in the dialog;
-Kriging fills it in. Give every output a name
-that says which run it is.
-
-**First, the number of points.** Run the tool twice, with **Sample Points** set to
-`Sample_Points_250` and then `Sample_Points_10000`, everything else at the defaults. With your
-Step 7 run, that is the same random seed at 250, 2,500 and 10,000 points.
-
-**Then your own points.** Draw a set of 2,500 nobody else has, outside the model, with the two tools
-we used to make the course's sets:
-
-1. Run **Create Random Points** from the Geoprocessing pane: **Output Location** your project
-   geodatabase, output `My_Random_Points`, **Constraining Feature Class** `Study_Area`, **Number of
-   Points** `2500`, and on its **Environments** tab **Random Number Generator** **Seed** set to the
-   **last four digits of your BYU ID** as a number (`0042` is `42`; if that gives 0, use `9999`).
-2. Run **Extract Values to Points**: `My_Random_Points` with `True_DEM`, output `My_Sample_Points`.
-
-![The Create Random Points tool in the Geoprocessing pane, Parameters and Environments together: Output Location Lab09.gdb, Output Point Feature Class My_Random_Points, Constraining Feature Class Study_Area, Number of Points Long 2500; and under Random Numbers, Random Number Generator Seed 4321, Generator ACM collected algorithm 599.](images/lab09-my-random-points.png)
-
-**Figure 8b.** Create Random Points, with the seed set on its Environments tab (here an example
-seed, 4321). Use your own.
-
-![The Extract Values to Points tool in the Geoprocessing pane: Input point features My_Random_Points, Input raster True_DEM, Output point features My_Sample_Points.](images/lab09-my-sample-points.png)
-
-**Figure 8c.** Extract Values to Points, giving your points their `RASTERVALU`.
-
-Now run the model on `My_Sample_Points` **inside ModelBuilder** — double-click the `Sample Points`
-oval, choose `My_Sample_Points`, and **Run** — so that its surfaces stay on disk. This is your
-**baseline**: Map 1 is made from it. Write your seed in your report: the grader re-runs your points
-with it.
-
-**Then the checkpoints.** In real work you would not have a true DEM; you would hold back some
-measured points and test against them. Do that once, on your baseline surfaces:
-
-1. Run **Create Random Points** again: constraining feature class `Study_Area`, **200** points,
-   output `Checkpoints` in your project geodatabase, **Random Number Generator** seed `99`. Everyone
-   uses the same 200 checkpoints.
-2. **Extract Multi Values to Points** on `Checkpoints` with `True_DEM` (output field name `TRUE_Z`),
-   `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface` (`KR_Z`).
-3. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
+1. **Extract Multi Values to Points** on `Checkpoints` (from the downloaded geodatabase; export a
+   copy to your project geodatabase first, so the download stays clean) with `True_DEM` (output field
+   name `TRUE_Z`), `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface`
+   (`KR_Z`).
+2. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
    `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
-4. **Summary Statistics** on `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and `SQ_KR`. The
-   square root of each mean is that method's **checkpoint RMSE**.
+3. **Summary Statistics** on your copy of `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and
+   `SQ_KR`. The square root of each mean is that method's **checkpoint RMSE**.
+
+Then make Map 1 (see the Deliverables) from the baseline's surfaces and error rasters.
 
 > [!WARNING]
-> **Finish Map 1 and the checkpoints before the next dialog run.** A run from the tool dialog deletes
+> **Finish Map 1 and the checkpoints before the first dialog run.** A run from the tool dialog deletes
 > everything that is not a parameter (Labs 5, 7 and 8 saw it), including the three surfaces Map 1 and
-> the checkpoints need. The downloaded data and your own points are inputs, so they are never
-> deleted.
+> the checkpoints need. The downloaded data are inputs, so they are never deleted.
 
-**Last, the parameters.** Two more runs from the tool dialog, both on `My_Sample_Points`:
+**Then the tool dialog.** Save the model, close it, and open it from the **Catalog** pane
+(**Toolboxes** ▸ `Lab09.atbx` ▸ **Interpolation Explorer**). Run it **five times**, giving every
+output a name that says which run it is (`RMSE_IDW_n250`, `Error_Kriging_gauss`). Before each run,
+empty the Semivariogram's **Major range**, **Partial sill** and **Nugget** boxes if a previous run
+filled them, so that Kriging fits its model to the points afresh.
 
-1. **IDW power 1 and Kriging exponential** (one run changes both: they are in different branches).
-2. **IDW power 3 and Kriging Gaussian**.
+| Run | Sample Points | IDW Power | Semi-variogram model |
+| --- | --- | --- | --- |
+| 1 | `Sample_Points_250` | 2 | Spherical |
+| 2 | `Sample_Points_10000` | 2 | Spherical |
+| 3 | `Sample_Points_2500` | 1 | Exponential |
+| 4 | `Sample_Points_2500` | 3 | Gaussian |
+| 5 | `Sample_Points_2500` | **your own power** (below) | Spherical |
 
-Before each, empty the Semivariogram's **Major range**, **Partial sill** and **Nugget** boxes if a
-previous run filled them, so Kriging fits the new model to your points.
+Runs 3 and 4 change IDW and Kriging at once; that is fine, because they are in different branches
+and each RMSE comes from its own branch.
 
-For **all six rows, in one table** — the course's 250, 2,500 and 10,000 points, then your own
-baseline and its two parameter runs — record your seed, what changed, and the RMSE of all three
-methods, and one more row with the three checkpoint RMSEs of your baseline.
+**Your own IDW power.** Every student tries a different power in run 5, worked out from your
+**BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It is
+**not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU sites.
+
+> **Your power = 1 + (the last two digits of your BYU ID) ÷ 40**
+>
+> - BYU ID `123456789`: the last two digits are **89**, so the power is 1 + 89 ÷ 40 = **3.225**.
+> - BYU ID `987654302`: the last two digits are **02**, so the power is 1 + 2 ÷ 40 = **1.05**.
+> - Last two digits **00**: the power is **1**.
+>
+> Every power falls between 1 and 3.475. Type it with all its decimals, and write your BYU ID's last
+> two digits and your power in your report: the grader checks your run 5 against them.
+
+![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer, set up for run 5 with the example BYU ID: Sample Points Sample_Points_2500; IDW Power 3.225; Semivariogram Ordinary, Spherical, with Lag size, Major range, Partial sill and Nugget empty; outputs RMSE_IDW_mypower, RMSE_Kriging_mypower, RMSE_Thiessen_mypower, Error_IDW_mypower, Error_Kriging_mypower and Error_Thiessen_mypower.](images/lab09-tool-dialog.png)
+
+**Figure 8.** The model as a tool, set up for run 5 with the example ID ending in 89 (power 3.225).
+Lag size may show empty in the dialog; Kriging fills it in.
+
+> [!TIP]
+> **Check run 5:** only the IDW RMSE changes; the Thiessen and Kriging RMSEs are the same as your
+> Step 7 run (28.29 and 14.46). With the example power of 3.225, IDW's RMSE is **20.29** m.
+
+Record **all of it in one table**: your baseline (Step 7) and the five runs, each with the sample
+points, the IDW power and semivariogram model, and the RMSE of all three methods, plus one more row
+with the three checkpoint RMSEs of your baseline.
 
 Then answer, in your report:
 
 1. **Which method wins, and does the ranking survive?** Rank the methods at 250, 2,500 and 10,000
    points, with your numbers. Does the winner change? How much does going from 250 to 10,000 points
-   buy each method? Did your own 2,500 points rank them the same way as the course's?
-2. **Which parameter mattered, and which barely did?** Compare what the IDW power and the
-   semivariogram model did with what the number of points did. Before you explain the Gaussian run,
-   look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its largest
-   positive errors, the places the surface came out too low?
+   buy each method?
+2. **Which parameter mattered, and which barely did?** Compare what the IDW power (powers 1, 2, 3 and
+   yours) and the semivariogram model did with what the number of points did. Before you explain the
+   Gaussian run, look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its
+   largest positive errors, the places the surface came out too low?
 3. **Could you have known without the truth?** Compare each method's checkpoint RMSE with its RMSE
    over all 67,337 cells. Would 200 checkpoints have told a client the right ranking, and how far off
    would the number you quoted have been?
@@ -550,17 +551,16 @@ Then answer, in your report:
 
 Make **two** professional map layouts (letter size, landscape is easiest):
 
-1. **Your baseline comparison sheet** — from your personal-seed baseline: the true DEM with your
+1. **Your baseline comparison sheet** — from your Step 7 run: the true DEM with the
    sample points and the three surfaces in one row, **on one elevation color scale**; the three error
    rasters beneath their surfaces **on one diverging color scale** with the same breaks; each panel
    labeled with its method, its parameters and its RMSE; legends for both scales; a title, neat
    line, north arrow and scale bar; and a text box with your name, the date, the map projection, the
-   DEM's source and date, and your seed.
+   DEM's source and date.
 2. **One scenario from Step 8** — whichever run most changes the picture: its three error rasters
    on Map 1's error scale with a legend, each labeled with its method, parameters and RMSE (the true
    DEM and the surfaces are optional); a title, neat line, north arrow and scale bar; and a text box
-   with your name, the date, the map projection, the DEM's source and date, and the seed of the points
-   the scenario used (1 for the course's sets). Say in
+   with your name, the date, the map projection, and the DEM's source and date. Say in
    the title and the text box what changed from Map 1 and by how much.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
@@ -573,19 +573,19 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
   Graphic**), and **one** screen capture of its tool dialog with the sample points, the IDW power
   and the semivariogram exposed; and **upload your project's toolbox** (`Lab09.atbx`, in your project
-  folder) with the report — the grader opens it and runs it on points drawn with your seed
+  folder) with the report — the grader opens it and runs it at your IDW power
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
   datum and units, and its cell size — and **what the service returned** in Step 1, what each
   means for your result, and which of the two you would cite in an engineering report
 - your **check values from Steps 3 to 7**, on the course's 2,500 points: each surface's range, the
   error table, and the three RMSEs
-- **where the methods break**: on your own baseline's error map for the best method (lowest RMSE), the cell with the
+- **where the methods break**: on your baseline's error map for the best method (lowest RMSE), the cell with the
   largest error in either direction — its coordinates and size — and why the ground there defeats
   the interpolators, with a cropped figure of the spot. Its value is the raster's minimum or maximum
   (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
   the layer a two-class symbology with the break just short of that value, so that one cell stands
   out, and click it with **Explore** to read its coordinates
-- your **sensitivity table** from Step 8, with your seed, and your answers to its three questions
+- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its three questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
@@ -610,7 +610,7 @@ U.S. Geological Survey, 3D Elevation Program. 3DEP Elevation image service.
 
 ## Example Maps
 
-These are examples, not templates. Your maps carry your name and your own seed's results, so your
+These are examples, not templates. Your maps carry your name, so your
 numbers will differ a little from these.
 
 ![Example comparison sheet titled "Rebuilding Y Mountain from 2,500 Points: Kriging Comes Closest". Top row: the true DEM with 2,500 black sample points, then the Thiessen, IDW and Kriging surfaces, all on one green-to-brown-to-white elevation scale over a hillshade; the Thiessen surface is visibly faceted. Second row: the three error maps on one red-to-blue scale, labeled Thiessen error RMSE 28.29 m, IDW error RMSE 20.71 m, Kriging error RMSE 14.46 m; the valley floor is pale everywhere, and the mountain front is a mottle of red and blue, finest-grained for Thiessen and palest for Kriging. Legends, north arrow, scale bar and a text box at the bottom.](images/lab09-example-map-baseline.png)
@@ -631,11 +631,11 @@ what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 3 to 7, on the course's 2,500 points (2)<br>• Where the methods break: the largest error on your own baseline's error map for the best method, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 3 to 7, on the course's 2,500 points (2)<br>• Where the methods break: the largest error on your baseline's error map for the best method, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, on the course's 2,500 points, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
-| **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, the DEM's source and date, and your seed (1)<br>• The true DEM with your sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
-| **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, the DEM's source and date, and your seed (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 8)<br>• One table with your seed: the course's 250, 2,500 and 10,000 points, then your own baseline and its two parameter runs, the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
+| **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The true DEM with the sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
+| **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
+| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
