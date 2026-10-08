@@ -801,7 +801,7 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 **Labs**
 
 - [Lab 7 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
-- [Lab 8 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next; [Lab 9 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) follows it and applies these methods in ArcGIS Pro
+- [Lab 8 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next; [Lab 9 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) follows it and applies these methods in ArcGIS Pro
 
 </div>
 <div>

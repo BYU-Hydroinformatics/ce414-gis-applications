@@ -240,7 +240,7 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 
 - Reading: **Chapter 9** of *GIS Fundamentals* (Spatial Analysis)
 - Take **Quiz 9** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Finish [Lab 9 — Practicing with Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
+- Finish [Lab 9 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
 - Start [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 

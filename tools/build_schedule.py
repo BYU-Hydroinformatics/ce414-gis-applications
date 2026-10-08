@@ -63,7 +63,7 @@ DECKS = [
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Avalanche Hazard",8:"Big Southern Butte",
-        9:"Practicing with Interpolation",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
+        9:"Interpolation Explorer",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 12)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",

@@ -15,7 +15,7 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [7](week-07.md) | Lake Bathymetry | Lab 6 — Lake Depth Explorer |
 | [8](week-08.md) | Interpolation and Midterm 1 | Lab 7 — Avalanche Hazard |
 | [9](week-09.md) | Interpolation, Part 3, and Web Services | Lab 8 — Big Southern Butte |
-| [10](week-10.md) | Raster-Based Spatial Analysis | Lab 9 — Practicing with Interpolation |
+| [10](week-10.md) | Raster-Based Spatial Analysis | Lab 9 — Interpolation Explorer |
 | [11](week-11.md) | Least Cost Path and Coordinate Systems | Lab 10 — Wind Farm Site Selection |
 | [12](week-12.md) | GPS and the Final Project | Lab 11 — Least Cost Path Power Line Analysis |
 | [13](week-13.md) | Final Project Work | — |

@@ -565,7 +565,7 @@ Open the **UGRC ski-area layer** on your phone or laptop (scan the code):
 
 - **Lab 8 — Big Southern Butte** is due **Saturday 11:59 pm**: [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
 - **Reading** — Chapter 14 of *GIS Fundamentals* (Data Standards and Data Quality); **Quiz 8** on Learning Suite, open book, due **Saturday 11:59 pm**
-- Next week: **raster-based spatial analysis**, and **Lab 9 — Practicing with Interpolation**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+- Next week: **raster-based spatial analysis**, and **Lab 9 — Interpolation Explorer**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 8, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 9. -->
