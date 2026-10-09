@@ -1,0 +1,1184 @@
+{
+ "cell_m": 100,
+ "arcgis": "3.7.1",
+ "study_area_km2": 9535.5,
+ "study_area_mi2": 3681.7,
+ "county_areas_km2": {
+  "Lake": 1489.3,
+  "Lincoln": 1496.4,
+  "Minnehaha": 2107.9,
+  "Moody": 1349.0,
+  "Turner": 1599.4,
+  "McCook": 1493.5
+ },
+ "grid_cells_in_study_area": 953568,
+ "grid_extent": [
+  611800,
+  4771600,
+  708600,
+  4896900
+ ],
+ "gwa_sr": "GCS_WGS_1984",
+ "gwa_cell_deg": [
+  0.002500000000000001,
+  0.002500000000000001
+ ],
+ "gwa_clip": [
+  862,
+  737,
+  "GCS_WGS_1984",
+  0.0025000000000000014
+ ],
+ "wind100_stats_ms": {
+  "MINIMUM": 6.569,
+  "MAXIMUM": 8.944,
+  "MEAN": 7.965,
+  "STD": 0.324
+ },
+ "wind_cells_below": {
+  "6.5": 0,
+  "7.0": 1990,
+  "7.5": 79302,
+  "8.0": 482969,
+  "8.5": 912677
+ },
+ "wind_cells_nodata_in_area": 0,
+ "turbines_inside_counties": 0,
+ "turbines_within_10mi": 339,
+ "projects_within_10mi": [
+  [
+   "MN",
+   "Buffalo Ridge",
+   2022
+  ],
+  [
+   "MN",
+   "Community Wind North",
+   2011
+  ],
+  [
+   "MN",
+   "JJN Wind Farm",
+   2004
+  ],
+  [
+   "MN",
+   "Lake Benton I",
+   1998
+  ],
+  [
+   "MN",
+   "MinWind I & II",
+   2002
+  ],
+  [
+   "MN",
+   "Minn-Dakota",
+   2007
+  ],
+  [
+   "MN",
+   "Norgaard (7 Projects)",
+   2006
+  ],
+  [
+   "MN",
+   "Olsen Farms",
+   2001
+  ],
+  [
+   "MN",
+   "Prairie Rose",
+   2012
+  ],
+  [
+   "MN",
+   "Rock County Wind Fuel Project",
+   2020
+  ],
+  [
+   "MN",
+   "Uilk Wind Farm",
+   2009
+  ],
+  [
+   "MN",
+   "Walleye",
+   2022
+  ],
+  [
+   "MN",
+   "West Pipestone (Maiden Winds)",
+   2004
+  ],
+  [
+   "SD",
+   "City of Howard Wind Turbines",
+   2001
+  ],
+  [
+   "SD",
+   "Minn-Dakota",
+   2007
+  ]
+ ],
+ "turbines_within_20mi": 888,
+ "projects_within_20mi": [
+  [
+   "MN",
+   "Blazing Star 1",
+   2020
+  ],
+  [
+   "MN",
+   "Blazing Star 2",
+   2021
+  ],
+  [
+   "MN",
+   "Buffalo Ridge",
+   2022
+  ],
+  [
+   "MN",
+   "Community Wind North",
+   2011
+  ],
+  [
+   "MN",
+   "Farmers' coops/Westridge",
+   2003
+  ],
+  [
+   "MN",
+   "Hilltop Power",
+   2009
+  ],
+  [
+   "MN",
+   "JJN Wind Farm",
+   2004
+  ],
+  [
+   "MN",
+   "Kas Farms",
+   2001
+  ],
+  [
+   "MN",
+   "Lake Benton I",
+   1998
+  ],
+  [
+   "MN",
+   "Lake Benton II Repower",
+   2019
+  ],
+  [
+   "MN",
+   "Lakota Ridge",
+   1999
+  ],
+  [
+   "MN",
+   "MinWind I & II",
+   2002
+  ],
+  [
+   "MN",
+   "Minn-Dakota",
+   2007
+  ],
+  [
+   "MN",
+   "Moraine II",
+   2009
+  ],
+  [
+   "MN",
+   "Moraine Wind Power project",
+   2003
+  ],
+  [
+   "MN",
+   "Norgaard (7 Projects)",
+   2006
+  ],
+  [
+   "MN",
+   "North Shaokatan Wind Farm",
+   2000
+  ],
+  [
+   "MN",
+   "Northern Wind Repower",
+   2023
+  ],
+  [
+   "MN",
+   "Olsen Farms",
+   2001
+  ],
+  [
+   "MN",
+   "Prairie Rose",
+   2012
+  ],
+  [
+   "MN",
+   "Ridgewind",
+   2010
+  ],
+  [
+   "MN",
+   "Rock Aetna",
+   2022
+  ],
+  [
+   "MN",
+   "Rock County Wind Fuel Project",
+   2020
+  ],
+  [
+   "MN",
+   "Ruthton Wind Farm",
+   2001
+  ],
+  [
+   "MN",
+   "Shane Colwell",
+   2006
+  ],
+  [
+   "MN",
+   "Shaokatan Hills",
+   1999
+  ],
+  [
+   "MN",
+   "Shaokatan Power Partners",
+   2003
+  ],
+  [
+   "MN",
+   "Stoneray",
+   2018
+  ],
+  [
+   "MN",
+   "Stoneray II",
+   2019
+  ],
+  [
+   "MN",
+   "Tholen & Petersen",
+   2005
+  ],
+  [
+   "MN",
+   "Uilk Wind Farm",
+   2009
+  ],
+  [
+   "MN",
+   "Walleye",
+   2022
+  ],
+  [
+   "MN",
+   "West Pipestone (Maiden Winds)",
+   2004
+  ],
+  [
+   "MN",
+   "Woodstock Hills Repower",
+   2018
+  ],
+  [
+   "MN",
+   "Woodstock Municipal Wind",
+   2010
+  ],
+  [
+   "MN",
+   "unknown Lincoln County 1",
+   -9999
+  ],
+  [
+   "MN",
+   "unknown Pipestone County",
+   2018
+  ],
+  [
+   "SD",
+   "Buffalo Ridge",
+   2009
+  ],
+  [
+   "SD",
+   "Carthage Wind Turbine",
+   2002
+  ],
+  [
+   "SD",
+   "City of Howard Wind Turbines",
+   2001
+  ],
+  [
+   "SD",
+   "Coyote Ridge",
+   2019
+  ],
+  [
+   "SD",
+   "Minn-Dakota",
+   2007
+  ]
+ ],
+ "turbines_within_30mi": 1515,
+ "projects_within_30mi": [
+  [
+   "IA",
+   "Plymouth Wind",
+   2021
+  ],
+  [
+   "MN",
+   "Blazing Star 1",
+   2020
+  ],
+  [
+   "MN",
+   "Blazing Star 2",
+   2021
+  ],
+  [
+   "MN",
+   "Buffalo Ridge",
+   2022
+  ],
+  [
+   "MN",
+   "Community Wind North",
+   2011
+  ],
+  [
+   "MN",
+   "East Ridge",
+   2006
+  ],
+  [
+   "MN",
+   "Farmers' coops/Westridge",
+   2003
+  ],
+  [
+   "MN",
+   "Fenton",
+   2007
+  ],
+  [
+   "MN",
+   "Hilltop Power",
+   2009
+  ],
+  [
+   "MN",
+   "JJN Wind Farm",
+   2004
+  ],
+  [
+   "MN",
+   "Kas Farms",
+   2001
+  ],
+  [
+   "MN",
+   "Lake Benton I",
+   1998
+  ],
+  [
+   "MN",
+   "Lake Benton II Repower",
+   2019
+  ],
+  [
+   "MN",
+   "Lakeview Ridge",
+   2001
+  ],
+  [
+   "MN",
+   "Lakota Ridge",
+   1999
+  ],
+  [
+   "MN",
+   "Lincoln County",
+   2003
+  ],
+  [
+   "MN",
+   "MinWind I & II",
+   2002
+  ],
+  [
+   "MN",
+   "Minn-Dakota",
+   2007
+  ],
+  [
+   "MN",
+   "Minnesota Wind Share",
+   2006
+  ],
+  [
+   "MN",
+   "Moraine II",
+   2009
+  ],
+  [
+   "MN",
+   "Moraine Wind Power project",
+   2003
+  ],
+  [
+   "MN",
+   "Nobles",
+   2010
+  ],
+  [
+   "MN",
+   "Nobles 2 Power Partners",
+   2020
+  ],
+  [
+   "MN",
+   "Norgaard (7 Projects)",
+   2006
+  ],
+  [
+   "MN",
+   "North Shaokatan Wind Farm",
+   2000
+  ],
+  [
+   "MN",
+   "Northern Wind Repower",
+   2023
+  ],
+  [
+   "MN",
+   "Olsen Farms",
+   2001
+  ],
+  [
+   "MN",
+   "Prairie Rose",
+   2012
+  ],
+  [
+   "MN",
+   "Red Pine",
+   2017
+  ],
+  [
+   "MN",
+   "Ridgewind",
+   2010
+  ],
+  [
+   "MN",
+   "Rock Aetna",
+   2022
+  ],
+  [
+   "MN",
+   "Rock County Wind Fuel Project",
+   2020
+  ],
+  [
+   "MN",
+   "Ruthton Wind Farm",
+   2001
+  ],
+  [
+   "MN",
+   "Shane Colwell",
+   2006
+  ],
+  [
+   "MN",
+   "Shaokatan Hills",
+   1999
+  ],
+  [
+   "MN",
+   "Shaokatan Power Partners",
+   2003
+  ],
+  [
+   "MN",
+   "Stoneray",
+   2018
+  ],
+  [
+   "MN",
+   "Stoneray II",
+   2019
+  ],
+  [
+   "MN",
+   "Tholen & Petersen",
+   2005
+  ],
+  [
+   "MN",
+   "Uilk Wind Farm",
+   2009
+  ],
+  [
+   "MN",
+   "Valley View",
+   2011
+  ],
+  [
+   "MN",
+   "Walleye",
+   2022
+  ],
+  [
+   "MN",
+   "West Pipestone (Maiden Winds)",
+   2004
+  ],
+  [
+   "MN",
+   "Woodstock Hills Repower",
+   2018
+  ],
+  [
+   "MN",
+   "Woodstock Municipal Wind",
+   2010
+  ],
+  [
+   "MN",
+   "unknown Lincoln County 1",
+   -9999
+  ],
+  [
+   "MN",
+   "unknown Pipestone County",
+   2018
+  ],
+  [
+   "SD",
+   "Beethoven Wind, LLC",
+   2015
+  ],
+  [
+   "SD",
+   "Buffalo Ridge",
+   2009
+  ],
+  [
+   "SD",
+   "Buffalo Ridge II",
+   2010
+  ],
+  [
+   "SD",
+   "Carthage Wind Turbine",
+   2002
+  ],
+  [
+   "SD",
+   "City of Howard Wind Turbines",
+   2001
+  ],
+  [
+   "SD",
+   "Coyote Ridge",
+   2019
+  ],
+  [
+   "SD",
+   "Minn-Dakota",
+   2007
+  ],
+  [
+   "SD",
+   "Prevailing Wind",
+   2020
+  ],
+  [
+   "SD",
+   "Tatanka Ridge",
+   2021
+  ]
+ ],
+ "sd_hub_height_2015plus": {
+  "n": 1004,
+  "median": 89.0,
+  "min": 80.0,
+  "max": 110.0
+ },
+ "named_streams_in_context": 133,
+ "river_names_in_context": [
+  "Big Sioux River",
+  "East Branch Rock River",
+  "East Fork Vermillion River",
+  "James River",
+  "Little Vermillion River",
+  "Rock River",
+  "Vermillion River",
+  "West Fork Vermillion River"
+ ],
+ "sd_incorporated_places_in_context": 85,
+ "sd_incorporated_places_in_counties": 45,
+ "road_mtfcc_in_context": [
+  [
+   "S1200",
+   492
+  ],
+  [
+   "S1100",
+   28
+  ]
+ ],
+ "dist_max_m": {
+  "Turbines": 102487.7,
+  "Rivers": 49025.1,
+  "Streams": 11335.8,
+  "Towns": 22138.2,
+  "Roads": 16900.0
+ },
+ "excluded_cells": {
+  "wind_lt_7": 1990,
+  "turbine_20mi": 353287,
+  "turbine_10mi": 92136,
+  "river_1mi": 79396,
+  "river_2mi": 157168,
+  "named_stream_1mi": 414993,
+  "town_gt_30mi": 0,
+  "road_gt_2mi": 370875
+ },
+ "excluded_pct": {
+  "wind_lt_7": 0.2,
+  "turbine_20mi": 37.0,
+  "turbine_10mi": 9.7,
+  "river_1mi": 8.3,
+  "river_2mi": 16.5,
+  "named_stream_1mi": 43.5,
+  "town_gt_30mi": 0.0,
+  "road_gt_2mi": 38.9
+ },
+ "mask_open_cells_base": 552371,
+ "mask_open_km2_base": 5523.7,
+ "mask_open_km2_variant": {
+  "turb10": 7834.8,
+  "turb30": 2479.9,
+  "river2": 5092.7,
+  "wind75": 5184.1,
+  "wind8": 3034.6
+ },
+ "score_ranges": {
+  "Score_Wind": [
+   1.0,
+   10.0,
+   6.289
+  ],
+  "Score_Town": [
+   1.93,
+   10.0,
+   7.68
+  ],
+  "Score_Road": [
+   2.842,
+   10.0,
+   8.298
+  ]
+ },
+ "runs": {
+  "example_0.5_0.25_0.25": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.174,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3208.5
+  },
+  "wind_first_0.7_0.15_0.15": {
+   "weights": [
+    0.7,
+    0.15,
+    0.15
+   ],
+   "max": 9.1257,
+   "mean": 6.852,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    653250,
+    4843650
+   ],
+   "top_lonlat": [
+    -97.0972,
+    43.73
+   ],
+   "km2_score_ge7": 2675.1
+  },
+  "infra_first_0.2_0.4_0.4": {
+   "weights": [
+    0.2,
+    0.4,
+    0.4
+   ],
+   "max": 9.6967,
+   "mean": 7.657,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4278.9
+  },
+  "equal_1/3": {
+   "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+   ],
+   "max": 9.5267,
+   "mean": 7.443,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3983.2
+  },
+  "example_turb10": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.18,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4653.0
+  }
+ },
+ "personal_A_wind_weight": {
+  "0": {
+   "weights": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "max": 9.5692,
+   "mean": 7.496,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4083.3
+  },
+  "11": {
+   "weights": [
+    0.355,
+    0.3225,
+    0.3225
+   ],
+   "max": 9.4991,
+   "mean": 7.408,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3909.6
+  },
+  "22": {
+   "weights": [
+    0.41,
+    0.29500000000000004,
+    0.29500000000000004
+   ],
+   "max": 9.429,
+   "mean": 7.319,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3693.1
+  },
+  "33": {
+   "weights": [
+    0.46499999999999997,
+    0.2675,
+    0.2675
+   ],
+   "max": 9.3589,
+   "mean": 7.23,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3417.6
+  },
+  "44": {
+   "weights": [
+    0.52,
+    0.24,
+    0.24
+   ],
+   "max": 9.2888,
+   "mean": 7.142,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3097.4
+  },
+  "55": {
+   "weights": [
+    0.575,
+    0.21250000000000002,
+    0.21250000000000002
+   ],
+   "max": 9.2186,
+   "mean": 7.053,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 2914.7
+  },
+  "66": {
+   "weights": [
+    0.63,
+    0.185,
+    0.185
+   ],
+   "max": 9.1485,
+   "mean": 6.964,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 2819.6
+  },
+  "77": {
+   "weights": [
+    0.685,
+    0.15749999999999997,
+    0.15749999999999997
+   ],
+   "max": 9.1,
+   "mean": 6.876,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    653250,
+    4843650
+   ],
+   "top_lonlat": [
+    -97.0972,
+    43.73
+   ],
+   "km2_score_ge7": 2706.9
+  },
+  "88": {
+   "weights": [
+    0.74,
+    0.13,
+    0.13
+   ],
+   "max": 9.1942,
+   "mean": 6.787,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    653250,
+    4843650
+   ],
+   "top_lonlat": [
+    -97.0972,
+    43.73
+   ],
+   "km2_score_ge7": 2585.0
+  },
+  "99": {
+   "weights": [
+    0.7949999999999999,
+    0.10250000000000004,
+    0.10250000000000004
+   ],
+   "max": 9.2883,
+   "mean": 6.698,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    653250,
+    4843650
+   ],
+   "top_lonlat": [
+    -97.0972,
+    43.73
+   ],
+   "km2_score_ge7": 2434.1
+  }
+ },
+ "personal_B_turbine_spacing": {
+  "0": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.18,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4653.0
+  },
+  "11": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.187,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4577.9
+  },
+  "22": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.191,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4469.2
+  },
+  "33": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.193,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4333.9
+  },
+  "44": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.196,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4210.5
+  },
+  "55": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.201,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 4088.1
+  },
+  "66": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.201,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3914.1
+  },
+  "77": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.196,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3699.5
+  },
+  "88": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.186,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3466.8
+  },
+  "99": {
+   "weights": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "max": 9.3143,
+   "mean": 7.175,
+   "n_top_cells": 1,
+   "top_xy_utm": [
+    656450,
+    4834550
+   ],
+   "top_lonlat": [
+    -97.0601,
+    43.6475
+   ],
+   "km2_score_ge7": 3228.6
+  }
+ }
+}

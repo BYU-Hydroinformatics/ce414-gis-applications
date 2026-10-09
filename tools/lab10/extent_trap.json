@@ -1,0 +1,18 @@
+{
+ "DistanceAccumulation | extent=study,mask=study": "ERROR ERROR 160333: The table was not found.",
+ "EucDistance | extent=study,mask=study": "ERROR ERROR 160333: The table was not found.",
+ "DistanceAccumulation | extent=study,no mask": {
+  "valid_cells_in_area": 953568,
+  "area_cells": 953568,
+  "min": 447.2,
+  "max": 91609.0
+ },
+ "EucDistance | extent=study,no mask": {
+  "valid_cells_in_area": 953568,
+  "area_cells": 953568,
+  "min": 447.2,
+  "max": 91609.0
+ },
+ "DistanceAccumulation | extent=context(20mi buffer),no mask": "ERROR boolean index did not match indexed array along axis 0; size of axis is 1896 but size of corresponding boolean axis is 1253",
+ "EucDistance | extent=context(20mi buffer),no mask": "ERROR boolean index did not match indexed array along axis 0; size of axis is 1896 but size of corresponding boolean axis is 1253"
+}
