@@ -202,11 +202,11 @@ By the end of class you should be able to:
 
 ---
 
-# Flow Accumulation > 5 Cell Threshold
+# Flow Accumulation ≥ 5 Cell Threshold
 
 ![h:400 center](images/ws-flow-accum-threshold-5.png)
 
-<!-- The outlined cells are the ones whose flow accumulation exceeds 5. That set is the stream network for this threshold. Nothing about the terrain changed; only the number we compared against. -->
+<!-- The outlined cells are the ones whose flow accumulation is 5 or more (the cell reading exactly 5 is outlined, so the test in this figure is >=, not >; in ArcGIS Pro that is Con("Flow_Accumulation" >= 5, 1)). That set is the stream network for this threshold. Nothing about the terrain changed; only the number we compared against. -->
 <!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
 
 ---
