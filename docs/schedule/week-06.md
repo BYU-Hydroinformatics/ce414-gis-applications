@@ -5,7 +5,7 @@
 ## :material-presentation-play: Presentation Slides
 
 - **Tuesday** — [Watershed Delineation, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-a.html) — What a watershed is and why water is managed by them — Powell, nested hydrologic units from Rock Canyon to the Great Salt Lake, the water balance — then Lab 5 and the first three steps from a DEM: the elevation surface, Fill, slope and aspect against D8, and the flow direction grid.
-- **Thursday** — [Watershed Delineation, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-b.html) — From flow direction to watersheds: flow accumulation, the stream threshold, stream links, pour points and subwatersheds, the Lab 5 model that runs all eight steps, and a watershed delineated by hand and with USGS StreamStats.
+- **Thursday** — [Watershed Delineation, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-06/watershed-delineation-b.html) — A watershed delineated by hand and then with USGS StreamStats, then the rest of the steps in ArcGIS Pro: flow accumulation, the stream threshold, stream links, pour points and subwatersheds, and the Lab 5 model that runs all eight.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
