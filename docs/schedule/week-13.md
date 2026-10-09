@@ -39,7 +39,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 Read Chapter 14 of *GIS Fundamentals*, 7th edition (Bolstad).
 
-**Quiz 8 — Data Standards and Data Quality** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+**Quiz 11 — Data Standards and Data Quality** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 

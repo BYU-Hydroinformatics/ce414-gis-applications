@@ -38,7 +38,7 @@ Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 Read Chapter 9 of *GIS Fundamentals*, 7th edition (Bolstad).
 
-**Quiz 9 — Spatial Analysis** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+**Quiz 8 — Volumes and Spatial Analysis** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 

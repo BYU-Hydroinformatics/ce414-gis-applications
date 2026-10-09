@@ -36,9 +36,9 @@ Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 ## :material-book-open-page-variant: Reading Quiz
 
-Read Chapter 3 of *GIS Fundamentals*, 7th edition (Bolstad).
+Read Chapters 3 and 5 of *GIS Fundamentals*, 7th edition (Bolstad).
 
-**Quiz 10 — Projections and Coordinate Systems** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+**Quiz 9 — Coordinate Systems and GPS** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 

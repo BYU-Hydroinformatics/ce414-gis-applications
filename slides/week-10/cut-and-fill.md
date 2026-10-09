@@ -170,11 +170,11 @@ Nine 10 m cells of existing ground (m):
 
 ![bg right:30% w:94%](images/vo-end-area.svg)
 
-- **Reading** — Chapter 9 of *GIS Fundamentals*; **Quiz 9** due **Saturday 11:59 pm**
+- **Reading** — Chapter 9 of *GIS Fundamentals*; **Quiz 8** due **Saturday 11:59 pm**
 - **Lab 9 — Big Southern Butte** — due **Saturday 11:59 pm** — [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 10 due items from tools/build_schedule.py: Quiz 9 (Chapter 9) and Lab 9. Deck written October 9, 2026; figures from tools/week10_volume_figures.py, numbers in tools/week10_volume_numbers.json. -->
+<!-- Week 10 due items from tools/build_schedule.py: Quiz 8 (Volumes and Spatial Analysis, Chapter 9) and Lab 9. Deck written October 9, 2026; figures from tools/week10_volume_figures.py, numbers in tools/week10_volume_numbers.json. -->
 
 ---
 

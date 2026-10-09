@@ -268,7 +268,7 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 - Next week: **cut, fill, and raster volumes**, and **Lab 9 — Big Southern Butte**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 9, Quiz 8 and Chapter 14 this Saturday; Lab 8 is due the Saturday of Week 10. Deck written October 8, 2026. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
 
 ---
 

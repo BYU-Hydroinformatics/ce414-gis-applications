@@ -124,11 +124,13 @@ DUE = {
              other=[("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
     9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
-    10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
-    11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),
-    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11, other=[]),
+    10: dict(reading="Chapter 9", quiz=(8, "Volumes and Spatial Analysis"), lab=9, other=[]),
+    11: dict(reading="Chapters 3 and 5", quiz=(9, "Coordinate Systems and GPS"), lab=10, other=[]),
+    12: dict(reading=None, quiz=(10, "Least Cost Paths"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
-    13: dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=None, other=[]),
+    # Quizzes 8-11 follow the lectures (Oct 9): Week 10 volumes, Week 11 the two refreshers in one quiz,
+    # Week 12 least cost paths, Week 13 data standards. Week 14 (Midterm 2, Lab 12) has no quiz.
+    13: dict(reading="Chapter 14", quiz=(11, "Data Standards and Data Quality"), lab=None, other=[]),
     14: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),

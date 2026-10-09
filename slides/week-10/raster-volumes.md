@@ -154,7 +154,7 @@ By the end of class you should be able to:
 ![bg right:30% w:94%](images/vo-butte-profile.png)
 
 - **Lab 9 — Big Southern Butte** — due **Saturday 11:59 pm**
-- **Quiz 9** (Chapter 9) — due **Saturday 11:59 pm**
+- **Quiz 8** (Volumes and Spatial Analysis, Chapter 9) — due **Saturday 11:59 pm**
 - Next week: **coordinate systems and GPS** refreshers, and **Lab 10 — Avalanche Hazard**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 

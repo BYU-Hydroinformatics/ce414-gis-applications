@@ -416,7 +416,7 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 # Before Next Class
 
 - Read **Chapter 5** of *GIS Fundamentals* (GPS and GNSS Data)
-- Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday of next week**
+- Take **Quiz 9** (Coordinate Systems and GPS, Chapters 3 and 5, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Finish [**Lab 10 — Avalanche Hazard**](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm**
 - Next week: **least cost paths**, and **Lab 11 — Least Cost Path Power Line Analysis**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
@@ -438,7 +438,7 @@ Five questions on what a receiver actually measures, and on why the position it 
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
-- Quiz 11 on Learning Suite is the graded one this week; this is the rehearsal for it
+- Quiz 9 on Learning Suite is the graded one this week; this is the rehearsal for it
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/gps/</span>
 

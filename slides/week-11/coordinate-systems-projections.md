@@ -681,7 +681,7 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 ![bg right:34% w:90%](images/crs-utm-zones-conus.png)
 
 - Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
-- Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Take **Quiz 9** (Coordinate Systems and GPS, Chapters 3 and 5, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Current lab: [Lab 10 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them
 - **Thursday:** a GPS refresher
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)

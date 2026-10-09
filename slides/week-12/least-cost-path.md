@@ -253,7 +253,7 @@ Brigham Young University
 # Before Next Class
 
 - **Lab 11 — Least Cost Path Power Line Analysis** uses today's tools, due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
-- Take **Quiz 11** (Chapter 5, GPS and GNSS Data, open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Take **Quiz 10** (Least Cost Paths, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.

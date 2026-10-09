@@ -317,7 +317,7 @@ That is the difference between a result and a recommendation.
 - **Read** the [Final Project page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) on the course site
 - **Start** your data-feasibility table — one row per layer
 - **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
-- **Quiz 8** (Chapter 14, Data Standards and Data Quality), open book, due **Saturday 11:59 pm** — Thursday is Thanksgiving, no class
+- **Quiz 11** (Chapter 14, Data Standards and Data Quality), open book, due **Saturday 11:59 pm** — Thursday is Thanksgiving, no class
 
 <!-- Conversion notes (2026-09-03): built from the Learning Suite "Final Project" page (one page,
 exported to PDF Sept 2, 2026) and the peer scoresheet in Final Projects/scoresheet.docx. No slide
