@@ -299,6 +299,85 @@ const LABS = {
   ],
 },
 
+'11': {
+  labTitle: 'Lab 11: Least Cost Path Power Line Analysis',
+  labSubtitle: 'A least-cost route for a power line from Spanish Fork Canyon to Bluffdale',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to route and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
+
+    { h: 'The Data and Their Metadata',
+      hint: 'Rubric: the three metadata values and what each means for your route (2 points). Read them yourself on the UGRC pages and services linked in the Data section and in READ-ME-FIRST.txt — do not copy them from Figure A.',
+      table: { caption: 'Table 1. Metadata for the roads, the city limits and the power lines.',
+               head: ['Metadata value', 'What you found', 'What it means for your route'],
+               rows: [['Roads: the “Last Update” date', '', ''], ['City limits: what the layer is for', '', ''],
+                      ['Power lines: what the metadata does and does not say', '', '']],
+               widths: [2600, 2400, 4360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool and its settings, the six Select expressions, the four score tables, the Raster Calculator expression, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Select (six: roads, lakes, streams, power lines, source, destination)', '', '', '', ''], ['Slope', '', '', '', ''],
+                      ['Distance Accumulation (roads, cities, lines)', '', '', '', ''], ['Reclassify (four scores)', '', '', '', ''],
+                      ['Polyline to Raster', '', '', '', ''], ['Raster Calculator (cost)', '', '', '', ''],
+                      ['Distance Accumulation (route)', '', '', '', ''], ['Optimal Path As Line', '', '', '', '']],
+               widths: [2300, 2100, 2000, 1700, 1260] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab11.atbx) with the report as well.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the two weights and the route exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the tool dialog with the two weights and the route exposed as parameters (2 points).' },
+      ] },
+
+    { h: 'Check Values',
+      hint: 'Rubric: your check values from Steps 1 to 7 (1 point); they also show the model works (part of its 4 points). These come from the default weights, 1 and 1.',
+      table: { caption: 'Table 3. Check values at the default weights.',
+               head: ['Check', 'Your value'],
+               rows: [['Major_Roads, Major_Lakes, Major_Streams, Existing_Lines (features)', ''], ['Cost_Surface minimum and maximum', ''],
+                      ['Route length (km)', ''], ['Accumulated cost at the destination', ''], ['Major streams crossed', '']],
+               widths: [5360, 4000] } },
+
+    { h: 'Where the Route Is Unrealistic',
+      hint: 'Rubric: two places on your route, each with coordinates, a cropped figure and the reason, and what data would fix it (3 points). A general paragraph about least cost paths earns nothing here.',
+      figures: [
+        { caption: 'Figure 3. Place 1, where the route is unrealistic, close up.', size: 'medium',
+          hint: 'A crop of your route on imagery, the coordinates labeled.' },
+        { caption: 'Figure 4. Place 2, close up.', size: 'medium',
+          hint: 'A second place, with a different reason if you can find one.' },
+      ] },
+
+    { h: 'Testing the Weights', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and at least five runs, including your BYU ID’s last two digits and Line_Weight, giving the weights, length, accumulated cost, crossings and the largest distance from the baseline (4 points).',
+      table: { caption: 'Table 4. Sensitivity. My BYU ID ends in __, so Line_Weight = 0.005 × __ = ______.',
+               head: ['Run', 'Slope_Weight', 'Line_Weight', 'Length (km)', 'Accumulated cost', 'Crossings', 'Farthest from baseline (m)'],
+               rows: [['Baseline', '1', '1', '', '', '', '0'], ['L0', '1', '0', '', '', '', ''], ['L2', '1', '2', '', '', '', ''],
+                      ['S5', '5', '1', '', '', '', ''], ['Mine', '1', '', '', '', '', ''], ['My choice', '', '', '', '', '', '']],
+               widths: [1300, 1150, 1150, 1250, 1600, 1150, 1760] },
+      questions: [
+        'Which weight moved the route, and which barely did — and why? Look at where the baseline runs. (2 points)',
+        'How much longer than the 52.79 km straight line is your route, and what is it buying with the extra kilometers? (2 points)',
+        'What does the cost surface leave out — right-of-way, landowners, public opinion, line capacity — and what would you add? (2 points)',
+      ] },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Use the same color for the baseline route on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Baseline — the least-cost route at weights 1 and 1, with the cost surface as an inset.', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, and the sources and dates of the data; the route and the two substations with a legend; existing lines, major roads, cities and major lakes; an inset of the cost surface with its legend; an imagery basemap.' },
+        { caption: 'Map 2. My route and one other run beside the baseline.',
+          hint: 'Must carry: the baseline, your personal route and one other run, each in the legend; the endpoints and the existing lines; title, neat line, north arrow and scale bar; a text box with author, date, projection and sources; the title and text box say what changed from Map 1 and why this run was chosen.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the elevation, the UGRC layers, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Expressions, score tables, coordinate systems and lengths come from your own work, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '10': {
   labTitle: 'Lab 10: Avalanche Hazard',
   labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',

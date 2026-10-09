@@ -1,0 +1,189 @@
+{
+ "Major_Roads": 1377,
+ "Major_Lakes": 7,
+ "Major_Streams": 319,
+ "Existing_Lines": 241,
+ "inputs": {
+  "Roads": 8937,
+  "Lakes": 967,
+  "Streams": 4086,
+  "Cities": 34,
+  "Power_Lines": 292,
+  "Endpoints": 2
+ },
+ "dem": {
+  "cols": 1719,
+  "rows": 2124,
+  "cell": 30.0,
+  "min": 1314.9735107422,
+  "max": 3568.3735351562
+ },
+ "slope": {
+  "min": 0.0,
+  "max": 71.81330871582031,
+  "mean": 11.2132
+ },
+ "Road_Distance": {
+  "min": 0.0,
+  "max": 24515.212890625,
+  "mean": 6202.1855
+ },
+ "City_Distance": {
+  "min": 0.0,
+  "max": 14923.39453125,
+  "mean": 3147.5289
+ },
+ "Line_Distance": {
+  "min": 0.0,
+  "max": 15571.271484375,
+  "mean": 3115.888
+ },
+ "Slope_Score": {
+  "1": 1848647,
+  "2": 324957,
+  "4": 259000,
+  "6": 249393,
+  "8": 501985,
+  "10": 459492
+ },
+ "Road_Score": {
+  "1": 646624,
+  "3": 374134,
+  "6": 835970,
+  "10": 1794428
+ },
+ "City_Score": {
+  "1": 1055936,
+  "2": 198582,
+  "4": 228810,
+  "6": 254776,
+  "8": 293203,
+  "10": 1619849
+ },
+ "Line_Score": {
+  "1": 614688,
+  "5": 1084196,
+  "10": 1952272
+ },
+ "River_Cells": 9713,
+ "straight_km": 52.79,
+ "base": {
+  "length_km": 56.09,
+  "total_cost": 744018.2,
+  "river_crossings": 4,
+  "pct_within_1km_road": 92.8,
+  "pct_within_500m_line": 99.7,
+  "pct_city_score_10": 100.0,
+  "slope_weight": 1.0,
+  "line_weight": 1.0,
+  "barrier": true
+ },
+ "Cost_base": {
+  "min": 4.0,
+  "max": 48.0,
+  "mean": 23.6865
+ },
+ "Acc_base": {
+  "min": 0.0,
+  "max": 1116187.375,
+  "mean": 566466.7829
+ },
+ "sensitivity": {
+  "line0": {
+   "length_km": 53.7,
+   "total_cost": 650456.3,
+   "river_crossings": 4,
+   "pct_within_1km_road": 100.0,
+   "pct_within_500m_line": 50.8,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 1,
+   "line_weight": 0,
+   "barrier": true,
+   "moved": {
+    "median_m": 904,
+    "max_m": 3408,
+    "pct_within_300m": 25.8
+   }
+  },
+  "line0_5": {
+   "length_km": 55.01,
+   "total_cost": 712499.9,
+   "river_crossings": 4,
+   "pct_within_1km_road": 99.9,
+   "pct_within_500m_line": 82.8,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 1,
+   "line_weight": 0.5,
+   "barrier": true,
+   "moved": {
+    "median_m": 58,
+    "max_m": 2530,
+    "pct_within_300m": 74.0
+   }
+  },
+  "line2": {
+   "length_km": 55.88,
+   "total_cost": 800664.9,
+   "river_crossings": 4,
+   "pct_within_1km_road": 89.5,
+   "pct_within_500m_line": 99.8,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 1,
+   "line_weight": 2,
+   "barrier": true,
+   "moved": {
+    "median_m": 2,
+    "max_m": 455,
+    "pct_within_300m": 97.7
+   }
+  },
+  "slope0": {
+   "length_km": 56.05,
+   "total_cost": 685047.6,
+   "river_crossings": 4,
+   "pct_within_1km_road": 92.7,
+   "pct_within_500m_line": 99.7,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 0,
+   "line_weight": 1,
+   "barrier": true,
+   "moved": {
+    "median_m": 6,
+    "max_m": 122,
+    "pct_within_300m": 100.0
+   }
+  },
+  "slope5": {
+   "length_km": 55.73,
+   "total_cost": 974822.6,
+   "river_crossings": 4,
+   "pct_within_1km_road": 88.6,
+   "pct_within_500m_line": 99.2,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 5,
+   "line_weight": 1,
+   "barrier": true,
+   "moved": {
+    "median_m": 9,
+    "max_m": 561,
+    "pct_within_300m": 93.9
+   }
+  },
+  "nobarrier": {
+   "length_km": 56.03,
+   "total_cost": 743288.9,
+   "river_crossings": 4,
+   "pct_within_1km_road": 92.8,
+   "pct_within_500m_line": 99.7,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 1,
+   "line_weight": 1,
+   "barrier": false,
+   "moved": {
+    "median_m": 0,
+    "max_m": 406,
+    "pct_within_300m": 97.3
+   }
+  }
+ }
+}

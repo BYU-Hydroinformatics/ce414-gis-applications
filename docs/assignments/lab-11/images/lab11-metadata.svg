@@ -1,0 +1,58 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 540' width='1000' height='540' role='img' aria-label='The six metadata questions applied to the Lab 11 data'>
+<title>The six metadata questions, applied to the power line data</title>
+<rect width='1000' height='540' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Reading the metadata: the six questions from CCE 114</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Every answer comes from READ-ME-FIRST.txt and the UGRC services&#39; own layer descriptions. Check them yourself.</text>
+<rect x='20' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHAT</text>
+<text x='102' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What do the data represent?</text>
+<text x='32' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Elevation.tif: ground elevation, METERS above</text>
+<text x='32' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>NAVD 88, 30 m cells. Roads with a UDOT class;</text>
+<text x='32' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>NHD lakes and streams; city limits; power</text>
+<text x='32' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>lines (KV-46/138/345) and substations.</text>
+<rect x='345' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHERE</text>
+<text x='427' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Where, and in what coordinate system?</text>
+<text x='357' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>39.98-40.55° N, 112.05-111.45° W: the mouth</text>
+<text x='357' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>of Spanish Fork Canyon to Bluffdale. NAD 1983</text>
+<text x='357' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>UTM zone 12N, meters, for every layer. The</text>
+<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>services themselves serve Web Mercator.</text>
+<rect x='670' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHEN</text>
+<text x='752' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When were the data collected?</text>
+<text x='682' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>All read October 9, 2026. Roads: &#39;Last Update</text>
+<text x='682' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>08/05/2026&#39;. Cities and lakes edited Oct 1,</text>
+<text x='682' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>2026; streams and power lines Mar 7, 2026.</text>
+<text x='682' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>A last-edit date is not when it was mapped.</text>
+<rect x='20' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHY</text>
+<text x='102' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Why were they created?</text>
+<text x='32' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Roads: cartography, address location and</text>
+<text x='32' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>UDOT&#39;s linear referencing. Cities: &#39;cartography</text>
+<text x='32' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>and APPROXIMATE boundary identification&#39;.</text>
+<text x='32' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3DEP: the national best-available elevation.</text>
+<rect x='345' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>HOW</text>
+<text x='427' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How were they collected and processed?</text>
+<text x='357' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>City boundaries change only when certified by</text>
+<text x='357' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>the Lt. Governor&#39;s Office. We exported 3DEP at</text>
+<text x='357' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>30 m (bilinear) and clipped every layer to</text>
+<text x='357' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>the box. The power-line layer does not say.</text>
+<rect x='670' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHO</text>
+<text x='752' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Who maintains them, and may you use them?</text>
+<text x='682' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>USGS (3DEP, the NHD), the Utah Geospatial</text>
+<text x='682' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Resource Center (roads with UDOT, cities,</text>
+<text x='682' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>power lines). Public data; credit each</text>
+<text x='682' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>source on your maps and in your report.</text>
+<rect x='20' y='440' width='960' height='82' rx='8' fill='#e8862a'/>
+<text x='32' y='468' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>The power-line layer&#39;s whole description is &#39;Electrical transmission facilities in Utah&#39;: no source, no date of</text>
+<text x='32' y='490' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>mapping, no accuracy. Your route leans on it. Say in your report what you would want to know before you</text>
+<text x='32' y='512' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>trusted it, and what a missing or misplaced line would do to your route.</text>
+</svg>
