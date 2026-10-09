@@ -46,6 +46,7 @@ QUIZZES = {
     "earthwork":           10,
     "volumes":             10,
     "least-cost-path":     12,
+    "cost-paths":          12,
     "coordinate-systems":  11,
     "final-project":       13,
     "gps":                 11,

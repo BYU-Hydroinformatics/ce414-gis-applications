@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — What Moved the Line?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which cost factors actually change a route, and what a corridor shows.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "What Moved the Line?",
+  subtitle: "CE 414 &middot; Week 12 &mdash; Least Cost Path Analysis, Part B<br>" +
+            "The algorithm is exact; the decisions are yours. For each item, decide " +
+            "<strong>what the tool or the cost surface is doing</strong>.",
+  badge: "Route call",
+  deckUrl: "../../slides/week-12/least-cost-path-b.html",
+  questions: [
+    {
+      prompt: "Cost Distance is deprecated in ArcGIS Pro. Which tool gives you both the accumulated cost raster and the back direction raster?",
+      options: [
+        "Distance Accumulation",
+        "Optimal Path As Raster",
+        "Euclidean Distance",
+        "Raster Calculator"
+      ],
+      answer: "Distance Accumulation",
+      explanation: "Distance Accumulation writes the accumulated cost raster, and its Output Back Direction Raster parameter writes the back direction raster in the same run. Optimal Path As Line reads those two rasters and draws the route; Euclidean Distance ignores cost."
+    },
+    {
+      prompt: "A cell of Distance Accumulation's back direction raster holds 90. What does that tell you?",
+      options: [
+        "The cell is 90 cost units from the source, in the cost raster's units",
+        "Head east from here to get back to the source",
+        "The route turns 90 degrees here"
+      ],
+      answer: "Head east from here to get back to the source",
+      explanation: "The back direction is a compass angle: 0 marks the source itself, 90 is east, 180 south, 270 west, 360 north. It is a direction, not a cost; the accumulated cost raster holds the cost."
+    },
+    {
+      prompt: "In the Lab 11 recipe, every cell on the cheapest route is inside a city or within 1 km of one, so the city factor is 10 all along it. Drop the city factor. What happens?",
+      options: [
+        "The route swings away from the cities, out of the ×10 cells",
+        "The route moves toward the cities, now that they cost nothing",
+        "Nothing; the total cost drops to a tenth"
+      ],
+      answer: "Nothing; the total cost drops to a tenth",
+      explanation: "A factor that is the same on every cell of the competing routes multiplies all of their costs equally, so it cannot change which one is cheapest. Measured: the route stayed at 68.86 km and the total cost fell by exactly a factor of 10."
+    },
+    {
+      prompt: "Turning Lab 11's road corridor from a hard barrier (NoData) into a soft cost (×10 off-road) gave the same route. What does that tell you?",
+      options: [
+        "The cheapest route already stayed within 2 km of a major road",
+        "Distance Accumulation quietly ignores NoData cells in a cost raster",
+        "A NoData barrier and a cost of 10 always give the same answer"
+      ],
+      answer: "The cheapest route already stayed within 2 km of a major road",
+      explanation: "A barrier only matters where the cheapest route wants to cross it. Here the power-line and water factors already kept the route near the roads, so the barrier never bound. Somewhere else, or with other weights, it would."
+    },
+    {
+      prompt: "On a corridor map, a cell is shaded “within 5% of the cheapest.” What does that mean?",
+      options: [
+        "Its own cell cost is within 5% of the cheapest cell's cost",
+        "It lies within 5% of the route's length from the route itself",
+        "The best route through it costs at most 5% more"
+      ],
+      answer: "The best route through it costs at most 5% more",
+      explanation: "Add the accumulated cost from the source to the accumulated cost from the destination: each cell gets the cost of the best route forced through it. Cells near the minimum are where a nearly-as-good route could go; that is how an engineer finds alternatives."
+    }
+  ],
+  perfectNote:  "All five. On to Lab 11.",
+  goodNote:     "Good. Reread the explanations you missed before you build the Lab 11 cost surface.",
+  tryAgainNote: "The back direction raster is a compass angle, a factor that is equal everywhere on the route cannot move it, and a corridor adds two accumulations. Look at those slides again."
+});
+</script>
+</body>
+</html>

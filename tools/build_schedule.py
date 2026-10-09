@@ -74,7 +74,8 @@ DECKS = [
     (10, "raster-volumes",                 "Volumes with Rasters",                       "How much rock is in a mountain: height times cell area summed, Raster Calculator and Zonal Statistics versus Surface Volume, why the base surface decides the answer, and Lab 9.", "Thu"),
     (11, "coordinate-systems-projections", "Coordinate Systems and Projections",        "A refresher: datums, projections, and coordinate systems as decisions — distortion, units, and choosing a CRS for analysis.", "Tue"),
     (11, "gps-triangulation",              "GPS and Positioning",                        "A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
-    (12, "least-cost-path",                "Least Cost Path Analysis",                   "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
+    (12, "least-cost-path",                "Least Cost Path Analysis, Part A",           "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
+    (12, "least-cost-path-b",              "Least Cost Path Analysis, Part B",           "ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 11's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.", "Thu"),
     (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
@@ -94,7 +95,6 @@ FINAL_PROJECT_WEEKS = (13, 14, 15)
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    12: "Thursday: least cost paths, part 2. Slides will be posted here before class.",
     13: "Thursday is Thanksgiving, no class.",
     14: "Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted "
         "here before class. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.",
@@ -191,7 +191,9 @@ PRACTICE = {
          ("gps", "Where Am I?",
           "Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.")],
     12: [("least-cost-path", "Cheapest or Shortest?",
-          "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one.")],
+          "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one."),
+         ("cost-paths", "What Moved the Line?",
+          "Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.")],
     13: [("final-project", "Ready to Pitch?",
           "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.")],
 }

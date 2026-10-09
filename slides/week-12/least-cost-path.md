@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 12 — Least Cost Path Analysis"
+footer: "CE 414 · Week 12 — Least Cost Path Analysis, Part A"
 ---
 
 <!-- _class: lead -->
@@ -12,6 +12,8 @@ footer: "CE 414 · Week 12 — Least Cost Path Analysis"
 
 # Least Cost Path Analysis
 
+## Part A — Cost Surfaces and the Cheapest Route
+
 CE 414 Engineering Applications of GIS
 Dr. Dan Ames
 Civil & Construction Engineering
@@ -20,7 +22,7 @@ Brigham Young University
 <!-- Concepts lecture for Week 11. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Least Cost Path Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -111,18 +113,18 @@ Brigham Young University
 
 # Current tool names in ArcGIS Pro
 
-- **Cost Distance**, **Cost Back Link**, and **Cost Path** still run in ArcGIS Pro, but Esri has **deprecated** them
-- The current replacements are:
-  - **Distance Accumulation** — produces the accumulative cost raster *and* the back direction raster in one run
-  - **Optimal Path As Line** / **Optimal Path As Raster** — replaces Cost Path, and can hand you a polyline directly
-- Lab 11's steps, screenshots, parameter names, and rubric all assume the **legacy** tools, so the lab and this deck have to change together
-- Your instructor will confirm which set of tools to use before you start the lab
+![bg right:44% w:96%](images/lcpb-cost-distance-deprecated.png)
 
-<!-- Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
+- **Cost Distance**, **Cost Back Link** and **Cost Path** still run, but are **deprecated**
+- **Distance Accumulation**: the accumulated cost *and* the back direction raster, in one run
+- **Optimal Path As Line**: replaces Cost Path, and draws the line itself
+- Thursday runs both sets on Lab 11's data: **the same route**
+
+<!-- Lab 11's steps, screenshots, parameter names and rubric still name the legacy tools; either set gives the same route on its data (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
 
 <!-- TODO(instructor): replace Cost Distance/Cost Path with Distance Accumulation/Optimal Path; align with Lab 11 -->
 
-<!-- TODO(graphic): a capture of the ArcGIS Pro Geoprocessing pane search results for "distance accumulation" and "optimal path", showing the deprecation notice on the legacy tools. Not fabricated here; needs a real Pro session. -->
+<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 11's data (68.86 km and 70.08 km, the same corridor). -->
 
 ---
 
