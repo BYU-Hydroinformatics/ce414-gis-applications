@@ -5,7 +5,69 @@ Depth Explorer), so the water labs run watersheds → bathymetry → flooding. *
 October 9):** introduced Tuesday October 20 and **due Saturday October 24, Week 8** — the same week
 as Midterm 1. It is therefore a **one-week lab with Lab 6's workload**: every prepared input is
 hosted (including the stage table), and the hydrology is explanation in the page plus **one row the
-student verifies**. Nothing is in `docs/` yet; all work is in `tools/lab07/` and `C:\Ames\HAND\`.
+student verifies**. Working data are in `C:\Ames\HAND\`.
+
+## 0. Status after the instructor's decisions (October 9, 2026) — read this first
+
+Sections 1–15 below are the feasibility record of October 8–9. The instructor then decided (section
+14's eight questions): Provo River 10163000; **FEMA's published FIS flows** (10/25/50/100/500-yr:
+1,475 / 1,810 / 2,065 / 2,325 / 2,935 ft³/s; the 500-yr is FEMA's 0.2 % column, read from the
+page image) as the design table, with the LP3 fit kept only for a "why do two 100-year floods
+differ?" question; **h = gage height − 3.20 ft, uncorrected** (the 0.47 m lidar-channel offset is a
+"where it breaks" item); 5 m lidar; personal flow Q = 900 + 12 × last two digits of the nine-digit
+BYU ID; sensitivity = stream threshold; buildings only; Iterate Field Values over the hosted table
+(Lab 6's For as the fallback). **Where sections 2, 5–11 disagree with this section, this section
+wins.**
+
+**Built:** `docs/assignments/lab-07/README.md` (full page, Steps 0–7, rubric 5 × 10),
+`docs/assignments/lab-07/images/` (four icons; Figure A metadata card; Figure B measured long
+profile + FEMA section C; Figure 1 rating; Figure C a *drawn* model diagram — all from
+`make_svgs.py`, data from `profile.py`), `docs/data/lab07-provo-river-hand.zip` (12,411,788 bytes,
+`make_extract.py`), `docs/assignments/lab-07/lab07-report-template.docx`
+(`LABS['07']` in `tools/templates/make_lab_report_template.js`).
+
+**Student path, as measured** (`verify_package.py` from the zip alone → `package_checks.json`;
+`probe_student_path.py` → `probe_student_path.json`):
+
+- Two models: **HAND Builder** (Fill → Flow Direction D8 → Flow Accumulation → Raster Calculator
+  `Con("%Flow_Accumulation%" > %Threshold%, 1)` → Buffer `Provo_River` 30 m → Extract by Mask →
+  Flow Distance VERTICAL/D8/MINIMUM) and **Flood Loop** (Iterate Field Values on `Stage_Table.H_CM`
+  → Raster Calculator `Con("%HAND%" <= %Value% / 100, 1)` → Raster to Polygon no-simplify multipart
+  → Calculate Field H_CM → Collect Values → Merge). Two models because an iterator reruns every tool.
+- Environments: Extent, Snap Raster, Cell Size = `Provo_DEM`. **Without Extent, HAND covers 695,974
+  cells, not 697,608** (Flow Distance takes the stream raster's extent).
+- A Con **where clause** `Value * 100 <= 153` fails (ERROR 010416), hence Raster Calculator with
+  `%Value% / 100` (arcpy `Con(hand <= 153 / 100, 1)` = 62,693 cells). VERIFY in the GUI.
+- `H_CM` = threshold in whole centimeters (gdb names cannot hold "1.53"): 119, 134, 143, 153, 173.
+
+| Check | Value |
+| --- | --- |
+| DEM | 1,718 × 2,124 × 5 m, 1,366.78–1,645.53 m |
+| Fill | 1,366.92–1,645.53; raised 489,125 cells (12.228 km²), max 8.47 m |
+| Flow accumulation max; Stream_Cells; River_Cells | 1,050,227; 74,866; 3,191 |
+| HAND | 697,608 cells, 0–197.95 m, mean 23.54 |
+| Verify row (25-yr) | 1,810 → 7.58 ft (7.57 ft = 1,809.84) → 1,371.844 m, h 1.335 m, H_CM 134 |
+| Floods (H_CM: cells, km², buildings) | 119: 51,474, 1.2869, 319 · 134: 56,420, 1.4105, 356 · 143: 59,332, 1.4833, 388 · 153: 62,693, 1.5673, 413 · 173: 68,538, 1.7135, 451 |
+| FEMA, 100-yr | FEMA 1.3429 km², HAND in comparison area 1.2801, overlap 0.7361; hit 0.548, FAR 0.425, **CSI 0.390** |
+| Threshold 400 / 1,000 / 4,000 / 8,000 | River_Cells 3,513 / 3,307 / 3,110 / 2,912; 100-yr km² 1.8591 / 1.7326 / 1.4389 / 0.9739; buildings 497 / 474 / 397 / 257; CSI 0.377 / 0.387 / 0.394 / 0.325 |
+| Personal (`personal.py`, h to the mm) | 100 distinct h and areas, 74 distinct building counts; 89 → 1,968 ft³/s, 7.78 ft, 1.396 m, 1.4548 km², 376; 02 → 924, 6.24, 0.927, 1.0799 km², 258 |
+| Traps | no corridor: 47.94 km² at h 1.53; raw DEM surface: 6,141 negative cells (min −1.92 m) |
+
+Also measured for the page and decks (`profile.py` → `profile.json`): river long profile
+1,476.98 → 1,367.05 m over 17.57 km; the 100-yr stage elevation (1,372.04 m) lies above only the
+lowest 4.8 km; at FEMA section C HAND floods 95 m of 123 m and FEMA 105 m; the D8 path from the
+highest river cell **leaves the river at 40.23923 N, 111.68941 W** and exits the box's south edge
+(a lecture/"where it breaks" fact — the bare-earth DEM routes the river south through the city).
+
+**Pilot (no-GUI, October 9):** `C:\Ames\Pilot07\PILOT_NOTES.md` — all ~40 check values reproduced from the zip; its text findings are fixed on the page (list in the page's migration notes), and the hosted geodatabase is now `ProvoData.gdb` (the project's own is `Lab07.gdb`).
+
+**Still owed:** the GUI build at 175 % (`C:\Ames\Lab07GUI\`) with every `TODO(capture)` on the
+page (Figures 0, 2, 3a, 3b, 4, 5a–5d, 6a, 6b, Figure C export) and the VERIFY items (Iterate Field
+Values menu and output name; inline `%Value%` arithmetic in Raster Calculator; Flow Distance dialog
+labels; Extract by Mask analysis extent; Jordanelle dates; a NOAA HAND/FIM link); example maps
+(`build_figures.py`, arcpy.mp); lab-machine run time; the two Week 8 decks (section 12, with the
+LP3/FEMA numbers updated to the FEMA design flows: 100-yr h = 1.527 m); Learning Suite due date;
+nav/schedule entries belong to the renumbering work (`build_schedule.py`, not touched here).
 
 **Lineage.** Three student final projects did this: 2021 (one stage, Logan, Flow Distance for HAND,
 Con for depth, clipped by private property), 2024 (Utah County flood-prone dense areas), 2025

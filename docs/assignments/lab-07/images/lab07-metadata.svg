@@ -1,0 +1,58 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 520' width='1000' height='520' role='img' aria-label='The six metadata questions applied to the Lab 7 data'>
+<title>The six metadata questions, applied to the Provo River data</title>
+<rect width='1000' height='520' fill='white'/>
+<text x='20' y='34' font-size='20' font-weight='bold' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Reading the metadata: the six questions from CCE 114</text>
+<text x='20' y='56' font-size='12' font-weight='normal' fill='#5b6770' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Every answer comes from READ-ME-FIRST.txt, the raster&#39;s properties and the USGS gage page. Check them yourself.</text>
+<rect x='20' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHAT</text>
+<text x='102' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>What do the data represent?</text>
+<text x='32' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Provo_DEM: bare-earth ground elevation, METERS</text>
+<text x='32' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>above NAVD 88, 5 m cells. Stage_Table: FEMA&#39;s</text>
+<text x='32' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>published peak flows (ft³/s), their gage height</text>
+<text x='32' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>(ft) from the USGS rating, and h in meters.</text>
+<rect x='345' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHERE</text>
+<text x='427' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Where, and in what coordinate system?</text>
+<text x='357' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>The Provo River from Provo Canyon&#39;s mouth to</text>
+<text x='357' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Utah Lake, 8.6 × 10.6 km, NAD 1983 UTM 12N.</text>
+<text x='357' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Gage 10163000 at 40.23926° N, 111.71119° W;</text>
+<text x='357' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>its datum is 4,493.22 ft above NAVD 88.</text>
+<rect x='670' y='75' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='75' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='98' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHEN</text>
+<text x='752' y='98' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>When were the data collected?</text>
+<text x='682' y='135' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Lidar from 3DEP projects flown 2013–2023, read</text>
+<text x='682' y='154' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>from the service Oct 8, 2026. Rating 30.0 in</text>
+<text x='682' y='173' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>force since Apr 26, 2023 (provisional). FEMA</text>
+<text x='682' y='192' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>flows and flood map effective June 23, 2026.</text>
+<rect x='20' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='20' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='32' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHY</text>
+<text x='102' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Why were they created?</text>
+<text x='32' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>3DEP: the national &#39;best available&#39; elevation.</text>
+<text x='32' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>The gage: to measure the river&#39;s flow. The</text>
+<text x='32' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>FEMA study: flood insurance rate maps, the</text>
+<text x='32' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1%-annual-chance floodplain you compare with.</text>
+<rect x='345' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='345' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='357' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>HOW</text>
+<text x='427' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>How were they collected and processed?</text>
+<text x='357' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Airborne lidar, bare earth, HYDRO-FLATTENED:</text>
+<text x='357' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>the river is a flat water surface on the day</text>
+<text x='357' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>it was flown. We resampled 2 m to 5 m. All 90</text>
+<text x='357' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>gage peaks carry code 6: affected by</text>
+<text x='357' y='386' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>regulation or diversion upstream.</text>
+<rect x='670' y='250' width='310' height='160' rx='8' fill='#eef2f6' stroke='#c9d2dc'/>
+<rect x='670' y='250' width='310' height='34' rx='8' fill='#002e5d'/>
+<text x='682' y='273' font-size='15' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>WHO</text>
+<text x='752' y='273' font-size='11' font-weight='normal' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>Who maintains them, and may you use them?</text>
+<text x='682' y='310' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>USGS (3DEP, NWIS gage and rating), FEMA</text>
+<text x='682' y='329' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>(flood study and map), UGRC (NHD river line,</text>
+<text x='682' y='348' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>building footprints). Public data; credit</text>
+<text x='682' y='367' font-size='11.5' font-weight='normal' fill='#1c2733' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>each source on your maps and in your report.</text>
+<rect x='20' y='438' width='960' height='64' rx='8' fill='#e8862a'/>
+<text x='32' y='464' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>HAND is measured from the DEM&#39;s river cells — the water surface on the day of the flight, not the channel bed —</text>
+<text x='32' y='486' font-size='12.5' font-weight='bold' fill='white' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>while h is measured from the gage&#39;s zero-flow level. Say in your report what that mismatch does to your floods.</text>
+</svg>

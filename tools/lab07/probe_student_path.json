@@ -1,0 +1,42 @@
+{
+ "no_env": {
+  "river_extent": [
+   436510.0,
+   4453425.0,
+   444780.0,
+   4463550.0
+  ],
+  "river_cells": 3191,
+  "hand_extent": [
+   436510.0,
+   4453425.0,
+   444780.0,
+   4463550.0
+  ],
+  "hand_cols_rows": [
+   1654,
+   2025
+  ],
+  "hand_cells": 695974,
+  "hand_max": 197.951904296875,
+  "fill_max": 1645.528564453125,
+  "acc_max": 1050227.0
+ },
+ "where_clause": {
+  "cm": 153,
+  "cells_where": 61061,
+  "cells_numpy_h": 61061,
+  "cells_numpy_x100": 61061
+ },
+ "raster_to_polygon": {
+  "rows": 1,
+  "area_m2": 1526525.0000019418,
+  "cells_x25": 1526525
+ },
+ "buildings": {
+  "spatial_join_join_count": [
+   413
+  ],
+  "select_by_location": 413
+ }
+}

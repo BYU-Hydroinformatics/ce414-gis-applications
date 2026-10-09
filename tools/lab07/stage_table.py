@@ -11,14 +11,15 @@ Method (a teaching approximation, NOT a published USGS estimate; StreamStats/Gag
 publishes no peak-flow statistics for this regulated gage):
   * Log-Pearson Type III, Bulletin 17B-style method of moments on log10 annual peaks, station
     skew only (no generalized-skew weighting, no low-outlier or historic adjustment).
-  * Three record periods are computed; the post-Jordanelle period (water years 1993 on, the
-    present regulation regime) is the one written as the lab's design table.
+  * Three record periods are computed (all systematic, post-Deer Creek, post-Jordanelle). They are
+    NOT the lab's design flows: the lab uses FEMA's published FIS flows (period fema_fis_2026,
+    design = True); the LP3 rows serve the "why do two 100-year floods differ?" question.
   * Flow -> gage height by the current USGS rating (exsa, rating 30.0): the first table row
     (0.01 ft steps) whose discharge is >= the flow, the rule students apply by hand. Above the rating's top (8.00 ft, 2,150 ft3/s) the
     top segment's power law Q = C (GH - 3.20)^b is extrapolated (flagged EXTRAPOLATED).
   * Elevation = gage datum (4,493.22 ft NAVD 88) + gage height.
-  * HAND threshold h = gage height - 3.20 ft (the rating offset, the gage height of zero flow):
-    the depth of water above the low-water surface the DEM's stream cells sit on.
+  * HAND threshold h = gage height - 3.20 ft (the rating offset, about the gage height of zero
+    flow), in meters; h_cm = h rounded to whole centimeters, the value the model iterates over.
 
 Run with any Python 3 that has numpy + scipy (the ArcGIS Pro python does):
   "C:/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe" tools/lab07/stage_table.py
@@ -47,7 +48,7 @@ PERIODS = {
     "post_deer_creek": (1942, 2100, "WY 1942 on (after Deer Creek Dam began storing, 1941)"),
     "post_jordanelle": (1993, 2100, "WY 1993 on (after Jordanelle Dam began storing, 1992-93)"),
 }
-DESIGN = "post_jordanelle"
+DESIGN = "fema_fis_2026"  # instructor decision, Oct 9, 2026: the lab uses FEMA's published flows
 # FEMA Flood Insurance Study, Utah County (49049CV001B, revised June 23, 2026), Table 9 Summary of
 # Discharges, Provo River "3 miles above tie-in to Utah Lake", drainage area 673 mi2. Read from the
 # PDF page image (page 53) on Oct 9, 2026. No 2- or 5-yr values are published; 500-yr = 0.2 %.
@@ -139,7 +140,7 @@ def main():
                 "q_cfs": round(flow), "q_m3s": round(float(flow) * FT ** 3, 1),
                 "gage_height_ft": round(g, 2), "elev_ft_navd88": round(datum_ft + g, 2),
                 "elev_m_navd88": round((datum_ft + g) * FT, 3),
-                "hand_h_ft": round(h_ft, 2), "hand_h_m": round(h_ft * FT, 3),
+                "hand_h_ft": round(h_ft, 2), "hand_h_m": round(h_ft * FT, 3), "h_cm": int(round(h_ft * FT * 100)),
                 "rating": "EXTRAPOLATED" if extrap else "within table",
                 "source": "FEMA FIS 2026" if key == "fema_fis_2026" else "LP3 (this script)",
             })

@@ -1,66 +1,67 @@
-"""Lab 7 (HAND): personal design flow -> stage -> HAND threshold -> flooded area and buildings,
-for every possible pair of last two BYU ID digits (00-99). Grading lookup table.
+"""Lab 7 (HAND): the personal design flow, for every possible last two digits (00-99) of the
+nine-digit BYU ID number. Grading lookup table -> personal_lookup.csv (and the summary into
+package_checks.json['personal_summary']).
 
-Rule (proposed): Q = 900 + 12 * dd  ft3/s   (dd = last two digits of the nine-digit BYU ID)
-  -> 900 to 2,088 ft3/s, always inside the published rating table (top row 2,150 ft3/s)
-  -> gage height = the FIRST row of the hosted rating table whose discharge is >= Q
-  -> h (m) = (gage height - 3.20 ft) * 0.3048, rounded to 0.001 m
-  -> flooded = HAND <= h ; area and building-centroid count
-Usage: personal.py <hand.tif> <cell_m> [out.csv]
+Rule (Step 7 of the page):
+  Q = 900 + 12 * dd  ft3/s                       (900 to 2,088: always inside the rating table)
+  gage height = the FIRST row of rating_10163000.csv whose discharge is >= Q
+  h = (gage height - 3.20) * 0.3048, in meters, rounded to 3 decimals (millimeters)
+  flood = Con("HAND" <= h, 1) -> Raster to Polygon (no simplify, multipart) -> Spatial Join with
+          Buildings (one to one, intersect) -> Join_Count ; area from the polygon
+Run after verify_package.py (uses C:/Ames/HAND/PkgCheck/Work.gdb/HAND, built from the zip).
 """
 import csv
+import json
 import os
-import sys
 
 import arcpy
 import numpy as np
+from arcpy.sa import Con, Raster
 
+arcpy.CheckOutExtension("Spatial")
+arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
-RATING = r"C:\Ames\HAND\raw\rating.rdb"
-GDB = r"C:\Ames\HAND\HAND.gdb"
-
-
-def rating():
-    lines = [l.rstrip("\n").split("\t") for l in open(RATING) if not l.startswith("#")][2:]
-    return [(float(a[0]), float(a[2])) for a in lines if a and a[0]]
-
-
-def h_for(dd, table):
-    q = 900 + 12 * dd
-    gh = next(g for g, d in table if d >= q)
-    return q, gh, round((gh - 3.20) * 0.3048, 3)
+PC = r"C:\Ames\HAND\PkgCheck"
+P = os.path.join(PC, "lab07-provo-river-hand")
+G = os.path.join(P, "ProvoData.gdb")
+WG = os.path.join(PC, "Work.gdb")
 
 
 def main():
-    hand_path, cell = sys.argv[1], float(sys.argv[2])
-    out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(HERE, "personal_lookup.csv")
-    r = arcpy.Raster(hand_path)
-    ext = r.extent
-    hand = arcpy.RasterToNumPyArray(r, nodata_to_value=-9999)
+    rating = [(float(r["gage_height_ft"]), float(r["discharge_cfs"]))
+              for r in csv.DictReader(open(os.path.join(P, "rating_10163000.csv")))]
+    hp = os.path.join(WG, "HAND")
+    hand = arcpy.RasterToNumPyArray(hp, nodata_to_value=-9999)
     valid = hand > -9999
-    xs, ys = [], []
-    for x, y in arcpy.da.SearchCursor(os.path.join(GDB, "Building_Points"), ["SHAPE@X", "SHAPE@Y"]):
-        xs.append(x); ys.append(y)
-    cols = np.floor((np.array(xs) - ext.XMin) / cell).astype(int)
-    rows = np.floor((ext.YMax - np.array(ys)) / cell).astype(int)
-    ok = (rows >= 0) & (rows < hand.shape[0]) & (cols >= 0) & (cols < hand.shape[1])
-    bv = hand[rows[ok], cols[ok]]
-    table = rating()
-    res = []
+    cache, rows = {}, []
     for dd in range(100):
-        q, gh, h = h_for(dd, table)
-        wet = valid & (hand <= h)
-        res.append({"last_two_digits": f"{dd:02d}", "q_cfs": q, "gage_height_ft": gh, "h_m": h,
-                    "cells": int(wet.sum()), "area_km2": round(wet.sum() * cell * cell / 1e6, 4),
-                    "building_centroids": int(((bv > -9999) & (bv <= h)).sum())})
-    with open(out, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(res[0]))
-        w.writeheader(); w.writerows(res)
-    hs = [x["h_m"] for x in res]
-    areas = [x["area_km2"] for x in res]
-    print("distinct h:", len(set(hs)), "distinct areas:", len(set(areas)), "distinct building counts:",
-          len(set(x["building_centroids"] for x in res)))
-    print(res[0], res[50], res[99], sep="\n")
+        q = 900 + 12 * dd
+        gh = next(g for g, d in rating if d >= q)
+        h = round((gh - 3.20) * 0.3048, 3)
+        if h not in cache:
+            with arcpy.EnvManager(extent=hp, snapRaster=hp, cellSize=hp):
+                Con(Raster(hp) <= h, 1).save(os.path.join(WG, "pers"))
+            pp = os.path.join(WG, "pers_poly")
+            arcpy.conversion.RasterToPolygon(os.path.join(WG, "pers"), pp, "NO_SIMPLIFY", "Value", "MULTIPLE_OUTER_PART")
+            sj = os.path.join(WG, "pers_sj")
+            arcpy.analysis.SpatialJoin(pp, os.path.join(G, "Buildings"), sj, "JOIN_ONE_TO_ONE", "KEEP_ALL",
+                                       match_option="INTERSECT")
+            jc, a = [x for x in arcpy.da.SearchCursor(sj, ["Join_Count", "SHAPE@AREA"])][0]
+            cache[h] = (int((valid & (hand <= h)).sum()), round(a / 1e6, 4), int(jc))
+        cells, area, b = cache[h]
+        rows.append({"last_two_digits": f"{dd:02d}", "q_cfs": q, "gage_height_ft": gh, "h_m": h,
+                     "wet_cells": cells, "area_km2": area, "buildings": b})
+    with open(os.path.join(HERE, "personal_lookup.csv"), "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+    summ = {"distinct_h": len({r["h_m"] for r in rows}), "distinct_area": len({r["area_km2"] for r in rows}),
+            "distinct_buildings": len({r["buildings"] for r in rows}),
+            "examples": [rows[89], rows[2], rows[0], rows[99]]}
+    c = json.load(open(os.path.join(HERE, "package_checks.json")))
+    c["personal_summary"] = summ
+    json.dump(c, open(os.path.join(HERE, "package_checks.json"), "w"), indent=1, default=float)
+    print(json.dumps(summ, indent=1))
 
 
 if __name__ == "__main__":
