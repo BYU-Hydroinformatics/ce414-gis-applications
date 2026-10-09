@@ -571,7 +571,7 @@ Kriging creates a mathematical model, which is then used to estimate values acro
 
 <!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
 
-<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 7 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
+<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 8 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
 
 ---
 
@@ -783,7 +783,7 @@ Read each surface back at its own sample points:
 
 All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
 
-<!-- Every tool in this table produced a surface in tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the parameters named are the ones the six-methods slide varies. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 9. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
+<!-- Every tool in this table produced a surface in tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the parameters named are the ones the six-methods slide varies. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 10. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
 
 ---
 
@@ -800,8 +800,8 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 
 **Labs**
 
-- [Lab 7 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/) is due **Saturday 11:59 pm**
-- [Lab 8 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) comes next; [Lab 9 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) follows it and applies these methods in ArcGIS Pro
+- [Lab 7 — Flood Mapping with HAND](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/), introduced this week, is due **Saturday of next week**
+- [Lab 9 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/) uses interpolation to find a volume; [Lab 10 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/) applies these methods in ArcGIS Pro
 
 </div>
 <div>
@@ -815,7 +815,7 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 </div>
 </div>
 
-<!-- Point them at Lab 9 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
+<!-- Point them at Lab 10 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
 
 <!-- The method-to-tool slide asked for here now precedes this one. -->
 
@@ -838,7 +838,7 @@ Five items on the same question we spent the session on: **what is this method a
 
 - Not graded, nothing recorded — it is a check that today landed
 - Every answer explains itself; read the explanation before you move on
-- The exponent and the neighbor count are the two knobs you turn by hand in Lab 9
+- The exponent and the neighbor count are the two knobs you turn by hand in Lab 10
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/interpolation/</span>
 

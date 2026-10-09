@@ -1,452 +1,648 @@
-# Lab 10: Wind Farm Site Selection
+# Lab 10: Interpolation Explorer
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Using raster analysis.*
+*Rebuilding a mountain from samples, three ways, and measuring how wrong each one is*
+
+<!-- **Revision notes.** Drafted October 6, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab10-backup/) and promoted October 7, 2026, with the instructor accepting every recommendation in tools/labs-09-11-plan.md section 4 and tools/lab10/PARITY_PLAN.md.
+
+*Changes to what the lab asks students to do:* one study area (the second DEM is gone); a hosted
+extract and study rectangle instead of "download a DEM and draw a box"; a look at the 3DEP image
+service in Step 1 (the Week 9 tie-in); three methods carried all the way to RMSE instead of seven
+surfaces and seven difference chains; the number of points, the IDW power and the Kriging
+semivariogram exposed as parameters; a Step 10 sensitivity table at a personal random seed with
+200 independent checkpoints; Map 1 is one comparison sheet; individual work, not pairs; rubric in
+five parts of ten.
+
+*Corrections:* RMSE is the root of the **mean** of the squared errors (the handout's summary left
+out the mean); the coordinate system is named as ArcGIS Pro names it; Figure 1 (a reproduced
+textbook figure) is replaced by a measured profile.
+
+*Simplified October 7, 2026 (instructor's request):* students now receive `True_DEM` (projected,
+30 m, clipped) and three hosted point sets (250, 2,500, 10,000; seed 1) instead of projecting,
+clipping and sampling the DEM themselves. The model shrinks from 20 tools to 16 and from 12
+parameters to 9; the sample points are the parameter instead of a number of points and a random
+seed. The personal seed survived outside the model at first (Step 8: Create Random Points + Extract Values to
+Points with the BYU ID digits). The Snap Raster / ERROR 010654 trap is gone (True_DEM is an input),
+and IDW/Kriging now fill RASTERVALU by themselves (the CID default came from Create Random Points).
+
+*Simplified again October 7, 2026 (instructor's request):* no personal point set; Step 8 is five
+tool-dialog runs on the course's sets, and the per-student element is run 5's IDW power = 1 + (last
+two digits of the nine-digit BYU ID) / 40. Checkpoints (seed 99) are hosted in the zip.
+
+*Figures:* Figures A and B are generated from the data (`tools/lab10/make_svgs.py`); the example
+maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
+GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab09GUI\Lab10.aprx`). -->
+
+> [!TIP]
+> **Start from the report template.** [`lab10-report-template.docx`](lab10-report-template.docx)
+> has the title block, a section for every deliverable, the tables already set up with the columns the
+> rubric asks for, and the rubric at the end ready to fill in. You are welcome to write your report
+> any way you like — the template is a floor, not a ceiling — but if you use it and fill in every
+> section, you will not have left a graded item out.
 
 ## Background
 
-Recent advances in clean energy research and ongoing efforts to update energy sources and reduce
-carbon emissions have led to a rise in wind energy farms. To maximize efficiency, it's crucial to
-analyze their locations based on criteria like consistent high winds and expansive flat plains. GIS
-technology, leveraging various elevation and wind pattern datasets, provides an effective and
-efficient way to evaluate different sites.
+Every elevation model, rainfall map and groundwater surface you will use as an engineer started as
+points: survey shots, rain gauges, wells. Something turned those points into a surface, and that
+something was an **interpolator**. In Lab 9 you used one (IDW) as a tool, to rebuild the plain under
+Big Southern Butte. In this lab the interpolator *is* the subject.
+
+The idea is simple. To estimate a value at one place you look at the samples around it and combine
+them: take the nearest one (**Thiessen**, or nearest neighbor), average the nearby ones with the
+closest weighted most (**inverse distance weighting**, IDW), or weight them by a model of how fast
+values stop resembling each other with distance (**Kriging**). A GIS does this at the center of
+every cell of an output raster (Bolstad, *GIS Fundamentals*, Chapter 12). Each method has a
+personality, and you can see it in the result: Thiessen makes terraces, IDW makes bull's-eyes around
+its samples and can never go above the highest one, Kriging smooths.
+
+What you usually cannot do is check the answer, because the true surface is the thing you do not
+have. Here you do. We sampled a real elevation model of Y Mountain at random points; you rebuild it
+from those points three ways, and subtract each rebuild from the truth, cell by cell. That gives you
+a map of where each method fails and one number, the root-mean-square error (RMSE), for how badly.
+
+![An elevation profile across the study area from the valley floor in the west to the ridge in the east. The true DEM rises from about 1,390 m to about 2,700 m. A Thiessen line follows it in flat steps that jump at sample points; an IDW line follows it but sags below the ridges; a Kriging line is smooth and cuts the peak short. Ten sample points within 150 m of the row are marked.](images/lab10-profile.svg)
+
+**Figure B.** One row of cells across the study area, the truth and three surfaces rebuilt from only
+250 points. Look at the ridge near kilometer 6.5: no method can put back a peak it never sampled.
+
+How close a rebuild comes depends on choices you make: the method, its parameters, and above all how
+many points you give it. In Step 8 you vary them, see how far the RMSE moves, and use what moves to
+decide which method you would trust with a surface you cannot check.
+
+> [!IMPORTANT]
+> **Your job — see the deliverables below.** Build one ModelBuilder model that takes a set of sample
+> points, rebuilds the surface by Thiessen polygons, IDW and Kriging, and reports each rebuild's error
+> map and RMSE; run it on Y Mountain; test how the number of points and each method's parameters
+> change the errors; and make two map sheets.
 
 ## Problem Statement
 
-We selected several counties in South Dakota for analysis to identify the optimal site for a new
-wind farm. The counties include Minnehaha, Moody, Lake, McCook, Turner, and Lincoln. South Dakota
-was chosen because its topography and wind patterns make it a common location for wind farms.
-Additionally, these counties are near cities that could benefit from increased electrical power
-sources. You will conduct your analysis twice: first for this collection of counties, then for a
-collection of counties you select in South Dakota.
+You are given a 30 m elevation model of Y Mountain and the valley below it — the truth — and three
+sets of random points that sampled it. Using them:
 
-<!-- TODO(instructor): STUDY-AREA CONTRADICTION #1 of 2. This paragraph names Minnehaha, Moody,
-     Lake, McCook, Turner, and Lincoln counties, which are all in *southeastern* South Dakota, and
-     the example map (Figure 28) shows that same southeastern corner. The "Spatial Considerations"
-     paragraph below says "Suppose you are planning to develop a new wind farm in western South
-     Dakota." Both wordings are preserved verbatim; pick one and correct the other. -->
+1. Rebuild the surface from the points by Thiessen polygons, IDW and ordinary Kriging.
+2. Map each rebuild's error against the true elevation model, and compute its RMSE.
+3. Find out which method and which settings rebuild this mountain best, and where every method fails.
 
-## Spatial Considerations
+## Analysis Considerations
 
-Suppose you are planning to develop a new wind farm in western South Dakota. Several factors can
-influence your decision on the placement, but for this lab exercise, you'll concentrate on the
-following:
+Every one of these is a decision somebody made, and every one of them can change the answer.
 
-<!-- TODO(instructor): STUDY-AREA CONTRADICTION #2 of 2. Exact wording here: "Suppose you are
-     planning to develop a new wind farm in western South Dakota." Exact wording in the Problem
-     Statement above: "We selected several counties in South Dakota for analysis... The counties
-     include Minnehaha, Moody, Lake, McCook, Turner, and Lincoln." Those counties are in
-     southeastern South Dakota. Not resolved here — instructor decision. -->
-
-- The area's average wind speed must be at least 7 m/s
-- It must be within 30 miles of a town or city
-- It must be within 2 miles of a main road
-- It must not be within 20 miles of a current wind farm
-- It must not be within 1 mile of a river
-
-<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 1 of 4. This criterion says
-     "It must not be within 1 mile of a river." Step 3's instruction text says "a 2-mile buffer
-     around the Roads and Rivers." The Buffer Rivers dialog (Figure 11) shows 1 Mile. The model
-     canvas labels the output "Rivers 2mi Buffer" (Figures 1, 8, and 13). Not resolved here. -->
-
-<!-- TODO(instructor): The criteria above mix hard exclusions (wind speed >= 7 m/s; not within
-     20 miles of an existing wind farm; not within 1 mile of a river) with what are really
-     preferences (proximity to a town and to a road). The Step 6 / Step 7 procedure flattens all
-     five to 0/1 and then weights them, so an "excluded" cell can still score highly if the other
-     factors carry enough weight. Recommend separating a Boolean exclusion mask (applied with Times
-     or Con) from the weighted preference layers. Pedagogy change — not made here. -->
-
-<!-- TODO(instructor): Factor scores are not normalized before combining. Every reclassified input
-     is 0/1 (Step 6) and the Weighted Sum weights in Figure 23 are raw integers 7/6/4/3/2 that do
-     not sum to 1. Recommend normalizing each factor to a common 0-1 (or 1-10) scale and using
-     weights that sum to 1 so the output score is interpretable. Pedagogy change — not made here. -->
-
-<!-- TODO(instructor): The lab asks for one weighting and never tests it. Recommend requiring a
-     weight-sensitivity comparison: run Weighted Sum at least twice with different defensible
-     weight sets and have students report how (or whether) the selected site moves. Would need a
-     matching rubric row. Not added here. -->
-
-<!-- TODO(instructor): The analysis CRS is never stated. All buffers are in miles and all rasters
-     must align, so the lab needs an explicit projected coordinate system set on the map and in the
-     geoprocessing environment before Step 1. The student example map (Figure 28) records
-     "NAD 1983 Zone 14" in its text box, which is consistent with NAD 1983 UTM Zone 14N for eastern
-     South Dakota, but the handout never asks for it. Not asserted in the text here. -->
-
-<!-- TODO(instructor): The geoprocessing environment settings that make a cell-by-cell raster
-     overlay valid are never specified: snap raster, processing extent, mask, and resampling
-     method. Step 6 only says "it is essential for all raster data sets you create to have the same
-     projection and cell size," which is necessary but not sufficient — without a common snap
-     raster and extent the layers will not align cell for cell. Not added here. -->
-
-> [!NOTE]
-> This lab assignment may feel a bit like our Walmart site selection, cell phone tower placement, or
-> other site selection labs we have completed this semester. However, there is a major difference:
-> we are going to use a raster-based index approach where we convert each layer to a raster and
-> compare them strictly using grid-based, cell-by-cell map algebra instead of using only
-> vector-based analysis.
+- **The truth.** The elevation model is treated as exact. It is not — it is itself a product of
+  interpolation from lidar and older sources — but here it is the reference everything else is
+  measured against. Your RMSE says how well you rebuilt the DEM, not how well anything matches the
+  ground.
+- **The cell size.** The DEM was projected to 30 m cells, as engineering-scale terrain work often
+  does, and every surface is built on that grid. A finer grid would make the truth rougher and the
+  errors bigger.
+- **The samples.** 250, 2,500 or 10,000 random points in a 60.6 km² rectangle; at 2,500, about one
+  point for every 27 cells. Random points cluster in some places and leave gaps in others, and the
+  gaps are where the errors are. The course's three sets were drawn once, with a fixed random seed,
+  so everyone's numbers match this page.
+- **The method and its parameters.** Thiessen has none. IDW has a **power** (how fast a sample's
+  influence falls off with distance; 2 is the default) and a number of neighbors (12). Kriging has a
+  **semivariogram model** (spherical is the default) fitted to the points, and a number of neighbors
+  (12). Every default is somebody's guess about a typical surface; Step 8 tests the guesses.
+- **The measure of error.** RMSE weights large errors heavily, because it squares them. It is one
+  number for the whole rectangle, and most of the rectangle is flat valley floor that every method
+  gets right. Look at the error maps, not just the number.
+- **The coordinate system.** **NAD 1983 UTM Zone 12N** in meters, so that cells are square and
+  distances, which every interpolator depends on, are in meters in every direction.
 
 ## Data
 
-The following datasets will be needed for this project. You can either download the data from the
-suggested sources or create the data you need to complete this exercise. When you download the
-data, unzip it, and save it to a folder created for this lab.
+> [!IMPORTANT]
+> **Set up your folder before you download anything.** On the lab machines, work on the **D:
+> drive**: one folder for this class named after you, `D:\Smith\`, and one folder per lab inside
+> it, `D:\Smith\Lab10\`. The **C: drive is locked**, and a **network drive** is slow enough to make
+> ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
+> them without saying why. **Back up your lab folder at the end of every session.** The full set of
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-| Dataset | Source |
-| --- | --- |
-| Local Roads | Polyline data from Open Data GIS. Go to <https://gis.sd.gov> and search for "Local Roads" |
-| Major Rivers | National Hydrography Dataset (NHD) shapefile dataset. Go to <https://nationalmap.gov/> and use the data downloader to find and download the NHD for South Dakota. |
-| City Boundaries | South Dakota State GIS Website Shapefile. Go to <https://gis.sd.gov> and search for "South Dakota City Boundaries". |
-| County Boundaries | Polygon data from Open Data GIS. Go to <https://gis.sd.gov> and search for "South Dakota County Boundaries". |
-| State Boundaries | South Dakota State GIS Website Shapefile. Go to <https://gis.sd.gov> and search for "Statewide Boundary" |
-| Existing Wind Farm Locations | Point Data of locations of existing wind farms can be downloaded from the U.S. Geological Survey Wind Turbine Database (USWTDB) here: <https://eerscmap.usgs.gov/uswtdb/data/> |
-| Wind Speed | Explore the data in the Wind Resource Database of the National Renewable Energy Laboratory: <https://wrdb.nrel.gov/>. You can also download JPG images of wind speed from the Department of Energy here: <https://windexchange.energy.gov/maps-data/>. (Search for South Dakota.) If you use an image, you'll need to georeference it and digitize polygons representing different wind speed regions. The simplest option here is to use the 30 meter height data and digitize the polygons from it. |
+| Layer | What it is | How you get it |
+| --- | --- | --- |
+| `lab10-y-mountain\Lab10.gdb\True_DEM` | The DEM projected to UTM 12N at 30 m and cut to the study rectangle: the truth | Prepared for you, in the zip |
+| `lab10-y-mountain\Lab10.gdb\Sample_Points_250`, `_2500`, `_10000` | Random points in the rectangle, each with the `True_DEM` value under it in `RASTERVALU` | Prepared for you, in the zip |
+| `lab10-y-mountain\Lab10.gdb\Checkpoints` | 200 more random points in the rectangle, never used to interpolate; Step 8 tests the surfaces at them | Prepared for you, in the zip |
+| `lab10-y-mountain\Lab10.gdb\Study_Area` | The study rectangle, on `True_DEM`'s 30 m grid | Prepared for you, in the zip |
+| `YMountain_DEM.tif` | The source: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 | In the zip, for its metadata and for Step 1 |
+| 3DEP elevation image service | The same elevations, served live | A web service you add in Step 1 |
 
-<!-- VERIFY: <https://gis.sd.gov> redirects to
-     https://opendata2017-09-18t192802468z-sdbit.opendata.arcgis.com/ (HTTP 200). The redirect
-     target looks like an auto-generated ArcGIS Open Data hostname; confirm the search terms above
-     still return these five layers on the current site. -->
+- **Download:** [`lab10-y-mountain.zip`](../../data/lab10-y-mountain.zip) (2.4 MB). Unzip it into
+  your Lab10 folder — the files are in a `lab10-y-mountain` folder inside it — and read
+  `READ-ME-FIRST.txt`.
 
-<!-- VERIFY: <https://nationalmap.gov/> redirects to
-     https://www.usgs.gov/programs/national-geospatial-program/national-map (HTTP 200; returns 403
-     to a non-browser user agent). Confirm the "data downloader" path for the NHD is still what a
-     student would find there. -->
+**What we already did for you.** Every step below is one you have done in an earlier lab, so we did
+them once, carefully, and handed you the results; your model starts where the interpolation starts.
 
-<!-- VERIFY: <https://wrdb.nrel.gov/> could not be reached from the migration environment (DNS for
-     the whole nrel.gov domain does not resolve here, so this is not evidence the link is dead).
-     Test it from a normal network before the lab is assigned. -->
+1. **Project Raster** (Labs 4, 5, 8 and 9): `YMountain_DEM.tif` to NAD 1983 UTM Zone 12N, bilinear,
+   30 m cells.
+2. **Extract by Mask** (Labs 4 and 9): the projected DEM cut to `Study_Area`, a rectangle drawn well
+   inside it with its corners on the 30 m grid. The result is `True_DEM`.
+3. **Create Random Points** (Lab 9): 250, 2,500 and 10,000 points inside `Study_Area`, with the
+   **Random Number Generator** environment set to seed 1, so the points are the same every time.
+4. **Extract Values to Points** (Lab 9): the `True_DEM` value under each point, written to
+   `RASTERVALU`.
 
-<!-- VERIFY: <https://windexchange.energy.gov/maps-data/> redirects to
-     https://www.energy.gov/cmei/systems/windexchange/maps-and-data (HTTP 200). Consider updating
-     the printed URL to the redirect target. -->
+We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.
 
-<!-- TODO(instructor): The Wind Speed row tells students to use "the 30 meter height data," but the
-     example image (Figure 3), the model's input dataset ("Wind Speed 80m"), and its clipped output
-     ("South Dakota 80m Wind Raster") are all 80 m data, and the 7 m/s threshold in the Spatial
-     Considerations is a plausible 80 m threshold, not a 30 m one. Data-source decision — not
-     changed here. -->
+> [!TIP]
+> **Check the data:** `True_DEM` has **67,337** cells with values, from **1,368.5 to 2,896.5** m
+> (mean **1,819.8**). `Sample_Points_250`, `_2500` and `_10000` have exactly that many points, each
+> with the fields `OBJECTID`, `Shape` and `RASTERVALU`; at 2,500 points `RASTERVALU` runs from
+> **1,368.7 to 2,886.7** m and the first point (`OBJECTID` 1) is at about **444,603.3 E,
+> 4,453,723.7 N**. `Study_Area` is one rectangle of **60.6 km²** (8.67 × 6.99 km).
 
-<!-- TODO(instructor): The Spatial Considerations require a site "within 2 miles of a main road,"
-     but the only road dataset listed is "Local Roads," and Step 2 intersects Local Roads. Decide
-     whether the criterion should say local roads or whether a separate primary/main road layer
-     should be added to the data table. -->
+> [!NOTE]
+> The samples never include the true highest cell (2,896.5 m): the tallest of the 2,500 is
+> 2,886.7 m. Keep that number in mind in Steps 3 to 5.
+
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Y Mountain DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.9 m east-west; Provo and the mountain front east of it, stored in latitude and longitude, with True_DEM its projection to UTM Zone 12N; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, playing the truth in this lab; a window cut from the tile with values unchanged; USGS, public domain. A footer says the DEM's own errors never show up in the RMSE.](images/lab10-dem-metadata.svg)
+
+**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
+the publication and source dates, the vertical datum and units, and the cell size —
+in `READ-ME-FIRST.txt`, in `YMountain_DEM.tif`'s properties in ArcGIS Pro, and in the tile's
+[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
+— and say in your report what each one does to your result.
 
 ## ModelBuilder Tools
 
-In this exercise, you will need to use tools from previous lab exercises as well as the following
-new tools:
+New in this lab:
 
-- **Weighted Sum** — This tool allows you to calculate a weighted sum. Using this tool allows us to
-  assign different weights to each of our input datasets. Consider that some factors are more
-  important than others, so when you are combining layers, you may want to give the more important
-  factors greater weight.
-- **Get Raster Properties** — This tool allows you to extract individual data values from your
-  raster datasets.
-- **Equal To** — This allows you to extract data that is equal to the input value.
+| Tool | What it does |
+| --- | --- |
+| ![Create Thiessen Polygons icon: five points, each inside the polygon of the area nearest to it](images/icon-create-thiessen-polygons.svg){ .tool-icon }<br>**Create Thiessen Polygons** (Analysis) | Draws, around every point, the polygon of all the places nearer to it than to any other point. Given the points' values, it is nearest-neighbor interpolation. Needs an Advanced license. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/create-thiessen-polygons.htm){ target="_blank" } |
+| ![Kriging icon: a semivariogram, points rising with distance and leveling off at a sill, with the range marked](images/icon-kriging.svg){ .tool-icon }<br>**Kriging** (Spatial Analyst) | Interpolates a raster from points, weighting the neighbors by a semivariogram: a curve fitted to how much the values differ as the distance between them grows. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/kriging.htm){ target="_blank" } |
+| ![Zonal Statistics as Table icon: the cells inside a zone summarized into a table row labeled MEAN](images/icon-zonal-statistics-as-table.svg){ .tool-icon }<br>**Zonal Statistics as Table** (Spatial Analyst) | Like Zonal Statistics, but writes the statistics of each zone to a table instead of a raster — here, the mean of the squared errors inside the study rectangle. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics-as-table.htm){ target="_blank" } |
 
-## Model Example
+Tools you already know: **IDW** (Lab 9), **Polygon to Raster**, **Raster Calculator** (Labs 2 and
+4–8), **Calculate Field** (Lab 6), and model parameters. Step 8 also uses **Extract Multi Values to
+Points** and **Summary Statistics**.
 
-![ModelBuilder canvas showing the first half of the completed wind farm model: county selection, intersects, buffers, polygon-to-raster conversions, and reclassifications for cities, roads, rivers, wind farms, and wind speed](images/lab10-model-overview-preprocessing.png)
+## Example Model
 
-**Figure 1.** The preprocessing half of the completed model — select, intersect, buffer, convert to
-raster, and reclassify, once for each input dataset.
+![The finished ModelBuilder model, exported as a vector diagram. Sample Points, marked P, feeds three branches: Create Thiessen Polygons then Polygon to Raster (Thiessen_Surface); IDW with IDW Power, marked P (IDW_Surface); and Kriging with Semivariogram, marked P (Kriging_Surface, and an unused Output variance of prediction raster). True_DEM and each surface feed a Raster Calculator (Error_Thiessen, Error_IDW and Error_Kriging, all marked P); each error goes to a second Raster Calculator that squares it, then Zonal Statistics as Table over Study_Area (each with an unused Output Join Layer), then Calculate Field, ending in RMSE Thiessen, RMSE IDW and RMSE Kriging, all marked P.](images/lab10-full-model.svg)
 
-<!-- TODO(instructor): Figure 1 is one of the six illegible ModelBuilder canvas grabs identified in
-     the September 2026 image audit. It is a wide, zoomed-out screen capture; the node labels are at
-     the edge of readability on screen and will not survive printing at 10 pt. It needs to be
-     re-exported from ModelBuilder (Model > Export > To Graphic) rather than re-screenshotted, and
-     is probably best split into two or three panels. Kept in place because the text refers to it. -->
-
-<!-- TODO(instructor): The node labels inside Figure 1 disagree with the handout's own numbers and
-     with the tool dialogs: the canvas reads "Cities 20mi Buffer" where the text and Figure 9 both
-     say 30 miles; "Roads 2km Buffer" where the text and Figure 10 both say 2 miles (km vs. mi);
-     and "Rivers 2mi Buffer" where Figure 11 shows 1 mile. Screenshots cannot be edited — the model
-     must be rebuilt and re-exported once the buffer distances are settled. -->
-
-![ModelBuilder canvas showing the second half of the model: five reclassified rasters feeding Weighted Sum, then Get Raster Properties, Equal To, and Raster to Point](images/lab10-model-overview-weighted-sum.png)
-
-**Figure 2.** The analysis half of the completed model — the five reclassified rasters feed Weighted
-Sum, and the maximum value of the result is used to extract the ideal wind farm locations.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
+Read it left to right: the sample points are rebuilt into a surface three ways; each rebuild is
+subtracted from `True_DEM`, squared, averaged over the rectangle and square-rooted. The nine
+elements marked `P` become the tool dialog of Step 8.
 
 ## Complete the Lab
 
-For an advanced GIS student, the information provided so far may be all you need to complete the
-assignment and generate an output map from the results. Feel free to try conducting the analysis
-using only the information above. If you complete the lab using only the info above (without the
-step-by-step instructions below), be sure to indicate this in your lab report to qualify for extra
-credit. If you need additional help, follow the step-by-step solution below.
+For an advanced GIS student, the information up to this point is all you need to complete the
+assignment. Feel free to try the analysis using only the information above. If you complete the lab
+without the step-by-step instructions below, say so in your report.
 
 ## Step-by-Step Solution
 
-<!-- TODO(instructor): This step-by-step section runs about 21 pages in the Word original and 26 of
-     the lab's 28 figures sit inside it. Recommend restructuring into a short core brief (criteria,
-     required outputs, environment settings, deliverables) plus a clearly labeled appendix holding
-     the click-by-click walkthrough, so the analytical decisions are not buried in tool dialogs.
-     Structural change to the assignment — not made here. -->
-
-### Step 0
-
-Either download raw wind speed data in shapefile or raster format from the links provided, or
-download an image of wind speed and digitize the polygons of wind speeds. For the second approach,
-we need to build our own wind speed raster using the JPG image downloaded from the Department of
-Energy. This will require using the georeferencing tools learned in a previous lab to assign the
-image a spatial location and projection. Next, you will either need to digitize the main polygons of
-wind speed or convert your polygons to a raster. You can also convert the JPG to a raster and
-reclassify the results from color codes to wind speeds. Regardless, the goal is to obtain a
-georeferenced raster dataset showing the average wind speed regionally across South Dakota.
-
-![Map of South Dakota annual average wind speed at 80 meters, shaded by wind speed class from under 4 m/s to over 10.5 m/s, published by AWS Truepower and NREL](images/lab10-sd-wind-speed-80m-map.png)
-
-**Figure 3.** An annual average wind speed map for South Dakota — the kind of JPG you would
-georeference and digitize in this step.
-
-### Step 1
-
-Use the Select tool to select the following counties: Minnehaha, Moody, Lake, McCook, Turner, and
-Lincoln. We have been asked to build our wind farm in one of these counties.
-
-![ModelBuilder canvas showing the South Dakota County Boundaries input feeding the Select Counties tool, producing the selected-counties output](images/lab10-select-counties-model.png)
-
-**Figure 4.** The Select step in the model.
-
-![Select tool dialog with South Dakota County Boundaries as the input and a series of Or clauses on the name field for Minnehaha, Moody, Lake, McCook, and Turner](images/lab10-select-counties-dialog.png)
-
-**Figure 5.** The Select tool dialog, with one clause per county name.
-
-<!-- VERIFY: Figure 5 shows the query built on a field named "name" with values "Minnehaha",
-     "Moody", "Lake", "McCook", "Turner". Confirm the field name and the exact spelling of the
-     values against whichever county boundary layer is downloaded — the field is often NAME or
-     NAMELSAD, and the clause list is scrolled so the Lincoln clause is not visible. -->
-
-### Step 2
-
-Next, we will use the Intersect tool to intersect the Local Roads with the selected counties. This
-will allow us to keep the data only in the counties we are working with. Do the same for the US
-Rivers and Streams and the wind farm locations.
-
-![ModelBuilder canvas showing three Intersect tools producing roads in selected counties, rivers in South Dakota, and wind farms in South Dakota](images/lab10-intersect-model.png)
-
-**Figure 6.** The three Intersect operations in the model.
-
-![Intersect tool dialog with Local Roads and the selected counties layer as input features and Local_Roads_Intersect as the output feature class](images/lab10-intersect-roads-dialog.png)
-
-**Figure 7.** The Intersect tool dialog for the roads.
-
-### Step 3
-
-Next, we will use the Buffer tool to buffer each of our datasets. Each of these is shown below in
-Figures 8 through 12. Make a 30-mile buffer around each of the cities, a 2-mile buffer around the
-Roads and Rivers, and a 20-mile buffer around existing wind farms.
-
-<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 2 of 4. Exact wording in this step:
-     "a 2-mile buffer around the Roads and Rivers." Exact wording in the Spatial Considerations:
-     "It must not be within 1 mile of a river." Figure 11 (Buffer Rivers dialog) shows a distance of
-     1 Miles. The model canvas node in Figures 1, 8, and 13 is labeled "Rivers 2mi Buffer". Not
-     resolved here. -->
-
-> [!TIP]
-> Don't forget to toggle the Dissolve Type to "Dissolve all output features into a single feature"!
-
-![ModelBuilder canvas showing four Buffer tools producing a cities buffer, a roads buffer, a rivers buffer, and a wind farm buffer](images/lab10-buffer-model.png)
-
-**Figure 8.** The four Buffer operations in the model.
-
-<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 3 of 4. The rivers node in Figure 8 is
-     labeled "Rivers 2mi Buffer", which contradicts the 1 Mile shown in Figure 11 and the "not
-     within 1 mile of a river" criterion. Figure 8 also labels the cities output "Cities 20mi
-     Buffer" while the text and Figure 9 both say 30 miles. Screenshot — cannot be corrected
-     without rebuilding and re-exporting the model. -->
-
-![Buffer tool dialog for cities with a distance of 30 Miles, full side type, planar method, and dissolve all output features into a single feature](images/lab10-buffer-cities-dialog.png)
-
-**Figure 9.** Buffer Cities — 30 Miles, dissolved into a single feature.
-
-![Buffer tool dialog for roads in selected counties with a distance of 2 Miles and dissolve all output features into a single feature](images/lab10-buffer-roads-dialog.png)
-
-**Figure 10.** Buffer Roads — 2 Miles.
-
-![Buffer tool dialog for rivers in South Dakota with a distance of 1 Miles and dissolve all output features into a single feature](images/lab10-buffer-rivers-dialog.png)
-
-**Figure 11.** Buffer Rivers — the dialog shows 1 Mile.
-
-<!-- TODO(instructor): RIVER BUFFER CONTRADICTION, occurrence 4 of 4. This screenshot shows a
-     Distance of "1" with units "Miles", agreeing with the Spatial Considerations criterion and
-     disagreeing with Step 3's "2-mile buffer around the Roads and Rivers" and with the "Rivers 2mi
-     Buffer" node label in Figures 1, 8, and 13. Not resolved here. -->
-
-![Buffer tool dialog for wind farms in South Dakota with a distance of 20 Miles and dissolve all output features into a single feature](images/lab10-buffer-windfarms-dialog.png)
-
-**Figure 12.** Buffer Windfarms — 20 Miles.
-
-### Step 4
-
-Next, we will use the Polygon to Raster tool on each dataset. Set the Cell Size to 1.
-
-<!-- TODO(instructor): The cell size of 1 is given with no units and no justification. Its meaning
-     depends entirely on the (unspecified) analysis CRS: 1 meter in a UTM-based CRS produces an
-     enormous raster over six South Dakota counties, while 1 foot or 1 degree would each be worse.
-     The source wind data in Figure 3 is 2.5 km resolution, so nothing in the analysis supports a
-     1-unit cell. Recommend stating an explicit cell size with units (for example, a few hundred
-     meters) and explaining how it was chosen from the coarsest input. Value left at 1 as
-     written. -->
-
-![ModelBuilder canvas showing four Polygon to Raster tools converting the cities, roads, rivers, and wind farm buffers to rasters](images/lab10-polygon-to-raster-model.png)
-
-**Figure 13.** The four Polygon to Raster conversions in the model.
-
-![Polygon to Raster tool dialog with the cities buffer as input, OBJECTID as the value field, cell assignment type of cell center, and a cellsize of 1](images/lab10-polygon-to-raster-dialog.png)
-
-**Figure 14.** The Polygon to Raster dialog — note the Cellsize of 1.
-
-<!-- VERIFY: Figure 14 uses OBJECTID as the Value field. Because the buffers were dissolved into a
-     single feature, every polygon carries OBJECTID = 1, which is what makes the Step 6
-     reclassification of "1 -> 1, NODATA -> 0" work. Confirm this is intended rather than
-     incidental, and that OBJECTID exists on the buffer outputs in the student's workspace. -->
-
-### Step 5
-
-Use the Clip Raster tool to clip the wind speed raster data to the county boundaries data that we
-created earlier.
-
-![ModelBuilder canvas showing the Wind Speed 80m raster and a boundary input feeding Clip Raster, producing the South Dakota 80m Wind Raster, which then feeds Reclassify](images/lab10-clip-raster-model.png)
-
-**Figure 15.** The Clip Raster step, producing the clipped wind speed raster.
-
-<!-- VERIFY: The text says the wind speed raster is clipped "to the county boundaries data that we
-     created earlier," but in Figures 1 and 15 the clip input comes from the "Select South Dakota"
-     branch off US States — that is, the state boundary, not the six selected counties. Confirm
-     which extent is intended. -->
-
-### Step 6
-
-Next, use the Reclassify tool to reclassify each raster dataset. This allows us to separate the
-desirable areas to build a wind farm from the undesirable areas. We will assign a value of 1 to the
-desirable areas and 0 to the undesirable areas.
-
-> [!IMPORTANT]
-> It is essential for all raster datasets you create to have the same projection and cell size.
-> Also, ensure there are no spaces in your file names or folder paths.
-
-![ModelBuilder canvas showing five Reclassify tools producing the city, road, river, wind farm, and wind speed reclassified rasters](images/lab10-reclassify-model.png)
-
-**Figure 16.** The five Reclassify operations in the model.
-
-![Reclassify tool dialog for the city raster mapping value 1 to 1 and NODATA to 0](images/lab10-reclassify-cities-dialog.png)
-
-**Figure 17.** Reclassify Cities — inside the 30-mile city buffer is desirable (1).
-
-![Reclassify tool dialog for the roads raster mapping the range 1 to 2 to a new value of 1 and NODATA to 0](images/lab10-reclassify-roads-dialog.png)
-
-**Figure 18.** Reclassify Roads — inside the road buffer is desirable (1).
-
-![Reclassify tool dialog for the river raster mapping value 1 to 0 and NODATA to 1](images/lab10-reclassify-rivers-dialog.png)
-
-**Figure 19.** Reclassify River — the mapping is reversed, because being inside the river buffer is
-undesirable (0).
-
-![Reclassify tool dialog for the wind farm raster mapping value 1 to 0 and NODATA to 1](images/lab10-reclassify-windfarms-dialog.png)
-
-**Figure 20.** Reclassify Windfarm — reversed as well, because being near an existing wind farm is
-undesirable (0).
-
-![Reclassify tool dialog for the South Dakota 80m wind raster mapping 0 to 7 to a new value of 0, 7 to 15 to a new value of 1, and NODATA to 0](images/lab10-reclassify-wind-speed-dialog.png)
-
-**Figure 21.** Reclassify the wind speed raster — speeds of 7 m/s and above become 1, everything
-below becomes 0.
-
-### Step 7
-
-Next, we will use the Weighted Sum tool. To do so, we will enter each of our input datasets and
-assign a weight to each based on its importance in our model. See Figure 23 to set these weights.
-Note that the specific weights you select depend on your engineering judgment. Consider which
-datasets are most important and which constraints deserve the most attention when choosing these
-weights.
-
-![ModelBuilder canvas showing the five reclassified rasters feeding the Weighted Sum tool, producing the Weighted Wind Locations raster](images/lab10-weighted-sum-model.png)
-
-**Figure 22.** The Weighted Sum step in the model.
-
-![Weighted Sum tool dialog listing five input rasters with the VALUE field and weights of 7 for windspeed, 6 for wind farms, 3 for rivers, 4 for cities, and 2 for roads](images/lab10-weighted-sum-dialog.png)
-
-**Figure 23.** The Weighted Sum dialog. The weights shown here are one student team's judgment, not
-a required answer.
-
-<!-- VERIFY: the weights visible in Figure 23 are Windspeed 7, Windfarm 6, River 3, City 4, Road 2.
-     The surrounding text says students choose their own weights, so treat this screenshot as an
-     example rather than as the specification. -->
-
-### Step 8
-
-Finally, we will use the Get Raster Properties tool to find the maximum value. This value will then
-be used in the Equal To tool to obtain our maximum raster points. This will ultimately show us the
-best locations for a wind farm. Finally, use the Raster to Point tool to find the ideal wind farm
-locations.
-
-![ModelBuilder canvas showing Weighted Wind Locations feeding Get Raster Properties to produce a maximum value, and feeding Equal To with an input maximum to produce maximum raster points, then Raster to Point to produce ideal wind farm locations](images/lab10-final-steps-model.png)
-
-**Figure 24.** The final chain of the model.
-
-![Get Raster Properties tool dialog with Weighted Wind Locations as the input raster, a property type of maximum cell value, and Band_1 as the band name](images/lab10-get-raster-properties-dialog.png)
-
-**Figure 25.** Get Raster Properties — set the Property type to **Maximum cell value**.
-
-![Equal To tool dialog with Weighted Wind Locations as the first input and Input Maximum as the second](images/lab10-equal-to-dialog.png)
-
-**Figure 26.** Equal To — compares the weighted raster against the maximum value found in Figure 25.
-
-![Raster to Point tool dialog with Maximum Raster Points as the input raster and VALUE as the field](images/lab10-raster-to-point-dialog.png)
-
-**Figure 27.** Raster to Point — converts the maximum-value cells to point features.
-
-<!-- VERIFY: the "Input Maximum" node in Figures 2 and 24 is a model variable fed from the Get
-     Raster Properties output. Confirm in ArcGIS Pro how that value is wired (the Get Raster
-     Properties output is a string-typed value and normally needs to be connected as a precondition
-     or converted before Equal To will accept it as a constant). The handout does not explain this
-     connection and it is the step students are most likely to get stuck on. -->
-
-## Example Map
+> [!NOTE]
+> **Important Note #1.** Steps 0–7 build the model and run it on the course's 2,500 points, so your
+> numbers can be checked against this page. Step 8 re-runs the same model on other points and with
+> other settings. Build it once, and build it to be changed.
 
 > [!NOTE]
-> This is not a complete example map, because it doesn't show the final selected point locations.
-> Make sure your final map includes point locations that meet the goal of identifying the one
-> location that has the maximum value from your weighted sum raster. Also, your project sponsor
-> doesn't care about "bad locations," so this doesn't need to be mentioned on your map.
+> **Important Note #2.** Every check value on this page was measured on the files you download, with
+> the steps below, in ArcGIS Pro 3.7.1, and should match to the last digit shown. The screenshots
+> were captured in the same version, building this model, and their paths start with `C:\` because
+> they were made on an instructor machine.
 
-![Example student map titled Windfarm Locations, showing a purple suitable-area polygon over an aerial base map of southeastern South Dakota near Sioux Falls, with scale bar, north arrow, legend, author names, projection NAD 1983 Zone 14, and date](images/lab10-example-map.png)
+### Step 0 — Set Up the Project
 
-**Figure 28.** An example student map. Note that it shows suitable *areas*, not the final selected
-point locations, and that its legend still lists "Bad Locations" — both of which the note above asks
-you to fix in your own map.
+1. Create a new project named `Lab10` in `D:\Smith\Lab10\` with the **Map** template; if you already
+   made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes a project
+   geodatabase and toolbox beside it, `Lab10.gdb` and `Lab10.atbx`. The downloaded data stay in their
+   own `lab10-y-mountain\Lab10.gdb`; this page always says which of the two it means.
+2. Add `True_DEM`, `Study_Area`, `Checkpoints` and the three `Sample_Points_` layers from
+   `lab10-y-mountain\Lab10.gdb`, and `YMountain_DEM.tif` (click **OK** to build pyramids and
+   statistics).
+3. Confirm Spatial Analyst is licensed and that your license level is **Advanced** (**Project** ▸
+   **Licensing**); Create Thiessen Polygons needs it. The lab machines have both.
+4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
+   **Properties**, set **Name** to `InterpolationExplorer` and **Label** to `Interpolation Explorer`,
+   and save.
+5. On the **ModelBuilder** tab click **Environments** and set (type a name in the search box to
+   find it):
+    - **Current Workspace** and **Scratch Workspace**: your project geodatabase
+    - **Cell Size**: `30`
+    - **Snap Raster**: `True_DEM`
+    - **Extent**: click the second button above the boxes, which lists the map's layers, and choose
+      `True_DEM`. The boxes fill with its corners in latitude and longitude; that is fine.
 
-## Rubric for Wind Farm Site Selection
+![The model's Environments dialog, searched for "extent": Extent set from True_DEM, Top 40.2665, Left -111.6761, Right -111.5736, Bottom 40.2027 in GCS North American 1983; Current Workspace Lab09.gdb; Output Coordinate System empty; Cell Size 30; Mask empty; Cell Alignment Default; Snap Raster True_DEM.](images/lab10-environments.png)
+
+**Figure 0.** ModelBuilder ▸ Environments. Leave Output Coordinate System empty: everything you use is
+already in UTM.
+
+> [!WARNING]
+> **Set all three: Cell Size, Snap Raster and Extent.** Without the cell size, IDW and Kriging pick
+> one from the spread of the points. Without the snap raster, they place their cells wherever their
+> points' box puts them, and the subtraction in Step 6 compares cells offset by part of a cell.
+> Without the extent, they fill only the box around the points; with 250 points that box misses
+> strips along the edges, and those cells drop out of the RMSE. Nothing reports an error in any of
+> these cases.
+
+### Step 1 — Look at the Service
+
+The same elevations are served live on the web. Before you use the prepared data, look at what the
+service gives you.
+
+1. On the **Map** tab, in the **Layer** group, click **Add Data From Path** (the yellow button
+   beside the basemap gallery), paste
+   `https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer`, and click
+   **Add**. It is slow; give it a minute.
+2. Right-click the new `3DEPElevation` layer ▸ **Properties** ▸ **Source**. Expand **Raster
+   Information** and **Spatial Reference** and record the columns and rows, the cell size, the pixel
+   type and the coordinate system. Look at the layer's legend in the Contents pane, too.
+3. On the **Map** tab click **Go To XY**, enter longitude **−111.58865** and latitude **40.21415**,
+   and drop a marker there. This is the highest cell of `YMountain_DEM.tif`. Click the marker with
+   **Explore**: the pop-up reports the service. Turn the service layer off and click again to read
+   the DEM.
+4. Remove the service layer and the marker's graphics layer. The rest of the lab runs on the prepared
+   data.
+
+![The Add Data From Path dialog: Path set to https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer and Service type An ArcGIS Server Web Service.](images/lab10-add-from-path.png)
+
+**Figure 1a.** Add Data From Path, with the 3DEP elevation service.
+
+![The service layer's Properties, Source page: Data Type Raster, Location the 3DEP ImageServer URL, Vertical Units Meter; Raster Information: Columns 40075015, Rows 20498394, 1 band, Cell Size X 1 and Y 1, Uncompressed Size 747.13 TB, Format Image Service, Source Type Elevation, Pixel Type unsigned char, Pixel Depth 8 Bit.](images/lab10-service-raster-info.png)
+
+**Figure 1b.** What came back: 1 m cells covering the whole country — 747 TB if you could download it
+— in **8-bit unsigned** pixels.
+
+![The Spatial Reference section of the same page: Projected Coordinate System WGS 1984 Web Mercator (auxiliary sphere), Projection Mercator Auxiliary Sphere, WKID 3857.](images/lab10-service-spatial-reference.png)
+
+**Figure 1c.** The service's coordinate system: Web Mercator, not the latitude and longitude of the
+extract, and not UTM.
+
+![The Explore pop-up for the service at the marker: 3DEPElevation (2), item n41w112; Service Pixel Value 154, Stretch.Pixel Value 154, Name n41w112, MinPS 0, MaxPS 27, LowPS 10.30736, HighPS 16.](images/lab10-service-popup.png)
+
+**Figure 1d.** The service at the highest cell of the extract. The value is **154**, not an
+elevation; the source item is tile `n41w112`, the same tile the extract was cut from.
+
+> [!TIP]
+> **Check the result:** the service arrives drawn as a **hillshade**, with a legend from 0 to 255.
+> That is the service's default *raster function*: the server turns elevations into a picture before
+> sending them, and that is why the pixel type is 8-bit and the pop-up reads **154** at the marker.
+> `YMountain_DEM.tif` reads about **2,893 to 2,897 m** there, depending on exactly which cell your click lands
+> in (the highest cell is 2,896.9 m).
+
+> [!NOTE]
+> **Why not just use the service?** A service is convenient and always current, but what comes back
+> depends on the request: here a shaded picture in Web Mercator rather than elevations in meters, and
+> it can change whenever the USGS updates it. An analysis that others must check needs a fixed copy
+> with a known date, which is why the course hosts one. Say in your report which of the two you would
+> cite in an engineering report, and why.
+
+### Step 2 — Choose the Sample Points
+
+The sample points are the model's main input, and the one you will change most, so make them a
+parameter before anything else uses them.
+
+1. Add **Create Thiessen Polygons** to the model (Step 3 fills it in), and in its **Input Features**
+   choose `Sample_Points_2500` from the map layers.
+2. In the model, right-click the new `Sample_Points_2500` oval ▸ **Rename** it `Sample Points`, and
+   right-click it ▸ **Parameter**.
+
+Every tool that follows takes `Sample Points` — choose it under **Model Variables** in each tool's
+list, not the map layer of the same set — so that changing this one input in Step 8 changes all three
+methods at once.
+
+> [!NOTE]
+> **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points as well.
+> With the points as a parameter, each of those runs is one choice in the tool dialog.
+
+### Step 3 — Build the Thiessen Surface
+
+1. **Create Thiessen Polygons**: **Input Features** `Sample Points`, output `Thiessen_Polygons`,
+   **Output Fields** **All fields**.
+2. Add **Polygon to Raster**: **Input Features** `Thiessen_Polygons`, **Value field**
+   `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30 (it fills in from the
+   environment), output `Thiessen_Surface`.
+
+![The Create Thiessen Polygons dialog from ModelBuilder: Input Features Sample Points, Output Feature Class Thiessen_Polygons, Output Fields All fields.](images/lab10-thiessen-polygons.png)
+
+**Figure 3a.** Create Thiessen Polygons, with **All fields**.
+
+![The Polygon to Raster dialog from ModelBuilder: Input Features Thiessen_Polygons, Value field RASTERVALU, Output Raster Dataset Thiessen_Surface, Cell assignment type Cell center, Priority field NONE, Cellsize 30, Build raster attribute table checked.](images/lab10-polygon-to-raster.png)
+
+**Figure 3b.** Polygon to Raster, with the value field changed to `RASTERVALU`.
+
+> [!WARNING]
+> **Two defaults here give a surface with no elevations in it.** Create Thiessen Polygons opens at
+> **Output Fields: Only feature ID**, which leaves the polygons with no `RASTERVALU` at all. Polygon
+> to Raster then fills **Value field** with `OBJECTID` by itself — a surface of polygon numbers, and
+> no error. Choose **All fields** in the first, and `RASTERVALU` in the second.
+
+> [!TIP]
+> **Check the result:** **2,500** polygons, one per point. `Thiessen_Surface` runs from **1,368.7 to
+> 2,886.7** m — exactly the range of the samples, because every cell simply takes the value of its
+> nearest point.
+
+### Step 4 — Build the IDW Surface
+
+Add **IDW** (the Spatial Analyst tool; the search also offers a 3D Analyst and a Geostatistical
+Analyst one): **Input point features** `Sample Points`, **Z value field** `RASTERVALU` (it fills in
+by itself), **Output cell size** `30`, **Power** 2, **Search radius** Variable with 12 points, output
+`IDW_Surface`. Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power**,
+rename the new oval `IDW Power` (select it and press **Ctrl+R**), and make it a parameter.
+
+![The IDW dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output raster IDW_Surface, Output cell size 30, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab10-idw.png)
+
+**Figure 4.** IDW.
+
+> [!TIP]
+> **Check the result:** `IDW_Surface` runs from **1,368.7 to 2,885.5** m. IDW is a weighted average,
+> so it can never go above its highest point or below its lowest: compare with the data check.
+
+### Step 5 — Build the Kriging Surface
+
+Add **Kriging** (Spatial Analyst): **Input point features** `Sample Points`, **Z value field**
+`RASTERVALU`, output `Kriging_Surface`, **Kriging method** Ordinary, **Semi-variogram model**
+Spherical, **Output cell size** `30`, **Search radius** Variable with 12 points. Leave **Lag size**
+at the 30 it fills in, the range, sill and nugget empty, and the optional variance raster empty.
+Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Semivariogram
+properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool dialog it shows
+the same controls as here: in Step 8 you pick another model from its **Semi-variogram model** list.
+
+![The Kriging dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output surface raster Kriging_Surface, Kriging method Ordinary, Semi-variogram model Spherical, Lag size 30, Major range, Partial sill and Nugget empty, Output cell size 30, Search radius Variable with Number of points 12, Output variance of prediction raster empty.](images/lab10-kriging.png)
+
+**Figure 5.** Kriging. The range, sill and nugget stay empty: Kriging fits them to your points.
+
+> [!TIP]
+> **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
+> its samples; here it does not, and it pulls the peak down a little further than IDW.
+
+### Step 6 — Map the Errors
+
+Add **Raster Calculator** (Spatial Analyst) three times, one per surface, each the truth minus the
+rebuild. Double-click `True_DEM` in the calculator's **Rasters** list to put it in the expression;
+it joins the model as an input.
+
+| Expression | Output |
+| --- | --- |
+| `"%True_DEM%" - "%Thiessen_Surface%"` | `Error_Thiessen` |
+| `"%True_DEM%" - "%IDW_Surface%"` | `Error_IDW` |
+| `"%True_DEM%" - "%Kriging_Surface%"` | `Error_Kriging` |
+
+The quickest way to the second and third: select the first Raster Calculator, **Ctrl+C**, click
+empty canvas, **Ctrl+V**, drag the copy clear, and edit its expression and output. A positive error
+means the surface came out too **low** there; a negative error, too **high**. Give all three the same
+diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
+50, 100 m), so that the same color means the same error on every map.
+
+![The Raster Calculator dialog from ModelBuilder, widened: the Rasters list shows Thiessen_Surface, IDW_Surface, Kriging_Surface, Output variance of prediction raster and IDW Power, with True_DEM further down the list; the expression reads "%True_DEM%" - "%Thiessen_Surface%"; Output raster Error_Thiessen.](images/lab10-rc-error.png)
+
+**Figure 6.** The Thiessen error. Type the output name last and check it before **OK**: Raster
+Calculator puts back the old name when the expression changes.
+
+> [!TIP]
+> **Check the result:**
+>
+> | Error raster | Minimum | Maximum | Mean |
+> | --- | --- | --- | --- |
+> | `Error_Thiessen` | −234.1 | 214.3 | −0.39 |
+> | `Error_IDW` | −136.8 | 169.9 | −0.84 |
+> | `Error_Kriging` | −104.0 | 164.4 | −0.31 |
+>
+> Every mean is under a meter: the errors cancel. That is why the next step squares them.
+
+### Step 7 — Compute the RMSE
+
+The root-mean-square error is the typical size of an error, whatever its sign: **square** every
+cell's error, take the **mean** of the squares over the rectangle, and take the **square root**.
+Build the chain once for Thiessen, then copy it twice:
+
+1. **Raster Calculator**: `Square("%Error_Thiessen%")`, output `SqError_Thiessen`.
+2. **Zonal Statistics as Table**: **Input raster or feature zone data** `Study_Area`, **Zone field**
+   `OBJECTID`, **Input value raster** `SqError_Thiessen`, **Statistics type** Mean (it opens at
+   All), output table `RMSE_Thiessen`.
+3. **Calculate Field**: **Input Table** `RMSE_Thiessen`, **Field Name** `RMSE`, **Field Type**
+   Double (it opens at Text), **Expression Type** Python, and in the box under `RMSE =`,
+   `math.sqrt(!MEAN!)`. Rename its output oval `RMSE Thiessen`.
+
+Copy the square Raster Calculator twice and edit it for IDW and Kriging. Then select the Zonal
+Statistics as Table and Calculate Field tools and their outputs, copy and paste them twice, and in
+each copy change only the value raster and the output table (`SqError_IDW` and `RMSE_IDW`;
+`SqError_Kriging` and `RMSE_Kriging`): the copied Calculate Field follows its table by itself. Rename
+the outputs `RMSE IDW` and `RMSE Kriging`.
+
+Finally make the outputs parameters: the three error rasters and the three `RMSE` ovals. With
+`Sample Points`, `IDW Power` and `Semivariogram`, that is nine. Save, and run the model inside
+ModelBuilder.
+
+![The Raster Calculator dialog from ModelBuilder: the expression reads Square("%Error_Thiessen%"); Output raster SqError_Thiessen.](images/lab10-rc-square.png)
+
+**Figure 7a.** Squaring the Thiessen error.
+
+![The Zonal Statistics as Table dialog from ModelBuilder: Input Raster or Feature Zone Data Study_Area, Zone Field OBJECTID, Input Value Raster SqError_Thiessen, Output Table RMSE_Thiessen, Ignore NoData in Calculations checked, Statistics Type Mean, Calculate Circular Statistics and Process as Multidimensional unchecked, Output Join Layer empty.](images/lab10-zonal-table.png)
+
+**Figure 7b.** Zonal Statistics as Table, with **Mean**.
+
+![The Calculate Field dialog from ModelBuilder: Input Table RMSE_Thiessen, Field Name RMSE with a warning that it is a new field, Field Type Double (64-bit floating point), Expression Type Python, Fields list OBJECTID, OBJECTID_1, COUNT, AREA, MEAN, and the expression RMSE = math.sqrt(!MEAN!).](images/lab10-calculate-field.png)
+
+**Figure 7c.** Calculate Field. The warning beside Field Name only says the field will be added.
+
+> [!TIP]
+> **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
+> **COUNT 67,337** and **AREA 60,603,300** (m²).
+>
+> | Table | MEAN (m²) | RMSE (m) |
+> | --- | --- | --- |
+> | `RMSE_Thiessen` | 800.3 | **28.29** |
+> | `RMSE_IDW` | 428.9 | **20.71** |
+> | `RMSE_Kriging` | 209.0 | **14.46** |
+>
+> If COUNT is smaller, an interpolator's output does not cover the whole rectangle — check the
+> **Extent** environment of Step 0. At 2,500 points it can look right without it; at 250 it does not.
+> The whole model runs in under ten seconds inside ModelBuilder.
+
+### Step 8 — Test the Choices
+
+The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
+and three sets of default parameters. Find out how much of it survives a change.
+
+**First, the checkpoints and Map 1.** Your Step 7 run is your **baseline**, and its surfaces are
+still on disk because you ran it inside ModelBuilder. Use them now, before any run from the tool
+dialog (see the warning below). In real work you would not have a true DEM; you would hold back some
+measured points and test against them. `Checkpoints` is 200 such points, drawn separately from the
+samples and never used to interpolate:
+
+1. **Extract Multi Values to Points** on `Checkpoints` (from the downloaded geodatabase; export a
+   copy to your project geodatabase first, so the download stays clean) with `True_DEM` (output field
+   name `TRUE_Z`), `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface`
+   (`KR_Z`).
+2. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
+   `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
+3. **Summary Statistics** on your copy of `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and
+   `SQ_KR`. The square root of each mean is that method's **checkpoint RMSE**.
+
+Then make Map 1 (see the Deliverables) from the baseline's surfaces and error rasters.
+
+> [!WARNING]
+> **Finish Map 1 and the checkpoints before the first dialog run.** A run from the tool dialog deletes
+> everything that is not a parameter (Labs 5, 8 and 9 saw it), including the three surfaces Map 1 and
+> the checkpoints need. The downloaded data are inputs, so they are never deleted.
+
+**Then the tool dialog.** Save the model, close it, and open it from the **Catalog** pane
+(**Toolboxes** ▸ `Lab10.atbx` ▸ **Interpolation Explorer**). Run it **five times**, giving every
+output a name that says which run it is (`RMSE_IDW_n250`, `Error_Kriging_gauss`). Before each run,
+empty the Semivariogram's **Major range**, **Partial sill** and **Nugget** boxes if a previous run
+filled them, so that Kriging fits its model to the points afresh.
+
+| Run | Sample Points | IDW Power | Semi-variogram model |
+| --- | --- | --- | --- |
+| 1 | `Sample_Points_250` | 2 | Spherical |
+| 2 | `Sample_Points_10000` | 2 | Spherical |
+| 3 | `Sample_Points_2500` | 1 | Exponential |
+| 4 | `Sample_Points_2500` | 3 | Gaussian |
+| 5 | `Sample_Points_2500` | **your own power** (below) | Spherical |
+
+Runs 3 and 4 change IDW and Kriging at once; that is fine, because they are in different branches
+and each RMSE comes from its own branch.
+
+**Your own IDW power.** Every student tries a different power in run 5, worked out from your
+**BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It is
+**not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU sites.
+
+> **Your power = 1 + (the last two digits of your BYU ID) ÷ 40**
+>
+> - BYU ID `123456789`: the last two digits are **89**, so the power is 1 + 89 ÷ 40 = **3.225**.
+> - BYU ID `987654302`: the last two digits are **02**, so the power is 1 + 2 ÷ 40 = **1.05**.
+> - Last two digits **00**: the power is **1**.
+>
+> Every power falls between 1 and 3.475. Type it with all its decimals, and write your BYU ID's last
+> two digits and your power in your report: the grader checks your run 5 against them.
+
+![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer, set up for run 5 with the example BYU ID: Sample Points Sample_Points_2500; IDW Power 3.225; Semivariogram Ordinary, Spherical, with Lag size, Major range, Partial sill and Nugget empty; outputs RMSE_IDW_mypower, RMSE_Kriging_mypower, RMSE_Thiessen_mypower, Error_IDW_mypower, Error_Kriging_mypower and Error_Thiessen_mypower.](images/lab10-tool-dialog.png)
+
+**Figure 8.** The model as a tool, set up for run 5 with the example ID ending in 89 (power 3.225).
+Lag size may show empty in the dialog; Kriging fills it in.
+
+> [!TIP]
+> **Check run 5:** only the IDW RMSE changes; the Thiessen and Kriging RMSEs are the same as your
+> Step 7 run (28.29 and 14.46). With the example power of 3.225, IDW's RMSE is **20.29** m.
+
+Record **all of it in one table**: your baseline (Step 7) and the five runs, each with the sample
+points, the IDW power and semivariogram model, and the RMSE of all three methods, plus one more row
+with the three checkpoint RMSEs of your baseline.
+
+Then answer, in your report:
+
+1. **Which method wins, and does the ranking survive?** Rank the methods at 250, 2,500 and 10,000
+   points, with your numbers. Does the winner change? How much does going from 250 to 10,000 points
+   buy each method?
+2. **Which parameter mattered, and which barely did?** Compare what the IDW power (powers 1, 2, 3 and
+   yours) and the semivariogram model did with what the number of points did. Before you explain the
+   Gaussian run, look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its
+   largest positive errors, the places the surface came out too low?
+3. **Could you have known without the truth?** Compare each method's checkpoint RMSE with its RMSE
+   over all 67,337 cells. Would 200 checkpoints have told a client the right ranking, and how far off
+   would the number you quoted have been?
+
+> [!TIP]
+> Before you run the 10,000-point set, predict its RMSEs from your 250 and 2,500 results. Then look
+> at where on the error maps the remaining error lives, and at the slope of the ground there.
+
+## Deliverables
+
+Make **two** professional map layouts (letter size, landscape is easiest):
+
+1. **Your baseline comparison sheet** — from your Step 7 run: the true DEM with the
+   sample points and the three surfaces in one row, **on one elevation color scale**; the three error
+   rasters beneath their surfaces **on one diverging color scale** with the same breaks; each panel
+   labeled with its method, its parameters and its RMSE; legends for both scales; a title, neat
+   line, north arrow and scale bar; and a text box with your name, the date, the map projection, the
+   DEM's source and date.
+2. **One scenario from Step 8** — whichever run most changes the picture: its three error rasters
+   on Map 1's error scale with a legend, each labeled with its method, parameters and RMSE (the true
+   DEM and the surfaces are optional); a title, neat line, north arrow and scale bar; and a text box
+   with your name, the date, the map projection, and the DEM's source and date. Say in
+   the title and the text box what changed from Map 1 and by how much.
+
+Write a brief report (2–3 pages of text, plus your figures and maps) covering:
+
+- a title block — assignment title, your name, the date and the course — and the name of your
+  peer reviewer
+- the requirements of the project and your approach to solving it
+- **a description of your model** a reader could repeat from: each tool and its settings, and every
+  input, intermediate and output dataset with its type
+- **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
+  Graphic**), and **one** screen capture of its tool dialog with the sample points, the IDW power
+  and the semivariogram exposed; and **upload your project's toolbox** (`Lab10.atbx`, in your project
+  folder) with the report — the grader opens it and runs it at your IDW power
+- **the three metadata values** for the DEM — its publication date and source dates, its vertical
+  datum and units, and its cell size — and **what the service returned** in Step 1, what each
+  means for your result, and which of the two you would cite in an engineering report
+- your **check values from Steps 3 to 7**, on the course's 2,500 points: each surface's range, the
+  error table, and the three RMSEs
+- **where the methods break**: on your baseline's error map for the best method (lowest RMSE), the cell with the
+  largest error in either direction — its coordinates and size — and why the ground there defeats
+  the interpolators, with a cropped figure of the spot. Its value is the raster's minimum or maximum
+  (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
+  the layer a two-class symbology with the break just short of that value, so that one cell stands
+  out, and click it with **Explore** to read its coordinates
+- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its three questions
+- **a copy of the rubric below with your self-assessment filled in** — a score in every row,
+  honestly arrived at. The grader will compare it with theirs.
+
+> [!NOTE]
+> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
+> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
+> model's elements, and the wording of your report are your own work. Submissions whose layouts,
+> labels or symbology match another student's too closely are flagged for follow-up.
+
+> [!IMPORTANT]
+> **Peer review before you submit.** Have another student in the class read your report against
+> the rubric and give you feedback, then act on that feedback before the deadline. Name your
+> reviewer in the report and say in a sentence what you changed because of them.
+
+**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
+n41w112 (May 2026). Study area: drawn for CE 414.
+
+## References
+
+Bolstad, P. *GIS Fundamentals: A First Text on Geographic Information Systems*. Eider Press.
+Chapter 12, the Week 8 reading on interpolation (any of the 5th to 7th editions).
+
+U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20,
+2026.
+
+U.S. Geological Survey, 3D Elevation Program. 3DEP Elevation image service.
+[elevation.nationalmap.gov](https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer){ target="_blank" }.
+
+## Example Maps
+
+These are examples, not templates. Your maps carry your name, so your
+numbers will differ a little from these.
+
+![Example comparison sheet titled "Rebuilding Y Mountain from 2,500 Points: Kriging Comes Closest". Top row: the true DEM with 2,500 black sample points, then the Thiessen, IDW and Kriging surfaces, all on one green-to-brown-to-white elevation scale over a hillshade; the Thiessen surface is visibly faceted. Second row: the three error maps on one red-to-blue scale, labeled Thiessen error RMSE 28.29 m, IDW error RMSE 20.71 m, Kriging error RMSE 14.46 m; the valley floor is pale everywhere, and the mountain front is a mottle of red and blue, finest-grained for Thiessen and palest for Kriging. Legends, north arrow, scale bar and a text box at the bottom.](images/lab10-example-map-baseline.png)
+
+**Figure 9.** A comparison sheet on the course's 2,500 points. Two things to do better than this example:
+mark and label the largest error on the best method's error map, and use the empty band below the
+error maps for a sentence on what the reader should notice.
+
+![Example scenario sheet titled "The Same Surfaces from 250 Points: Every Error Grows", with the same layout and color scales: far fewer sample points; blurred, blocky surfaces; and error maps dominated by dark red and dark blue across the mountain, labeled RMSE 80.73, 69.46 and 50.38 m. The text box says the run was chosen because whole ridges are missed, not just the cliff bands.](images/lab10-example-map-scenario.png)
+
+**Figure 10.** The kind of second map Step 8 asks for. Yours needs only the error maps, and should
+be the run that most changes what a reader would conclude, which may not be this one.
+
+## Rubric for Interpolation Explorer
+
+Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
+what to submit.
 
 | Item | Points |
 | --- | --- |
-| Assignment Title, Name, Date, Course |  |
-| Brief report of the requirements of the project, what you learned, what worked well, and what you did differently, if anything, than the lab assignment. Describe the specific areas recommended for new wind farms. Do you agree with the results of the model, or did you find anything different from what you expected? | /10 |
-| One or more full pages (8.5 x 11) showing your model. Also, describe your model, including:<br>• List tool settings applied for the analysis (could someone repeat the assignment using your lab report?)<br>• List all input, intermediate, and output datasets<br>• Describe each input dataset, including type (point, line, polygon, raster) and the source of the data<br>• Describe each output dataset (point, line, polygon, raster)<br>• All text in the graphics is readable (10 pt. font minimum)<br>• All tools and datasets are shown | /10 |
-| Make a full page (8.5 x 11) map showing the results of the analysis.<br>• Map Title, Neat Line, North Arrow, Scale Bar<br>• Text box with author name, date, and map projection<br>• Suitable locations for new wind farms are clearly shown<br>• All datasets clearly symbolized<br>• Visible base map showing road data<br>• Data points showing existing wind farms<br>• Zoomed to an appropriate scale for viewing analysis results<br>• All text is legible on the printed map | /15<br><br>/15<br><br>(Analyze two counties in South Dakota and make two maps). |
-| **Total Points** | **/50** |
-
-<!-- Rubric total checked: 10 + 10 + 15 + 15 = 50, which matches the stated /50. The title row
-     carries no points, as in the original. -->
-
-<!-- TODO(instructor): The last rubric row awards 15 + 15 for "two maps" and its parenthetical says
-     "Analyze two counties in South Dakota and make two maps," but the Problem Statement asks for
-     two *collections* of counties (the six named ones, then a set the student chooses). Reconcile
-     the count. Point values and structure left unchanged. -->
-
-<!-- TODO(instructor): No rubric row covers the raster-specific work this lab is actually about —
-     the reclassification scheme, the choice and justification of weights, the environment settings,
-     or a weight-sensitivity comparison. Adding one would need point values reallocated, so nothing
-     was changed. -->
-
-## Credits
-
-This lab was originally created by Camden Greenhalgh, Sarah Fox, and Emma Stucki as part of a final
-project for BYU Civil Engineering 414, Fall 2021.
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 3 to 7, on the course's 2,500 points (2)<br>• Where the methods break: the largest error on your baseline's error map for the best method, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, on the course's 2,500 points, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The true DEM with the sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
+| **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
+| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
+| **Total** | **/50** |
 
 > [!NOTE]
 > **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
@@ -455,83 +651,16 @@ project for BYU Civil Engineering 414, Fall 2021.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Migration notes (2026-09-03): REDACTION (2026-09-03): lab10-weighted-sum-model.png had a file-path tooltip containing a student surname painted out; lab10-example-map.png had the three student author names in the map text block painted out (CRS and date lines kept). Model nodes and map content are otherwise unchanged.
-source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 9 - Wind Farm Site Selection.docx
-
-ArcGIS Pro version verified against: NOT VERIFIED in this migration. No ArcGIS Pro session was
-opened; every tool name, parameter, and field name below is as it appeared in the Word original or
-in its screenshots.
-
-images renamed from fig-NN:
-  fig-01 -> lab10-model-overview-preprocessing.png
-  fig-02 -> lab10-model-overview-weighted-sum.png
-  fig-03 -> lab10-sd-wind-speed-80m-map.png
-  fig-04 -> lab10-select-counties-model.png
-  fig-05 -> lab10-select-counties-dialog.png
-  fig-06 -> lab10-intersect-model.png
-  fig-07 -> lab10-intersect-roads-dialog.png
-  fig-08 -> lab10-buffer-model.png
-  fig-09 -> lab10-buffer-cities-dialog.png
-  fig-10 -> lab10-buffer-roads-dialog.png
-  fig-11 -> lab10-buffer-rivers-dialog.png
-  fig-12 -> lab10-buffer-windfarms-dialog.png
-  fig-13 -> lab10-polygon-to-raster-model.png
-  fig-14 -> lab10-polygon-to-raster-dialog.png
-  fig-15 -> lab10-clip-raster-model.png
-  fig-16 -> lab10-reclassify-model.png
-  fig-17 -> lab10-reclassify-cities-dialog.png
-  fig-18 -> lab10-reclassify-roads-dialog.png
-  fig-19 -> lab10-reclassify-rivers-dialog.png
-  fig-20 -> lab10-reclassify-windfarms-dialog.png
-  fig-21 -> lab10-reclassify-wind-speed-dialog.png
-  fig-22 -> lab10-weighted-sum-model.png
-  fig-23 -> lab10-weighted-sum-dialog.png
-  fig-24 -> lab10-final-steps-model.png
-  fig-25 -> lab10-get-raster-properties-dialog.png
-  fig-26 -> lab10-equal-to-dialog.png
-  fig-27 -> lab10-raster-to-point-dialog.png
-  fig-28 -> lab10-example-map.png
-No image was deleted; the text uses all 28. images/.gitkeep was removed.
-
-stale/unverified screenshots:
-  Figure 1 - illegible wide ModelBuilder canvas grab; needs re-export from ModelBuilder, not a
-    re-screenshot. Also carries stale node labels: "Cities 20mi Buffer" (text and Figure 9 say 30
-    miles), "Roads 2km Buffer" (text and Figure 10 say 2 miles), "Rivers 2mi Buffer" (Figure 11
-    shows 1 mile).
-  Figure 8 - same stale node labels for cities (20mi) and rivers (2mi).
-  Figure 13 - same stale node labels for cities (20mi) and rivers (2mi).
-  Figure 22 - a tooltip showing a personal file path
-    (C:\Fox-Pinkney\Final Project-414\...\South Dakota Wind Farm.gdb\Reclass_City1) is open over the
-    canvas; it should be dismissed before re-capture.
-  Figure 28 - 2021 student map; carries the original authors' names and a December 6, 2021 date,
-    shows areas rather than the required point locations, and its legend still lists "Bad
-    Locations". Kept because the note above it depends on those defects.
-  All dialog screenshots (Figures 5, 7, 9-12, 14, 17-21, 23, 25-27) are from an unidentified
-    ArcGIS Pro version and were not re-verified against a current release.
-
-TODO(instructor): study area southeastern vs. western South Dakota (2 spots); river buffer 1 mi vs.
-  2 mi (4 spots); hard exclusions not separated from weighted preferences; factor scores not
-  normalized; no weight-sensitivity comparison required; analysis CRS unspecified; snap raster,
-  extent, mask and resampling unspecified; cell size of 1 has no units or justification; wind data
-  30 m vs. 80 m; "main road" criterion vs. Local Roads dataset; 21-page procedure should be split
-  into a core brief plus an appendix; Figure 1 needs re-export; stale model node labels; rubric
-  "two counties" vs. "two collections of counties"; rubric has no row for the raster-specific work.
-
-VERIFY: county name field and values in Figure 5; OBJECTID as the Polygon to Raster value field in
-  Figure 14; whether Clip Raster uses the state or the county extent in Figure 15; the example
-  weights in Figure 23; how the Get Raster Properties output is wired into Equal To; and the four
-  data URLs noted in the Data section.
-
-dead/redirected links:
-  https://gis.sd.gov -> 200, redirects to
-    https://opendata2017-09-18t192802468z-sdbit.opendata.arcgis.com/
-  https://nationalmap.gov/ -> 200 with a browser user agent (403 without), redirects to
-    https://www.usgs.gov/programs/national-geospatial-program/national-map
-  https://eerscmap.usgs.gov/uswtdb/data/ -> 200, no redirect
-  https://wrdb.nrel.gov/ -> COULD NOT TEST. DNS in the migration environment does not resolve
-    nrel.gov at all (the apex domain fails too), so this is an environment limitation, not evidence
-    the link is dead. Retest from a normal network.
-  https://windexchange.energy.gov/maps-data/ -> 200, redirects to
-    https://www.energy.gov/cmei/systems/windexchange/maps-and-data
-No link was replaced with a guess.
--->
+<!-- Migration notes (draft 2026-10-06, promoted 2026-10-07).
+SOURCE: "Lab 9 - Practicing with Interpolation.docx" (instructor's copy in Downloads, saved 2026-10-06), whose September 3 migration is archived at docs/assignments/lab10-backup/README.md; rebuilt to tools/lab-conversion-guide.md per tools/labs-09-11-plan.md section 4 (accepted 2026-10-06) and tools/lab10/PARITY_PLAN.md.
+ARCGIS PRO: 3.7.1, arcpy (tools/lab10/run_model.py, extra_checks.py, chain_check.py, extent_check.py) and a GUI build on 2026-10-07 at 175 % (C:\Ames\Lab09GUI\Lab10.aprx, model InterpolationExplorer, set up by tools/lab10/gui_project.py; captures in caps\). Every check value reproduced in the GUI: first point, sample range, surface ranges, error table, ZSaT COUNT/AREA/MEAN and RMSE 28.29 / 20.71 / 14.46; a tool-dialog run at 250 points gave 80.73 / 69.46 / 50.38 (the oracle values) in 1 min 54 s; a full ModelBuilder run 1 min 34 s.
+GUI FACTS (2026-10-07): Snap Raster True_DEM breaks every tool-dialog run (ERROR 010654, the output True_DEM is the same as the snap raster) - environments are now Snap Raster DEM_UTM and Extent = YMountain_DEM.tif from the layer list (fills in degrees; Study_Area from the layer list also fills in degrees; browsing to True_DEM gives UTM but True_DEM is a model output); with these the surfaces cover all of DEM_UTM, so Kriging's minimum is 1,368.5 (outside the rectangle) while the RMSEs are unchanged. Create Variable > From Environment > Random Number Generator exposes the seed as a parameter (Random Seed). Semivariogram properties can be a parameter; after a run its dialog shows the fitted range/sill (10950 / 513125.9) but a 250-point dialog run still refit (50.38). Defaults that silently give wrong surfaces: Thiessen Output Fields Only feature ID; Polygon to Raster Value field OBJECTID; IDW and Kriging Z value field CID; Zonal Statistics as Table Statistics All; Calculate Field Field Type Text. Kriging writes one extra cell on each side of the extent. Project Raster proposes 9.06 m. The service arrives through its Hillshade raster function: 40,075,015 x 20,498,394 cells of 1 m, 747.13 TB, unsigned char 8 bit, WGS 1984 Web Mercator (auxiliary sphere) WKID 3857; Explore at the highest cell reads Service Pixel Value 154, item n41w112, LowPS 10.30736. Dialog runs delete DEM_UTM, True_DEM, Sample_Points and the three surfaces. Copying a Zonal Statistics + Calculate Field chain keeps the Calculate Field wired to its own table. The copied blank project pre-filled Output Coordinate System in the model environments (cleared) and carried Lab01.atbx and Lab01.gdb.
+DATA: docs/data/lab10-y-mountain.zip, 1,885,312 bytes: YMountain_DEM.tif (window -111.68 -111.57 40.20 40.27 of USGS_13_n41w112, published 2026-05-20, source dates 1946-2023; 1,188 x 756 float32, 1,368.03-2,896.92 m, no NoData) and Lab10.gdb\Study_Area (442,514.873-451,184.873 E, 4,450,507.050-4,457,497.050 N, on DEM_UTM's 30 m grid). Built by tools/lab10/fetch_dem.py, run_model.py, make_extract.py.
+VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 (at seed 1 / 2,500 points also without an Extent environment, but NOT in general: the pilot found IDW and Kriging at 250 points cover only 66,297 cells without Extent = True_DEM, RMSE 69.47 / 50.24 instead of 69.46 / 50.38; Extent now set in Step 0); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
+SENSITIVITY (do NOT publish): see tools/lab10/PARITY_PLAN.md. Points 250/1,000/2,500/10,000: Kriging 50.38/24.90/14.46/6.90; IDW power 1/2/3/5: 23.98/20.71/20.20/21.60; Kriging Gaussian 24.81, other models 14.46; checkpoints within 2-3 m of the full-grid RMSE, same ranking; seeds 2-5 never change the ranking.
+GRADING ORACLE: run_model.py --seed NNNN reproduces a student's own rows of the Step 8 table (baseline, IDW 1 / exponential, IDW 3 / Gaussian, plus the checkpoint RMSEs); the course rows are fixed (package_checks.json).
+SIMPLIFIED VERSION (2026-10-07): zip now carries Lab10.gdb\True_DEM and Sample_Points_250/_2500/_10000 (seed 1, CID dropped), 2,436,872 bytes, rebuilt by make_extract.py and reverified from the zip by verify_package.py (package_checks.json): 250 -> 80.73 / 69.46 / 50.38; 2,500 -> 28.29 / 20.71 / 14.46; 10,000 -> 15.71 / 10.39 / 6.90; Kriging surface min 1,368.7 with Extent = True_DEM. GUI build 2 (C:\Ames\Lab09GUI2\Lab10.aprx, set up by tools/lab10/gui_project2.py): 16 tools, 9 parameters; ModelBuilder run 7 s; dialog run on My_Sample_Points (seed 4321) 1 min 11 s gave 27.32 / 19.10 / 12.79 and IDW 3 + Gaussian (range/sill/nugget cleared) 18.54 / 25.45, both exactly the oracle. GUI facts: with hosted points IDW and Kriging fill RASTERVALU by themselves; Snap Raster and Extent can both be True_DEM (an input, so no ERROR 010654); choosing a map layer in a tool's list creates the model variable (renamed Sample Points); double-clicking True_DEM in Raster Calculator brings it in as a model variable and the expression becomes "%True_DEM%"; Kriging's Semivariogram range/sill/nugget stay empty after a run if cleared before it. Captures replaced: Figures 0, 3a, 4, 5, 6, 7b, 8a; new 8b, 8c; Figure C re-exported. Old-version captures dropped from the page: project raster, extract by mask, create random points, extract values (files deleted).
+PILOT 2 (no-GUI, simplified page, 2026-10-07, C:\Ames\Pilot09b\PILOT_NOTES.md): every number reproduced from the zip, including seed 4321 (baseline 27.32 / 19.10 / 12.79; checkpoints 28.98 / 18.49 / 12.70; IDW1+exponential 22.65 / 12.79; IDW3+Gaussian 18.54 / 25.45). Fixed: Gaussian question now reads the kept Error_Kriging, not the deleted surface; project named Lab10 and downloaded vs project geodatabase distinguished; 'steps 3 and 4' renamed to the tools; example maps renumbered 9-10; 'where the methods break' is the student's own baseline; Map 2 seed wording; checkpoint RMSEs get their own table row (matches template); alt text.
+PILOT (no-GUI, 2026-10-06, C:\Ames\Pilot09\PILOT_NOTES.md): every seed-1 number reproduced; checkpoint recipe works as written (seed 1: 30.38 / 23.16 / 17.12, deliberately not published). Fixed from its findings: Extent environment added (Step 0, Step 3 warning, Step 9 tip); Step 10 warning to finish Map 1 and the checkpoints before dialog runs; semivariogram parameter path spelled out; Map 2 deliverable matches its rubric row, true DEM optional; 'largest error' defined (best method, either direction) with a way to find it; True_DEM cell count without the wrong 289 x 233; citation question added to deliverables and rubric; Figure A names the three values; checkpoint output location; OBJECTID_1 zone field noted.
+LICENSE: the instructor confirmed 2026-10-07 that the lab machines have the same extensions as the build machine (Advanced, Spatial Analyst), so Create Thiessen Polygons is available.
+TODO(instructor): 1. A dialog run with Kriging Gaussian and the fitted range/sill left in (the page tells students to clear them). 2. Week 9 deck alignment. 3. Learning Suite due date November 7. OLD-PAGE IMAGES moved with the archive: lab10-example-modelbuilder-model.png, lab10-fixed-radius-interpolation-concept.png. -->

@@ -217,18 +217,18 @@ tools/templates/make_lab_report_template.js           the builder (LABS block at
 docs/assignments/lab-NN/labNN-report-template.docx    the artifact MkDocs serves
 ```
 
-Built so far: **Labs 1 to 8.** Run `node make_lab_report_template.js` with no argument to
+Built so far: **Labs 1 to 6 and 8 to 10** (renumbered October 8, 2026: Lab 7 is the new HAND lab, still to come). Run `node make_lab_report_template.js` with no argument to
 see which keys exist. After a change to the generic machinery, rebuild every lab so all templates
 stay identical in everything but content:
 
 ```bash
-for k in 01 02 03 04 05 06 07 08; do node tools/templates/make_lab_report_template.js $k; done
+for k in 01 02 03 04 05 06 08 09 10; do node tools/templates/make_lab_report_template.js $k; done
 ```
 
 LibreOffice is not installed on the Windows machine; render through Word instead (COM
 `SaveAs` with format 17 = PDF) and look at the pages.
 
-**Labs 9, 10 and 11 do not have templates yet, and should not until they are revised.**
+**Labs 7, 11 and 12 do not have templates yet, and should not until they are written or revised.**
 Their rubrics are still the Word-era ones — a handful of rows with no per-bullet point values, and
 in some cases no `## Deliverables` list to build sections from. The builder reads the rubric out of
 the lab page, so it would either find nothing or reproduce a rubric that does not match how the five

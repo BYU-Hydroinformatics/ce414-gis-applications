@@ -1,6 +1,5 @@
-r"""Zip the Y Mountain DEM (from fetch_dem.py) and the prepared Lab09.gdb (True_DEM, Study_Area and three
-sample-point sets, all from run_model.py at seed 1) with a READ-ME into docs/data/lab09-y-mountain.zip.
-ArcGIS Pro Python; run run_model.py first."""
+"""Zip the Big Southern Butte DEM (from fetch_dem.py) and the reference outline (from
+make_outline.py) with a READ-ME into docs/data/lab09-big-southern-butte.zip. ArcGIS Pro Python."""
 import os
 import shutil
 import zipfile
@@ -8,90 +7,70 @@ import zipfile
 import arcpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEM = r"C:\Ames\Lab09\Data\YMountain_DEM.tif"
-CHECK = r"C:\Ames\Lab09\Check.gdb"
-STAGE = r"C:\Ames\Lab09\Stage"
-OUT = os.path.join(HERE, "..", "..", "docs", "data", "lab09-y-mountain.zip")
-FOLDER = "lab09-y-mountain"
+DEM = r"C:\Ames\Lab08\Data\BigSouthernButte_DEM.tif"
+CHECK = r"C:\Ames\Lab08\Check.gdb"
+STAGE = r"C:\Ames\Lab08\Stage"
+OUT = os.path.join(HERE, "..", "..", "docs", "data", "lab09-big-southern-butte.zip")
+FOLDER = "lab09-big-southern-butte"
 
-README = """Y MOUNTAIN - prepared data for CE 414 Lab 9 (Interpolation Explorer)
-==================================================================
+README = """BIG SOUTHERN BUTTE - prepared data for CE 414 Lab 9 (Butte Volume)
+=================================================================
 
 WHAT
-  YMountain_DEM.tif - a bare-earth digital elevation model: one band of 32-bit floating-point
-  elevations in METERS above the North American Vertical Datum of 1988 (NAVD 88).
-  1,188 columns x 756 rows of 1/3 arc-second cells (about 10.3 m north-south and 7.9 m
+  BigSouthernButte_DEM.tif - a bare-earth digital elevation model: one band of 32-bit
+  floating-point elevations in METERS above the North American Vertical Datum of 1988 (NAVD 88).
+  3,024 columns x 1,836 rows of 1/3 arc-second cells (about 10.3 m north-south and 7.5 m
   east-west at this latitude). There are no NoData cells in the extract.
-  Elevations run from about 1,368 m (the valley floor in Provo) to about 2,897 m (the ridge
-  in the southeast corner).
+  Elevations run from about 1,500 m (the plain at the north edge) to about 2,307 m (the summit).
 
-  You do not need the .tif to build the model. It is the source everything in Lab09.gdb was made
-  from, kept so you can read its metadata (Lab 9, Figure A) and compare it with the web service
-  (Lab 9, Step 1).
-
-  Lab09.gdb / True_DEM - the DEM projected to NAD 1983 UTM Zone 12N with 30 m cells and cut to
-  the study rectangle: 67,337 cells, 1,368.5 to 2,896.5 m. This is "the truth" in Lab 9.
-
-  Lab09.gdb / Study_Area - one rectangle, 8.67 km x 6.99 km (60.6 square kilometers), in
-  NAD 1983 UTM Zone 12N, with its edges on the 30 m grid of True_DEM, so every cell inside it is
-  whole. It is the area the points sample and the area every error is measured over.
-
-  Lab09.gdb / Sample_Points_250, Sample_Points_2500, Sample_Points_10000 - random points inside
-  Study_Area (250, 2,500 and 10,000 of them), each carrying the True_DEM cell value under it in
-  the field RASTERVALU (meters). These are the samples you interpolate from.
-
-  Lab09.gdb / Checkpoints - 200 more random points inside Study_Area, drawn separately and never
-  used to interpolate. Lab 9, Step 8 tests each rebuilt surface at these points.
+  Lab09.gdb / Butte_Boundary - one polygon, the reference outline of the base of the butte
+  (28.03 square kilometers), in NAD 1983 UTM Zone 12N. It was derived from the DEM, not
+  digitized; see PROCESSING. Lab 9 asks you to draw your own outline as well and compare.
 
 WHERE
-  Provo, Utah County, Utah: the BYU campus and the valley floor in the west, the mountain front
-  with the block Y, Y Mountain and the mouth of Rock Canyon in the east.
-  111.68 W to 111.57 W, 40.20 N to 40.27 N.
+  A rectangle over Big Southern Butte on the eastern Snake River Plain, Butte County, Idaho:
+  113.17 W to 112.89 W, 43.32 N to 43.49 N. The butte is near the middle; the small raised
+  feature near the east edge is a separate landform and is not part of the lab.
   DEM coordinate system: GCS North American 1983 (latitude/longitude, decimal degrees), exactly
-  as the USGS distributes it. Everything in Lab09.gdb is in NAD 1983 UTM Zone 12N.
+  as the USGS distributes it. A volume needs meters in both the cell size and the elevations;
+  Lab 9, Step 1 projects it.
 
 WHEN
-  Source tile USGS_13_n41w112, "current" version, published 2026-05-20 (metadata title
-  "USGS 1/3 Arc Second n41w112 20260519"). The seamless 3DEP tiles are mosaics of source data;
-  the tile metadata gives source dates of 1946-2023 without saying which source covers Provo.
-  Cut for this course on 2026-10-06.
+  Source tiles USGS_13_n44w114 and USGS_13_n44w113, "current" versions, both published
+  2026-04-07 (metadata titles "USGS 1/3 Arc Second n44w114 20260407" and "... n44w113
+  20260407"). The seamless 3DEP tiles are mosaics of source data; the tile metadata gives source
+  dates of 1957-2024 for n44w114 and 2019-2024 for n44w113 without saying which source covers
+  the butte. Cut for this course on 2026-10-05.
 
 WHY / HOW
   The USGS 3D Elevation Program (3DEP) seamless 1/3 arc-second layer: "best available"
   elevation data of diverse origin, resampled to a common grid and datum. It is bare earth.
-  In Lab 9 it plays the part of the truth: you sample it, rebuild it from the samples, and
-  measure how far each rebuild is from it.
+  The butte straddles the 113 W tile edge, so the window comes from two tiles.
 
 WHO
   U.S. Geological Survey, The National Map. Public domain.
-  https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.tif
-  (metadata: the same address ending in .xml)
-  The same elevations are served live by the 3DEP elevation image service, which Lab 9, Step 1
-  looks at:
-  https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer
+  https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w114/USGS_13_n44w114.tif
+  https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w113/USGS_13_n44w113.tif
+  (metadata: the same addresses ending in .xml)
 
 PROCESSING
   DEM
-  1. Read the window above out of the cloud-optimized tile over HTTP with rasterio.
-  2. Wrote it unchanged - same cells, same values, same coordinate system - as a compressed
-     GeoTIFF. Nothing was filled, smoothed or resampled.
-  True_DEM and Study_Area
-  1. Project Raster: NAD 1983 UTM Zone 12N, bilinear resampling, 30 m cells (314 x 262 cells).
-     The thin wedges of NoData along its edges come from tilting a latitude/longitude rectangle.
-  2. Drew a rectangle well inside it, with its corners on that 30 m grid (Study_Area).
-  3. Extract by Mask with Study_Area gave True_DEM.
-  Sample points
-  4. Create Random Points inside Study_Area, Random Number Generator seed 1 (ACM collected
-     algorithm 599), 250, 2,500 and 10,000 points.
-  5. Extract Values to Points from True_DEM, which writes RASTERVALU; the CID field Create Random
-     Points adds was deleted.
-  Checkpoints
-  6. Create Random Points inside Study_Area, seed 99, 200 points; no values attached (CID deleted).
-  Scripts: tools/lab09/fetch_dem.py, run_model.py and make_extract.py in the course repo.
+  1. Read the window above out of each cloud-optimized tile over HTTP with rasterio.
+  2. Joined the two pieces edge to edge and wrote them unchanged - same cells, same values, same
+     coordinate system - as one compressed GeoTIFF. Nothing was filled, smoothed or resampled.
+  Butte_Boundary
+  1. Projected the DEM to NAD 1983 UTM Zone 12N at 10 m (bilinear).
+  2. Fitted a least-squares plane to the plain in a ring 4.5-8 km from the summit. The plain
+     falls about 5.4 m per kilometer toward the north.
+  3. Kept the connected cells standing more than 10 m above that plane around the summit,
+     filled holes, converted them to a polygon and smoothed it (PAEK, 200 m).
+  It is a reasonable base, not the only one: a 5 m threshold leaks out along lava flows to the
+  south; 20 m gives 24.6 square kilometers.
+  Scripts: tools/lab09/fetch_dem.py, make_outline.py and make_extract.py in the course repo.
 
 LICENSE
   U.S. government data, public domain. Credit line:
-  "Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 (May 2026)."
+  "Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tiles n44w114 and n44w113 (April 2026)."
 """
 
 arcpy.env.overwriteOutput = True
@@ -100,21 +79,11 @@ if os.path.exists(STAGE):
 os.makedirs(STAGE)
 arcpy.management.CreateFileGDB(STAGE, "Lab09.gdb")
 gdb = os.path.join(STAGE, "Lab09.gdb")
-arcpy.conversion.ExportFeatures(os.path.join(CHECK, "Study_Area"), os.path.join(gdb, "Study_Area"))
-arcpy.management.CopyRaster(os.path.join(CHECK, "True_DEM"), os.path.join(gdb, "True_DEM"))
-for n in (250, 2500, 10000):
-    out = os.path.join(gdb, f"Sample_Points_{n}")
-    arcpy.conversion.ExportFeatures(os.path.join(CHECK, f"Points_n{n}_s1"), out)
-    arcpy.management.DeleteField(out, "CID")
-    print(out, arcpy.management.GetCount(out)[0], [f.name for f in arcpy.ListFields(out)])
-out = os.path.join(gdb, "Checkpoints")
-arcpy.conversion.ExportFeatures(os.path.join(CHECK, "Checkpoints"), out)
-arcpy.management.DeleteField(out, "CID")
-print(out, arcpy.management.GetCount(out)[0], [f.name for f in arcpy.ListFields(out)])
+arcpy.conversion.ExportFeatures(os.path.join(CHECK, "Butte_Boundary"), os.path.join(gdb, "Butte_Boundary"))
 arcpy.management.ClearWorkspaceCache()
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with zipfile.ZipFile(OUT, "w", zipfile.ZIP_DEFLATED) as z:
-    z.write(DEM, f"{FOLDER}/YMountain_DEM.tif")
+    z.write(DEM, f"{FOLDER}/BigSouthernButte_DEM.tif")
     for f in sorted(os.listdir(gdb)):
         if not f.endswith(".lock"):
             z.write(os.path.join(gdb, f), f"{FOLDER}/Lab09.gdb/{f}")

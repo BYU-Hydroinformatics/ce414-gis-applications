@@ -218,21 +218,6 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 
 ---
 
-# Next: Lab 10 — Wind Farm Site Selection
-
-<!-- TODO(graphic): this slide needs a figure from the wind farm lab — a suitability
-     surface or the finished site map — once those captures exist. No image was added
-     rather than reusing one already shown earlier in the deck. -->
-
-- The lab applies this workflow end to end:
-  [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
-- Bring the vocabulary from today with you: **reclassify**, **overlay**, **cell size**,
-  **suitability surface**
-
-<!-- Short preview only. Read the lab handout before class so you can answer setup questions. -->
-
----
-
 # Before Next Class
 
 <!-- TODO(graphic): closing slide has no figure. Per this pass's rules no image was
@@ -240,11 +225,11 @@ Reference: [UCGIS Body of Knowledge — raster overlay](https://gistbok.ucgis.or
 
 - Reading: **Chapter 9** of *GIS Fundamentals* (Spatial Analysis)
 - Take **Quiz 9** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Finish [Lab 9 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm**
-- Start [Lab 10 — Wind Farm Site Selection](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- Finish [Lab 8 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/), due **Saturday 11:59 pm**
+- Start [Lab 9 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday of next week**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- TODO(instructor): this deck is too short to carry the wind farm suitability lab on its own. It stops at "combine the layers" and never covers the decisions the lab requires. Missing, in the order a student needs them:
+<!-- October 8, 2026: the Wind Farm lab this deck led into was retired (docs/assignments/windfarm-backup); the deck now stands alone as the suitability lecture, and the note below is kept for when it is next revised. TODO(instructor): this deck is too short to carry the wind farm suitability lab on its own. It stops at "combine the layers" and never covers the decisions the lab requires. Missing, in the order a student needs them:
   1. Hard constraints versus soft preferences — which criteria are pass/fail masks and which are scored on a range.
   2. Normalization and reclassification choices — how to get criteria measured in different units onto a common scale, and how the choice of class breaks changes the map.
   3. Weights as assumptions — stating a weight is stating a value judgment; it belongs in the write-up, not buried in a tool dialog.
@@ -269,7 +254,7 @@ Five decisions from today's workflow: criteria, **reclassify**, overlay, and rea
 
 - Not graded, nothing recorded — a check that today landed
 - Every answer explains itself; read it before you move on
-- These are the decisions Lab 10 makes you write down
+- These are the decisions every suitability model makes you write down
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/suitability/</span>
 

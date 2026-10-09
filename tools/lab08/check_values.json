@@ -1,164 +1,147 @@
 {
- "seed_reproducible": true,
- "first_point": [
-  337632.58,
-  4806349.71
- ],
- "baseline_points_kept": 560,
- "baseline": {
-  "volume_km3": 5.145,
-  "cells": 280311,
-  "max_height_m": 729.1,
-  "neg_cells": 53,
-  "neg_volume_km3": -0.0
+ "dem": {
+  "min": 2177.97705078125,
+  "max": 3499.4345703125,
+  "cols": 1023,
+  "rows": 896,
+  "cell": 10.0
  },
- "outline_km2": 28.03,
- "butte_dem_max_m": 2306.8,
- "methods": {
-  "IDW": {
-   "volume_km3": 5.145,
-   "cells": 280311,
-   "max_height_m": 729.1,
-   "neg_cells": 53,
-   "neg_volume_km3": -0.0
-  },
-  "Natural Neighbor": {
-   "volume_km3": 5.0292,
-   "cells": 280311,
-   "max_height_m": 731.6,
-   "neg_cells": 0,
-   "neg_volume_km3": 0.0
-  },
-  "Spline": {
-   "volume_km3": 4.4811,
-   "cells": 280311,
-   "max_height_m": 664.9,
-   "neg_cells": 11963,
-   "neg_volume_km3": -0.0089
-  },
-  "Kriging": {
-   "volume_km3": 4.988,
-   "cells": 280311,
-   "max_height_m": 722.1,
-   "neg_cells": 210,
-   "neg_volume_km3": -0.0
-  },
-  "Trend (plane)": {
-   "volume_km3": 5.3117,
-   "cells": 280311,
-   "max_height_m": 742.1,
-   "neg_cells": 0,
-   "neg_volume_km3": 0.0
-  }
+ "snowbird_km2": 10.781,
+ "slope_max": 77.81876373291016,
+ "slope_classes": {
+  "0": 0.0,
+  "1": 4.985,
+  "2": 1.667,
+  "3": 0.793,
+  "4": 1.289,
+  "5": 2.047
  },
- "counts": {
-  "250": {
-   "kept": 146,
-   "volume_km3": 5.2288,
-   "cells": 280311,
-   "max_height_m": 735.7,
-   "neg_cells": 0,
-   "neg_volume_km3": 0.0
-  },
-  "500": {
-   "kept": 274,
-   "volume_km3": 5.1992,
-   "cells": 280311,
-   "max_height_m": 730.3,
-   "neg_cells": 13,
-   "neg_volume_km3": -0.0
-  },
-  "2000": {
-   "kept": 1136,
-   "volume_km3": 5.1026,
-   "cells": 280311,
-   "max_height_m": 725.1,
-   "neg_cells": 91,
-   "neg_volume_km3": -0.0
-  },
-  "4000": {
-   "kept": 2302,
-   "volume_km3": 5.0617,
-   "cells": 280311,
-   "max_height_m": 722.9,
-   "neg_cells": 18,
-   "neg_volume_km3": -0.0
-  }
+ "aspect_classes": {
+  "0": 0.0,
+  "1": 0.571,
+  "2": 2.053,
+  "3": 2.768,
+  "4": 3.492,
+  "5": 1.896
  },
- "seeds": {
-  "2": {
-   "kept": 567,
-   "volume_km3": 5.1478,
-   "cells": 280311,
-   "max_height_m": 724.4,
-   "neg_cells": 8,
-   "neg_volume_km3": -0.0
+ "runs": {
+  "0": {
+   "alt_classes": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.172,
+    "3": 1.635,
+    "4": 1.527,
+    "5": 7.448
+   },
+   "agree_classes": {
+    "0": 10.345,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.01,
+    "4": 0.09,
+    "5": 0.336
+   },
+   "combined_classes": {
+    "0": 0.0,
+    "1": 0.167,
+    "2": 3.162,
+    "3": 3.692,
+    "4": 2.673,
+    "5": 1.087
+   },
+   "product_min": 1,
+   "product_max": 125,
+   "product_values": 30
   },
-  "3": {
-   "kept": 582,
-   "volume_km3": 5.1614,
-   "cells": 280311,
-   "max_height_m": 731.2,
-   "neg_cells": 0,
-   "neg_volume_km3": 0.0
+  "-400": {
+   "alt_classes": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.172,
+    "5": 10.61
+   },
+   "agree_classes": {
+    "0": 10.366,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.415
+   },
+   "combined_classes": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 2.658,
+    "3": 4.148,
+    "4": 2.648,
+    "5": 1.328
+   },
+   "product_min": 3,
+   "product_max": 125,
+   "product_values": 28
   },
-  "4": {
-   "kept": 587,
-   "volume_km3": 5.1559,
-   "cells": 280311,
-   "max_height_m": 727.4,
-   "neg_cells": 83,
-   "neg_volume_km3": -0.0
-  },
-  "5": {
-   "kept": 581,
-   "volume_km3": 5.1464,
-   "cells": 280311,
-   "max_height_m": 725.6,
-   "neg_cells": 5,
-   "neg_volume_km3": -0.0
-  },
-  "6": {
-   "kept": 569,
-   "volume_km3": 5.1463,
-   "cells": 280311,
-   "max_height_m": 727.1,
-   "neg_cells": 2,
-   "neg_volume_km3": -0.0
-  }
- },
- "outline": {
   "-200": {
-   "volume_km3": 4.8462,
-   "cells": 240415,
-   "max_height_m": 716.0,
-   "neg_cells": 89,
-   "neg_volume_km3": -0.0,
-   "area_km2": 24.043
-  },
-  "-100": {
-   "volume_km3": 5.008,
-   "cells": 259889,
-   "max_height_m": 723.5,
-   "neg_cells": 10,
-   "neg_volume_km3": -0.0,
-   "area_km2": 25.99
-  },
-  "100": {
-   "volume_km3": 5.2357,
-   "cells": 301333,
-   "max_height_m": 730.0,
-   "neg_cells": 323,
-   "neg_volume_km3": -0.0,
-   "area_km2": 30.133
+   "alt_classes": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.172,
+    "4": 1.635,
+    "5": 8.974
+   },
+   "agree_classes": {
+    "0": 10.342,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.001,
+    "4": 0.033,
+    "5": 0.406
+   },
+   "combined_classes": {
+    "0": 0.0,
+    "1": 0.044,
+    "2": 2.656,
+    "3": 4.144,
+    "4": 2.648,
+    "5": 1.288
+   },
+   "product_min": 2,
+   "product_max": 125,
+   "product_values": 29
   },
   "200": {
-   "volume_km3": 5.3216,
-   "cells": 322745,
-   "max_height_m": 735.5,
-   "neg_cells": 2478,
-   "neg_volume_km3": -0.0002,
-   "area_km2": 32.274
+   "alt_classes": {
+    "0": 0.0,
+    "1": 0.172,
+    "2": 1.635,
+    "3": 1.527,
+    "4": 2.848,
+    "5": 4.599
+   },
+   "agree_classes": {
+    "0": 10.335,
+    "1": 0.044,
+    "2": 0.022,
+    "3": 0.04,
+    "4": 0.082,
+    "5": 0.258
+   },
+   "combined_classes": {
+    "0": 0.0,
+    "1": 0.252,
+    "2": 3.487,
+    "3": 3.726,
+    "4": 2.516,
+    "5": 0.8
+   },
+   "product_min": 1,
+   "product_max": 125,
+   "product_values": 30
   }
- }
+ },
+ "flat_cells_total": 480,
+ "seconds": 51.0
 }

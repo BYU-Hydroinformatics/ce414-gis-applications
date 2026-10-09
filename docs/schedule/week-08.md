@@ -29,9 +29,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 7 — Avalanche Hazard](../assignments/lab-07/README.md)
-
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+*No lab this week.*
 
 </div>
 

@@ -23,7 +23,9 @@ Tuesday is a final-project work day with your partner; Thursday is Thanksgiving,
 
 ## :material-flask: Lab Assignment
 
-*No lab this week.*
+[Lab 11 — Least Cost Path Power Line Analysis](../assignments/lab-11/README.md)
+
+Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 </div>
 

@@ -1,100 +1,80 @@
-# Lab 8 (Big Southern Butte) — parity plan
+# Lab 8 (Avalanche Hazard) — parity plan
 
-Written October 5, 2026, to bring Lab 8 to the standard of Labs 1–7 (`tools/lab-conversion-guide.md`).
-The live page `docs/assignments/lab-08/README.md` is untouched; the rebuild is
-`docs/assignments/lab-08/draft.md` (search-excluded, not linked). **Nothing here is promoted until
-Dan decides the items marked DECISION.** Lab 8 is due Saturday of Week 9 (October 31).
+Written October 2, 2026, while Dan was away, to bring Lab 8 to the standard of Labs 1–6
+(`tools/lab-conversion-guide.md`). The live page `docs/assignments/lab-08/README.md` is untouched;
+the rebuild is `docs/assignments/lab-08/draft.md` (search-excluded, not linked). **Nothing here is
+promoted until Dan decides the items marked DECISION.** Lab 8 is due Saturday of Week 8
+(October 24); the draft is meant to be reviewed before Tuesday, October 20.
 
 ## Gap table
 
-| Element (Labs 1–7) | Lab 8 now | Draft |
+| Element (Labs 1–6) | Lab 8 now | Draft |
 | --- | --- | --- |
-| One study area | Big Southern Butte **plus a second feature in a DEM of the student's choosing** (15 points) | Big Southern Butte only (DECISION 1) |
-| Two maps, baseline + one scenario | Two maps, but the second is the second DEM | Baseline + one Step 9 scenario (DECISION 1) |
-| Hosted data with READ-ME and metadata questions | "Download from The National Map or Inside Idaho" (no URL) | `docs/data/lab08-big-southern-butte.zip` (10.4 MB): 1/3″ DEM cut from tiles n44w114 + n44w113 (the butte straddles 113° W), and a reference `Butte_Boundary`; Figure A owed |
-| Reproducible check values | "between 3.0 and 6.0 km³ depending on your polygon" | A hosted outline (DECISION 2) and a fixed random seed (DECISION 3) make every step checkable |
-| Projected coordinate system named | NAD 1983 UTM 12N at 30 m | UTM 12N at **10 m**, bilinear (DECISION 5) |
-| A parameter and a sensitivity step | None (a TODO asks for one) | Number of points and the outline as parameters, plus one interpolation swap (DECISION 4) |
-| Rubric five parts of ten | 5 + 10 + 5 + 15 + 15, with an SQL-threshold item from another lab | Five parts of ten (DECISION 6) |
-| Report template | None | To build with `make_lab_report_template.js 08` after the decisions |
-| GUI build and captures | Word-era captures, a pre-renumbering geodatabase name, an illegible model overview | Owed (Step figures marked TODO(capture)) |
+| One study area | Snowbird **plus a second resort of the student's choosing** (required) | Snowbird only (DECISION 1) |
+| Two maps, baseline + one scenario | Three maps (Con method, multiply method, second resort) | Two maps (DECISION 2) |
+| Hosted data with READ-ME and metadata questions | Students download NED from a dead UGRC page | `docs/data/lab08-little-cottonwood-dem.zip` (2.4 MB, USGS 1/3″ tile n41w112) + UGRC ski-area boundaries as a live layer; Figure A owed |
+| Projected coordinate system named | "Project Raster to the NAD 1983 projection" (a datum, not a projection) | NAD 1983 UTM zone 12N, 10 m, bilinear (as Lab 5) |
+| Check values in every step | None | Every step (below) |
+| A parameter and a sensitivity step | None; "divide 0–125 into five categories" with no breaks | Elevation-band shift as a model parameter + three combination rules (DECISION 3, 4) |
+| Where the method breaks | A hint question | Its own deliverable: snowpack, weather, wind loading, triggering; vegetation and terrain traps; the DEM's ground surface |
+| Rubric five parts of ten | 5 + 10 + 5 + 30, plus a "/50 self-assessment" row | Five parts of ten (DECISION 5) |
+| Report template | None | To build with `tools/templates/make_lab_report_template.js` after the decisions |
+| GUI build and captures | Word-era screenshots from two model versions | Owed (Step figures marked TODO(capture)) |
 
 ## Decisions for Dan — all accepted as recommended, October 5, 2026; page promoted
 
-1. **Drop Part 2** (the second DEM of the student's choosing). The conversion guide says no
-   required second study area, and Part 2 is unbounded (any DEM, any feature, any volume) and
-   ungradable against a check value. The sensitivity step replaces it; the "reuse the tool" idea
-   survives as the student-drawn outline run, which goes through the same tool dialog.
-2. **Host a reference outline.** `Butte_Boundary` (28.03 km²) is derived from the DEM, not
-   digitized: a least-squares plane fitted to the plain 4.5–8 km from the summit (it falls 5.4 m per
-   km to the north, which is what the old Figure 2 caption says), cells more than 10 m above it,
-   connected to the summit, holes filled, smoothed (`make_outline.py`; the READ-ME explains it).
-   Students still digitize their own outline in Step 9 and compare — the handout's own Spatial
-   Considerations say the outline is the biggest source of difference, and now they measure it.
-   Alternative: no hosted outline (every volume different, no check values past Step 1).
-3. **Fix the random seed.** Create Random Points honors the Random number generator environment (listed in its tool reference). With seed 1
-   (ACM599) the reference run's points are identical run to run (`run_model.py` tests it), so the
-   page can quote 560 points kept and 5.145 km³. **Verify in the GUI** that the model-level
-   environment gives the same first point (337,632.6 E, 4,806,349.7 N).
-4. **Sensitivity design.** Parameters: the number of points and the outline. Runs: 250 and 4,000
-   points, the student's own outline, and one copy of the model with **Spline** in place of IDW
-   (ties to the Week 8 interpolation deck, and Spline overshoots: 11,963 cells come out below the
-   plain). Measured spread (km³): method 4.48–5.31; outline ±200 m 4.85–5.32; points 250–4,000
-   5.06–5.23; seed (1,000 points, six seeds) 5.145–5.161. The TIP hints that the random part matters
-   least.
-5. **10 m cells**, not 30 m: the DEM is 1/3″ (about 10 m north–south), the Lab 5 and Lab 7 pattern,
-   and the 30 × 30 in the old expression becomes 10 × 10. Run time is a few seconds per tool.
-6. **Rubric**: five parts of ten as Lab 7. The SQL-threshold sub-item (from another lab) becomes
-   "the number of points and the outline exposed as parameters".
-7. **Background**: the uncited "one of the largest volcanic domes on Earth (U.S. Department of the
-   Interior, 2012)" and the dead BLM flyer are replaced by the USGS Yellowstone Volcano Observatory
-   article "The Big Buttes of the Eastern Snake River Plain" (December 4, 2023): two coalesced
-   rhyolite lobes, about 300,000 years old, about 760 m tall, among the largest rhyolite domes in the
-   world. Godchaux et al. (1992) is about the *western* plain's phreatomagmatic volcanoes and is
-   dropped; Greeley (1982) and Hughes et al. (1999) stay.
-8. **The old 3.0–6.0 km³ range** is replaced by the check value. Wikipedia quotes about 8 km³ for the
-   combined domes, unsourced; the draft does not cite it, but Step 9's third question asks what the
-   model's number measures (volume above an interpolated plain, not the volume of the dome).
+1. **Drop the second ski area** (the conversion guide says no required second study area). The
+   draft drops it; the sensitivity step replaces it.
+2. **Two maps.** The "all three agree" Con method becomes a step with a check value and a report
+   question (it leaves 96 % of Snowbird unclassified), not a map.
+3. **How to turn the 1–125 product into five classes.** The handout says only "divide the ranges
+   0–125 into five categories". The draft takes the **cube root of the product** (the geometric
+   mean of the three classes) and rounds it: products 1–3 Low, 4–15 Moderate, 16–42 Considerable,
+   43–91 High, 92–125 Extreme. It keeps the handout's point (5, 5, 4 → 100 → Extreme) and is one
+   Raster Calculator expression. Alternatives: equal intervals of 25 (puts 5,5,4 in Extreme too, but
+   5,5,1 = 25 in Low); natural breaks (not checkable).
+4. **The sensitivity design.** Two things move: (a) a model parameter, **Elevation shift**, that
+   moves all four altitude breaks (an advisory's bands change with the storm and the season), and
+   (b) two more combination rules computed in the same run with **Cell Statistics** — the worst
+   factor (maximum) and the best factor (minimum). Finding: at Snowbird the altitude bands barely
+   matter (69 % of the area is above 2,800 m) while the combination rule changes Extreme from 3 % to
+   76 % of the area. The TIP hints at the first without giving away the second.
+5. **Wording.** The draft calls the output **terrain-based avalanche hazard screening** and says
+   in Background what it is not (no snowpack, weather, wind or trigger). The title stays "Lab 8:
+   Avalanche Hazard" so the schedule and Learning Suite links still read right. Rename if you want.
+6. **Table 1 stays as the handout has it** (from a Sawtooth Avalanche Center advisory), with one
+   correction: slope's Low band starts at 0, not −1 (−1 is the Aspect tool's flat code). The aspect
+   row keeps −1 in Extreme as written, and the draft points out what that does to flat cells
+   (nothing much: flat cells are slope class 1).
+7. **References**: the uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002"
+   are replaced by sources checked October 2, 2026: CAIC (27 US avalanche deaths per winter over
+   the last 10 winters) and avalanche.org's encyclopedia (slope angle; aspect). Dead Sawtooth link
+   replaced by the site root.
 
-## Measured (ArcGIS Pro 3.7.1 arcpy, October 5, 2026)
+## Measured (ArcGIS Pro 3.7.1 arcpy, `run_model.py` and `tool_checks.py`, October 2, 2026)
 
-`run_model.py` → `check_values.json`; `step_checks.py` → `step_checks.json`.
+- Extract: 1,296 × 864 cells of 1/3″, 2,176.4–3,500.5 m, no NoData.
+- Project Raster (UTM 12N, bilinear, 10 m): 1,023 × 896 cells, 2,178.0–3,499.4 m.
+- Slope max 77.8°. Aspect flat cells (−1): 480 in the whole extent.
+- Snowbird (UGRC SkiAreaBoundaries, OBJECTID 13): 10.781 km² by Tabulate Area at 10 m.
+  (UGRC's Shape__Area, 18.7 km², is Web Mercator: divide by about 1.73 at this latitude.)
+- Snowbird by class (km²), shift 0, measured as students will (Tabulate Area against the live
+  Web Mercator layer; `student_route_checks.json` — the page uses these):
 
-- Extract: 3,024 × 1,836 cells of 1/3″, 1,499.8–2,307.1 m, no NoData.
-- Project Raster (UTM 12N, bilinear, 10 m): 2,314 × 1,944 cells, 1,499.8–2,306.8 m.
-- Butte_Boundary 28.030 km²; Points_Boundary (Buffer 1,500 m) 65.411 km².
-- Create Random Points, 1,000, seed 1: RASTERVALU 1,531.2–2,277.2 m; Erase leaves **560**
-  (1,531.2–1,597.0 m, mean 1,559.4).
-- IDW (power 2, variable 12, 10 m): inside the outline the plain runs 1,547.1–1,585.9 m.
-- Extract by Mask: 280,311 cells (= 28.03 km²). DEM inside 1,554.8–2,306.8 m.
-- Height above the plain: −0.5 to 729.1 m, mean 183.5 m; 53 cells below zero.
-- Zonal Statistics SUM: **5.145 km³** (same with the default processing extent).
+| Classes | 1 | 2 | 3 | 4 | 5 |
+| --- | --- | --- | --- | --- | --- |
+| Altitude | 0 | 0.172 | 1.638 | 1.527 | 7.445 |
+| Slope | 4.986 | 1.667 | 0.794 | 1.289 | 2.047 |
+| Aspect | 0.571 | 2.054 | 2.768 | 3.493 | 1.896 |
+| All three agree (0 = not classified: 10.346) | 0 | 0 | 0.010 | 0.090 | 0.336 |
+| Geometric mean (baseline) | 0.168 | 3.162 | 3.691 | 2.673 | 1.087 |
+| Worst factor (maximum) | 0 | 0.082 | 0.758 | 1.738 | 8.203 |
+| Best factor (minimum) | 5.116 | 2.363 | 1.663 | 1.303 | 0.336 |
 
-| Run | Volume (km³) | Cells below the plain |
-| --- | --- | --- |
-| Baseline (IDW, 1,000 points, seed 1) | 5.145 | 53 |
-| Natural Neighbor | 5.029 | 0 |
-| Spline (regularized, 0.1, 12) | 4.481 | 11,963 |
-| Kriging (ordinary, spherical) | 4.988 | 210 |
-| Trend (first-order plane) | 5.312 | 0 |
-| 250 points (146 kept) | 5.229 | 0 |
-| 500 points (274 kept) | 5.199 | 13 |
-| 2,000 points (1,136 kept) | 5.103 | 91 |
-| 4,000 points (2,302 kept) | 5.062 | 18 |
-| Seeds 2–6 (1,000 points) | 5.146–5.161 | 0–83 |
-| Outline −200 / −100 / +100 / +200 m | 4.846 / 5.008 / 5.236 / 5.322 | |
+  Rule_Spread (worst − best) 0–4: 0.436 / 1.559 / 2.547 / 2.931 / 3.309. (`check_values.json`
+  and `tool_checks.json` used the boundary projected first and differ in the third decimal.)
 
-**Extent caveat.** All runs use the default processing extent, as a student's will. IDW gives the
-same answer with the extent set to `Points_Boundary`, but Spline does not (4.428 km³, 12,449 cells
-below the plain): it partitions its extent into regions, so its result depends on the extent. The
-spline numbers a student gets will only match if they leave Processing Extent at its default.
-
-## Still owed
-
-1. DONE October 5: all decisions accepted; draft promoted (old page at docs/assignments/lab08-backup/).
-2. GUI build in ArcGIS Pro 3.7.1 at 175 %: captures for every step, Figure C (Export To Graphic),
-   confirm the seed environment and the tool-dialog run.
-3. Figure A (metadata infographic) and tool icons (`make_svgs.py`, the Lab 7 pattern); example
-   maps (`build_figures.py`).
-4. DONE October 5: no-GUI pilot — every check value reproduced; text fixes applied (see the draft's notes).
-5. DONE October 5: report template (`make_lab_report_template.js 08`) and promotion.
+- Sensitivity, geometric mean, High + Extreme (km²): −400 m 3.976; −200 m 3.936; 0 3.760;
+  +200 m 3.316; +400 m 2.465. Maximum rule Extreme: 10.613, 9.152, 8.205, 6.415, 4.289.
+  Minimum rule Extreme: 0.415, 0.406, 0.336, 0.258, 0.126. (Do not publish; the TIP hints.)
+- Run time of the whole reference run: 51 s.

@@ -26,7 +26,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 10 — Wind Farm Site Selection](../assignments/lab-10/README.md)
+[Lab 9 — Big Southern Butte](../assignments/lab-09/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 

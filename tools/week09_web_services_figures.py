@@ -410,7 +410,7 @@ print("Sentinel-2 TCI", sds.RasterXSize, sds.GetMetadata("IMAGE_STRUCTURE"), "fi
 
 # ---------------------------------------------------------------- bytes moved
 fig, ax = plt.subplots(figsize=(10, 3.6))
-rows = [("3DEP 1/3″ tile n41w112\nwhole file (Lab 7 source)", tnm_size, "#9aa5b1"),
+rows = [("3DEP 1/3″ tile n41w112\nwhole file (Lab 8 source)", tnm_size, "#9aa5b1"),
         ("3DEP tile\n100 × 100-cell window", tnm_bytes, BLUE),
         ("Sentinel-2 true color\nwhole file", s2_size, "#9aa5b1"),
         ("Sentinel-2\nBYU window", s2_bytes, BLUE)]

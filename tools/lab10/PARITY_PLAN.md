@@ -1,230 +1,166 @@
-# Lab 10 (Wind Farm Site Selection) — parity plan
+# Lab 10 (Interpolation Explorer) — parity plan
 
-Written October 8, 2026, to bring Lab 10 to the standard of Labs 1–9 (`tools/lab-conversion-guide.md`).
+Written October 6, 2026, to bring Lab 10 to the standard of Labs 1–8 (`tools/lab-conversion-guide.md`).
 The overall plan for Labs 9–11 is `tools/labs-09-11-plan.md`; the instructor accepted every
-recommendation in it on October 6, 2026, including the Lab 10 design in its section 5 and the
-integrity measures in its section 8. The live page `docs/assignments/lab-10/README.md` is untouched;
-the rebuild will be `docs/assignments/lab-10/draft.md` (search-excluded, not linked). **Nothing below
-the decisions list gets built until the instructor answers it.**
+recommendation in it on October 6, 2026, including the Lab 10 redesign in its section 4. The live page
+`docs/assignments/lab-10/README.md` is untouched; the rebuild is `docs/assignments/lab-10/draft.md`
+(search-excluded, not linked). Lab 10 is introduced Tuesday of Week 9 and due Saturday of Week 10
+(November 7).
 
-**Calendar.** Lab 10 is introduced **Tuesday, November 3 (Week 10)** and due **Saturday, November 14**.
-Target: promoted, GUI-built and templated by **Tuesday, October 27**.
+**Source.** `Lab 9 - Practicing with Interpolation.docx` (instructor's copy in Downloads, saved
+October 6, 2026). The September 3 migration on the live page matches it step for step; its four media
+files are the two figures plus two header logos.
 
-**Source.** `Lab 9 - Wind Farm Site Selection.docx` (Word-era numbering), migrated September 3, 2026;
-the live page matches it step for step and uses all 28 of its figures. Created by three students as a
-Fall 2021 CE 414 final project (credit kept).
-
-**What the current page is.** A faithful, unverified migration: 537 lines, 20 TODO/VERIFY comments, 28
-captures from an unidentified ArcGIS Pro version, a 2021 student example map, and a rubric of
-10 + 10 + 15 + 15. Its model is five Select/Intersect → Buffer → Polygon to Raster → Reclassify (0/1)
-chains, a Weighted Sum with raw weights 7/6/4/3/2, and Get Raster Properties → Equal To → Raster to
-Point for the single best cell. It asks for the analysis twice ("then for a collection of counties
-you select").
+**Instructor's intent (October 6).** Lab 9 uses interpolation only to rebuild the plain under Big
+Southern Butte. Lab 10 is where students *explore* interpolation: sample a known surface, rebuild it
+with several methods and parameter settings, compare each rebuild with the truth, and learn how each
+method behaves. The revision keeps that design and gives it the course spine.
 
 ## Gap table
 
-| Element (Labs 4–9) | Lab 10 now | Plan |
+| Element (Labs 1–8) | Lab 10 now | Draft |
 | --- | --- | --- |
-| One study area | Six southeastern counties, then "western South Dakota" in the next section, then "counties you select" | The six counties only: Minnehaha, Moody, Lake, McCook, Turner, Lincoln (9,535.5 km², measured) |
-| Hosted data, READ-ME, metadata questions | Five gis.sd.gov searches, an NHD "data downloader", a wind source that is a JPG to georeference and digitize | `docs/data/lab10-southeast-sd.zip` (estimated under 10 MB) with every layer the model needs; Figure A metadata card for the turbine database |
-| A live source varied deliberately | None | Step 1 opens the live USGS wind turbine database (download or viewer) and compares it with the frozen extract |
-| Coordinate system and raster environments | None stated; "Cell Size 1" with no units; snap, extent and mask never set | NAD 1983 UTM Zone 14N (WKID 26914), 100 m cells, snap raster = the hosted wind raster, extent = study area, **mask left empty for the distance tools** (measured trap, below) |
-| Check values in every step | None | Measured below: cell counts, distance maxima, cells excluded per criterion, open area, top score and its location |
-| One model, parameters exposed | 25 tools in five parallel chains; nothing exposed | About 16 tools: Select ×2, Distance Accumulation ×4, Raster Calculator (mask), Rescale by Function ×3, Weighted Sum, Set Null, Zonal Statistics + Equal To + Raster to Point. Parameters: three exclusion values and the weight table |
-| Exclusions vs preferences | All five criteria flattened to 0/1 and weighted, so an excluded cell can still score high | Exclusions → one 0/1 mask applied once; preferences → common 1–10 scores combined with weights summing to 1 |
-| Sensitivity step with table and three questions | None ("do it again for other counties") | Step 10: course weights, own weights, wind-first, infrastructure-first, the AI's weights, 10-mile spacing, and a personal weight run |
-| "Where the method breaks" | "Do you agree with the results of the model?" | The top site as measured is 54 m from a town boundary (below); students must find and explain what the score does not measure |
-| Defaults traps as WARNING boxes | None | Five measured or known (below) |
-| Rubric five parts of ten | 10 + 10 + 15 + 15, "two maps" for two county sets, no row for the raster work | Five parts of ten; sensitivity row carries the AI-weights bullet |
-| Deliverables list, peer review, `.atbx` | None | As Lab 9: two maps, report list matching the rubric item for item, peer-review box, toolbox upload |
-| Icons, Figure C, example maps | None | Icons for Distance Accumulation, Rescale by Function, Weighted Sum; Figure C SVG; two `arcpy.mp` layouts |
-| Report template | None | `LABS['10']` in `tools/templates/make_lab_report_template.js` |
-| GUI build and captures | 28 Word-era captures with stale labels (Cities 20mi, Roads 2km, Rivers 2mi), one with a student's path | All replaced by a GUI build at 175 % |
-| Individual work | "one student team's judgment" | Individual |
-| Extra credit for skipping the steps | Promised in Complete the Lab | Removed (guide section 2) |
+| One study area | Y Mountain **plus a second DEM of the student's choosing** (15 points) | Y Mountain only; the "model works on any DEM" idea survives in the personal-seed run through the tool dialog |
+| Hosted data, READ-ME, metadata questions | "Download a DEM that covers Y Mountain" (no source) | `docs/data/lab10-y-mountain.zip` (1.9 MB): 1/3″ DEM from tile n41w112 + `Lab10.gdb\Study_Area`; Figure A metadata card |
+| A live source deliberately varied in | None | Step 1 adds the USGS 3DEP elevation **image service** and asks what came back (Week 9 tie-in) |
+| Reproducible check values | None ("draw a box") | Hosted study rectangle on the 30 m grid + fixed seed 1: every step has a number |
+| Coordinate system | "UTM NAD 83 Zone 12 North", 30 m | NAD 1983 UTM Zone 12N, 30 m, bilinear (kept) |
+| One model, parameters exposed | Seven interpolation tools, seven difference chains, input DEM as the only planned parameter | Three methods (Thiessen, IDW, Kriging), each carried through to RMSE; parameters: number of points, IDW power, Kriging semivariogram |
+| Sensitivity step with table and three questions | "Choose different values" inside the model (six variants) | Step 10: a personal-seed baseline and four tool-dialog runs, one table, three questions, 200 checkpoints |
+| RMSE described correctly | "squaring your errors, summing them, and taking the square root" (omits the mean) | Mean of the squared errors, then the root; Zonal Statistics as Table + Calculate Field |
+| "Where the method breaks" | "Which method worked best and why?" | Where on the mountain the errors are largest, with coordinates from the student's own error map |
+| Rubric five parts of ten | 0 + 5 + 10 + 5 + 15 + 15 | Five parts of ten |
+| Individual work | Partners allowed | Individual (plan section 4) |
+| Report template | None | `make_lab_report_template.js 09` after review |
+| GUI build and captures | Word-era Figure 2 (Thiessen branch only) | **Owed**: desktop control denied October 6; every dialog figure is a `TODO(capture)` |
+| Figure 1 | Bolstad 6th ed. figure, reproduced | Replaced by Figure B, a measured profile across the mountain front (`make_svgs.py`); Bolstad cited, not copied |
 
-## Decisions for the instructor (short)
+## Design decisions made in the draft (flag if you disagree)
 
-Already accepted on October 6 and not reopened: six counties with "western SD" deleted; exclusion
-mask + normalized weighted preferences; Weighted Sum in ModelBuilder (Suitability Modeler mentioned
-in the deck); river exclusion 1 mile; personal parameters, `.atbx`, spot-check vivas, the AI-weights
-bullet. What is still open:
+1. **Thiessen is built as polygons and then rasterized** (Create Thiessen Polygons → Polygon to
+   Raster on `RASTERVALU`), as the handout allowed. Create Thiessen Polygons needs an
+   **Advanced** license; this machine is ArcInfo. *Verify the lab machines are Advanced*; if not,
+   Natural Neighbor replaces it.
+2. **Errors are True minus Surface**, so a positive error means the surface came out too low.
+3. **RMSE in the model**: Raster Calculator `Square(...)`, Zonal Statistics as Table (Mean over
+   `Study_Area`), Calculate Field `RMSE = math.sqrt(!MEAN!)`. Three output tables are model
+   parameters, so every dialog run keeps its three numbers.
+4. **Personal seed** (plan section 8): Steps 0–9 use seed 1 and match this page; Step 10 starts by
+   changing the seed to the last four digits of the student's BYU ID and re-running inside
+   ModelBuilder. That run is Map 1 and the first row of the table. `run_model.py --seed NNNN`
+   reproduces any student's table in about two minutes.
+5. **Checkpoints** (question 3): 200 points from seed 99, the same for everyone, never used to
+   interpolate. Extract Multi Values to Points + Calculate Field + Summary Statistics.
+6. **Kriging's own error estimate is not used.** Measured: its prediction standard error averages
+   79.6 m against a real RMSE of 14.5 m, correlation with the real error 0.25 (one global
+   semivariogram over a valley floor and a mountain front). Too confusing for this lab; noted here
+   in case a later version wants it.
 
-1. **Distance tool: Distance Accumulation**, not Euclidean Distance. *Recommend: yes.* The Euclidean
-   Distance reference page now says it "is deprecated and will be removed in a future release" and
-   names Distance Accumulation as the replacement. Both give identical distances here (measured).
-   Same tool Lab 11 will use, so students meet it once before the cost version.
-2. **Wind data: Global Wind Atlas mean wind speed at 100 m**, clipped and hosted. *Recommend: yes.*
-   It is the only numeric raster found that needs no login or API key (CC BY 4.0, DTU with the World
-   Bank). NREL is now the National Laboratory of the Rockies: `nrel.gov` no longer resolves, so the
-   page's `wrdb.nrel.gov` link is dead; `wrdb.nlr.gov` loads but is a JavaScript app (download path
-   VERIFY in a browser). 100 m rather than 80 m because South Dakota turbines built since 2015 have
-   hub heights of 80–110 m, median 89 m (USWTDB, 1,004 turbines). The DOE's 2025 South Dakota 100 m
-   map (JPG) is linked for comparison, not digitized.
-3. **Wind threshold.** At 100 m, 7 m/s excludes **0.2 %** of the area (1,990 of 953,568 cells); the
-   study area runs 6.57–8.94 m/s, mean 7.97. *Recommend: keep 7 m/s as the default* and let the
-   sensitivity TIP say "one exclusion does almost nothing at its default" (the guide's pattern);
-   7.5 m/s would exclude 8.3 % and 8.0 m/s 50.6 %. Alternative: default 7.5.
-4. **Town and road criteria become preferences only.** "Within 30 miles of a town" excludes **0 %**
-   (no cell is more than 13.8 miles from an incorporated South Dakota place); "within 2 miles of a
-   main road" would exclude **38.9 %**. *Recommend: both are 1–10 scores (closer is better), no
-   exclusion.* Town = incorporated places (TIGER `CLASSFP = 'C5'`); road = TIGER primary and
-   secondary roads (`MTFCC` S1100, S1200), which is what "main road" means — the page's "Local
-   Roads" layer contradicts its own criterion.
-5. **"River" = a named NHD stream/river whose name contains "River"**: `ftype = 460 AND gnis_name
-   LIKE '%River%'`, eight rivers (Big Sioux, James, Vermillion and its East, West and Little forks,
-   Rock, East Branch Rock). *Recommend: yes.* 1 mile excludes 8.3 %; every *named* stream at 1 mile
-   would exclude 43.5 %.
-6. **No town setback.** The course run's best cell is **54 m from Humboldt's boundary**, because the
-   town score rewards closeness and nothing penalizes it. *Recommend: leave it in* as the built-in
-   "where the method breaks" discovery, and ask for a setback distance in the report. Alternative: add
-   a fourth exclusion (for example 1 mile from incorporated places) to the mask.
-7. **Personal parameter: a personal weight run.** Run 7 uses *wind weight = 0.30 + (last two digits
-   of the nine-digit BYU ID) ÷ 200* (0.300–0.795), with town and road splitting the rest equally.
-   *Recommend: this* over a personal turbine spacing (10 + digits ÷ 10 miles). Both give a different
-   graded area for every ID; only the weight version ever moves the site (it moves between digits 66
-   and 77), so it also teaches the lesson. Grading lookup for all 100 values precomputed by
-   `run_model.py --personal`.
-8. **Best site = one cell, or a block?** The one-cell maximum is 1 ha, not a wind farm. *Recommend:
-   keep the single cell* (Zonal Statistics MAXIMUM → Equal To → Raster to Point, which avoids wiring
-   Get Raster Properties' string output into Equal To) and ask in question 3 what a minimum farm
-   area would change. Alternative: Focal Statistics (mean over a 2 km circle) before the maximum.
-9. **Neighbor-state towns and roads.** Turbines come from every state (all 888 within 20 miles are in
-   Minnesota or South Dakota; none inside the six counties), but the probe used South Dakota places
-   and roads only. *Recommend: include Minnesota and Iowa TIGER places and roads within 20 miles* so
-   distances near the border are right (effect not yet measured).
+## Measured (ArcGIS Pro 3.7.1 arcpy, October 6, 2026)
 
-## Data sources (checked October 8, 2026; curl with a browser user agent)
+`run_model.py` → `check_values.json`; `extra_checks.py` → `extra_checks.json`. Seed 1, ACM599.
 
-| Layer | Source | Status | Use |
-| --- | --- | --- | --- |
-| Counties | Census TIGER/Line 2025 counties, `www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip` | 200, 84.0 MB (national) | Hosted extract; fields `STATEFP`, `NAME`, `NAMELSAD` verified; the six `NAME` values are exactly Minnehaha, Moody, Lake, McCook, Turner, Lincoln (`STATEFP = '46'`) |
-| Towns | TIGER/Line 2025 places, South Dakota `tl_2025_46_place.zip` | 200, 0.8 MB | 485 places: `CLASSFP` C5 = incorporated (LSAD 25 city 157, 43 town 152, 47 village 1), U1/U2 = census-designated (175). 45 incorporated places in the counties, 85 within 20 mi |
-| Roads | TIGER/Line 2025 primary and secondary roads, `tl_2025_46_prisecroads.zip` | 200, 3.2 MB | `MTFCC` S1100 (92) and S1200 (2,016) statewide; fields `LINEARID`, `FULLNAME`, `RTTYP`, `MTFCC` |
-| Rivers | USGS NHD High Resolution HU4 1016 (James) and 1017 (Big Sioux, Vermillion) file geodatabases on `prd-tnm.s3.amazonaws.com` | 200, 58.7 MB and 43.6 MB | Field names are **lowercase** (`ftype`, `gnis_name`); `NHDFlowline` is in a network, so **Project fails with ERROR 001489** — use Export Features with the output coordinate system set. State GDB (368 MB) and state shapefile (790 MB) also 200, too big |
-| Existing turbines | USGS/ACP/LBNL U.S. Wind Turbine Database: `energy.usgs.gov/uswtdb/data/`, `eerscmap.usgs.gov/uswtdb/assets/data/uswtdbSHP.zip`, viewer, REST API `energy.usgs.gov/api/uswtdb/v1/turbines` | All 200; SHP zip 3.9 MB, CSV 1.7 MB, GeoJSON 1.4 MB; DOI 10.5066/F7TX3DN0 resolves | 77,379 turbines (SD 1,503, MN 2,726, IA 6,515). **Metadata catch:** the data page cites **V9.1 (September 28, 2026)**, but the zip downloaded today holds `uswtdb_V9_0_20260626.shp`. Updated quarterly, so the model uses a frozen hosted extract and Step 1 compares it with the live release |
-| Wind speed | Global Wind Atlas, `globalwindatlas.info/api/gis/country/USA/wind-speed/100` → `gwa.cdn.nazkamapps.com/country_tifs_v4/USA_wind-speed_100m.tif` | 200, 751 MB (Last-Modified June 12, 2025) | 0.0025° WGS 1984 cells; clip hosted. License CC BY 4.0 (search result; the site's terms page is a JavaScript app, VERIFY in a browser). Version: the path says `v4`, the attribution text found says 3.0 — VERIFY |
-| Wind (NREL/NLR) | `wrdb.nrel.gov` (on the page) | **Dead**: `nrel.gov` has no address | Replace; `wrdb.nlr.gov`, `maps.nlr.gov/wind-prospector`, `developer.nlr.gov/docs/wind/wind-toolkit/`, `data.nlr.gov` all 200 (WIND Toolkit needs an API key) |
-| Wind map | DOE WINDExchange, `windexchange.energy.gov/maps-data/` → `energy.gov/cmei/systems/windexchange/maps-and-data`; South Dakota 100 m JPG (`/sites/default/files/2025-10/South_Dakota_Land-Based_Wind_Speed_at_100_Meters.jpg`) | 200; JPG 4.8 MB | Link only, as a comparison in the metadata step |
-| SD state portal | `gis.sd.gov` → `opendata2017-09-18t192802468z-sdbit.opendata.arcgis.com` | 200 | Not needed; drop |
-| The National Map | `nationalmap.gov` → usgs.gov page; `apps.nationalmap.gov/downloader/` | 200 | Keep the downloader link for NHD provenance |
-| Not used | PAD-US (usgs.gov download page 200), NLCD (`mrlc.gov/data` 200), 3DEP image service (200) | — | Candidates for "what the score does not measure" (question 3), not for the model |
+- Extract: 1,188 × 756 cells of 1/3″, 1,368.0–2,896.9 m, no NoData.
+- Project Raster (UTM 12N, bilinear, 30 m): 314 × 262 cells, 1,368.1–2,896.5 m.
+- Study_Area 8.67 × 6.99 km = 60.6 km²; True_DEM 289 × 234 (one empty row), 67,337 cells, 1,368.5–2,896.5 m, mean 1,819.8 m.
+- Create Random Points, 2,500, seed 1: first point 444,603.3 E 4,453,723.7 N; `RASTERVALU`
+  1,368.7–2,886.7 m; a repeat run is identical.
+- Thiessen: 2,500 polygons; surface 1,368.7–2,886.7 (exactly the samples'); error −234.1 to +214.3,
+  mean −0.39; **RMSE 28.29 m**.
+- IDW (power 2, variable 12): surface 1,368.7–2,885.5; error −136.8 to +169.9, mean −0.84;
+  **RMSE 20.71 m**.
+- Kriging (ordinary, spherical, variable 12): surface 1,368.7–2,884.3; error −104.0 to +164.4, mean
+  −0.31; **RMSE 14.46 m**.
+- Largest IDW and Kriging error at 447,570 E 4,456,642 N (40.2586 N, 111.6166 W).
+- 3DEP image service, value at the highest cell (40.21415 N, 111.58865 W): 2,896.7 m (REST identify)
+  vs 2,896.5 m in True_DEM. Service: Web Mercator (3857), 1 m pixels, F32, bilinear default.
 
-Side finding: `pro.arcgis.com/.../tool-reference/...` now answers **301 → `doc.esri.com/en/arcgis-pro/latest/...`**.
-Links on Labs 1–9 still work through the redirect; new pages should use the `doc.esri.com` form.
+## Sensitivity (for setting expectations; do NOT publish)
 
-## Measured (ArcGIS Pro 3.7.1 arcpy, October 8, 2026) — probe, not yet the oracle
-
-`inventory.py` → `inventory.json`; `probe_model.py 100` → `probe_checks_100m.json`; `extent_trap.py` →
-`extent_trap.json`. Data in `C:\Ames\Lab10\` (raw downloads, `src\`, `probe_100m.gdb`). UTM 14N, 100 m,
-grid snapped to whole hundreds of meters, extent = study area.
-
-- Study area: six counties dissolved, **9,535.5 km²** (3,681.7 mi²); **953,568 cells** at 100 m.
-  Counties (km²): Minnehaha 2,107.9, Turner 1,599.4, Lincoln 1,496.4, McCook 1,493.5, Lake 1,489.3,
-  Moody 1,349.0.
-- Wind at 100 m (bilinear to 100 m): **6.569–8.944 m/s, mean 7.965**, no NoData. Cells below 7.0:
-  1,990; below 7.5: 79,302; below 8.0: 482,969.
-- Turbines: **none inside the six counties.** Within 10 / 20 / 30 miles of them: 339 / 888 / 1,515,
-  nearly all on the Buffalo Ridge in Minnesota (Lake Benton, Prairie Rose, Stoneray, Rock Aetna…).
-  The nearest is 447 m outside the boundary.
-- Distance maxima inside the area: turbines 102.5 km, rivers 49.0 km, towns 22.1 km, roads 16.9 km.
-- Excluded share of the area: wind < 7 m/s **0.2 %**; within 20 mi of a turbine **37.0 %** (10 mi:
-  9.7 %); within 1 mi of a river **8.3 %** (2 mi: 16.5 %). Not used as exclusions: more than 30 mi
-  from a town 0 %; more than 2 mi from a main road 38.9 %.
-- Mask (wind ≥ 7, turbines > 20 mi, rivers > 1 mi): **552,371 cells open, 5,523.7 km²** (57.9 %).
-  Variants (km² open): spacing 10 mi 7,834.8; 30 mi 2,479.9; rivers 2 mi 5,092.7; wind 7.5 5,184.1;
-  wind 8.0 3,034.6.
-- Scores (Rescale by Function, Linear, 1–10; town 0–30 mi and road 0–10 mi reversed 10→1 — the
-  reversed scale worked in arcpy, VERIFY in the dialog): wind 1–10, town 1.93–10, road 2.84–10.
-- Course weights wind 0.5 / town 0.25 / road 0.25: maximum **9.3143**, one cell at **656,450 E,
-  4,834,550 N** (43.6475 N, 97.0601 W), western Minnehaha County, **54 m from Humboldt**; 3,208.5
-  km² score ≥ 7.
-
-### Sensitivity (for setting expectations; do NOT publish)
-
-| Run | Weights (wind/town/road) | Max | km² ≥ 7 | Top site |
+| Run (seed 1) | Thiessen | IDW | Kriging | Checkpoint RMSE Th / IDW / Kr |
 | --- | --- | --- | --- | --- |
-| Course | 0.5 / 0.25 / 0.25 | 9.3143 | 3,208.5 | 656,450 E 4,834,550 N (Humboldt) |
-| Wind-first | 0.7 / 0.15 / 0.15 | 9.1257 | 2,675.1 | 653,250 E 4,843,650 N, 7.1 km from Montrose — **moves 9.6 km** |
-| Infrastructure-first | 0.2 / 0.4 / 0.4 | 9.6967 | 4,278.9 | Humboldt cell |
-| Equal | ⅓ / ⅓ / ⅓ | 9.5267 | 3,983.2 | Humboldt cell |
-| Course, spacing 10 mi | 0.5 / 0.25 / 0.25 | 9.3143 | 4,653.0 | Humboldt cell |
+| 250 points | 80.73 | 69.46 | 50.38 | 75.77 / 71.18 / 50.85 |
+| 1,000 points | 44.07 | 37.00 | 24.90 | 42.55 / 38.80 / 23.88 |
+| **2,500 (baseline)** | **28.29** | **20.71** | **14.46** | 30.38 / 23.16 / 17.12 |
+| 10,000 points | 15.71 | 10.39 | 6.90 | 15.20 / 9.85 / 7.14 |
 
-- Personal weight (0.30 + d/200, d = 0, 11, …, 99): area 4,083.3 → 2,434.1 km², changing at every
-  step; the site moves from the Humboldt cell to the Montrose-area cell between d = 66 and 77.
-- Personal spacing (10 + d/10 mi): area 4,653.0 → 3,228.6 km²; the site never moves.
-- Lesson the TIP can hint at: the exclusions decide *how much* land is open; the weights decide
-  *where* the best cell is, and only a strong tilt toward wind moves it.
+- IDW power 1 / 2 / 3 / 5: 23.98 / 20.71 / 20.20 / 21.60.
+- Kriging spherical, exponential, linear, circular all 14.46; Gaussian 24.81 (surface max 2,826.1,
+  it shaves the peaks).
+- Seeds 2–5 at 2,500: Thiessen 28.2–29.1, IDW 19.2–21.2, Kriging 13.1–14.2. The ranking never
+  changes.
+- RMSE by slope (Thiessen / IDW / Kriging): <10° 5.0 / 5.3 / 3.9; 10–25° 25.7 / 25.2 / 17.7;
+  25–35° 37.7 / 26.8 / 17.8; >35° 47.7 / 30.6 / 22.4.
+- Personal seed 4321 (oracle test): baseline row and checkpoints reproduced in one call.
 
-### Traps found (each becomes a WARNING box)
+## Pilot (no-GUI, October 6, 2026)
 
-1. **Mask environment + sources outside it.** With Mask = study area, Distance Accumulation and
-   Euclidean Distance to the turbines (all outside the counties) returned all NoData in one run and
-   `ERROR 160333: The table was not found` in another. With extent = study area and no mask, both
-   give 447.2–91,609.0 m over all 953,568 cells. Set the mask only after the distances, or apply it
-   with Set Null at the end.
-2. **Clipping inputs to the counties first** (the current Step 2 Intersect) leaves zero turbines, so
-   the 20-mile exclusion silently vanishes. Clip to a 20-mile buffer, or not at all.
-3. **Extent environment on vector tools.** In the probe, with an Extent environment set (in UTM
-   coordinates, inputs in geographic coordinates), Project and Copy Features wrote empty feature
-   classes (0 features, no error). The cause is not pinned down (arcpy only); verify in the GUI
-   whether a model-level Extent does the same to the Select steps.
-4. **Raster Clip with an output coordinate system set** resampled the wind raster to two 163 km cells.
-   The hosted wind raster comes already projected, so students never clip it.
-5. **NHD `Project` → ERROR 001489** (network feature class); the hosted extract avoids it.
+`C:\Ames\Pilot09\PILOT_NOTES.md`. Every seed-1 number reproduced from the page and the zip. The serious
+finding: without an **Extent** environment, IDW and Kriging at 250 points cover only 66,297 of 67,337
+cells (RMSE 69.47 / 50.24 vs 69.46 / 50.38), and coverage depends on the seed, so personal-seed tables
+would not match the oracle. Extent = True_DEM is now in Step 0 (the oracle always set it). Also fixed:
+Step 10 order (Map 1 and checkpoints before any dialog run), semivariogram parameter path, Map 2
+deliverable vs rubric, "largest error" defined, citation question graded, Figure A names its values.
 
-## Sensitivity design (Step 10, proposed)
 
-Parameters exposed: minimum wind speed, turbine spacing (miles), river setback (miles), and the
-Weighted Sum table. Runs from the tool dialog after Map 1 is made:
+## Simplification (October 7, 2026, instructor's request)
 
-| Run | What changes |
-| --- | --- |
-| Baseline | Course weights 0.5 / 0.25 / 0.25, 7 m/s, 20 mi, 1 mi — the published check values |
-| 1 | **Your own weights**, justified in the report before running (the Lab 1 "layer you create and defend") |
-| 2 | Wind-first 0.7 / 0.15 / 0.15 |
-| 3 | Infrastructure-first 0.2 / 0.4 / 0.4 |
-| 4 | **The AI's weights**: before any run, the student asks an AI tool for a weight set and its justification for this site, pastes the prompt and answer, and runs it |
-| 5 | Course weights, turbine spacing 10 mi |
-| 6 | Personal weight from the BYU ID digits (decision 7) |
+Students now receive `Lab10.gdb\True_DEM` (projected, 30 m, clipped) and three hosted point sets
+(`Sample_Points_250`, `_2500`, `_10000`; seed 1, `RASTERVALU` only) instead of projecting, clipping
+and sampling the DEM themselves; the page explains what we did for them. Measured effect:
 
-Record for each: weights and exclusion values, open area (km²), area scoring ≥ 7 (km²), maximum
-score, and the top cell's coordinates and distance from the baseline site. Questions:
-1. What moves the answer most — the exclusions or the weights — with your numbers?
-2. Is the top site robust? Across how many runs does it stay put, and what did the AI's weights do
-   to it? Where was the AI right, and what could only the data answer?
-3. What does the score not measure? Use the top site's surroundings (the town next to it) and name
-   the data that would fix it: setbacks, land ownership, transmission capacity, wildlife (PAD-US),
-   land cover (NLCD), minimum farm area.
+| | Before | After |
+| --- | --- | --- |
+| Tools in the model | 20 | 16 |
+| Model parameters | 12 | 9 (sample points, IDW power, semivariogram, 3 errors, 3 RMSEs) |
+| Steps | 0-10 | 0-8 |
+| ModelBuilder run | about 1.5 min | 7 s |
 
-## Pilot plan
+Pain points removed (all found in the first GUI build or the pilot): the Snap Raster / ERROR 010654
+trap (True_DEM is now an input), Project Raster's 9.06 m proposal and coordinate picker, the
+`Study_Area:1` model-variable choice and two Create Variable steps for points and seed, IDW/Kriging
+defaulting to the `CID` field (gone: the hosted points have no `CID`), and dialog runs deleting the
+truth and the points (inputs are never deleted).
 
-As Lab 9: after the draft, a fresh subagent in `C:\Ames\Pilot10\` reads the draft as a first-time
-student, downloads the hosted zip from the built site, reproduces every published check value with
-the ArcGIS Pro Python, runs the personal-weight oracle for two invented IDs, and writes
-`PILOT_NOTES.md` (ranked findings and a stated/measured/match table). Specific things to try: the
-model with and without the Mask environment; a reversed Rescale by Function; the Weighted Sum table
-as a model parameter; the Zonal Statistics → Equal To wiring. Then the GUI build at 175 %
-(`C:\Ames\Lab10GUI\Lab10.aprx`), which is where the dialog questions get settled.
+Kept: the sample-count comparison (three hosted sets, same seed) and the personal seed, which moved
+out of the model into two tool runs in Step 8 (Create Random Points with the BYU ID digits, Extract
+Values to Points). `run_model.py --seed` now reproduces the student's three own rows.
 
-## Still owed (in order)
+Verified from the zip (`verify_package.py` -> `package_checks.json`) and in a second GUI build
+(`C:\Ames\Lab09GUI2\`): course points 250 / 2,500 / 10,000 give 80.73 / 69.46 / 50.38,
+28.29 / 20.71 / 14.46 and 15.71 / 10.39 / 6.90; seed 4321 gives 27.32 / 19.10 / 12.79 and, with IDW 3
+and Kriging Gaussian from the tool dialog, 18.54 / 25.45 — all exactly the oracle.
 
-1. Instructor answers to decisions 1–9.
-2. `tools/lab10/run_model.py` (the oracle, with `--personal` for the 100-value lookup) and
-   `step_checks.json`; `fetch_data.py` + `make_extract.py` for `docs/data/lab10-southeast-sd.zip` with
-   `READ-ME-FIRST.txt` (provenance, USWTDB version, GWA credit line, processing). Include MN/IA towns
-   and roads if decision 9 is accepted, and re-measure.
-3. `docs/assignments/lab-10/draft.md` in the guide's anatomy: Background rewritten around the
-   exclusion/preference distinction; Step 0 with environments and the 953,568-cell check; Step 1 the
-   live turbine database; Steps 2–9 as in the gap table; Step 10 the sensitivity; Deliverables, rubric
-   (five × ten, AI-weights bullet in Sensitivity), "Make it yours" and peer-review boxes, `.atbx`
-   upload, BYU-ID box copied from Lab 9.
-4. `make_svgs.py` (three icons, Figure A turbine-database metadata card, Figure B exclusions vs
-   preferences diagram with measured percentages).
-5. No-GUI pilot; fixes.
-6. Promotion (old page to `lab10-backup/`), GUI build and captures, Figure C, snippets,
-   `build_figures.py` example maps (baseline and wind-first), report template `LABS['10']`.
-7. Week 10 deck: `slides/week-10/raster-spatial-analysis.md` is a single 14-slide deck with an open
-   `TODO(instructor)` saying it stops at "combine the layers"; it needs exclusion vs preference,
-   Distance Accumulation, Rescale by Function, weights summing to 1, and a Lab 10 preview figure.
-8. Learning Suite due date (November 14) and template link.
+Note: `check_values.json` is from the pre-simplification run (course baseline, its own checkpoints); `package_checks.json` is current. Pilot 2 (October 7, `C:\Ames\Pilot09b\`) reproduced every number from the zip and found ten text issues, all fixed.
+
+## Second simplification (October 7, 2026, instructor's request)
+
+No personal point set: Step 8 is five tool-dialog runs on the course's sets (250 and 10,000 points;
+IDW 1 + exponential and IDW 3 + Gaussian on 2,500; and run 5). The per-student element is run 5's
+**IDW power = 1 + (last two digits of the nine-digit BYU ID number) / 40**, 1.000 to 3.475: 100
+possible values instead of the 10 a last-digit rule gives, for the same effort. `Checkpoints`
+(seed 99, 200 points) is hosted in the zip, so no student runs Create Random Points at all. Grading
+table for every power: `package_checks.json['personal_power']`. GUI-checked: power 3.225 from the
+tool dialog gives IDW RMSE 20.29 (Thiessen 28.29 and Kriging 14.46 unchanged).
+
+Limitation accepted: every other number, including the largest-error coordinates, is now the same
+for every student; the IDW-power row, the `.atbx` submission and spot-check vivas are the checks.
+
+**Future customization (instructor's idea):** the student's NetID (self-chosen letters and numbers)
+could seed a personal point set or another personal parameter in a later version; turn it into a
+number with a stated rule (for example the sum of its characters' positions in the alphabet and
+digit values) so the grader can reproduce it. `run_model.py --seed` already reproduces seeded runs.
+
+## Still owed
+
+1. ~~GUI build~~ **Done October 7, 2026** (`C:\Ames\Lab09GUI\Lab10.aprx`, captures in `caps\`): every
+   check value reproduced in the GUI; 18 figures and Figure C in the draft. Settled there: the service
+   arrives as an 8-bit **hillshade** (Explore reads 154, not an elevation) in Web Mercator at 1 m;
+   the semivariogram and the random seed (Create Variable ▸ From Environment) can both be model
+   parameters; **Snap Raster `True_DEM` breaks dialog runs** (ERROR 010654), so the environments are
+   now Snap Raster `DEM_UTM` + Extent from `YMountain_DEM.tif`; four silent wrong defaults (Thiessen
+   Output Fields, Polygon to Raster Value field, IDW/Kriging Z field `CID`, ZSaT Statistics All, and
+   Calculate Field Type Text) are now WARNING boxes. Still to try: a dialog run with Kriging Gaussian.
+2. Promotion, then the report template (`node make_lab_report_template.js 09` reads README.md), the
+   Week 9 deck alignment, and the Learning Suite due date (November 7). Example maps and the no-GUI
+   pilot are done.

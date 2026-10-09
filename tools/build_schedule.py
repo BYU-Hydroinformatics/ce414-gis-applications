@@ -27,7 +27,13 @@ Your Own Adventure is gone. Settled September 9, 2026: Week 3 rebuilt around NDV
 analysis (Tuesday) plus a new hands-on deck (Thursday), retiring ModelBuilder Part C. Settled
 September 9, 2026: that pair was resplit as Part A and Part B, matching Week 2 — Part A ends with the
 NDVI threshold table, and Part B carries the raster-function families, the threshold as a model
-parameter, and the four hands-on exercises."""
+parameter, and the four hands-on exercises.
+
+Settled October 8, 2026: a new Lab 7, Flood Mapping with HAND, follows the two water labs
+(watersheds, bathymetry, flooding); Avalanche Hazard, Big Southern Butte and Interpolation Explorer
+became Labs 8 to 10, the Wind Farm lab was retired (docs/assignments/windfarm-backup), and a new
+Lab 12 (Network Analyst) closes the labs. Lab 7 is introduced Tuesday of Week 8 and due Saturday of
+Week 9; Labs 8 to 12 follow one a week, Lab 12 due in Week 14."""
 import re
 from pathlib import Path
 
@@ -63,9 +69,10 @@ DECKS = [
     (12, "gps-triangulation",              "GPS and Positioning",                        "How satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
-        5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Avalanche Hazard",8:"Big Southern Butte",
-        9:"Interpolation Explorer",10:"Wind Farm Site Selection",11:"Least Cost Path Power Line Analysis"}
-LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 12)}
+        5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Avalanche Hazard",
+        9:"Big Southern Butte",10:"Interpolation Explorer",11:"Least Cost Path Power Line Analysis",
+        12:"Network Analysis"}
+LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 13)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
                8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
@@ -105,16 +112,16 @@ DUE = {
     7:  dict(reading=None, quiz=None, lab=6,   # Lab 6 (Lake Depth Explorer) is introduced Thursday and due the same Saturday; see ROADMAP item 4
              other=[("In-class activity: Read the USGS Lake Table (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class"),
                     ("In-class activity: Three Lake Levels", "done in class Thursday; upload a screen capture by 9:30 am, fifteen minutes after class")]),  # Oct 1: replaces the two old Week 7 activities; Learning Suite still has the old ones
-    8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=7,
+    8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=None,
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class"),
                     ("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
-    9:  dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=8, other=[]),
-    10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
-    11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),
-    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11, other=[]),
-    # Lab N is due the Saturday of Week N+1 from Lab 7 on; Lab 6 is the exception (due in Week 7, its own week).
-    13: dict(reading=None, quiz=None, lab=None, other=[]),
-    14: dict(reading=None, quiz=None, lab=None,
+    9:  dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=7, other=[]),
+    10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=8, other=[]),
+    11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=9, other=[]),
+    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=10, other=[]),
+    # From Lab 7 on, Lab N is due the Saturday of Week N+2 (Lab 7 spans Midterm 1 week); Lab 6 is due in Week 7, its own week.
+    13: dict(reading=None, quiz=None, lab=11, other=[]),
+    14: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
     15: dict(reading=None, quiz=None, lab=None,

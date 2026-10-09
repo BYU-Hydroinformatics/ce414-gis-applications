@@ -25,7 +25,9 @@ Tuesday is a final-project work day with the instructor available; Thursday is t
 
 ## :material-flask: Lab Assignment
 
-*No lab this week.*
+[Lab 12 — Network Analysis](../assignments/lab-12/README.md)
+
+Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 </div>
 

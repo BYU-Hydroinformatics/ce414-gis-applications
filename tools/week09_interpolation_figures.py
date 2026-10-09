@@ -1,9 +1,9 @@
 r"""Figures for the Week 9 Tuesday deck, slides/week-09/interpolation-explorer.md.
 
-1. ie-error-row.png: the three error panels and their legend, cropped from Lab 9's example baseline
-   map (docs/assignments/lab-09/images/lab09-example-map-baseline.png).
+1. ie-error-row.png: the three error panels and their legend, cropped from Lab 10's example baseline
+   map (docs/assignments/lab-10/images/lab10-example-map-baseline.png).
 2. ie-checkpoint-spread.png + numbers: how much an RMSE measured at 200 random checkpoints wanders
-   around the RMSE over every cell. Uses the baseline surfaces that tools/lab09/verify_package.py
+   around the RMSE over every cell. Uses the baseline surfaces that tools/lab10/verify_package.py
    leaves in C:\Ames\Lab09\ZipCheck (course 2,500 points; IDW power 2; ordinary spherical Kriging).
    The 200-point draws here are NOT the lab's Checkpoints feature class, so the lab's own checkpoint
    answers are not shown.
@@ -20,10 +20,10 @@ from PIL import Image
 
 REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = os.path.join(REPO, "slides", "week-09", "images")
-GDB = r"C:\Ames\Lab09\ZipCheck\lab09-y-mountain\Lab09.gdb"
+GDB = r"C:\Ames\Lab09\ZipCheck\lab10-y-mountain\Lab10.gdb"
 
 # 1. Crop the error row (panels + legend) out of the example map.
-im = Image.open(os.path.join(REPO, "docs", "assignments", "lab-09", "images", "lab09-example-map-baseline.png"))
+im = Image.open(os.path.join(REPO, "docs", "assignments", "lab-10", "images", "lab10-example-map-baseline.png"))
 im.crop((250, 545, 1607, 883)).save(os.path.join(OUT, "ie-error-row.png"))
 
 # 2. Checkpoint spread.

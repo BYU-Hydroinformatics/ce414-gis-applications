@@ -1,40 +1,27 @@
-# Lab 9: Interpolation Explorer
+# Lab 9: Big Southern Butte
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Rebuilding a mountain from samples, three ways, and measuring how wrong each one is*
+*Measuring the volume of a volcanic dome by rebuilding the plain beneath it*
 
-<!-- **Revision notes.** Drafted October 6, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab09-backup/) and promoted October 7, 2026, with the instructor accepting every recommendation in tools/labs-09-11-plan.md section 4 and tools/lab09/PARITY_PLAN.md.
+<!-- **Revision notes.** Drafted October 5, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab09-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab09/PARITY_PLAN.md. The decisions
+it rests on are in `tools/lab09/PARITY_PLAN.md`. The dialog captures (Figures 0-8) and Figure C come
+from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab08GUI\Lab09.aprx, model
+ButteVolume, set up by tools/lab09/gui_project.py). ModelBuilder run 32 s; every check value
+reproduced (first point 337,632.58 E 4,806,349.71 N, 560 kept, 280,311 cells, 729.1 / 183.5 m, 53
+below, 5.145018 km3). A tool-dialog run at 250 points (1 min 10 s) gave 146 kept, 735.7 m, 0 below,
+5.2288 km3, matching check_values.json, and deleted every non-parameter output except Random_Points.
+GUI facts: the environment is "Random Number Generator" (Seed, Generator = ACM collected algorithm 599)
+and the model-level seed reaches Create Random Points; the Cell Size list offers only map layers;
+choosing the outline map layer in Erase added a duplicate variable (model variable reads
+Butte_Boundary:1); IDW takes cell size 10 from the environment; Extract by Mask fills Analysis Extent
+from the mask; Raster Calculator (2) replaced the typed name with RasterC_1; Zonal Statistics opens
+at Mean with OBJECTID filled in.
 
-*Changes to what the lab asks students to do:* one study area (the second DEM is gone); a hosted
-extract and study rectangle instead of "download a DEM and draw a box"; a look at the 3DEP image
-service in Step 1 (the Week 9 tie-in); three methods carried all the way to RMSE instead of seven
-surfaces and seven difference chains; the number of points, the IDW power and the Kriging
-semivariogram exposed as parameters; a Step 10 sensitivity table at a personal random seed with
-200 independent checkpoints; Map 1 is one comparison sheet; individual work, not pairs; rubric in
-five parts of ten.
-
-*Corrections:* RMSE is the root of the **mean** of the squared errors (the handout's summary left
-out the mean); the coordinate system is named as ArcGIS Pro names it; Figure 1 (a reproduced
-textbook figure) is replaced by a measured profile.
-
-*Simplified October 7, 2026 (instructor's request):* students now receive `True_DEM` (projected,
-30 m, clipped) and three hosted point sets (250, 2,500, 10,000; seed 1) instead of projecting,
-clipping and sampling the DEM themselves. The model shrinks from 20 tools to 16 and from 12
-parameters to 9; the sample points are the parameter instead of a number of points and a random
-seed. The personal seed survived outside the model at first (Step 8: Create Random Points + Extract Values to
-Points with the BYU ID digits). The Snap Raster / ERROR 010654 trap is gone (True_DEM is an input),
-and IDW/Kriging now fill RASTERVALU by themselves (the CID default came from Create Random Points).
-
-*Simplified again October 7, 2026 (instructor's request):* no personal point set; Step 8 is five
-tool-dialog runs on the course's sets, and the per-student element is run 5's IDW power = 1 + (last
-two digits of the nine-digit BYU ID) / 40. Checkpoints (seed 99) are hosted in the zip.
-
-*Figures:* Figures A and B are generated from the data (`tools/lab09/make_svgs.py`); the example
-maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
-GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab09GUI\Lab09.aprx`). -->
+**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 5, 2026
+(`tools/lab09/run_model.py`, `step_checks.py`) against the hosted data. -->
 
 > [!TIP]
 > **Start from the report template.** [`lab09-report-template.docx`](lab09-report-template.docx)
@@ -45,72 +32,67 @@ GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab09GUI\Lab
 
 ## Background
 
-Every elevation model, rainfall map and groundwater surface you will use as an engineer started as
-points: survey shots, rain gauges, wells. Something turned those points into a surface, and that
-something was an **interpolator**. In Lab 8 you used one (IDW) as a tool, to rebuild the plain under
-Big Southern Butte. In this lab the interpolator *is* the subject.
+Big Southern Butte rises about 760 m (2,500 ft) out of the flat lava plain of the eastern Snake
+River Plain in Idaho, west of Idaho Falls. It is a **rhyolite dome**: two lobes of thick,
+silica-rich lava that pushed up through the plain's basalt and merged about 300,000 years ago, and
+it is among the largest rhyolite domes in the world
+([USGS Yellowstone Volcano Observatory, 2023](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }).
+How much lava a dome holds is one of the numbers a volcanologist uses to compare eruptions, and
+nobody can weigh a mountain. They measure it from an elevation model.
 
-The idea is simple. To estimate a value at one place you look at the samples around it and combine
-them: take the nearest one (**Thiessen**, or nearest neighbor), average the nearby ones with the
-closest weighted most (**inverse distance weighting**, IDW), or weight them by a model of how fast
-values stop resembling each other with distance (**Kriging**). A GIS does this at the center of
-every cell of an output raster (Bolstad, *GIS Fundamentals*, Chapter 12). Each method has a
-personality, and you can see it in the result: Thiessen makes terraces, IDW makes bull's-eyes around
-its samples and can never go above the highest one, Kriging smooths.
+![Ground-level photograph of Big Southern Butte, a broad dome rising above the flat Snake River Plain with mountains on the horizon](images/lab09-big-southern-butte-photo.jpg)
 
-What you usually cannot do is check the answer, because the true surface is the thing you do not
-have. Here you do. We sampled a real elevation model of Y Mountain at random points; you rebuild it
-from those points three ways, and subtract each rebuild from the truth, cell by cell. That gives you
-a map of where each method fails and one number, the root-mean-square error (RMSE), for how badly.
+**Figure B.** Big Southern Butte from the plain. The plain looks flat; it falls gently to the north.
 
-![An elevation profile across the study area from the valley floor in the west to the ridge in the east. The true DEM rises from about 1,390 m to about 2,700 m. A Thiessen line follows it in flat steps that jump at sample points; an IDW line follows it but sags below the ridges; a Kriging line is smooth and cuts the peak short. Ten sample points within 150 m of the row are marked.](images/lab09-profile.svg)
+The trick is the ground *under* the butte. You cannot see it, so you rebuild it: sample elevations
+on the plain all around the butte, interpolate a surface across the gap, and subtract that surface
+from the real one. What is left is the butte, cell by cell, and adding up its cells gives its volume.
+That is the same idea as Lab 6, where the water surface was the lid and the lake bed the bottom;
+here the DEM is the lid and an interpolated plain is the bottom.
 
-**Figure B.** One row of cells across the study area, the truth and three surfaces rebuilt from only
-250 points. Look at the ridge near kilometer 6.5: no method can put back a peak it never sampled.
-
-How close a rebuild comes depends on choices you make: the method, its parameters, and above all how
-many points you give it. In Step 8 you vary them, see how far the RMSE moves, and use what moves to
-decide which method you would trust with a surface you cannot check.
+Every part of that recipe is a choice: where the butte ends, how many points sample the plain, and
+how you interpolate between them (the Week 8 methods). In Step 9 you vary each choice and see which
+moves the answer most.
 
 > [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one ModelBuilder model that takes a set of sample
-> points, rebuilds the surface by Thiessen polygons, IDW and Kriging, and reports each rebuild's error
-> map and RMSE; run it on Y Mountain; test how the number of points and each method's parameters
-> change the errors; and make two map sheets.
+> **Your job — see the deliverables below.** Build one ModelBuilder model that takes a DEM and an
+> outline and returns the volume of the land inside the outline above an interpolated base surface;
+> run it on Big Southern Butte; test how much the outline, the number of points, and the
+> interpolation method change the volume; and make two maps.
 
 ## Problem Statement
 
-You are given a 30 m elevation model of Y Mountain and the valley below it — the truth — and three
-sets of random points that sampled it. Using them:
+You are given a 10 m elevation model of Big Southern Butte and the plain around it, and a reference
+outline of the butte's base. Using them:
 
-1. Rebuild the surface from the points by Thiessen polygons, IDW and ordinary Kriging.
-2. Map each rebuild's error against the true elevation model, and compute its RMSE.
-3. Find out which method and which settings rebuild this mountain best, and where every method fails.
+1. Rebuild the plain beneath the butte by interpolating from random points on the plain around it.
+2. Compute the height of the butte above that rebuilt plain in every cell.
+3. Report the butte's volume in cubic kilometers.
+4. Map the height of the butte above the plain.
 
 ## Analysis Considerations
 
 Every one of these is a decision somebody made, and every one of them can change the answer.
 
-- **The truth.** The elevation model is treated as exact. It is not — it is itself a product of
-  interpolation from lidar and older sources — but here it is the reference everything else is
-  measured against. Your RMSE says how well you rebuilt the DEM, not how well anything matches the
-  ground.
-- **The cell size.** The DEM was projected to 30 m cells, as engineering-scale terrain work often
-  does, and every surface is built on that grid. A finer grid would make the truth rougher and the
-  errors bigger.
-- **The samples.** 250, 2,500 or 10,000 random points in a 60.6 km² rectangle; at 2,500, about one
-  point for every 27 cells. Random points cluster in some places and leave gaps in others, and the
-  gaps are where the errors are. The course's three sets were drawn once, with a fixed random seed,
-  so everyone's numbers match this page.
-- **The method and its parameters.** Thiessen has none. IDW has a **power** (how fast a sample's
-  influence falls off with distance; 2 is the default) and a number of neighbors (12). Kriging has a
-  **semivariogram model** (spherical is the default) fitted to the points, and a number of neighbors
-  (12). Every default is somebody's guess about a typical surface; Step 8 tests the guesses.
-- **The measure of error.** RMSE weights large errors heavily, because it squares them. It is one
-  number for the whole rectangle, and most of the rectangle is flat valley floor that every method
-  gets right. Look at the error maps, not just the number.
-- **The coordinate system.** **NAD 1983 UTM Zone 12N** in meters, so that cells are square and
-  distances, which every interpolator depends on, are in meters in every direction.
+- **Where the butte ends.** The base of a dome blends into its apron of debris and into the lava
+  flows around it. The reference outline was drawn by a rule from the DEM — every cell standing more
+  than 10 m above a plane fitted to the plain — and `READ-ME-FIRST.txt` explains it. It is a
+  reasonable base, not the only one. In Step 9 you draw your own.
+- **The points on the plain.** Points inside the outline sample the butte, not the plain, so the
+  model erases them. The rest sample a ring of plain 1,500 m wide. More points follow the plain's
+  bumps more closely; fewer points smooth them out. The points are random, so two runs differ — unless
+  you fix the random seed, which Step 0 does so that your numbers match this page.
+- **The interpolation method.** IDW never goes above its highest point or below its lowest, so the
+  rebuilt plain stays inside the range of the plain around it. A spline is smooth and can overshoot.
+  Week 8 compared them; here you see what the difference does to a volume.
+- **What the volume is.** The volume *above an interpolated surface*. If lava flows of the plain lap
+  against the butte's lower slopes, part of the dome is buried below that surface, and no elevation
+  model can see it.
+- **The elevation model.** Bare earth, 1/3 arc-second cells (about 10 m), elevations in meters above
+  NAVD 88.
+- **The coordinate system.** A volume needs the cell size and the elevations in the same unit. The
+  DEM arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in meters,
+  so that each 10 m cell is 100 m² and each meter of height over it is 100 m³.
 
 ## Data
 
@@ -122,50 +104,27 @@ Every one of these is a decision somebody made, and every one of them can change
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
 > conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-| Layer | What it is | How you get it |
+| Layer | Where it comes from | How you get it |
 | --- | --- | --- |
-| `lab09-y-mountain\Lab09.gdb\True_DEM` | The DEM projected to UTM 12N at 30 m and cut to the study rectangle: the truth | Prepared for you, in the zip |
-| `lab09-y-mountain\Lab09.gdb\Sample_Points_250`, `_2500`, `_10000` | Random points in the rectangle, each with the `True_DEM` value under it in `RASTERVALU` | Prepared for you, in the zip |
-| `lab09-y-mountain\Lab09.gdb\Checkpoints` | 200 more random points in the rectangle, never used to interpolate; Step 8 tests the surfaces at them | Prepared for you, in the zip |
-| `lab09-y-mountain\Lab09.gdb\Study_Area` | The study rectangle, on `True_DEM`'s 30 m grid | Prepared for you, in the zip |
-| `YMountain_DEM.tif` | The source: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 | In the zip, for its metadata and for Step 1 |
-| 3DEP elevation image service | The same elevations, served live | A web service you add in Step 1 |
+| `BigSouthernButte_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM, two tiles joined | Prepared extract, hosted here |
+| `Lab09.gdb\Butte_Boundary` | Derived from the DEM for this course (see the READ-ME) | In the same zip |
 
-- **Download:** [`lab09-y-mountain.zip`](../../data/lab09-y-mountain.zip) (2.4 MB). Unzip it into
-  your Lab09 folder — the files are in a `lab09-y-mountain` folder inside it — and read
-  `READ-ME-FIRST.txt`.
-
-**What we already did for you.** Every step below is one you have done in an earlier lab, so we did
-them once, carefully, and handed you the results; your model starts where the interpolation starts.
-
-1. **Project Raster** (Labs 4, 5, 7 and 8): `YMountain_DEM.tif` to NAD 1983 UTM Zone 12N, bilinear,
-   30 m cells.
-2. **Extract by Mask** (Labs 4 and 8): the projected DEM cut to `Study_Area`, a rectangle drawn well
-   inside it with its corners on the 30 m grid. The result is `True_DEM`.
-3. **Create Random Points** (Lab 8): 250, 2,500 and 10,000 points inside `Study_Area`, with the
-   **Random Number Generator** environment set to seed 1, so the points are the same every time.
-4. **Extract Values to Points** (Lab 8): the `True_DEM` value under each point, written to
-   `RASTERVALU`.
-
-We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.
+- **Download:** [`lab09-big-southern-butte.zip`](../../data/lab09-big-southern-butte.zip)
+  (10.4 MB). Unzip it into your Lab09 folder — the files are in a `lab09-big-southern-butte` folder
+  inside it — and read `READ-ME-FIRST.txt`.
 
 > [!TIP]
-> **Check the data:** `True_DEM` has **67,337** cells with values, from **1,368.5 to 2,896.5** m
-> (mean **1,819.8**). `Sample_Points_250`, `_2500` and `_10000` have exactly that many points, each
-> with the fields `OBJECTID`, `Shape` and `RASTERVALU`; at 2,500 points `RASTERVALU` runs from
-> **1,368.7 to 2,886.7** m and the first point (`OBJECTID` 1) is at about **444,603.3 E,
-> 4,453,723.7 N**. `Study_Area` is one rectangle of **60.6 km²** (8.67 × 6.99 km).
+> **Check the data:** `BigSouthernButte_DEM.tif` is **3,024 columns × 1,836 rows** of 1/3
+> arc-second cells, values **1,499.8 to 2,307.1** (meters above NAVD 88), GCS North American 1983,
+> no NoData cells. `Butte_Boundary` is one polygon of **28.03 km²** in NAD 1983 UTM Zone 12N.
 
-> [!NOTE]
-> The samples never include the true highest cell (2,896.5 m): the tallest of the 2,500 is
-> 2,886.7 m. Keep that number in mind in Steps 3 to 5.
-
-![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Y Mountain DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.9 m east-west; Provo and the mountain front east of it, stored in latitude and longitude, with True_DEM its projection to UTM Zone 12N; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, playing the truth in this lab; a window cut from the tile with values unchanged; USGS, public domain. A footer says the DEM's own errors never show up in the RMSE.](images/lab09-dem-metadata.svg)
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Big Southern Butte DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.5 m east-west; a box around the butte stored in latitude and longitude, to be projected in Step 1; tiles n44w114 and n44w113 published April 7, 2026 from sources collected 1957 to 2024; the 3D Elevation Program's general-purpose seamless layer, not made to measure volcanoes; sources resampled to one grid, two tiles joined edge to edge; USGS, public domain. A footer says the cell size and vertical unit matter most for a volume.](images/lab09-dem-metadata.svg)
 
 **Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
-the publication and source dates, the vertical datum and units, and the cell size —
-in `READ-ME-FIRST.txt`, in `YMountain_DEM.tif`'s properties in ArcGIS Pro, and in the tile's
-[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
+in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tiles'
+metadata files
+([n44w114](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w114/USGS_13_n44w114.xml){ target="_blank" },
+[n44w113](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w113/USGS_13_n44w113.xml){ target="_blank" })
 — and say in your report what each one does to your result.
 
 ## ModelBuilder Tools
@@ -174,22 +133,25 @@ New in this lab:
 
 | Tool | What it does |
 | --- | --- |
-| ![Create Thiessen Polygons icon: five points, each inside the polygon of the area nearest to it](images/icon-create-thiessen-polygons.svg){ .tool-icon }<br>**Create Thiessen Polygons** (Analysis) | Draws, around every point, the polygon of all the places nearer to it than to any other point. Given the points' values, it is nearest-neighbor interpolation. Needs an Advanced license. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/create-thiessen-polygons.htm){ target="_blank" } |
-| ![Kriging icon: a semivariogram, points rising with distance and leveling off at a sill, with the range marked](images/icon-kriging.svg){ .tool-icon }<br>**Kriging** (Spatial Analyst) | Interpolates a raster from points, weighting the neighbors by a semivariogram: a curve fitted to how much the values differ as the distance between them grows. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/kriging.htm){ target="_blank" } |
-| ![Zonal Statistics as Table icon: the cells inside a zone summarized into a table row labeled MEAN](images/icon-zonal-statistics-as-table.svg){ .tool-icon }<br>**Zonal Statistics as Table** (Spatial Analyst) | Like Zonal Statistics, but writes the statistics of each zone to a table instead of a raster — here, the mean of the squared errors inside the study rectangle. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics-as-table.htm){ target="_blank" } |
+| ![Create Random Points icon: dots scattered inside a polygon](images/icon-create-random-points.svg){ .tool-icon }<br>**Create Random Points** (Data Management) | Scatters a given number of points at random inside a polygon. The points have a location and nothing else. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-random-points.htm){ target="_blank" } |
+| ![Extract Values to Points icon: a point on a grid cell picking up the value 1559 into RASTERVALU](images/icon-extract-values-to-points.svg){ .tool-icon }<br>**Extract Values to Points** (Spatial Analyst) | Copies the raster value under each point into a new field, `RASTERVALU`. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/extract-values-to-points.htm){ target="_blank" } |
+| ![Erase icon: points inside an outline crossed out, the rest kept](images/icon-erase.svg){ .tool-icon }<br>**Erase** (Analysis) | Removes the parts of one layer that fall inside another — here, the points on the butte. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/erase.htm){ target="_blank" } |
+| ![IDW icon: a cell joined to five points by lines, thicker for nearer points, labeled 1 over d squared](images/icon-idw.svg){ .tool-icon }<br>**IDW** (Spatial Analyst) | Interpolates a raster surface from points, each cell a weighted average of its nearest points, the nearest weighted most. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/idw.htm){ target="_blank" } |
+| ![Zonal Statistics icon: the cells inside a zone summed into one value](images/icon-zonal-statistics.svg){ .tool-icon }<br>**Zonal Statistics** (Spatial Analyst) | A statistic of a raster's cells inside each zone — here, the sum of the cell volumes inside the outline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics.htm){ target="_blank" } |
 
-Tools you already know: **IDW** (Lab 8), **Polygon to Raster**, **Raster Calculator** (Labs 2 and
-4–8), **Calculate Field** (Lab 6), and model parameters. Step 8 also uses **Extract Multi Values to
-Points** and **Summary Statistics**.
+Tools you already know: **Project Raster** (Labs 4, 5 and 8), **Buffer** (Labs 1 and 4), **Extract by
+Mask** (Lab 4), **Raster Calculator** (Labs 2, 4–6 and 8), **Hillshade**, and model parameters. Step 9 also
+uses **Spline** (Spatial Analyst), the smooth interpolator from Week 8.
 
 ## Example Model
 
-![The finished ModelBuilder model, exported as a vector diagram. Sample Points, marked P, feeds three branches: Create Thiessen Polygons then Polygon to Raster (Thiessen_Surface); IDW with IDW Power, marked P (IDW_Surface); and Kriging with Semivariogram, marked P (Kriging_Surface, and an unused Output variance of prediction raster). True_DEM and each surface feed a Raster Calculator (Error_Thiessen, Error_IDW and Error_Kriging, all marked P); each error goes to a second Raster Calculator that squares it, then Zonal Statistics as Table over Study_Area (each with an unused Output Join Layer), then Calculate Field, ending in RMSE Thiessen, RMSE IDW and RMSE Kriging, all marked P.](images/lab09-full-model.svg)
+![The finished ModelBuilder model, exported as a vector diagram. Butte_Boundary, marked P, feeds Buffer (Points_Boundary), Erase, both Extract by Mask tools and Zonal Statistics. Points_Boundary, Lab08.gdb and Number of Points, marked P, feed Create Random Points (Random_Points), then Extract Values to Points with DEM_UTM (Points_Values), Erase (Plain_Points, marked P), IDW (Plain_Surface) and Extract by Mask (2) (Plain_Butte). BigSouthernButte_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask (DEM_Butte). DEM_Butte and Plain_Butte feed Raster Calculator (Height_Above_Plain, marked P), then Raster Calculator (2) (Volume_Cell), then Zonal Statistics (Butte_Volume, marked P).](images/lab09-full-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
-Read it left to right: the sample points are rebuilt into a surface three ways; each rebuild is
-subtracted from `True_DEM`, squared, averaged over the rectangle and square-rooted. The nine
-elements marked `P` become the tool dialog of Step 8.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Two
+inputs, the DEM and the outline, and one number out. The upper branch rebuilds the plain from points
+around the butte; the lower branch cuts the real surface to the outline; two Raster Calculators and
+Zonal Statistics turn the difference into a volume. The six elements marked `P` are the model
+parameters and become the tool dialog of Step 9.
 
 ## Complete the Lab
 
@@ -200,368 +162,268 @@ without the step-by-step instructions below, say so in your report.
 ## Step-by-Step Solution
 
 > [!NOTE]
-> **Important Note #1.** Steps 0–7 build the model and run it on the course's 2,500 points, so your
-> numbers can be checked against this page. Step 8 re-runs the same model on other points and with
-> other settings. Build it once, and build it to be changed.
-
-> [!NOTE]
-> **Important Note #2.** Every check value on this page was measured on the files you download, with
-> the steps below, in ArcGIS Pro 3.7.1, and should match to the last digit shown. The screenshots
-> were captured in the same version, building this model, and their paths start with `C:\` because
-> they were made on an instructor machine.
+> **Every check value on this page** was measured on the files you download, with the steps below,
+> in ArcGIS Pro 3.7.1. With the random seed of Step 0, your numbers should match to the last digit
+> shown.
 
 ### Step 0 — Set Up the Project
 
-1. Create a new project named `Lab09` in `D:\Smith\Lab09\` with the **Map** template; if you already
-   made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes a project
-   geodatabase and toolbox beside it, `Lab09.gdb` and `Lab09.atbx`. The downloaded data stay in their
-   own `lab09-y-mountain\Lab09.gdb`; this page always says which of the two it means.
-2. Add `True_DEM`, `Study_Area`, `Checkpoints` and the three `Sample_Points_` layers from
-   `lab09-y-mountain\Lab09.gdb`, and `YMountain_DEM.tif` (click **OK** to build pyramids and
-   statistics).
-3. Confirm Spatial Analyst is licensed and that your license level is **Advanced** (**Project** ▸
-   **Licensing**); Create Thiessen Polygons needs it. The lab machines have both.
+1. Create a new project in `D:\Smith\Lab09\` with the **Map** template; if you already made the
+   folder, uncheck **Create a folder for this local project**.
+2. Add `BigSouthernButte_DEM.tif` (click **OK** to build pyramids and statistics) and
+   `Lab09.gdb\Butte_Boundary`. Add an imagery basemap and look at the outline against it.
+3. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
 4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
-   **Properties**, set **Name** to `InterpolationExplorer` and **Label** to `Interpolation Explorer`,
-   and save.
-5. On the **ModelBuilder** tab click **Environments** and set (type a name in the search box to
-   find it):
+   **Properties**, set **Name** to `ButteVolume` and **Label** to `Butte Volume`, and save.
+5. On the **ModelBuilder** tab click **Environments** and set:
     - **Current Workspace** and **Scratch Workspace**: your project geodatabase
-    - **Cell Size**: `30`
-    - **Snap Raster**: `True_DEM`
-    - **Extent**: click the second button above the boxes, which lists the map's layers, and choose
-      `True_DEM`. The boxes fill with its corners in latitude and longitude; that is fine.
+    - **Random Number Generator**: **Seed** `1`; leave **Generator** at ACM collected algorithm 599
+    - after Step 1 has run once: **Cell Size** `10`, and **Snap Raster** `DEM_UTM` — it is not in
+      the list until it is on a map, so browse to it in your project geodatabase or type its path
 
-![The model's Environments dialog, searched for "extent": Extent set from True_DEM, Top 40.2665, Left -111.6761, Right -111.5736, Bottom 40.2027 in GCS North American 1983; Current Workspace Lab09.gdb; Output Coordinate System empty; Cell Size 30; Mask empty; Cell Alignment Default; Snap Raster True_DEM.](images/lab09-environments.png)
+    Type an environment's name in the dialog's search box to find it.
 
-**Figure 0.** ModelBuilder ▸ Environments. Leave Output Coordinate System empty: everything you use is
-already in UTM.
+![The model's Environments dialog, two searches combined: Current Workspace and Scratch Workspace Lab08.gdb; Output Coordinate System empty; Cell Size 10; Mask empty; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab09-environments.png)
 
-> [!WARNING]
-> **Set all three: Cell Size, Snap Raster and Extent.** Without the cell size, IDW and Kriging pick
-> one from the spread of the points. Without the snap raster, they place their cells wherever their
-> points' box puts them, and the subtraction in Step 6 compares cells offset by part of a cell.
-> Without the extent, they fill only the box around the points; with 250 points that box misses
-> strips along the edges, and those cells drop out of the RMSE. Nothing reports an error in any of
-> these cases.
-
-### Step 1 — Look at the Service
-
-The same elevations are served live on the web. Before you use the prepared data, look at what the
-service gives you.
-
-1. On the **Map** tab, in the **Layer** group, click **Add Data From Path** (the yellow button
-   beside the basemap gallery), paste
-   `https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer`, and click
-   **Add**. It is slow; give it a minute.
-2. Right-click the new `3DEPElevation` layer ▸ **Properties** ▸ **Source**. Expand **Raster
-   Information** and **Spatial Reference** and record the columns and rows, the cell size, the pixel
-   type and the coordinate system. Look at the layer's legend in the Contents pane, too.
-3. On the **Map** tab click **Go To XY**, enter longitude **−111.58865** and latitude **40.21415**,
-   and drop a marker there. This is the highest cell of `YMountain_DEM.tif`. Click the marker with
-   **Explore**: the pop-up reports the service. Turn the service layer off and click again to read
-   the DEM.
-4. Remove the service layer and the marker's graphics layer. The rest of the lab runs on the prepared
-   data.
-
-![The Add Data From Path dialog: Path set to https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer and Service type An ArcGIS Server Web Service.](images/lab09-add-from-path.png)
-
-**Figure 1a.** Add Data From Path, with the 3DEP elevation service.
-
-![The service layer's Properties, Source page: Data Type Raster, Location the 3DEP ImageServer URL, Vertical Units Meter; Raster Information: Columns 40075015, Rows 20498394, 1 band, Cell Size X 1 and Y 1, Uncompressed Size 747.13 TB, Format Image Service, Source Type Elevation, Pixel Type unsigned char, Pixel Depth 8 Bit.](images/lab09-service-raster-info.png)
-
-**Figure 1b.** What came back: 1 m cells covering the whole country — 747 TB if you could download it
-— in **8-bit unsigned** pixels.
-
-![The Spatial Reference section of the same page: Projected Coordinate System WGS 1984 Web Mercator (auxiliary sphere), Projection Mercator Auxiliary Sphere, WKID 3857.](images/lab09-service-spatial-reference.png)
-
-**Figure 1c.** The service's coordinate system: Web Mercator, not the latitude and longitude of the
-extract, and not UTM.
-
-![The Explore pop-up for the service at the marker: 3DEPElevation (2), item n41w112; Service Pixel Value 154, Stretch.Pixel Value 154, Name n41w112, MinPS 0, MaxPS 27, LowPS 10.30736, HighPS 16.](images/lab09-service-popup.png)
-
-**Figure 1d.** The service at the highest cell of the extract. The value is **154**, not an
-elevation; the source item is tile `n41w112`, the same tile the extract was cut from.
-
-> [!TIP]
-> **Check the result:** the service arrives drawn as a **hillshade**, with a legend from 0 to 255.
-> That is the service's default *raster function*: the server turns elevations into a picture before
-> sending them, and that is why the pixel type is 8-bit and the pop-up reads **154** at the marker.
-> `YMountain_DEM.tif` reads about **2,893 to 2,897 m** there, depending on exactly which cell your click lands
-> in (the highest cell is 2,896.9 m).
+**Figure 0.** ModelBuilder ▸ Environments, from two searches (`workspace` and `random`). Leave
+Output Coordinate System empty: Step 1 projects the DEM itself.
 
 > [!NOTE]
-> **Why not just use the service?** A service is convenient and always current, but what comes back
-> depends on the request: here a shaded picture in Web Mercator rather than elevations in meters, and
-> it can change whenever the USGS updates it. An analysis that others must check needs a fixed copy
-> with a known date, which is why the course hosts one. Say in your report which of the two you would
-> cite in an engineering report, and why.
+> **Why fix the seed?** Create Random Points draws from a random number generator. With the same seed
+> it draws the same points every time, so your volume can be checked against this page. Another seed
+> gives other points and a slightly different volume; Step 9 tests the choices that matter more.
 
-### Step 2 — Choose the Sample Points
+### Step 1 — Project the DEM
 
-The sample points are the model's main input, and the one you will change most, so make them a
-parameter before anything else uses them.
+Add **Project Raster** with `BigSouthernButte_DEM.tif` as the input:
 
-1. Add **Create Thiessen Polygons** to the model (Step 3 fills it in), and in its **Input Features**
-   choose `Sample_Points_2500` from the map layers.
-2. In the model, right-click the new `Sample_Points_2500` oval ▸ **Rename** it `Sample Points`, and
-   right-click it ▸ **Parameter**.
+- **Output Coordinate System**: NAD 1983 UTM Zone 12N
+- **Resampling Technique**: Bilinear interpolation
+- **Output Cell Size**: 10 (X and Y)
+- **Output Raster Dataset**: `DEM_UTM`
 
-Every tool that follows takes `Sample Points` — choose it under **Model Variables** in each tool's
-list, not the map layer of the same set — so that changing this one input in Step 8 changes all three
-methods at once.
+![The Project Raster dialog from ModelBuilder: Input Raster BigSouthernButte_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10, Registration Point empty.](images/lab09-project-raster.png)
 
-> [!NOTE]
-> **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points as well.
-> With the points as a parameter, each of those runs is one choice in the tool dialog.
+**Figure 1.** Project Raster. It switches itself to Bilinear when you pick this DEM and proposes
+cells of about 9.0 m; type 10 in both X and Y.
 
-### Step 3 — Build the Thiessen Surface
+> [!TIP]
+> **Check the result:** `DEM_UTM` is **2,314 columns × 1,944 rows** of 10 m cells, values
+> **1,499.8 to 2,306.8** m. The summit cell is about 0.3 m lower than in the original because
+> bilinear resampling averages neighbors. The thin wedges along the edges are NoData: a latitude and
+> longitude rectangle is slightly tilted in UTM.
 
-1. **Create Thiessen Polygons**: **Input Features** `Sample Points`, output `Thiessen_Polygons`,
-   **Output Fields** **All fields**.
-2. Add **Polygon to Raster**: **Input Features** `Thiessen_Polygons`, **Value field**
-   `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30 (it fills in from the
-   environment), output `Thiessen_Surface`.
+### Step 2 — Draw the Sampling Ring
 
-![The Create Thiessen Polygons dialog from ModelBuilder: Input Features Sample Points, Output Feature Class Thiessen_Polygons, Output Fields All fields.](images/lab09-thiessen-polygons.png)
+Add **Buffer** with `Butte_Boundary` as the input, **Distance** `1500` Meters, **Dissolve Type**
+Dissolve all output features into a single feature, output `Points_Boundary`.
 
-**Figure 3a.** Create Thiessen Polygons, with **All fields**.
+This polygon covers the butte and a ring of plain 1,500 m wide around it. The random points go here.
 
-![The Polygon to Raster dialog from ModelBuilder: Input Features Thiessen_Polygons, Value field RASTERVALU, Output Raster Dataset Thiessen_Surface, Cell assignment type Cell center, Priority field NONE, Cellsize 30, Build raster attribute table checked.](images/lab09-polygon-to-raster.png)
+![The Buffer dialog from ModelBuilder, with a banner suggesting Pairwise Buffer: Input Features Butte_Boundary, Output Feature Class Points_Boundary, Distance 1500 Meters, Side Type Full, Method Planar, Dissolve Type Dissolve all output features into a single feature.](images/lab09-buffer.png)
 
-**Figure 3b.** Polygon to Raster, with the value field changed to `RASTERVALU`.
+**Figure 2.** Buffer. Pairwise Buffer does the same job; either is fine.
+
+> [!TIP]
+> **Check the result:** `Points_Boundary` is **65.411 km²**; `Butte_Boundary` is **28.030 km²** of
+> it.
+
+### Step 3 — Sample the Plain
+
+1. Add **Create Random Points**: **Output Location** your project geodatabase, **Output Point
+   Feature Class** `Random_Points`, **Constraining Feature Class** `Points_Boundary`, **Number of
+   Points [value or field]** `1000` (leave its type at Long). Then right-click the tool in the
+   model ▸ **Create Variable** ▸ **From Parameter** ▸ **Number of Points [value or field]**,
+   right-click the new oval ▸ **Rename** it `Number of Points`, and right-click it ▸ **Parameter**.
+2. Add **Extract Values to Points** with `Random_Points` and `DEM_UTM`, output `Points_Values`.
+
+![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab08.gdb, Output Point Feature Class Random_Points, Constraining Feature Class Points_Boundary, Number of Points Long 1000, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab09-create-random-points.png)
+
+**Figure 3a.** Create Random Points. Once a constraining feature class is set, the Constraining
+Extent box disappears.
+
+![The Extract Values to Points dialog from ModelBuilder: Input point features Random_Points, Input raster DEM_UTM, Output point features Points_Values, both checkboxes unchecked.](images/lab09-extract-values.png)
+
+**Figure 3b.** Extract Values to Points.
+
+> [!TIP]
+> **Check the result:** 1,000 points, `RASTERVALU` from **1,531.2 to 2,277.2** m. With seed 1, the
+> first point (`OBJECTID` 1) is at about **337,632.6 E, 4,806,349.7 N** — on the butte's east-southeast
+> flank.
+
+### Step 4 — Keep the Plain Points
+
+Add **Erase**: **Input Features** `Points_Values`, **Erase Features** `Butte_Boundary`, output
+`Plain_Points`.
 
 > [!WARNING]
-> **Two defaults here give a surface with no elevations in it.** Create Thiessen Polygons opens at
-> **Output Fields: Only feature ID**, which leaves the polygons with no `RASTERVALU` at all. Polygon
-> to Raster then fills **Value field** with `OBJECTID` by itself — a surface of polygon numbers, and
-> no error. Choose **All fields** in the first, and `RASTERVALU` in the second.
+> **Pick the outline from Model Variables.** The Erase Features list shows `Butte_Boundary` twice:
+> the map layer at the top, and the model's own variable under **Model Variables**, where it reads
+> `Butte_Boundary:1`. Choose the second. In our build, choosing the map layer added a second
+> `Butte_Boundary` oval to the model; the tool dialog would then ask for the outline twice and a
+> Step 9 run with your own outline would use both. The same goes for the masks in Steps 6 and 8.
+> If an extra oval appears, delete it and reconnect.
+
+![The Erase dialog from ModelBuilder, with a banner suggesting Pairwise Erase: Input Features Points_Values, Erase Features Butte_Boundary:1, Output Feature Class Plain_Points.](images/lab09-erase.png)
+
+**Figure 4.** Erase, with the outline chosen from Model Variables.
 
 > [!TIP]
-> **Check the result:** **2,500** polygons, one per point. `Thiessen_Surface` runs from **1,368.7 to
-> 2,886.7** m — exactly the range of the samples, because every cell simply takes the value of its
-> nearest point.
+> **Check the result:** **560** points remain, `RASTERVALU` **1,531.2 to 1,597.0** m (mean
+> 1,559.4). If any point is above 1,600 m, the erase used the wrong polygon.
 
-### Step 4 — Build the IDW Surface
+### Step 5 — Rebuild the Plain
 
-Add **IDW** (the Spatial Analyst tool; the search also offers a 3D Analyst and a Geostatistical
-Analyst one): **Input point features** `Sample Points`, **Z value field** `RASTERVALU` (it fills in
-by itself), **Output cell size** `30`, **Power** 2, **Search radius** Variable with 12 points, output
-`IDW_Surface`. Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power**,
-rename the new oval `IDW Power` (select it and press **Ctrl+R**), and make it a parameter.
+Add **IDW**: **Input point features** `Plain_Points`, **Z value field** `RASTERVALU`, **Output
+cell size** `10`, **Power** 2, **Search radius** Variable with 12 points, output `Plain_Surface`.
 
-![The IDW dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output raster IDW_Surface, Output cell size 30, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab09-idw.png)
+![The IDW dialog from ModelBuilder: Input point features Plain_Points, Z value field RASTERVALU, Output raster Plain_Surface with a warning icon, Output cell size 10, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab09-idw.png)
 
-**Figure 4.** IDW.
-
-> [!TIP]
-> **Check the result:** `IDW_Surface` runs from **1,368.7 to 2,885.5** m. IDW is a weighted average,
-> so it can never go above its highest point or below its lowest: compare with the data check.
-
-### Step 5 — Build the Kriging Surface
-
-Add **Kriging** (Spatial Analyst): **Input point features** `Sample Points`, **Z value field**
-`RASTERVALU`, output `Kriging_Surface`, **Kriging method** Ordinary, **Semi-variogram model**
-Spherical, **Output cell size** `30`, **Search radius** Variable with 12 points. Leave **Lag size**
-at the 30 it fills in, the range, sill and nugget empty, and the optional variance raster empty.
-Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Semivariogram
-properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool dialog it shows
-the same controls as here: in Step 8 you pick another model from its **Semi-variogram model** list.
-
-![The Kriging dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output surface raster Kriging_Surface, Kriging method Ordinary, Semi-variogram model Spherical, Lag size 30, Major range, Partial sill and Nugget empty, Output cell size 30, Search radius Variable with Number of points 12, Output variance of prediction raster empty.](images/lab09-kriging.png)
-
-**Figure 5.** Kriging. The range, sill and nugget stay empty: Kriging fits them to your points.
-
-> [!TIP]
-> **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
-> its samples; here it does not, and it pulls the peak down a little further than IDW.
-
-### Step 6 — Map the Errors
-
-Add **Raster Calculator** (Spatial Analyst) three times, one per surface, each the truth minus the
-rebuild. Double-click `True_DEM` in the calculator's **Rasters** list to put it in the expression;
-it joins the model as an input.
-
-| Expression | Output |
-| --- | --- |
-| `"%True_DEM%" - "%Thiessen_Surface%"` | `Error_Thiessen` |
-| `"%True_DEM%" - "%IDW_Surface%"` | `Error_IDW` |
-| `"%True_DEM%" - "%Kriging_Surface%"` | `Error_Kriging` |
-
-The quickest way to the second and third: select the first Raster Calculator, **Ctrl+C**, click
-empty canvas, **Ctrl+V**, drag the copy clear, and edit its expression and output. A positive error
-means the surface came out too **low** there; a negative error, too **high**. Give all three the same
-diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
-50, 100 m), so that the same color means the same error on every map.
-
-![The Raster Calculator dialog from ModelBuilder, widened: the Rasters list shows Thiessen_Surface, IDW_Surface, Kriging_Surface, Output variance of prediction raster and IDW Power, with True_DEM further down the list; the expression reads "%True_DEM%" - "%Thiessen_Surface%"; Output raster Error_Thiessen.](images/lab09-rc-error.png)
-
-**Figure 6.** The Thiessen error. Type the output name last and check it before **OK**: Raster
-Calculator puts back the old name when the expression changes.
-
-> [!TIP]
-> **Check the result:**
->
-> | Error raster | Minimum | Maximum | Mean |
-> | --- | --- | --- | --- |
-> | `Error_Thiessen` | −234.1 | 214.3 | −0.39 |
-> | `Error_IDW` | −136.8 | 169.9 | −0.84 |
-> | `Error_Kriging` | −104.0 | 164.4 | −0.31 |
->
-> Every mean is under a meter: the errors cancel. That is why the next step squares them.
-
-### Step 7 — Compute the RMSE
-
-The root-mean-square error is the typical size of an error, whatever its sign: **square** every
-cell's error, take the **mean** of the squares over the rectangle, and take the **square root**.
-Build the chain once for Thiessen, then copy it twice:
-
-1. **Raster Calculator**: `Square("%Error_Thiessen%")`, output `SqError_Thiessen`.
-2. **Zonal Statistics as Table**: **Input raster or feature zone data** `Study_Area`, **Zone field**
-   `OBJECTID`, **Input value raster** `SqError_Thiessen`, **Statistics type** Mean (it opens at
-   All), output table `RMSE_Thiessen`.
-3. **Calculate Field**: **Input Table** `RMSE_Thiessen`, **Field Name** `RMSE`, **Field Type**
-   Double (it opens at Text), **Expression Type** Python, and in the box under `RMSE =`,
-   `math.sqrt(!MEAN!)`. Rename its output oval `RMSE Thiessen`.
-
-Copy the square Raster Calculator twice and edit it for IDW and Kriging. Then select the Zonal
-Statistics as Table and Calculate Field tools and their outputs, copy and paste them twice, and in
-each copy change only the value raster and the output table (`SqError_IDW` and `RMSE_IDW`;
-`SqError_Kriging` and `RMSE_Kriging`): the copied Calculate Field follows its table by itself. Rename
-the outputs `RMSE IDW` and `RMSE Kriging`.
-
-Finally make the outputs parameters: the three error rasters and the three `RMSE` ovals. With
-`Sample Points`, `IDW Power` and `Semivariogram`, that is nine. Save, and run the model inside
-ModelBuilder.
-
-![The Raster Calculator dialog from ModelBuilder: the expression reads Square("%Error_Thiessen%"); Output raster SqError_Thiessen.](images/lab09-rc-square.png)
-
-**Figure 7a.** Squaring the Thiessen error.
-
-![The Zonal Statistics as Table dialog from ModelBuilder: Input Raster or Feature Zone Data Study_Area, Zone Field OBJECTID, Input Value Raster SqError_Thiessen, Output Table RMSE_Thiessen, Ignore NoData in Calculations checked, Statistics Type Mean, Calculate Circular Statistics and Process as Multidimensional unchecked, Output Join Layer empty.](images/lab09-zonal-table.png)
-
-**Figure 7b.** Zonal Statistics as Table, with **Mean**.
-
-![The Calculate Field dialog from ModelBuilder: Input Table RMSE_Thiessen, Field Name RMSE with a warning that it is a new field, Field Type Double (64-bit floating point), Expression Type Python, Fields list OBJECTID, OBJECTID_1, COUNT, AREA, MEAN, and the expression RMSE = math.sqrt(!MEAN!).](images/lab09-calculate-field.png)
-
-**Figure 7c.** Calculate Field. The warning beside Field Name only says the field will be added.
-
-> [!TIP]
-> **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
-> **COUNT 67,337** and **AREA 60,603,300** (m²).
->
-> | Table | MEAN (m²) | RMSE (m) |
-> | --- | --- | --- |
-> | `RMSE_Thiessen` | 800.3 | **28.29** |
-> | `RMSE_IDW` | 428.9 | **20.71** |
-> | `RMSE_Kriging` | 209.0 | **14.46** |
->
-> If COUNT is smaller, an interpolator's output does not cover the whole rectangle — check the
-> **Extent** environment of Step 0. At 2,500 points it can look right without it; at 250 it does not.
-> The whole model runs in under ten seconds inside ModelBuilder.
-
-### Step 8 — Test the Choices
-
-The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
-and three sets of default parameters. Find out how much of it survives a change.
-
-**First, the checkpoints and Map 1.** Your Step 7 run is your **baseline**, and its surfaces are
-still on disk because you ran it inside ModelBuilder. Use them now, before any run from the tool
-dialog (see the warning below). In real work you would not have a true DEM; you would hold back some
-measured points and test against them. `Checkpoints` is 200 such points, drawn separately from the
-samples and never used to interpolate:
-
-1. **Extract Multi Values to Points** on `Checkpoints` (from the downloaded geodatabase; export a
-   copy to your project geodatabase first, so the download stays clean) with `True_DEM` (output field
-   name `TRUE_Z`), `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface`
-   (`KR_Z`).
-2. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
-   `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
-3. **Summary Statistics** on your copy of `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and
-   `SQ_KR`. The square root of each mean is that method's **checkpoint RMSE**.
-
-Then make Map 1 (see the Deliverables) from the baseline's surfaces and error rasters.
+**Figure 5.** IDW. The warning icon only says `Plain_Surface` already exists from an earlier run.
 
 > [!WARNING]
-> **Finish Map 1 and the checkpoints before the first dialog run.** A run from the tool dialog deletes
-> everything that is not a parameter (Labs 5, 7 and 8 saw it), including the three surfaces Map 1 and
-> the checkpoints need. The downloaded data are inputs, so they are never deleted.
-
-**Then the tool dialog.** Save the model, close it, and open it from the **Catalog** pane
-(**Toolboxes** ▸ `Lab09.atbx` ▸ **Interpolation Explorer**). Run it **five times**, giving every
-output a name that says which run it is (`RMSE_IDW_n250`, `Error_Kriging_gauss`). Before each run,
-empty the Semivariogram's **Major range**, **Partial sill** and **Nugget** boxes if a previous run
-filled them, so that Kriging fits its model to the points afresh.
-
-| Run | Sample Points | IDW Power | Semi-variogram model |
-| --- | --- | --- | --- |
-| 1 | `Sample_Points_250` | 2 | Spherical |
-| 2 | `Sample_Points_10000` | 2 | Spherical |
-| 3 | `Sample_Points_2500` | 1 | Exponential |
-| 4 | `Sample_Points_2500` | 3 | Gaussian |
-| 5 | `Sample_Points_2500` | **your own power** (below) | Spherical |
-
-Runs 3 and 4 change IDW and Kriging at once; that is fine, because they are in different branches
-and each RMSE comes from its own branch.
-
-**Your own IDW power.** Every student tries a different power in run 5, worked out from your
-**BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It is
-**not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU sites.
-
-> **Your power = 1 + (the last two digits of your BYU ID) ÷ 40**
->
-> - BYU ID `123456789`: the last two digits are **89**, so the power is 1 + 89 ÷ 40 = **3.225**.
-> - BYU ID `987654302`: the last two digits are **02**, so the power is 1 + 2 ÷ 40 = **1.05**.
-> - Last two digits **00**: the power is **1**.
->
-> Every power falls between 1 and 3.475. Type it with all its decimals, and write your BYU ID's last
-> two digits and your power in your report: the grader checks your run 5 against them.
-
-![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer, set up for run 5 with the example BYU ID: Sample Points Sample_Points_2500; IDW Power 3.225; Semivariogram Ordinary, Spherical, with Lag size, Major range, Partial sill and Nugget empty; outputs RMSE_IDW_mypower, RMSE_Kriging_mypower, RMSE_Thiessen_mypower, Error_IDW_mypower, Error_Kriging_mypower and Error_Thiessen_mypower.](images/lab09-tool-dialog.png)
-
-**Figure 8.** The model as a tool, set up for run 5 with the example ID ending in 89 (power 3.225).
-Lag size may show empty in the dialog; Kriging fills it in.
+> **Check the cell size.** With the Cell Size environment of Step 0, IDW fills in 10. Without it,
+> IDW picks a cell size from the extent of the points, much coarser than the DEM's. Keep the Snap
+> Raster environment on `DEM_UTM` so the plain's cells line up with the DEM's. The Z value field list
+> stays empty until the model has run once; type `RASTERVALU`.
 
 > [!TIP]
-> **Check run 5:** only the IDW RMSE changes; the Thiessen and Kriging RMSEs are the same as your
-> Step 7 run (28.29 and 14.46). With the example power of 3.225, IDW's RMSE is **20.29** m.
+> **Check the result** (after Step 6): inside the outline the rebuilt plain runs from **1,547.1 to
+> 1,585.9** m, higher in the south. IDW cannot go above or below its points: compare with Step 4.
 
-Record **all of it in one table**: your baseline (Step 7) and the five runs, each with the sample
-points, the IDW power and semivariogram model, and the RMSE of all three methods, plus one more row
-with the three checkpoint RMSEs of your baseline.
+### Step 6 — Cut Both Surfaces to the Outline
+
+Add **Extract by Mask** twice, each with `Butte_Boundary` as the mask:
+
+1. `DEM_UTM` → `DEM_Butte`
+2. `Plain_Surface` → `Plain_Butte`
+
+![The Extract by Mask dialog from ModelBuilder: Input raster DEM_UTM, Input raster or feature mask data Butte_Boundary:1, Output raster DEM_Butte, Extraction Area Inside, and the Analysis Extent filled in from the mask: top 4810897.26, left 332575.20, right 338592.05, bottom 4804664.22, NAD 1983 UTM Zone 12N.](images/lab09-extract-mask.png)
+
+**Figure 6.** The first Extract by Mask. The Analysis Extent fills itself in from the mask; leave it.
+Type the output name last: this tool replaces a typed name when its inputs change.
+
+> [!TIP]
+> **Check the result:** each is **280,311** cells — 28.03 km² of 10 m cells, the outline's area.
+> `DEM_Butte` runs from **1,554.8 to 2,306.8** m.
+
+### Step 7 — Compute Height and Volume
+
+Add **Raster Calculator** twice, both in the model:
+
+1. The height of the butte above the plain, in meters, output `Height_Above_Plain`:
+
+    ```text
+    "%DEM_Butte%" - "%Plain_Butte%"
+    ```
+
+2. Each cell's volume, output `Volume_Cell`:
+
+    ```text
+    "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3)
+    ```
+
+    Height times the cell's 10 m × 10 m is cubic meters; divided by 1,000³ it is cubic kilometers.
+    `**` is Python's power operator.
+
+![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, BigSouthernButte_DEM.tif, Number of Points, Plain_Surface and DEM_Butte; the expression reads "%DEM_Butte%" - "%Plain_Butte%"; Output raster Height_Above_Plain.](images/lab09-rc-height.png)
+
+**Figure 7a.** The height above the plain.
+
+![The Raster Calculator (2) dialog: the expression reads "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3); Output raster Volume_Cell.](images/lab09-rc-volume.png)
+
+**Figure 7b.** Each cell's volume, in cubic kilometers. Raster Calculator replaced the typed output
+name with `RasterC_1` when the expression went in; type the name last and check it before OK.
+
+> [!TIP]
+> **Check the result:** in `Height_Above_Plain` (**Properties** ▸ **Source** ▸ **Statistics**) the
+> tallest cell is **729.1 m** above the plain and the mean is **183.5 m**. **53** cells at the edge
+> are a fraction of a meter *below* the plain; they subtract a negligible amount.
+
+### Step 8 — Add Up the Volume
+
+Add **Zonal Statistics**: **Input raster or feature zone data** `Butte_Boundary`, **Zone field**
+`OBJECTID`, **Input value raster** `Volume_Cell`, **Statistics type** Sum, output `Butte_Volume`.
+Every cell of the output holds the same number: the sum. Read it in the layer's **Properties** ▸
+**Source** ▸ **Statistics** or by clicking a cell.
+
+Make these model parameters, and name them so the tool dialog reads well: the DEM, `Butte_Boundary`
+and the number of points (inputs), and `Plain_Points`, `Height_Above_Plain` and `Butte_Volume`
+(outputs). Step 9 and your maps need all three outputs.
+
+![The Zonal Statistics dialog from ModelBuilder: Input Raster or Feature Zone Data Butte_Boundary:1, Zone Field OBJECTID, Input Value Raster Volume_Cell, Output Raster Butte_Volume, Statistics Type Sum, Ignore NoData in Calculations checked, Process as Multidimensional unchecked.](images/lab09-zonal.png)
+
+**Figure 8a.** Zonal Statistics. Zone Field fills in `OBJECTID` by itself; Statistics Type opens at
+Mean — change it to Sum, near the bottom of the list.
+
+![The model as a tool in the Geoprocessing pane, titled Butte Volume: Number of Points, Long, 1000; Butte_Boundary; BigSouthernButte_DEM.tif; then the outputs Plain_Points, Height_Above_Plain and Butte_Volume, each with a warning icon because those datasets already exist.](images/lab09-tool-dialog.png)
+
+**Figure 8b.** The model as a tool. The warning icons only say the outputs exist from an earlier run;
+give every output a new name for each Step 9 run.
+
+> [!TIP]
+> **Check the result:** **5.145 km³**. As a sanity check: 28.03 km² of outline times a mean height
+> of 183.5 m is 5.14 km³.
+
+> [!WARNING]
+> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 8 saw it),
+> including `DEM_UTM`. Do Steps 1–8 from inside ModelBuilder first and record the check values before
+> any dialog run. In our build, a dialog run at 250 points took 1 minute 10 seconds and left only its
+> three outputs and `Random_Points`. The model makes `DEM_UTM` again at the start of every run, so
+> the Snap Raster setting still works.
+
+### Step 9 — Test the Assumptions
+
+The volume rests on three choices: the outline, the number of points, and the interpolation method.
+Run the model from its tool dialog **four more times**, giving each output a name that says what
+changed (`Butte_Volume_n250`, `Height_Above_Plain_n250`):
+
+1. **Fewer and more points:** 250 and 4,000 (two runs).
+2. **Your own outline:** in your project geodatabase, create a polygon feature class
+   `My_Butte_Boundary` in NAD 1983 UTM Zone 12N. Turn off the reference outline layer, make a
+   hillshade of `DEM_UTM` with the **Hillshade** tool, and digitize the base of the butte against it
+   and the imagery as **one polygon** — Zonal Statistics sums each feature separately, so a second
+   feature gives a second volume. Run the tool with it at 1,000 points.
+3. **Another method:** save a copy of the model (**Save As**), replace IDW with **Spline**
+   (Regularized, weight 0.1, 12 points, cell size 10), and run it once at 1,000 points with the
+   reference outline. Leave the Processing Extent environment at its default: the spline's result
+   depends on it.
+
+For **the baseline and every run, in one table**, record what changed, the points kept after the
+erase, the outline's area, the volume, the tallest cell, and the number of cells below the plain.
+Where to read each:
+
+- **Points kept:** the record count of that run's `Plain_Points` (open its attribute table).
+- **Outline area:** the outline's `Shape_Area` field, in square meters.
+- **Tallest cell:** that run's `Height_Above_Plain`, **Properties** ▸ **Source** ▸ **Statistics**,
+  maximum.
+- **Cells below the plain:** Raster Calculator, `Con("Height_Above_Plain_n250" < 0, 1)` (use the
+  run's own raster), then the **Count** of value 1 in the output's attribute table. No output, or
+  an empty table, means zero.
 
 Then answer, in your report:
 
-1. **Which method wins, and does the ranking survive?** Rank the methods at 250, 2,500 and 10,000
-   points, with your numbers. Does the winner change? How much does going from 250 to 10,000 points
-   buy each method?
-2. **Which parameter mattered, and which barely did?** Compare what the IDW power (powers 1, 2, 3 and
-   yours) and the semivariogram model did with what the number of points did. Before you explain the
-   Gaussian run, look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its
-   largest positive errors, the places the surface came out too low?
-3. **Could you have known without the truth?** Compare each method's checkpoint RMSE with its RMSE
-   over all 67,337 cells. Would 200 checkpoints have told a client the right ranking, and how far off
-   would the number you quoted have been?
+1. **Which choice moves the volume most,** and which least? Rank them with your numbers.
+2. **What did the spline do that IDW cannot?** Map its cells below the plain and explain them with
+   what you learned about the methods in Week 8.
+3. **What does your number measure?** Is it the volume of the lava dome? Say what part of the dome
+   the model cannot see, and what data would let you measure it.
 
 > [!TIP]
-> Before you run the 10,000-point set, predict its RMSEs from your 250 and 2,500 results. Then look
-> at where on the error maps the remaining error lives, and at the slope of the ground there.
+> The random part of the model is not the part that matters most. Check how far apart your 250- and
+> 4,000-point runs are before you guess.
 
 ## Deliverables
 
-Make **two** professional map layouts (letter size, landscape is easiest):
+Make **two** professional map layouts:
 
-1. **Your baseline comparison sheet** — from your Step 7 run: the true DEM with the
-   sample points and the three surfaces in one row, **on one elevation color scale**; the three error
-   rasters beneath their surfaces **on one diverging color scale** with the same breaks; each panel
-   labeled with its method, its parameters and its RMSE; legends for both scales; a title, neat
-   line, north arrow and scale bar; and a text box with your name, the date, the map projection, the
-   DEM's source and date.
-2. **One scenario from Step 8** — whichever run most changes the picture: its three error rasters
-   on Map 1's error scale with a legend, each labeled with its method, parameters and RMSE (the true
-   DEM and the surfaces are optional); a title, neat line, north arrow and scale bar; and a text box
-   with your name, the date, the map projection, and the DEM's source and date. Say in
-   the title and the text box what changed from Map 1 and by how much.
+1. **Your baseline result** — `Height_Above_Plain` from the baseline run in a clear color scale
+   with a legend in meters, over a hillshade or imagery, with the reference outline, the volume in
+   the title or a text box, a neat line, north arrow and scale bar, a text box with your name, the
+   date, the map projection and the DEM's source and date, and an inset locating the butte in Idaho.
+2. **One scenario from Step 9** — your own outline or the spline, whichever changes the picture
+   more, with the same color scale as Map 1 so the two can be compared. Say on the map what changed
+   and by how much.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
@@ -571,77 +433,67 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **a description of your model** a reader could repeat from: each tool and its settings, and every
   input, intermediate and output dataset with its type
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its tool dialog with the sample points, the IDW power
-  and the semivariogram exposed; and **upload your project's toolbox** (`Lab09.atbx`, in your project
-  folder) with the report — the grader opens it and runs it at your IDW power
+  Graphic**), and **one** screen capture of its tool dialog with the outline and the number of
+  points exposed
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
-  datum and units, and its cell size — and **what the service returned** in Step 1, what each
-  means for your result, and which of the two you would cite in an engineering report
-- your **check values from Steps 3 to 7**, on the course's 2,500 points: each surface's range, the
-  error table, and the three RMSEs
-- **where the methods break**: on your baseline's error map for the best method (lowest RMSE), the cell with the
-  largest error in either direction — its coordinates and size — and why the ground there defeats
-  the interpolators, with a cropped figure of the spot. Its value is the raster's minimum or maximum
-  (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
-  the layer a two-class symbology with the break just short of that value, so that one cell stands
-  out, and click it with **Explore** to read its coordinates
-- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its three questions
+  datum and units, and its cell size — and what each one means for your result
+- your **check values from Steps 4 to 8**: the points kept, the tallest cell, and the volume
+- your **sensitivity table** from Step 9 and your answers to its three questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
-
-> [!NOTE]
-> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
-> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
-> model's elements, and the wording of your report are your own work. Submissions whose layouts,
-> labels or symbology match another student's too closely are flagged for follow-up.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your
 > reviewer in the report and say in a sentence what you changed because of them.
 
-**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
-n41w112 (May 2026). Study area: drawn for CE 414.
+**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tiles
+n44w114 and n44w113 (April 2026). Butte outline: derived from the DEM for CE 414.
 
 ## References
 
-Bolstad, P. *GIS Fundamentals: A First Text on Geographic Information Systems*. Eider Press.
-Chapter 12, the Week 8 reading on interpolation (any of the 5th to 7th editions).
+Greeley, R. (1982). The Snake River Plain, Idaho: Representative of a new category of volcanism.
+*Journal of Geophysical Research*, 87(B4), 2705–2712.
+[doi:10.1029/JB087iB04p02705](https://doi.org/10.1029/JB087iB04p02705){ target="_blank" }.
 
-U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20,
-2026.
+Hughes, S.S., Smith, R.P., Hackett, W.R., and Anderson, S.R. (1999). Mafic volcanism and
+environmental geology of the eastern Snake River Plain, Idaho. In Hughes, S.S., and Thackray, G.D.,
+eds., *Guidebook to the Geology of Eastern Idaho*, Idaho Museum of Natural History, 143–168.
 
-U.S. Geological Survey, 3D Elevation Program. 3DEP Elevation image service.
-[elevation.nationalmap.gov](https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer){ target="_blank" }.
+Lifton, Z. (2023). The Big Buttes of the Eastern Snake River Plain. *Yellowstone Caldera Chronicles*,
+USGS Yellowstone Volcano Observatory, December 4, 2023.
+[usgs.gov](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }.
+
+U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tiles n44w114 and n44w113,
+published April 7, 2026.
 
 ## Example Maps
 
-These are examples, not templates. Your maps carry your name, so your
-numbers will differ a little from these.
+These are examples, not templates. Your maps carry your name, and your second map shows the run you
+chose.
 
-![Example comparison sheet titled "Rebuilding Y Mountain from 2,500 Points: Kriging Comes Closest". Top row: the true DEM with 2,500 black sample points, then the Thiessen, IDW and Kriging surfaces, all on one green-to-brown-to-white elevation scale over a hillshade; the Thiessen surface is visibly faceted. Second row: the three error maps on one red-to-blue scale, labeled Thiessen error RMSE 28.29 m, IDW error RMSE 20.71 m, Kriging error RMSE 14.46 m; the valley floor is pale everywhere, and the mountain front is a mottle of red and blue, finest-grained for Thiessen and palest for Kriging. Legends, north arrow, scale bar and a text box at the bottom.](images/lab09-example-map-baseline.png)
+![Example baseline layout titled "Big Southern Butte: About 5.1 Cubic Kilometers Above the Plain": the height of the butte above the rebuilt plain inside the black reference outline, over a gray hillshade, in classes from pale yellow (0 to 50 m) at the edges through orange to dark red (600 to 750 m) at the two summit lobes. Below, an Idaho locator with an orange dot, a legend, north arrow, a scale bar in kilometers, and a text box: 5.145 cubic km inside the 28.03 sq km outline, tallest cell 729 m above the plain, mean height 183.5 m.](images/lab09-example-map-baseline.png)
 
-**Figure 9.** A comparison sheet on the course's 2,500 points. Two things to do better than this example:
-mark and label the largest error on the best method's error map, and use the empty band below the
-error maps for a sentence on what the reader should notice.
+**Figure 9.** The baseline map. Two things to do better than this example: label the summit and
+one place on the plain, and show where the random points fell.
 
-![Example scenario sheet titled "The Same Surfaces from 250 Points: Every Error Grows", with the same layout and color scales: far fewer sample points; blurred, blocky surfaces; and error maps dominated by dark red and dark blue across the mountain, labeled RMSE 80.73, 69.46 and 50.38 m. The text box says the run was chosen because whole ridges are missed, not just the cliff bands.](images/lab09-example-map-scenario.png)
+![Example scenario layout titled "Big Southern Butte by Spline: About 4.5 Cubic Kilometers": the same design and color classes, with blue patches along the western, northern and northeastern edges of the outline where the ground is below the plain the spline drew, and less dark red at the summit. The text box says the volume falls from 5.145 to 4.481 cubic km and 11,963 cells sit below the plain, because the spline bulges up under the butte where it has no points to hold it down.](images/lab09-example-map-scenario.png)
 
-**Figure 10.** The kind of second map Step 8 asks for. Yours needs only the error maps, and should
-be the run that most changes what a reader would conclude, which may not be this one.
+**Figure 10.** The kind of second map Step 9 asks for. Your own second map should be the run that
+most changes what a reader would conclude, which may not be this one.
 
-## Rubric for Interpolation Explorer
+## Rubric for Big Southern Butte
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 3 to 7, on the course's 2,500 points (2)<br>• Where the methods break: the largest error on your baseline's error map for the best method, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, on the course's 2,500 points, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
-| **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The true DEM with the sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
-| **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• Your check values from Steps 4 to 8 (2)<br>• What the volume measures and what the model cannot see (Step 9, question 3) (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its baseline volume matches the check value (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the outline and the number of points exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in a clear color scale with a legend in meters (2)<br>• The outline over a hillshade or imagery (1)<br>• An inset locating the butte in Idaho (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
+| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend (2)<br>• The outline used, over a hillshade or imagery (1)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and the four Step 9 runs (250 and 4,000 points, your own outline, the spline), with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4)<br>• Which choice moves the volume most and least, ranked with your numbers (3)<br>• What the spline did that IDW cannot, mapped and explained (3) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -651,16 +503,10 @@ what to submit.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Migration notes (draft 2026-10-06, promoted 2026-10-07).
-SOURCE: "Lab 8 - Practicing with Interpolation.docx" (instructor's copy in Downloads, saved 2026-10-06), whose September 3 migration is archived at docs/assignments/lab09-backup/README.md; rebuilt to tools/lab-conversion-guide.md per tools/labs-09-11-plan.md section 4 (accepted 2026-10-06) and tools/lab09/PARITY_PLAN.md.
-ARCGIS PRO: 3.7.1, arcpy (tools/lab09/run_model.py, extra_checks.py, chain_check.py, extent_check.py) and a GUI build on 2026-10-07 at 175 % (C:\Ames\Lab09GUI\Lab09.aprx, model InterpolationExplorer, set up by tools/lab09/gui_project.py; captures in caps\). Every check value reproduced in the GUI: first point, sample range, surface ranges, error table, ZSaT COUNT/AREA/MEAN and RMSE 28.29 / 20.71 / 14.46; a tool-dialog run at 250 points gave 80.73 / 69.46 / 50.38 (the oracle values) in 1 min 54 s; a full ModelBuilder run 1 min 34 s.
-GUI FACTS (2026-10-07): Snap Raster True_DEM breaks every tool-dialog run (ERROR 010654, the output True_DEM is the same as the snap raster) - environments are now Snap Raster DEM_UTM and Extent = YMountain_DEM.tif from the layer list (fills in degrees; Study_Area from the layer list also fills in degrees; browsing to True_DEM gives UTM but True_DEM is a model output); with these the surfaces cover all of DEM_UTM, so Kriging's minimum is 1,368.5 (outside the rectangle) while the RMSEs are unchanged. Create Variable > From Environment > Random Number Generator exposes the seed as a parameter (Random Seed). Semivariogram properties can be a parameter; after a run its dialog shows the fitted range/sill (10950 / 513125.9) but a 250-point dialog run still refit (50.38). Defaults that silently give wrong surfaces: Thiessen Output Fields Only feature ID; Polygon to Raster Value field OBJECTID; IDW and Kriging Z value field CID; Zonal Statistics as Table Statistics All; Calculate Field Field Type Text. Kriging writes one extra cell on each side of the extent. Project Raster proposes 9.06 m. The service arrives through its Hillshade raster function: 40,075,015 x 20,498,394 cells of 1 m, 747.13 TB, unsigned char 8 bit, WGS 1984 Web Mercator (auxiliary sphere) WKID 3857; Explore at the highest cell reads Service Pixel Value 154, item n41w112, LowPS 10.30736. Dialog runs delete DEM_UTM, True_DEM, Sample_Points and the three surfaces. Copying a Zonal Statistics + Calculate Field chain keeps the Calculate Field wired to its own table. The copied blank project pre-filled Output Coordinate System in the model environments (cleared) and carried Lab01.atbx and Lab01.gdb.
-DATA: docs/data/lab09-y-mountain.zip, 1,885,312 bytes: YMountain_DEM.tif (window -111.68 -111.57 40.20 40.27 of USGS_13_n41w112, published 2026-05-20, source dates 1946-2023; 1,188 x 756 float32, 1,368.03-2,896.92 m, no NoData) and Lab09.gdb\Study_Area (442,514.873-451,184.873 E, 4,450,507.050-4,457,497.050 N, on DEM_UTM's 30 m grid). Built by tools/lab09/fetch_dem.py, run_model.py, make_extract.py.
-VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 (at seed 1 / 2,500 points also without an Extent environment, but NOT in general: the pilot found IDW and Kriging at 250 points cover only 66,297 cells without Extent = True_DEM, RMSE 69.47 / 50.24 instead of 69.46 / 50.38; Extent now set in Step 0); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
-SENSITIVITY (do NOT publish): see tools/lab09/PARITY_PLAN.md. Points 250/1,000/2,500/10,000: Kriging 50.38/24.90/14.46/6.90; IDW power 1/2/3/5: 23.98/20.71/20.20/21.60; Kriging Gaussian 24.81, other models 14.46; checkpoints within 2-3 m of the full-grid RMSE, same ranking; seeds 2-5 never change the ranking.
-GRADING ORACLE: run_model.py --seed NNNN reproduces a student's own rows of the Step 8 table (baseline, IDW 1 / exponential, IDW 3 / Gaussian, plus the checkpoint RMSEs); the course rows are fixed (package_checks.json).
-SIMPLIFIED VERSION (2026-10-07): zip now carries Lab09.gdb\True_DEM and Sample_Points_250/_2500/_10000 (seed 1, CID dropped), 2,436,872 bytes, rebuilt by make_extract.py and reverified from the zip by verify_package.py (package_checks.json): 250 -> 80.73 / 69.46 / 50.38; 2,500 -> 28.29 / 20.71 / 14.46; 10,000 -> 15.71 / 10.39 / 6.90; Kriging surface min 1,368.7 with Extent = True_DEM. GUI build 2 (C:\Ames\Lab09GUI2\Lab09.aprx, set up by tools/lab09/gui_project2.py): 16 tools, 9 parameters; ModelBuilder run 7 s; dialog run on My_Sample_Points (seed 4321) 1 min 11 s gave 27.32 / 19.10 / 12.79 and IDW 3 + Gaussian (range/sill/nugget cleared) 18.54 / 25.45, both exactly the oracle. GUI facts: with hosted points IDW and Kriging fill RASTERVALU by themselves; Snap Raster and Extent can both be True_DEM (an input, so no ERROR 010654); choosing a map layer in a tool's list creates the model variable (renamed Sample Points); double-clicking True_DEM in Raster Calculator brings it in as a model variable and the expression becomes "%True_DEM%"; Kriging's Semivariogram range/sill/nugget stay empty after a run if cleared before it. Captures replaced: Figures 0, 3a, 4, 5, 6, 7b, 8a; new 8b, 8c; Figure C re-exported. Old-version captures dropped from the page: project raster, extract by mask, create random points, extract values (files deleted).
-PILOT 2 (no-GUI, simplified page, 2026-10-07, C:\Ames\Pilot09b\PILOT_NOTES.md): every number reproduced from the zip, including seed 4321 (baseline 27.32 / 19.10 / 12.79; checkpoints 28.98 / 18.49 / 12.70; IDW1+exponential 22.65 / 12.79; IDW3+Gaussian 18.54 / 25.45). Fixed: Gaussian question now reads the kept Error_Kriging, not the deleted surface; project named Lab09 and downloaded vs project geodatabase distinguished; 'steps 3 and 4' renamed to the tools; example maps renumbered 9-10; 'where the methods break' is the student's own baseline; Map 2 seed wording; checkpoint RMSEs get their own table row (matches template); alt text.
-PILOT (no-GUI, 2026-10-06, C:\Ames\Pilot09\PILOT_NOTES.md): every seed-1 number reproduced; checkpoint recipe works as written (seed 1: 30.38 / 23.16 / 17.12, deliberately not published). Fixed from its findings: Extent environment added (Step 0, Step 3 warning, Step 9 tip); Step 10 warning to finish Map 1 and the checkpoints before dialog runs; semivariogram parameter path spelled out; Map 2 deliverable matches its rubric row, true DEM optional; 'largest error' defined (best method, either direction) with a way to find it; True_DEM cell count without the wrong 289 x 233; citation question added to deliverables and rubric; Figure A names the three values; checkpoint output location; OBJECTID_1 zone field noted.
-LICENSE: the instructor confirmed 2026-10-07 that the lab machines have the same extensions as the build machine (Advanced, Spatial Analyst), so Create Thiessen Polygons is available.
-TODO(instructor): 1. A dialog run with Kriging Gaussian and the fitted range/sill left in (the page tells students to clear them). 2. Week 9 deck alignment. 3. Learning Suite due date November 7. OLD-PAGE IMAGES moved with the archive: lab09-example-modelbuilder-model.png, lab09-fixed-radius-interpolation-concept.png. -->
+<!-- Draft notes (2026-10-05).
+SOURCE: the September 3 migration of "Lab 8 - Big Southern Butte.docx" (docs/assignments/lab-09/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab09/PARITY_PLAN.md.
+CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
+DATA: docs/data/lab09-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab09.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab09/fetch_dem.py, make_outline.py, make_extract.py.
+SENSITIVITY (do NOT publish): IDW 5.145; Natural Neighbor 5.029; Spline 4.481 (11,963 cells below the plain); Kriging 4.988; Trend 5.312; 250 pts 5.229; 500 5.199; 2,000 5.103; 4,000 5.062; seeds 2-6 5.146-5.161; outline -200/-100/+100/+200 m: 4.846/5.008/5.236/5.322.
+PILOT (no-GUI, 2026-10-05, C:\Ames\Pilot08\PILOT-REPORT.md): every check value reproduced from the student zip (volume 5.14502), and the Step 9 runs (250: 146 kept, 5.2288; 4,000: 2,302 kept, 5.0617; Spline 4.4811, 11,963 below) match. Fixed from its findings: Height_Above_Plain is now a model output (Step 7 split in two) and Plain_Points/Height_Above_Plain are output parameters so dialog runs keep what Step 9 and Map 2 need; Step 9 says where to read each table value (Con < 0 count verified: 53 baseline, 11,963 spline); four runs, not 'at least three'; own outline must be one polygon, reference layer turned off; seed promise removed; photo is Figure B; tools-you-know lab numbers corrected; columns x rows, edge NoData, ESE; Map 1 deliverable lists the rubric's elements. Still open: template link (build after review), the draft box citing PARITY_PLAN.md (removed at promotion).
+GUI facts owed: the Random Numbers environment label and reach; exposing Number of Points; IDW's default cell size; dialog-run deletion of intermediates. -->

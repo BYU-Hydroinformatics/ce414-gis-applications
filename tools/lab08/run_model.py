@@ -1,111 +1,119 @@
-"""Lab 8 reference run: the butte-volume model the students build, run with arcpy, plus the
-sensitivity runs. Writes tools/lab08/check_values.json.
+"""Reference run of the Lab 8 (avalanche terrain) analysis in arcpy, with the check values.
 
-Model: Create Random Points (in Points_Boundary, fixed seed) -> Extract Values to Points ->
-Erase (Butte_Boundary) -> interpolate the plain -> Extract by Mask (DEM and plain) ->
-Raster Calculator (height x cell area / 1e9) -> Zonal Statistics SUM.
-ArcGIS Pro Python; needs DEM_UTM, Butte_Boundary, Points_Boundary in C:\\Ames\\Lab08\\Check.gdb.
+    python run_model.py [shift ...]      (ArcGIS Pro Python; default shifts: 0 -400 -200 200)
+
+Steps, as the draft page has them:
+  1. Project Raster: LittleCottonwood_DEM.tif -> NAD 1983 UTM zone 12N, bilinear, 10 m cells.
+  2. Slope (degrees) and Aspect.
+  3. Reclassify slope and aspect with Table 1; altitude with Table 1 shifted by SHIFT meters
+     (Raster Calculator, so the shift can be a model parameter).
+  4. Combine: (a) the "all three agree" Con method; (b) the product, 1-125, grouped into five
+     classes by its cube root (the geometric mean of the three classes), rounded.
+  5. Areas by class inside the Snowbird boundary (UGRC SkiAreaBoundaries, OBJECTID 13).
+
+Writes C:\\Ames\\Lab07\\Check.gdb and tools/lab08/check_values.json.
 """
 import json
 import os
+import sys
+import time
+import urllib.request
 
 import arcpy
 import numpy as np
-from arcpy.sa import (Idw, ExtractByMask, Kriging, KrigingModelOrdinary, NaturalNeighbor, Raster,
-                      Spline, Trend, ZonalStatistics, RadiusVariable)
+from arcpy.sa import Aspect, Con, Float, Int, Power, Raster, Reclassify, RemapRange, Slope
 
-GDB = r"C:\Ames\Lab08\Check.gdb"
-OUT = os.path.join(os.path.dirname(__file__), "check_values.json")
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = r"C:\Ames\Lab07"
+DEM = os.path.join(ROOT, "Data", "LittleCottonwood_DEM.tif")
+GDB = os.path.join(ROOT, "Check.gdb")
+SHIFTS = [float(v) for v in sys.argv[1:]] or [0, -400, -200, 200]
+UTM = arcpy.SpatialReference(26912)
+BOUNDARY_URL = ("https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/"
+                "FeatureServer/0/query?where=OBJECTID+IN+(13,14)&outFields=OBJECTID,NAME&outSR=26912&f=json")
+
+# Table 1 of the lab (from a Sawtooth Avalanche Center advisory). Slope's Low band starts at 0
+# (the handout's -1 is the Aspect tool's flat code, not a slope).
+SLOPE = [[0, 25, 1], [25, 30, 2], [30, 32, 3], [32, 35, 4], [35, 45, 5], [45, 50, 4], [50, 55, 3], [55, 60, 2], [60, 90, 1]]
+ASPECT = [[-1, 45, 5], [45, 90, 4], [90, 135, 3], [135, 180, 2], [180, 225, 1], [225, 270, 2], [270, 315, 3], [315, 360, 4]]
+ALT = [2200, 2400, 2600, 2800]          # class 1 below 2,200 m ... class 5 above 2,800 m
+
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
+os.makedirs(ROOT, exist_ok=True)
+if not arcpy.Exists(GDB):
+    arcpy.management.CreateFileGDB(ROOT, "Check.gdb")
 arcpy.env.workspace = GDB
-dem = Raster(os.path.join(GDB, "DEM_UTM"))
-arcpy.env.snapRaster = dem
-arcpy.env.cellSize = dem
-# no extent override: the GUI default (each tool's own inputs) is what students get; Spline depends on it
-CELL = dem.meanCellWidth
+
+t0 = time.time()
+proj = os.path.join(GDB, "DEM_UTM")
+arcpy.management.ProjectRaster(DEM, proj, UTM, "BILINEAR", "10")
+arcpy.env.snapRaster = proj
+arcpy.env.cellSize = proj
+arcpy.env.extent = proj
+dem = Raster(proj)
+slope = Slope(dem, "DEGREE")
+slope.save(os.path.join(GDB, "Slope_Deg"))
+aspect = Aspect(dem)
+aspect.save(os.path.join(GDB, "Aspect_Deg"))
+slope_c = Reclassify(slope, "VALUE", RemapRange(SLOPE), "NODATA")
+slope_c.save(os.path.join(GDB, "Slope_Class"))
+aspect_c = Reclassify(aspect, "VALUE", RemapRange(ASPECT), "NODATA")
+aspect_c.save(os.path.join(GDB, "Aspect_Class"))
+
+# Snowbird and Alta boundaries from UGRC, projected
+js = json.loads(urllib.request.urlopen(BOUNDARY_URL, timeout=60).read())
+bnd = os.path.join(GDB, "SkiAreas")
+if arcpy.Exists(bnd):
+    arcpy.management.Delete(bnd)
+arcpy.management.CreateFeatureclass(GDB, "SkiAreas", "POLYGON", spatial_reference=UTM)
+arcpy.management.AddField(bnd, "NAME", "TEXT", field_length=60)
+with arcpy.da.InsertCursor(bnd, ["SHAPE@", "NAME"]) as cur:
+    for f in js["features"]:
+        rings = f["geometry"]["rings"]
+        arr = arcpy.Array([arcpy.Array([arcpy.Point(*xy) for xy in ring]) for ring in rings])
+        cur.insertRow([arcpy.Polygon(arr, UTM), f["attributes"]["NAME"]])
+
+cell_km2 = (dem.meanCellWidth * dem.meanCellHeight) / 1e6
+mask_lyr = arcpy.management.MakeFeatureLayer(bnd, "snowbird", "NAME LIKE 'Snowbird%'")
+mask = arcpy.sa.ExtractByMask(Raster(proj) * 0 + 1, mask_lyr)
+mask.save(os.path.join(GDB, "Snowbird_Mask"))
+m = arcpy.RasterToNumPyArray(mask, arcpy.Point(dem.extent.XMin, dem.extent.YMin), dem.width, dem.height, nodata_to_value=0) > 0
 
 
-def points(n, seed, tag):
-    arcpy.env.randomGenerator = f"{seed} ACM599"
-    rp = f"RP_{tag}"
-    arcpy.management.CreateRandomPoints(GDB, rp, "Points_Boundary", "", n)
-    arcpy.sa.ExtractValuesToPoints(rp, dem, f"PV_{tag}")
-    arcpy.analysis.Erase(f"PV_{tag}", "Butte_Boundary", f"NB_{tag}")
-    xy = [r for r in arcpy.da.SearchCursor(rp, ["SHAPE@X", "SHAPE@Y"])]
-    return xy, int(arcpy.management.GetCount(f"NB_{tag}")[0])
+def counts(r, classes=range(0, 6)):
+    a = arcpy.RasterToNumPyArray(r, arcpy.Point(dem.extent.XMin, dem.extent.YMin), dem.width, dem.height, nodata_to_value=-9)
+    return {int(k): round(float(((a == k) & m).sum() * cell_km2), 3) for k in classes}
 
 
-def plain(method, tag):
-    fc = f"NB_{tag}"
-    if method == "IDW":
-        return Idw(fc, "RASTERVALU", CELL, 2, RadiusVariable(12))
-    if method == "Natural Neighbor":
-        return NaturalNeighbor(fc, "RASTERVALU", CELL)
-    if method == "Spline":
-        return Spline(fc, "RASTERVALU", CELL, "REGULARIZED", 0.1, 12)
-    if method == "Kriging":
-        return Kriging(fc, "RASTERVALU", KrigingModelOrdinary("SPHERICAL"), CELL)
-    if method == "Trend (plane)":
-        return Trend(fc, "RASTERVALU", CELL, 1, "LINEAR")
-    raise ValueError(method)
+out = dict(dem=dict(min=float(dem.minimum), max=float(dem.maximum), cols=dem.width, rows=dem.height, cell=dem.meanCellWidth),
+           snowbird_km2=round(float(m.sum() * cell_km2), 3), slope_max=float(Raster(os.path.join(GDB, "Slope_Deg")).maximum),
+           slope_classes=counts(slope_c), aspect_classes=counts(aspect_c), runs={})
+flat = arcpy.RasterToNumPyArray(aspect, nodata_to_value=-9)
+out["flat_cells_total"] = int((flat == -1).sum())
 
+for shift in SHIFTS:
+    a1, a2, a3, a4 = (v + shift for v in ALT)
+    alt_c = Con(dem <= a1, 1, Con(dem <= a2, 2, Con(dem <= a3, 3, Con(dem <= a4, 4, 5))))
+    tag = f"{int(shift):+d}".replace("+", "p").replace("-", "m")
+    alt_c.save(os.path.join(GDB, f"Alt_Class_{tag}"))
+    agree = Con((alt_c == 1) & (slope_c == 1) & (aspect_c == 1), 1,
+                Con((alt_c == 2) & (slope_c == 2) & (aspect_c == 2), 2,
+                    Con((alt_c == 3) & (slope_c == 3) & (aspect_c == 3), 3,
+                        Con((alt_c == 4) & (slope_c == 4) & (aspect_c == 4), 4,
+                            Con((alt_c == 5) & (slope_c == 5) & (aspect_c == 5), 5, 0)))))
+    agree.save(os.path.join(GDB, f"Agree_{tag}"))
+    product = alt_c * slope_c * aspect_c
+    product.save(os.path.join(GDB, f"Product_{tag}"))
+    combined = Int(Power(Float(product), 1.0 / 3.0) + 0.5)
+    combined.save(os.path.join(GDB, f"Combined_{tag}"))
+    pa = arcpy.RasterToNumPyArray(product, nodata_to_value=-9)
+    out["runs"][str(int(shift))] = dict(
+        alt_classes=counts(alt_c), agree_classes=counts(agree), combined_classes=counts(combined),
+        product_min=int(pa[pa > 0].min()), product_max=int(pa.max()),
+        product_values=int(len(np.unique(pa[pa > 0]))))
+    print(shift, out["runs"][str(int(shift))]["combined_classes"], flush=True)
 
-def volume(surface, outline="Butte_Boundary"):
-    b = ExtractByMask(dem, outline)
-    p = ExtractByMask(surface, outline)
-    v = (b - p) * CELL * CELL / (1000 ** 3)
-    z = ZonalStatistics(outline, "OBJECTID", v, "SUM")
-    a = arcpy.RasterToNumPyArray(v, nodata_to_value=np.nan)
-    h = arcpy.RasterToNumPyArray(b - p, nodata_to_value=np.nan)
-    zone = float(z.maximum)
-    return dict(volume_km3=round(zone, 4), cells=int(np.isfinite(a).sum()),
-                max_height_m=round(float(np.nanmax(h)), 1), neg_cells=int((h < 0).sum()),
-                neg_volume_km3=round(float(np.nansum(np.where(a < 0, a, 0))), 4)), v
-
-
-res = {}
-xy1, nb = points(1000, 1, "base")
-xy1b, _ = points(1000, 1, "repeat")
-res["seed_reproducible"] = xy1 == xy1b
-res["first_point"] = [round(xy1[0][0], 2), round(xy1[0][1], 2)]
-res["baseline_points_kept"] = nb
-base, vras = volume(plain("IDW", "base"))
-vras.save(os.path.join(GDB, "Volume_per_cell"))
-res["baseline"] = base
-res["outline_km2"] = round(sum(r[0] for r in arcpy.da.SearchCursor("Butte_Boundary", ["SHAPE@AREA"])) / 1e6, 3)
-plane_dem = arcpy.RasterToNumPyArray(ExtractByMask(dem, "Butte_Boundary"), nodata_to_value=np.nan)
-res["butte_dem_max_m"] = round(float(np.nanmax(plane_dem)), 1)
-
-res["methods"] = {}
-for m in ("IDW", "Natural Neighbor", "Spline", "Kriging", "Trend (plane)"):
-    res["methods"][m] = volume(plain(m, "base"))[0]
-    print(m, res["methods"][m], flush=True)
-
-res["counts"] = {}
-for n in (250, 500, 2000, 4000):
-    _, k = points(n, 1, f"n{n}")
-    res["counts"][n] = dict(kept=k, **volume(plain("IDW", f"n{n}"))[0])
-    print(n, res["counts"][n], flush=True)
-
-res["seeds"] = {}
-for s in (2, 3, 4, 5, 6):
-    _, k = points(1000, s, f"s{s}")
-    res["seeds"][s] = dict(kept=k, **volume(plain("IDW", f"s{s}"))[0])
-    print("seed", s, res["seeds"][s], flush=True)
-
-# Outline sensitivity: grow and shrink the reference outline, as a digitizer might.
-res["outline"] = {}
-for d in (-200, -100, 100, 200):
-    arcpy.analysis.Buffer("Butte_Boundary", f"BB_{abs(d)}{'m' if d < 0 else 'p'}", f"{d} Meters")
-for d in (-200, -100, 100, 200):
-    o = f"BB_{abs(d)}{'m' if d < 0 else 'p'}"
-    arcpy.analysis.Erase("PV_base", o, "NB_o")
-    surf = Idw("NB_o", "RASTERVALU", CELL, 2, RadiusVariable(12))
-    r = volume(surf, o)[0]
-    r["area_km2"] = round(sum(x[0] for x in arcpy.da.SearchCursor(o, ["SHAPE@AREA"])) / 1e6, 3)
-    res["outline"][d] = r
-    print("outline", d, r, flush=True)
-
-json.dump(res, open(OUT, "w"), indent=1)
-print(json.dumps({k: res[k] for k in ("seed_reproducible", "first_point", "baseline_points_kept", "baseline", "outline_km2", "butte_dem_max_m")}, indent=1))
+out["seconds"] = round(time.time() - t0, 1)
+json.dump(out, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
+print(json.dumps({k: v for k, v in out.items() if k != "runs"}, indent=1))

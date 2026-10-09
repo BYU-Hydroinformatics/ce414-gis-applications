@@ -1,180 +1,111 @@
-r"""Lab 9 reference run: the interpolation-comparison model the students build, run with arcpy, plus
-the sensitivity runs. Writes tools/lab09/check_values.json.
+"""Lab 9 reference run: the butte-volume model the students build, run with arcpy, plus the
+sensitivity runs. Writes tools/lab09/check_values.json.
 
-Model: Project Raster (UTM 12N, 30 m, bilinear) -> Extract by Mask (Study_Area) = True_DEM ->
-Create Random Points (in Study_Area, fixed seed) -> Extract Values to Points ->
-  Thiessen:  Create Thiessen Polygons -> Polygon to Raster (RASTERVALU)
-  IDW:       IDW (power, variable 12)
-  Kriging:   Kriging (ordinary, semivariogram model, variable 12)
-each -> Raster Calculator (True_DEM - surface = error) -> Raster Calculator (Square) ->
-Zonal Statistics as Table (MEAN, Study_Area) -> Calculate Field RMSE = sqrt(MEAN).
-Environments: snap raster and extent True_DEM, cell size 30.
-
-ArcGIS Pro Python. Needs C:\Ames\Lab09\Data\YMountain_DEM.tif; builds C:\Ames\Lab09\Check.gdb.
-Usage: run_model.py   (the original reference run). Since October 7, 2026 the lab uses only the hosted
-point sets and a personal IDW power; the grading table for every power is verify_package.py ->
-package_checks.json['personal_power']. The --seed mode is kept for a possible future personal-seed version.
+Model: Create Random Points (in Points_Boundary, fixed seed) -> Extract Values to Points ->
+Erase (Butte_Boundary) -> interpolate the plain -> Extract by Mask (DEM and plain) ->
+Raster Calculator (height x cell area / 1e9) -> Zonal Statistics SUM.
+ArcGIS Pro Python; needs DEM_UTM, Butte_Boundary, Points_Boundary in C:\\Ames\\Lab08\\Check.gdb.
 """
-import argparse
 import json
-import math
 import os
-import time
 
 import arcpy
 import numpy as np
-from arcpy.sa import (ExtractByMask, Idw, Kriging, KrigingModelOrdinary, Raster, RadiusVariable,
-                      Square, ZonalStatisticsAsTable)
+from arcpy.sa import (Idw, ExtractByMask, Kriging, KrigingModelOrdinary, NaturalNeighbor, Raster,
+                      Spline, Trend, ZonalStatistics, RadiusVariable)
 
-DEM = r"C:\Ames\Lab09\Data\YMountain_DEM.tif"
-GDB = r"C:\Ames\Lab09\Check.gdb"
+GDB = r"C:\Ames\Lab08\Check.gdb"
 OUT = os.path.join(os.path.dirname(__file__), "check_values.json")
-UTM = arcpy.SpatialReference(26912)        # NAD 1983 UTM Zone 12N
-# xmin, ymin, xmax, ymax in UTM 12N meters, on the 30 m grid of DEM_UTM (origin 442,124.873 E,
-# top 4,457,947.050 N) so every cell inside it is whole: 289 x 233 cells, 60.6 km2.
-STUDY = (442514.873, 4450507.050, 451184.873, 4457497.050)
-
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
+arcpy.env.workspace = GDB
+dem = Raster(os.path.join(GDB, "DEM_UTM"))
+arcpy.env.snapRaster = dem
+arcpy.env.cellSize = dem
+# no extent override: the GUI default (each tool's own inputs) is what students get; Spline depends on it
+CELL = dem.meanCellWidth
 
 
-def setup():
-    if not arcpy.Exists(GDB):
-        arcpy.management.CreateFileGDB(os.path.dirname(GDB), os.path.basename(GDB))
-    arcpy.env.workspace = GDB
-    sa = os.path.join(GDB, "Study_Area")
-    if arcpy.Exists(sa):   # rebuilt every time so a change to STUDY takes effect
-        arcpy.management.Delete(sa)
-    if not arcpy.Exists(sa):
-        x0, y0, x1, y1 = STUDY
-        arcpy.management.CreateFeatureclass(GDB, "Study_Area", "POLYGON", spatial_reference=UTM)
-        with arcpy.da.InsertCursor(sa, ["SHAPE@"]) as cur:
-            ring = arcpy.Array([arcpy.Point(x0, y0), arcpy.Point(x0, y1), arcpy.Point(x1, y1),
-                                arcpy.Point(x1, y0), arcpy.Point(x0, y0)])
-            cur.insertRow([arcpy.Polygon(ring, UTM)])
-    arcpy.management.ProjectRaster(DEM, "DEM_UTM", UTM, "BILINEAR", 30)
-    true = ExtractByMask("DEM_UTM", "Study_Area")
-    true.save("True_DEM")
-    arcpy.env.snapRaster = os.path.join(GDB, "True_DEM")
-    arcpy.env.extent = os.path.join(GDB, "True_DEM")
-    arcpy.env.cellSize = 30
-    t = Raster("True_DEM")
-    a = arcpy.RasterToNumPyArray(t, nodata_to_value=np.nan)
-    return dict(dem_utm=dict(cols=Raster("DEM_UTM").width, rows=Raster("DEM_UTM").height,
-                             min=round(Raster("DEM_UTM").minimum, 1), max=round(Raster("DEM_UTM").maximum, 1)),
-                true_dem=dict(cols=t.width, rows=t.height, cells=int(np.isfinite(a).sum()),
-                              min=round(float(np.nanmin(a)), 1), max=round(float(np.nanmax(a)), 1),
-                              mean=round(float(np.nanmean(a)), 1)),
-                study_km2=round((STUDY[2] - STUDY[0]) * (STUDY[3] - STUDY[1]) / 1e6, 2))
-
-
-def sample(n, seed, tag):
+def points(n, seed, tag):
     arcpy.env.randomGenerator = f"{seed} ACM599"
     rp = f"RP_{tag}"
-    arcpy.management.CreateRandomPoints(GDB, rp, "Study_Area", "", n)
-    arcpy.sa.ExtractValuesToPoints(rp, "True_DEM", f"Points_{tag}")
-    raw = [r[0] for r in arcpy.da.SearchCursor(f"Points_{tag}", ["RASTERVALU"])]
-    vals = [v for v in raw if v is not None and v != -9999]
-    first = next(arcpy.da.SearchCursor(rp, ["SHAPE@X", "SHAPE@Y"]))
-    return f"Points_{tag}", dict(n=len(vals), min=round(min(vals), 1), max=round(max(vals), 1),
-                                 nodata=len(raw) - len(vals),
-                                 first_point=[round(first[0], 1), round(first[1], 1)])
+    arcpy.management.CreateRandomPoints(GDB, rp, "Points_Boundary", "", n)
+    arcpy.sa.ExtractValuesToPoints(rp, dem, f"PV_{tag}")
+    arcpy.analysis.Erase(f"PV_{tag}", "Butte_Boundary", f"NB_{tag}")
+    xy = [r for r in arcpy.da.SearchCursor(rp, ["SHAPE@X", "SHAPE@Y"])]
+    return xy, int(arcpy.management.GetCount(f"NB_{tag}")[0])
 
 
-def thiessen(pts, tag):
-    arcpy.analysis.CreateThiessenPolygons(pts, f"Thiessen_Poly_{tag}", "ALL")
-    npoly = int(arcpy.management.GetCount(f"Thiessen_Poly_{tag}")[0])
-    arcpy.conversion.PolygonToRaster(f"Thiessen_Poly_{tag}", "RASTERVALU", f"Thiessen_{tag}", "CELL_CENTER", "", 30)
-    return Raster(f"Thiessen_{tag}"), npoly
+def plain(method, tag):
+    fc = f"NB_{tag}"
+    if method == "IDW":
+        return Idw(fc, "RASTERVALU", CELL, 2, RadiusVariable(12))
+    if method == "Natural Neighbor":
+        return NaturalNeighbor(fc, "RASTERVALU", CELL)
+    if method == "Spline":
+        return Spline(fc, "RASTERVALU", CELL, "REGULARIZED", 0.1, 12)
+    if method == "Kriging":
+        return Kriging(fc, "RASTERVALU", KrigingModelOrdinary("SPHERICAL"), CELL)
+    if method == "Trend (plane)":
+        return Trend(fc, "RASTERVALU", CELL, 1, "LINEAR")
+    raise ValueError(method)
 
 
-def idw(pts, power, tag):
-    r = Idw(pts, "RASTERVALU", 30, power, RadiusVariable(12))
-    r.save(f"IDW_{tag}")
-    return r
+def volume(surface, outline="Butte_Boundary"):
+    b = ExtractByMask(dem, outline)
+    p = ExtractByMask(surface, outline)
+    v = (b - p) * CELL * CELL / (1000 ** 3)
+    z = ZonalStatistics(outline, "OBJECTID", v, "SUM")
+    a = arcpy.RasterToNumPyArray(v, nodata_to_value=np.nan)
+    h = arcpy.RasterToNumPyArray(b - p, nodata_to_value=np.nan)
+    zone = float(z.maximum)
+    return dict(volume_km3=round(zone, 4), cells=int(np.isfinite(a).sum()),
+                max_height_m=round(float(np.nanmax(h)), 1), neg_cells=int((h < 0).sum()),
+                neg_volume_km3=round(float(np.nansum(np.where(a < 0, a, 0))), 4)), v
 
 
-def kriging(pts, model, tag):
-    r = Kriging(pts, "RASTERVALU", KrigingModelOrdinary(model), 30, RadiusVariable(12))
-    r.save(f"Kriging_{tag}")
-    return r
+res = {}
+xy1, nb = points(1000, 1, "base")
+xy1b, _ = points(1000, 1, "repeat")
+res["seed_reproducible"] = xy1 == xy1b
+res["first_point"] = [round(xy1[0][0], 2), round(xy1[0][1], 2)]
+res["baseline_points_kept"] = nb
+base, vras = volume(plain("IDW", "base"))
+vras.save(os.path.join(GDB, "Volume_per_cell"))
+res["baseline"] = base
+res["outline_km2"] = round(sum(r[0] for r in arcpy.da.SearchCursor("Butte_Boundary", ["SHAPE@AREA"])) / 1e6, 3)
+plane_dem = arcpy.RasterToNumPyArray(ExtractByMask(dem, "Butte_Boundary"), nodata_to_value=np.nan)
+res["butte_dem_max_m"] = round(float(np.nanmax(plane_dem)), 1)
 
+res["methods"] = {}
+for m in ("IDW", "Natural Neighbor", "Spline", "Kriging", "Trend (plane)"):
+    res["methods"][m] = volume(plain(m, "base"))[0]
+    print(m, res["methods"][m], flush=True)
 
-def score(surface, tag, checkpoints=None):
-    """Error raster, squared error, Zonal Statistics as Table MEAN, sqrt -- as the students do it."""
-    err = Raster("True_DEM") - surface
-    err.save(f"Error_{tag}")
-    sq = Square(err)
-    ZonalStatisticsAsTable("Study_Area", "OBJECTID", sq, f"ZS_{tag}", "DATA", "MEAN")
-    mean_sq = next(arcpy.da.SearchCursor(f"ZS_{tag}", ["MEAN"]))[0]
-    s = arcpy.RasterToNumPyArray(surface, nodata_to_value=np.nan)
-    e = arcpy.RasterToNumPyArray(err, nodata_to_value=np.nan)
-    t = arcpy.RasterToNumPyArray(Raster("True_DEM"), nodata_to_value=np.nan)
-    iy, ix = np.unravel_index(np.nanargmax(np.abs(e)), e.shape)
-    ext = err.extent
-    worst = [round(ext.XMin + (ix + 0.5) * 30, 0), round(ext.YMax - (iy + 0.5) * 30, 0)]
-    res = dict(rmse=round(math.sqrt(mean_sq), 2), mean_sq=round(mean_sq, 1),
-               surf_min=round(float(np.nanmin(s)), 1), surf_max=round(float(np.nanmax(s)), 1),
-               err_min=round(float(np.nanmin(e)), 1), err_max=round(float(np.nanmax(e)), 1),
-               mean_err=round(float(np.nanmean(e)), 2), cells=int(np.isfinite(e).sum()),
-               worst_xy=worst, worst_err=round(float(e[iy, ix]), 1),
-               cells_above_true_max=int((s > np.nanmax(t)).sum()),
-               within_5m=round(float((np.abs(e) <= 5).sum() / np.isfinite(e).sum()), 3))
-    if checkpoints:
-        arcpy.sa.ExtractValuesToPoints(checkpoints, surface, f"CP_{tag}")
-        arcpy.sa.ExtractMultiValuesToPoints(f"CP_{tag}", [[os.path.join(GDB, "True_DEM"), "TRUE_Z"]])
-        d = [(a - b) for a, b in arcpy.da.SearchCursor(f"CP_{tag}", ["TRUE_Z", "RASTERVALU"])
-             if a is not None and b is not None and b != -9999]
-        res["checkpoint_rmse"] = round(math.sqrt(sum(x * x for x in d) / len(d)), 2)
-        res["checkpoints_used"] = len(d)
-    return res
+res["counts"] = {}
+for n in (250, 500, 2000, 4000):
+    _, k = points(n, 1, f"n{n}")
+    res["counts"][n] = dict(kept=k, **volume(plain("IDW", f"n{n}"))[0])
+    print(n, res["counts"][n], flush=True)
 
+res["seeds"] = {}
+for s in (2, 3, 4, 5, 6):
+    _, k = points(1000, s, f"s{s}")
+    res["seeds"][s] = dict(kept=k, **volume(plain("IDW", f"s{s}"))[0])
+    print("seed", s, res["seeds"][s], flush=True)
 
-def run(n, seed, power=2, model="SPHERICAL", tag=None, checkpoints=None, which=("Thiessen", "IDW", "Kriging")):
-    tag = tag or f"n{n}_s{seed}"
-    pts, pinfo = sample(n, seed, tag)
-    out = dict(points=pinfo)
-    t0 = time.time()
-    if "Thiessen" in which:
-        th, npoly = thiessen(pts, tag)
-        out["Thiessen"] = dict(polygons=npoly, **score(th, f"Th_{tag}", checkpoints))
-    if "IDW" in which:
-        out["IDW"] = score(idw(pts, power, f"{tag}_p{power}"), f"IDW_{tag}_p{power}", checkpoints)
-    if "Kriging" in which:
-        out["Kriging"] = score(kriging(pts, model, f"{tag}_{model[:3]}"), f"Kr_{tag}_{model[:3]}", checkpoints)
-    out["secs"] = round(time.time() - t0, 1)
-    print(tag, json.dumps({k: (v.get("rmse") if isinstance(v, dict) and "rmse" in v else v) for k, v in out.items()}), flush=True)
-    return out
+# Outline sensitivity: grow and shrink the reference outline, as a digitizer might.
+res["outline"] = {}
+for d in (-200, -100, 100, 200):
+    arcpy.analysis.Buffer("Butte_Boundary", f"BB_{abs(d)}{'m' if d < 0 else 'p'}", f"{d} Meters")
+for d in (-200, -100, 100, 200):
+    o = f"BB_{abs(d)}{'m' if d < 0 else 'p'}"
+    arcpy.analysis.Erase("PV_base", o, "NB_o")
+    surf = Idw("NB_o", "RASTERVALU", CELL, 2, RadiusVariable(12))
+    r = volume(surf, o)[0]
+    r["area_km2"] = round(sum(x[0] for x in arcpy.da.SearchCursor(o, ["SHAPE@AREA"])) / 1e6, 3)
+    res["outline"][d] = r
+    print("outline", d, r, flush=True)
 
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--seed", type=int)
-    ap.add_argument("--points", type=int, default=2500)
-    a = ap.parse_args()
-    res = dict(setup=setup())
-    print(json.dumps(res["setup"]), flush=True)
-    # checkpoints: 200 independent points, seed 99, never used to interpolate (Step 10, question 3)
-    arcpy.env.randomGenerator = "99 ACM599"
-    arcpy.management.CreateRandomPoints(GDB, "Checkpoints", "Study_Area", "", 200)
-    if a.seed is not None:   # grading oracle: a student's own rows of the Step 8 table (2,500 points at their seed)
-        s = a.seed
-        table = {"baseline (my points)": run(2500, s, tag=f"p{s}", checkpoints="Checkpoints"),
-                 "IDW power 1, Kriging exponential": run(2500, s, power=1, model="EXPONENTIAL", tag=f"p{s}_a"),
-                 "IDW power 3, Kriging Gaussian": run(2500, s, power=3, model="GAUSSIAN", tag=f"p{s}_b")}
-        print(json.dumps({k: {m: v[m]["rmse"] for m in ("Thiessen", "IDW", "Kriging")} for k, v in table.items()}, indent=1))
-        print("checkpoint RMSE:", {m: table["baseline (my points)"][m]["checkpoint_rmse"] for m in ("Thiessen", "IDW", "Kriging")})
-        return
-    res["baseline"] = run(2500, 1, checkpoints="Checkpoints")
-    res["repeat_identical"] = run(2500, 1, tag="repeat", which=("IDW",))["IDW"]["rmse"] == res["baseline"]["IDW"]["rmse"]
-    res["counts"] = {n: run(n, 1, checkpoints="Checkpoints") for n in (250, 1000, 10000)}
-    res["idw_power"] = {p: run(2500, 1, power=p, tag=f"pow{p}", which=("IDW",))["IDW"] for p in (1, 3, 5)}
-    res["kriging_model"] = {m: run(2500, 1, model=m, tag=f"mod{m[:3]}", which=("Kriging",))["Kriging"]
-                            for m in ("EXPONENTIAL", "GAUSSIAN", "LINEAR", "CIRCULAR")}
-    res["seeds"] = {s: run(2500, s, tag=f"seed{s}") for s in (2, 3, 4, 5)}
-    json.dump(res, open(OUT, "w"), indent=1)
-    print("wrote", OUT)
-
-
-if __name__ == "__main__":
-    main()
+json.dump(res, open(OUT, "w"), indent=1)
+print(json.dumps({k: res[k] for k in ("seed_reproducible", "first_point", "baseline_points_kept", "baseline", "outline_km2", "butte_dem_max_m")}, indent=1))

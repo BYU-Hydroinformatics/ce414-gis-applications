@@ -299,8 +299,8 @@ const LABS = {
   ],
 },
 
-'07': {
-  labTitle: 'Lab 7: Avalanche Hazard',
+'08': {
+  labTitle: 'Lab 8: Avalanche Hazard',
   labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',
   sections: [
     { h: 'Requirements and Approach',
@@ -373,8 +373,8 @@ const LABS = {
   ],
 },
 
-'08': {
-  labTitle: 'Lab 8: Big Southern Butte',
+'09': {
+  labTitle: 'Lab 9: Big Southern Butte',
   labSubtitle: 'Measuring the volume of a volcanic dome by rebuilding the plain beneath it',
   sections: [
     { h: 'Requirements and Approach',
@@ -444,8 +444,8 @@ const LABS = {
   ],
 },
 
-'09': {
-  labTitle: 'Lab 9: Interpolation Explorer',
+'10': {
+  labTitle: 'Lab 10: Interpolation Explorer',
   labSubtitle: 'Rebuilding a mountain from samples, three ways, and measuring how wrong each one is',
   sections: [
     { h: 'Requirements and Approach',

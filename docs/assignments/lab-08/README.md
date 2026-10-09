@@ -1,98 +1,146 @@
-# Lab 8: Big Southern Butte
+# Lab 8: Avalanche Hazard
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Measuring the volume of a volcanic dome by rebuilding the plain beneath it*
+*Terrain-based avalanche hazard screening from slope, aspect, and elevation*
 
-<!-- **Revision notes.** Drafted October 5, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab08-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab08/PARITY_PLAN.md. The decisions
-it rests on are in `tools/lab08/PARITY_PLAN.md`. The dialog captures (Figures 0-8) and Figure C come
-from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab08GUI\Lab08.aprx, model
-ButteVolume, set up by tools/lab08/gui_project.py). ModelBuilder run 32 s; every check value
-reproduced (first point 337,632.58 E 4,806,349.71 N, 560 kept, 280,311 cells, 729.1 / 183.5 m, 53
-below, 5.145018 km3). A tool-dialog run at 250 points (1 min 10 s) gave 146 kept, 735.7 m, 0 below,
-5.2288 km3, matching check_values.json, and deleted every non-parameter output except Random_Points.
-GUI facts: the environment is "Random Number Generator" (Seed, Generator = ACM collected algorithm 599)
-and the model-level seed reaches Create Random Points; the Cell Size list offers only map layers;
-choosing the outline map layer in Erase added a duplicate variable (model variable reads
-Butte_Boundary:1); IDW takes cell size 10 from the environment; Extract by Mask fills Analysis Extent
-from the mask; Raster Calculator (2) replaced the typed name with RasterC_1; Zonal Statistics opens
-at Mean with OBJECTID filled in.
+<!-- **Revision notes.** Drafted October 2, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab08-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab08/PARITY_PLAN.md. It follows `tools/lab-conversion-guide.md` and the pattern of Labs 4–6.
 
-**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 5, 2026
-(`tools/lab08/run_model.py`, `step_checks.py`) against the hosted data. -->
+**Changes to what the lab asks students to do:** one study area (Snowbird), not two; two maps
+(baseline and one scenario), not three; the "all three agree" Con method becomes a step with a
+check value and a report question rather than a map; the multiply method's 1–125 scale is grouped
+into five classes by a stated rule (the cube root of the product); an **Elevation shift**
+parameter and two more combination rules (worst factor, best factor) make the sensitivity step;
+class areas inside the Snowbird boundary are measured with Tabulate Area and checked; the rubric
+is five parts of ten.
+
+**Corrections:** "Project Raster to the NAD 1983 projection" (a datum) is now NAD 1983 UTM zone 12N
+at 10 m; slope's Low band starts at 0, not −1; "Project" in the tool list is Project Raster; the
+uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002" are replaced by sourced
+statements; the dead Sawtooth link is replaced.
+
+**Figures:** the dialog captures (Figures 0-9) and Figure C come from a GUI build of the model in
+ArcGIS Pro 3.7.1 at 175 % display scaling on October 5, 2026 (C:\Ames\Lab07GUI\Lab08.aprx, model
+AvalancheTerrain); Figure B is the danger-scale image the Word-era page used. The Word-era captures
+and the Snowbird example map are in the archived copy.
+
+**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 2, 2026
+(`tools/lab08/run_model.py`, `tool_checks.py`) against the hosted extract, and reproduced by the GUI build. -->
+
+> [!WARNING]
+> **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
+> terrain-based screening of slope, aspect, and elevation, produced for the purpose of learning
+> raster analysis and ModelBuilder. It does not account for snowpack, weather, wind loading,
+> recent avalanche activity, or human triggering, and it is **not suitable for operational
+> avalanche safety decisions**. For real trip planning, use the current forecast from the
+> [Utah Avalanche Center](https://utahavalanchecenter.org/){ target="_blank" } or the avalanche
+> center responsible for where you are going.
 
 > [!TIP]
 > **Start from the report template.** [`lab08-report-template.docx`](lab08-report-template.docx)
-> has the title block, a section for every deliverable, the tables already set up with the columns the
-> rubric asks for, and the rubric at the end ready to fill in. You are welcome to write your report
-> any way you like — the template is a floor, not a ceiling — but if you use it and fill in every
-> section, you will not have left a graded item out.
+> has the title block, a section for every deliverable, the tables already set up with the columns
+> the rubric asks for (including the Snowbird class-area table and the sensitivity table with all
+> three rules), and the rubric at the end ready to fill in. Open it in Word or upload it to Google
+> Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome to write
+> your report any way you like — the template is a floor, not a ceiling — but if you use it and fill
+> in every section, you will not have left a graded item out.
 
 ## Background
 
-Big Southern Butte rises about 760 m (2,500 ft) out of the flat lava plain of the eastern Snake
-River Plain in Idaho, west of Idaho Falls. It is a **rhyolite dome**: two lobes of thick,
-silica-rich lava that pushed up through the plain's basalt and merged about 300,000 years ago, and
-it is among the largest rhyolite domes in the world
-([USGS Yellowstone Volcano Observatory, 2023](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }).
-How much lava a dome holds is one of the numbers a volcanologist uses to compare eruptions, and
-nobody can weigh a mountain. They measure it from an elevation model.
+An avalanche is a mass of snow sliding fast down a slope. In the United States an average of
+**27 people died in avalanches each winter** over the last ten winters, according to the Colorado
+Avalanche Information Center, which keeps the national accident archive
+([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }).
 
-![Ground-level photograph of Big Southern Butte, a broad dome rising above the flat Snake River Plain with mountains on the horizon](images/lab08-big-southern-butte-photo.jpg)
+Avalanche centers publish a forecast every morning of the season, and the forecast is partly a map
+of terrain: it rates the danger by **elevation band** and by **aspect** (the compass direction a
+slope faces), on the five-level North American Public Avalanche Danger Scale — Low, Moderate,
+Considerable, High, Extreme (Figure B). The snowpack and the weather decide *how* dangerous today
+is; the terrain decides *where* that danger lives. A slope steeper than about 30°, facing the
+direction the wind loaded with snow, high enough to hold the cold weak layers, is where an avalanche
+starts on a dangerous day.
 
-**Figure B.** Big Southern Butte from the plain. The plain looks flat; it falls gently to the north.
+![The North American Public Avalanche Danger Scale table, listing the five danger levels from 1 Low (green) to 5 Extreme (black) with travel advice, likelihood of avalanches, and avalanche size and distribution](images/lab08-north-american-danger-scale.jpeg)
 
-The trick is the ground *under* the butte. You cannot see it, so you rebuild it: sample elevations
-on the plain all around the butte, interpolate a surface across the gap, and subtract that surface
-from the real one. What is left is the butte, cell by cell, and adding up its cells gives its volume.
-That is the same idea as Lab 6, where the water surface was the lid and the lake bed the bottom;
-here the DEM is the lid and an interpolated plain is the bottom.
+**Figure B.** The North American Public Avalanche Danger Scale. Its five colors are the colors your
+maps use.
 
-Every part of that recipe is a choice: where the butte ends, how many points sample the plain, and
-how you interpolate between them (the Week 8 methods). In Step 9 you vary each choice and see which
-moves the answer most.
+This lab builds the terrain half of that picture for one ski area, Snowbird, in Little Cottonwood
+Canyon east of Salt Lake City. A ModelBuilder model computes slope and aspect from an elevation
+model, rates every 10 m cell on elevation, slope and aspect from a table taken from a real
+avalanche advisory, and combines the three ratings into one map of **terrain-based hazard**. The
+result is a screening: it says which terrain *could* be dangerous when the snowpack is, not whether
+it is dangerous today.
+
+The interesting part is the combining. Three ratings from 1 to 5 can be turned into one in several
+defensible ways, and they do not agree. In Step 9 you will vary the elevation bands and compare
+three ways of combining, see how far the map moves, and use what moves to say how much of the
+answer is the terrain and how much is your choice of rule.
 
 > [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one ModelBuilder model that takes a DEM and an
-> outline and returns the volume of the land inside the outline above an interpolated base surface;
-> run it on Big Southern Butte; test how much the outline, the number of points, and the
-> interpolation method change the volume; and make two maps.
+> **Your job — see the deliverables below.** Build one ModelBuilder model that rates Snowbird's
+> terrain on elevation, slope and aspect and combines the three into a hazard class; measure how
+> much of the ski area falls in each class; test the elevation bands and the combination rule; and
+> make two maps.
 
 ## Problem Statement
 
-You are given a 10 m elevation model of Big Southern Butte and the plain around it, and a reference
-outline of the butte's base. Using them:
+You are given a 10 m elevation model of upper Little Cottonwood Canyon and the boundary of the
+Snowbird ski area. Using them:
 
-1. Rebuild the plain beneath the butte by interpolating from random points on the plain around it.
-2. Compute the height of the butte above that rebuilt plain in every cell.
-3. Report the butte's volume in cubic kilometers.
-4. Map the height of the butte above the plain.
+1. Rate every cell on **altitude**, **slope** and **aspect** with Table 1.
+2. Combine the three ratings into one terrain hazard class from 1 (Low) to 5 (Extreme), by a rule
+   you can state and defend.
+3. Report how much of Snowbird, in square kilometers, falls in each class.
+4. Map the result in the danger-scale colors.
 
 ## Analysis Considerations
 
 Every one of these is a decision somebody made, and every one of them can change the answer.
 
-- **Where the butte ends.** The base of a dome blends into its apron of debris and into the lava
-  flows around it. The reference outline was drawn by a rule from the DEM — every cell standing more
-  than 10 m above a plane fitted to the plain — and `READ-ME-FIRST.txt` explains it. It is a
-  reasonable base, not the only one. In Step 9 you draw your own.
-- **The points on the plain.** Points inside the outline sample the butte, not the plain, so the
-  model erases them. The rest sample a ring of plain 1,500 m wide. More points follow the plain's
-  bumps more closely; fewer points smooth them out. The points are random, so two runs differ — unless
-  you fix the random seed, which Step 0 does so that your numbers match this page.
-- **The interpolation method.** IDW never goes above its highest point or below its lowest, so the
-  rebuilt plain stays inside the range of the plain around it. A spline is smooth and can overshoot.
-  Week 8 compared them; here you see what the difference does to a volume.
-- **What the volume is.** The volume *above an interpolated surface*. If lava flows of the plain lap
-  against the butte's lower slopes, part of the dome is buried below that surface, and no elevation
-  model can see it.
-- **The elevation model.** Bare earth, 1/3 arc-second cells (about 10 m), elevations in meters above
-  NAVD 88.
-- **The coordinate system.** A volume needs the cell size and the elevations in the same unit. The
-  DEM arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in meters,
-  so that each 10 m cell is 100 m² and each meter of height over it is 100 m³.
+- **The three factors.** A forecast says where the danger is by elevation band and aspect; slope
+  angle decides whether a slope can avalanche at all. Most slab avalanches start on slopes between
+  30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50° shed snow in small
+  loose slides too often to build big slabs
+  ([avalanche.org: slope angle](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/slope-angle/){ target="_blank" }).
+  Aspect matters because wind builds slabs on the slopes downwind of it — a west wind loads east
+  aspects — and because the sun can destroy weak layers on south-facing slopes that survive on
+  shaded ones
+  ([avalanche.org: aspect](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/aspect/){ target="_blank" }).
+- **What the model leaves out.** The snowpack's layers and their strength, today's weather, wind
+  loading, recent avalanches, and the person who triggers the slide. Also slope shape (convex rolls
+  are more dangerous than concave bowls), ground cover (smooth grass and rock slabs slide more than
+  boulder fields and forest), and terrain traps below a slope. None of these is in an elevation
+  model. Your report says what each one would change.
+- **Table 1.** The class breaks below come from the course's original handout, which took them
+  from one advisory issued by the Sawtooth Avalanche Center, in central Idaho, on one day. Another day's advisory moves the elevation bands, and another
+  center would use different ones. Step 9 moves them.
+- **How the three ratings combine.** "All three agree", the product, the worst of the three, the
+  best of the three — each is a different claim about how the factors interact. Step 6 builds two
+  and Step 7 adds two more.
+- **The elevation model.** Bare earth: the ground surface, without trees, lift towers or the
+  winter snowpack, which can be meters deep and changes the slope a skier stands on. Cells of about
+  10 m, so a gully narrower than that is not in it.
+- **The coordinate system.** Slope and Aspect need cells and elevations in the same linear unit.
+  The extract arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in
+  meters.
+
+|  | Altitude (meters) | Slope (degrees) | Aspect (degrees) |
+| --- | --- | --- | --- |
+| Low (1) | 0 – 2,200 | 0 – 25<br>60 – 90 | 180 – 225 |
+| Moderate (2) | 2,200 – 2,400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
+| Considerable (3) | 2,400 – 2,600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
+| High (4) | 2,600 – 2,800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
+| Extreme (5) | above 2,800 | 35 – 45 | −1 – 45 |
+
+**Table 1.** Terrain ratings from a Sawtooth Avalanche Center advisory. A value exactly on a break
+goes to the lower range: 25° is Low and 35° is High, because ArcGIS Pro's Reclassify counts the end
+of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme.
+With slope class 1, a flat cell comes out Considerable under the geometric mean of Step 6 and Extreme
+under the worst-factor rule of Step 7. There are none inside Snowbird, but they show on any map that
+reaches past its boundary. Say in your report whether you would rate them differently.
 
 ## Data
 
@@ -106,25 +154,27 @@ Every one of these is a decision somebody made, and every one of them can change
 
 | Layer | Where it comes from | How you get it |
 | --- | --- | --- |
-| `BigSouthernButte_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM, two tiles joined | Prepared extract, hosted here |
-| `Lab08.gdb\Butte_Boundary` | Derived from the DEM for this course (see the READ-ME) | In the same zip |
+| `LittleCottonwood_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM | Prepared extract, hosted here |
+| Snowbird ski area boundary | Utah Geospatial Resource Center (UGRC), *Utah Ski Area Boundaries* | Live web layer, added by URL |
+| Table 1 | A Sawtooth Avalanche Center advisory | You type it into the Reclassify and Raster Calculator tools |
 
-- **Download:** [`lab08-big-southern-butte.zip`](../../data/lab08-big-southern-butte.zip)
-  (10.4 MB). Unzip it into your Lab08 folder — the files are in a `lab08-big-southern-butte` folder
-  inside it — and read `READ-ME-FIRST.txt`.
+- **Download:** [`lab08-little-cottonwood-dem.zip`](../../data/lab08-little-cottonwood-dem.zip)
+  (2.4 MB). Unzip it into your Lab08 folder — the files are in a `lab08-little-cottonwood-dem`
+  folder inside it — and read `READ-ME-FIRST.txt`.
+- **Add the ski areas** in Step 0 from this feature service URL:
+  `https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0`
+  (the same layer as UGRC's [Utah Ski Area Boundaries](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" } page).
 
 > [!TIP]
-> **Check the data:** `BigSouthernButte_DEM.tif` is **3,024 columns × 1,836 rows** of 1/3
-> arc-second cells, values **1,499.8 to 2,307.1** (meters above NAVD 88), GCS North American 1983,
-> no NoData cells. `Butte_Boundary` is one polygon of **28.03 km²** in NAD 1983 UTM Zone 12N.
+> **Check the data:** `LittleCottonwood_DEM.tif` is **1,296 columns × 864 rows** of 1/3 arc-second
+> cells, values **2,176.4 to 3,500.5** (meters above NAVD 88), GCS North American 1983, no NoData
+> cells. The ski-area layer has 14 polygons; Snowbird's is named `Snowbird Ski and Summer Resort`.
 
-![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Big Southern Butte DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.5 m east-west; a box around the butte stored in latitude and longitude, to be projected in Step 1; tiles n44w114 and n44w113 published April 7, 2026 from sources collected 1957 to 2024; the 3D Elevation Program's general-purpose seamless layer, not made to measure volcanoes; sources resampled to one grid, two tiles joined edge to edge; USGS, public domain. A footer says the cell size and vertical unit matter most for a volume.](images/lab08-dem-metadata.svg)
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Little Cottonwood Canyon DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.8 m east-west; a box over upper Little Cottonwood Canyon with Snowbird and Alta, stored in latitude and longitude, to be projected in Step 1; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, not made for avalanche terrain; lidar, contour-based and radar sources resampled to one grid, bare earth without trees, lift towers or snowpack; USGS, public domain. A footer says the model sees the ground, not the snow a skier stands on.](images/lab08-dem-metadata.svg)
 
 **Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
-in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tiles'
-metadata files
-([n44w114](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w114/USGS_13_n44w114.xml){ target="_blank" },
-[n44w113](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w113/USGS_13_n44w113.xml){ target="_blank" })
+in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
+[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
 — and say in your report what each one does to your result.
 
 ## ModelBuilder Tools
@@ -133,25 +183,24 @@ New in this lab:
 
 | Tool | What it does |
 | --- | --- |
-| ![Create Random Points icon: dots scattered inside a polygon](images/icon-create-random-points.svg){ .tool-icon }<br>**Create Random Points** (Data Management) | Scatters a given number of points at random inside a polygon. The points have a location and nothing else. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-random-points.htm){ target="_blank" } |
-| ![Extract Values to Points icon: a point on a grid cell picking up the value 1559 into RASTERVALU](images/icon-extract-values-to-points.svg){ .tool-icon }<br>**Extract Values to Points** (Spatial Analyst) | Copies the raster value under each point into a new field, `RASTERVALU`. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/extract-values-to-points.htm){ target="_blank" } |
-| ![Erase icon: points inside an outline crossed out, the rest kept](images/icon-erase.svg){ .tool-icon }<br>**Erase** (Analysis) | Removes the parts of one layer that fall inside another — here, the points on the butte. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/erase.htm){ target="_blank" } |
-| ![IDW icon: a cell joined to five points by lines, thicker for nearer points, labeled 1 over d squared](images/icon-idw.svg){ .tool-icon }<br>**IDW** (Spatial Analyst) | Interpolates a raster surface from points, each cell a weighted average of its nearest points, the nearest weighted most. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/idw.htm){ target="_blank" } |
-| ![Zonal Statistics icon: the cells inside a zone summed into one value](images/icon-zonal-statistics.svg){ .tool-icon }<br>**Zonal Statistics** (Spatial Analyst) | A statistic of a raster's cells inside each zone — here, the sum of the cell volumes inside the outline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics.htm){ target="_blank" } |
+| ![Slope icon: a hillside with its angle, 38 degrees, marked](images/icon-slope.svg){ .tool-icon }<br>**Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
+| ![Aspect icon: a compass with an arrow pointing northeast](images/icon-aspect.svg){ .tool-icon }<br>**Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
+| ![Cell Statistics icon: three stacked grids combined into one holding their maximum](images/icon-cell-statistics.svg){ .tool-icon }<br>**Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
+| ![Tabulate Area icon: a zone outlined over classed cells and the table of class areas it produces](images/icon-tabulate-area.svg){ .tool-icon }<br>**Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
 
-Tools you already know: **Project Raster** (Labs 4, 5 and 7), **Buffer** (Labs 1 and 4), **Extract by
-Mask** (Lab 4), **Raster Calculator** (Labs 2 and 4–7), **Hillshade**, and model parameters. Step 9 also
-uses **Spline** (Spatial Analyst), the smooth interpolator from Week 8.
+Tools you already know: **Project Raster** (Lab 5), **Reclassify** (Lab 2), **Raster Calculator**
+with an inline variable (Labs 2, 4 and 5), and model parameters.
+
 
 ## Example Model
 
-![The finished ModelBuilder model, exported as a vector diagram. Butte_Boundary, marked P, feeds Buffer (Points_Boundary), Erase, both Extract by Mask tools and Zonal Statistics. Points_Boundary, Lab08.gdb and Number of Points, marked P, feed Create Random Points (Random_Points), then Extract Values to Points with DEM_UTM (Points_Values), Erase (Plain_Points, marked P), IDW (Plain_Surface) and Extract by Mask (2) (Plain_Butte). BigSouthernButte_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask (DEM_Butte). DEM_Butte and Plain_Butte feed Raster Calculator (Height_Above_Plain, marked P), then Raster Calculator (2) (Volume_Cell), then Zonal Statistics (Butte_Volume, marked P).](images/lab08-full-model.svg)
+![The finished ModelBuilder model, exported as a vector diagram. LittleCottonwood_DEM.tif into Project Raster, DEM_UTM. DEM_UTM feeds Slope (Slope_Deg, Reclassify, Slope_Class), Aspect (Aspect_Deg, Reclassify (2), Aspect_Class), and with Shift, marked P, a Raster Calculator that makes Altitude_Class, marked P. The three class rasters feed Raster Calculator (2), Agree_Class; Raster Calculator (3), Hazard_Class, marked P; Cell Statistics, Worst_Class, marked P; and Cell Statistics (2), Best_Class, marked P; Worst_Class and Best_Class feed Raster Calculator (4), Rule_Spread, marked P.](images/lab08-full-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Two
-inputs, the DEM and the outline, and one number out. The upper branch rebuilds the plain from points
-around the butte; the lower branch cuts the real surface to the outline; two Raster Calculators and
-Zonal Statistics turn the difference into a volume. The six elements marked `P` are the model
-parameters and become the tool dialog of Step 9.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. One
+elevation model in, three rating rasters in the middle, and the combined maps out: all three agree,
+the geometric mean, the worst and best factor, and where those two differ. The six elements marked
+`P` are the model parameters — the shift, the altitude classes and the four combined maps — and they
+become the tool dialog of Step 9.
 
 ## Complete the Lab
 
@@ -162,268 +211,305 @@ without the step-by-step instructions below, say so in your report.
 ## Step-by-Step Solution
 
 > [!NOTE]
+> **Build it once, build it to be changed.** The steps walk through Snowbird at the default
+> elevation bands. Step 9 re-runs the same model with the bands moved, so give every dataset a
+> readable name as you go.
+
+> [!NOTE]
 > **Every check value on this page** was measured on the files you download, with the steps below,
-> in ArcGIS Pro 3.7.1. With the random seed of Step 0, your numbers should match to the last digit
-> shown.
+> in ArcGIS Pro 3.7.1. Your numbers should match to the last digit shown.
 
 ### Step 0 — Set Up the Project
 
 1. Create a new project in `D:\Smith\Lab08\` with the **Map** template; if you already made the
    folder, uncheck **Create a folder for this local project**.
-2. Add `BigSouthernButte_DEM.tif` (click **OK** to build pyramids and statistics) and
-   `Lab08.gdb\Butte_Boundary`. Add an imagery basemap and look at the outline against it.
-3. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
-4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
-   **Properties**, set **Name** to `ButteVolume` and **Label** to `Butte Volume`, and save.
-5. On the **ModelBuilder** tab click **Environments** and set:
-    - **Current Workspace** and **Scratch Workspace**: your project geodatabase
-    - **Random Number Generator**: **Seed** `1`; leave **Generator** at ACM collected algorithm 599
-    - after Step 1 has run once: **Cell Size** `10`, and **Snap Raster** `DEM_UTM` — it is not in
-      the list until it is on a map, so browse to it in your project geodatabase or type its path
+2. Add `LittleCottonwood_DEM.tif`. When the **Build Pyramids and Calculate Statistics** dialog
+   opens, click **OK**.
+3. On the **Map** tab click the arrow under **Add Data** ▸ **From Path**, paste the ski-area URL
+   from the Data section, and click **Add**. Add an imagery or topographic basemap.
+4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
+5. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
+   **Properties**, set **Name** to `AvalancheTerrain` and **Label** to `Avalanche Terrain`, and save.
+6. On the **ModelBuilder** tab click **Environments** and check that **Current Workspace** and
+   **Scratch Workspace** are your project geodatabase.
 
-    Type an environment's name in the dialog's search box to find it.
+![The model's Environments dialog: Current Workspace and Scratch Workspace both Lab07.gdb; Output Coordinate System, Geographic Transformations and Processing Extent empty; under Raster Analysis, Cell Size empty and Cell Size Projection Method Convert units.](images/lab08-environments.png)
 
-![The model's Environments dialog, two searches combined: Current Workspace and Scratch Workspace Lab08.gdb; Output Coordinate System empty; Cell Size 10; Mask empty; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab08-environments.png)
-
-**Figure 0.** ModelBuilder ▸ Environments, from two searches (`workspace` and `random`). Leave
-Output Coordinate System empty: Step 1 projects the DEM itself.
-
-> [!NOTE]
-> **Why fix the seed?** Create Random Points draws from a random number generator. With the same seed
-> it draws the same points every time, so your volume can be checked against this page. Another seed
-> gives other points and a slightly different volume; Step 9 tests the choices that matter more.
+**Figure 0.** ModelBuilder ▸ Environments: the two workspaces, everything else at its default.
 
 ### Step 1 — Project the DEM
 
-Add **Project Raster** with `BigSouthernButte_DEM.tif` as the input:
+Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input:
 
 - **Output Coordinate System**: NAD 1983 UTM Zone 12N
-- **Resampling Technique**: Bilinear interpolation
-- **Output Cell Size**: 10 (X and Y)
+- **Resampling Technique**: Bilinear interpolation (elevations are continuous; nearest neighbor
+  leaves stair steps that become stripes in Slope)
+- **Output Cell Size**: 10
 - **Output Raster Dataset**: `DEM_UTM`
 
-![The Project Raster dialog from ModelBuilder: Input Raster BigSouthernButte_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10, Registration Point empty.](images/lab08-project-raster.png)
 
-**Figure 1.** Project Raster. It switches itself to Bilinear when you pick this DEM and proposes
-cells of about 9.0 m; type 10 in both X and Y.
+![The Project Raster dialog from ModelBuilder: Input Raster LittleCottonwood_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10.](images/lab08-project-raster.png)
 
-> [!TIP]
-> **Check the result:** `DEM_UTM` is **2,314 columns × 1,944 rows** of 10 m cells, values
-> **1,499.8 to 2,306.8** m. The summit cell is about 0.3 m lower than in the original because
-> bilinear resampling averages neighbors. The thin wedges along the edges are NoData: a latitude and
-> longitude rectangle is slightly tilted in UTM.
-
-### Step 2 — Draw the Sampling Ring
-
-Add **Buffer** with `Butte_Boundary` as the input, **Distance** `1500` Meters, **Dissolve Type**
-Dissolve all output features into a single feature, output `Points_Boundary`.
-
-This polygon covers the butte and a ring of plain 1,500 m wide around it. The random points go here.
-
-![The Buffer dialog from ModelBuilder, with a banner suggesting Pairwise Buffer: Input Features Butte_Boundary, Output Feature Class Points_Boundary, Distance 1500 Meters, Side Type Full, Method Planar, Dissolve Type Dissolve all output features into a single feature.](images/lab08-buffer.png)
-
-**Figure 2.** Buffer. Pairwise Buffer does the same job; either is fine.
+**Figure 1.** Project Raster. It opens with Nearest neighbor, switches itself to Bilinear when you
+pick this DEM, and proposes cells of about 9.04 m; type 10 in both X and Y.
 
 > [!TIP]
-> **Check the result:** `Points_Boundary` is **65.411 km²**; `Butte_Boundary` is **28.030 km²** of
-> it.
+> **Check the result:** `DEM_UTM` is **1,023 × 896** cells of 10 m, values **2,178.0 to 3,499.4**
+> m. If the cell size reads about 0.0001, you are looking at the unprojected DEM.
 
-### Step 3 — Sample the Plain
+### Step 2 — Compute Slope
 
-1. Add **Create Random Points**: **Output Location** your project geodatabase, **Output Point
-   Feature Class** `Random_Points`, **Constraining Feature Class** `Points_Boundary`, **Number of
-   Points [value or field]** `1000` (leave its type at Long). Then right-click the tool in the
-   model ▸ **Create Variable** ▸ **From Parameter** ▸ **Number of Points [value or field]**,
-   right-click the new oval ▸ **Rename** it `Number of Points`, and right-click it ▸ **Parameter**.
-2. Add **Extract Values to Points** with `Random_Points` and `DEM_UTM`, output `Points_Values`.
+Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and output `Slope_Deg`.
 
-![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab08.gdb, Output Point Feature Class Random_Points, Constraining Feature Class Points_Boundary, Number of Points Long 1000, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab08-create-random-points.png)
+![The Slope dialog from ModelBuilder, with a banner suggesting the Surface Parameters tool: Input raster DEM_UTM, Output raster Slope_Deg, Output measurement Degree, Method Planar, Z factor 1, Target device for analysis GPU then CPU.](images/lab08-slope.png)
 
-**Figure 3a.** Create Random Points. Once a constraining feature class is set, the Constraining
-Extent box disappears.
-
-![The Extract Values to Points dialog from ModelBuilder: Input point features Random_Points, Input raster DEM_UTM, Output point features Points_Values, both checkboxes unchecked.](images/lab08-extract-values.png)
-
-**Figure 3b.** Extract Values to Points.
+**Figure 2.** Slope, in degrees, Planar. Ignore the banner; Surface Parameters does more than this
+lab needs.
 
 > [!TIP]
-> **Check the result:** 1,000 points, `RASTERVALU` from **1,531.2 to 2,277.2** m. With seed 1, the
-> first point (`OBJECTID` 1) is at about **337,632.6 E, 4,806,349.7 N** — on the butte's east-southeast
-> flank.
+> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (the
+> layer's **Properties** ▸ **Source** ▸ **Statistics** list both).
 
-### Step 4 — Keep the Plain Points
-
-Add **Erase**: **Input Features** `Points_Values`, **Erase Features** `Butte_Boundary`, output
-`Plain_Points`.
 
 > [!WARNING]
-> **Pick the outline from Model Variables.** The Erase Features list shows `Butte_Boundary` twice:
-> the map layer at the top, and the model's own variable under **Model Variables**, where it reads
-> `Butte_Boundary:1`. Choose the second. In our build, choosing the map layer added a second
-> `Butte_Boundary` oval to the model; the tool dialog would then ask for the outline twice and a
-> Step 9 run with your own outline would use both. The same goes for the masks in Steps 6 and 8.
-> If an extra oval appears, delete it and reconnect.
+> **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
+> `LittleCottonwood_DEM.tif` itself it reports a mean of 24.3° — about 2.6° too gentle. Its cells
+> are 1/3 arc-second, which here is 10.3 m north–south but only 7.8 m east–west; projected cells are
+> square meters. Two or three degrees move a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
 
-![The Erase dialog from ModelBuilder, with a banner suggesting Pairwise Erase: Input Features Points_Values, Erase Features Butte_Boundary:1, Output Feature Class Plain_Points.](images/lab08-erase.png)
+### Step 3 — Compute Aspect
 
-**Figure 4.** Erase, with the outline chosen from Model Variables.
+Add **Aspect** with `DEM_UTM` as the input and output `Aspect_Deg`.
 
 > [!TIP]
-> **Check the result:** **560** points remain, `RASTERVALU` **1,531.2 to 1,597.0** m (mean
-> 1,559.4). If any point is above 1,600 m, the erase used the wrong polygon.
+> **Check the result:** values run from 0 to 360, plus **−1 on 480 flat cells** in the whole
+> projected DEM.
 
-### Step 5 — Rebuild the Plain
+![The Aspect dialog from ModelBuilder: Input raster DEM_UTM, Output raster Aspect_Deg, Method Planar, Target device for analysis GPU then CPU.](images/lab08-aspect.png)
 
-Add **IDW**: **Input point features** `Plain_Points`, **Z value field** `RASTERVALU`, **Output
-cell size** `10`, **Power** 2, **Search radius** Variable with 12 points, output `Plain_Surface`.
+**Figure 3.** Aspect.
 
-![The IDW dialog from ModelBuilder: Input point features Plain_Points, Z value field RASTERVALU, Output raster Plain_Surface with a warning icon, Output cell size 10, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab08-idw.png)
+### Step 4 — Rate Slope and Aspect
 
-**Figure 5.** IDW. The warning icon only says `Plain_Surface` already exists from an earlier run.
+Add **Reclassify** twice, with the slope and aspect rows of Table 1.
+
+1. **Reclassify** `Slope_Deg`, field **Value**, nine rows: 0–25 → 1, 25–30 → 2, 30–32 → 3,
+   32–35 → 4, 35–45 → 5, 45–50 → 4, 50–55 → 3, 55–60 → 2, 60–90 → 1. Output `Slope_Class`.
+2. **Reclassify** `Aspect_Deg`, eight rows: −1–45 → 5, 45–90 → 4, 90–135 → 3, 135–180 → 2,
+   180–225 → 1, 225–270 → 2, 270–315 → 3, 315–360 → 4. Output `Aspect_Class`.
+
+Two ranges can share a new value; that is how the table says "steep and gentle are both Low."
+
+![The Reclassify dialog for slope: Input raster Slope_Deg, Reclass field VALUE, nine rows 0 to 25 is 1, 25 to 30 is 2, 30 to 32 is 3, 32 to 35 is 4, 35 to 45 is 5, 45 to 50 is 4, 50 to 55 is 3, 55 to 60 is 2, 60 to 90 is 1, then a NODATA row; Output raster Slope_Class; Change missing values to NoData unchecked.](images/lab08-reclass-slope.png)
+
+**Figure 4a.** The slope ratings. ArcGIS Pro adds the NODATA row itself.
+
+![The Reclassify (2) dialog for aspect: Input raster Aspect_Deg, Reclass field VALUE, eight rows -1 to 45 is 5, 45 to 90 is 4, 90 to 135 is 3, 135 to 180 is 2, 180 to 225 is 1, 225 to 270 is 2, 270 to 315 is 3, 315 to 360 is 4, then a NODATA row; Output raster Aspect_Class.](images/lab08-reclass-aspect.png)
+
+**Figure 4b.** The aspect ratings.
 
 > [!WARNING]
-> **Check the cell size.** With the Cell Size environment of Step 0, IDW fills in 10. Without it,
-> IDW picks a cell size from the extent of the points, much coarser than the DEM's. Keep the Snap
-> Raster environment on `DEM_UTM` so the plain's cells line up with the DEM's. The Z value field list
-> stays empty until the model has run once; type `RASTERVALU`.
+> **Type −1 by editing, not in the blank row.** In our build, a new row whose Start was typed as
+> `-1` vanished when the row was committed. Type `0` for the first Start, finish the table, then
+> double-click that cell and change it to `-1`. Check that the first row reads −1 before you click
+> OK; without it the 480 flat cells come out NoData.
 
 > [!TIP]
-> **Check the result** (after Step 6): inside the outline the rebuilt plain runs from **1,547.1 to
-> 1,585.9** m, higher in the south. IDW cannot go above or below its points: compare with Step 4.
+> **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
+> and slope class 5 **2.047 km²**; aspect class 4 (northwest-to-north and northeast-to-east)
+> **3.493 km²**. If any cell of `Slope_Class` is NoData, a range has a gap.
 
-### Step 6 — Cut Both Surfaces to the Outline
+### Step 5 — Rate Altitude, With a Shift
 
-Add **Extract by Mask** twice, each with `Butte_Boundary` as the mask:
+Reclassify cannot take a parameter, and Step 9 needs to move the elevation bands. So rate altitude
+with **Raster Calculator**, with the bands written out and an inline variable added to each break:
 
-1. `DEM_UTM` → `DEM_Butte`
-2. `Plain_Surface` → `Plain_Butte`
+1. On the canvas toolbar click **Variable**, choose **Long** in the data type list, and click
+   **OK**. Right-click the new oval ▸ **Rename**, type `Shift`, double-click it and set its value to
+   `0`, then right-click it ▸ **Parameter**.
+2. Add **Raster Calculator** with this expression, and output `Altitude_Class`:
 
-![The Extract by Mask dialog from ModelBuilder: Input raster DEM_UTM, Input raster or feature mask data Butte_Boundary:1, Output raster DEM_Butte, Extraction Area Inside, and the Analysis Extent filled in from the mask: top 4810897.26, left 332575.20, right 338592.05, bottom 4804664.22, NAD 1983 UTM Zone 12N.](images/lab08-extract-mask.png)
+```text
+Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5))))
+```
 
-**Figure 6.** The first Extract by Mask. The Analysis Extent fills itself in from the mask; leave it.
-Type the output name last: this tool replaces a typed name when its inputs change.
+A positive shift raises every band (less of the mountain counts as high); a negative shift lowers
+them.
 
-> [!TIP]
-> **Check the result:** each is **280,311** cells — 28.03 km² of 10 m cells, the outline's area.
-> `DEM_Butte` runs from **1,554.8 to 2,306.8** m.
 
-### Step 7 — Compute Height and Volume
+![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class and Aspect_Class; the expression reads Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5)))); Output raster Altitude_Class.](images/lab08-rc-altitude.png)
 
-Add **Raster Calculator** twice, both in the model:
-
-1. The height of the butte above the plain, in meters, output `Height_Above_Plain`:
-
-    ```text
-    "%DEM_Butte%" - "%Plain_Butte%"
-    ```
-
-2. Each cell's volume, output `Volume_Cell`:
-
-    ```text
-    "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3)
-    ```
-
-    Height times the cell's 10 m × 10 m is cubic meters; divided by 1,000³ it is cubic kilometers.
-    `**` is Python's power operator.
-
-![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, BigSouthernButte_DEM.tif, Number of Points, Plain_Surface and DEM_Butte; the expression reads "%DEM_Butte%" - "%Plain_Butte%"; Output raster Height_Above_Plain.](images/lab08-rc-height.png)
-
-**Figure 7a.** The height above the plain.
-
-![The Raster Calculator (2) dialog: the expression reads "%Height_Above_Plain%" * 10 * 10 / (1000 ** 3); Output raster Volume_Cell.](images/lab08-rc-volume.png)
-
-**Figure 7b.** Each cell's volume, in cubic kilometers. Raster Calculator replaced the typed output
-name with `RasterC_1` when the expression went in; type the name last and check it before OK.
+**Figure 5.** The altitude rating, with `%Shift%` in every break. On the canvas, Shift draws a
+connector to this tool. Type the output name last: Raster Calculator replaces a typed name with a
+default such as `RasterC_1` when the expression changes.
 
 > [!TIP]
-> **Check the result:** in `Height_Above_Plain` (**Properties** ▸ **Source** ▸ **Statistics**) the
-> tallest cell is **729.1 m** above the plain and the mean is **183.5 m**. **53** cells at the edge
-> are a fraction of a meter *below* the plain; they subtract a negligible amount.
+> **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
+> and no cells below 2,200 m. Most of the ski area is "Extreme" on altitude alone — keep that in
+> mind in Step 9.
 
-### Step 8 — Add Up the Volume
+### Step 6 — Combine the Ratings
 
-Add **Zonal Statistics**: **Input raster or feature zone data** `Butte_Boundary`, **Zone field**
-`OBJECTID`, **Input value raster** `Volume_Cell`, **Statistics type** Sum, output `Butte_Volume`.
-Every cell of the output holds the same number: the sum. Read it in the layer's **Properties** ▸
-**Source** ▸ **Statistics** or by clicking a cell.
+Two ways, both in Raster Calculator.
 
-Make these model parameters, and name them so the tool dialog reads well: the DEM, `Butte_Boundary`
-and the number of points (inputs), and `Plain_Points`, `Height_Above_Plain` and `Butte_Volume`
-(outputs). Step 9 and your maps need all three outputs.
+**First, "all three agree."** A cell gets a class only where all three ratings are that class:
 
-![The Zonal Statistics dialog from ModelBuilder: Input Raster or Feature Zone Data Butte_Boundary:1, Zone Field OBJECTID, Input Value Raster Volume_Cell, Output Raster Butte_Volume, Statistics Type Sum, Ignore NoData in Calculations checked, Process as Multidimensional unchecked.](images/lab08-zonal.png)
+```text
+Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1), 1, Con(("%Altitude_Class%" == 2) & ("%Slope_Class%" == 2) & ("%Aspect_Class%" == 2), 2, Con(("%Altitude_Class%" == 3) & ("%Slope_Class%" == 3) & ("%Aspect_Class%" == 3), 3, Con(("%Altitude_Class%" == 4) & ("%Slope_Class%" == 4) & ("%Aspect_Class%" == 4), 4, Con(("%Altitude_Class%" == 5) & ("%Slope_Class%" == 5) & ("%Aspect_Class%" == 5), 5, 0)))))
+```
 
-**Figure 8a.** Zonal Statistics. Zone Field fills in `OBJECTID` by itself; Statistics Type opens at
-Mean — change it to Sum, near the bottom of the list.
-
-![The model as a tool in the Geoprocessing pane, titled Butte Volume: Number of Points, Long, 1000; Butte_Boundary; BigSouthernButte_DEM.tif; then the outputs Plain_Points, Height_Above_Plain and Butte_Volume, each with a warning icon because those datasets already exist.](images/lab08-tool-dialog.png)
-
-**Figure 8b.** The model as a tool. The warning icons only say the outputs exist from an earlier run;
-give every output a new name for each Step 9 run.
+Output `Agree_Class`. Look at it before you go on.
 
 > [!TIP]
-> **Check the result:** **5.145 km³**. As a sanity check: 28.03 km² of outline times a mean height
-> of 183.5 m is 5.14 km³.
+> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.781 km²** — 96 % — is 0, unclassified. A
+> 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
+> Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
+
+**Second, the geometric mean.** Multiply the three ratings (1 to 125), take the cube root, and round.
+The cube root of a product of three numbers is their geometric mean, which brings the result back to
+the 1–5 scale:
+
+```text
+Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5)
+```
+
+Output `Hazard_Class`, and make it a model parameter. Rated 5, 5, 4, a cell's product is 100, its
+geometric mean 4.6, and its class 5. In product terms the classes are 1–3 Low, 4–15 Moderate, 16–42
+Considerable, 43–91 High, 92–125 Extreme.
+
+![The Raster Calculator (2) dialog, widened: the full nested Con expression testing Altitude_Class, Slope_Class and Aspect_Class for equality at each class from 1 to 5, else 0; Output raster Agree_Class.](images/lab08-rc-agree.png)
+
+**Figure 6a.** "All three agree." Widen the dialog to read the whole expression.
+
+![The Raster Calculator (3) dialog: the expression Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5); Output raster Hazard_Class.](images/lab08-rc-geomean.png)
+
+**Figure 6b.** The geometric mean, rounded to the nearest class.
+
+> [!NOTE]
+> **Why `+ 0.5` and `Int`.** `Int` drops the fraction, so adding 0.5 first rounds to the nearest
+> class: a geometric mean of 3.48 (product 42) is Considerable, 3.50 (product 43) is High.
+
+### Step 7 — Add Two More Rules
+
+Add **Cell Statistics** twice, each with `Altitude_Class`, `Slope_Class` and `Aspect_Class` as the
+inputs:
+
+1. **Overlay statistic** Maximum, output `Worst_Class` — a cell is as dangerous as its worst factor.
+2. **Overlay statistic** Minimum, output `Best_Class` — a cell is only as dangerous as its least
+   dangerous factor.
+
+These two bracket the geometric mean. Then one more **Raster Calculator**, output `Rule_Spread`:
+
+```text
+"%Worst_Class%" - "%Best_Class%"
+```
+
+`Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
+where the rule you choose matters.
+
+Make `Altitude_Class`, `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters,
+so that every run from the tool dialog keeps them and lets you name them.
 
 > [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw it),
-> including `DEM_UTM`. Do Steps 1–8 from inside ModelBuilder first and record the check values before
-> any dialog run. In our build, a dialog run at 250 points took 1 minute 10 seconds and left only its
-> three outputs and `Random_Points`. The model makes `DEM_UTM` again at the start of every run, so
-> the Snap Raster setting still works.
+> **A run from the tool dialog deletes everything that is not a parameter.** In our build, the first
+> dialog run removed `DEM_UTM`, `Slope_Deg`, `Aspect_Deg`, `Slope_Class` and `Aspect_Class` from the
+> geodatabase — including the copies the earlier ModelBuilder run had made. Do Step 8 from a run
+> inside ModelBuilder, before any dialog run.
+
+> [!TIP]
+> **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
+> on **3.309 km²**.
+
+![The Cell Statistics dialog from ModelBuilder: Input rasters or constant values Altitude_Class, Slope_Class and Aspect_Class; Output raster Worst_Class; Overlay statistic Maximum; Ignore NoData in calculations checked; Process as multiband unchecked.](images/lab08-cellstats-max.png)
+
+**Figure 7a.** Cell Statistics, Maximum: the worst factor. The second one is the same with
+**Minimum** and `Best_Class`.
+
+![The Raster Calculator (4) dialog: the expression "%Worst_Class%" - "%Best_Class%"; Output raster Rule_Spread.](images/lab08-rc-spread.png)
+
+**Figure 7b.** Where the rules disagree.
+
+### Step 8 — Measure Snowbird
+
+Run the model. Then add **Tabulate Area** (outside the model is fine) with:
+
+- **Input raster or feature zone data**: the ski-area layer, with **only Snowbird selected** (select
+  it with **Select By Attributes**, `NAME` begins with `Snowbird`)
+- **Zone field**: `NAME`
+- **Input raster or feature class data**: `Hazard_Class`, **Class field** `Value`
+- **Output table**: `Snowbird_Hazard`
+
+The table has one column per class, in square meters. Divide by 1,000,000 for km². Run Tabulate
+Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Class`, `Worst_Class`,
+`Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
+table for the raster and the run, such as `TA_Hazard_s0`.
+
+
+![The Tabulate Area tool in the Geoprocessing pane: Input raster or feature zone data SkiAreaBoundaries, with Use the selected records: 1 switched on; Zone field NAME; Input raster or feature class data Hazard_Class; Class field Value; Output table TA_Hazard_s0; Classes as rows in output table unchecked.](images/lab08-tabulate-area.png)
+
+**Figure 8a.** Tabulate Area on the selected Snowbird polygon. The switch **Use the selected records:
+1** confirms that only Snowbird is used.
+
+![The TA_Hazard_s0 table: one row, NAME Snowbird Ski and Summer Resort, VALUE_1 167400, VALUE_2 3161700, VALUE_3 3692400, VALUE_4 2673200, VALUE_5 1086600, in square meters.](images/lab08-ta-table.png)
+
+**Figure 8b.** The output: one column per class, in square meters.
+
+> [!TIP]
+> **Check the result** (km², Snowbird, shift 0):
+>
+> | Rule | Low | Moderate | Considerable | High | Extreme |
+> | --- | --- | --- | --- | --- | --- |
+> | Geometric mean (`Hazard_Class`) | 0.167 | 3.162 | 3.692 | 2.673 | 1.087 |
+>
+> The five add to **10.781 km²**, Snowbird's area. Your figures may differ from any check value on
+> this page by 0.001 km² — one 10 m cell on the boundary. UGRC's own `Shape__Area` field says 18.7 million
+> square meters: that is the area in the layer's Web Mercator coordinates, which stretch areas by
+> about 1.73 at this latitude. Your table measures in the raster's UTM meters.
 
 ### Step 9 — Test the Assumptions
 
-The volume rests on three choices: the outline, the number of points, and the interpolation method.
-Run the model from its tool dialog **four more times**, giving each output a name that says what
-changed (`Butte_Volume_n250`, `Height_Above_Plain_n250`):
+The default map is *an* answer, not *the* answer: one day's elevation bands from one advisory, and
+one rule for combining. Run the model at least **three more times** from its tool dialog with a
+different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
+carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
+`Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
 
-1. **Fewer and more points:** 250 and 4,000 (two runs).
-2. **Your own outline:** in your project geodatabase, create a polygon feature class
-   `My_Butte_Boundary` in NAD 1983 UTM Zone 12N. Turn off the reference outline layer, make a
-   hillshade of `DEM_UTM` with the **Hillshade** tool, and digitize the base of the butte against it
-   and the imagery as **one polygon** — Zonal Statistics sums each feature separately, so a second
-   feature gives a second volume. Run the tool with it at 1,000 points.
-3. **Another method:** save a copy of the model (**Save As**), replace IDW with **Spline**
-   (Regularized, weight 0.1, 12 points, cell size 10), and run it once at 1,000 points with the
-   reference outline. Leave the Processing Extent environment at its default: the spline's result
-   depends on it.
+![The model as a tool in the Geoprocessing pane, titled Avalanche Terrain: Shift 0, then the outputs Hazard_Class, Worst_Class, Best_Class, Rule_Spread and Altitude_Class, the first four with warning icons because those datasets already exist.](images/lab08-tool-dialog.png)
 
-For **the baseline and every run, in one table**, record what changed, the points kept after the
-erase, the outline's area, the volume, the tallest cell, and the number of cells below the plain.
-Where to read each:
+**Figure 9a.** The model as a tool. The warning icons only say the datasets exist from an earlier
+run; give every output a new name for each run.
 
-- **Points kept:** the record count of that run's `Plain_Points` (open its attribute table).
-- **Outline area:** the outline's `Shape_Area` field, in square meters.
-- **Tallest cell:** that run's `Height_Above_Plain`, **Properties** ▸ **Source** ▸ **Statistics**,
-  maximum.
-- **Cells below the plain:** Raster Calculator, `Con("Height_Above_Plain_n250" < 0, 1)` (use the
-  run's own raster), then the **Count** of value 1 in the output's attribute table. No output, or
-  an empty table, means zero.
+![The completed-run pop-up for Avalanche Terrain: elapsed time 1 minute 34 seconds; parameters Shift 400, Hazard_Class, Worst_Class, Best_Class and Rule_Spread written to Lab07.gdb with the suffix _p400.](images/lab08-run-p400.png)
 
-Then answer, in your report:
+**Figure 9b.** A run at Shift 400, finished in about a minute and a half.
 
-1. **Which choice moves the volume most,** and which least? Rank them with your numbers.
-2. **What did the spline do that IDW cannot?** Map its cells below the plain and explain them with
-   what you learned about the methods in Week 8.
-3. **What does your number measure?** Is it the volume of the lava dome? Say what part of the dome
-   the model cannot see, and what data would let you measure it.
+Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
+that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
+in one table**, record the shift, the area of Snowbird in altitude class 5, and, for each of the
+three rules, the area rated High or Extreme. Then answer, in your report:
+
+1. **How much does moving the elevation bands change the map,** in each direction? Use the
+   altitude-class column to say why.
+2. **How much does the combination rule change the map?** For the same run, compare the High +
+   Extreme area under the three rules. Which rule would you publish, and to whom?
+3. **Where do the three rules agree, and where do they disagree most?** Map `Rule_Spread` at
+   shift 0 beside the imagery and say what kind of terrain sits at 0 and at 4.
+
+Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
 
 > [!TIP]
-> The random part of the model is not the part that matters most. Check how far apart your 250- and
-> 4,000-point runs are before you guess.
+> At Snowbird one of these two choices moves the map far more than the other. Look at Step 5's
+> check value before you guess which.
 
 ## Deliverables
 
 Make **two** professional map layouts:
 
-1. **Your baseline result** — `Height_Above_Plain` from the baseline run in a clear color scale
-   with a legend in meters, over a hillshade or imagery, with the reference outline, the volume in
-   the title or a text box, a neat line, north arrow and scale bar, a text box with your name, the
-   date, the map projection and the DEM's source and date, and an inset locating the butte in Idaho.
-2. **One scenario from Step 9** — your own outline or the spline, whichever changes the picture
-   more, with the same color scale as Map 1 so the two can be compared. Say on the map what changed
-   and by how much.
+1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, titled with the rule and the
+   bands, in the danger-scale colors (Figure B) with the labels Low to Extreme, the Snowbird boundary
+   and labeled places, and an inset locating Little Cottonwood Canyon in Salt Lake County.
+2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
+   the picture. Say on the map what changed and why you chose it.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
@@ -433,12 +519,16 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **a description of your model** a reader could repeat from: each tool and its settings, and every
   input, intermediate and output dataset with its type
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its tool dialog with the outline and the number of
-  points exposed
+  Graphic**), and **one** screen capture of its toolbox interface with the shift parameter exposed
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
   datum and units, and its cell size — and what each one means for your result
-- your **check values from Steps 4 to 8**: the points kept, the tallest cell, and the volume
+- your **Step 8 table** of Snowbird's area in each `Hazard_Class` at shift 0, in km²
+- the **"all three agree" result**: its check value and, in your own words, why it is the wrong
+  answer
 - your **sensitivity table** from Step 9 and your answers to its three questions
+- **where the map is wrong and why** — what the terrain-only model leaves out (snowpack, weather,
+  wind loading, triggering, slope shape, ground cover, terrain traps), what the bare-earth 10 m
+  DEM cannot show, and what Table 1 assumes — and what data would fix each
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
@@ -447,53 +537,55 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your
 > reviewer in the report and say in a sentence what you changed because of them.
 
-**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tiles
-n44w114 and n44w113 (April 2026). Butte outline: derived from the DEM for CE 414.
+**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
+n41w112 (May 2026). Ski areas: Utah Geospatial Resource Center. Ratings: Sawtooth Avalanche Center
+advisory, via CE 414.
 
 ## References
 
-Greeley, R. (1982). The Snake River Plain, Idaho: Representative of a new category of volcanism.
-*Journal of Geophysical Research*, 87(B4), 2705–2712.
-[doi:10.1029/JB087iB04p02705](https://doi.org/10.1029/JB087iB04p02705){ target="_blank" }.
+avalanche.org. *North American Public Avalanche Danger Scale.* [avalanche.org](https://avalanche.org/avalanche-encyclopedia/human/resources/north-american-public-avalanche-danger-scale/){ target="_blank" }.
 
-Hughes, S.S., Smith, R.P., Hackett, W.R., and Anderson, S.R. (1999). Mafic volcanism and
-environmental geology of the eastern Snake River Plain, Idaho. In Hughes, S.S., and Thackray, G.D.,
-eds., *Guidebook to the Geology of Eastern Idaho*, Idaho Museum of Natural History, 143–168.
+avalanche.org. *Avalanche Encyclopedia: Slope Angle* and *Aspect.* Accessed October 2, 2026.
 
-Lifton, Z. (2023). The Big Buttes of the Eastern Snake River Plain. *Yellowstone Caldera Chronicles*,
-USGS Yellowstone Volcano Observatory, December 4, 2023.
-[usgs.gov](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }.
+Colorado Avalanche Information Center. *Statistics and Reporting.*
+[avalanche.state.co.us](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }. Accessed October 2, 2026.
 
-U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tiles n44w114 and n44w113,
-published April 7, 2026.
+Sawtooth Avalanche Center. [sawtoothavalanche.com](https://www.sawtoothavalanche.com/){ target="_blank" }.
+
+Utah Avalanche Center. [utahavalanchecenter.org](https://utahavalanchecenter.org/){ target="_blank" }.
+
+U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20, 2026.
+
+Utah Geospatial Resource Center. *Utah Ski Area Boundaries.*
+[opendata.gis.utah.gov](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" }.
 
 ## Example Maps
 
 These are examples, not templates. Your maps carry your name, and your second map shows the run you
 chose.
 
-![Example baseline layout titled "Big Southern Butte: About 5.1 Cubic Kilometers Above the Plain": the height of the butte above the rebuilt plain inside the black reference outline, over a gray hillshade, in classes from pale yellow (0 to 50 m) at the edges through orange to dark red (600 to 750 m) at the two summit lobes. Below, an Idaho locator with an orange dot, a legend, north arrow, a scale bar in kilometers, and a text box: 5.145 cubic km inside the 28.03 sq km outline, tallest cell 729 m above the plain, mean height 183.5 m.](images/lab08-example-map-baseline.png)
+![Example baseline layout titled "Avalanche Terrain at Snowbird: Geometric Mean, Advisory Bands": the terrain hazard classes over imagery in the danger-scale colors, green Low through yellow, orange and red to black Extreme, with the Snowbird boundary in cyan and Alta's in gray; Extreme and High follow the steep walls and gullies, Moderate and Considerable cover the broader slopes, and Low appears only on the canyon floor. Below, a Salt Lake County locator, a legend, north arrow, scale bar in kilometers, and a text box: of Snowbird's 10.8 sq km, 3.8 rate High or Extreme and 1.1 Extreme.](images/lab08-example-map-baseline.png)
 
-**Figure 9.** The baseline map. Two things to do better than this example: label the summit and
-one place on the plain, and show where the random points fell.
+**Figure 10.** The baseline map. Two things to do better than this example: label the peaks and the
+lifts so a reader can find their way around, and mark one slope you checked against imagery.
 
-![Example scenario layout titled "Big Southern Butte by Spline: About 4.5 Cubic Kilometers": the same design and color classes, with blue patches along the western, northern and northeastern edges of the outline where the ground is below the plain the spline drew, and less dark red at the summit. The text box says the volume falls from 5.145 to 4.481 cubic km and 11,963 cells sit below the plain, because the spline bulges up under the butte where it has no points to hold it down.](images/lab08-example-map-scenario.png)
+![Example scenario layout titled "Avalanche Terrain at Snowbird: Elevation Bands Raised 400 m": the same design with less red and black on the lower slopes, and a text box saying High or Extreme falls from 3.8 to 2.5 sq km and Extreme from 1.1 to 0.47 sq km, chosen to show what a warm spell that pushes the problem up the mountain does to the map.](images/lab08-example-map-scenario.png)
 
-**Figure 10.** The kind of second map Step 9 asks for. Your own second map should be the run that
-most changes what a reader would conclude, which may not be this one.
+**Figure 11.** The kind of second map Step 9 asks for. Your own second map should be the run that most
+changes what a reader would conclude, which may not be this one.
 
-## Rubric for Big Southern Butte
+## Rubric for Avalanche Hazard
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• Your check values from Steps 4 to 8 (2)<br>• What the volume measures and what the model cannot see (Step 9, question 3) (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its baseline volume matches the check value (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the outline and the number of points exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
-| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in a clear color scale with a legend in meters (2)<br>• The outline over a hillshade or imagery (1)<br>• An inset locating the butte in Idaho (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend (2)<br>• The outline used, over a hillshade or imagery (1)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and the four Step 9 runs (250 and 4,000 points, your own outline, the spline), with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4)<br>• Which choice moves the volume most and least, ranked with your numbers (3)<br>• What the spline did that IDW cannot, mapped and explained (3) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• The "all three agree" result and why it is the wrong answer (2)<br>• Where the map is wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Step 8 table of Snowbird's areas at shift 0 matches the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• An inset locating Little Cottonwood Canyon (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
+| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map in each direction, and why (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree (`Rule_Spread`), and what terrain that is (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -503,10 +595,11 @@ what to submit.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Draft notes (2026-10-05).
-SOURCE: the September 3 migration of "Lab 7 - Big Southern Butte.docx" (docs/assignments/lab-08/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab08/PARITY_PLAN.md.
-CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
-DATA: docs/data/lab08-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab08.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab08/fetch_dem.py, make_outline.py, make_extract.py.
-SENSITIVITY (do NOT publish): IDW 5.145; Natural Neighbor 5.029; Spline 4.481 (11,963 cells below the plain); Kriging 4.988; Trend 5.312; 250 pts 5.229; 500 5.199; 2,000 5.103; 4,000 5.062; seeds 2-6 5.146-5.161; outline -200/-100/+100/+200 m: 4.846/5.008/5.236/5.322.
-PILOT (no-GUI, 2026-10-05, C:\Ames\Pilot08\PILOT-REPORT.md): every check value reproduced from the student zip (volume 5.14502), and the Step 9 runs (250: 146 kept, 5.2288; 4,000: 2,302 kept, 5.0617; Spline 4.4811, 11,963 below) match. Fixed from its findings: Height_Above_Plain is now a model output (Step 7 split in two) and Plain_Points/Height_Above_Plain are output parameters so dialog runs keep what Step 9 and Map 2 need; Step 9 says where to read each table value (Con < 0 count verified: 53 baseline, 11,963 spline); four runs, not 'at least three'; own outline must be one polygon, reference layer turned off; seed promise removed; photo is Figure B; tools-you-know lab numbers corrected; columns x rows, edge NoData, ESE; Map 1 deliverable lists the rubric's elements. Still open: template link (build after review), the draft box citing PARITY_PLAN.md (removed at promotion).
-GUI facts owed: the Random Numbers environment label and reach; exposing Number of Points; IDW's default cell size; dialog-run deletion of intermediates. -->
+<!-- Migration notes (rebuild drafted 2026-10-02, promoted 2026-10-05).
+SOURCE: the September 3 migration of "Lab 6 - Avalanche Hazard.docx" (docs/assignments/lab-08/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab08/PARITY_PLAN.md.
+ARCGIS PRO VERSION: 3.7.1. (1) arcpy (tools/lab08/run_model.py, tool_checks.py, student_route_checks.json), 2026-10-02. (2) GUI build 2026-10-05 at 175 % in C:\Ames\Lab07GUI\Lab08.aprx, model AvalancheTerrain (label Avalanche Terrain), built from the page: run inside ModelBuilder 1 min 1 s; every class-area check value reproduced (Tabulate Area in the GUI: Hazard 0.167 / 3.162 / 3.692 / 2.673 / 1.087, total 10.781 - one cell off the arcpy 0.168 / 3.691 / 10.782, so the page now quotes the GUI values and a one-cell tolerance); Shift 400 run from the tool dialog 1 min 34 s, Hazard 0.870 / 4.095 / 3.353 / 1.990 / 0.475, Worst 5 4.288, Best 5 0.126, matching SENSITIVITY. GUI FACTS: Project Raster opens Nearest neighbor and switches to Bilinear once this DEM is chosen, proposing 9.04 m cells; Slope and Aspect show a Surface Parameters banner, Method Planar, Target device GPU then CPU; Reclassify drops a newly typed row whose Start is -1 (edit an existing row to -1 instead) and appends a NODATA row; the Variable button opens Variable Data Type, Long is in the list; %Shift% draws its connector; Raster Calculator overwrote a typed output name (RasterC_1) once; Cell Statistics labels Input rasters or constant values / Overlay statistic / Ignore NoData in calculations; Tabulate Area shows "Use the selected records: 1" for a selected service layer and honors it; a tool-dialog run deleted DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class, Aspect_Class and Altitude_Class (Altitude_Class is now a parameter; Step 7 warns); the tool dialog showed an empty parameter list until the model tab was closed (Lab 5 saw the same).
+DATA: docs/data/lab08-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab08/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
+VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
+SENSITIVITY (do NOT publish; High + Extreme km2, geometric mean / maximum Extreme / minimum Extreme): shift -400: 3.975 / 10.613 / 0.415; -200: 3.937 / 9.152 / 0.406; 0: 3.760 / 8.203 / 0.336; +200: 3.317 / 6.415 / 0.258; +400: 2.465 / 4.289 / 0.126. The bands move the geometric-mean High + Extreme by -0.4 to +1.3 km2 over 800 m of shift; the rule moves Extreme alone from 0.34 to 8.20 km2 at shift 0.
+PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
+TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab08/PARITY_PLAN.md, all as recommended; page promoted, old page at lab08-backup. 2. DONE 2026-10-05: GUI build, 16 captures, Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab08-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->

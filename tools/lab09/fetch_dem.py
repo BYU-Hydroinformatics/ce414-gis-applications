@@ -1,39 +1,41 @@
-r"""Cut the Y Mountain DEM extract for Lab 9 out of the USGS 1/3 arc-second 3DEP tile n41w112.
+"""Cut the Big Southern Butte DEM extract for Lab 9 out of the USGS 1/3 arc-second 3DEP tiles.
 
-The window runs from the BYU campus on the valley floor, up the mountain front past the Y, to the
-summit of Y Mountain and the head of Slide Canyon, so the surface has flat ground, a steep front
-and a summit ridge for the interpolators to struggle with. Cell values, cell size and coordinate
-system are unchanged. Writes C:\Ames\Lab09\Data\YMountain_DEM.tif.
+The butte (43.40 N, 113.03 W) sits beside the 113 W tile edge, so the window is read from tiles
+n44w114 and n44w113 over HTTP and the two pieces are joined edge to edge. Cell values, cell size and
+coordinate system are unchanged. Writes C:\\Ames\\Lab08\\Data\\BigSouthernButte_DEM.tif.
 Run with the standalone Python 3.14 (rasterio).
 """
 import json
 import os
 
+import numpy as np
 import rasterio
+from rasterio.merge import merge
 from rasterio.windows import from_bounds
 
-URL = "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.tif"
-# West, south, east, north (NAD 1983 degrees).
-BOUNDS = (-111.68, 40.20, -111.57, 40.27)
-OUT = r"C:\Ames\Lab09\Data\YMountain_DEM.tif"
+TILES = ["n44w114", "n44w113"]
+URL = "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/{t}/USGS_13_{t}.tif"
+# West, south, east, north (NAD 1983 degrees): the butte with a wide margin of plain around it.
+BOUNDS = (-113.17, 43.32, -112.89, 43.49)
+OUT = r"C:\Ames\Lab08\Data\BigSouthernButte_DEM.tif"
 
 os.environ.setdefault("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR")
-with rasterio.open("/vsicurl/" + URL) as src:
-    win = from_bounds(*BOUNDS, transform=src.transform).round_offsets().round_lengths()
-    data = src.read(1, window=win)
-    profile = src.profile.copy()
-    profile.update(width=win.width, height=win.height, transform=src.window_transform(win),
-                   compress="deflate", predictor=3, tiled=True, blockxsize=256, blockysize=256)
-    profile.pop("photometric", None)
-    desc = src.tags().get("TIFFTAG_IMAGEDESCRIPTION", "")
-    tags = src.tags()
+srcs = [rasterio.open("/vsicurl/" + URL.format(t=t)) for t in TILES]
+data, transform = merge(srcs, bounds=BOUNDS, nodata=srcs[0].nodata)
+profile = srcs[0].profile.copy()
+profile.update(width=data.shape[2], height=data.shape[1], transform=transform, count=1,
+               compress="deflate", predictor=3, tiled=True, blockxsize=256, blockysize=256)
+profile.pop("photometric", None)
+tags = {t: s.tags() for t, s in zip(TILES, srcs)}
+for s in srcs:
+    s.close()
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with rasterio.open(OUT, "w", **profile) as dst:
-    dst.write(data, 1)
+    dst.write(data[0], 1)
 nod = profile.get("nodata")
-v = data[data != nod]
-print(json.dumps(dict(width=int(win.width), height=int(win.height), nodata=nod,
-                      nodata_cells=int((data == nod).sum()), min=float(v.min()), max=float(v.max()),
-                      res=[profile["transform"].a, -profile["transform"].e], bytes=os.path.getsize(OUT),
-                      description=desc, tags=tags), indent=1), flush=True)
-os._exit(0)
+v = data[0][data[0] != nod]
+print(json.dumps(dict(width=int(data.shape[2]), height=int(data.shape[1]), nodata=nod,
+                      nodata_cells=int((data[0] == nod).sum()), min=float(v.min()), max=float(v.max()),
+                      res=[transform.a, -transform.e], bytes=os.path.getsize(OUT),
+                      titles={t: tg.get("TIFFTAG_IMAGEDESCRIPTION", "") for t, tg in tags.items()}), indent=1), flush=True)
+os._exit(0)   # skip GDAL's slow /vsicurl/ teardown (Lab 8's fetch hung here)

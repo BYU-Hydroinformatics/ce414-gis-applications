@@ -26,7 +26,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 8 — Big Southern Butte](../assignments/lab-08/README.md)
+[Lab 7 — Flood Mapping with HAND](../assignments/lab-07/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 

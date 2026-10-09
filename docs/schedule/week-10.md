@@ -24,7 +24,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 9 — Interpolation Explorer](../assignments/lab-09/README.md)
+[Lab 8 — Avalanche Hazard](../assignments/lab-08/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 

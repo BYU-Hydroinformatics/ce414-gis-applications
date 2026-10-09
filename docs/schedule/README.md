@@ -13,13 +13,13 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [5](week-05.md) | Terrain Analysis | Lab 4 — Cell Phone Tower Placement |
 | [6](week-06.md) | Watershed Delineation | Lab 5 — Watershed Delineation |
 | [7](week-07.md) | Lake Bathymetry | Lab 6 — Lake Depth Explorer |
-| [8](week-08.md) | Interpolation and Midterm 1 | Lab 7 — Avalanche Hazard |
-| [9](week-09.md) | Interpolation, Part 3, and Web Services | Lab 8 — Big Southern Butte |
-| [10](week-10.md) | Raster-Based Spatial Analysis | Lab 9 — Interpolation Explorer |
-| [11](week-11.md) | Least Cost Path and Coordinate Systems | Lab 10 — Wind Farm Site Selection |
-| [12](week-12.md) | GPS and the Final Project | Lab 11 — Least Cost Path Power Line Analysis |
-| [13](week-13.md) | Final Project Work | — |
-| [14](week-14.md) | Presentations and Midterm 2 | — |
+| [8](week-08.md) | Interpolation and Midterm 1 | — |
+| [9](week-09.md) | Interpolation, Part 3, and Web Services | Lab 7 — Flood Mapping with HAND |
+| [10](week-10.md) | Raster-Based Spatial Analysis | Lab 8 — Avalanche Hazard |
+| [11](week-11.md) | Least Cost Path and Coordinate Systems | Lab 9 — Big Southern Butte |
+| [12](week-12.md) | GPS and the Final Project | Lab 10 — Interpolation Explorer |
+| [13](week-13.md) | Final Project Work | Lab 11 — Least Cost Path Power Line Analysis |
+| [14](week-14.md) | Presentations and Midterm 2 | Lab 12 — Network Analysis |
 | [15](week-15.md) | Final Project Presentations | — |
 
 ## Exams

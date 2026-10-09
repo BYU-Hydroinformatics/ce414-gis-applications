@@ -62,13 +62,13 @@ By the end of class you should be able to:
 ![bg right:42% w:92%](images/ws9-ski-areas-query.png)
 
 - **Lab 5** — UGRC's **Utah Streams NHD**: **541,604** stream lines, added by URL, never downloaded
-- **Lab 7** — UGRC's **ski area boundaries**: **14** polygons, added by URL with **Add Data ▸ From Path**
-- **Labs 4 and 7** — USGS **3DEP** elevation tiles, which you *did* download whole
+- **Lab 8** — UGRC's **ski area boundaries**: **14** polygons, added by URL with **Add Data ▸ From Path**
+- **Labs 4 and 8** — USGS **3DEP** elevation tiles, which you *did* download whole
 
 Today: what was happening behind those URLs, and why the third one did not have to be a download either.
 
-<!-- The map is one of today's requests: the UGRC ski-area feature service from Lab 7, queried as GeoJSON, drawn over a hillshade that a USGS WMS rendered on request. Two services, two standards, one map, nothing downloaded. (7 of the 14 resorts fall in this window.) -->
-<!-- Counts measured October 5, 2026 with returnCountOnly queries: UtahStreamsNHD/FeatureServer/0/query?where=1=1&returnCountOnly=true&f=json returned {"count":541604}; the same query on SkiAreaBoundaries returned {"count":14}. Lab 7's DEM was cut from USGS_13_n41w112.tif (lab-07 migration notes); Lab 4 used four USGS_1_n4Xw11X.tif tiles. Both kinds of tile are cloud-optimized GeoTIFFs (checked by reading their headers: GDAL reports LAYOUT=COG), which is Part 5 of today. -->
+<!-- The map is one of today's requests: the UGRC ski-area feature service from Lab 8, queried as GeoJSON, drawn over a hillshade that a USGS WMS rendered on request. Two services, two standards, one map, nothing downloaded. (7 of the 14 resorts fall in this window.) -->
+<!-- Counts measured October 5, 2026 with returnCountOnly queries: UtahStreamsNHD/FeatureServer/0/query?where=1=1&returnCountOnly=true&f=json returned {"count":541604}; the same query on SkiAreaBoundaries returned {"count":14}. Lab 8's DEM was cut from USGS_13_n41w112.tif (lab-08 migration notes); Lab 4 used four USGS_1_n4Xw11X.tif tiles. Both kinds of tile are cloud-optimized GeoTIFFs (checked by reading their headers: GDAL reports LAYOUT=COG), which is Part 5 of today. -->
 
 ---
 
@@ -363,13 +363,13 @@ GeoJSON · longitude, latitude · asked with **/collections/…/items**
 
 - **Not an OGC standard** — Esri's own published API, used by ArcGIS Online and ArcGIS Server
 - **FeatureServer** → features (UGRC ski areas, NHD) · **MapServer** → map images (USGSTopo) · **ImageServer** → raster values (3DEP)
-- But an ImageServer can draw before it sends: added to ArcGIS Pro, 3DEP arrives as an **8-bit hillshade** — Tuesday's Lab 9 Step 1
+- But an ImageServer can draw before it sends: added to ArcGIS Pro, 3DEP arrives as an **8-bit hillshade** — you will meet it in Lab 10, Step 1
 - One ArcGIS Server can also speak **WMS, WFS, WCS** for the same data:
 
 ![w:800 center](images/ws9-rest-vs-wms.png)
 
 <!-- The figure: the same USGSTopo map service asked through REST (MapServer/export, f=image) and through WMS (WMSServer, GetMap), October 5, 2026. The two renders differ in label density because the REST export adjusts the extent to the image shape in Web Mercator and draws at a different scale; both are pictures. The 3DEP ImageServer likewise answers ArcGIS REST, WMS and WCS (we used all three). -->
-<!-- The Lab 9 tie-in, observed in the Lab 9 GUI build (ArcGIS Pro 3.7.1, October 2026): Add Data From Path with the 3DEP ImageServer URL gave a layer drawn as a hillshade, Pixel Type unsigned char, 8 bit, Web Mercator (WKID 3857), 1 m cells, and the Explore pop-up at Y Mountain's summit read 154 where the DEM reads about 2,897 m. The service itself is Float32 (its ?f=pjson says pixelType F32, -60.3 to 3,922.5 m) and lists twelve raster functions, Hillshade Gray first; the layer in ArcGIS Pro is that function's output, not the elevations. Ask the class who saw 154 on Tuesday, and how they would get the meters (the WCS on the previous slides, or the layer's raster function set to None in its properties - VERIFY that last menu path in the GUI before saying it). -->
+<!-- The Lab 10 tie-in, observed in the Lab 10 GUI build (ArcGIS Pro 3.7.1, October 2026): Add Data From Path with the 3DEP ImageServer URL gave a layer drawn as a hillshade, Pixel Type unsigned char, 8 bit, Web Mercator (WKID 3857), 1 m cells, and the Explore pop-up at Y Mountain's summit read 154 where the DEM reads about 2,897 m. The service itself is Float32 (its ?f=pjson says pixelType F32, -60.3 to 3,922.5 m) and lists twelve raster functions, Hillshade Gray first; the layer in ArcGIS Pro is that function's output, not the elevations. When Lab 10 comes, students will see 154 at Y Mountain's summit; ask now how they would get the meters (the WCS on the previous slides, or the layer's raster function set to None in its properties - VERIFY that last menu path in the GUI before saying it). -->
 <!-- REST endpoints used today: https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0 and .../UtahStreamsNHD/FeatureServer/0 (ArcGIS Online, current version 12); https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer; https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer (ArcGIS Server 11.3, Float32, values -60.3 to 3,922.5 m). Esri's reference: https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/ -->
 
 ---
@@ -448,7 +448,7 @@ GeoJSON · longitude, latitude · asked with **/collections/…/items**
 
 - An ordinary GeoTIFF, **arranged** for the web: internal **tiles**, **overviews**, and the index **at the front**
 - A client reads the index, then asks for **only the bytes** of the tiles it needs (HTTP range requests)
-- The **3DEP tile behind Lab 7**: 10,812² cells in 512 × 512 tiles, 5 overviews — a window at BYU moved **0.72 MB of 403 MB**
+- The **3DEP tile behind Lab 8**: 10,812² cells in 512 × 512 tiles, 5 overviews — a window at BYU moved **0.72 MB of 403 MB**
 
 <!-- Measured October 5, 2026 with GDAL in the ArcGIS Pro Python: https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.tif, 403,454,436 bytes, LAYOUT=COG, LZW, 512 x 512 blocks, overviews 5406, 2703, 1351, 675, 337 columns wide. A 100 x 100-cell read at -111.64, 40.25 took 1 HEAD and 2 GETs (the first 16 KB header, then one block) = 720,896 bytes; the center value was 1430.04 m. The server answers Accept-Ranges: bytes. The 1 arc-second tiles of Lab 4 (USGS_1_n40w112.tif checked) carry the same COG header. -->
 <!-- arcpy.Raster() opened the plain https:// URL of this tile directly in ArcGIS Pro 3.7.1's Python (10812 x 10812 cells). VERIFY in the GUI: that Map ▸ Add Data ▸ From Path accepts the same https://...tif URL and draws it. -->
@@ -511,7 +511,7 @@ Server connections then appear in the **Catalog** pane under **Servers**; drag a
 
 ![bg right:24% w:92%](images/ogc-wms-multiple-maps.png)
 
-<!-- From Path was used in the Lab 5 and Lab 7 GUI builds (ArcGIS Pro 3.7.1, September 30 and October 5, 2026), worded exactly as in those labs. The four Insert ▸ Connections paths are quoted from Esri's ArcGIS Pro documentation ("latest"), read October 5, 2026: help/data/services/add-wms-services.htm, add-wfs-services.htm, add-ogc-api-services.htm, and help/data/imagery/create-a-stac-connection.htm. Esri's OGC API page says ArcGIS Pro supports OGC API - Features and OGC API - Tiles (map tiles) through that connection; Maps, Records and Processes are not listed. -->
+<!-- From Path was used in the Lab 5 and Lab 8 GUI builds (ArcGIS Pro 3.7.1, September 30 and October 5, 2026), worded exactly as in those labs. The four Insert ▸ Connections paths are quoted from Esri's ArcGIS Pro documentation ("latest"), read October 5, 2026: help/data/services/add-wms-services.htm, add-wfs-services.htm, add-ogc-api-services.htm, and help/data/imagery/create-a-stac-connection.htm. Esri's OGC API page says ArcGIS Pro supports OGC API - Features and OGC API - Tiles (map tiles) through that connection; Maps, Records and Processes are not listed. -->
 <!-- VERIFY in ArcGIS Pro 3.7.1 before class: the four Insert ▸ Connections menu paths have been checked in the documentation only, not seen in the GUI. TODO(capture): a real ArcGIS Pro capture of the Insert ▸ Connections ▸ Server menu would replace the side figure (the 2011 OGC diagram of one client overlaying maps from several servers, which is what ArcGIS Pro does with these connections); no capture exists yet. Good demo order if there is time: New WMS Server with https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer, then New OGC API Server with https://demo.pygeoapi.io/master and add utah_city_locations. Neither has been tried in the GUI for this deck. -->
 
 ---
@@ -565,13 +565,13 @@ Open the **UGRC ski-area layer** on your phone or laptop (scan the code):
 
 ![bg right:35% w:90%](images/ws9-s2-byu-cog.png)
 
-- **Lab 8 — Big Southern Butte** is due **Saturday 11:59 pm**: [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
+- **Lab 7 — Flood Mapping with HAND** is due **Saturday 11:59 pm**: [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 - **Reading** — Chapter 14 of *GIS Fundamentals* (Data Standards and Data Quality); **Quiz 8** on Learning Suite, open book, due **Saturday 11:59 pm**
-- **Lab 9 — Interpolation Explorer**, started Tuesday, is due **Saturday of next week**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+- **Lab 8 — Avalanche Hazard** comes next, due **Saturday of next week**: [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
 - Next week: **raster-based spatial analysis**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 8, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 9, which is introduced on Tuesday of Week 9 (interpolation-explorer.md). -->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 9, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 10, which is introduced on Tuesday of Week 9 (interpolation-explorer.md). -->
 
 ---
 

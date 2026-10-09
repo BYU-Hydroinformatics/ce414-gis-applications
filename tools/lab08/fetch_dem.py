@@ -1,41 +1,37 @@
-"""Cut the Big Southern Butte DEM extract for Lab 8 out of the USGS 1/3 arc-second 3DEP tiles.
+"""Cut the Little Cottonwood Canyon DEM extract for Lab 8 out of the USGS 1/3 arc-second tile n41w112.
 
-The butte (43.40 N, 113.03 W) sits beside the 113 W tile edge, so the window is read from tiles
-n44w114 and n44w113 over HTTP and the two pieces are joined edge to edge. Cell values, cell size and
-coordinate system are unchanged. Writes C:\\Ames\\Lab08\\Data\\BigSouthernButte_DEM.tif.
-Run with the standalone Python 3.14 (rasterio).
+The tile is a cloud-optimized GeoTIFF of about 380 MB. This reads only the window we need over
+HTTP and writes it unchanged (same CRS, same cell values, same 1/3 arc-second cells) to
+C:\\Ames\\Lab05\\Data\\RockCanyon_DEM.tif. Run with the standalone Python 3.14 (rasterio).
 """
 import json
 import os
 
-import numpy as np
 import rasterio
-from rasterio.merge import merge
 from rasterio.windows import from_bounds
 
-TILES = ["n44w114", "n44w113"]
-URL = "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/{t}/USGS_13_{t}.tif"
-# West, south, east, north (NAD 1983 degrees): the butte with a wide margin of plain around it.
-BOUNDS = (-113.17, 43.32, -112.89, 43.49)
-OUT = r"C:\Ames\Lab08\Data\BigSouthernButte_DEM.tif"
+URL = "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.tif"
+# West, south, east, north in decimal degrees (NAD 1983): upper Little Cottonwood Canyon, Snowbird and Alta with a margin.
+BOUNDS = (-111.70, 40.53, -111.58, 40.61)
+OUT = r"C:\Ames\Lab07\Data\LittleCottonwood_DEM.tif"
 
 os.environ.setdefault("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR")
-srcs = [rasterio.open("/vsicurl/" + URL.format(t=t)) for t in TILES]
-data, transform = merge(srcs, bounds=BOUNDS, nodata=srcs[0].nodata)
-profile = srcs[0].profile.copy()
-profile.update(width=data.shape[2], height=data.shape[1], transform=transform, count=1,
-               compress="deflate", predictor=3, tiled=True, blockxsize=256, blockysize=256)
-profile.pop("photometric", None)
-tags = {t: s.tags() for t, s in zip(TILES, srcs)}
-for s in srcs:
-    s.close()
+with rasterio.open("/vsicurl/" + URL) as src:
+    win = from_bounds(*BOUNDS, transform=src.transform).round_offsets().round_lengths()
+    data = src.read(1, window=win)
+    profile = src.profile.copy()
+    profile.update(width=win.width, height=win.height, transform=src.window_transform(win),
+                   compress="deflate", predictor=3, tiled=True, blockxsize=256, blockysize=256)
+    profile.pop("photometric", None)
+    tags = src.tags()
+    crs = src.crs.to_wkt()
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with rasterio.open(OUT, "w", **profile) as dst:
-    dst.write(data[0], 1)
+    dst.write(data, 1)
 nod = profile.get("nodata")
-v = data[0][data[0] != nod]
-print(json.dumps(dict(width=int(data.shape[2]), height=int(data.shape[1]), nodata=nod,
-                      nodata_cells=int((data[0] == nod).sum()), min=float(v.min()), max=float(v.max()),
-                      res=[transform.a, -transform.e], bytes=os.path.getsize(OUT),
-                      titles={t: tg.get("TIFFTAG_IMAGEDESCRIPTION", "") for t, tg in tags.items()}), indent=1), flush=True)
-os._exit(0)   # skip GDAL's slow /vsicurl/ teardown (Lab 7's fetch hung here)
+valid = data[data != nod] if nod is not None else data
+info = dict(width=win.width, height=win.height, dtype=str(data.dtype), nodata=nod,
+            min=float(valid.min()), max=float(valid.max()), bounds=list(rasterio.windows.bounds(win, src.transform)),
+            res=list(src.res), bytes=os.path.getsize(OUT), tags=tags)
+print(json.dumps(info, indent=1))
+print(crs[:200])
