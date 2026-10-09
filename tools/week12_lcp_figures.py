@@ -1,16 +1,12 @@
 r"""Figures and numbers for the Week 12 Thursday deck (slides/week-12/least-cost-path-b.md).
 
-Everything is computed in ArcGIS Pro 3.7.1 (Spatial Analyst) from tools/week12_lcp_data.py's download
-of Lab 11's setting (C:\Ames\Week12). Three parts:
+Computed in ArcGIS Pro 3.7.1 (Spatial Analyst). Two parts:
 
 1. Toy grids. The same small cost rasters run through legacy Cost Distance and through Distance
    Accumulation, so the deck can state exactly how each one charges a step (measured, not assumed).
-2. Lab 11's recipe, as its handout states it, at 100 m: within 2 km of a major road = 1, elsewhere
-   NoData; within 2 km of a major river or lake = 10, else 1; cities scaled 1 to 10 by distance out to
-   5 km; on an existing power line = 1, else 10; all multiplied together and by the elevation.
-   Where the handout leaves a number open (the city scale, the power-line rasterization) the choice
-   is written in CITY_SCALE and the docstring of cost_surface() and stated on the slide.
-3. Scenarios that change one decision each, the straight line, and a near-optimal corridor.
+2. Lab 11 itself: every map is drawn from the Lab 11 reference run (tools/lab11/run_model.py, in
+   C:\Ames\Lab11\ref; run it first), so the deck shows the lab's own data (30 m), scores, weights and
+   sensitivity runs. Adds the corridor and the legacy Cost Distance chain on the same cost surface.
 
 Writes slides/week-12/images/lcpb-*.png and tools/week12_lcp_numbers.json.   ArcGIS Pro Python.
 """
@@ -32,19 +28,18 @@ arcpy.env.overwriteOutput = True
 REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = os.path.join(REPO, "slides", "week-12", "images")
 W = r"C:\Ames\Week12"
-SRC = os.path.join(W, "LCP.gdb")
-G = os.path.join(W, "Work.gdb")
-DEM = os.path.join(W, "dem100.tif")
+L11 = r"C:\Ames\Lab11\ref\lab11-power-line"
+REF = r"C:\Ames\Lab11\ref\Ref.gdb"
+FG = os.path.join(W, "Lab11Fig.gdb")
+DEM = os.path.join(L11, "Elevation.tif")
 UTM = arcpy.SpatialReference(26912)
 NUM = {}
 plt.rcParams.update({"font.size": 13, "axes.spines.top": False, "axes.spines.right": False})
-# Cities: inside a city or within 1 km = 10, then 8, 6, 4, 2 out to 5 km, beyond = 1
-CITY_SCALE = [(0, 10), (1000, 10), (2000, 8), (3000, 6), (4000, 4), (5000, 2)]
 
 
 def save(fig, name):
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, name), dpi=150)
+    fig.savefig(os.path.join(OUT, name), dpi=150, bbox_inches="tight", pad_inches=0.15)
     plt.close(fig)
     print(name)
 
@@ -140,258 +135,195 @@ def fig_toy(res):
     save(fig, "lcpb-box.png")
 
 
-# ------------------------------------------------------------------ 2. Lab 11's cost surface
-def prep():
-    if not arcpy.Exists(G):
-        arcpy.management.CreateFileGDB(W, "Work.gdb")
-    arcpy.management.CalculateStatistics(DEM)
-    arcpy.env.workspace = G
-    arcpy.env.extent = arcpy.env.snapRaster = arcpy.env.cellSize = DEM
-    arcpy.env.outputCoordinateSystem = UTM
-    s = lambda n: os.path.join(SRC, n)
-    arcpy.analysis.PairwiseBuffer(s("Major_Roads"), "road_buf", "2 Kilometers", "ALL")
-    arcpy.analysis.PairwiseBuffer(s("Major_Streams"), "stream_buf", "2 Kilometers", "ALL")
-    arcpy.analysis.PairwiseBuffer(s("Major_Lakes"), "lake_buf", "2 Kilometers", "ALL")
-    arcpy.management.Merge(["stream_buf", "lake_buf"], "water_two")
-    arcpy.analysis.PairwiseDissolve("water_two", "water_buf")
-    arcpy.analysis.MultipleRingBuffer(s("Cities"), "city_rings", [1, 2, 3, 4, 5], "Kilometers", "distance",
-                                      "ALL", "FULL")
-    for fc, val in (("road_buf", "road"), ("water_buf", "water")):
-        arcpy.management.AddField(fc, "v", "SHORT"); arcpy.management.CalculateField(fc, "v", "1")
-        arcpy.conversion.PolygonToRaster(fc, "v", f"{val}_r", "CELL_CENTER", cellsize=DEM)
-    arcpy.conversion.PolygonToRaster("city_rings", "distance", "city_r", "CELL_CENTER", cellsize=DEM)
-    pl = s("Power_Lines")
-    arcpy.management.AddField(pl, "v", "SHORT"); arcpy.management.CalculateField(pl, "v", "1")
-    arcpy.conversion.PolylineToRaster(pl, "v", "power_r", "MAXIMUM_LENGTH", cellsize=DEM)
-    arcpy.conversion.PolygonToRaster(s("Cities"), "OBJECTID", "inside_city", "CELL_CENTER", cellsize=DEM)
-    Hillshade(DEM, 315, 45).save("hs")
-
-
-def cost_surface(roads="barrier", cities=True, power=True, water=True, elevation=True, name="cost"):
-    """Lab 11: road = 1 within 2 km else NoData ("barrier") or 10 ("soft"); water = 10 within 2 km else
-    1; city = CITY_SCALE by ring (inside a city = 10); power = 1 on a cell the line crosses (Polyline
-    to Raster, 100 m) else 10; times the elevation in meters."""
-    if roads == "barrier":
-        road = SetNull(IsNull("road_r"), 1)
-    elif roads == "soft":
-        road = Con(IsNull("road_r"), 10, 1)
-    else:
-        road = Raster(DEM) * 0 + 1
-    f = road
-    if water:
-        f = f * Con(IsNull("water_r"), 1, 10)
-    if cities:
-        ring = Raster("city_r")
-        cf = Con(IsNull(ring), 1, 1)
-        for d, v in CITY_SCALE[1:]:
-            cf = Con(ring == d / 1000, v, cf)
-        cf = Con(IsNull("inside_city"), cf, 10)
-        f = f * cf
-    if power:
-        f = f * Con(IsNull("power_r"), 10, 1)
-    if elevation:
-        f = f * Raster(DEM)
-    f.save(name)
-    return name
-
-
-def route(cost, tag):
-    pts = os.path.join(SRC, "Endpoints")
-    src = arcpy.management.MakeFeatureLayer(pts, f"s_{tag}", "Role = 'Source'")
-    dst = arcpy.management.MakeFeatureLayer(pts, f"d_{tag}", "Role = 'Destination'")
-    acc = DistanceAccumulation(src, in_cost_raster=cost, out_back_direction_raster=f"bd_{tag}")
-    acc.save(f"acc_{tag}")
-    OptimalPathAsLine(dst, f"acc_{tag}", f"bd_{tag}", f"path_{tag}")
-    length = sum(r[0] for r in arcpy.da.SearchCursor(f"path_{tag}", ["SHAPE@LENGTH"])) / 1000
-    x, y = NUM["dest_xy"]
-    total = float(arcpy.management.GetCellValue(f"acc_{tag}", f"{x} {y}").getOutput(0))
-    NUM[tag] = {"length_km": round(length, 2), "total_cost": total}
-    return length, total
-
-
-def path_xy(tag):
+# ------------------------------------------------------------------ 2. Lab 11's model
+# Everything below reads the Lab 11 reference run (tools/lab11/run_model.py, C:\Ames\Lab11\ref):
+# the lab's own data, cell size, scores, weights and runs. New datasets go to FG, never into REF.
+def path_xy(fc):
     out = []
-    for (g,) in arcpy.da.SearchCursor(f"path_{tag}", ["SHAPE@"]):
+    for (g,) in arcpy.da.SearchCursor(fc, ["SHAPE@"]):
         for part in g:
             out.append(np.array([[p.X, p.Y] for p in part if p]))
     return out
 
 
-def fc_xy(fc, where=None):
+def fc_xy(fc):
     out = []
-    for (g,) in arcpy.da.SearchCursor(fc, ["SHAPE@"], where):
+    for (g,) in arcpy.da.SearchCursor(fc, ["SHAPE@"]):
         for part in g:
-            pts = [[p.X, p.Y] if p else [np.nan, np.nan] for p in part]
-            out.append(np.array(pts))
+            out.append(np.array([[p.X, p.Y] if p else [np.nan, np.nan] for p in part]))
     return out
 
 
-def base_ax(ax, ext, title=None, hs=None):
-    xmin, ymin, xmax, ymax = ext
+def extent():
+    d = arcpy.Describe(DEM)
+    return (d.extent.XMin, d.extent.YMin, d.extent.XMax, d.extent.YMax)
+
+
+def kext():
+    x0, y0, x1, y1 = extent()
+    return [x0 / 1000, x1 / 1000, y0 / 1000, y1 / 1000]
+
+
+def base_ax(ax, title=None, hs=None):
+    x0, y0, x1, y1 = extent()
     if hs is not None:
-        ax.imshow(hs, cmap="gray", extent=[xmin / 1000, xmax / 1000, ymin / 1000, ymax / 1000], vmin=0, vmax=255)
-    ax.set_xlim(xmin / 1000, xmax / 1000); ax.set_ylim(ymin / 1000, ymax / 1000)
+        ax.imshow(hs, cmap="gray", extent=kext(), vmin=0, vmax=255)
+    ax.set_xlim(x0 / 1000, x1 / 1000); ax.set_ylim(y0 / 1000, y1 / 1000)
     ax.set_aspect("equal"); ax.set_xticks([]); ax.set_yticks([])
-    for s in ax.spines.values():
-        s.set_visible(True)
     if title:
         ax.set_title(title, fontsize=12)
 
 
 def ends(ax):
-    for k, mk, c in (("src_xy", "^", "#00a000"), ("dest_xy", "s", "#d00000")):
-        x, y = NUM[k]
+    for (role, (x, y)) in arcpy.da.SearchCursor(os.path.join(L11, "PowerLineData.gdb", "Endpoints"), ["Role", "SHAPE@XY"]):
+        mk, c = ("^", "#00a000") if role == "Source" else ("s", "#d00000")
         ax.plot(x / 1000, y / 1000, mk, ms=11, mfc=c, mec="w", mew=1.5, zorder=10)
 
 
-def main():
-    os.makedirs(OUT, exist_ok=True)
-    fig_toy(toy())
-    prep()
-    for (r, x, y) in arcpy.da.SearchCursor(os.path.join(SRC, "Endpoints"), ["Role", "SHAPE@X", "SHAPE@Y"]):
-        NUM["src_xy" if r == "Source" else "dest_xy"] = [x, y]
-    sx, sy = NUM["src_xy"]; dx, dy = NUM["dest_xy"]
-    NUM["straight_km"] = round(math.hypot(sx - dx, sy - dy) / 1000, 2)
-    d = arcpy.Describe(DEM)
-    ext = (d.extent.XMin, d.extent.YMin, d.extent.XMax, d.extent.YMax)
-    hs = arr(Raster("hs"))
-    dem = arr(Raster(DEM))
-    NUM["dem_range"] = [float(np.nanmin(dem)), float(np.nanmax(dem))]
+def draw(ax, fc, color, lw, alpha=1.0, style="-"):
+    for p in path_xy(os.path.join(REF, fc)):
+        ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, style, c=color, lw=lw, alpha=alpha)
 
-    scen = {"base": dict(), "soft_roads": dict(roads="soft"), "no_cities": dict(cities=False),
-            "no_power": dict(power=False), "no_water": dict(water=False),
-            "terrain_only": dict(roads="none", cities=False, power=False, water=False)}
-    for tag, kw in scen.items():
-        c = cost_surface(name=f"cost_{tag}", **kw)
-        route(c, tag)
-        print(tag, NUM[tag])
 
-    # the legacy chain Lab 11's handout names, on the same cost surface
-    pts = os.path.join(SRC, "Endpoints")
-    s_l = arcpy.management.MakeFeatureLayer(pts, "s_legacy", "Role = 'Source'")
-    d_l = arcpy.management.MakeFeatureLayer(pts, "d_legacy", "Role = 'Destination'")
-    CostDistance(s_l, "cost_base").save("cd_legacy")
-    CostBackLink(s_l, "cost_base").save("bl_legacy")
-    CostPath(d_l, "cd_legacy", "bl_legacy", "EACH_CELL").save("cp_legacy")
-    arcpy.conversion.RasterToPolyline("cp_legacy", "path_legacy", "ZERO", 0, "NO_SIMPLIFY")
-    NUM["legacy"] = {"length_km": round(sum(r[0] for r in arcpy.da.SearchCursor("path_legacy", ["SHAPE@LENGTH"])) / 1000, 2),
-                     "total_cost": float(arcpy.management.GetCellValue("cd_legacy", f"{dx} {dy}").getOutput(0))}
-    print("legacy", NUM["legacy"])
+def lab11():
+    if not arcpy.Exists(FG):
+        arcpy.management.CreateFileGDB(W, os.path.basename(FG))
+    arcpy.env.workspace = FG
+    arcpy.env.extent = arcpy.env.snapRaster = arcpy.env.cellSize = DEM
+    ck = json.load(open(os.path.join(REPO, "tools", "lab11", "check_values.json")))
+    ex = json.load(open(os.path.join(REPO, "tools", "lab11", "explore_weights.json")))
+    NUM["lab11"] = {"base": ck["base"], "straight_km": ck["straight_km"],
+                    "runs": {k: ck["sensitivity"][k] for k in ("line0", "line0_5", "line2", "slope0", "slope5", "nobarrier")},
+                    "explore": {k: ex[k] for k in ("road0", "city0")}}
+    Hillshade(DEM, 315, 45).save("hs")
+    hs = arr(Raster(os.path.join(FG, "hs")))
+    r = lambda n: os.path.join(REF, n)
 
-    # factor panels
-    road = arr(Con(IsNull("road_r"), 0, 1))
-    water = arr(Con(IsNull("water_r"), 1, 10))
-    ring = arr(Raster("city_r")); inside = ~np.isnan(arr(Raster("inside_city")))
-    city = np.ones_like(ring)
-    for dd, v in CITY_SCALE[1:]:
-        city[ring == dd / 1000] = v
-    city[inside] = 10
-    power = arr(Con(IsNull("power_r"), 10, 1))
-    cost = arr(Raster("cost_base"))
-    fig, axs = plt.subplots(2, 3, figsize=(13, 10.2))
-    panels = [(road, "Major road within 2 km:\n1, else NoData (white)", ListedColormap(["white", "#4d4d4d"]), 0, 1),
-              (water, "Major river or lake within 2 km:\n10, else 1", ListedColormap(["#f0f0f0", "#2171b5"]), 1, 10),
-              (city, "Cities, by distance out to 5 km:\n10 inside, 8, 6, 4, 2, then 1", "Oranges", 1, 10),
-              (power, "Existing power line:\n1 on the line, else 10", ListedColormap(["#d4a000", "#f0f0f0"]), 1, 10),
-              (dem, f"Elevation, m (multiplier)\n{NUM['dem_range'][0]:,.0f} to {NUM['dem_range'][1]:,.0f}", "terrain", None, None),
-              (np.log10(cost), "Cost = product of all five\n(log scale; white = NoData)", "magma_r", None, None)]
+    # the five layers and the sum
+    sc = {n: arr(Raster(r(n))) for n in ("Slope_Score", "Road_Score", "City_Score", "Line_Score", "Cost_base")}
+    river = ~np.isnan(arr(Raster(r("River_Cells"))))
+    fig, axs = plt.subplots(2, 3, figsize=(13, 10.4))
+    panels = [(sc["Slope_Score"], "Slope score\n(0-5 degrees: 1 ... over 30: 10)", "YlOrBr", 1, 10),
+              (sc["Road_Score"], "Road score\n(within 1 km: 1 ... over 5 km: 10)", "YlOrBr", 1, 10),
+              (sc["City_Score"], "City score\n(inside or within 1 km: 10 ... beyond 5 km: 1)", "YlOrBr", 1, 10),
+              (sc["Line_Score"], "Existing-line score\n(within 500 m: 1, 0.5-2 km: 5, else 10)", "YlOrBr", 1, 10),
+              (np.where(river, 10.0, np.nan), "Major streams\n(+10 on every river cell)", ListedColormap(["#2171b5"]), 0, 10),
+              (sc["Cost_base"], f"Cost surface = the sum (weights 1)\n{np.nanmin(sc['Cost_base']):.0f} to {np.nanmax(sc['Cost_base']):.0f}", "magma_r", 4, 48)]
     for ax, (a, t, cm, lo, hi) in zip(axs.flat, panels):
-        base_ax(ax, ext, t)
-        ma = np.ma.masked_invalid(a.astype(float))
-        if lo is not None and a is road:
-            ma = np.ma.masked_where(a == 0, a)
-            ax.imshow(np.ones_like(a), cmap=ListedColormap(["white"]), extent=[e / 1000 for e in (ext[0], ext[2], ext[1], ext[3])])
-        ax.imshow(ma, cmap=cm, vmin=lo, vmax=hi, extent=[e / 1000 for e in (ext[0], ext[2], ext[1], ext[3])],
-                  interpolation="nearest")
+        base_ax(ax, t, hs if a is not sc["Cost_base"] else None)
+        im = ax.imshow(np.ma.masked_invalid(a), cmap=cm, vmin=lo, vmax=hi, extent=kext(), interpolation="nearest",
+                       alpha=0.85 if a is not sc["Cost_base"] else 1.0)
         ends(ax)
     save(fig, "lcpb-factors.png")
 
-    # accumulation with the path
-    acc = arr(Raster("acc_base"))
+    # accumulation and route
+    acc = arr(Raster(r("Acc_base")))
     fig, ax = plt.subplots(figsize=(8.4, 9.6))
-    base_ax(ax, ext, None, hs)
-    im = ax.imshow(np.ma.masked_invalid(acc) / 1e6, cmap="viridis_r", alpha=0.75,
-                   extent=[e / 1000 for e in (ext[0], ext[2], ext[1], ext[3])])
-    lv = np.nanpercentile(acc, [10, 20, 30, 40, 50, 60, 70, 80, 90])
-    X = np.linspace(ext[0], ext[2], acc.shape[1]) / 1000; Y = np.linspace(ext[3], ext[1], acc.shape[0]) / 1000
-    ax.contour(X, Y, acc, levels=lv, colors="w", linewidths=0.6)
-    for p in path_xy("base"):
-        ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c="#ff2a2a", lw=2.6)
+    base_ax(ax, None, hs)
+    im = ax.imshow(np.ma.masked_invalid(acc) / 1e3, cmap="viridis_r", alpha=0.75, extent=kext())
+    x0, y0, x1, y1 = extent()
+    X = np.linspace(x0, x1, acc.shape[1]) / 1000; Y = np.linspace(y1, y0, acc.shape[0]) / 1000
+    ax.contour(X, Y, acc, levels=np.nanpercentile(acc, range(10, 100, 10)), colors="w", linewidths=0.6)
+    for p in fc_xy(r("Major_Lakes")):
+        ax.fill(p[:, 0] / 1000, p[:, 1] / 1000, fc="#9ecae1", ec="w", lw=0.6)
+    draw(ax, "Route_base", "#ff2a2a", 2.6)
     ends(ax)
-    cb = fig.colorbar(im, ax=ax, shrink=0.6, pad=0.02); cb.set_label("accumulated cost (millions)")
-    ax.set_title("Distance Accumulation from the source; Optimal Path As Line back from the destination",
-                 fontsize=11)
+    cb = fig.colorbar(im, ax=ax, shrink=0.6, pad=0.02); cb.set_label("accumulated cost (thousands)")
+    ax.set_title("Distance Accumulation from the source, around the lakes (light blue);\n"
+                 "Optimal Path As Line back from the destination", fontsize=11)
     save(fig, "lcpb-accumulation.png")
 
-    # back direction near the destination
-    bd = arr(Raster("bd_base"))
+    # back direction
+    bd = arr(Raster(r("Back_base")))
     fig, ax = plt.subplots(figsize=(8.4, 9.6))
-    base_ax(ax, ext, None, hs)
-    im = ax.imshow(np.ma.masked_invalid(bd), cmap="twilight", vmin=0, vmax=360, alpha=0.85,
-                   extent=[e / 1000 for e in (ext[0], ext[2], ext[1], ext[3])], interpolation="nearest")
-    for p in path_xy("base"):
-        ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c="k", lw=2.4)
+    base_ax(ax, None, hs)
+    im = ax.imshow(np.ma.masked_invalid(bd), cmap="twilight", vmin=0, vmax=360, alpha=0.85, extent=kext(),
+                   interpolation="nearest")
+    draw(ax, "Route_base", "k", 2.4)
     ends(ax)
     cb = fig.colorbar(im, ax=ax, shrink=0.6, pad=0.02, ticks=[0, 90, 180, 270, 360])
     cb.set_label("back direction, degrees (0 = source; 90 = go east)")
     save(fig, "lcpb-backdirection.png")
 
-    # scenarios
-    roads = fc_xy(os.path.join(SRC, "Major_Roads"))
-    fig, axs = plt.subplots(1, 4, figsize=(17, 6.2))
-    sets = [("base", "Lab 11 recipe", "#ff2a2a"),
-            ("no_power", "No reward for power lines", "#ffb000"),
-            ("no_water", "No water penalty", "#b000ff"),
-            ("terrain_only", "Elevation alone", "#00c8ff")]
-    for ax, (tag, title, c) in zip(axs, sets):
-        base_ax(ax, ext, f"{title}\n{NUM[tag]['length_km']:.1f} km", hs)
-        for r in roads:
-            ax.plot(r[:, 0] / 1000, r[:, 1] / 1000, c="#555555", lw=0.6)
-        for p in path_xy("base"):
-            ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c="#ff2a2a", lw=1.2, alpha=0.6)
-        for p in path_xy(tag):
-            ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c=c, lw=3)
-        ax.plot([sx / 1000, dx / 1000], [sy / 1000, dy / 1000], ":", c="w", lw=1.4)
+    # what moved the line
+    lines = fc_xy(r("Existing_Lines"))
+    def panel(ax, fc, title, c):
+        base_ax(ax, title, hs)
+        for p in lines:
+            ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, c="#e6c200", lw=0.7, alpha=0.8)
+        draw(ax, "Route_base", "#ff2a2a", 5, alpha=0.5)
+        draw(ax, fc, c, 1.8, style="--" if c != "#ff2a2a" else "-")
         ends(ax)
+    s = NUM["lab11"]
+    fig, axs = plt.subplots(1, 3, figsize=(15, 6.6))
+    for ax, (fc, t, c) in zip(axs, [("Route_slope5", f"Slope_Weight 5\n{s['runs']['slope5']['length_km']:.2f} km", "#00c8ff"),
+                                    ("Route_x_city0", f"City weight 0\n{s['explore']['city0']['length_km']:.2f} km", "#00c8ff"),
+                                    ("Route_nobarrier", f"No lake barrier\n{s['runs']['nobarrier']['length_km']:.2f} km", "#00c8ff")]):
+        panel(ax, fc, t, c)
+    save(fig, "lcpb-nochange.png")
+    fig, axs = plt.subplots(1, 3, figsize=(15, 6.6))
+    for ax, (fc, t, c) in zip(axs, [("Route_base", f"Lab 11 defaults (weights 1)\n{s['base']['length_km']:.2f} km", "#ff2a2a"),
+                                    ("Route_line0", f"Line_Weight 0\n{s['runs']['line0']['length_km']:.2f} km", "#b000ff"),
+                                    ("Route_x_road0", f"Road weight 0\n{s['explore']['road0']['length_km']:.2f} km", "#ffb000")]):
+        panel(ax, fc, t, c)
     save(fig, "lcpb-scenarios.png")
 
-    # the two decisions that did not move the route, drawn over the recipe's
-    fig, axs = plt.subplots(1, 2, figsize=(10.5, 7.2))
-    for ax, (tag, title, c) in zip(axs, [("soft_roads", "Off-road allowed at ×10", "#ffb000"),
-                                          ("no_cities", "No city factor", "#00c8ff")]):
-        base_ax(ax, ext, f"{title}\n{NUM[tag]['length_km']:.2f} km; recipe {NUM['base']['length_km']:.2f} km", hs)
-        for p in path_xy("base"):
-            ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c="#ff2a2a", lw=6, alpha=0.55)
-        for p in path_xy(tag):
-            ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "--", c=c, lw=1.8)
-        ends(ax)
-    save(fig, "lcpb-nochange.png")
-
     # corridor: accumulation from both ends
-    pts = os.path.join(SRC, "Endpoints")
-    dst = arcpy.management.MakeFeatureLayer(pts, "d_corr", "Role = 'Destination'")
-    acc2 = DistanceAccumulation(dst, in_cost_raster="cost_base")
-    acc2.save("acc_from_dest")
-    tot = Raster("acc_base") + Raster("acc_from_dest")
-    tot.save("corridor_sum")
-    T = arr(tot)
+    ep = os.path.join(L11, "PowerLineData.gdb", "Endpoints")
+    dst = arcpy.management.MakeFeatureLayer(ep, "d_corr", "Role = 'Destination'")
+    DistanceAccumulation(dst, in_barrier_data=r("Major_Lakes"), in_cost_raster=r("Cost_base")).save("acc_from_dest")
+    (Raster(r("Acc_base")) + Raster("acc_from_dest")).save("corridor_sum")
+    T = arr(Raster(os.path.join(FG, "corridor_sum")))
     m = np.nanmin(T)
-    NUM["corridor"] = {"min_sum": float(m)}
+    NUM["lab11"]["corridor"] = {"min_sum": float(m)}
     fig, ax = plt.subplots(figsize=(8.4, 9.6))
-    base_ax(ax, ext, None, hs)
+    base_ax(ax, None, hs)
+    from matplotlib.patches import Patch
     for pct, col in ((10, "#fdd49e"), (5, "#fc8d59"), (1, "#b30000")):
         band = np.where(T <= m * (1 + pct / 100), 1.0, np.nan)
-        NUM["corridor"][f"within_{pct}pct_km2"] = float(np.nansum(band) * 0.01)
-        ax.imshow(np.ma.masked_invalid(band), cmap=ListedColormap([col]), alpha=0.9,
-                  extent=[e / 1000 for e in (ext[0], ext[2], ext[1], ext[3])], interpolation="nearest")
-    for p in path_xy("base"):
-        ax.plot(p[:, 0] / 1000, p[:, 1] / 1000, "-", c="k", lw=1.4)
+        NUM["lab11"]["corridor"][f"within_{pct}pct_km2"] = round(float(np.nansum(band) * 0.0009), 1)
+        ax.imshow(np.ma.masked_invalid(band), cmap=ListedColormap([col]), alpha=0.9, extent=kext(), interpolation="nearest")
+    draw(ax, "Route_base", "k", 1.4)
     ends(ax)
-    from matplotlib.patches import Patch
     ax.legend(handles=[Patch(color="#b30000", label="within 1% of the cheapest"),
                        Patch(color="#fc8d59", label="within 5%"), Patch(color="#fdd49e", label="within 10%")],
               loc="lower left", fontsize=11, framealpha=0.9)
     save(fig, "lcpb-corridor.png")
+
+
+
+def legacy():
+    """The legacy chain on Lab 11's cost surface (lakes as NoData, since Cost Distance has no barrier
+    input). `python week12_lcp_figures.py legacy`, after the main run (it reads its numbers file)."""
+    arcpy.env.workspace = FG
+    arcpy.env.extent = arcpy.env.snapRaster = arcpy.env.cellSize = DEM
+    r = lambda n: os.path.join(REF, n)
+    ep = os.path.join(L11, "PowerLineData.gdb", "Endpoints")
+    NUM.update(json.load(open(os.path.join(REPO, "tools", "week12_lcp_numbers.json"))))
+    arcpy.conversion.PolygonToRaster(r("Major_Lakes"), "OBJECTID", "lakes_r", "CELL_CENTER", cellsize=DEM)
+    Con(IsNull("lakes_r"), Raster(r("Cost_base"))).save("cost_legacy")
+    # feature classes, not layers: Cost Path fails on a definition-query layer (ERROR 010511)
+    src = arcpy.analysis.Select(ep, "src_pt", "Role = 'Source'")
+    dstl = arcpy.analysis.Select(ep, "dest_pt", "Role = 'Destination'")
+    # the back link from Cost Distance's own output: a separate Cost Back Link run made Cost Path fail
+    CostDistance(src, "cost_legacy", out_backlink_raster=os.path.join(FG, "bl_legacy")).save("cd_legacy")
+    CostPath(dstl, "cd_legacy", "bl_legacy", "EACH_CELL").save("cp_legacy")
+    arcpy.conversion.RasterToPolyline("cp_legacy", "path_legacy", "ZERO", 0, "NO_SIMPLIFY")
+    leg = [g for (g,) in arcpy.da.SearchCursor("path_legacy", ["SHAPE@"])]
+    new = [g for (g,) in arcpy.da.SearchCursor(r("Route_base"), ["SHAPE@"])][0]
+    d = sorted(new.distanceTo(g.positionAlongLine(k)) for g in leg for k in range(0, int(g.length), 100))
+    NUM["lab11"]["legacy"] = {"length_km": round(sum(g.length for g in leg) / 1000, 2),
+                              "median_m": round(d[len(d) // 2]), "p95_m": round(d[int(len(d) * .95)]), "max_m": round(d[-1])}
+
+
+def main():
+    import sys
+    if sys.argv[1:] == ["legacy"]:
+        legacy()
+    else:
+        os.makedirs(OUT, exist_ok=True)
+        fig_toy(toy())
+        lab11()
     json.dump(NUM, open(os.path.join(REPO, "tools", "week12_lcp_numbers.json"), "w"), indent=1)
     print(json.dumps({k: v for k, v in NUM.items() if k != "toy"}, indent=1))
 

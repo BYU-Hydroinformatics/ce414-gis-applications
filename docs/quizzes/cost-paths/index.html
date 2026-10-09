@@ -6,7 +6,7 @@
   <title>CE 414 — What Moved the Line?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which cost factors actually change a route, and what a corridor shows.">
+  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which of Lab 11's weights actually move the route, and what a corridor shows.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -43,24 +43,24 @@ CE414Quiz.start({
       explanation: "The back direction is a compass angle: 0 marks the source itself, 90 is east, 180 south, 270 west, 360 north. It is a direction, not a cost; the accumulated cost raster holds the cost."
     },
     {
-      prompt: "In the Lab 11 recipe, every cell on the cheapest route is inside a city or within 1 km of one, so the city factor is 10 all along it. Drop the city factor. What happens?",
+      prompt: "In Lab 11, raising Slope_Weight from 1 to 5 moves the route by at most about 560 m. Why so little?",
       options: [
-        "The route swings away from the cities, out of the ×10 cells",
-        "The route moves toward the cities, now that they cost nothing",
-        "Nothing; the total cost drops to a tenth"
+        "Distance Accumulation ignores weights above 1",
+        "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
+        "Slope is measured in degrees, so its scores are too small to matter"
       ],
-      answer: "Nothing; the total cost drops to a tenth",
-      explanation: "A factor that is the same on every cell of the competing routes multiplies all of their costs equally, so it cannot change which one is cheapest. Measured: the route stayed at 68.86 km and the total cost fell by exactly a factor of 10."
+      answer: "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
+      explanation: "A weight multiplies a score; if the score is the same along every route the line could take, multiplying it changes every route's cost alike and cannot choose between them. In mountains, slope would move the line."
     },
     {
-      prompt: "Turning Lab 11's road corridor from a hard barrier (NoData) into a soft cost (×10 off-road) gave the same route. What does that tell you?",
+      prompt: "Lab 11's route lies within 500 m of an existing transmission line for 99.7% of its length. Which change should move it most?",
       options: [
-        "The cheapest route already stayed within 2 km of a major road",
-        "Distance Accumulation quietly ignores NoData cells in a cost raster",
-        "A NoData barrier and a cost of 10 always give the same answer"
+        "Setting Line_Weight to 0",
+        "Removing the lake barrier",
+        "Setting Line_Weight to 2"
       ],
-      answer: "The cheapest route already stayed within 2 km of a major road",
-      explanation: "A barrier only matters where the cheapest route wants to cross it. Here the power-line and water factors already kept the route near the roads, so the barrier never bound. Somewhere else, or with other weights, it would."
+      answer: "Setting Line_Weight to 0",
+      explanation: "The existing-line score is what holds the route where it is. Remove it and the route cuts nearer the straight line (measured: up to 3.4 km from the baseline). Weight 2 only holds it tighter, and the lakes were never in its way."
     },
     {
       prompt: "On a corridor map, a cell is shaded “within 5% of the cheapest.” What does that mean?",
@@ -75,7 +75,7 @@ CE414Quiz.start({
   ],
   perfectNote:  "All five. On to Lab 11.",
   goodNote:     "Good. Reread the explanations you missed before you build the Lab 11 cost surface.",
-  tryAgainNote: "The back direction raster is a compass angle, a factor that is equal everywhere on the route cannot move it, and a corridor adds two accumulations. Look at those slides again."
+  tryAgainNote: "The back direction raster is a compass angle, a score that is equal along every candidate route cannot move it, and a corridor adds two accumulations. Look at those slides again."
 });
 </script>
 </body>

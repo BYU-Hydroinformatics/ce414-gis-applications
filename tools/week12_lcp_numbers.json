@@ -273,51 +273,158 @@
    ]
   }
  },
- "src_xy": [
-  450130.24710000027,
-  4436462.4077
- ],
- "dest_xy": [
-  420691.4212999996,
-  4479301.155300001
- ],
- "straight_km": 51.98,
- "dem_range": [
-  1315.250244140625,
-  3558.7236328125
- ],
- "base": {
-  "length_km": 68.86,
-  "total_cost": 5756761100.0
- },
- "soft_roads": {
-  "length_km": 68.85,
-  "total_cost": 5756761100.0
- },
- "no_cities": {
-  "length_km": 68.86,
-  "total_cost": 575676100.0
- },
- "no_power": {
-  "length_km": 58.28,
-  "total_cost": 2851162900.0
- },
- "no_water": {
-  "length_km": 58.16,
-  "total_cost": 972333820.0
- },
- "terrain_only": {
-  "length_km": 52.1,
-  "total_cost": 72137568.0
- },
- "legacy": {
-  "length_km": 70.08,
-  "total_cost": 5803580900.0
- },
- "corridor": {
-  "min_sum": 5616753664.0,
-  "within_10pct_km2": 178.11,
-  "within_5pct_km2": 108.15,
-  "within_1pct_km2": 30.73
+ "lab11": {
+  "base": {
+   "length_km": 56.09,
+   "total_cost": 744018.2,
+   "river_crossings": 4,
+   "pct_within_1km_road": 92.8,
+   "pct_within_500m_line": 99.7,
+   "pct_city_score_10": 100.0,
+   "slope_weight": 1.0,
+   "line_weight": 1.0,
+   "barrier": true
+  },
+  "straight_km": 52.79,
+  "runs": {
+   "line0": {
+    "length_km": 53.7,
+    "total_cost": 650456.3,
+    "river_crossings": 4,
+    "pct_within_1km_road": 100.0,
+    "pct_within_500m_line": 50.8,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 1,
+    "line_weight": 0,
+    "barrier": true,
+    "moved": {
+     "median_m": 904,
+     "max_m": 3408,
+     "pct_within_300m": 25.8
+    }
+   },
+   "line0_5": {
+    "length_km": 55.01,
+    "total_cost": 712499.9,
+    "river_crossings": 4,
+    "pct_within_1km_road": 99.9,
+    "pct_within_500m_line": 82.8,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 1,
+    "line_weight": 0.5,
+    "barrier": true,
+    "moved": {
+     "median_m": 58,
+     "max_m": 2530,
+     "pct_within_300m": 74.0
+    }
+   },
+   "line2": {
+    "length_km": 55.88,
+    "total_cost": 800664.9,
+    "river_crossings": 4,
+    "pct_within_1km_road": 89.5,
+    "pct_within_500m_line": 99.8,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 1,
+    "line_weight": 2,
+    "barrier": true,
+    "moved": {
+     "median_m": 2,
+     "max_m": 455,
+     "pct_within_300m": 97.7
+    }
+   },
+   "slope0": {
+    "length_km": 56.05,
+    "total_cost": 685047.6,
+    "river_crossings": 4,
+    "pct_within_1km_road": 92.7,
+    "pct_within_500m_line": 99.7,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 0,
+    "line_weight": 1,
+    "barrier": true,
+    "moved": {
+     "median_m": 6,
+     "max_m": 122,
+     "pct_within_300m": 100.0
+    }
+   },
+   "slope5": {
+    "length_km": 55.73,
+    "total_cost": 974822.6,
+    "river_crossings": 4,
+    "pct_within_1km_road": 88.6,
+    "pct_within_500m_line": 99.2,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 5,
+    "line_weight": 1,
+    "barrier": true,
+    "moved": {
+     "median_m": 9,
+     "max_m": 561,
+     "pct_within_300m": 93.9
+    }
+   },
+   "nobarrier": {
+    "length_km": 56.03,
+    "total_cost": 743288.9,
+    "river_crossings": 4,
+    "pct_within_1km_road": 92.8,
+    "pct_within_500m_line": 99.7,
+    "pct_city_score_10": 100.0,
+    "slope_weight": 1,
+    "line_weight": 1,
+    "barrier": false,
+    "moved": {
+     "median_m": 0,
+     "max_m": 406,
+     "pct_within_300m": 97.3
+    }
+   }
+  },
+  "explore": {
+   "road0": {
+    "weights": [
+     1,
+     1,
+     0,
+     1
+    ],
+    "length_km": 54.96,
+    "moved": {
+     "median_m": 240,
+     "max_m": 1630,
+     "pct_within_300m": 54.5
+    }
+   },
+   "city0": {
+    "weights": [
+     1,
+     1,
+     1,
+     0
+    ],
+    "length_km": 56.4,
+    "moved": {
+     "median_m": 20,
+     "max_m": 276,
+     "pct_within_300m": 100.0
+    }
+   }
+  },
+  "corridor": {
+   "min_sum": 743587.25,
+   "within_10pct_km2": 458.4,
+   "within_5pct_km2": 310.2,
+   "within_1pct_km2": 89.7
+  },
+  "legacy": {
+   "length_km": 58.49,
+   "median_m": 184,
+   "p95_m": 670,
+   "max_m": 788
+  }
  }
 }

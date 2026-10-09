@@ -89,11 +89,10 @@ Brigham Young University
 
 1. Combine your raster data sets into a **"virtual terrain"**, where **high values are undesirable** paths and **low values are desirable** paths
 2. Identify a **start point** (source) and an **end point** (destination) for the path of interest
-3. Run **Cost Distance** (or **Path Distance**) to create the **least-cost distance raster** and the **back link raster**
-4. Run **Cost Path** with those two rasters and the destination to get the path
-5. Convert the path raster to a **polyline** so you can symbolize and map it
+3. Run **Distance Accumulation** to create the **accumulated cost raster** and the **back direction raster**
+4. Run **Optimal Path As Line** with those two rasters and the destination: the path, already a **line**
 
-<!-- These are the steps as Lab 11 runs them. Step 5, Raster to Polyline, is not on the original slide but is in the lab, and without it students end up trying to symbolize a one-cell-wide raster. The next slide shows the whole Lab 11 model, so students can see how much of it is step 1. -->
+<!-- These are the steps as Lab 11 runs them, with ArcGIS Pro's current tools. The source slide named Cost Distance, Cost Path and a final Raster to Polyline; Optimal Path As Line makes the polyline itself. The legacy names come back on the deprecation slide. The next slide shows the whole Lab 11 model, so students can see how much of it is step 1. -->
 
 <!-- TODO(graphic): a clean five-step schematic of this workflow — input rasters, reclassify, Raster Calculator, cost surface, source/destination, accumulated cost + back link, path. Not generated here; needs a real figure. -->
 
@@ -101,13 +100,11 @@ Brigham Young University
 
 # The whole model, end to end
 
-![w:1130 center](images/lcp-full-model-overview.png)
+![h:450 center](images/lcp-lab11-model.svg)
 
-<p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last few boxes on the right.</p>
+<p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last boxes at the bottom right.</p>
 
-<!-- Do not read this diagram. The point is scale: about forty tools, and only the last four are the least-cost path itself. Everything to the left is preparing the cost surface. Say plainly that this is what Lab 11 asks them to build, and that they build it left to right. -->
-
-<!-- TODO(instructor): this ModelBuilder overview is a zoomed-out canvas capture and the node labels are illegible at any display size. It needs a re-export from ModelBuilder (right-click the model > Export > As Graphic at high resolution), not a re-screenshot. The same image is Figure 1 in Lab 11. -->
+<!-- Do not read this diagram. The point is scale: about thirty tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 11 asks them to build. The image is Lab 11's Figure C, the model exported from ModelBuilder in the October 9, 2026 build of the lab. -->
 
 ---
 
@@ -118,13 +115,11 @@ Brigham Young University
 - **Cost Distance**, **Cost Back Link** and **Cost Path** still run, but are **deprecated**
 - **Distance Accumulation**: the accumulated cost *and* the back direction raster, in one run
 - **Optimal Path As Line**: replaces Cost Path, and draws the line itself
-- Thursday runs both sets on Lab 11's data: **the same route**
+- Lab 11 uses the **current** tools; Thursday compares the two sets on its data
 
-<!-- Lab 11's steps, screenshots, parameter names and rubric still name the legacy tools; either set gives the same route on its data (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
+<!-- Lab 11 is built on Distance Accumulation and Optimal Path As Line. On its cost surface the legacy chain gives 58.49 km against 56.09 km, within 788 m everywhere (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
 
-<!-- TODO(instructor): replace Cost Distance/Cost Path with Distance Accumulation/Optimal Path; align with Lab 11 -->
-
-<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 11's data (68.86 km and 70.08 km, the same corridor). -->
+<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 11's data (56.09 km and 58.49 km). -->
 
 ---
 
@@ -244,14 +239,14 @@ Brigham Young University
 
 # Next: Lab 11, power line routing
 
-![bg right:38% w:88%](images/lcp-example-map-power-lines.jpg)
+![bg right:38% w:92%](images/lcp-lab11-example-map.png)
 
-- Route a high-voltage line from the **wind farm** at the mouth of Spanish Fork Canyon to the **data center** in Bluffdale
-- You build the cost surface yourself from **roads, rivers and lakes, cities, existing power lines, and elevation** — reclassified and weighted
-- Then the two-tool routing you just saw, and a **Raster to Polyline** at the end
+- Route a high-voltage line between two **existing substations**: Spanish Fork Canyon to Bluffdale
+- You build the cost surface yourself from **slope, roads, cities, existing power lines and rivers**, each scored 1 to 10, with **lakes** as barriers
+- Then the two-tool routing you just saw: **Distance Accumulation** and **Optimal Path As Line**
 - The whole thing lives in **one ModelBuilder model** so you can change a weight and re-run it
 
-<!-- Preview the lab. The reason it is a model and not a sequence of clicks is that the weights are arguable, and a model lets them re-run the analysis after changing one. Encourage students to run at least one alternative weighting and look at how far the path moves. -->
+<!-- Preview the lab; the map is Lab 11's example baseline layout. The reason it is a model and not a sequence of clicks is that the weights are arguable, and a model lets them re-run the analysis after changing one. Encourage students to run at least one alternative weighting and look at how far the path moves. -->
 
 ---
 
@@ -275,7 +270,8 @@ The arcgis.com quotation on the "Why Least-Cost Path?" slide was condensed to sh
 rather than reproduced in full; the original slide did not cite which arcgis.com page it came from.
 The student example map (images/lcp-example-map-power-lines.jpg) still carries its placeholder
 "Name / Date / Projection" text block; kept, and used in the speaker notes as a rubric reminder.
-Nothing outside slides/week-11/ was created or modified. -->
+Nothing outside slides/week-11/ was created or modified.
+Realigned October 9, 2026 with the rebuilt Lab 11: General Workflow names the current tools; the model overview is Lab 11's exported Figure C (lcp-lab11-model.svg), replacing the illegible lcp-full-model-overview.png; the Lab 11 preview uses the lab's example map. -->
 
 ---
 
