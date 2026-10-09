@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Height Above What?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what HAND measures, how it is computed, why the stream definition matters, and how to score a flood map.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Height Above What?",
+  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part B<br>" +
+            "One depth floods a whole river. For each item, decide what the HAND model " +
+            "<strong>is doing with the terrain</strong>.",
+  badge: "HAND call",
+  deckUrl: "../../slides/week-08/hand.html",
+  questions: [
+    {
+      prompt: "What does a cell's HAND value measure?",
+      options: [
+        "Its elevation above sea level",
+        "Its straight-line distance to the river",
+        "Its drop to the stream it drains to"
+      ],
+      answer: "Its drop to the stream it drains to",
+      explanation: "HAND follows the path the water takes (the flow direction) to the stream and measures the vertical drop along it. Sea level and straight-line distance ignore where the water actually goes."
+    },
+    {
+      prompt: "Which tool turns Lab 5's chain into HAND?",
+      options: [
+        "Flow Distance, vertical",
+        "Flow Accumulation, with a weight raster",
+        "Euclidean Distance to the river",
+        "Raster Calculator subtracting a constant"
+      ],
+      answer: "Flow Distance, vertical",
+      explanation: "Flow Distance measures along the flow path to the stream cells, and its vertical option gives the height difference: that is HAND. Euclidean Distance is horizontal and ignores flow; Flow Accumulation counts upstream cells."
+    },
+    {
+      prompt: "You call every cell above an accumulation threshold a stream, with no river corridor. What happens to the 1% flood?",
+      options: [
+        "It shrinks, because the river is narrower",
+        "It grows: every gully floods",
+        "Nothing; HAND ignores the streams"
+      ],
+      answer: "It grows: every gully floods",
+      explanation: "HAND is measured to whatever you call a stream. Make every gully a stream and every cell near a gully gets a small HAND, so one river depth floods them all; the stream definition is the biggest choice in the model."
+    },
+    {
+      prompt: "A cell has HAND = 1.2 m. The flood depth h at the gage is 1.5 m. Is the cell flooded in the model?",
+      options: [
+        "No, because 1.2 is less than 1.5",
+        "Only if its elevation is below the gage",
+        "It depends on its distance to the gage",
+        "Yes, because 1.2 m is at most 1.5 m"
+      ],
+      answer: "Yes, because 1.2 m is at most 1.5 m",
+      explanation: "The model floods every cell with HAND less than or equal to h, one threshold for the whole river. Elevation and distance to the gage play no part; that is both HAND's strength and its limit."
+    },
+    {
+      prompt: "Your flood map and FEMA's overlap well, but yours also floods a lot of land FEMA calls dry. Which score shows that?",
+      options: [
+        "A high false-alarm ratio",
+        "A high hit rate",
+        "A low number of misses"
+      ],
+      answer: "A high false-alarm ratio",
+      explanation: "The false-alarm ratio is the share of your flooded area that FEMA calls dry. The hit rate only asks how much of FEMA's floodplain you caught, so a map that floods everything scores a perfect hit rate; CSI counts both errors at once."
+    }
+  ],
+  perfectNote:  "All five. On to Lab 7.",
+  goodNote:     "Good. Reread the explanations you missed before Lab 7, Step 3.",
+  tryAgainNote: "HAND is the vertical drop to the stream a cell drains to, the stream definition drives it, and a cell floods when HAND is at most h. Look at those slides again."
+});
+</script>
+</body>
+</html>

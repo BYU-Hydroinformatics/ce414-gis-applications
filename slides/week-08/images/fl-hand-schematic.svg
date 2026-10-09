@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+  <title>Elevation versus height above nearest drainage along a sloping valley</title>
+  <rect width="720" height="420" fill="#ffffff"/>
+  <!-- sloping terrain: valley falls left to right -->
+  <path d="M20,70 C120,90 160,200 230,215 L250,225 L270,215 C340,200 420,170 480,190 C540,210 560,280 600,290 L620,300 L640,290 C670,285 690,270 700,265 L700,400 L20,400 Z" fill="#cbd5e0" stroke="#4a5568" stroke-width="2"/>
+  <!-- rivers -->
+  <circle cx="250" cy="222" r="8" fill="#2b6cb0"/>
+  <circle cx="620" cy="297" r="8" fill="#2b6cb0"/>
+  <text x="212" y="250" fill="#2b6cb0">river, upstream</text>
+  <text x="565" y="325" fill="#2b6cb0">river, downstream</text>
+  <!-- hillside cell A upstream -->
+  <circle cx="160" cy="180" r="6" fill="#c05621"/><text x="88" y="172" fill="#c05621" font-weight="600">cell A</text>
+  <path d="M160,180 C200,205 225,215 246,220" fill="none" stroke="#c05621" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m)"/>
+  <line x1="160" y1="180" x2="160" y2="222" stroke="#1a365d" stroke-width="3"/>
+  <line x1="150" y1="222" x2="258" y2="222" stroke="#1a365d" stroke-dasharray="3 3"/>
+  <text x="96" y="208" fill="#1a365d">HAND</text>
+  <!-- low floodplain cell B downstream -->
+  <circle cx="560" cy="262" r="6" fill="#c05621"/><text x="500" y="236" fill="#c05621" font-weight="600">cell B</text>
+  <path d="M560,262 C585,280 600,290 614,295" fill="none" stroke="#c05621" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m)"/>
+  <line x1="560" y1="262" x2="560" y2="297" stroke="#1a365d" stroke-width="3"/>
+  <line x1="550" y1="297" x2="628" y2="297" stroke="#1a365d" stroke-dasharray="3 3"/>
+  <!-- sea-level style comparison -->
+  <text x="20" y="34" font-size="19" font-weight="600" fill="#1a202c">Cell A is much higher above sea level than cell B,</text>
+  <text x="20" y="58" font-size="19" font-weight="600" fill="#1a202c">but each sits only a little above the river it drains to.</text>
+  <text x="300" y="380" fill="#4a5568">dashed orange: the path water takes (D8 flow direction)</text>
+  <text x="300" y="400" fill="#4a5568">dark blue: HAND, the vertical drop along that path</text>
+  <defs><marker id="m" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c05621"/></marker></defs>
+</svg>

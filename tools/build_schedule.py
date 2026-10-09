@@ -66,8 +66,12 @@ DECKS = [
     (6,  "watershed-delineation-b",        "Watershed Delineation, Part B",              "From flow direction to watersheds: flow accumulation, the stream threshold, stream links, pour points and subwatersheds, the Lab 5 model that runs all eight steps, and a watershed delineated by hand and with USGS StreamStats.", "Thu"),
     (7,  "lake-bathymetry",                "Lake Bathymetry, Part A",                    "A lake with no outlet: the Great Salt Lake's level as its water balance, how lake bottoms are measured, the USGS lake-bottom DEM, two vertical datums, and elevation-area-volume curves.", "Tue"),
     (7,  "lake-depth-explorer",            "Lake Bathymetry, Part B",                    "One model, many runs: ModelBuilder iterators, %Value% in expressions and output names, Collect Values and Merge, and Lab 6 — Lake Depth Explorer at Lake Powell.", "Thu"),
+    (8,  "flood-models",                   "Flood Mapping, Part A",                      "From a flow to a flooded map: annual peaks and the 100-year flood as a 1% chance, the rating curve, gage height versus depth, the bathtub model, and what FEMA does instead.", "Tue"),
+    (8,  "hand",                           "Flood Mapping, Part B",                      "HAND, height above nearest drainage: Lab 5's chain plus Flow Distance, the stream definition, one threshold per flood, scoring a flood map against FEMA's, and Lab 7.", "Thu"),
     (9,  "interpolation",                  "Interpolation",                              "Estimating a surface from points: sampling designs, Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.", "Tue"),
     (9,  "interpolation-explorer",         "Interpolation Explorer",                     "How wrong is the surface? Error rasters, RMSE and what it hides, checkpoints when there is no truth, whether a ranking survives a change, and Lab 8.", "Thu"),
+    (10, "cut-and-fill",                   "Cut and Fill",                               "Earthwork as the difference of two surfaces: cut and fill cell by cell, the balance grade of a level pad, ArcGIS Pro's Cut Fill tool, average end area for roads, and what a grid volume leaves out.", "Tue"),
+    (10, "raster-volumes",                 "Volumes with Rasters",                       "How much rock is in a mountain: height times cell area summed, Raster Calculator and Zonal Statistics versus Surface Volume, why the base surface decides the answer, and Lab 9.", "Thu"),
     (11, "coordinate-systems-projections", "Coordinate Systems and Projections",        "A refresher: datums, projections, and coordinate systems as decisions — distortion, units, and choosing a CRS for analysis.", "Tue"),
     (11, "gps-triangulation",              "GPS and Positioning",                        "A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
     (12, "least-cost-path",                "Least Cost Path Analysis",                   "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
@@ -90,10 +94,6 @@ FINAL_PROJECT_WEEKS = (13, 14, 15)
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    8: "Tuesday: simple bathtub flood models and flood inundation modeling. Thursday: HAND (height above nearest "
-       "drainage) and Lab 7. Slides will be posted here before class. Midterm 1 is open in the Testing Center this week.",
-    10: "Tuesday: cut and fill. Thursday: volumetric analysis with rasters, and Lab 9. Slides will be posted here "
-        "before class.",
     12: "Thursday: least cost paths, part 2. Slides will be posted here before class.",
     13: "Thursday is Thanksgiving, no class.",
     14: "Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted "
@@ -174,10 +174,18 @@ PRACTICE = {
          "Five questions on a terminal lake's level, measuring the bottom, vertical datums, and what one foot of level does to area."),
         ("iterators", "Lake Depth Explorer",
          "Five questions on iterators, %Value% in expressions and output names, collecting a loop's outputs, and the Lake Powell datum trap.")],
+    8: [("floods", "How Big, How High?",
+         "Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one."),
+        ("hand", "Height Above What?",
+         "Five questions on what HAND measures, the tool that computes it, why the stream definition matters, and how to score a flood map.")],
     9: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust."),
         ("rmse", "How Wrong Is the Surface?",
          "Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.")],
+    10: [("earthwork", "Cut or Fill?",
+          "Five questions on cut versus fill, raising a pad's grade, the balance grade, the sign of Cut Fill's VOLUME, and what a grid volume leaves out."),
+         ("volumes", "The Base Is the Answer",
+          "Five questions on a cell's volume, why a DEM must be projected first, when Surface Volume is enough, and why the base surface decides a mountain's volume.")],
     11: [("coordinate-systems", "Projections and Datums",
           "Five questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting."),
          ("gps", "Where Am I?",

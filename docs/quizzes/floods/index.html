@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — How Big, How High?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: return periods, rating curves, depth, and when a bathtub flood model is the right one.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "How Big, How High?",
+  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part A<br>" +
+            "From a flood flow to a flooded map. For each item, decide what the number " +
+            "<strong>actually means</strong>.",
+  badge: "Flood call",
+  deckUrl: "../../slides/week-08/flood-models.html",
+  questions: [
+    {
+      prompt: "What does \"the 100-year flood\" mean?",
+      options: [
+        "A 1% chance of being exceeded each year",
+        "A flood that happens once every hundred years",
+        "The largest flow measured in the last century",
+        "A flood that cannot recur for another century"
+      ],
+      answer: "A 1% chance of being exceeded each year",
+      explanation: "It is a probability that resets every year, which is why FEMA writes \"1% annual chance\". Two such floods can come in back-to-back years; a 100-year record need not contain one."
+    },
+    {
+      prompt: "A house sits in the 1% floodplain. Chance of at least one such flood during a 30-year mortgage?",
+      options: [
+        "About 1%",
+        "About 30%",
+        "About 26%"
+      ],
+      answer: "About 26%",
+      explanation: "The chance of no flood in a year is 0.99, so of none in 30 years is 0.99 to the 30th, about 0.74. One minus that is about 0.26, not 30% (chances do not simply add) and certainly not 1%."
+    },
+    {
+      prompt: "FEMA's 1% flow for the Provo River is above the top row of the gage's rating curve. What does that mean for its water level?",
+      options: [
+        "Its level is extrapolated",
+        "The flood cannot be mapped at all",
+        "The gage has failed and must be replaced",
+        "The flow must be reduced to the top row"
+      ],
+      answer: "Its level is extrapolated",
+      explanation: "A rating is built from field measurements, and the largest floods are the hardest to measure. Above the last row, the level comes from extending the curve: usable, but the least certain part of the answer."
+    },
+    {
+      prompt: "Why does Lab 7 flood the land by depth above the river instead of by water elevation?",
+      options: [
+        "Depth is always measured in feet",
+        "HAND is also a height above the river",
+        "The DEM has no vertical datum to use"
+      ],
+      answer: "HAND is also a height above the river",
+      explanation: "Depth is gage height minus the zero-flow offset, a height above the river bottom, which is exactly what HAND measures for every cell. The gage datum cancels out, so it never enters the model."
+    },
+    {
+      prompt: "When is a bathtub model (one flat water elevation) the right flood model?",
+      options: [
+        "A steep mountain river",
+        "Any river, if the DEM is fine enough",
+        "A river just below a dam",
+        "A lake with a level surface"
+      ],
+      answer: "A lake with a level surface",
+      explanation: "A lake's surface really is flat, which is why Lab 6's shorelines were bathtubs. A river's surface slopes downhill, so one flat elevation drowns the low ground near its mouth and never reaches the river upstream."
+    }
+  ],
+  perfectNote:  "All five. You are ready for Thursday's HAND model.",
+  goodNote:     "Good. Reread the explanations you missed before Lab 7.",
+  tryAgainNote: "A 100-year flood is a 1% chance every year, a rating turns flow into a water level, and a bathtub only suits a flat water surface. Look at those slides again."
+});
+</script>
+</body>
+</html>

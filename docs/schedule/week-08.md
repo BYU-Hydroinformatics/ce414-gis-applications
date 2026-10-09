@@ -7,7 +7,10 @@
 
 ## :material-presentation-play: Presentation Slides
 
-*No slides this week.*
+- **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — From a flow to a flooded map: annual peaks and the 100-year flood as a 1% chance, the rating curve, gage height versus depth, the bathtub model, and what FEMA does instead.
+- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — HAND, height above nearest drainage: Lab 5's chain plus Flow Distance, the stream definition, one threshold per flood, scoring a flood map against FEMA's, and Lab 7.
+
+Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 </div>
 
@@ -15,7 +18,10 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday: simple bathtub flood models and flood inundation modeling. Thursday: HAND (height above nearest drainage) and Lab 7. Slides will be posted here before class. Midterm 1 is open in the Testing Center this week.
+Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
+
+- [How Big, How High?](../quizzes/floods/index.html) — Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one.
+- [Height Above What?](../quizzes/hand/index.html) — Five questions on what HAND measures, the tool that computes it, why the stream definition matters, and how to score a flood map.
 
 </div>
 
