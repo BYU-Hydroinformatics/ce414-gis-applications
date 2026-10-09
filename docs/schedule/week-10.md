@@ -1,12 +1,10 @@
-# Week 10: Raster-Based Spatial Analysis
+# Week 10: Cut, Fill, and Raster Volumes
 
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides
 
-- [Raster-Based Spatial Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-10/raster-spatial-analysis.html) — The raster suitability workflow end to end — criteria, data, rasterization, reclassification, overlay, and heat maps.
-
-Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
+*No slides this week.*
 
 </div>
 
@@ -14,9 +12,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 ## :material-account-group: In-Class Practice
 
-Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
-
-- [Criteria to Surface](../quizzes/suitability/index.html) — Five questions on the suitability workflow: framing the question, reclassifying criteria onto a common scale, ruling land out, and reading the surface you get.
+Tuesday: cut and fill. Thursday: volumetric analysis with rasters, and Lab 9. Slides will be posted here before class.
 
 </div>
 
@@ -24,7 +20,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 8 — Avalanche Hazard](../assignments/lab-08/README.md)
+[Lab 9 — Big Southern Butte](../assignments/lab-09/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 

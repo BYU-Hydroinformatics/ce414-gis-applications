@@ -1,5 +1,5 @@
-"""Set up C:\\Ames\\Lab09GUI for the Lab 10 GUI build, as a student would after Step 0 items 1-2:
-the student zip unzipped, a project Lab10.aprx with a project geodatabase and toolbox, and a map
+"""Set up C:\\Ames\\Lab09GUI for the Lab 8 GUI build, as a student would after Step 0 items 1-2:
+the student zip unzipped, a project Lab08.aprx with a project geodatabase and toolbox, and a map
 holding True_DEM, Study_Area, the three sample-point sets and YMountain_DEM.tif, with an imagery basemap. ModelBuilder work is done in the GUI.
 ArcGIS Pro Python."""
 import json
@@ -10,7 +10,7 @@ import zipfile
 import arcpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab10-y-mountain.zip")
+ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab08-y-mountain.zip")
 ROOT = r"C:\Ames\Lab09GUI2"
 BLANK = r"C:\Ames\Lab01\_probe.aprx"
 
@@ -18,25 +18,25 @@ if os.path.exists(ROOT):
     shutil.rmtree(ROOT)
 os.makedirs(ROOT)
 zipfile.ZipFile(ZIP).extractall(ROOT)
-data = os.path.join(ROOT, "lab10-y-mountain")
-arcpy.management.CreateFileGDB(ROOT, "Lab10.gdb")
+data = os.path.join(ROOT, "lab08-y-mountain")
+arcpy.management.CreateFileGDB(ROOT, "Lab08.gdb")
 # an empty .atbx (a zip holding toolbox.content), the same layout ArcGIS Pro writes
-with zipfile.ZipFile(os.path.join(ROOT, "Lab10.atbx"), "w", zipfile.ZIP_DEFLATED) as z:
-    z.writestr("toolbox.content", json.dumps({"version": "1.0", "alias": "Lab10", "displayname": "$rc:title",
+with zipfile.ZipFile(os.path.join(ROOT, "Lab08.atbx"), "w", zipfile.ZIP_DEFLATED) as z:
+    z.writestr("toolbox.content", json.dumps({"version": "1.0", "alias": "Lab08", "displayname": "$rc:title",
                                               "toolsets": {}}, indent=4))
-    z.writestr("toolbox.content.rc", json.dumps({"map": {"title": "Lab10"}}, indent=4))
+    z.writestr("toolbox.content.rc", json.dumps({"map": {"title": "Lab08"}}, indent=4))
 p = arcpy.mp.ArcGISProject(BLANK)
-p.saveACopy(os.path.join(ROOT, "Lab10.aprx"))
-p = arcpy.mp.ArcGISProject(os.path.join(ROOT, "Lab10.aprx"))
+p.saveACopy(os.path.join(ROOT, "Lab08.aprx"))
+p = arcpy.mp.ArcGISProject(os.path.join(ROOT, "Lab08.aprx"))
 for x in p.listLayouts() + p.listMaps():
     p.deleteItem(x)
-p.defaultGeodatabase = os.path.join(ROOT, "Lab10.gdb")
-p.defaultToolbox = os.path.join(ROOT, "Lab10.atbx")
+p.defaultGeodatabase = os.path.join(ROOT, "Lab08.gdb")
+p.defaultToolbox = os.path.join(ROOT, "Lab08.atbx")
 m = p.createMap("Map", "MAP")
 for l in m.listLayers():
     m.removeLayer(l)
 m.addBasemap("Imagery")
-gdb = os.path.join(data, "Lab10.gdb")
+gdb = os.path.join(data, "Lab08.gdb")
 m.addDataFromPath(os.path.join(data, "YMountain_DEM.tif"))
 m.addDataFromPath(os.path.join(gdb, "True_DEM"))
 for n in (10000, 2500, 250):

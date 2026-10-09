@@ -682,7 +682,8 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 
 - Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
 - Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Current lab: [Lab 9 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them; [Lab 10 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/) is next
+- Current lab: [Lab 10 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them
+- **Thursday:** a GPS refresher
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Review - Coordinate Systems and Projections.pptx",
@@ -710,7 +711,7 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
      VERIFY flags left in place: the UTM zone/datum behind the BYU-Utah easting/northing pair; the Lambert
      Conformal Conic naming and the "oblique conic" answer on the drill; the "southeastern Florida and
      northeastern Washington" distortion answer; the single "line of least distortion" drawn for a secant
-     LCC; the ellipsoid-vs-spheroid quiz option; and the Lab 10 pairing on the last slide.
+     LCC; the ellipsoid-vs-spheroid quiz option; and the Lab 8 pairing on the last slide.
 
      TODO(graphic) left on five slides that have no visual and for which none exists in the source: the
      geodesy question, the three "ask" slides that precede their own evidence figures, and the registration
@@ -735,7 +736,7 @@ Five questions: what your coordinates **measure**, what your map **gives up**, a
 
 - Not graded, nothing recorded — a check that today landed
 - Every answer explains itself; read it before you move on
-- It is the check Lab 10 wants before you combine layers
+- It is the check Lab 8 wants before you combine layers
 
 <span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/coordinate-systems/</span>
 

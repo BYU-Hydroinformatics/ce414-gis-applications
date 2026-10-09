@@ -1205,7 +1205,7 @@ Past initiatives:
 # Before Next Class
 
 - **Lab 9 — Big Southern Butte** is due **Saturday 11:59 pm**: [assignments/lab-09](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
-- **Lab 10 — Interpolation Explorer** is next: [assignments/lab-10](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
+- **Lab 8 — Interpolation Explorer** is next: [assignments/lab-08](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
 - Read **Chapter 14** of *GIS Fundamentals* (Data Standards and Data Quality)
 - Take **Quiz 8** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
@@ -1286,7 +1286,7 @@ GEOSS Registry count, the 2011 imagery-deployment list, the 2011 SWE status list
 ArcGIS-9-era compliance screenshot, the dropped initiative-lead names, and the KML/GML note paste error;
 TODO(graphic) on the GeoDRM cloud graphic whose text overflowed its shapes and was replaced with a plain
 list; TODO(graphic) on sixteen text-only slides that want a figure (image generation was off for this pass);
-TODO(instructor) for the reading chapter; and VERIFY on the Lab 8 pairing in Before Next Class.
+TODO(instructor) for the reading chapter; and VERIFY on the Lab 10 pairing in Before Next Class.
 -->
 
 ---

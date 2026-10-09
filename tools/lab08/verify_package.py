@@ -1,9 +1,9 @@
-r"""Reproduce Lab 10's check values from the hosted zip alone, the way the page builds the model:
+r"""Reproduce Lab 8's check values from the hosted zip alone, the way the page builds the model:
 environments Cell Size 30, Snap Raster and Extent True_DEM; Thiessen (polygons -> Polygon to Raster),
 IDW (power 2, 12 points), Kriging (ordinary spherical, 12 points); error, square, Zonal Statistics as
 Table MEAN over Study_Area, sqrt. Runs all three hosted point sets, and with --seed the Step 7 personal
 point set (Create Random Points 2,500 + Extract Values to Points) and its two parameter runs.
-Writes tools/lab10/package_checks.json.   ArcGIS Pro Python.
+Writes tools/lab08/package_checks.json.   ArcGIS Pro Python.
 """
 import argparse, json, math, os, shutil, zipfile
 import arcpy
@@ -11,14 +11,14 @@ import numpy as np
 from arcpy.sa import Idw, Kriging, KrigingModelOrdinary, RadiusVariable, Raster, Square, ZonalStatisticsAsTable
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab10-y-mountain.zip")
+ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab08-y-mountain.zip")
 ROOT = r"C:\Ames\Lab09\ZipCheck"
 
 
 if os.path.exists(ROOT):
     shutil.rmtree(ROOT)
 zipfile.ZipFile(ZIP).extractall(ROOT)
-GDB = os.path.join(ROOT, "lab10-y-mountain", "Lab10.gdb")
+GDB = os.path.join(ROOT, "lab08-y-mountain", "Lab08.gdb")
 arcpy.CheckOutExtension("Spatial"); arcpy.env.overwriteOutput = True; arcpy.env.workspace = GDB
 TRUE = os.path.join(GDB, "True_DEM")
 arcpy.env.cellSize = 30; arcpy.env.snapRaster = TRUE; arcpy.env.extent = TRUE

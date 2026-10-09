@@ -80,11 +80,11 @@ nav:
       - "Week 5 — Terrain Analysis": schedule/week-05.md
       - "Week 6 — Watershed Delineation": schedule/week-06.md
       - "Week 7 — Lake Bathymetry": schedule/week-07.md
-      - "Week 8 — Interpolation and Midterm 1": schedule/week-08.md
-      - "Week 9 — Interpolation, Part 3, and Web Services": schedule/week-09.md
-      - "Week 10 — Raster-Based Spatial Analysis": schedule/week-10.md
-      - "Week 11 — Least Cost Path and Coordinate Systems": schedule/week-11.md
-      - "Week 12 — GPS and the Final Project": schedule/week-12.md
-      - "Week 13 — Final Project Work": schedule/week-13.md
-      - "Week 14 — Presentations and Midterm 2": schedule/week-14.md
-      - "Week 15 — Final Project Presentations": schedule/week-15.md
+      - "Week 8 — Flood Mapping and Midterm 1": schedule/week-08.md
+      - "Week 9 — Interpolation": schedule/week-09.md
+      - "Week 10 — Cut, Fill, and Raster Volumes": schedule/week-10.md
+      - "Week 11 — Coordinate Systems and GPS": schedule/week-11.md
+      - "Week 12 — Least Cost Path": schedule/week-12.md
+      - "Week 13 — The Final Project": schedule/week-13.md
+      - "Week 14 — Network Analysis and Midterm 2": schedule/week-14.md
+      - "Week 15 — Final Project Due": schedule/week-15.md

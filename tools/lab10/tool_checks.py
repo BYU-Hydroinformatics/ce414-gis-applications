@@ -1,8 +1,8 @@
-"""Lab 8 check values measured with the tools the draft page uses (run after run_model.py).
+"""Lab 10 check values measured with the tools the draft page uses (run after run_model.py).
 
 Cell Statistics (MAXIMUM, MINIMUM) on the three class rasters, the geometric-mean expression in
 Raster Calculator form, and Tabulate Area of every result inside the Snowbird boundary (UGRC
-SkiAreaBoundaries). Writes tools/lab08/tool_checks.json. ArcGIS Pro Python.
+SkiAreaBoundaries). Writes tools/lab10/tool_checks.json. ArcGIS Pro Python.
 """
 import json
 import os

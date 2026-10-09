@@ -6,7 +6,7 @@ Fall 2026 · Dr. Dan Ames
 
 > [!NOTE]
 > **This lab is being written.** It is introduced in class on Tuesday of Week 8 and is due Saturday of
-> Week 9. This page will carry the full assignment, its data and its report template by then.
+> the same week. This page will carry the full assignment, its data and its report template by then.
 
 Lab 7 completes the course's three water labs: Lab 5 found where water goes, Lab 6 measured how much a
 lake holds, and Lab 7 asks how high a river rises in a flood and what it covers. You will compute the

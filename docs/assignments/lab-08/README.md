@@ -1,146 +1,116 @@
-# Lab 8: Avalanche Hazard
+# Lab 8: Interpolation Explorer
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Terrain-based avalanche hazard screening from slope, aspect, and elevation*
+*Rebuilding a mountain from samples, three ways, and measuring how wrong each one is*
 
-<!-- **Revision notes.** Drafted October 2, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab08-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab08/PARITY_PLAN.md. It follows `tools/lab-conversion-guide.md` and the pattern of Labs 4–6.
+<!-- **Revision notes.** Drafted October 6, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab08-backup/) and promoted October 7, 2026, with the instructor accepting every recommendation in tools/labs-09-11-plan.md section 4 and tools/lab08/PARITY_PLAN.md.
 
-**Changes to what the lab asks students to do:** one study area (Snowbird), not two; two maps
-(baseline and one scenario), not three; the "all three agree" Con method becomes a step with a
-check value and a report question rather than a map; the multiply method's 1–125 scale is grouped
-into five classes by a stated rule (the cube root of the product); an **Elevation shift**
-parameter and two more combination rules (worst factor, best factor) make the sensitivity step;
-class areas inside the Snowbird boundary are measured with Tabulate Area and checked; the rubric
-is five parts of ten.
+*Changes to what the lab asks students to do:* one study area (the second DEM is gone); a hosted
+extract and study rectangle instead of "download a DEM and draw a box"; a look at the 3DEP image
+service in Step 1 (the Week 9 tie-in); three methods carried all the way to RMSE instead of seven
+surfaces and seven difference chains; the number of points, the IDW power and the Kriging
+semivariogram exposed as parameters; a Step 10 sensitivity table at a personal random seed with
+200 independent checkpoints; Map 1 is one comparison sheet; individual work, not pairs; rubric in
+five parts of ten.
 
-**Corrections:** "Project Raster to the NAD 1983 projection" (a datum) is now NAD 1983 UTM zone 12N
-at 10 m; slope's Low band starts at 0, not −1; "Project" in the tool list is Project Raster; the
-uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002" are replaced by sourced
-statements; the dead Sawtooth link is replaced.
+*Corrections:* RMSE is the root of the **mean** of the squared errors (the handout's summary left
+out the mean); the coordinate system is named as ArcGIS Pro names it; Figure 1 (a reproduced
+textbook figure) is replaced by a measured profile.
 
-**Figures:** the dialog captures (Figures 0-9) and Figure C come from a GUI build of the model in
-ArcGIS Pro 3.7.1 at 175 % display scaling on October 5, 2026 (C:\Ames\Lab07GUI\Lab08.aprx, model
-AvalancheTerrain); Figure B is the danger-scale image the Word-era page used. The Word-era captures
-and the Snowbird example map are in the archived copy.
+*Simplified October 7, 2026 (instructor's request):* students now receive `True_DEM` (projected,
+30 m, clipped) and three hosted point sets (250, 2,500, 10,000; seed 1) instead of projecting,
+clipping and sampling the DEM themselves. The model shrinks from 20 tools to 16 and from 12
+parameters to 9; the sample points are the parameter instead of a number of points and a random
+seed. The personal seed survived outside the model at first (Step 8: Create Random Points + Extract Values to
+Points with the BYU ID digits). The Snap Raster / ERROR 010654 trap is gone (True_DEM is an input),
+and IDW/Kriging now fill RASTERVALU by themselves (the CID default came from Create Random Points).
 
-**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 2, 2026
-(`tools/lab08/run_model.py`, `tool_checks.py`) against the hosted extract, and reproduced by the GUI build. -->
+*Simplified again October 7, 2026 (instructor's request):* no personal point set; Step 8 is five
+tool-dialog runs on the course's sets, and the per-student element is run 5's IDW power = 1 + (last
+two digits of the nine-digit BYU ID) / 40. Checkpoints (seed 99) are hosted in the zip.
 
-> [!WARNING]
-> **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
-> terrain-based screening of slope, aspect, and elevation, produced for the purpose of learning
-> raster analysis and ModelBuilder. It does not account for snowpack, weather, wind loading,
-> recent avalanche activity, or human triggering, and it is **not suitable for operational
-> avalanche safety decisions**. For real trip planning, use the current forecast from the
-> [Utah Avalanche Center](https://utahavalanchecenter.org/){ target="_blank" } or the avalanche
-> center responsible for where you are going.
+*Figures:* Figures A and B are generated from the data (`tools/lab08/make_svgs.py`); the example
+maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
+GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab09GUI\Lab08.aprx`). -->
 
 > [!TIP]
 > **Start from the report template.** [`lab08-report-template.docx`](lab08-report-template.docx)
-> has the title block, a section for every deliverable, the tables already set up with the columns
-> the rubric asks for (including the Snowbird class-area table and the sensitivity table with all
-> three rules), and the rubric at the end ready to fill in. Open it in Word or upload it to Google
-> Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome to write
-> your report any way you like — the template is a floor, not a ceiling — but if you use it and fill
-> in every section, you will not have left a graded item out.
+> has the title block, a section for every deliverable, the tables already set up with the columns the
+> rubric asks for, and the rubric at the end ready to fill in. You are welcome to write your report
+> any way you like — the template is a floor, not a ceiling — but if you use it and fill in every
+> section, you will not have left a graded item out.
 
 ## Background
 
-An avalanche is a mass of snow sliding fast down a slope. In the United States an average of
-**27 people died in avalanches each winter** over the last ten winters, according to the Colorado
-Avalanche Information Center, which keeps the national accident archive
-([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }).
+Every elevation model, rainfall map and groundwater surface you will use as an engineer started as
+points: survey shots, rain gauges, wells. Something turned those points into a surface, and that
+something was an **interpolator**. In this lab the interpolator *is* the subject; in Lab 9 you will
+use one (IDW) as a tool, to rebuild the plain under Big Southern Butte.
 
-Avalanche centers publish a forecast every morning of the season, and the forecast is partly a map
-of terrain: it rates the danger by **elevation band** and by **aspect** (the compass direction a
-slope faces), on the five-level North American Public Avalanche Danger Scale — Low, Moderate,
-Considerable, High, Extreme (Figure B). The snowpack and the weather decide *how* dangerous today
-is; the terrain decides *where* that danger lives. A slope steeper than about 30°, facing the
-direction the wind loaded with snow, high enough to hold the cold weak layers, is where an avalanche
-starts on a dangerous day.
+The idea is simple. To estimate a value at one place you look at the samples around it and combine
+them: take the nearest one (**Thiessen**, or nearest neighbor), average the nearby ones with the
+closest weighted most (**inverse distance weighting**, IDW), or weight them by a model of how fast
+values stop resembling each other with distance (**Kriging**). A GIS does this at the center of
+every cell of an output raster (Bolstad, *GIS Fundamentals*, Chapter 12). Each method has a
+personality, and you can see it in the result: Thiessen makes terraces, IDW makes bull's-eyes around
+its samples and can never go above the highest one, Kriging smooths.
 
-![The North American Public Avalanche Danger Scale table, listing the five danger levels from 1 Low (green) to 5 Extreme (black) with travel advice, likelihood of avalanches, and avalanche size and distribution](images/lab08-north-american-danger-scale.jpeg)
+What you usually cannot do is check the answer, because the true surface is the thing you do not
+have. Here you do. We sampled a real elevation model of Y Mountain at random points; you rebuild it
+from those points three ways, and subtract each rebuild from the truth, cell by cell. That gives you
+a map of where each method fails and one number, the root-mean-square error (RMSE), for how badly.
 
-**Figure B.** The North American Public Avalanche Danger Scale. Its five colors are the colors your
-maps use.
+![An elevation profile across the study area from the valley floor in the west to the ridge in the east. The true DEM rises from about 1,390 m to about 2,700 m. A Thiessen line follows it in flat steps that jump at sample points; an IDW line follows it but sags below the ridges; a Kriging line is smooth and cuts the peak short. Ten sample points within 150 m of the row are marked.](images/lab08-profile.svg)
 
-This lab builds the terrain half of that picture for one ski area, Snowbird, in Little Cottonwood
-Canyon east of Salt Lake City. A ModelBuilder model computes slope and aspect from an elevation
-model, rates every 10 m cell on elevation, slope and aspect from a table taken from a real
-avalanche advisory, and combines the three ratings into one map of **terrain-based hazard**. The
-result is a screening: it says which terrain *could* be dangerous when the snowpack is, not whether
-it is dangerous today.
+**Figure B.** One row of cells across the study area, the truth and three surfaces rebuilt from only
+250 points. Look at the ridge near kilometer 6.5: no method can put back a peak it never sampled.
 
-The interesting part is the combining. Three ratings from 1 to 5 can be turned into one in several
-defensible ways, and they do not agree. In Step 9 you will vary the elevation bands and compare
-three ways of combining, see how far the map moves, and use what moves to say how much of the
-answer is the terrain and how much is your choice of rule.
+How close a rebuild comes depends on choices you make: the method, its parameters, and above all how
+many points you give it. In Step 8 you vary them, see how far the RMSE moves, and use what moves to
+decide which method you would trust with a surface you cannot check.
 
 > [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one ModelBuilder model that rates Snowbird's
-> terrain on elevation, slope and aspect and combines the three into a hazard class; measure how
-> much of the ski area falls in each class; test the elevation bands and the combination rule; and
-> make two maps.
+> **Your job — see the deliverables below.** Build one ModelBuilder model that takes a set of sample
+> points, rebuilds the surface by Thiessen polygons, IDW and Kriging, and reports each rebuild's error
+> map and RMSE; run it on Y Mountain; test how the number of points and each method's parameters
+> change the errors; and make two map sheets.
 
 ## Problem Statement
 
-You are given a 10 m elevation model of upper Little Cottonwood Canyon and the boundary of the
-Snowbird ski area. Using them:
+You are given a 30 m elevation model of Y Mountain and the valley below it — the truth — and three
+sets of random points that sampled it. Using them:
 
-1. Rate every cell on **altitude**, **slope** and **aspect** with Table 1.
-2. Combine the three ratings into one terrain hazard class from 1 (Low) to 5 (Extreme), by a rule
-   you can state and defend.
-3. Report how much of Snowbird, in square kilometers, falls in each class.
-4. Map the result in the danger-scale colors.
+1. Rebuild the surface from the points by Thiessen polygons, IDW and ordinary Kriging.
+2. Map each rebuild's error against the true elevation model, and compute its RMSE.
+3. Find out which method and which settings rebuild this mountain best, and where every method fails.
 
 ## Analysis Considerations
 
 Every one of these is a decision somebody made, and every one of them can change the answer.
 
-- **The three factors.** A forecast says where the danger is by elevation band and aspect; slope
-  angle decides whether a slope can avalanche at all. Most slab avalanches start on slopes between
-  30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50° shed snow in small
-  loose slides too often to build big slabs
-  ([avalanche.org: slope angle](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/slope-angle/){ target="_blank" }).
-  Aspect matters because wind builds slabs on the slopes downwind of it — a west wind loads east
-  aspects — and because the sun can destroy weak layers on south-facing slopes that survive on
-  shaded ones
-  ([avalanche.org: aspect](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/aspect/){ target="_blank" }).
-- **What the model leaves out.** The snowpack's layers and their strength, today's weather, wind
-  loading, recent avalanches, and the person who triggers the slide. Also slope shape (convex rolls
-  are more dangerous than concave bowls), ground cover (smooth grass and rock slabs slide more than
-  boulder fields and forest), and terrain traps below a slope. None of these is in an elevation
-  model. Your report says what each one would change.
-- **Table 1.** The class breaks below come from the course's original handout, which took them
-  from one advisory issued by the Sawtooth Avalanche Center, in central Idaho, on one day. Another day's advisory moves the elevation bands, and another
-  center would use different ones. Step 9 moves them.
-- **How the three ratings combine.** "All three agree", the product, the worst of the three, the
-  best of the three — each is a different claim about how the factors interact. Step 6 builds two
-  and Step 7 adds two more.
-- **The elevation model.** Bare earth: the ground surface, without trees, lift towers or the
-  winter snowpack, which can be meters deep and changes the slope a skier stands on. Cells of about
-  10 m, so a gully narrower than that is not in it.
-- **The coordinate system.** Slope and Aspect need cells and elevations in the same linear unit.
-  The extract arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in
-  meters.
-
-|  | Altitude (meters) | Slope (degrees) | Aspect (degrees) |
-| --- | --- | --- | --- |
-| Low (1) | 0 – 2,200 | 0 – 25<br>60 – 90 | 180 – 225 |
-| Moderate (2) | 2,200 – 2,400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
-| Considerable (3) | 2,400 – 2,600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
-| High (4) | 2,600 – 2,800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
-| Extreme (5) | above 2,800 | 35 – 45 | −1 – 45 |
-
-**Table 1.** Terrain ratings from a Sawtooth Avalanche Center advisory. A value exactly on a break
-goes to the lower range: 25° is Low and 35° is High, because ArcGIS Pro's Reclassify counts the end
-of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme.
-With slope class 1, a flat cell comes out Considerable under the geometric mean of Step 6 and Extreme
-under the worst-factor rule of Step 7. There are none inside Snowbird, but they show on any map that
-reaches past its boundary. Say in your report whether you would rate them differently.
+- **The truth.** The elevation model is treated as exact. It is not — it is itself a product of
+  interpolation from lidar and older sources — but here it is the reference everything else is
+  measured against. Your RMSE says how well you rebuilt the DEM, not how well anything matches the
+  ground.
+- **The cell size.** The DEM was projected to 30 m cells, as engineering-scale terrain work often
+  does, and every surface is built on that grid. A finer grid would make the truth rougher and the
+  errors bigger.
+- **The samples.** 250, 2,500 or 10,000 random points in a 60.6 km² rectangle; at 2,500, about one
+  point for every 27 cells. Random points cluster in some places and leave gaps in others, and the
+  gaps are where the errors are. The course's three sets were drawn once, with a fixed random seed,
+  so everyone's numbers match this page.
+- **The method and its parameters.** Thiessen has none. IDW has a **power** (how fast a sample's
+  influence falls off with distance; 2 is the default) and a number of neighbors (12). Kriging has a
+  **semivariogram model** (spherical is the default) fitted to the points, and a number of neighbors
+  (12). Every default is somebody's guess about a typical surface; Step 8 tests the guesses.
+- **The measure of error.** RMSE weights large errors heavily, because it squares them. It is one
+  number for the whole rectangle, and most of the rectangle is flat valley floor that every method
+  gets right. Look at the error maps, not just the number.
+- **The coordinate system.** **NAD 1983 UTM Zone 12N** in meters, so that cells are square and
+  distances, which every interpolator depends on, are in meters in every direction.
 
 ## Data
 
@@ -152,28 +122,49 @@ reaches past its boundary. Say in your report whether you would rate them differ
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
 > conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-| Layer | Where it comes from | How you get it |
+| Layer | What it is | How you get it |
 | --- | --- | --- |
-| `LittleCottonwood_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM | Prepared extract, hosted here |
-| Snowbird ski area boundary | Utah Geospatial Resource Center (UGRC), *Utah Ski Area Boundaries* | Live web layer, added by URL |
-| Table 1 | A Sawtooth Avalanche Center advisory | You type it into the Reclassify and Raster Calculator tools |
+| `lab08-y-mountain\Lab08.gdb\True_DEM` | The DEM projected to UTM 12N at 30 m and cut to the study rectangle: the truth | Prepared for you, in the zip |
+| `lab08-y-mountain\Lab08.gdb\Sample_Points_250`, `_2500`, `_10000` | Random points in the rectangle, each with the `True_DEM` value under it in `RASTERVALU` | Prepared for you, in the zip |
+| `lab08-y-mountain\Lab08.gdb\Checkpoints` | 200 more random points in the rectangle, never used to interpolate; Step 8 tests the surfaces at them | Prepared for you, in the zip |
+| `lab08-y-mountain\Lab08.gdb\Study_Area` | The study rectangle, on `True_DEM`'s 30 m grid | Prepared for you, in the zip |
+| `YMountain_DEM.tif` | The source: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 | In the zip, for its metadata and for Step 1 |
+| 3DEP elevation image service | The same elevations, served live | A web service you add in Step 1 |
 
-- **Download:** [`lab08-little-cottonwood-dem.zip`](../../data/lab08-little-cottonwood-dem.zip)
-  (2.4 MB). Unzip it into your Lab08 folder — the files are in a `lab08-little-cottonwood-dem`
-  folder inside it — and read `READ-ME-FIRST.txt`.
-- **Add the ski areas** in Step 0 from this feature service URL:
-  `https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0`
-  (the same layer as UGRC's [Utah Ski Area Boundaries](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" } page).
+- **Download:** [`lab08-y-mountain.zip`](../../data/lab08-y-mountain.zip) (2.4 MB). Unzip it into
+  your Lab08 folder — the files are in a `lab08-y-mountain` folder inside it — and read
+  `READ-ME-FIRST.txt`.
+
+**What we already did for you.** Every step below is one you have done in an earlier lab, so we did
+them once, carefully, and handed you the results; your model starts where the interpolation starts.
+
+1. **Project Raster** (Labs 4 and 5): `YMountain_DEM.tif` to NAD 1983 UTM Zone 12N, bilinear,
+   30 m cells.
+2. **Extract by Mask** (Lab 4): the projected DEM cut to `Study_Area`, a rectangle drawn well
+   inside it with its corners on the 30 m grid. The result is `True_DEM`.
+3. **Create Random Points**: 250, 2,500 and 10,000 points inside `Study_Area`, with the
+   **Random Number Generator** environment set to seed 1, so the points are the same every time.
+4. **Extract Values to Points** (Lab 9): the `True_DEM` value under each point, written to
+   `RASTERVALU`.
+
+We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.
 
 > [!TIP]
-> **Check the data:** `LittleCottonwood_DEM.tif` is **1,296 columns × 864 rows** of 1/3 arc-second
-> cells, values **2,176.4 to 3,500.5** (meters above NAVD 88), GCS North American 1983, no NoData
-> cells. The ski-area layer has 14 polygons; Snowbird's is named `Snowbird Ski and Summer Resort`.
+> **Check the data:** `True_DEM` has **67,337** cells with values, from **1,368.5 to 2,896.5** m
+> (mean **1,819.8**). `Sample_Points_250`, `_2500` and `_10000` have exactly that many points, each
+> with the fields `OBJECTID`, `Shape` and `RASTERVALU`; at 2,500 points `RASTERVALU` runs from
+> **1,368.7 to 2,886.7** m and the first point (`OBJECTID` 1) is at about **444,603.3 E,
+> 4,453,723.7 N**. `Study_Area` is one rectangle of **60.6 km²** (8.67 × 6.99 km).
 
-![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Little Cottonwood Canyon DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.8 m east-west; a box over upper Little Cottonwood Canyon with Snowbird and Alta, stored in latitude and longitude, to be projected in Step 1; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, not made for avalanche terrain; lidar, contour-based and radar sources resampled to one grid, bare earth without trees, lift towers or snowpack; USGS, public domain. A footer says the model sees the ground, not the snow a skier stands on.](images/lab08-dem-metadata.svg)
+> [!NOTE]
+> The samples never include the true highest cell (2,896.5 m): the tallest of the 2,500 is
+> 2,886.7 m. Keep that number in mind in Steps 3 to 5.
+
+![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Y Mountain DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.9 m east-west; Provo and the mountain front east of it, stored in latitude and longitude, with True_DEM its projection to UTM Zone 12N; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, playing the truth in this lab; a window cut from the tile with values unchanged; USGS, public domain. A footer says the DEM's own errors never show up in the RMSE.](images/lab08-dem-metadata.svg)
 
 **Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
-in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
+the publication and source dates, the vertical datum and units, and the cell size —
+in `READ-ME-FIRST.txt`, in `YMountain_DEM.tif`'s properties in ArcGIS Pro, and in the tile's
 [metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
 — and say in your report what each one does to your result.
 
@@ -183,24 +174,23 @@ New in this lab:
 
 | Tool | What it does |
 | --- | --- |
-| ![Slope icon: a hillside with its angle, 38 degrees, marked](images/icon-slope.svg){ .tool-icon }<br>**Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
-| ![Aspect icon: a compass with an arrow pointing northeast](images/icon-aspect.svg){ .tool-icon }<br>**Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
-| ![Cell Statistics icon: three stacked grids combined into one holding their maximum](images/icon-cell-statistics.svg){ .tool-icon }<br>**Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
-| ![Tabulate Area icon: a zone outlined over classed cells and the table of class areas it produces](images/icon-tabulate-area.svg){ .tool-icon }<br>**Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
+| ![Create Thiessen Polygons icon: five points, each inside the polygon of the area nearest to it](images/icon-create-thiessen-polygons.svg){ .tool-icon }<br>**Create Thiessen Polygons** (Analysis) | Draws, around every point, the polygon of all the places nearer to it than to any other point. Given the points' values, it is nearest-neighbor interpolation. Needs an Advanced license. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/create-thiessen-polygons.htm){ target="_blank" } |
+| ![IDW icon: a cell joined to five points by lines, thicker for nearer points, labeled 1 over d squared](images/icon-idw.svg){ .tool-icon }<br>**IDW** (Spatial Analyst) | Interpolates a raster surface from points, each cell a weighted average of its nearest points, the nearest weighted most. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/idw.htm){ target="_blank" } |
+| ![Kriging icon: a semivariogram, points rising with distance and leveling off at a sill, with the range marked](images/icon-kriging.svg){ .tool-icon }<br>**Kriging** (Spatial Analyst) | Interpolates a raster from points, weighting the neighbors by a semivariogram: a curve fitted to how much the values differ as the distance between them grows. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/kriging.htm){ target="_blank" } |
+| ![Zonal Statistics as Table icon: the cells inside a zone summarized into a table row labeled MEAN](images/icon-zonal-statistics-as-table.svg){ .tool-icon }<br>**Zonal Statistics as Table** (Spatial Analyst) | Like Zonal Statistics, but writes the statistics of each zone to a table instead of a raster — here, the mean of the squared errors inside the study rectangle. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics-as-table.htm){ target="_blank" } |
 
-Tools you already know: **Project Raster** (Lab 5), **Reclassify** (Lab 2), **Raster Calculator**
-with an inline variable (Labs 2, 4 and 5), and model parameters.
-
+Tools you already know: **Polygon to Raster**, **Raster Calculator** (Labs 2 and
+4–7), **Calculate Field** (Lab 6), and model parameters. Step 8 also uses **Extract Multi Values to
+Points** and **Summary Statistics**.
 
 ## Example Model
 
-![The finished ModelBuilder model, exported as a vector diagram. LittleCottonwood_DEM.tif into Project Raster, DEM_UTM. DEM_UTM feeds Slope (Slope_Deg, Reclassify, Slope_Class), Aspect (Aspect_Deg, Reclassify (2), Aspect_Class), and with Shift, marked P, a Raster Calculator that makes Altitude_Class, marked P. The three class rasters feed Raster Calculator (2), Agree_Class; Raster Calculator (3), Hazard_Class, marked P; Cell Statistics, Worst_Class, marked P; and Cell Statistics (2), Best_Class, marked P; Worst_Class and Best_Class feed Raster Calculator (4), Rule_Spread, marked P.](images/lab08-full-model.svg)
+![The finished ModelBuilder model, exported as a vector diagram. Sample Points, marked P, feeds three branches: Create Thiessen Polygons then Polygon to Raster (Thiessen_Surface); IDW with IDW Power, marked P (IDW_Surface); and Kriging with Semivariogram, marked P (Kriging_Surface, and an unused Output variance of prediction raster). True_DEM and each surface feed a Raster Calculator (Error_Thiessen, Error_IDW and Error_Kriging, all marked P); each error goes to a second Raster Calculator that squares it, then Zonal Statistics as Table over Study_Area (each with an unused Output Join Layer), then Calculate Field, ending in RMSE Thiessen, RMSE IDW and RMSE Kriging, all marked P.](images/lab08-full-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. One
-elevation model in, three rating rasters in the middle, and the combined maps out: all three agree,
-the geometric mean, the worst and best factor, and where those two differ. The six elements marked
-`P` are the model parameters — the shift, the altitude classes and the four combined maps — and they
-become the tool dialog of Step 9.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
+Read it left to right: the sample points are rebuilt into a surface three ways; each rebuild is
+subtracted from `True_DEM`, squared, averaged over the rectangle and square-rooted. The nine
+elements marked `P` become the tool dialog of Step 8.
 
 ## Complete the Lab
 
@@ -211,305 +201,368 @@ without the step-by-step instructions below, say so in your report.
 ## Step-by-Step Solution
 
 > [!NOTE]
-> **Build it once, build it to be changed.** The steps walk through Snowbird at the default
-> elevation bands. Step 9 re-runs the same model with the bands moved, so give every dataset a
-> readable name as you go.
+> **Important Note #1.** Steps 0–7 build the model and run it on the course's 2,500 points, so your
+> numbers can be checked against this page. Step 8 re-runs the same model on other points and with
+> other settings. Build it once, and build it to be changed.
 
 > [!NOTE]
-> **Every check value on this page** was measured on the files you download, with the steps below,
-> in ArcGIS Pro 3.7.1. Your numbers should match to the last digit shown.
+> **Important Note #2.** Every check value on this page was measured on the files you download, with
+> the steps below, in ArcGIS Pro 3.7.1, and should match to the last digit shown. The screenshots
+> were captured in the same version, building this model, and their paths start with `C:\` because
+> they were made on an instructor machine.
 
 ### Step 0 — Set Up the Project
 
-1. Create a new project in `D:\Smith\Lab08\` with the **Map** template; if you already made the
-   folder, uncheck **Create a folder for this local project**.
-2. Add `LittleCottonwood_DEM.tif`. When the **Build Pyramids and Calculate Statistics** dialog
-   opens, click **OK**.
-3. On the **Map** tab click the arrow under **Add Data** ▸ **From Path**, paste the ski-area URL
-   from the Data section, and click **Add**. Add an imagery or topographic basemap.
-4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
-5. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
-   **Properties**, set **Name** to `AvalancheTerrain` and **Label** to `Avalanche Terrain`, and save.
-6. On the **ModelBuilder** tab click **Environments** and check that **Current Workspace** and
-   **Scratch Workspace** are your project geodatabase.
+1. Create a new project named `Lab08` in `D:\Smith\Lab08\` with the **Map** template; if you already
+   made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes a project
+   geodatabase and toolbox beside it, `Lab08.gdb` and `Lab08.atbx`. The downloaded data stay in their
+   own `lab08-y-mountain\Lab08.gdb`; this page always says which of the two it means.
+2. Add `True_DEM`, `Study_Area`, `Checkpoints` and the three `Sample_Points_` layers from
+   `lab08-y-mountain\Lab08.gdb`, and `YMountain_DEM.tif` (click **OK** to build pyramids and
+   statistics).
+3. Confirm Spatial Analyst is licensed and that your license level is **Advanced** (**Project** ▸
+   **Licensing**); Create Thiessen Polygons needs it. The lab machines have both.
+4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
+   **Properties**, set **Name** to `InterpolationExplorer` and **Label** to `Interpolation Explorer`,
+   and save.
+5. On the **ModelBuilder** tab click **Environments** and set (type a name in the search box to
+   find it):
+    - **Current Workspace** and **Scratch Workspace**: your project geodatabase
+    - **Cell Size**: `30`
+    - **Snap Raster**: `True_DEM`
+    - **Extent**: click the second button above the boxes, which lists the map's layers, and choose
+      `True_DEM`. The boxes fill with its corners in latitude and longitude; that is fine.
 
-![The model's Environments dialog: Current Workspace and Scratch Workspace both Lab07.gdb; Output Coordinate System, Geographic Transformations and Processing Extent empty; under Raster Analysis, Cell Size empty and Cell Size Projection Method Convert units.](images/lab08-environments.png)
+![The model's Environments dialog, searched for "extent": Extent set from True_DEM, Top 40.2665, Left -111.6761, Right -111.5736, Bottom 40.2027 in GCS North American 1983; Current Workspace Lab09.gdb; Output Coordinate System empty; Cell Size 30; Mask empty; Cell Alignment Default; Snap Raster True_DEM.](images/lab08-environments.png)
 
-**Figure 0.** ModelBuilder ▸ Environments: the two workspaces, everything else at its default.
-
-### Step 1 — Project the DEM
-
-Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input:
-
-- **Output Coordinate System**: NAD 1983 UTM Zone 12N
-- **Resampling Technique**: Bilinear interpolation (elevations are continuous; nearest neighbor
-  leaves stair steps that become stripes in Slope)
-- **Output Cell Size**: 10
-- **Output Raster Dataset**: `DEM_UTM`
-
-
-![The Project Raster dialog from ModelBuilder: Input Raster LittleCottonwood_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10.](images/lab08-project-raster.png)
-
-**Figure 1.** Project Raster. It opens with Nearest neighbor, switches itself to Bilinear when you
-pick this DEM, and proposes cells of about 9.04 m; type 10 in both X and Y.
-
-> [!TIP]
-> **Check the result:** `DEM_UTM` is **1,023 × 896** cells of 10 m, values **2,178.0 to 3,499.4**
-> m. If the cell size reads about 0.0001, you are looking at the unprojected DEM.
-
-### Step 2 — Compute Slope
-
-Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and output `Slope_Deg`.
-
-![The Slope dialog from ModelBuilder, with a banner suggesting the Surface Parameters tool: Input raster DEM_UTM, Output raster Slope_Deg, Output measurement Degree, Method Planar, Z factor 1, Target device for analysis GPU then CPU.](images/lab08-slope.png)
-
-**Figure 2.** Slope, in degrees, Planar. Ignore the banner; Surface Parameters does more than this
-lab needs.
-
-> [!TIP]
-> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (the
-> layer's **Properties** ▸ **Source** ▸ **Statistics** list both).
-
+**Figure 0.** ModelBuilder ▸ Environments. Leave Output Coordinate System empty: everything you use is
+already in UTM.
 
 > [!WARNING]
-> **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
-> `LittleCottonwood_DEM.tif` itself it reports a mean of 24.3° — about 2.6° too gentle. Its cells
-> are 1/3 arc-second, which here is 10.3 m north–south but only 7.8 m east–west; projected cells are
-> square meters. Two or three degrees move a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
+> **Set all three: Cell Size, Snap Raster and Extent.** Without the cell size, IDW and Kriging pick
+> one from the spread of the points. Without the snap raster, they place their cells wherever their
+> points' box puts them, and the subtraction in Step 6 compares cells offset by part of a cell.
+> Without the extent, they fill only the box around the points; with 250 points that box misses
+> strips along the edges, and those cells drop out of the RMSE. Nothing reports an error in any of
+> these cases.
 
-### Step 3 — Compute Aspect
+### Step 1 — Look at the Service
 
-Add **Aspect** with `DEM_UTM` as the input and output `Aspect_Deg`.
+The same elevations are served live on the web. Before you use the prepared data, look at what the
+service gives you.
 
-> [!TIP]
-> **Check the result:** values run from 0 to 360, plus **−1 on 480 flat cells** in the whole
-> projected DEM.
+1. On the **Map** tab, in the **Layer** group, click **Add Data From Path** (the yellow button
+   beside the basemap gallery), paste
+   `https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer`, and click
+   **Add**. It is slow; give it a minute.
+2. Right-click the new `3DEPElevation` layer ▸ **Properties** ▸ **Source**. Expand **Raster
+   Information** and **Spatial Reference** and record the columns and rows, the cell size, the pixel
+   type and the coordinate system. Look at the layer's legend in the Contents pane, too.
+3. On the **Map** tab click **Go To XY**, enter longitude **−111.58865** and latitude **40.21415**,
+   and drop a marker there. This is the highest cell of `YMountain_DEM.tif`. Click the marker with
+   **Explore**: the pop-up reports the service. Turn the service layer off and click again to read
+   the DEM.
+4. Remove the service layer and the marker's graphics layer. The rest of the lab runs on the prepared
+   data.
 
-![The Aspect dialog from ModelBuilder: Input raster DEM_UTM, Output raster Aspect_Deg, Method Planar, Target device for analysis GPU then CPU.](images/lab08-aspect.png)
+![The Add Data From Path dialog: Path set to https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer and Service type An ArcGIS Server Web Service.](images/lab08-add-from-path.png)
 
-**Figure 3.** Aspect.
+**Figure 1a.** Add Data From Path, with the 3DEP elevation service.
 
-### Step 4 — Rate Slope and Aspect
+![The service layer's Properties, Source page: Data Type Raster, Location the 3DEP ImageServer URL, Vertical Units Meter; Raster Information: Columns 40075015, Rows 20498394, 1 band, Cell Size X 1 and Y 1, Uncompressed Size 747.13 TB, Format Image Service, Source Type Elevation, Pixel Type unsigned char, Pixel Depth 8 Bit.](images/lab08-service-raster-info.png)
 
-Add **Reclassify** twice, with the slope and aspect rows of Table 1.
+**Figure 1b.** What came back: 1 m cells covering the whole country — 747 TB if you could download it
+— in **8-bit unsigned** pixels.
 
-1. **Reclassify** `Slope_Deg`, field **Value**, nine rows: 0–25 → 1, 25–30 → 2, 30–32 → 3,
-   32–35 → 4, 35–45 → 5, 45–50 → 4, 50–55 → 3, 55–60 → 2, 60–90 → 1. Output `Slope_Class`.
-2. **Reclassify** `Aspect_Deg`, eight rows: −1–45 → 5, 45–90 → 4, 90–135 → 3, 135–180 → 2,
-   180–225 → 1, 225–270 → 2, 270–315 → 3, 315–360 → 4. Output `Aspect_Class`.
+![The Spatial Reference section of the same page: Projected Coordinate System WGS 1984 Web Mercator (auxiliary sphere), Projection Mercator Auxiliary Sphere, WKID 3857.](images/lab08-service-spatial-reference.png)
 
-Two ranges can share a new value; that is how the table says "steep and gentle are both Low."
+**Figure 1c.** The service's coordinate system: Web Mercator, not the latitude and longitude of the
+extract, and not UTM.
 
-![The Reclassify dialog for slope: Input raster Slope_Deg, Reclass field VALUE, nine rows 0 to 25 is 1, 25 to 30 is 2, 30 to 32 is 3, 32 to 35 is 4, 35 to 45 is 5, 45 to 50 is 4, 50 to 55 is 3, 55 to 60 is 2, 60 to 90 is 1, then a NODATA row; Output raster Slope_Class; Change missing values to NoData unchecked.](images/lab08-reclass-slope.png)
+![The Explore pop-up for the service at the marker: 3DEPElevation (2), item n41w112; Service Pixel Value 154, Stretch.Pixel Value 154, Name n41w112, MinPS 0, MaxPS 27, LowPS 10.30736, HighPS 16.](images/lab08-service-popup.png)
 
-**Figure 4a.** The slope ratings. ArcGIS Pro adds the NODATA row itself.
-
-![The Reclassify (2) dialog for aspect: Input raster Aspect_Deg, Reclass field VALUE, eight rows -1 to 45 is 5, 45 to 90 is 4, 90 to 135 is 3, 135 to 180 is 2, 180 to 225 is 1, 225 to 270 is 2, 270 to 315 is 3, 315 to 360 is 4, then a NODATA row; Output raster Aspect_Class.](images/lab08-reclass-aspect.png)
-
-**Figure 4b.** The aspect ratings.
-
-> [!WARNING]
-> **Type −1 by editing, not in the blank row.** In our build, a new row whose Start was typed as
-> `-1` vanished when the row was committed. Type `0` for the first Start, finish the table, then
-> double-click that cell and change it to `-1`. Check that the first row reads −1 before you click
-> OK; without it the 480 flat cells come out NoData.
-
-> [!TIP]
-> **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
-> and slope class 5 **2.047 km²**; aspect class 4 (northwest-to-north and northeast-to-east)
-> **3.493 km²**. If any cell of `Slope_Class` is NoData, a range has a gap.
-
-### Step 5 — Rate Altitude, With a Shift
-
-Reclassify cannot take a parameter, and Step 9 needs to move the elevation bands. So rate altitude
-with **Raster Calculator**, with the bands written out and an inline variable added to each break:
-
-1. On the canvas toolbar click **Variable**, choose **Long** in the data type list, and click
-   **OK**. Right-click the new oval ▸ **Rename**, type `Shift`, double-click it and set its value to
-   `0`, then right-click it ▸ **Parameter**.
-2. Add **Raster Calculator** with this expression, and output `Altitude_Class`:
-
-```text
-Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5))))
-```
-
-A positive shift raises every band (less of the mountain counts as high); a negative shift lowers
-them.
-
-
-![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class and Aspect_Class; the expression reads Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5)))); Output raster Altitude_Class.](images/lab08-rc-altitude.png)
-
-**Figure 5.** The altitude rating, with `%Shift%` in every break. On the canvas, Shift draws a
-connector to this tool. Type the output name last: Raster Calculator replaces a typed name with a
-default such as `RasterC_1` when the expression changes.
+**Figure 1d.** The service at the highest cell of the extract. The value is **154**, not an
+elevation; the source item is tile `n41w112`, the same tile the extract was cut from.
 
 > [!TIP]
-> **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
-> and no cells below 2,200 m. Most of the ski area is "Extreme" on altitude alone — keep that in
-> mind in Step 9.
-
-### Step 6 — Combine the Ratings
-
-Two ways, both in Raster Calculator.
-
-**First, "all three agree."** A cell gets a class only where all three ratings are that class:
-
-```text
-Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1), 1, Con(("%Altitude_Class%" == 2) & ("%Slope_Class%" == 2) & ("%Aspect_Class%" == 2), 2, Con(("%Altitude_Class%" == 3) & ("%Slope_Class%" == 3) & ("%Aspect_Class%" == 3), 3, Con(("%Altitude_Class%" == 4) & ("%Slope_Class%" == 4) & ("%Aspect_Class%" == 4), 4, Con(("%Altitude_Class%" == 5) & ("%Slope_Class%" == 5) & ("%Aspect_Class%" == 5), 5, 0)))))
-```
-
-Output `Agree_Class`. Look at it before you go on.
-
-> [!TIP]
-> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.781 km²** — 96 % — is 0, unclassified. A
-> 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
-> Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
-
-**Second, the geometric mean.** Multiply the three ratings (1 to 125), take the cube root, and round.
-The cube root of a product of three numbers is their geometric mean, which brings the result back to
-the 1–5 scale:
-
-```text
-Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5)
-```
-
-Output `Hazard_Class`, and make it a model parameter. Rated 5, 5, 4, a cell's product is 100, its
-geometric mean 4.6, and its class 5. In product terms the classes are 1–3 Low, 4–15 Moderate, 16–42
-Considerable, 43–91 High, 92–125 Extreme.
-
-![The Raster Calculator (2) dialog, widened: the full nested Con expression testing Altitude_Class, Slope_Class and Aspect_Class for equality at each class from 1 to 5, else 0; Output raster Agree_Class.](images/lab08-rc-agree.png)
-
-**Figure 6a.** "All three agree." Widen the dialog to read the whole expression.
-
-![The Raster Calculator (3) dialog: the expression Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5); Output raster Hazard_Class.](images/lab08-rc-geomean.png)
-
-**Figure 6b.** The geometric mean, rounded to the nearest class.
+> **Check the result:** the service arrives drawn as a **hillshade**, with a legend from 0 to 255.
+> That is the service's default *raster function*: the server turns elevations into a picture before
+> sending them, and that is why the pixel type is 8-bit and the pop-up reads **154** at the marker.
+> `YMountain_DEM.tif` reads about **2,893 to 2,897 m** there, depending on exactly which cell your click lands
+> in (the highest cell is 2,896.9 m).
 
 > [!NOTE]
-> **Why `+ 0.5` and `Int`.** `Int` drops the fraction, so adding 0.5 first rounds to the nearest
-> class: a geometric mean of 3.48 (product 42) is Considerable, 3.50 (product 43) is High.
+> **Why not just use the service?** A service is convenient and always current, but what comes back
+> depends on the request: here a shaded picture in Web Mercator rather than elevations in meters, and
+> it can change whenever the USGS updates it. An analysis that others must check needs a fixed copy
+> with a known date, which is why the course hosts one. Say in your report which of the two you would
+> cite in an engineering report, and why.
 
-### Step 7 — Add Two More Rules
+### Step 2 — Choose the Sample Points
 
-Add **Cell Statistics** twice, each with `Altitude_Class`, `Slope_Class` and `Aspect_Class` as the
-inputs:
+The sample points are the model's main input, and the one you will change most, so make them a
+parameter before anything else uses them.
 
-1. **Overlay statistic** Maximum, output `Worst_Class` — a cell is as dangerous as its worst factor.
-2. **Overlay statistic** Minimum, output `Best_Class` — a cell is only as dangerous as its least
-   dangerous factor.
+1. Add **Create Thiessen Polygons** to the model (Step 3 fills it in), and in its **Input Features**
+   choose `Sample_Points_2500` from the map layers.
+2. In the model, right-click the new `Sample_Points_2500` oval ▸ **Rename** it `Sample Points`, and
+   right-click it ▸ **Parameter**.
 
-These two bracket the geometric mean. Then one more **Raster Calculator**, output `Rule_Spread`:
+Every tool that follows takes `Sample Points` — choose it under **Model Variables** in each tool's
+list, not the map layer of the same set — so that changing this one input in Step 8 changes all three
+methods at once.
 
-```text
-"%Worst_Class%" - "%Best_Class%"
-```
+> [!NOTE]
+> **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points as well.
+> With the points as a parameter, each of those runs is one choice in the tool dialog.
 
-`Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
-where the rule you choose matters.
+### Step 3 — Build the Thiessen Surface
 
-Make `Altitude_Class`, `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters,
-so that every run from the tool dialog keeps them and lets you name them.
+1. **Create Thiessen Polygons**: **Input Features** `Sample Points`, output `Thiessen_Polygons`,
+   **Output Fields** **All fields**.
+2. Add **Polygon to Raster**: **Input Features** `Thiessen_Polygons`, **Value field**
+   `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30 (it fills in from the
+   environment), output `Thiessen_Surface`.
+
+![The Create Thiessen Polygons dialog from ModelBuilder: Input Features Sample Points, Output Feature Class Thiessen_Polygons, Output Fields All fields.](images/lab08-thiessen-polygons.png)
+
+**Figure 3a.** Create Thiessen Polygons, with **All fields**.
+
+![The Polygon to Raster dialog from ModelBuilder: Input Features Thiessen_Polygons, Value field RASTERVALU, Output Raster Dataset Thiessen_Surface, Cell assignment type Cell center, Priority field NONE, Cellsize 30, Build raster attribute table checked.](images/lab08-polygon-to-raster.png)
+
+**Figure 3b.** Polygon to Raster, with the value field changed to `RASTERVALU`.
 
 > [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter.** In our build, the first
-> dialog run removed `DEM_UTM`, `Slope_Deg`, `Aspect_Deg`, `Slope_Class` and `Aspect_Class` from the
-> geodatabase — including the copies the earlier ModelBuilder run had made. Do Step 8 from a run
-> inside ModelBuilder, before any dialog run.
+> **Two defaults here give a surface with no elevations in it.** Create Thiessen Polygons opens at
+> **Output Fields: Only feature ID**, which leaves the polygons with no `RASTERVALU` at all. Polygon
+> to Raster then fills **Value field** with `OBJECTID` by itself — a surface of polygon numbers, and
+> no error. Choose **All fields** in the first, and `RASTERVALU` in the second.
 
 > [!TIP]
-> **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
-> on **3.309 km²**.
+> **Check the result:** **2,500** polygons, one per point. `Thiessen_Surface` runs from **1,368.7 to
+> 2,886.7** m — exactly the range of the samples, because every cell simply takes the value of its
+> nearest point.
 
-![The Cell Statistics dialog from ModelBuilder: Input rasters or constant values Altitude_Class, Slope_Class and Aspect_Class; Output raster Worst_Class; Overlay statistic Maximum; Ignore NoData in calculations checked; Process as multiband unchecked.](images/lab08-cellstats-max.png)
+### Step 4 — Build the IDW Surface
 
-**Figure 7a.** Cell Statistics, Maximum: the worst factor. The second one is the same with
-**Minimum** and `Best_Class`.
+Add **IDW** (the Spatial Analyst tool; the search also offers a 3D Analyst and a Geostatistical
+Analyst one): **Input point features** `Sample Points`, **Z value field** `RASTERVALU` (it fills in
+by itself), **Output cell size** `30`, **Power** 2, **Search radius** Variable with 12 points, output
+`IDW_Surface`. Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power**,
+rename the new oval `IDW Power` (select it and press **Ctrl+R**), and make it a parameter.
 
-![The Raster Calculator (4) dialog: the expression "%Worst_Class%" - "%Best_Class%"; Output raster Rule_Spread.](images/lab08-rc-spread.png)
+![The IDW dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output raster IDW_Surface, Output cell size 30, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab08-idw.png)
 
-**Figure 7b.** Where the rules disagree.
-
-### Step 8 — Measure Snowbird
-
-Run the model. Then add **Tabulate Area** (outside the model is fine) with:
-
-- **Input raster or feature zone data**: the ski-area layer, with **only Snowbird selected** (select
-  it with **Select By Attributes**, `NAME` begins with `Snowbird`)
-- **Zone field**: `NAME`
-- **Input raster or feature class data**: `Hazard_Class`, **Class field** `Value`
-- **Output table**: `Snowbird_Hazard`
-
-The table has one column per class, in square meters. Divide by 1,000,000 for km². Run Tabulate
-Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Class`, `Worst_Class`,
-`Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
-table for the raster and the run, such as `TA_Hazard_s0`.
-
-
-![The Tabulate Area tool in the Geoprocessing pane: Input raster or feature zone data SkiAreaBoundaries, with Use the selected records: 1 switched on; Zone field NAME; Input raster or feature class data Hazard_Class; Class field Value; Output table TA_Hazard_s0; Classes as rows in output table unchecked.](images/lab08-tabulate-area.png)
-
-**Figure 8a.** Tabulate Area on the selected Snowbird polygon. The switch **Use the selected records:
-1** confirms that only Snowbird is used.
-
-![The TA_Hazard_s0 table: one row, NAME Snowbird Ski and Summer Resort, VALUE_1 167400, VALUE_2 3161700, VALUE_3 3692400, VALUE_4 2673200, VALUE_5 1086600, in square meters.](images/lab08-ta-table.png)
-
-**Figure 8b.** The output: one column per class, in square meters.
+**Figure 4.** IDW.
 
 > [!TIP]
-> **Check the result** (km², Snowbird, shift 0):
+> **Check the result:** `IDW_Surface` runs from **1,368.7 to 2,885.5** m. IDW is a weighted average,
+> so it can never go above its highest point or below its lowest: compare with the data check.
+
+### Step 5 — Build the Kriging Surface
+
+Add **Kriging** (Spatial Analyst): **Input point features** `Sample Points`, **Z value field**
+`RASTERVALU`, output `Kriging_Surface`, **Kriging method** Ordinary, **Semi-variogram model**
+Spherical, **Output cell size** `30`, **Search radius** Variable with 12 points. Leave **Lag size**
+at the 30 it fills in, the range, sill and nugget empty, and the optional variance raster empty.
+Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Semivariogram
+properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool dialog it shows
+the same controls as here: in Step 8 you pick another model from its **Semi-variogram model** list.
+
+![The Kriging dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output surface raster Kriging_Surface, Kriging method Ordinary, Semi-variogram model Spherical, Lag size 30, Major range, Partial sill and Nugget empty, Output cell size 30, Search radius Variable with Number of points 12, Output variance of prediction raster empty.](images/lab08-kriging.png)
+
+**Figure 5.** Kriging. The range, sill and nugget stay empty: Kriging fits them to your points.
+
+> [!TIP]
+> **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
+> its samples; here it does not, and it pulls the peak down a little further than IDW.
+
+### Step 6 — Map the Errors
+
+Add **Raster Calculator** (Spatial Analyst) three times, one per surface, each the truth minus the
+rebuild. Double-click `True_DEM` in the calculator's **Rasters** list to put it in the expression;
+it joins the model as an input.
+
+| Expression | Output |
+| --- | --- |
+| `"%True_DEM%" - "%Thiessen_Surface%"` | `Error_Thiessen` |
+| `"%True_DEM%" - "%IDW_Surface%"` | `Error_IDW` |
+| `"%True_DEM%" - "%Kriging_Surface%"` | `Error_Kriging` |
+
+The quickest way to the second and third: select the first Raster Calculator, **Ctrl+C**, click
+empty canvas, **Ctrl+V**, drag the copy clear, and edit its expression and output. A positive error
+means the surface came out too **low** there; a negative error, too **high**. Give all three the same
+diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
+50, 100 m), so that the same color means the same error on every map.
+
+![The Raster Calculator dialog from ModelBuilder, widened: the Rasters list shows Thiessen_Surface, IDW_Surface, Kriging_Surface, Output variance of prediction raster and IDW Power, with True_DEM further down the list; the expression reads "%True_DEM%" - "%Thiessen_Surface%"; Output raster Error_Thiessen.](images/lab08-rc-error.png)
+
+**Figure 6.** The Thiessen error. Type the output name last and check it before **OK**: Raster
+Calculator puts back the old name when the expression changes.
+
+> [!TIP]
+> **Check the result:**
 >
-> | Rule | Low | Moderate | Considerable | High | Extreme |
-> | --- | --- | --- | --- | --- | --- |
-> | Geometric mean (`Hazard_Class`) | 0.167 | 3.162 | 3.692 | 2.673 | 1.087 |
+> | Error raster | Minimum | Maximum | Mean |
+> | --- | --- | --- | --- |
+> | `Error_Thiessen` | −234.1 | 214.3 | −0.39 |
+> | `Error_IDW` | −136.8 | 169.9 | −0.84 |
+> | `Error_Kriging` | −104.0 | 164.4 | −0.31 |
 >
-> The five add to **10.781 km²**, Snowbird's area. Your figures may differ from any check value on
-> this page by 0.001 km² — one 10 m cell on the boundary. UGRC's own `Shape__Area` field says 18.7 million
-> square meters: that is the area in the layer's Web Mercator coordinates, which stretch areas by
-> about 1.73 at this latitude. Your table measures in the raster's UTM meters.
+> Every mean is under a meter: the errors cancel. That is why the next step squares them.
 
-### Step 9 — Test the Assumptions
+### Step 7 — Compute the RMSE
 
-The default map is *an* answer, not *the* answer: one day's elevation bands from one advisory, and
-one rule for combining. Run the model at least **three more times** from its tool dialog with a
-different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
-carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
-`Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
+The root-mean-square error is the typical size of an error, whatever its sign: **square** every
+cell's error, take the **mean** of the squares over the rectangle, and take the **square root**.
+Build the chain once for Thiessen, then copy it twice:
 
-![The model as a tool in the Geoprocessing pane, titled Avalanche Terrain: Shift 0, then the outputs Hazard_Class, Worst_Class, Best_Class, Rule_Spread and Altitude_Class, the first four with warning icons because those datasets already exist.](images/lab08-tool-dialog.png)
+1. **Raster Calculator**: `Square("%Error_Thiessen%")`, output `SqError_Thiessen`.
+2. **Zonal Statistics as Table**: **Input raster or feature zone data** `Study_Area`, **Zone field**
+   `OBJECTID`, **Input value raster** `SqError_Thiessen`, **Statistics type** Mean (it opens at
+   All), output table `RMSE_Thiessen`.
+3. **Calculate Field**: **Input Table** `RMSE_Thiessen`, **Field Name** `RMSE`, **Field Type**
+   Double (it opens at Text), **Expression Type** Python, and in the box under `RMSE =`,
+   `math.sqrt(!MEAN!)`. Rename its output oval `RMSE Thiessen`.
 
-**Figure 9a.** The model as a tool. The warning icons only say the datasets exist from an earlier
-run; give every output a new name for each run.
+Copy the square Raster Calculator twice and edit it for IDW and Kriging. Then select the Zonal
+Statistics as Table and Calculate Field tools and their outputs, copy and paste them twice, and in
+each copy change only the value raster and the output table (`SqError_IDW` and `RMSE_IDW`;
+`SqError_Kriging` and `RMSE_Kriging`): the copied Calculate Field follows its table by itself. Rename
+the outputs `RMSE IDW` and `RMSE Kriging`.
 
-![The completed-run pop-up for Avalanche Terrain: elapsed time 1 minute 34 seconds; parameters Shift 400, Hazard_Class, Worst_Class, Best_Class and Rule_Spread written to Lab07.gdb with the suffix _p400.](images/lab08-run-p400.png)
+Finally make the outputs parameters: the three error rasters and the three `RMSE` ovals. With
+`Sample Points`, `IDW Power` and `Semivariogram`, that is nine. Save, and run the model inside
+ModelBuilder.
 
-**Figure 9b.** A run at Shift 400, finished in about a minute and a half.
+![The Raster Calculator dialog from ModelBuilder: the expression reads Square("%Error_Thiessen%"); Output raster SqError_Thiessen.](images/lab08-rc-square.png)
 
-Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
-that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
-in one table**, record the shift, the area of Snowbird in altitude class 5, and, for each of the
-three rules, the area rated High or Extreme. Then answer, in your report:
+**Figure 7a.** Squaring the Thiessen error.
 
-1. **How much does moving the elevation bands change the map,** in each direction? Use the
-   altitude-class column to say why.
-2. **How much does the combination rule change the map?** For the same run, compare the High +
-   Extreme area under the three rules. Which rule would you publish, and to whom?
-3. **Where do the three rules agree, and where do they disagree most?** Map `Rule_Spread` at
-   shift 0 beside the imagery and say what kind of terrain sits at 0 and at 4.
+![The Zonal Statistics as Table dialog from ModelBuilder: Input Raster or Feature Zone Data Study_Area, Zone Field OBJECTID, Input Value Raster SqError_Thiessen, Output Table RMSE_Thiessen, Ignore NoData in Calculations checked, Statistics Type Mean, Calculate Circular Statistics and Process as Multidimensional unchecked, Output Join Layer empty.](images/lab08-zonal-table.png)
 
-Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
+**Figure 7b.** Zonal Statistics as Table, with **Mean**.
+
+![The Calculate Field dialog from ModelBuilder: Input Table RMSE_Thiessen, Field Name RMSE with a warning that it is a new field, Field Type Double (64-bit floating point), Expression Type Python, Fields list OBJECTID, OBJECTID_1, COUNT, AREA, MEAN, and the expression RMSE = math.sqrt(!MEAN!).](images/lab08-calculate-field.png)
+
+**Figure 7c.** Calculate Field. The warning beside Field Name only says the field will be added.
 
 > [!TIP]
-> At Snowbird one of these two choices moves the map far more than the other. Look at Step 5's
-> check value before you guess which.
+> **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
+> **COUNT 67,337** and **AREA 60,603,300** (m²).
+>
+> | Table | MEAN (m²) | RMSE (m) |
+> | --- | --- | --- |
+> | `RMSE_Thiessen` | 800.3 | **28.29** |
+> | `RMSE_IDW` | 428.9 | **20.71** |
+> | `RMSE_Kriging` | 209.0 | **14.46** |
+>
+> If COUNT is smaller, an interpolator's output does not cover the whole rectangle — check the
+> **Extent** environment of Step 0. At 2,500 points it can look right without it; at 250 it does not.
+> The whole model runs in under ten seconds inside ModelBuilder.
+
+### Step 8 — Test the Choices
+
+The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
+and three sets of default parameters. Find out how much of it survives a change.
+
+**First, the checkpoints and Map 1.** Your Step 7 run is your **baseline**, and its surfaces are
+still on disk because you ran it inside ModelBuilder. Use them now, before any run from the tool
+dialog (see the warning below). In real work you would not have a true DEM; you would hold back some
+measured points and test against them. `Checkpoints` is 200 such points, drawn separately from the
+samples and never used to interpolate:
+
+1. **Extract Multi Values to Points** on `Checkpoints` (from the downloaded geodatabase; export a
+   copy to your project geodatabase first, so the download stays clean) with `True_DEM` (output field
+   name `TRUE_Z`), `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface`
+   (`KR_Z`).
+2. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
+   `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
+3. **Summary Statistics** on your copy of `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and
+   `SQ_KR`. The square root of each mean is that method's **checkpoint RMSE**.
+
+Then make Map 1 (see the Deliverables) from the baseline's surfaces and error rasters.
+
+> [!WARNING]
+> **Finish Map 1 and the checkpoints before the first dialog run.** A run from the tool dialog deletes
+> everything that is not a parameter (Lab 5 saw it), including the three surfaces Map 1 and
+> the checkpoints need. The downloaded data are inputs, so they are never deleted.
+
+**Then the tool dialog.** Save the model, close it, and open it from the **Catalog** pane
+(**Toolboxes** ▸ `Lab08.atbx` ▸ **Interpolation Explorer**). Run it **five times**, giving every
+output a name that says which run it is (`RMSE_IDW_n250`, `Error_Kriging_gauss`). Before each run,
+empty the Semivariogram's **Major range**, **Partial sill** and **Nugget** boxes if a previous run
+filled them, so that Kriging fits its model to the points afresh.
+
+| Run | Sample Points | IDW Power | Semi-variogram model |
+| --- | --- | --- | --- |
+| 1 | `Sample_Points_250` | 2 | Spherical |
+| 2 | `Sample_Points_10000` | 2 | Spherical |
+| 3 | `Sample_Points_2500` | 1 | Exponential |
+| 4 | `Sample_Points_2500` | 3 | Gaussian |
+| 5 | `Sample_Points_2500` | **your own power** (below) | Spherical |
+
+Runs 3 and 4 change IDW and Kriging at once; that is fine, because they are in different branches
+and each RMSE comes from its own branch.
+
+**Your own IDW power.** Every student tries a different power in run 5, worked out from your
+**BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It is
+**not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU sites.
+
+> **Your power = 1 + (the last two digits of your BYU ID) ÷ 40**
+>
+> - BYU ID `123456789`: the last two digits are **89**, so the power is 1 + 89 ÷ 40 = **3.225**.
+> - BYU ID `987654302`: the last two digits are **02**, so the power is 1 + 2 ÷ 40 = **1.05**.
+> - Last two digits **00**: the power is **1**.
+>
+> Every power falls between 1 and 3.475. Type it with all its decimals, and write your BYU ID's last
+> two digits and your power in your report: the grader checks your run 5 against them.
+
+![The model as a tool in a floating Geoprocessing pane, titled Interpolation Explorer, set up for run 5 with the example BYU ID: Sample Points Sample_Points_2500; IDW Power 3.225; Semivariogram Ordinary, Spherical, with Lag size, Major range, Partial sill and Nugget empty; outputs RMSE_IDW_mypower, RMSE_Kriging_mypower, RMSE_Thiessen_mypower, Error_IDW_mypower, Error_Kriging_mypower and Error_Thiessen_mypower.](images/lab08-tool-dialog.png)
+
+**Figure 8.** The model as a tool, set up for run 5 with the example ID ending in 89 (power 3.225).
+Lag size may show empty in the dialog; Kriging fills it in.
+
+> [!TIP]
+> **Check run 5:** only the IDW RMSE changes; the Thiessen and Kriging RMSEs are the same as your
+> Step 7 run (28.29 and 14.46). With the example power of 3.225, IDW's RMSE is **20.29** m.
+
+Record **all of it in one table**: your baseline (Step 7) and the five runs, each with the sample
+points, the IDW power and semivariogram model, and the RMSE of all three methods, plus one more row
+with the three checkpoint RMSEs of your baseline.
+
+Then answer, in your report:
+
+1. **Which method wins, and does the ranking survive?** Rank the methods at 250, 2,500 and 10,000
+   points, with your numbers. Does the winner change? How much does going from 250 to 10,000 points
+   buy each method?
+2. **Which parameter mattered, and which barely did?** Compare what the IDW power (powers 1, 2, 3 and
+   yours) and the semivariogram model did with what the number of points did. Before you explain the
+   Gaussian run, look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its
+   largest positive errors, the places the surface came out too low?
+3. **Could you have known without the truth?** Compare each method's checkpoint RMSE with its RMSE
+   over all 67,337 cells. Would 200 checkpoints have told a client the right ranking, and how far off
+   would the number you quoted have been?
+
+> [!TIP]
+> Before you run the 10,000-point set, predict its RMSEs from your 250 and 2,500 results. Then look
+> at where on the error maps the remaining error lives, and at the slope of the ground there.
 
 ## Deliverables
 
-Make **two** professional map layouts:
+Make **two** professional map layouts (letter size, landscape is easiest):
 
-1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, titled with the rule and the
-   bands, in the danger-scale colors (Figure B) with the labels Low to Extreme, the Snowbird boundary
-   and labeled places, and an inset locating Little Cottonwood Canyon in Salt Lake County.
-2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
-   the picture. Say on the map what changed and why you chose it.
+1. **Your baseline comparison sheet** — from your Step 7 run: the true DEM with the
+   sample points and the three surfaces in one row, **on one elevation color scale**; the three error
+   rasters beneath their surfaces **on one diverging color scale** with the same breaks; each panel
+   labeled with its method, its parameters and its RMSE; legends for both scales; a title, neat
+   line, north arrow and scale bar; and a text box with your name, the date, the map projection, the
+   DEM's source and date.
+2. **One scenario from Step 8** — whichever run most changes the picture: its three error rasters
+   on Map 1's error scale with a legend, each labeled with its method, parameters and RMSE (the true
+   DEM and the surfaces are optional); a title, neat line, north arrow and scale bar; and a text box
+   with your name, the date, the map projection, and the DEM's source and date. Say in
+   the title and the text box what changed from Map 1 and by how much.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
@@ -519,18 +572,29 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **a description of your model** a reader could repeat from: each tool and its settings, and every
   input, intermediate and output dataset with its type
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its toolbox interface with the shift parameter exposed
+  Graphic**), and **one** screen capture of its tool dialog with the sample points, the IDW power
+  and the semivariogram exposed; and **upload your project's toolbox** (`Lab08.atbx`, in your project
+  folder) with the report — the grader opens it and runs it at your IDW power
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
-  datum and units, and its cell size — and what each one means for your result
-- your **Step 8 table** of Snowbird's area in each `Hazard_Class` at shift 0, in km²
-- the **"all three agree" result**: its check value and, in your own words, why it is the wrong
-  answer
-- your **sensitivity table** from Step 9 and your answers to its three questions
-- **where the map is wrong and why** — what the terrain-only model leaves out (snowpack, weather,
-  wind loading, triggering, slope shape, ground cover, terrain traps), what the bare-earth 10 m
-  DEM cannot show, and what Table 1 assumes — and what data would fix each
+  datum and units, and its cell size — and **what the service returned** in Step 1, what each
+  means for your result, and which of the two you would cite in an engineering report
+- your **check values from Steps 3 to 7**, on the course's 2,500 points: each surface's range, the
+  error table, and the three RMSEs
+- **where the methods break**: on your baseline's error map for the best method (lowest RMSE), the cell with the
+  largest error in either direction — its coordinates and size — and why the ground there defeats
+  the interpolators, with a cropped figure of the spot. Its value is the raster's minimum or maximum
+  (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
+  the layer a two-class symbology with the break just short of that value, so that one cell stands
+  out, and click it with **Explore** to read its coordinates
+- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its three questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
+
+> [!NOTE]
+> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
+> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
+> model's elements, and the wording of your report are your own work. Submissions whose layouts,
+> labels or symbology match another student's too closely are flagged for follow-up.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
@@ -538,54 +602,47 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 > reviewer in the report and say in a sentence what you changed because of them.
 
 **Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
-n41w112 (May 2026). Ski areas: Utah Geospatial Resource Center. Ratings: Sawtooth Avalanche Center
-advisory, via CE 414.
+n41w112 (May 2026). Study area: drawn for CE 414.
 
 ## References
 
-avalanche.org. *North American Public Avalanche Danger Scale.* [avalanche.org](https://avalanche.org/avalanche-encyclopedia/human/resources/north-american-public-avalanche-danger-scale/){ target="_blank" }.
+Bolstad, P. *GIS Fundamentals: A First Text on Geographic Information Systems*. Eider Press.
+Chapter 12, the Week 9 reading on interpolation (any of the 5th to 7th editions).
 
-avalanche.org. *Avalanche Encyclopedia: Slope Angle* and *Aspect.* Accessed October 2, 2026.
+U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20,
+2026.
 
-Colorado Avalanche Information Center. *Statistics and Reporting.*
-[avalanche.state.co.us](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }. Accessed October 2, 2026.
-
-Sawtooth Avalanche Center. [sawtoothavalanche.com](https://www.sawtoothavalanche.com/){ target="_blank" }.
-
-Utah Avalanche Center. [utahavalanchecenter.org](https://utahavalanchecenter.org/){ target="_blank" }.
-
-U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20, 2026.
-
-Utah Geospatial Resource Center. *Utah Ski Area Boundaries.*
-[opendata.gis.utah.gov](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" }.
+U.S. Geological Survey, 3D Elevation Program. 3DEP Elevation image service.
+[elevation.nationalmap.gov](https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer){ target="_blank" }.
 
 ## Example Maps
 
-These are examples, not templates. Your maps carry your name, and your second map shows the run you
-chose.
+These are examples, not templates. Your maps carry your name, so your
+numbers will differ a little from these.
 
-![Example baseline layout titled "Avalanche Terrain at Snowbird: Geometric Mean, Advisory Bands": the terrain hazard classes over imagery in the danger-scale colors, green Low through yellow, orange and red to black Extreme, with the Snowbird boundary in cyan and Alta's in gray; Extreme and High follow the steep walls and gullies, Moderate and Considerable cover the broader slopes, and Low appears only on the canyon floor. Below, a Salt Lake County locator, a legend, north arrow, scale bar in kilometers, and a text box: of Snowbird's 10.8 sq km, 3.8 rate High or Extreme and 1.1 Extreme.](images/lab08-example-map-baseline.png)
+![Example comparison sheet titled "Rebuilding Y Mountain from 2,500 Points: Kriging Comes Closest". Top row: the true DEM with 2,500 black sample points, then the Thiessen, IDW and Kriging surfaces, all on one green-to-brown-to-white elevation scale over a hillshade; the Thiessen surface is visibly faceted. Second row: the three error maps on one red-to-blue scale, labeled Thiessen error RMSE 28.29 m, IDW error RMSE 20.71 m, Kriging error RMSE 14.46 m; the valley floor is pale everywhere, and the mountain front is a mottle of red and blue, finest-grained for Thiessen and palest for Kriging. Legends, north arrow, scale bar and a text box at the bottom.](images/lab08-example-map-baseline.png)
 
-**Figure 10.** The baseline map. Two things to do better than this example: label the peaks and the
-lifts so a reader can find their way around, and mark one slope you checked against imagery.
+**Figure 9.** A comparison sheet on the course's 2,500 points. Two things to do better than this example:
+mark and label the largest error on the best method's error map, and use the empty band below the
+error maps for a sentence on what the reader should notice.
 
-![Example scenario layout titled "Avalanche Terrain at Snowbird: Elevation Bands Raised 400 m": the same design with less red and black on the lower slopes, and a text box saying High or Extreme falls from 3.8 to 2.5 sq km and Extreme from 1.1 to 0.47 sq km, chosen to show what a warm spell that pushes the problem up the mountain does to the map.](images/lab08-example-map-scenario.png)
+![Example scenario sheet titled "The Same Surfaces from 250 Points: Every Error Grows", with the same layout and color scales: far fewer sample points; blurred, blocky surfaces; and error maps dominated by dark red and dark blue across the mountain, labeled RMSE 80.73, 69.46 and 50.38 m. The text box says the run was chosen because whole ridges are missed, not just the cliff bands.](images/lab08-example-map-scenario.png)
 
-**Figure 11.** The kind of second map Step 9 asks for. Your own second map should be the run that most
-changes what a reader would conclude, which may not be this one.
+**Figure 10.** The kind of second map Step 8 asks for. Yours needs only the error maps, and should
+be the run that most changes what a reader would conclude, which may not be this one.
 
-## Rubric for Avalanche Hazard
+## Rubric for Interpolation Explorer
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• The "all three agree" result and why it is the wrong answer (2)<br>• Where the map is wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Step 8 table of Snowbird's areas at shift 0 matches the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
-| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• An inset locating Little Cottonwood Canyon (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
-| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map in each direction, and why (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree (`Rule_Spread`), and what terrain that is (2) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values for the DEM and what the service returned in Step 1, what each means for your result, and which you would cite (2)<br>• Your check values from Steps 3 to 7, on the course's 2,500 points (2)<br>• Where the methods break: the largest error on your baseline's error map for the best method, its coordinates and size, with a cropped figure, and why the ground there defeats the interpolators (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, on the course's 2,500 points, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
+| **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The true DEM with the sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
+| **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
+| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -595,11 +652,16 @@ what to submit.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Migration notes (rebuild drafted 2026-10-02, promoted 2026-10-05).
-SOURCE: the September 3 migration of "Lab 6 - Avalanche Hazard.docx" (docs/assignments/lab-08/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab08/PARITY_PLAN.md.
-ARCGIS PRO VERSION: 3.7.1. (1) arcpy (tools/lab08/run_model.py, tool_checks.py, student_route_checks.json), 2026-10-02. (2) GUI build 2026-10-05 at 175 % in C:\Ames\Lab07GUI\Lab08.aprx, model AvalancheTerrain (label Avalanche Terrain), built from the page: run inside ModelBuilder 1 min 1 s; every class-area check value reproduced (Tabulate Area in the GUI: Hazard 0.167 / 3.162 / 3.692 / 2.673 / 1.087, total 10.781 - one cell off the arcpy 0.168 / 3.691 / 10.782, so the page now quotes the GUI values and a one-cell tolerance); Shift 400 run from the tool dialog 1 min 34 s, Hazard 0.870 / 4.095 / 3.353 / 1.990 / 0.475, Worst 5 4.288, Best 5 0.126, matching SENSITIVITY. GUI FACTS: Project Raster opens Nearest neighbor and switches to Bilinear once this DEM is chosen, proposing 9.04 m cells; Slope and Aspect show a Surface Parameters banner, Method Planar, Target device GPU then CPU; Reclassify drops a newly typed row whose Start is -1 (edit an existing row to -1 instead) and appends a NODATA row; the Variable button opens Variable Data Type, Long is in the list; %Shift% draws its connector; Raster Calculator overwrote a typed output name (RasterC_1) once; Cell Statistics labels Input rasters or constant values / Overlay statistic / Ignore NoData in calculations; Tabulate Area shows "Use the selected records: 1" for a selected service layer and honors it; a tool-dialog run deleted DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class, Aspect_Class and Altitude_Class (Altitude_Class is now a parameter; Step 7 warns); the tool dialog showed an empty parameter list until the model tab was closed (Lab 5 saw the same).
-DATA: docs/data/lab08-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab08/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
-VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
-SENSITIVITY (do NOT publish; High + Extreme km2, geometric mean / maximum Extreme / minimum Extreme): shift -400: 3.975 / 10.613 / 0.415; -200: 3.937 / 9.152 / 0.406; 0: 3.760 / 8.203 / 0.336; +200: 3.317 / 6.415 / 0.258; +400: 2.465 / 4.289 / 0.126. The bands move the geometric-mean High + Extreme by -0.4 to +1.3 km2 over 800 m of shift; the rule moves Extreme alone from 0.34 to 8.20 km2 at shift 0.
-PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
-TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab08/PARITY_PLAN.md, all as recommended; page promoted, old page at lab08-backup. 2. DONE 2026-10-05: GUI build, 16 captures, Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab08-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
+<!-- Migration notes (draft 2026-10-06, promoted 2026-10-07).
+SOURCE: "Lab 9 - Practicing with Interpolation.docx" (instructor's copy in Downloads, saved 2026-10-06), whose September 3 migration is archived at docs/assignments/lab08-backup/README.md; rebuilt to tools/lab-conversion-guide.md per tools/labs-09-11-plan.md section 4 (accepted 2026-10-06) and tools/lab08/PARITY_PLAN.md.
+ARCGIS PRO: 3.7.1, arcpy (tools/lab08/run_model.py, extra_checks.py, chain_check.py, extent_check.py) and a GUI build on 2026-10-07 at 175 % (C:\Ames\Lab09GUI\Lab08.aprx, model InterpolationExplorer, set up by tools/lab08/gui_project.py; captures in caps\). Every check value reproduced in the GUI: first point, sample range, surface ranges, error table, ZSaT COUNT/AREA/MEAN and RMSE 28.29 / 20.71 / 14.46; a tool-dialog run at 250 points gave 80.73 / 69.46 / 50.38 (the oracle values) in 1 min 54 s; a full ModelBuilder run 1 min 34 s.
+GUI FACTS (2026-10-07): Snap Raster True_DEM breaks every tool-dialog run (ERROR 010654, the output True_DEM is the same as the snap raster) - environments are now Snap Raster DEM_UTM and Extent = YMountain_DEM.tif from the layer list (fills in degrees; Study_Area from the layer list also fills in degrees; browsing to True_DEM gives UTM but True_DEM is a model output); with these the surfaces cover all of DEM_UTM, so Kriging's minimum is 1,368.5 (outside the rectangle) while the RMSEs are unchanged. Create Variable > From Environment > Random Number Generator exposes the seed as a parameter (Random Seed). Semivariogram properties can be a parameter; after a run its dialog shows the fitted range/sill (10950 / 513125.9) but a 250-point dialog run still refit (50.38). Defaults that silently give wrong surfaces: Thiessen Output Fields Only feature ID; Polygon to Raster Value field OBJECTID; IDW and Kriging Z value field CID; Zonal Statistics as Table Statistics All; Calculate Field Field Type Text. Kriging writes one extra cell on each side of the extent. Project Raster proposes 9.06 m. The service arrives through its Hillshade raster function: 40,075,015 x 20,498,394 cells of 1 m, 747.13 TB, unsigned char 8 bit, WGS 1984 Web Mercator (auxiliary sphere) WKID 3857; Explore at the highest cell reads Service Pixel Value 154, item n41w112, LowPS 10.30736. Dialog runs delete DEM_UTM, True_DEM, Sample_Points and the three surfaces. Copying a Zonal Statistics + Calculate Field chain keeps the Calculate Field wired to its own table. The copied blank project pre-filled Output Coordinate System in the model environments (cleared) and carried Lab01.atbx and Lab01.gdb.
+DATA: docs/data/lab08-y-mountain.zip, 1,885,312 bytes: YMountain_DEM.tif (window -111.68 -111.57 40.20 40.27 of USGS_13_n41w112, published 2026-05-20, source dates 1946-2023; 1,188 x 756 float32, 1,368.03-2,896.92 m, no NoData) and Lab08.gdb\Study_Area (442,514.873-451,184.873 E, 4,450,507.050-4,457,497.050 N, on DEM_UTM's 30 m grid). Built by tools/lab08/fetch_dem.py, run_model.py, make_extract.py.
+VERIFIED NUMBERS (seed 1 ACM599): DEM_UTM 314 x 262, 1,368.1-2,896.5; True_DEM 67,337 cells, 1,368.5-2,896.5, mean 1,819.8; first point 444,603.3 E 4,453,723.7 N; samples 1,368.7-2,886.7; Thiessen 2,500 polygons, surface 1,368.7-2,886.7, error -234.1/214.3 mean -0.39, MEAN 800.3, RMSE 28.29; IDW 1,368.7-2,885.5, error -136.8/169.9 mean -0.84, MEAN 428.9, RMSE 20.71; Kriging 1,368.7-2,884.3, error -104.0/164.4 mean -0.31, MEAN 209.0, RMSE 14.46; ZSaT COUNT 67,337 AREA 60,603,300 (at seed 1 / 2,500 points also without an Extent environment, but NOT in general: the pilot found IDW and Kriging at 250 points cover only 66,297 cells without Extent = True_DEM, RMSE 69.47 / 50.24 instead of 69.46 / 50.38; Extent now set in Step 0); Calculate Field math.sqrt(!MEAN!) reproduces the RMSEs; Create Thiessen Polygons ONLY_FID leaves only Input_FID. Service: REST identify 2,896.7 at the highest cell (40.21415 N, 111.58865 W).
+SENSITIVITY (do NOT publish): see tools/lab08/PARITY_PLAN.md. Points 250/1,000/2,500/10,000: Kriging 50.38/24.90/14.46/6.90; IDW power 1/2/3/5: 23.98/20.71/20.20/21.60; Kriging Gaussian 24.81, other models 14.46; checkpoints within 2-3 m of the full-grid RMSE, same ranking; seeds 2-5 never change the ranking.
+GRADING ORACLE: run_model.py --seed NNNN reproduces a student's own rows of the Step 8 table (baseline, IDW 1 / exponential, IDW 3 / Gaussian, plus the checkpoint RMSEs); the course rows are fixed (package_checks.json).
+SIMPLIFIED VERSION (2026-10-07): zip now carries Lab08.gdb\True_DEM and Sample_Points_250/_2500/_10000 (seed 1, CID dropped), 2,436,872 bytes, rebuilt by make_extract.py and reverified from the zip by verify_package.py (package_checks.json): 250 -> 80.73 / 69.46 / 50.38; 2,500 -> 28.29 / 20.71 / 14.46; 10,000 -> 15.71 / 10.39 / 6.90; Kriging surface min 1,368.7 with Extent = True_DEM. GUI build 2 (C:\Ames\Lab09GUI2\Lab08.aprx, set up by tools/lab08/gui_project2.py): 16 tools, 9 parameters; ModelBuilder run 7 s; dialog run on My_Sample_Points (seed 4321) 1 min 11 s gave 27.32 / 19.10 / 12.79 and IDW 3 + Gaussian (range/sill/nugget cleared) 18.54 / 25.45, both exactly the oracle. GUI facts: with hosted points IDW and Kriging fill RASTERVALU by themselves; Snap Raster and Extent can both be True_DEM (an input, so no ERROR 010654); choosing a map layer in a tool's list creates the model variable (renamed Sample Points); double-clicking True_DEM in Raster Calculator brings it in as a model variable and the expression becomes "%True_DEM%"; Kriging's Semivariogram range/sill/nugget stay empty after a run if cleared before it. Captures replaced: Figures 0, 3a, 4, 5, 6, 7b, 8a; new 8b, 8c; Figure C re-exported. Old-version captures dropped from the page: project raster, extract by mask, create random points, extract values (files deleted).
+PILOT 2 (no-GUI, simplified page, 2026-10-07, C:\Ames\Pilot09b\PILOT_NOTES.md): every number reproduced from the zip, including seed 4321 (baseline 27.32 / 19.10 / 12.79; checkpoints 28.98 / 18.49 / 12.70; IDW1+exponential 22.65 / 12.79; IDW3+Gaussian 18.54 / 25.45). Fixed: Gaussian question now reads the kept Error_Kriging, not the deleted surface; project named Lab08 and downloaded vs project geodatabase distinguished; 'steps 3 and 4' renamed to the tools; example maps renumbered 9-10; 'where the methods break' is the student's own baseline; Map 2 seed wording; checkpoint RMSEs get their own table row (matches template); alt text.
+PILOT (no-GUI, 2026-10-06, C:\Ames\Pilot09\PILOT_NOTES.md): every seed-1 number reproduced; checkpoint recipe works as written (seed 1: 30.38 / 23.16 / 17.12, deliberately not published). Fixed from its findings: Extent environment added (Step 0, Step 3 warning, Step 9 tip); Step 10 warning to finish Map 1 and the checkpoints before dialog runs; semivariogram parameter path spelled out; Map 2 deliverable matches its rubric row, true DEM optional; 'largest error' defined (best method, either direction) with a way to find it; True_DEM cell count without the wrong 289 x 233; citation question added to deliverables and rubric; Figure A names the three values; checkpoint output location; OBJECTID_1 zone field noted.
+LICENSE: the instructor confirmed 2026-10-07 that the lab machines have the same extensions as the build machine (Advanced, Spatial Analyst), so Create Thiessen Polygons is available.
+TODO(instructor): 1. A dialog run with Kriging Gaussian and the fitted range/sill left in (the page tells students to clear them). 2. Week 9 deck alignment. 3. Learning Suite due date November 7. OLD-PAGE IMAGES moved with the archive: lab08-example-modelbuilder-model.png, lab08-fixed-radius-interpolation-concept.png. -->

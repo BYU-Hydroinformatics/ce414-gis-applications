@@ -1,4 +1,4 @@
-# Week 15: Final Project Presentations
+# Week 15: Final Project Due
 
 > [!IMPORTANT] Also this week
 > - Final project **presentation** (poster, slides, or video) — due Wednesday 11:59 pm.
@@ -21,7 +21,7 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the following week.
+No class this week. Work on your final project and submit it by the last day of classes.
 
 </div>
 

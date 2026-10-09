@@ -1,7 +1,7 @@
 """Week 8 interpolation figures from real data, with a known answer.
 
-The truth is the Lab 8 Little Cottonwood Canyon DEM (C:\\Ames\\Lab07\\Check.gdb\\DEM_UTM, from
-tools/lab08/run_model.py), resampled to 30 m. 150 sample points and 60 hold-out points are drawn at
+The truth is the Lab 10 Little Cottonwood Canyon DEM (C:\\Ames\\Lab07\\Check.gdb\\DEM_UTM, from
+tools/lab10/run_model.py), resampled to 30 m. 150 sample points and 60 hold-out points are drawn at
 random (seed 414) and snapped to 30 m cell centers, so that a method that passes through its data
 returns the sampled value exactly at those cells. Six ArcGIS Pro methods interpolate the 150 points:
 Thiessen polygons (Create Thiessen Polygons), Natural Neighbor, IDW (power 2, 12 points), Spline

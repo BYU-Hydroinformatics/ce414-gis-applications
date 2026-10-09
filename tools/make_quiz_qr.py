@@ -39,14 +39,12 @@ QUIZZES = {
     "basins":               6,
     "bathymetry":           7,
     "iterators":            7,
-    "interpolation":        8,
+    "interpolation":        9,
     "rmse":                 9,
-    "web-services":         9,
-    "suitability":         10,
-    "least-cost-path":     11,
+    "least-cost-path":     12,
     "coordinate-systems":  11,
-    "final-project":       12,
-    "gps":                 12,
+    "final-project":       13,
+    "gps":                 11,
 }
 
 # 860 px square matches the pilot code and is more than enough for a 1280x720 slide.

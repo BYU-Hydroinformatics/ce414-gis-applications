@@ -1,7 +1,7 @@
-r"""Lab 10 extra measurements on the baseline (seed 1, 2,500 points) in C:\Ames\Lab09\Check.gdb:
+r"""Lab 8 extra measurements on the baseline (seed 1, 2,500 points) in C:\Ames\Lab09\Check.gdb:
 Kriging's own error estimate (variance raster) against the real error; where the errors are largest
 (slope classes); worst-error locations in lat/lon; the true summit and its value in the 3DEP image
-service (REST identify). Writes tools/lab10/extra_checks.json."""
+service (REST identify). Writes tools/lab08/extra_checks.json."""
 import json, math, os, urllib.request, urllib.parse
 import arcpy, numpy as np
 from arcpy.sa import Kriging, KrigingModelOrdinary, RadiusVariable, Raster, Slope

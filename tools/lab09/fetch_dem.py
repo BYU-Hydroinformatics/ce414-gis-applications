@@ -38,4 +38,4 @@ print(json.dumps(dict(width=int(data.shape[2]), height=int(data.shape[1]), nodat
                       nodata_cells=int((data[0] == nod).sum()), min=float(v.min()), max=float(v.max()),
                       res=[transform.a, -transform.e], bytes=os.path.getsize(OUT),
                       titles={t: tg.get("TIFFTAG_IMAGEDESCRIPTION", "") for t, tg in tags.items()}), indent=1), flush=True)
-os._exit(0)   # skip GDAL's slow /vsicurl/ teardown (Lab 8's fetch hung here)
+os._exit(0)   # skip GDAL's slow /vsicurl/ teardown (Lab 10's fetch hung here)

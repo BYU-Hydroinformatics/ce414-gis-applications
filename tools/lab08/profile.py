@@ -1,6 +1,6 @@
 r"""Figure B data: an east-west profile across the study area through the true DEM and the three
 250-point rebuilds (seed 1) left in C:\Ames\Lab09\Check.gdb by run_model.py, plus the 250 sample
-points within 150 m of the line. Writes tools/lab10/profile.json for make_svgs.py."""
+points within 150 m of the line. Writes tools/lab08/profile.json for make_svgs.py."""
 import json, os, sys
 import arcpy, numpy as np
 from arcpy.sa import Raster

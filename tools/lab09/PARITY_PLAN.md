@@ -42,9 +42,9 @@ Dan decides the items marked DECISION.** Lab 9 is due Saturday of Week 9 (Octobe
    plain). Measured spread (km³): method 4.48–5.31; outline ±200 m 4.85–5.32; points 250–4,000
    5.06–5.23; seed (1,000 points, six seeds) 5.145–5.161. The TIP hints that the random part matters
    least.
-5. **10 m cells**, not 30 m: the DEM is 1/3″ (about 10 m north–south), the Lab 5 and Lab 8 pattern,
+5. **10 m cells**, not 30 m: the DEM is 1/3″ (about 10 m north–south), the Lab 5 and Lab 10 pattern,
    and the 30 × 30 in the old expression becomes 10 × 10. Run time is a few seconds per tool.
-6. **Rubric**: five parts of ten as Lab 8. The SQL-threshold sub-item (from another lab) becomes
+6. **Rubric**: five parts of ten as Lab 10. The SQL-threshold sub-item (from another lab) becomes
    "the number of points and the outline exposed as parameters".
 7. **Background**: the uncited "one of the largest volcanic domes on Earth (U.S. Department of the
    Interior, 2012)" and the dead BLM flyer are replaced by the USGS Yellowstone Volcano Observatory
@@ -94,7 +94,7 @@ spline numbers a student gets will only match if they leave Processing Extent at
 1. DONE October 5: all decisions accepted; draft promoted (old page at docs/assignments/lab09-backup/).
 2. GUI build in ArcGIS Pro 3.7.1 at 175 %: captures for every step, Figure C (Export To Graphic),
    confirm the seed environment and the tool-dialog run.
-3. Figure A (metadata infographic) and tool icons (`make_svgs.py`, the Lab 8 pattern); example
+3. Figure A (metadata infographic) and tool icons (`make_svgs.py`, the Lab 10 pattern); example
    maps (`build_figures.py`).
 4. DONE October 5: no-GUI pilot — every check value reproduced; text fixes applied (see the draft's notes).
 5. DONE October 5: report template (`make_lab_report_template.js 08`) and promotion.

@@ -299,8 +299,8 @@ const LABS = {
   ],
 },
 
-'08': {
-  labTitle: 'Lab 8: Avalanche Hazard',
+'10': {
+  labTitle: 'Lab 10: Avalanche Hazard',
   labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',
   sections: [
     { h: 'Requirements and Approach',
@@ -444,8 +444,8 @@ const LABS = {
   ],
 },
 
-'10': {
-  labTitle: 'Lab 10: Interpolation Explorer',
+'08': {
+  labTitle: 'Lab 8: Interpolation Explorer',
   labSubtitle: 'Rebuilding a mountain from samples, three ways, and measuring how wrong each one is',
   sections: [
     { h: 'Requirements and Approach',

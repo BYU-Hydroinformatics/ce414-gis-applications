@@ -33,7 +33,14 @@ Settled October 8, 2026: a new Lab 7, Flood Mapping with HAND, follows the two w
 (watersheds, bathymetry, flooding); Avalanche Hazard, Big Southern Butte and Interpolation Explorer
 became Labs 8 to 10, the Wind Farm lab was retired (docs/assignments/windfarm-backup), and a new
 Lab 12 (Network Analyst) closes the labs. Lab 7 is introduced Tuesday of Week 8 and due Saturday of
-Week 9; Labs 8 to 12 follow one a week, Lab 12 due in Week 14."""
+Week 9; Labs 8 to 12 follow one a week, Lab 12 due in Week 14.
+
+Settled October 9, 2026: one lab a week from Week 7 on, each lab introduced and due in its own week:
+Lab 7 HAND (Week 8, with Midterm 1), Lab 8 Interpolation Explorer (9), Lab 9 Big Southern Butte (10),
+Lab 10 Avalanche Hazard (11, with refresher lectures on projections and GPS), Lab 11 Least Cost Path (12),
+no lab in Week 13 (final project introduced Tuesday; Thanksgiving), Lab 12 Network Analysis (14), and no
+class in Week 15 (final project due by the last day of classes). The OGC Web Services and Raster-Based
+Spatial Analysis decks were retired to slides/retired/ (not built)."""
 import re
 from pathlib import Path
 
@@ -59,38 +66,39 @@ DECKS = [
     (6,  "watershed-delineation-b",        "Watershed Delineation, Part B",              "From flow direction to watersheds: flow accumulation, the stream threshold, stream links, pour points and subwatersheds, the Lab 5 model that runs all eight steps, and a watershed delineated by hand and with USGS StreamStats.", "Thu"),
     (7,  "lake-bathymetry",                "Lake Bathymetry, Part A",                    "A lake with no outlet: the Great Salt Lake's level as its water balance, how lake bottoms are measured, the USGS lake-bottom DEM, two vertical datums, and elevation-area-volume curves.", "Tue"),
     (7,  "lake-depth-explorer",            "Lake Bathymetry, Part B",                    "One model, many runs: ModelBuilder iterators, %Value% in expressions and output names, Collect Values and Merge, and Lab 6 — Lake Depth Explorer at Lake Powell.", "Thu"),
-    (8,  "interpolation",                  "Interpolation",                              "Estimating a surface from points: Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.", None),
-    (9,  "interpolation-explorer",         "Interpolation Explorer",                     "How wrong is the surface? Error rasters, RMSE and what it hides, checkpoints when there is no truth, whether a ranking survives a change, and Lab 9.", "Tue"),
-    (9,  "ogc-web-services",               "OGC Web Services",                           "Data you ask for instead of download: WMS, WFS, WCS and catalogs, the OGC API generation, ArcGIS REST queries, and cloud-native COG and STAC, all on live Utah services.", "Thu"),
-    (10, "raster-spatial-analysis",        "Raster-Based Spatial Analysis",              "The raster suitability workflow end to end — criteria, data, rasterization, reclassification, overlay, and heat maps.", None),
-    (11, "least-cost-path",                "Least Cost Path Analysis",                   "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
-    (11, "coordinate-systems-projections", "Coordinate Systems and Projections",        "Datums, projections, and coordinate systems as decisions: distortion, units, and choosing a CRS for analysis.", "Thu"),
-    (12, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue?"),
-    (12, "gps-triangulation",              "GPS and Positioning",                        "How satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
+    (9,  "interpolation",                  "Interpolation",                              "Estimating a surface from points: sampling designs, Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.", "Tue"),
+    (9,  "interpolation-explorer",         "Interpolation Explorer",                     "How wrong is the surface? Error rasters, RMSE and what it hides, checkpoints when there is no truth, whether a ranking survives a change, and Lab 8.", "Thu"),
+    (11, "coordinate-systems-projections", "Coordinate Systems and Projections",        "A refresher: datums, projections, and coordinate systems as decisions — distortion, units, and choosing a CRS for analysis.", "Tue"),
+    (11, "gps-triangulation",              "GPS and Positioning",                        "A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
+    (12, "least-cost-path",                "Least Cost Path Analysis",                   "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
+    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
-        5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Avalanche Hazard",
-        9:"Big Southern Butte",10:"Interpolation Explorer",11:"Least Cost Path Power Line Analysis",
+        5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Interpolation Explorer",
+        9:"Big Southern Butte",10:"Avalanche Hazard",11:"Least Cost Path Power Line Analysis",
         12:"Network Analysis"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 13)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
-               8:"Interpolation and Midterm 1",9:"Interpolation, Part 3, and Web Services",
-               10:"Raster-Based Spatial Analysis",11:"Least Cost Path and Coordinate Systems",12:"GPS and the Final Project",
-               13:"Final Project Work",14:"Presentations and Midterm 2",15:"Final Project Presentations"}
+               8:"Flood Mapping and Midterm 1",9:"Interpolation",10:"Cut, Fill, and Raster Volumes",
+               11:"Coordinate Systems and GPS",12:"Least Cost Path",13:"The Final Project",
+               14:"Network Analysis and Midterm 2",15:"Final Project Due"}
 DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
-# Weeks whose page should point at the final project page. The project is introduced in Week 12 and
+# Weeks whose page should point at the final project page. The project is introduced in Week 13 and
 # runs to the end, and the page is not in the site menu — these pointers are how students reach it.
-FINAL_PROJECT_WEEKS = (12, 13, 14, 15)
+FINAL_PROJECT_WEEKS = (13, 14, 15)
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
-    13: "Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.",
-    14: "Tuesday is a final-project work day with the instructor available; Thursday is the first day of final "
-        "project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is "
-        "open in the Testing Center from Tuesday morning to Thursday evening.",
-    15: "Tuesday is the second day of presentations. Thursday is the last day of class. The final exam is the "
-        "following week.",
+    8: "Tuesday: simple bathtub flood models and flood inundation modeling. Thursday: HAND (height above nearest "
+       "drainage) and Lab 7. Slides will be posted here before class. Midterm 1 is open in the Testing Center this week.",
+    10: "Tuesday: cut and fill. Thursday: volumetric analysis with rasters, and Lab 9. Slides will be posted here "
+        "before class.",
+    12: "Thursday: least cost paths, part 2. Slides will be posted here before class.",
+    13: "Thursday is Thanksgiving, no class.",
+    14: "Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted "
+        "here before class. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.",
+    15: "No class this week. Work on your final project and submit it by the last day of classes.",
 }
 
 # What is due in each week. Quizzes and labs are due Saturday 11:59 pm; everything else says when.
@@ -112,15 +120,15 @@ DUE = {
     7:  dict(reading=None, quiz=None, lab=6,   # Lab 6 (Lake Depth Explorer) is introduced Thursday and due the same Saturday; see ROADMAP item 4
              other=[("In-class activity: Read the USGS Lake Table (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class"),
                     ("In-class activity: Three Lake Levels", "done in class Thursday; upload a screen capture by 9:30 am, fifteen minutes after class")]),  # Oct 1: replaces the two old Week 7 activities; Learning Suite still has the old ones
-    8:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=None,
-             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class"),
-                    ("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
-    9:  dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=7, other=[]),
-    10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=8, other=[]),
-    11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=9, other=[]),
-    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=10, other=[]),
-    # From Lab 7 on, Lab N is due the Saturday of Week N+2 (Lab 7 spans Midterm 1 week); Lab 6 is due in Week 7, its own week.
-    13: dict(reading=None, quiz=None, lab=11, other=[]),
+    8:  dict(reading=None, quiz=None, lab=7,
+             other=[("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
+    9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
+             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
+    10: dict(reading="Chapter 9", quiz=(9, "Spatial Analysis"), lab=9, other=[]),
+    11: dict(reading="Chapter 3", quiz=(10, "Projections and Coordinate Systems"), lab=10, other=[]),
+    12: dict(reading="Chapter 5", quiz=(11, "GPS and GNSS Data"), lab=11, other=[]),
+    # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
+    13: dict(reading="Chapter 14", quiz=(8, "Data Standards and Data Quality"), lab=None, other=[]),
     14: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
@@ -166,22 +174,18 @@ PRACTICE = {
          "Five questions on a terminal lake's level, measuring the bottom, vertical datums, and what one foot of level does to area."),
         ("iterators", "Lake Depth Explorer",
          "Five questions on iterators, %Value% in expressions and output names, collecting a loop's outputs, and the Lake Powell datum trap.")],
-    8: [("interpolation", "Points Into Surfaces",
-         "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.")],
-    9: [("rmse", "How Wrong Is the Surface?",
-         "Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints."),
-        ("web-services", "What Comes Back?",
-         "Five questions on what each OGC service actually hands you (a picture, the features themselves, the coverage values, or somewhere to find them) and why a standard is a document, not software.")],
-    10: [("suitability", "Criteria to Surface",
-          "Five questions on the suitability workflow: framing the question, reclassifying criteria onto a common scale, ruling land out, and reading the surface you get.")],
-    11: [("least-cost-path", "Cheapest or Shortest?",
-          "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one."),
-         ("coordinate-systems", "Projections and Datums",
-          "Five questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting.")],
-    12: [("final-project", "Ready to Pitch?",
-          "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right."),
+    9: [("interpolation", "Points Into Surfaces",
+         "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust."),
+        ("rmse", "How Wrong Is the Surface?",
+         "Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.")],
+    11: [("coordinate-systems", "Projections and Datums",
+          "Five questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting."),
          ("gps", "Where Am I?",
           "Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.")],
+    12: [("least-cost-path", "Cheapest or Shortest?",
+          "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one.")],
+    13: [("final-project", "Ready to Pitch?",
+          "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.")],
 }
 
 # Extra lines for a week's Presentation Slides card, such as the data an in-lecture exercise uses.

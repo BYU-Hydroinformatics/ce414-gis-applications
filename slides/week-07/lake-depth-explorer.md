@@ -184,7 +184,7 @@ By the end of class you should be able to:
 # Before Next Class
 
 - **Lab 6 — Lake Depth Explorer** (Lake Powell) — due **Saturday, October 17** — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
-- Next week: **interpolation** — turning scattered points into a surface, which is how every bathymetry grid is made
+- Next week: **flood mapping** — bathtub models, flood inundation, and HAND, for Lab 7 — and **Midterm 1** in the Testing Center
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:\Ames\Lab06GUI\caps); lb-todo-dem.svg on the Tuesday deck is still a placeholder. -->

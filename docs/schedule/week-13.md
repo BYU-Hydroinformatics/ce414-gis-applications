@@ -1,4 +1,4 @@
-# Week 13: Final Project Work
+# Week 13: The Final Project
 
 > [!IMPORTANT] Also this week
 > - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
@@ -7,7 +7,9 @@
 
 ## :material-presentation-play: Presentation Slides
 
-*No slides this week.*
+- **Tuesday** — [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html) — What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.
+
+Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 </div>
 
@@ -15,7 +17,11 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday is a final-project work day with your partner; Thursday is Thanksgiving, no class.
+Thursday is Thanksgiving, no class.
+
+Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
+
+- [Ready to Pitch?](../quizzes/final-project/index.html) — Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.
 
 </div>
 
@@ -23,9 +29,7 @@ Tuesday is a final-project work day with your partner; Thursday is Thanksgiving,
 
 ## :material-flask: Lab Assignment
 
-[Lab 11 — Least Cost Path Power Line Analysis](../assignments/lab-11/README.md)
-
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+*No lab this week.*
 
 </div>
 
@@ -33,7 +37,9 @@ Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 ## :material-book-open-page-variant: Reading Quiz
 
-*No reading quiz this week.*
+Read Chapter 14 of *GIS Fundamentals*, 7th edition (Bolstad).
+
+**Quiz 8 — Data Standards and Data Quality** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 

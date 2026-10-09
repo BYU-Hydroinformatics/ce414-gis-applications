@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 11 — Least Cost Path Analysis"
+footer: "CE 414 · Week 12 — Least Cost Path Analysis"
 ---
 
 <!-- _class: lead -->
@@ -20,7 +20,7 @@ Brigham Young University
 <!-- Concepts lecture for Week 11. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Least Cost Path Analysis<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -255,10 +255,8 @@ Brigham Young University
 
 # Before Next Class
 
-- **Lab 9 — Big Southern Butte** is due **Saturday 11:59 pm**: [assignments/lab-09](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
-- **Lab 11 — Least Cost Path Power Line Analysis** uses today's tools: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
-- Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
-- Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- **Lab 11 — Least Cost Path Power Line Analysis** uses today's tools, due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
+- Take **Quiz 11** (Chapter 5, GPS and GNSS Data, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.

@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 12 — GPS and Positioning"
+footer: "CE 414 · Week 11 — GPS and Positioning"
 ---
 
 <!-- _class: lead -->
@@ -24,7 +24,7 @@ Brigham Young University
 <!-- Week 12 concepts lecture. This hour is a review of how satellite positioning actually works, and why the position a receiver reports is never exactly where you are. It runs as a refresher: most students met GPS in the introductory geomatics course, so move quickly through the signal material and spend the time on error sources and differential correction. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — GPS and Positioning<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — GPS and Positioning<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -416,10 +416,9 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 # Before Next Class
 
 - Read **Chapter 5** of *GIS Fundamentals* (GPS and GNSS Data)
-- Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Finish [**Lab 11 — Least Cost Path Power Line Analysis**](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/), due **Saturday 11:59 pm**
-- **Midterm 2** is in the Testing Center the week after Thanksgiving: Tuesday 8:00 am to Thursday 9:00 pm
-- Start on the [Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) — the proposal is the next thing due
+- Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday of next week**
+- Finish [**Lab 10 — Avalanche Hazard**](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm**
+- Next week: **least cost paths**, and **Lab 11 — Least Cost Path Power Line Analysis**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- TODO(graphic): a "what's due this week" visual, or a screenshot of the Final Project proposal template. -->

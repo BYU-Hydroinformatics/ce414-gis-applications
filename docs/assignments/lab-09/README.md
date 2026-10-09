@@ -51,7 +51,7 @@ That is the same idea as Lab 6, where the water surface was the lid and the lake
 here the DEM is the lid and an interpolated plain is the bottom.
 
 Every part of that recipe is a choice: where the butte ends, how many points sample the plain, and
-how you interpolate between them (the Week 8 methods). In Step 9 you vary each choice and see which
+how you interpolate between them (the Week 9 methods). In Step 9 you vary each choice and see which
 moves the answer most.
 
 > [!IMPORTANT]
@@ -84,7 +84,7 @@ Every one of these is a decision somebody made, and every one of them can change
   you fix the random seed, which Step 0 does so that your numbers match this page.
 - **The interpolation method.** IDW never goes above its highest point or below its lowest, so the
   rebuilt plain stays inside the range of the plain around it. A spline is smooth and can overshoot.
-  Week 8 compared them; here you see what the difference does to a volume.
+  Week 9 compared them; here you see what the difference does to a volume.
 - **What the volume is.** The volume *above an interpolated surface*. If lava flows of the plain lap
   against the butte's lower slopes, part of the dome is buried below that surface, and no elevation
   model can see it.
@@ -136,12 +136,11 @@ New in this lab:
 | ![Create Random Points icon: dots scattered inside a polygon](images/icon-create-random-points.svg){ .tool-icon }<br>**Create Random Points** (Data Management) | Scatters a given number of points at random inside a polygon. The points have a location and nothing else. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-random-points.htm){ target="_blank" } |
 | ![Extract Values to Points icon: a point on a grid cell picking up the value 1559 into RASTERVALU](images/icon-extract-values-to-points.svg){ .tool-icon }<br>**Extract Values to Points** (Spatial Analyst) | Copies the raster value under each point into a new field, `RASTERVALU`. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/extract-values-to-points.htm){ target="_blank" } |
 | ![Erase icon: points inside an outline crossed out, the rest kept](images/icon-erase.svg){ .tool-icon }<br>**Erase** (Analysis) | Removes the parts of one layer that fall inside another — here, the points on the butte. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/erase.htm){ target="_blank" } |
-| ![IDW icon: a cell joined to five points by lines, thicker for nearer points, labeled 1 over d squared](images/icon-idw.svg){ .tool-icon }<br>**IDW** (Spatial Analyst) | Interpolates a raster surface from points, each cell a weighted average of its nearest points, the nearest weighted most. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/idw.htm){ target="_blank" } |
 | ![Zonal Statistics icon: the cells inside a zone summed into one value](images/icon-zonal-statistics.svg){ .tool-icon }<br>**Zonal Statistics** (Spatial Analyst) | A statistic of a raster's cells inside each zone — here, the sum of the cell volumes inside the outline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics.htm){ target="_blank" } |
 
-Tools you already know: **Project Raster** (Labs 4, 5 and 8), **Buffer** (Labs 1 and 4), **Extract by
+Tools you already know: **IDW** (Lab 8), **Project Raster** (Labs 4 and 5), **Buffer** (Labs 1 and 4), **Extract by
 Mask** (Lab 4), **Raster Calculator** (Labs 2, 4–6 and 8), **Hillshade**, and model parameters. Step 9 also
-uses **Spline** (Spatial Analyst), the smooth interpolator from Week 8.
+uses **Spline** (Spatial Analyst), the smooth interpolator from the Week 9 lectures.
 
 ## Example Model
 
@@ -405,7 +404,7 @@ Then answer, in your report:
 
 1. **Which choice moves the volume most,** and which least? Rank them with your numbers.
 2. **What did the spline do that IDW cannot?** Map its cells below the plain and explain them with
-   what you learned about the methods in Week 8.
+   what you learned about the methods in Week 9 and Lab 8.
 3. **What does your number measure?** Is it the volume of the lava dome? Say what part of the dome
    the model cannot see, and what data would let you measure it.
 
@@ -504,7 +503,7 @@ what to submit.
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
 <!-- Draft notes (2026-10-05).
-SOURCE: the September 3 migration of "Lab 8 - Big Southern Butte.docx" (docs/assignments/lab-09/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab09/PARITY_PLAN.md.
+SOURCE: the September 3 migration of "Lab 10 - Big Southern Butte.docx" (docs/assignments/lab-09/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab09/PARITY_PLAN.md.
 CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
 DATA: docs/data/lab09-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab09.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab09/fetch_dem.py, make_outline.py, make_extract.py.
 SENSITIVITY (do NOT publish): IDW 5.145; Natural Neighbor 5.029; Spline 4.481 (11,963 cells below the plain); Kriging 4.988; Trend 5.312; 250 pts 5.229; 500 5.199; 2,000 5.103; 4,000 5.062; seeds 2-6 5.146-5.161; outline -200/-100/+100/+200 m: 4.846/5.008/5.236/5.322.

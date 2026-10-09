@@ -204,7 +204,7 @@ United States Geological Survey (USGS) website <http://water.usgs.gov/maps.html>
 | **Part 2: Choose your own data results**<br>Download a new DEM for an area of interest and re-run your model from your tool interface using the new dataset. Make a full page (8.5 x 11) map showing the results of your second area analysis. Include all required map elements.<br>What is your total computed volume for your selected feature?<br>Are your results as expected, or did you find anything interesting or different than expected? | /15 |
 | **Total points possible:** | **/50** |
 
-<!-- TODO(instructor): in the "Show a ModelBuilder tool interface" row, the sub-item "Include a user interface for adjusting the SQL statement that specifies the threshold value" does not belong to this lab — Lab 8 uses no SQL statement and no threshold value anywhere in its workflow. It appears to be carried over from another lab's rubric. Removing or replacing it (for example with a parameter for the number of random points, or for the interpolation method) is a rubric decision, so it is left in place here. The row is worth 5 points. -->
+<!-- TODO(instructor): in the "Show a ModelBuilder tool interface" row, the sub-item "Include a user interface for adjusting the SQL statement that specifies the threshold value" does not belong to this lab — Lab 10 uses no SQL statement and no threshold value anywhere in its workflow. It appears to be carried over from another lab's rubric. Removing or replacing it (for example with a parameter for the number of random points, or for the interpolation method) is a rubric decision, so it is left in place here. The row is worth 5 points. -->
 
 <!-- Rubric total checked: 5 + 10 + 5 + 15 + 15 = 50, which matches the stated "/50". The "Assignment title, name, date, course" row carries no points in the source and is left blank. -->
 
@@ -217,7 +217,7 @@ United States Geological Survey (USGS) website <http://water.usgs.gov/maps.html>
 
 <!--
 Migration notes (2026-09-03):
-source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 8 - Big Southern Butte.docx
+source: /Users/dan/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 10 - Big Southern Butte.docx
 ArcGIS Pro version verified against: NOT VERIFIED in this migration.
 images renamed from fig-NN:
   fig-01.png -> lab09-butte-raster-elevation.png

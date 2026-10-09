@@ -1,4 +1,4 @@
-# Week 14: Presentations and Midterm 2
+# Week 14: Network Analysis and Midterm 2
 
 > [!IMPORTANT] Also this week
 > - **Midterm 2** — closed book, concept based, in the Testing Center — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
@@ -17,7 +17,7 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday is a final-project work day with the instructor available; Thursday is the first day of final project presentations, eight minutes each. Sign up for a day on the class Google document. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.
+Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted here before class. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.
 
 </div>
 

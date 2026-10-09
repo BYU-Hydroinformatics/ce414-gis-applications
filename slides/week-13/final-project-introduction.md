@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 12 — Final Project Introduction"
+footer: "CE 414 · Week 13 — Final Project Introduction"
 ---
 
 <!-- _class: lead -->
@@ -21,7 +21,7 @@ the "what a lab-sized project looks like" slide, the pitfalls, and the proposal 
 additions meant to make the expectations concrete. Adjust anything marked TODO before presenting. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Final Project Introduction<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Final Project Introduction<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -314,10 +314,9 @@ That is the difference between a result and a recommendation.
 # Before Next Class
 
 - **Read** the [Final Project page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) on the course site
-- **Finish** [Lab 11 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/), due **Saturday 11:59 pm**
 - **Start** your data-feasibility table — one row per layer
 - **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
-- **Quiz 11** (Chapter 5, GPS and GNSS Data), open book, due **Saturday 11:59 pm**
+- **Quiz 8** (Chapter 14, Data Standards and Data Quality), open book, due **Saturday 11:59 pm** — Thursday is Thanksgiving, no class
 
 <!-- Conversion notes (2026-09-03): built from the Learning Suite "Final Project" page (one page,
 exported to PDF Sept 2, 2026) and the peer scoresheet in Final Projects/scoresheet.docx. No slide

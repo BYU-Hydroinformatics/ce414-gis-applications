@@ -1,14 +1,10 @@
-# Week 12: GPS and the Final Project
-
-> [!IMPORTANT] Also this week
-> - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
+# Week 12: Least Cost Path
 
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** (day not yet confirmed) — [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/final-project-introduction.html) — What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.
-- **Thursday** — [GPS and Positioning](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/gps-triangulation.html) — How satellite positioning works, what limits its accuracy, and what that means for field data.
+- **Tuesday** — [Least Cost Path Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/least-cost-path.html) — Cost surfaces and the cheapest route across them, with a power-line corridor as the example.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -18,10 +14,11 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 ## :material-account-group: In-Class Practice
 
+Thursday: least cost paths, part 2. Slides will be posted here before class.
+
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Ready to Pitch?](../quizzes/final-project/index.html) — Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.
-- [Where Am I?](../quizzes/gps/index.html) — Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.
+- [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one.
 
 </div>
 
@@ -29,7 +26,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 10 — Interpolation Explorer](../assignments/lab-10/README.md)
+[Lab 11 — Least Cost Path Power Line Analysis](../assignments/lab-11/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 

@@ -101,7 +101,7 @@ slides, the reading and quiz, the in-class activities, and the lab that is due. 
 fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 The lab handouts are linked from the week each lab is due. The
-[Final Project](assignments/final-project.md) is linked from Weeks 12 through 15.
+[Final Project](assignments/final-project.md) is linked from Weeks 13 through 15.
 
 > [!NOTE]
 > This site was built out in September 2026. The lab handouts and lecture decks are all here, each
