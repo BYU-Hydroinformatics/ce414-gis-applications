@@ -1,0 +1,85 @@
+{
+  "site": "10163000",
+  "gage_datum_ft_navd88": 4493.22,
+  "rating": "# //RATING ID=\"30.0\" TYPE=\"STGQ\" NAME=\"stage-discharge\" AGING=????",
+  "rating_offset_ft": 3.2,
+  "rating_top": {
+    "gh_ft": 8.0,
+    "q_cfs": 2150.0
+  },
+  "extrapolation": {
+    "b": 1.8351753085671294,
+    "C": 120.84977948065814
+  },
+  "n_peaks": 90,
+  "wy_range": [
+    1903,
+    2024
+  ],
+  "lp3": {
+    "all_systematic": {
+      "n": 89,
+      "mean_log": 2.9176627736395577,
+      "sd_log": 0.2602626806233896,
+      "skew": -0.37193892104922716,
+      "q": {
+        "2": 859,
+        "5": 1381,
+        "10": 1734,
+        "25": 2179,
+        "50": 2506,
+        "100": 2827
+      },
+      "label": "WY 1934 on (all systematic peaks; every peak is coded 6, regulated)",
+      "first_wy": 1934,
+      "last_wy": 2024,
+      "max_peak": 2520.0
+    },
+    "post_deer_creek": {
+      "n": 83,
+      "mean_log": 2.9252435611606615,
+      "sd_log": 0.25617462605733593,
+      "skew": -0.3822350437712931,
+      "q": {
+        "2": 874,
+        "5": 1394,
+        "10": 1743,
+        "25": 2179,
+        "50": 2498,
+        "100": 2809
+      },
+      "label": "WY 1942 on (after Deer Creek Dam began storing, 1941)",
+      "first_wy": 1942,
+      "last_wy": 2024,
+      "max_peak": 2520.0
+    },
+    "post_jordanelle": {
+      "n": 32,
+      "mean_log": 2.9266961809132015,
+      "sd_log": 0.24079077009089214,
+      "skew": 0.034140394358690575,
+      "q": {
+        "2": 842,
+        "5": 1346,
+        "10": 1722,
+        "25": 2244,
+        "50": 2665,
+        "100": 3111
+      },
+      "label": "WY 1993 on (after Jordanelle Dam began storing, 1992-93)",
+      "first_wy": 1993,
+      "last_wy": 2024,
+      "max_peak": 1990.0
+    },
+    "fema_fis_2026": {
+      "label": "FEMA FIS Utah County 2026, Table 9 (published, regulated)",
+      "q": {
+        "10": 1475,
+        "25": 1810,
+        "50": 2065,
+        "100": 2325,
+        "500": 2935
+      }
+    }
+  }
+}

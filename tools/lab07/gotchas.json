@@ -1,0 +1,50 @@
+[
+ {
+  "case": "reference",
+  "cells": 697608,
+  "min": 0.0,
+  "max": 197.951904296875,
+  "negative_cells": 0,
+  "wet_100yr_km2": 1.7512
+ },
+ {
+  "case": "A: 0 off-stream inside corridor, NoData outside",
+  "cells": 697608,
+  "min": 0.0,
+  "max": 197.951904296875,
+  "negative_cells": 0,
+  "wet_100yr_km2": 1.7512
+ },
+ {
+  "case": "A2: 0 everywhere off-stream, no mask",
+  "cells": 3370573,
+  "min": 0.0,
+  "max": 177.57763671875,
+  "negative_cells": 0,
+  "wet_100yr_km2": 51.9605
+ },
+ {
+  "case": "B: raw DEM as surface",
+  "cells": 697608,
+  "min": -1.918701171875,
+  "max": 197.951904296875,
+  "negative_cells": 6141,
+  "wet_100yr_km2": 1.7239
+ },
+ {
+  "case": "C: no flow direction raster",
+  "cells": 697608,
+  "min": 0.0,
+  "max": 197.951904296875,
+  "negative_cells": 0,
+  "wet_100yr_km2": 1.7512
+ },
+ {
+  "case": "D: no corridor mask",
+  "cells": 3370573,
+  "min": 0.0,
+  "max": 177.57763671875,
+  "negative_cells": 0,
+  "wet_100yr_km2": 51.9605
+ }
+]

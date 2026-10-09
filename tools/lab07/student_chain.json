@@ -1,0 +1,146 @@
+{
+ "tag": "lidar_5m_T0.05_C30",
+ "fema_dom_km2": 1.3429,
+ "rows": [
+  {
+   "return_period_yr": 2,
+   "h_m": 0.878,
+   "H_CM": 88,
+   "polygons": 77,
+   "area_km2": 1.0422,
+   "buildings_intersect": 241,
+   "buildings_center_in": 189,
+   "hand_dom_km2": 0.879,
+   "both_km2": 0.6149,
+   "hit_rate": 0.458,
+   "csi": 0.383
+  },
+  {
+   "return_period_yr": 5,
+   "h_m": 1.134,
+   "H_CM": 113,
+   "polygons": 78,
+   "area_km2": 1.2333,
+   "buildings_intersect": 299,
+   "buildings_center_in": 243,
+   "hand_dom_km2": 1.0219,
+   "both_km2": 0.6728,
+   "hit_rate": 0.501,
+   "csi": 0.398
+  },
+  {
+   "return_period_yr": 10,
+   "h_m": 1.297,
+   "H_CM": 130,
+   "polygons": 92,
+   "area_km2": 1.3762,
+   "buildings_intersect": 341,
+   "buildings_center_in": 285,
+   "hand_dom_km2": 1.1323,
+   "both_km2": 0.7064,
+   "hit_rate": 0.526,
+   "csi": 0.399
+  },
+  {
+   "return_period_yr": 25,
+   "h_m": 1.498,
+   "H_CM": 150,
+   "polygons": 97,
+   "area_km2": 1.5444,
+   "buildings_intersect": 395,
+   "buildings_center_in": 333,
+   "hand_dom_km2": 1.2618,
+   "both_km2": 0.7357,
+   "hit_rate": 0.548,
+   "csi": 0.394
+  },
+  {
+   "return_period_yr": 50,
+   "h_m": 1.644,
+   "H_CM": 164,
+   "polygons": 71,
+   "area_km2": 1.6542,
+   "buildings_intersect": 434,
+   "buildings_center_in": 369,
+   "hand_dom_km2": 1.3542,
+   "both_km2": 0.7585,
+   "hit_rate": 0.565,
+   "csi": 0.391
+  },
+  {
+   "return_period_yr": 100,
+   "h_m": 1.789,
+   "H_CM": 179,
+   "polygons": 71,
+   "area_km2": 1.7537,
+   "buildings_intersect": 454,
+   "buildings_center_in": 390,
+   "hand_dom_km2": 1.4435,
+   "both_km2": 0.776,
+   "hit_rate": 0.578,
+   "csi": 0.386
+  }
+ ],
+ "fill_minus_dem_river": {
+  "cells": 3191,
+  "filled_cells": 667,
+  "over_0p5m": 45,
+  "max_m": 2.097412109375,
+  "mean_m": 0.041647590696811676
+ },
+ "fill_minus_dem_all": {
+  "filled_cells": 439673,
+  "filled_km2": 10.992,
+  "max_m": 8.471923828125
+ },
+ "river_fill_spots_sample": [
+  [
+   444178,
+   4462768
+  ],
+  [
+   441528,
+   4454668
+  ],
+  [
+   441482,
+   4454648
+  ],
+  [
+   441448,
+   4454628
+  ],
+  [
+   441418,
+   4454612
+  ],
+  [
+   441398,
+   4454592
+  ],
+  [
+   441382,
+   4454578
+  ],
+  [
+   441368,
+   4454562
+  ],
+  [
+   441358,
+   4454552
+  ],
+  [
+   439562,
+   4454518
+  ],
+  [
+   439628,
+   4454478
+  ],
+  [
+   439668,
+   4454468
+  ]
+ ]
+}

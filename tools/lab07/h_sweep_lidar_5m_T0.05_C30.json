@@ -1,0 +1,260 @@
+{
+ "tag": "lidar_5m_T0.05_C30",
+ "rows": [
+  {
+   "h_m": 0.25,
+   "raw": {
+    "hit_rate": 0.278,
+    "far": 0.219,
+    "csi": 0.258,
+    "area_km2": 0.515
+   },
+   "connected": {
+    "hit_rate": 0.278,
+    "far": 0.219,
+    "csi": 0.258,
+    "area_km2": 0.515
+   }
+  },
+  {
+   "h_m": 0.5,
+   "raw": {
+    "hit_rate": 0.356,
+    "far": 0.24,
+    "csi": 0.32,
+    "area_km2": 0.728
+   },
+   "connected": {
+    "hit_rate": 0.356,
+    "far": 0.24,
+    "csi": 0.32,
+    "area_km2": 0.728
+   }
+  },
+  {
+   "h_m": 0.75,
+   "raw": {
+    "hit_rate": 0.429,
+    "far": 0.284,
+    "csi": 0.367,
+    "area_km2": 0.949
+   },
+   "connected": {
+    "hit_rate": 0.429,
+    "far": 0.284,
+    "csi": 0.367,
+    "area_km2": 0.949
+   }
+  },
+  {
+   "h_m": 1.0,
+   "raw": {
+    "hit_rate": 0.481,
+    "far": 0.32,
+    "csi": 0.392,
+    "area_km2": 1.135
+   },
+   "connected": {
+    "hit_rate": 0.481,
+    "far": 0.32,
+    "csi": 0.392,
+    "area_km2": 1.135
+   }
+  },
+  {
+   "h_m": 1.25,
+   "raw": {
+    "hit_rate": 0.52,
+    "far": 0.365,
+    "csi": 0.4,
+    "area_km2": 1.335
+   },
+   "connected": {
+    "hit_rate": 0.52,
+    "far": 0.365,
+    "csi": 0.4,
+    "area_km2": 1.335
+   }
+  },
+  {
+   "h_m": 1.5,
+   "raw": {
+    "hit_rate": 0.549,
+    "far": 0.416,
+    "csi": 0.394,
+    "area_km2": 1.544
+   },
+   "connected": {
+    "hit_rate": 0.549,
+    "far": 0.416,
+    "csi": 0.394,
+    "area_km2": 1.544
+   }
+  },
+  {
+   "h_m": 1.75,
+   "raw": {
+    "hit_rate": 0.574,
+    "far": 0.456,
+    "csi": 0.388,
+    "area_km2": 1.727
+   },
+   "connected": {
+    "hit_rate": 0.574,
+    "far": 0.456,
+    "csi": 0.388,
+    "area_km2": 1.727
+   }
+  },
+  {
+   "h_m": 2.0,
+   "raw": {
+    "hit_rate": 0.597,
+    "far": 0.495,
+    "csi": 0.376,
+    "area_km2": 1.906
+   },
+   "connected": {
+    "hit_rate": 0.597,
+    "far": 0.495,
+    "csi": 0.376,
+    "area_km2": 1.906
+   }
+  },
+  {
+   "h_m": 2.25,
+   "raw": {
+    "hit_rate": 0.62,
+    "far": 0.529,
+    "csi": 0.366,
+    "area_km2": 2.107
+   },
+   "connected": {
+    "hit_rate": 0.62,
+    "far": 0.529,
+    "csi": 0.366,
+    "area_km2": 2.107
+   }
+  },
+  {
+   "h_m": 2.5,
+   "raw": {
+    "hit_rate": 0.634,
+    "far": 0.572,
+    "csi": 0.343,
+    "area_km2": 2.346
+   },
+   "connected": {
+    "hit_rate": 0.634,
+    "far": 0.572,
+    "csi": 0.343,
+    "area_km2": 2.346
+   }
+  },
+  {
+   "h_m": 0.408,
+   "raw": {
+    "hit_rate": 0.326,
+    "far": 0.231,
+    "csi": 0.297,
+    "area_km2": 0.641
+   },
+   "connected": {
+    "hit_rate": 0.326,
+    "far": 0.231,
+    "csi": 0.297,
+    "area_km2": 0.641
+   }
+  },
+  {
+   "h_m": 0.664,
+   "raw": {
+    "hit_rate": 0.411,
+    "far": 0.274,
+    "csi": 0.356,
+    "area_km2": 0.894
+   },
+   "connected": {
+    "hit_rate": 0.411,
+    "far": 0.274,
+    "csi": 0.356,
+    "area_km2": 0.894
+   }
+  },
+  {
+   "h_m": 0.827,
+   "raw": {
+    "hit_rate": 0.447,
+    "far": 0.292,
+    "csi": 0.377,
+    "area_km2": 1.004
+   },
+   "connected": {
+    "hit_rate": 0.447,
+    "far": 0.292,
+    "csi": 0.377,
+    "area_km2": 1.004
+   }
+  },
+  {
+   "h_m": 1.028,
+   "raw": {
+    "hit_rate": 0.485,
+    "far": 0.324,
+    "csi": 0.394,
+    "area_km2": 1.155
+   },
+   "connected": {
+    "hit_rate": 0.485,
+    "far": 0.324,
+    "csi": 0.394,
+    "area_km2": 1.155
+   }
+  },
+  {
+   "h_m": 1.174,
+   "raw": {
+    "hit_rate": 0.509,
+    "far": 0.347,
+    "csi": 0.401,
+    "area_km2": 1.266
+   },
+   "connected": {
+    "hit_rate": 0.509,
+    "far": 0.347,
+    "csi": 0.401,
+    "area_km2": 1.266
+   }
+  },
+  {
+   "h_m": 1.319,
+   "raw": {
+    "hit_rate": 0.529,
+    "far": 0.381,
+    "csi": 0.399,
+    "area_km2": 1.394
+   },
+   "connected": {
+    "hit_rate": 0.529,
+    "far": 0.381,
+    "csi": 0.399,
+    "area_km2": 1.394
+   }
+  },
+  {
+   "h_m": 1.789,
+   "raw": {
+    "hit_rate": 0.577,
+    "far": 0.462,
+    "csi": 0.386,
+    "area_km2": 1.751
+   },
+   "connected": {
+    "hit_rate": 0.577,
+    "far": 0.462,
+    "csi": 0.386,
+    "area_km2": 1.751
+   }
+  }
+ ]
+}

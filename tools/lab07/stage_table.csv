@@ -1,0 +1,24 @@
+period,design,return_period_yr,aep_pct,q_cfs,q_m3s,gage_height_ft,elev_ft_navd88,elev_m_navd88,hand_h_ft,hand_h_m,rating,source
+all_systematic,False,2,50.0,859,24.3,6.12,4499.34,1371.399,2.92,0.89,within table,LP3 (this script)
+all_systematic,False,5,20.0,1381,39.1,6.98,4500.2,1371.661,3.78,1.152,within table,LP3 (this script)
+all_systematic,False,10,10.0,1734,49.1,7.47,4500.69,1371.81,4.27,1.301,within table,LP3 (this script)
+all_systematic,False,25,4.0,2179,61.7,8.04,4501.26,1371.983,4.84,1.474,EXTRAPOLATED,LP3 (this script)
+all_systematic,False,50,2.0,2506,71.0,8.42,4501.64,1372.099,5.22,1.59,EXTRAPOLATED,LP3 (this script)
+all_systematic,False,100,1.0,2827,80.0,8.77,4501.99,1372.207,5.57,1.698,EXTRAPOLATED,LP3 (this script)
+post_deer_creek,False,2,50.0,874,24.7,6.15,4499.37,1371.408,2.95,0.899,within table,LP3 (this script)
+post_deer_creek,False,5,20.0,1394,39.5,7.0,4500.22,1371.667,3.8,1.158,within table,LP3 (this script)
+post_deer_creek,False,10,10.0,1743,49.4,7.49,4500.71,1371.816,4.29,1.308,within table,LP3 (this script)
+post_deer_creek,False,25,4.0,2179,61.7,8.04,4501.26,1371.983,4.84,1.474,EXTRAPOLATED,LP3 (this script)
+post_deer_creek,False,50,2.0,2498,70.7,8.41,4501.63,1372.096,5.21,1.588,EXTRAPOLATED,LP3 (this script)
+post_deer_creek,False,100,1.0,2809,79.5,8.75,4501.97,1372.201,5.55,1.692,EXTRAPOLATED,LP3 (this script)
+post_jordanelle,True,2,50.0,842,23.8,6.09,4499.31,1371.39,2.89,0.881,within table,LP3 (this script)
+post_jordanelle,True,5,20.0,1346,38.1,6.92,4500.14,1371.643,3.72,1.134,within table,LP3 (this script)
+post_jordanelle,True,10,10.0,1722,48.8,7.46,4500.68,1371.807,4.26,1.298,within table,LP3 (this script)
+post_jordanelle,True,25,4.0,2244,63.5,8.11,4501.33,1372.006,4.91,1.498,EXTRAPOLATED,LP3 (this script)
+post_jordanelle,True,50,2.0,2665,75.5,8.6,4501.82,1372.153,5.4,1.644,EXTRAPOLATED,LP3 (this script)
+post_jordanelle,True,100,1.0,3111,88.1,9.07,4502.29,1372.298,5.87,1.789,EXTRAPOLATED,LP3 (this script)
+fema_fis_2026,False,10,10.0,1475,41.8,7.11,4500.33,1371.701,3.91,1.192,within table,FEMA FIS 2026
+fema_fis_2026,False,25,4.0,1810,51.3,7.58,4500.8,1371.844,4.38,1.335,within table,FEMA FIS 2026
+fema_fis_2026,False,50,2.0,2065,58.5,7.9,4501.12,1371.941,4.7,1.433,within table,FEMA FIS 2026
+fema_fis_2026,False,100,1.0,2325,65.8,8.21,4501.43,1372.036,5.01,1.527,EXTRAPOLATED,FEMA FIS 2026
+fema_fis_2026,False,500,0.2,2935,83.1,8.89,4502.11,1372.242,5.69,1.733,EXTRAPOLATED,FEMA FIS 2026

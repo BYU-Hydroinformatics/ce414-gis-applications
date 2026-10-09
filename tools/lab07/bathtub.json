@@ -1,0 +1,66 @@
+{
+ "seed_elev_m": 1371.3975830078125,
+ "rows": [
+  {
+   "return_period_yr": 2,
+   "elev_m": 1371.387,
+   "h_m": 0.878,
+   "bathtub_km2": 14.496,
+   "bathtub_connected_km2": 0.0,
+   "hand_km2": 1.034,
+   "bathtub_connected_north_m": null,
+   "hand_north_m": 4463346.0
+  },
+  {
+   "return_period_yr": 5,
+   "elev_m": 1371.642,
+   "h_m": 1.134,
+   "bathtub_km2": 14.764,
+   "bathtub_connected_km2": 0.0,
+   "hand_km2": 1.209,
+   "bathtub_connected_north_m": 4454598.0,
+   "hand_north_m": 4463366.0
+  },
+  {
+   "return_period_yr": 10,
+   "elev_m": 1371.805,
+   "h_m": 1.297,
+   "bathtub_km2": 14.926,
+   "bathtub_connected_km2": 0.0,
+   "hand_km2": 1.329,
+   "bathtub_connected_north_m": 4454600.0,
+   "hand_north_m": 4463372.0
+  },
+  {
+   "return_period_yr": 25,
+   "elev_m": 1372.006,
+   "h_m": 1.498,
+   "bathtub_km2": 15.124,
+   "bathtub_connected_km2": 0.0,
+   "hand_km2": 1.522,
+   "bathtub_connected_north_m": 4454600.0,
+   "hand_north_m": 4463388.0
+  },
+  {
+   "return_period_yr": 50,
+   "elev_m": 1372.153,
+   "h_m": 1.644,
+   "bathtub_km2": 15.269,
+   "bathtub_connected_km2": 0.0,
+   "hand_km2": 1.634,
+   "bathtub_connected_north_m": 4454600.0,
+   "hand_north_m": 4463402.0
+  },
+  {
+   "return_period_yr": 100,
+   "elev_m": 1372.298,
+   "h_m": 1.789,
+   "bathtub_km2": 15.423,
+   "bathtub_connected_km2": 0.001,
+   "hand_km2": 1.744,
+   "bathtub_connected_north_m": 4454632.0,
+   "hand_north_m": 4463406.0
+  }
+ ],
+ "gage_y": 4454555.338
+}
