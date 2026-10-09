@@ -1,11 +1,11 @@
 # Week 15: Final Project Due
 
 > [!IMPORTANT] Also this week
-> - Final project **presentation** (poster, slides, or video) — due Wednesday 11:59 pm.
+> - Final project **presentation video** (eight minutes; post the link on the class Google document) — due Wednesday 11:59 pm.
 > - Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed — due Wednesday 11:59 pm.
 > - Attendance record on the class Google document — due Wednesday 11:59 pm.
 > - Final project **lab assignment** (each team member submits) — due Thursday 11:59 pm.
-> - Notes on at least ten classmates' presentations — due Thursday 11:59 pm.
+> - Notes on at least ten classmates' presentation videos — due Thursday 11:59 pm.
 > - Course evaluation (extra credit) — due Friday 11:59 pm.
 > - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 

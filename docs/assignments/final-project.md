@@ -13,9 +13,9 @@ Weeks are course weeks; see the [Schedule](../schedule/README.md) for how they m
 | Step | What | When |
 | --- | --- | --- |
 | 1. Proposal | Meet with the instructor as a team to discuss your idea, the data you need, where you will get it, and the analysis you plan. Some class time is set aside for this; otherwise book a slot at [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours). Then record your team, idea, and data on the class Google document. | Week 14, by Friday 5:00 pm |
-| 2. Presentation | Eight minutes, as a poster, a slide deck, or a YouTube video. Sign up for a presentation day on the class Google document. | Week 15, Wednesday 11:59 pm |
+| 2. Presentation | An eight-minute **video** (YouTube or similar). Post its link on the class Google document. | Week 15, Wednesday 11:59 pm |
 | 3. Lab assignment | Write your project up as a **lab assignment** modeled on [Lab 4 — Cell Phone Tower Placement](lab-04/README.md), with all the same sections including the results, so that a future student could do it. Submit it as a Word document on Learning Suite. **Each team member submits separately.** | Week 15, Thursday 11:59 pm |
-| Presentation notes | Take notes on at least ten classmates' presentations and turn in what you learned that was new or interesting. | Week 15, Thursday 11:59 pm |
+| Presentation notes | Watch at least ten classmates' presentation videos and turn in what you learned that was new or interesting. | Week 15, Thursday 11:59 pm |
 
 With your lab assignment, add three notes:
 
@@ -24,11 +24,11 @@ With your lab assignment, add three notes:
 2. Your best guess at the hours you personally spent.
 3. Whether you think this project would be a good one for future students to try.
 
-## Presentation days
+## Presentation videos
 
-Presentations run on Thursday of Week 14 and Tuesday of Week 15, eight minutes each. The two
-work days before presentations (Tuesday of Weeks 13 and 14) are class time for your team to work
-together with the instructor available.
+There are no live presentations. Each team records an eight-minute video and posts its link on the
+class Google document by Wednesday of Week 15. There is no class in Week 15: use the week to finish
+the project, then watch at least ten classmates' videos and turn in your notes by Thursday.
 
 ## Past projects
 

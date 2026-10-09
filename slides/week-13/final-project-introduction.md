@@ -216,12 +216,11 @@ in-class. -->
 
 | Week | Milestone |
 | --- | --- |
-| 12 | Project introduced; start scouting data |
-| 13 | **Proposal meeting**, feasibility table complete, idea approved |
-| 14 | Model runs end to end on real data; first map draft |
-| 15 | Validation done; report written; **presentation** |
+| 13 | Project introduced; start scouting data; feasibility table |
+| 14 | **Proposal meeting** by Friday, idea approved; model runs on real data |
+| 15 | No class: validation done, report written, **presentation video** posted |
 
-Data problems surface in Week 13, not Week 15. That is the point of the order.
+Data problems should surface in Week 13, not Week 15. That is the point of the order.
 
 <!-- TODO(instructor): verify against the Learning Suite calendar. The living plan recommends
 introducing the project by Week 8 or 9 in future offerings so the milestones can spread out. -->
@@ -230,8 +229,8 @@ introducing the project by Week 8 or 9 in future offerings so the milestones can
 
 # Deliverable 2 — the presentation
 
-- All teams present from **one shared Google Slides deck**; the link is posted on Learning Suite
-- Aim for a few minutes: the question, the map, the model, what you learned
+- An **eight-minute video**; post its link on the class Google document by Wednesday of Week 15
+- The question, the map, the model, what you learned; then watch ten classmates' videos
 - Lead with the **map**. Show the **model**. Explain **one** decision you had to make.
 
 Past decks, for calibration:
@@ -239,10 +238,12 @@ Past decks, for calibration:
 [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk) ·
 [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E) ·
 [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M) ·
-[2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRv)
+[2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw) ·
+[2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8) ·
+[2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g) ·
+[2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8)
 
-<!-- TODO(instructor): confirm the presentation length and add the 2023-2025 deck links. The
-2022 link on the Learning Suite page appears truncated — check it. -->
+<!-- October 9, 2026: presentations are video only (no class in Week 15). Deck links 2018-2025 are the ones on the Learning Suite Final Project page. -->
 
 ---
 

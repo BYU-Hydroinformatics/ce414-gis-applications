@@ -133,11 +133,11 @@ DUE = {
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
     15: dict(reading=None, quiz=None, lab=None,
-             other=[("Final project **presentation** (poster, slides, or video)", "Wednesday 11:59 pm"),
+             other=[("Final project **presentation video** (eight minutes; post the link on the class Google document)", "Wednesday 11:59 pm"),
                     ("Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed", "Wednesday 11:59 pm"),
                     ("Attendance record on the class Google document", "Wednesday 11:59 pm"),
                     ("Final project **lab assignment** (each team member submits)", "Thursday 11:59 pm"),
-                    ("Notes on at least ten classmates' presentations", "Thursday 11:59 pm"),
+                    ("Notes on at least ten classmates' presentation videos", "Thursday 11:59 pm"),
                     ("Course evaluation (extra credit)", "Friday 11:59 pm")]),
 }
 

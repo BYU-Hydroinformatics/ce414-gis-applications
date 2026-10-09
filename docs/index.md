@@ -69,7 +69,7 @@ recommendation through a professional map and a concise report.
   afternoon of class for individual lab work.
 - A **reading quiz** and a **lab** almost every week, both due **Saturday at 11:59 pm**.
 - Two closed-book **midterms** in the Testing Center, a hands-on **final exam** in ArcGIS Pro, and
-  a team **final project** presented in the last two weeks.
+  a team **final project** presented by video at the end of the semester.
 - **Peer review.** You will review and stamp at least ten classmates' lab reports over the
   semester; make your engineering stamp in the first week.
 
