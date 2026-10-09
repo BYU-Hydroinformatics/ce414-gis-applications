@@ -14,9 +14,10 @@ gage height - 3.20 ft, uncorrected; 5 m lidar package; personal flow Q = 900 + 1
 digits of the BYU ID number; stream threshold as the sensitivity variable; buildings only; Iterate
 Field Values over the hosted stage table. Every check value was measured from the hosted zip alone
 in ArcGIS Pro 3.7.1 arcpy (tools/lab07/verify_package.py -> package_checks.json; personal.py ->
-personal_lookup.csv). NOT YET BUILT IN THE GUI: every dialog figure is a TODO(capture), and the
-GUI behavior of Iterate Field Values, inline %Value% in Raster Calculator and the dialog labels are
-marked VERIFY. Figure C is a drawn diagram (make_svgs.py), not a ModelBuilder export. -->
+personal_lookup.csv). GUI BUILD October 9, 2026, ArcGIS Pro 3.7.1 at 175 % (C:\Ames\Lab07HAND,
+set up by tools/lab07/gui_project.py): both models built by hand from this page, run inside
+ModelBuilder, every check value of Steps 2-6 reproduced exactly; the dialog figures and Figure C are
+from that session. -->
 
 > [!TIP]
 > **Start from the report template.** [`lab07-report-template.docx`](lab07-report-template.docx)
@@ -195,13 +196,14 @@ loop pieces from Lab 6 — **Raster to Polygon**, **Calculate Field**, **Collect
 
 ## Example Model
 
-![Diagram of the two models. Model 1, HAND Builder: Provo_DEM, marked P, into Fill, Filled_DEM, Flow Direction, Flow_Direction, Flow Accumulation, Flow_Accumulation; Raster Calculator with Threshold (2000), marked P, makes Stream_Cells; Provo_River into Buffer 30 m makes River_Corridor; Extract by Mask makes River_Cells; Flow Distance, which also takes Filled_DEM and Flow_Direction, makes HAND, marked P. Model 2, Flood Loop: Stage_Table into Iterate Field Values, whose Value (H_CM) goes to Raster Calculator with the expression Con("%HAND%" <= %Value% / 100, 1) and HAND, marked P; then flood_%Value%, Raster to Polygon, Calculate Field, and Collect Values and Merge into Floods, marked P.](images/lab07-model.svg)
+![The HAND Builder model, exported from ModelBuilder as a vector diagram. Top row: Provo_DEM.tif, marked P, into Fill, Filled_DEM, Flow Direction, which makes Flow_Direction and an unused Output drop raster. Flow_Direction feeds Flow Accumulation, which makes Flow_Accumulation; Raster Calculator takes Flow_Accumulation and Threshold, marked P, and makes Stream_Cells. Provo_River goes through Buffer to River_Corridor; Extract by Mask takes Stream_Cells and River_Corridor and makes River_Cells, marked P. Flow Distance takes River_Cells, Filled_DEM and Flow_Direction and makes HAND, marked P. Every tool and output carries a green check mark from a completed run.](images/lab07-model-hand.svg)
 
-**Figure C.** The two models, drawn as a diagram (not a ModelBuilder export). The first computes
-HAND once; the second floods it once per row of the stage table. They are two models because a
-model with an iterator runs *every* tool in it once per value (Lab 6, Step 6): in one model,
-Fill, Flow Direction, Flow Accumulation and Flow Distance would all run five times.
-<!-- TODO(capture): replace Figure C with the GUI build's Export To Graphic of both models (lab07-full-model.svg). -->
+![The Flood Loop model, exported from ModelBuilder as a vector diagram, in two rows. Top: Stage_Table into Iterate Field Values, whose output Value goes to Raster Calculator; HAND, marked P, also goes to Raster Calculator. Bottom: flood_%Value% into Raster to Polygon, floodpoly_%Value%, Calculate Field, floodpoly_String, Collect Values, whose Output Values (and a gray Output Table) go to Merge, which makes Floods, marked P.](images/lab07-model-floodloop.svg)
+
+**Figure C.** The two models, exported from ModelBuilder (**Export** ▸ **Export To Graphic**) after
+a run. The first computes HAND once; the second floods it once per row of the stage table. They are
+two models because a model with an iterator runs *every* tool in it once per value (Lab 6, Step 6):
+in one model, Fill, Flow Direction, Flow Accumulation and Flow Distance would all run five times.
 
 ## Complete the Lab
 
@@ -213,8 +215,8 @@ without the step-by-step instructions below, say so in your report.
 
 > [!NOTE]
 > **Every check value on this page** was measured on the files you download, with the settings
-> below, in ArcGIS Pro 3.7.1, and your numbers should match to the last digit shown. The whole HAND
-> chain takes well under a minute on the 5 m surface.
+> below, in ArcGIS Pro 3.7.1, and your numbers should match to the last digit shown. On a laptop,
+> the HAND chain ran in about a minute inside ModelBuilder, and the flood loop in under a minute.
 
 ### Step 0 — Set Up the Project
 
@@ -234,7 +236,10 @@ without the step-by-step instructions below, say so in your report.
     - **Snap Raster**: `Provo_DEM.tif`
     - **Cell Size**: `Provo_DEM.tif` (or type 5)
 
-<!-- TODO(capture): Figure 0, the HAND Builder Environments dialog with the four settings. -->
+![The HAND Builder model's Environments dialog: Current Workspace and Scratch Workspace both Lab07.gdb; Output Coordinates collapsed and empty; under Processing Extent, the Extent taken from Provo_DEM.tif, with Top 4463550, Left 436190, Right 444780 and Bottom 4452930 in NAD 1983 UTM Zone 12N; under Raster Analysis, Cell Size and Snap Raster both Provo_DEM.tif.](images/lab07-environments.png)
+
+**Figure 0.** ModelBuilder ▸ **Environments**. Choosing `Provo_DEM.tif` for the Extent fills in its
+four edges; if **Output Coordinate System** comes filled in from an earlier project, clear it.
 
 > [!WARNING]
 > **Set the Extent.** Without it, Extract by Mask (Step 3) makes `River_Cells` only as large as the
@@ -285,7 +290,10 @@ In the **HAND Builder** model, as in Lab 5:
 2. **Flow Direction**: input `Filled_DEM`, **Flow direction type** **D8**, output
    `Flow_Direction`.
 
-<!-- TODO(capture): Figure 2, the Flow Direction dialog from ModelBuilder (D8). VERIFY the force-flow default (arcpy NORMAL) and the Method label seen in Lab 5. -->
+![The Flow Direction tool dialog opened from ModelBuilder: Input surface raster Filled_DEM; Output flow direction raster Flow_Direction; Force all edge cells to flow outward unchecked; Output drop raster empty; Flow direction type D8; Method Planar.](images/lab07-flow-direction.png)
+
+**Figure 2.** Flow Direction at its defaults: **Force all edge cells to flow outward** unchecked,
+**D8**, **Planar**.
 
 > [!TIP]
 > **Check the result:** `Filled_DEM` runs from **1,366.92 to 1,645.53** m. Fill raised **489,125**
@@ -307,7 +315,15 @@ In the **HAND Builder** model, as in Lab 5:
 5. **Extract by Mask**: input raster `Stream_Cells`, mask `River_Corridor`, output `River_Cells`.
    Make `River_Cells` a parameter, so that the tool-dialog runs of Step 7 keep it.
 
-<!-- TODO(capture): Figure 3a, Raster Calculator with Con("%Flow_Accumulation%" > %Threshold%, 1); Figure 3b, Extract by Mask. VERIFY Extract by Mask's Analysis extent default in 3.7.1 with the Extent environment set. -->
+![The Raster Calculator dialog in ModelBuilder: the Rasters list shows Filled_DEM, Provo_DEM.tif, Flow_Direction, Output drop raster and Flow_Accumulation; the expression reads Con("%Flow_Accumulation%" > %Threshold%, 1); the Output raster is Stream_Cells.](images/lab07-rc-streams.png)
+
+**Figure 3a.** The stream threshold. Double-click `Flow_Accumulation` in the **Rasters** list to put
+`"%Flow_Accumulation%"` in the expression, and type `%Threshold%` yourself.
+
+![The Extract by Mask dialog: Input raster Stream_Cells; mask River_Corridor; Output raster River_Cells; Extraction Area Inside; Analysis Extent with Top 4463550, Left 436190, Right 444780 and Bottom 4452930, NAD 1983 UTM Zone 12N.](images/lab07-extract-mask.png)
+
+**Figure 3b.** Extract by Mask. With the Extent environment set, **Analysis Extent** fills in with
+the DEM's edges, not the corridor's.
 
 > [!TIP]
 > **Check the result:** `Flow_Accumulation` reaches **1,050,227** cells. `Stream_Cells` has
@@ -327,13 +343,17 @@ Add **Flow Distance** (Spatial Analyst):
 - **Input surface raster**: `Filled_DEM`
 - **Input flow direction raster**: `Flow_Direction`
 - **Distance type**: **Vertical**
-- **Flow direction type**: **D8**
+- **Input flow direction type**: **D8**
 - **Statistics type**: **Minimum**
 - **Output raster**: `HAND`
 
-Make `HAND` a parameter. Save the model and run it inside ModelBuilder.
+Make `HAND` a parameter. Save the model and run it inside ModelBuilder. When ArcGIS Pro asks whether
+to build pyramids for `HAND`, click **Yes**.
 
-<!-- TODO(capture): Figure 4, the Flow Distance dialog. VERIFY the dialog labels; arcpy 3.7.1 names the parameters in_stream_raster, in_surface_raster, in_flow_direction_raster, distance_type (VERTICAL default), flow_direction_type (D8 default), statistics_type (MINIMUM default). -->
+![The Flow Distance dialog: Input stream raster River_Cells; Input surface raster Filled_DEM; Output raster HAND; Input flow direction raster Flow_Direction; Distance type Vertical; Input flow direction type D8; Statistics type Minimum.](images/lab07-flow-distance.png)
+
+**Figure 4.** Flow Distance. **Vertical**, **D8** and **Minimum** are the defaults; the flow
+direction raster is not, so choose `Flow_Direction`.
 
 > [!TIP]
 > **Check the result:** `HAND` has values on **697,608** cells, from **0 to 197.95** m (mean
@@ -352,21 +372,47 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 
 1. In the **Catalog** pane, right-click `Lab07.atbx` ▸ **New** ▸ **Model**. In **Properties** set
    **Name** `FloodLoop` and **Label** `Flood Loop`. Set the same environments as in Step 0.
-2. **Insert** ▸ **Iterators** ▸ **Iterate Field Values**: **Input Table** `Stage_Table` (the
-   downloaded one), **Field** `H_CM`. Its green output is `Value`, the threshold in centimeters for
+2. On the **ModelBuilder** tab, in the **Insert** group, click **Iterators** ▸ **Iterate Field
+   Values**. Double-click it: **Input Table** `Stage_Table` (the downloaded one), **Field** `H_CM`.
+   Leave **Data Type** at **String**. Its green output is `Value`, the threshold in centimeters for
    one row at a time.
-3. **Raster Calculator**: `Con("%HAND%" <= %Value% / 100, 1)`, output `flood_%Value%`. Choose `HAND`
-   from the map layers (add it from your project geodatabase first), then right-click its oval ▸
-   **Parameter**.
+
+    ![The Iterate Field Values dialog: Input Table Stage_Table; Field H_CM; Data Type String; Unique Values checked; Skip Null Values unchecked; Null Value 0.](images/lab07-iterate-field-values.png)
+
+    **Figure 5a.** Iterate Field Values: one pass per `H_CM` in the stage table.
+
+3. Add `HAND` to the map from your project geodatabase. **Raster Calculator**: double-click `HAND`
+   in the **Rasters** list (it goes in as `"HAND"`), then type the rest:
+   `Con("HAND" <= %Value% / 100, 1)`. Output `flood_%Value%`. ModelBuilder adds a `HAND` oval;
+   right-click it ▸ **Parameter**. `%Value%` is replaced by each row's number before the expression
+   runs, so the first pass computes `Con("HAND" <= 119 / 100, 1)` and writes `flood_119`; when you
+   run the model as a tool on a different HAND (Step 7), the expression follows the parameter.
+
+    ![The Raster Calculator dialog in the Flood Loop model: the Rasters list shows Value, Output raster, HAND and Provo_DEM.tif; the expression reads Con("HAND" <= %Value% / 100, 1); the Output raster is flood_%Value%.](images/lab07-flood-calc.png)
+
+    **Figure 5b.** One flood per pass. Type the output name last.
+
 4. **Raster to Polygon**: input `flood_%Value%`, **Simplify polygons** unchecked, **Create
    multipart features** checked, output `floodpoly_%Value%`. Each flood becomes one row.
-5. **Calculate Field**: input `floodpoly_%Value%`, **Field Name** `H_CM`, **Field Type** Long,
-   `H_CM =` `%Value%`.
-6. **Collect Values** on Calculate Field's output, then **Merge** (connect Collect Values' output
-   to Merge by dragging, as in Lab 6), output `Floods`; make `Floods` a parameter.
+
+    ![The Raster to Polygon dialog: Input raster flood_%Value%; Field VALUE; Output polygon features floodpoly_%Value%; Simplify polygons unchecked; Create multipart features checked; Maximum vertices per polygon feature empty.](images/lab07-raster-to-polygon.png)
+
+    **Figure 5c.** Raster to Polygon, unsimplified and multipart.
+
+5. **Calculate Field**: input `floodpoly_%Value%`, **Field Name** `H_CM` (a new field), **Field
+   Type** **Long (32-bit integer)**, `H_CM =` `%Value%`. Its output oval is labeled
+   `floodpoly_String`; that is only ModelBuilder's name for it.
+6. **Collect Values** (ModelBuilder tab ▸ **Insert** group ▸ **Utilities** ▸ **Collect Values**):
+   **Input Value** `floodpoly_String`. Add **Merge** and drag from Collect Values' **Output Values**
+   onto Merge, choosing **Input Datasets**, as in Lab 6. Output `Floods`; make `Floods` a parameter.
+
+    ![The Merge dialog: Input Datasets floodpoly_String, grayed because it comes from Collect Values; Output Dataset Floods; Field Matching Mode Automatically generate fields consolidated from all inputs; Add source information to output unchecked.](images/lab07-merge.png)
+
+    **Figure 5d.** Merge, fed by Collect Values, so it runs once, after the last pass.
+
 7. Save, and run the model.
 
-<!-- TODO(capture): Figures 5a-5d: Iterate Field Values (Stage_Table, H_CM), Raster Calculator with %Value%, Raster to Polygon with multipart checked, Merge. VERIFY in the GUI: (1) the Insert ▸ Iterators menu lists Iterate Field Values and its output is named Value; (2) inline %Value% inside a Raster Calculator expression is substituted as a number, so %Value% / 100 is 1.53 (arcpy: Con(hand <= 153 / 100, 1) gives 62,693 cells); (3) %Value% in an output name gives flood_153; (4) the Data Type of Value (String by default) does not break the expression. A SQL where clause "Value * 100 <= 153" in Con fails in arcpy (ERROR 010416), so the page uses Raster Calculator. FALLBACK if Iterate Field Values misbehaves (instructor decision: Lab 6's For loop noted as fallback): For cannot step through five uneven values, so either (a) For From 119 To 173 By 1 (55 floods, of which the five stage-table values are the ones reported; slower, about 55 passes), or (b) Iterate Row Selection on Stage_Table + Get Field Value (H_CM). Decide after the GUI build. -->
+<!-- GUI build 2026-10-09 (Pro 3.7.1): (1) Iterate Field Values is under ModelBuilder tab > Insert group > Iterators; output named Value, Data Type String by default, Null Value auto-filled 0. (2) Double-clicking a map layer in Raster Calculator's Rasters list inserts "HAND" (layer name), not "%HAND%"; the run gave exactly the check cells (51,474 ... 68,538), so %Value% / 100 works with the String type. (3) Running Flood Loop from its tool dialog on HAND x 2 (C:\Ames\Lab07HAND\ParamTest.gdb) gave exactly the HAND x 2 cell counts, so "HAND" follows the parameter. (4) Calculate Field's derived output is auto-named floodpoly_String. (5) Collect Values is under Insert > Utilities and shows two outputs, Output Values and a gray Output Table. (6) A SQL where clause "Value * 100 <= 153" in Con fails in arcpy (ERROR 010416), which is why the page uses Raster Calculator. Run: 43 s inside ModelBuilder. -->
 
 > [!TIP]
 > **Check the result:** `Floods` has **5** rows.
@@ -392,11 +438,13 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 
 Run these from the Geoprocessing pane, not in a model.
 
-1. **Join Field**: **Input Table** `Floods`, **Input Join Field** `H_CM`, **Join Table**
-   `Stage_Table`, **Join Table Field** `H_CM`, **Transfer Fields** `RETURN_YR` and `Q_CFS`.
-2. **Spatial Join**: **Target Features** `Floods`, **Join Features** `Buildings`, **Join Operation**
-   **Join one to one**, **Keep All Target Features** checked, **Match Option** **Intersect**,
-   output `Floods_Buildings`. `Join_Count` is the number of buildings each flood touches.
+1. **Join Field**: **Input Table** `Floods`, **Input Field** `H_CM`, **Join Table**
+   `Stage_Table`, **Join Field** `H_CM`, **Transfer Method** **Select transfer fields**, **Transfer
+   Fields** `RETURN_YR` and `Q_CFS`.
+2. **Spatial Join**: **Target Features** `Floods`, **Join Features** `Buildings` (leave **Join
+   Count Field Name** at `Join_Count`), **Output Feature Class** `Floods_Buildings`, **Join
+   Operation** **Join one to one**, **Keep all target features** checked, **Match Option**
+   **Intersect**. `Join_Count` is the number of buildings each flood touches.
 3. **Compare the 100-year flood with FEMA.** Select the `H_CM` = 153 row of `Floods` and run
    **Pairwise Clip** with `Comparison_Area` (output `HAND100_Compare`), then **Pairwise Intersect**
    of `HAND100_Compare` and `FEMA_Floodplain_1pct` (output `Overlap100`). Sum `Shape_Area` in each
@@ -407,7 +455,14 @@ Run these from the Geoprocessing pane, not in a model.
     - **false-alarm ratio** = (*H* − *O*) ÷ *H* — the share of HAND's flood FEMA does not map;
     - **critical success index**, CSI = *O* ÷ (*H* + *F* − *O*) — 1 is perfect agreement.
 
-<!-- TODO(capture): Figure 6a Spatial Join dialog; Figure 6b the attribute table of Floods_Buildings. -->
+![The Spatial Join tool in the Geoprocessing pane: Target Features Floods; Join Features Buildings with Join Count Field Name Join_Count; Output Feature Class Floods_Buildings; Join Operation Join one to one; Keep all target features checked; Match Option Intersect; Search Radius empty, in Meters; Fields and Attribute Matching collapsed.](images/lab07-spatial-join.png)
+
+**Figure 6a.** Spatial Join: one row per flood, with the number of buildings it touches.
+
+![The attribute table of Floods_Buildings: five rows with Join_Count 319, 356, 388, 413 and 451; TARGET_FID 1 to 5; gridcode 1; H_CM 119, 134, 143, 153 and 173; RETURN_YR 10, 25, 50, 100 and 500; Q_CFS 1475, 1810, 2065, 2325 and 2935; NAME empty.](images/lab07-floods-buildings-table.png)
+
+**Figure 6b.** `Floods_Buildings`. The columns after `Q_CFS` (`NAME` and the rest) come from one of
+the buildings and mean nothing here.
 
 > [!TIP]
 > **Check the result:**
@@ -478,8 +533,9 @@ Then run **Flood Loop** from the Catalog pane on each new HAND, with a new `Floo
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 8 saw it):
 > every intermediate — `Filled_DEM`, `Flow_Direction`, `Flow_Accumulation`, `Stream_Cells`,
-> `River_Corridor`, and the loop's `flood_` and `floodpoly_` datasets — goes. `HAND`, `River_Cells`
-> and `Floods` are parameters, so they stay, under the new names you typed.
+> `River_Corridor` — goes, and so do the loop's last `flood_` and `floodpoly_` (the earlier passes'
+> are left behind, overwritten by the new run). `HAND`, `River_Cells` and `Floods` are parameters,
+> so they stay, under the new names you typed.
 
 Record **all of it in one table**: your baseline (threshold 2,000), the three threshold runs and
 your design flood, with the threshold, the number of `River_Cells`, and the area and buildings of
@@ -636,9 +692,10 @@ what to submit.
 
 <!-- Migration notes (new lab, 2026-10-09).
 SOURCE: none (new lab). Lineage: student final projects 2021 (Logan, Flow Distance, single stage), 2024 (Utah County flood-prone areas), 2025 (Mapping Flood Intervals with HAND: gage -> peak statistics -> rating -> stage -> HAND extents per return period). Plan: tools/lab07/PLAN.md.
-ARCGIS PRO: 3.7.1 arcpy only (no GUI build yet). tools/lab07/verify_package.py extracts docs/data/lab07-provo-river-hand.zip and runs the page's path with the page's settings; probe_student_path.py tested the no-Extent trap (695,974 vs 697,608 HAND cells), the SQL where-clause failure (ERROR 010416 for 'Value * 100 <= 153'), multipart Raster to Polygon (1 row, area = cells x 25 exactly) and Spatial Join = Select Layer By Location count (413 at 100-yr). gotchas.py: stream raster with 0 off-stream inside the corridor gives the same HAND; no flow direction raster gives the same HAND; raw DEM surface 6,141 negative cells, min -1.92 m; no corridor 47.94 km2 at h 1.53 (41.74 at 1.19).
+ARCGIS PRO: 3.7.1 arcpy, then the GUI build of 2026-10-09 (see the comment under Step 5 and FIGURES below). tools/lab07/verify_package.py extracts docs/data/lab07-provo-river-hand.zip and runs the page's path with the page's settings; probe_student_path.py tested the no-Extent trap (695,974 vs 697,608 HAND cells), the SQL where-clause failure (ERROR 010416 for 'Value * 100 <= 153'), multipart Raster to Polygon (1 row, area = cells x 25 exactly) and Spatial Join = Select Layer By Location count (413 at 100-yr). gotchas.py: stream raster with 0 off-stream inside the corridor gives the same HAND; no flow direction raster gives the same HAND; raw DEM surface 6,141 negative cells, min -1.92 m; no corridor 47.94 km2 at h 1.53 (41.74 at 1.19).
 DATA: docs/data/lab07-provo-river-hand.zip, 12,411,788 bytes, built by tools/lab07/make_extract.py (5 m) from fetch_dem.py (3DEP ImageServer exportImage at 2 m, 30 tiles, Oct 8 2026) and fetch_vectors.py (UGRC UtahStreamsNHD, Buildings; NFHL layers 28 and 14, DFIRM 49049C, Oct 8 2026). Stage table: stage_table.py (design = FEMA FIS 49049CV001B Table 9, read from the page image; rating 30.0; first row >= Q; h = (GH - 3.20) ft x 0.3048; H_CM = round(h x 100)).
 VERIFIED NUMBERS (package_checks.json): DEM 1,718 x 2,124, 1,366.78-1,645.53; Fill 1,366.92-1,645.53, 489,125 cells raised (12.228 km2), max 8.47 m; Flow_Accumulation max 1,050,227; Stream_Cells 74,866; River_Cells 3,191; HAND 697,608 cells, 0-197.95, mean 23.54; floods (cells, km2, buildings): 119 51,474 1.2869 319; 134 56,420 1.4105 356; 143 59,332 1.4833 388; 153 62,693 1.5673 413; 173 68,538 1.7135 451; 100-yr FEMA 1.3429, HAND in comparison 1.2801, overlap 0.7361, hit 0.548, FAR 0.425, CSI 0.390. Threshold runs (river cells; 10-yr km2/bldg; 100-yr km2/bldg/CSI): 400 3,513 1.5235/387 1.8591/497/0.377; 1,000 3,307 1.4163/370 1.7326/474/0.387; 4,000 3,110 1.1825/301 1.4389/397/0.394; 8,000 2,912 0.7684/169 0.9739/257/0.325. Personal (personal.py, mm h): 100 distinct h and areas, 74 distinct building counts; 89 -> 1,968 cfs, 7.78 ft, 1.396 m, 58,193 cells, 1.4548 km2, 376; 02 -> 924, 6.24, 0.927, 1.0799 km2, 258.
 OTHER MEASURED FACTS (PLAN.md, xs_check.py, profile.py): FEMA 1% depth above streambed median 1.80 m (1.49-2.07); DEM channel minus FEMA bed median 0.47 m (0.10-1.44) at 42 sections; section C: HAND wet 95 m, FEMA 105 m of 123 m; the river long profile 1,476.98 -> 1,367.05 m over 17.57 km; 100-yr stage elevation 1,372.04 m reaches the lowest 4.8 km; the D8 path from the highest river cell leaves the river at 40.23923 N, 111.68941 W (441,358 E, 4,454,538 N) and exits the box's south edge. LP3 (stage_table.py, not published flows): post-Jordanelle WY1993-2024 n=32 Q100 3,111; all systematic WY1934-2024 n=89 Q100 2,827.
 PILOT (no-GUI, 2026-10-09, C:\Ames\Pilot07\PILOT_NOTES.md): every check value on the page reproduced from the zip with arcpy (about 40, no mismatch). Fixed from its findings: the Extent warning now names Extract by Mask (it shrinks River_Cells; Flow Distance follows); Step 6 formulas name HAND100_Compare (the clipped flood; with the whole flood FAR would be 0.530 and CSI 0.339); Step 7 Q3 gives new output names so the baseline comparison is not overwritten; building counts moved from the model row to a write-up check-values bullet (they come from Spatial Join outside the models), where-wrong 3 -> 2 points; .atbx is opened to read the models (its paths point at the student's D: drive); Deliverables now list the peer-review sentence, numbered figures, the AI line, the loop-value description, Map 1 basemap and Map 2's full item list; Q2 allows a flow below the 10-year (IDs ending 00-47); rating extension described as log-log about the 3.20 ft offset (a linear extension gives 8.22/8.96 ft, not 8.21/8.89); 1903 peak code 6,Bd explained; the downloaded geodatabase renamed ProvoData.gdb (both were Lab07.gdb); the dialog-run deletion list completed; Provo_River described as one feature in two parts. Pilot measured section C HAND 96 m (page 95) and the bathtub's river length 4.6 km (page 4.8), both method-dependent.
-TODO(capture): Figures 0, 2, 3a, 3b, 4, 5a-5d, 6a, 6b; Figure C export; example maps; GUI build at 175 % (C:\Ames\Lab07GUI\); lab-machine run time; Learning Suite due date (Saturday of Week 8). -->
+FIGURES: Figures A, B and 1 and the four tool icons by tools/lab07/make_svgs.py (lab07-model.svg, the drawn stand-in for Figure C, is no longer used). Dialog captures lab07-environments (composed from two grabs), -flow-direction, -rc-streams, -extract-mask, -flow-distance, -iterate-field-values, -flood-calc, -raster-to-polygon, -merge, -spatial-join (stitched from two scrolled grabs of the Geoprocessing pane), -floods-buildings-table (.png) are screen grabs (tools/screenshots/) at 175 % from the 2026-10-09 session; Figure C (lab07-model-hand.svg, lab07-model-floodloop.svg) is each model's Export To Graphic after a run, laid out by hand. Originals in C:\Ames\Lab07HAND\caps. GUI checks: Join Field labels are Input Field / Join Field; Spatial Join 3.7.1 takes a list of Join Features, each with a Join Count Field Name; Flow Distance's label is Input flow direction type. Step 6 floods and building counts reproduced exactly in the GUI (319/356/388/413/451). Not built in the GUI: Step 6 Pairwise Clip/Intersect and Step 7 (arcpy values only).
+TODO: example maps; lab-machine run time; Jordanelle dates (VERIFY above). -->

@@ -9,7 +9,7 @@ Writes into docs/assignments/lab-07/images/:
                          HAND water surface, and FEMA cross-section C with HAND's wet cells
   lab07-rating.svg       Figure 1, the gage's rating with FEMA's five flows (rating_10163000.csv,
                          Stage_Table)
-  lab07-model.svg        Figure C, a drawn diagram of the two models (NOT a ModelBuilder export)
+  lab07-model.svg        drawn diagram of the two models; no longer on the page (Figure C is now the GUI export)
 
 Every number is read from the package (C:/Ames/HAND/PkgCheck) or from package_checks.json /
 profile.json; metadata statements from READ-ME-FIRST.txt, the NWIS site and rating files, the
