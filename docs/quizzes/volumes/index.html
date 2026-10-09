@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — The Base Is the Answer</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: raster volumes as a sum, units, Surface Volume, and why the base surface decides the answer.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "The Base Is the Answer",
+  subtitle: "CE 414 &middot; Week 10 &mdash; Volumes with Rasters<br>" +
+            "A lid, a bottom, and every cell in between. For each item, decide " +
+            "<strong>what the volume depends on</strong>.",
+  badge: "Volume call",
+  deckUrl: "../../slides/week-10/raster-volumes.html",
+  questions: [
+    {
+      prompt: "A 10 m cell stands 50 m above the base. What is its volume?",
+      options: [
+        "500 m³",
+        "5,000 m³",
+        "50,000 m³",
+        "5 km³"
+      ],
+      answer: "5,000 m³",
+      explanation: "Height times the cell's area: 50 m x 100 m² = 5,000 m³. Sum every cell for the total, and divide by 1,000³ for cubic kilometers."
+    },
+    {
+      prompt: "You sum height x 100 on a DEM still in latitude and longitude. What goes wrong?",
+      options: [
+        "Nothing; ArcGIS Pro converts the units",
+        "The heights are in degrees",
+        "Its cell area is wrong"
+      ],
+      answer: "Its cell area is wrong",
+      explanation: "A geographic DEM's cell size is in degrees, and its cells are not 10 m squares. Project to a coordinate system in meters first, so the cell area and the heights are in the same unit."
+    },
+    {
+      prompt: "When does Surface Volume (3D Analyst) do the whole job?",
+      options: [
+        "When the base is a flat plane",
+        "When the base is an interpolated surface",
+        "Only for lakes"
+      ],
+      answer: "When the base is a flat plane",
+      explanation: "Surface Volume measures above or below one flat plane. A curved base, like Lab 9's interpolated plain, needs Raster Calculator for the height and Zonal Statistics (Sum) for the total."
+    },
+    {
+      prompt: "Three flat bases gave Big Southern Butte 4.51 to 5.46 km³. What does that spread show?",
+      options: [
+        "The DEM is too coarse",
+        "The outline was digitized wrong",
+        "The base drives the answer",
+        "Flat bases cannot give volumes"
+      ],
+      answer: "The base drives the answer",
+      explanation: "Same DEM, same outline: only the base changed, and the volume moved by about a fifth. That is why Lab 9 rebuilds the plain by interpolation instead of picking one elevation."
+    },
+    {
+      prompt: "Why is a flat base a poor choice under Big Southern Butte?",
+      options: [
+        "The plain slopes to the north",
+        "Flat bases are slower to compute",
+        "The butte is not in Utah",
+        "Rhyolite is too dense to measure"
+      ],
+      answer: "The plain slopes to the north",
+      explanation: "The plain around the butte is not level, so one elevation sits too high on one side and too low on the other. An interpolated base follows the plain from points sampled all around it."
+    }
+  ],
+  perfectNote:  "All five. On to Lab 9.",
+  goodNote:     "Good. Reread the explanations you missed before Lab 9, Step 5.",
+  tryAgainNote: "A raster volume is height times cell area, summed; project first so the units agree; and the base surface decides the answer. Look at those slides again."
+});
+</script>
+</body>
+</html>

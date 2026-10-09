@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Cut or Fill?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: cut, fill, the balance grade, and reading the Cut Fill tool's output.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Cut or Fill?",
+  subtitle: "CE 414 &middot; Week 10 &mdash; Cut and Fill<br>" +
+            "An existing surface, a design surface, and the soil in between. For each item, decide " +
+            "<strong>which way the soil moves</strong>.",
+  badge: "Earthwork call",
+  deckUrl: "../../slides/week-10/cut-and-fill.html",
+  questions: [
+    {
+      prompt: "A cell's ground is 2 m above the design surface. Cut or fill, and how much for a 10 m cell?",
+      options: [
+        "Fill, 20 m³",
+        "Cut, 200 m³",
+        "Cut, 20 m³",
+        "Fill, 200 m³"
+      ],
+      answer: "Cut, 200 m³",
+      explanation: "Ground above the design must be dug out: cut. Its volume is the height difference times the cell's area, 2 m x 100 m² = 200 m³."
+    },
+    {
+      prompt: "You raise a level pad's grade by 1 m. What happens?",
+      options: [
+        "Cut and fill both grow",
+        "Less cut and more fill",
+        "More cut and less fill"
+      ],
+      answer: "Less cut and more fill",
+      explanation: "A higher grade leaves less ground above it to dig and more space below it to build up. The balance grade is where the two curves cross."
+    },
+    {
+      prompt: "On a grid, at what grade does a level pad's cut equal its fill?",
+      options: [
+        "The lowest ground cell",
+        "The highest ground cell",
+        "Halfway between highest and lowest",
+        "The mean ground height under the pad"
+      ],
+      answer: "The mean ground height under the pad",
+      explanation: "Cut minus fill is the sum of (ground minus grade) times the cell area, which is zero exactly when the grade is the mean of the ground cells. The midpoint of the range only matches the mean on a perfectly uniform slope."
+    },
+    {
+      prompt: "In ArcGIS Pro's Cut Fill output, a region has VOLUME = -5,000 m³. What happened there?",
+      options: [
+        "Material was added: fill",
+        "Material was removed: cut",
+        "The surfaces did not change"
+      ],
+      answer: "Material was added: fill",
+      explanation: "Cut Fill reports material removed as positive and material added as negative; unchanged cells get zero. Getting the sign backwards flips a whole earthwork report."
+    },
+    {
+      prompt: "Which does a simple grid volume of a level pad leave out?",
+      options: [
+        "The cell size",
+        "The side slopes at the pad's edges",
+        "The ground elevation",
+        "The pad's grade"
+      ],
+      answer: "The side slopes at the pad's edges",
+      explanation: "A real pad ties back to the ground with cut and fill slopes, which add earthwork. Swell and shrink, unusable material and DEM error are also left out; the grid gives a first estimate."
+    }
+  ],
+  perfectNote:  "All five. Thursday: the same sum, on a mountain.",
+  goodNote:     "Good. Reread the explanations you missed before Thursday.",
+  tryAgainNote: "Cut is ground above the design, fill is ground below it, a level pad balances at the mean ground height, and Cut Fill reports cut as positive. Look at those slides again."
+});
+</script>
+</body>
+</html>

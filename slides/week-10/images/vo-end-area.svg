@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+  <title>Average end area: two road cross-sections a distance L apart</title>
+  <rect width="760" height="400" fill="#ffffff"/>
+  <!-- station 1 -->
+  <g transform="translate(30,90)">
+    <path d="M0,40 C80,20 160,10 300,0" fill="none" stroke="#2d3748" stroke-width="2"/>
+    <path d="M60,30 L100,80 L220,80 L260,5" fill="none" stroke="#2f855a" stroke-width="3"/>
+    <path d="M60,30 C100,23 160,14 260,5 L220,80 L100,80 Z" fill="#c05621" opacity="0.55"/>
+    <text x="140" y="56" fill="#7b341e" font-weight="600">A₁</text>
+    <text x="0" y="120" fill="#1a202c" font-weight="600">Station 1: cut area A₁</text>
+  </g>
+  <!-- station 2 -->
+  <g transform="translate(420,90)">
+    <path d="M0,60 C80,50 160,40 300,30" fill="none" stroke="#2d3748" stroke-width="2"/>
+    <path d="M70,52 L100,80 L220,80 L250,34" fill="none" stroke="#2f855a" stroke-width="3"/>
+    <path d="M70,52 C110,47 170,40 250,34 L220,80 L100,80 Z" fill="#c05621" opacity="0.55"/>
+    <text x="150" y="68" fill="#7b341e" font-weight="600">A₂</text>
+    <text x="0" y="120" fill="#1a202c" font-weight="600">Station 2: cut area A₂</text>
+  </g>
+  <line x1="170" y1="250" x2="560" y2="250" stroke="#4a5568" stroke-width="2" marker-start="url(#m)" marker-end="url(#m)"/>
+  <text x="352" y="242" fill="#4a5568">L</text>
+  <text x="200" y="320" font-size="22" font-weight="600" fill="#1a202c">V ≈ L × (A₁ + A₂) ÷ 2</text>
+  <text x="30" y="40" font-size="19" font-weight="600" fill="#1a202c">Roads: earthwork from cross-sections</text>
+  <text x="30" y="370" fill="#4a5568">black: existing ground · green: design cross-section · orange: cut (drawn, not to scale)</text>
+  <defs><marker id="m" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker></defs>
+</svg>

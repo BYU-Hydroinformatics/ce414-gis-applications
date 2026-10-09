@@ -1,0 +1,71 @@
+{
+ "pad": {
+  "lon": -111.6357,
+  "lat": 40.26534,
+  "x0": 445872.33431329206,
+  "y0": 4457352.196698995,
+  "width_m": 150,
+  "depth_m": 100,
+  "mean_slope_pct": 8.1,
+  "ground_min": 1511.94,
+  "ground_max": 1524.02,
+  "ground_mean": 1517.7,
+  "cells": 150
+ },
+ "balance": {
+  "z": 1517.7,
+  "cut_m3": 21852,
+  "fill_m3": 21852
+ },
+ "cutfill_tool_rows": [
+  [
+   1,
+   2600,
+   0.0,
+   260000.0
+  ],
+  [
+   2,
+   75,
+   -21852.5,
+   7500.0
+  ],
+  [
+   3,
+   75,
+   21852.5,
+   7500.0
+  ]
+ ],
+ "cutfill_tool_sum": {
+  "positive_m3": 21852,
+  "negative_m3": -21852
+ },
+ "sign_check_grade_plus_2m": {
+  "tool_positive": 9487,
+  "tool_negative": -39487,
+  "numpy_cut": 9487,
+  "numpy_fill": 39487
+ },
+ "butte": {
+  "cells": 280311,
+  "area_km2": 28.03,
+  "dem_max": 2306.8,
+  "lab_baseline_km3": 5.145,
+  "planes": {
+   "lowest edge cell": {
+    "z": 1554.8,
+    "volume_km3": 5.465
+   },
+   "mean of the edge": {
+    "z": 1572.2,
+    "volume_km3": 4.976
+   },
+   "highest edge cell": {
+    "z": 1588.9,
+    "volume_km3": 4.507
+   }
+  },
+  "summit_col": 1215
+ }
+}
