@@ -170,6 +170,10 @@ These came out of the September 2026 audit and are **not** cosmetic:
 - **`Week 11 - Least Cost Path Analysis.pptx` teaches deprecated tools.** It uses ArcMap-era
   `CostDistance` / `Backlink`. Current practice is **Distance Accumulation** + **Optimal Path As
   Line**. Fix the tool choice before converting; the screenshots cannot be fixed independently.
+  *Resolved October 9, 2026:* Lab 11 was rebuilt on Distance Accumulation + Optimal Path As Line
+  (new data package, GUI-built at 175 %, piloted, example maps, report template; `tools/lab11/`),
+  and both Week 12 decks (`least-cost-path.md`, `least-cost-path-b.md`) now teach the current
+  tools on Lab 11's own data, with the legacy chain shown only as a comparison.
 - **Six "screenshots" across Labs 4, 5, 7, 9, 10 and the LCP deck are illegible.** They are
   zoomed-out ModelBuilder canvas grabs. These need **re-export from ModelBuilder**, not
   re-screenshotting.

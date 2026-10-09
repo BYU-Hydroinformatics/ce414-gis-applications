@@ -96,7 +96,7 @@ def endpoints(m):
 
 def base_layers(m):
     poly(m, os.path.join(SRC, "Cities"), "City limits", rgb(255, 255, 255, 0), rgb(255, 190, 120), 0.8)
-    poly(m, os.path.join(G, "Major_Lakes"), "Lakes over 1 sq km (barrier)", rgb(70, 110, 200, 60), rgb(200, 220, 255), 0.8)
+    poly(m, os.path.join(G, "Major_Lakes"), "Lakes and marshes over 1 sq km (barrier)", rgb(70, 110, 200, 60), rgb(200, 220, 255), 0.8)
     line(m, os.path.join(G, "Major_Roads"), "Major roads", rgb(200, 200, 200), 0.8)
     line(m, os.path.join(G, "Existing_Lines"), "Existing transmission lines (46-345 kV)", rgb(255, 230, 0), 1.0)
     line(m, os.path.join(FIG, "Straight_Line"), "Straight line between the substations", rgb(225, 225, 225), 1.4, dashed=True)
