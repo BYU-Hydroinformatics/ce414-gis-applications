@@ -4,6 +4,7 @@
 
 ## :material-presentation-play: Presentation Slides
 
+- **Tuesday** — [Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation-explorer.html) — How wrong is the surface? Error rasters, RMSE and what it hides, checkpoints when there is no truth, whether a ranking survives a change, and Lab 9.
 - **Thursday** — [OGC Web Services](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/ogc-web-services.html) — Data you ask for instead of download: WMS, WFS, WCS and catalogs, the OGC API generation, ArcGIS REST queries, and cloud-native COG and STAC, all on live Utah services.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
@@ -16,6 +17,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
+- [How Wrong Is the Surface?](../quizzes/rmse/index.html) — Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.
 - [What Comes Back?](../quizzes/web-services/index.html) — Five questions on what each OGC service actually hands you (a picture, the features themselves, the coverage values, or somewhere to find them) and why a standard is a document, not software.
 
 </div>

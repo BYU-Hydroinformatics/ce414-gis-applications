@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — How Wrong Is the Surface?</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: error rasters, RMSE, checkpoints, and whether a ranking of interpolation methods survives a change.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "How Wrong Is the Surface?",
+  subtitle: "CE 414 &middot; Week 9 &mdash; Interpolation Explorer<br>" +
+            "You rebuilt a DEM from points. For each item, decide what the error tells you " +
+            "<strong>and what it does not</strong>.",
+  badge: "Error call",
+  deckUrl: "../../slides/week-09/interpolation-explorer.html",
+  questions: [
+    {
+      prompt: "Your error raster is the true DEM minus the surface. A cell reads +40. What happened there?",
+      options: [
+        "The surface came out 40 m too low",
+        "The surface came out 40 m too high",
+        "The true DEM is 40 m in error",
+        "Forty sample points fell in that cell"
+      ],
+      answer: "The surface came out 40 m too low",
+      explanation: "Truth minus surface is positive when the truth is bigger, so the surface fell short of the ground by 40 m. Subtract the other way and every sign, and every color on the map, flips, which is why the order is fixed once and kept."
+    },
+    {
+      prompt: "Why are the errors squared before they are averaged in an RMSE?",
+      options: [
+        "To turn meters into square meters",
+        "So cells with no data drop out",
+        "So every miss counts, big ones most",
+        "Zonal Statistics cannot average negatives"
+      ],
+      answer: "So every miss counts, big ones most",
+      explanation: "Averaged as they are, a surface too high in one place and too low in another can score near zero. Squaring makes every miss positive and weights a 100 m miss far more than a 5 m one; the square root at the end puts the answer back in meters."
+    },
+    {
+      prompt: "Two surfaces have the same RMSE. What could still differ between them?",
+      options: [
+        "Nothing; same RMSE, same surface",
+        "Where the errors are, and which way",
+        "Only the cell size of the two surfaces"
+      ],
+      answer: "Where the errors are, and which way",
+      explanation: "An RMSE is one number for a whole map. One surface could be biased high everywhere and the other balanced, or one could have a single huge miss on a cliff band. The error map shows what the number hides."
+    },
+    {
+      prompt: "In real work you have no true DEM. How do you judge an interpolated surface?",
+      options: [
+        "Compare it with a basemap hillshade",
+        "Check it at measured points held back",
+        "Read it back at its own sample points",
+        "Pick the smoothest-looking surface"
+      ],
+      answer: "Check it at measured points held back",
+      explanation: "Checkpoints the method never saw are the only honest test. Reading an exact method back at its own sample points returns the measurements unchanged, so it says nothing about the ground in between."
+    },
+    {
+      prompt: "The same surfaces were checked at 2,000 random sets of 200 checkpoints. What did that show?",
+      options: [
+        "200 points are too few to tell the methods apart",
+        "Every set gave exactly the all-cell RMSE",
+        "The winner changed from one set to the next",
+        "Each RMSE wandered, but the ranking never changed"
+      ],
+      answer: "Each RMSE wandered, but the ranking never changed",
+      explanation: "Each method's checkpoint RMSE moved by a few meters from one set to the next, but the same points judge all three surfaces, so a set that lands on hard ground makes every method look worse together. 200 checkpoints were enough to choose a method, and loose for quoting its accuracy."
+    }
+  ],
+  perfectNote:  "All five. You are ready for Lab 9's error maps and its checkpoint question.",
+  goodNote:     "Good. Reread the explanations you missed before you start Lab 9 Step 6.",
+  tryAgainNote: "Error is truth minus surface, RMSE squares it so every miss counts, and checkpoints are how you judge a surface when there is no truth. Look at those slides again."
+});
+</script>
+</body>
+</html>

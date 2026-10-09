@@ -589,6 +589,12 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
+> [!NOTE]
+> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
+> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
+> model's elements, and the wording of your report are your own work. Submissions whose layouts,
+> labels or symbology match another student's too closely are flagged for follow-up.
+
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your

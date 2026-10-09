@@ -40,6 +40,7 @@ QUIZZES = {
     "bathymetry":           7,
     "iterators":            7,
     "interpolation":        8,
+    "rmse":                 9,
     "web-services":         9,
     "suitability":         10,
     "least-cost-path":     11,

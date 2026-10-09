@@ -363,11 +363,13 @@ GeoJSON · longitude, latitude · asked with **/collections/…/items**
 
 - **Not an OGC standard** — Esri's own published API, used by ArcGIS Online and ArcGIS Server
 - **FeatureServer** → features (UGRC ski areas, NHD) · **MapServer** → map images (USGSTopo) · **ImageServer** → raster values (3DEP)
+- But an ImageServer can draw before it sends: added to ArcGIS Pro, 3DEP arrives as an **8-bit hillshade** — Tuesday's Lab 9 Step 1
 - One ArcGIS Server can also speak **WMS, WFS, WCS** for the same data:
 
 ![w:800 center](images/ws9-rest-vs-wms.png)
 
 <!-- The figure: the same USGSTopo map service asked through REST (MapServer/export, f=image) and through WMS (WMSServer, GetMap), October 5, 2026. The two renders differ in label density because the REST export adjusts the extent to the image shape in Web Mercator and draws at a different scale; both are pictures. The 3DEP ImageServer likewise answers ArcGIS REST, WMS and WCS (we used all three). -->
+<!-- The Lab 9 tie-in, observed in the Lab 9 GUI build (ArcGIS Pro 3.7.1, October 2026): Add Data From Path with the 3DEP ImageServer URL gave a layer drawn as a hillshade, Pixel Type unsigned char, 8 bit, Web Mercator (WKID 3857), 1 m cells, and the Explore pop-up at Y Mountain's summit read 154 where the DEM reads about 2,897 m. The service itself is Float32 (its ?f=pjson says pixelType F32, -60.3 to 3,922.5 m) and lists twelve raster functions, Hillshade Gray first; the layer in ArcGIS Pro is that function's output, not the elevations. Ask the class who saw 154 on Tuesday, and how they would get the meters (the WCS on the previous slides, or the layer's raster function set to None in its properties - VERIFY that last menu path in the GUI before saying it). -->
 <!-- REST endpoints used today: https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0 and .../UtahStreamsNHD/FeatureServer/0 (ArcGIS Online, current version 12); https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer; https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer (ArcGIS Server 11.3, Float32, values -60.3 to 3,922.5 m). Esri's reference: https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/ -->
 
 ---
@@ -565,10 +567,11 @@ Open the **UGRC ski-area layer** on your phone or laptop (scan the code):
 
 - **Lab 8 — Big Southern Butte** is due **Saturday 11:59 pm**: [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
 - **Reading** — Chapter 14 of *GIS Fundamentals* (Data Standards and Data Quality); **Quiz 8** on Learning Suite, open book, due **Saturday 11:59 pm**
-- Next week: **raster-based spatial analysis**, and **Lab 9 — Interpolation Explorer**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+- **Lab 9 — Interpolation Explorer**, started Tuesday, is due **Saturday of next week**: [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
+- Next week: **raster-based spatial analysis**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 8, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 9. -->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py (Lab 8, Quiz 8, Chapter 14); Week 10 lists the Raster-Based Spatial Analysis deck, Chapter 9, and Lab 9, which is introduced on Tuesday of Week 9 (interpolation-explorer.md). -->
 
 ---
 
