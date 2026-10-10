@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 9. Tuesday's interpolation lecture built the surfaces: Thiessen, IDW, splines, kriging. Today is the question it ended on: how would you know which one to trust? First with the truth in hand, then without it. Then Lab 8, which does exactly this on Y Mountain. The title image is the Lab 8 example baseline sheet: the true DEM and three rebuilds from the same 2,500 points, with their error maps underneath. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 9 — Interpolation Explorer<span class="updated">Last Updated: 2026-10-08</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 9 — Interpolation Explorer<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---

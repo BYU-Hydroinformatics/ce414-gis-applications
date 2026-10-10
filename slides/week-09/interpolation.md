@@ -20,7 +20,7 @@ Brigham Young University
 <!-- Let's learn about sampling and interpolation. This is now one Tuesday session (Thursday is Interpolation Explorer and Lab 8): it runs from sampling design through splines to kriging, so skip optional slides as time requires. The surface on the right is the end product of everything we do today — a continuous surface built from a scatter of measured points. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 9 — Interpolation<span class="updated">Last Updated: 2026-09-07</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 9 — Interpolation<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
