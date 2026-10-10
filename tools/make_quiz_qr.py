@@ -50,6 +50,8 @@ QUIZZES = {
     "coordinate-systems":  11,
     "final-project":       13,
     "gps":                 11,
+    "networks":            14,
+    "service-areas":       14,
 }
 
 # 860 px square matches the pilot code and is more than enough for a 1280x720 slide.

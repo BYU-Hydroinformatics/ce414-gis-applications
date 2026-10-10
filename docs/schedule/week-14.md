@@ -9,7 +9,10 @@
 
 ## :material-presentation-play: Presentation Slides
 
-*No slides this week.*
+- **Tuesday** — [Network Analysis, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-14/network-analysis-a.html) — Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.
+- **Thursday** — [Network Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-14/network-analysis-b.html) — Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 12.
+
+Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 </div>
 
@@ -17,7 +20,10 @@
 
 ## :material-account-group: In-Class Practice
 
-Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted here before class. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.
+Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
+
+- [Along the Roads](../quizzes/networks/index.html) — Five questions on what a network dataset is made of: junctions and connectivity, one-way streets as a cost, two impedances that give two routes, what UGRC's 1.5 factor stands for, and which distance belongs to a fire engine.
+- [Four Minutes Away](../quizzes/service-areas/index.html) — Five questions on Solve, which solver answers which question, why a buffer and a service area disagree about the same four minutes, and what Lab 12's cutoff decides.
 
 </div>
 

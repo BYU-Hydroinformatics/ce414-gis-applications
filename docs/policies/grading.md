@@ -23,13 +23,13 @@ Below 60 % is an E.
 
 ## What is graded
 
-Point values are from the Learning Suite assignments view (September 8, 2026), 1,270 points in
-all. The grade is points-based, so the percentages below are simply each component's share of the
+Point values are from the Learning Suite assignments view (September 8, 2026) plus Lab 12, added
+October 10, 2026: 1,320 points in all. The grade is points-based, so the percentages below are simply each component's share of the
 total and will shift a little if points are added or dropped during the semester.
 
 | Component | Points | Notes |
 | --- | --- | --- |
-| Labs 1 to 11 | 50 each, 550 total (about 43 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
+| Labs 1 to 12 | 50 each, 600 total (about 45 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
 | Reading quizzes (11) | 20 each, 220 total (about 17 %) | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
 | Midterms 1 and 2 | 100 each | Closed book, concept based, in the Testing Center. Open Tuesday 8:00 am to Thursday 9:00 pm of Weeks 8 and 14. |
 | Final exam | 100 | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
@@ -39,7 +39,7 @@ total and will shift a little if points are added or dropped during the semester
 | Peer review | 20 | Review and stamp at least ten classmates' lab reports, two points each, and turn in a memo at the end listing whom you reviewed. |
 | Final project presentation notes | 10 | Notes on at least ten classmates' presentations. |
 
-The three exams together are about 24 % of the grade and the final project about 8 %. Attendance,
+The three exams together are about 23 % of the grade and the final project about 8 %. Attendance,
 the in-class activities, peer review, and the presentation notes together are the **Attendance and
 Participation** category, about 8 %.
 

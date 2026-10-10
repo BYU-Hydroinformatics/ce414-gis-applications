@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Along the Roads</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what a network dataset is made of, how edges connect, what an impedance is, how one-way streets are handled, and why the shortest route is not the fastest.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Along the Roads",
+  subtitle: "CE 414 &middot; Week 14 &mdash; Network Analysis, Part A<br>" +
+            "A network is a model of how things move. For each item, decide " +
+            "<strong>what the network knows and what it does not</strong>.",
+  badge: "Network call",
+  deckUrl: "../../slides/week-14/network-analysis-a.html",
+  questions: [
+    {
+      prompt: "Two road segments cross on the map but share no junction in the network dataset. What can a route do there?",
+      options: [
+        "Turn from one onto the other, since the lines touch",
+        "Turn, but with a delay added for the crossing",
+        "Turn only if both segments are two-way",
+        "Nothing: the edges are not connected"
+      ],
+      answer: "Nothing: the edges are not connected",
+      explanation: "Connectivity lives in the junctions. An overpass crosses a street on the map and never meets it in the network, which is exactly right for a freeway; it is also why a missing junction at a real intersection silently breaks every route through it."
+    },
+    {
+      prompt: "In UGRC's network, TravelMinutes on a one-way segment is 3.04 one way and 304 the other. How is the one-way rule being enforced?",
+      options: [
+        "As a restriction: the wrong direction is forbidden",
+        "As a cost: 100 times the right direction",
+        "It is not enforced; the two values are a data error"
+      ],
+      answer: "As a cost: 100 times the right direction",
+      explanation: "A restriction attribute would make the edge impassable one way. UGRC chose a cost instead, a hundredfold penalty, so a solver will go the wrong way only when nothing else reaches at all. Both are models of the same sign; they differ in what happens at the edge of the network."
+    },
+    {
+      prompt: "A network carries two costs, TravelMinutes and Length. You solve a route with each. Why can the two routes differ?",
+      options: [
+        "They cannot; the solver always finds the same edges",
+        "Meters and minutes rank the same edges differently",
+        "Length ignores one-way streets and TravelMinutes does not"
+      ],
+      answer: "Meters and minutes rank the same edges differently",
+      explanation: "An impedance is whatever you choose to minimize. Meters and minutes rank the same edges differently, so the cheapest route under one can be expensive under the other. Which impedance is right depends on the question: a fire engine's standard is written in minutes."
+    },
+    {
+      prompt: "UGRC estimated each segment's minutes from its posted speed limit and road class, and multiplied surface-street times by 1.5. What is that factor standing in for?",
+      options: [
+        "Signals, stops and cross traffic",
+        "The extra length of a curved street",
+        "The time a fire engine loses leaving the station",
+        "A unit conversion from miles to kilometers"
+      ],
+      answer: "Signals, stops and cross traffic",
+      explanation: "A posted limit is a ceiling, not an average. Streets with traffic lights and cross traffic move slower than their limit, so UGRC scaled them up; freeways kept their limit. It is a crude model of typical driving, and UGRC says so, which is why Lab 12 asks what an engine with its lights on does to the answer."
+    },
+    {
+      prompt: "Lab 1 buffered roads and stores; Lab 11 accumulated cost across a raster; Lab 12 travels a network. Which distance belongs to a fire engine's response time?",
+      options: [
+        "Straight-line, because a buffer is the simplest",
+        "Cost distance, because terrain always matters",
+        "Network distance: engines stay on the roads",
+        "Any of them, since all three measure meters"
+      ],
+      answer: "Network distance: engines stay on the roads",
+      explanation: "Each distance fits a different mover. A power line crosses country, so a cost surface fits it; a vehicle is confined to the roads, so its distance runs along the edges and through the junctions. The buffer is the one that is simply wrong here, and Lab 12 measures by how much."
+    }
+  ],
+  perfectNote:  "All five. Thursday puts the network to work.",
+  goodNote:     "Good. Reread the explanations you missed before Thursday's service areas.",
+  tryAgainNote: "Connectivity lives in the junctions, an impedance is whatever cost you minimize, and a one-way rule can be a wall or a price. Look at those slides again."
+});
+</script>
+</body>
+</html>

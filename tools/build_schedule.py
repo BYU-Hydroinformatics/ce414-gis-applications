@@ -76,7 +76,8 @@ DECKS = [
     (11, "gps-triangulation",              "GPS and Positioning",                        "A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
     (12, "least-cost-path",                "Least Cost Path Analysis, Part A",           "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
     (12, "least-cost-path-b",              "Least Cost Path Analysis, Part B",           "ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 11's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.", "Thu"),
-    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),
+    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),    (14, "network-analysis-a",             "Network Analysis, Part A",                   "Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.", "Tue"),
+    (14, "network-analysis-b",             "Network Analysis, Part B",                   "Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 12.", "Thu"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Interpolation Explorer",
@@ -96,8 +97,6 @@ FINAL_PROJECT_WEEKS = (13, 14, 15)
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
     13: "Thursday is Thanksgiving, no class.",
-    14: "Tuesday and Thursday: network analysis with ArcGIS Pro's Network Analyst, and Lab 12. Slides will be posted "
-        "here before class. Midterm 2 is open in the Testing Center from Tuesday morning to Thursday evening.",
     15: "No class this week. Work on your final project and submit it by the last day of classes.",
 }
 
@@ -194,6 +193,10 @@ PRACTICE = {
           "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one."),
          ("cost-paths", "What Moved the Line?",
           "Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.")],
+    14: [("networks", "Along the Roads",
+          "Five questions on what a network dataset is made of: junctions and connectivity, one-way streets as a cost, two impedances that give two routes, what UGRC's 1.5 factor stands for, and which distance belongs to a fire engine."),
+         ("service-areas", "Four Minutes Away",
+          "Five questions on Solve, which solver answers which question, why a buffer and a service area disagree about the same four minutes, and what Lab 12's cutoff decides.")],
     13: [("final-project", "Ready to Pitch?",
           "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.")],
 }

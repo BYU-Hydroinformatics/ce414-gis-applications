@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CE 414 — Four Minutes Away</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="CE 414 in-class quiz: what a service area is, what Solve does, closest facility against location-allocation, why a buffer and a service area disagree, and what Lab 12's cutoff decides.">
+  <link rel="stylesheet" href="../lib/quiz.css">
+</head>
+<body>
+<div class="container" id="quizRoot"></div>
+<script src="../lib/quiz.js"></script>
+<script>
+CE414Quiz.start({
+  title: "Four Minutes Away",
+  subtitle: "CE 414 &middot; Week 14 &mdash; Network Analysis, Part B<br>" +
+            "Three solvers, one network. For each item, decide " +
+            "<strong>which analysis answers the question, and what it assumes</strong>.",
+  badge: "Solver call",
+  deckUrl: "../../slides/week-14/network-analysis-b.html",
+  questions: [
+    {
+      prompt: "You run Make Service Area Analysis Layer and Add Locations, and the map shows the stations but no polygons. What is missing?",
+      options: [
+        "Solve: nothing is computed until the layer is solved",
+        "A larger search tolerance",
+        "Copy Features, to write the polygons to the geodatabase",
+        "A travel mode with a name"
+      ],
+      answer: "Solve: nothing is computed until the layer is solved",
+      explanation: "The analysis layer holds the settings and the inputs; Solve is the step that walks the network outward from each facility and fills in the Polygons sublayer. Copy Features only keeps what Solve produced."
+    },
+    {
+      prompt: "A dispatcher asks: for this address, which station's engine arrives first, and in how many minutes? Which solver?",
+      options: [
+        "Service Area",
+        "Location-Allocation",
+        "Closest Facility",
+        "Route"
+      ],
+      answer: "Closest Facility",
+      explanation: "Closest Facility starts at incidents and finds the nearest facility by the network cost, with the route and its minutes. A service area answers the opposite question, what a facility can reach; location-allocation chooses where facilities should be."
+    },
+    {
+      prompt: "A city wants to know where one new station would bring the most residents inside four minutes. Which solver?",
+      options: [
+        "Service Area, run once per candidate site",
+        "Location-Allocation, maximize coverage",
+        "Closest Facility from every block",
+        "Route from the existing stations"
+      ],
+      answer: "Location-Allocation, maximize coverage",
+      explanation: "Location-allocation weighs demand (people, by block) against candidate sites and picks the set that covers the most within the cutoff. You could brute-force it with one service area per candidate; the solver does that comparison for you, with the existing stations held as required."
+    },
+    {
+      prompt: "A 3.75 km buffer around the stations leaves 3.5 % of Utah County outside; the four-minute service area leaves 57.5 % outside. Why so different?",
+      options: [
+        "The buffer was drawn in the wrong coordinate system",
+        "The service area forgets the stations near the county line",
+        "Census blocks are too small for a buffer to count",
+        "The circle ignores the roads; the engine cannot"
+      ],
+      answer: "The circle ignores the roads; the engine cannot",
+      explanation: "The buffer assumes the engine drives 35 mph in every direction at once, across the lake if need be. The network makes it follow roads at UGRC's typical-traffic minutes, with signals and turns; four minutes of that reaches a few kilometers along a few streets. Same standard, two models of movement."
+    },
+    {
+      prompt: "In Lab 12 the four-minute cutoff is a model parameter and every student runs a different one. What is the lab asking you to find out?",
+      options: [
+        "The one true response-time standard for Utah County",
+        "How much the answer depends on the standard",
+        "Whether Network Analyst is faster than a buffer",
+        "Which stations should close"
+      ],
+      answer: "How much the answer depends on the standard",
+      explanation: "Four minutes is a standard somebody chose. Varying it shows how much of the answer is the standard and how much is the road network and where people live: a few minutes more takes in whole cities, and after that the share stops falling because almost nobody is left."
+    }
+  ],
+  perfectNote:  "All five. On to Lab 12.",
+  goodNote:     "Good. Reread the explanations you missed before you build the Lab 12 model.",
+  tryAgainNote: "Solve is what computes, each solver answers a different question, and a buffer and a service area are two models of the same four minutes. Look at those slides again."
+});
+</script>
+</body>
+</html>
