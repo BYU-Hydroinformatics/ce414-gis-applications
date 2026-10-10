@@ -79,6 +79,18 @@
         "127.0.0.1"
       ],
       "port": 8416
+    },
+    {
+      "name": "mkdocs-win",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "mkdocs",
+        "serve",
+        "-a",
+        "127.0.0.1:8414"
+      ],
+      "port": 8414
     }
   ]
 }
