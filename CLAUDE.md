@@ -121,3 +121,12 @@ its figure, a table that lost a column.
 Commit logically-grouped work with a message that says what changed and why. Do not push to `main`
 without being asked — the push is what publishes to students. If you are a subagent converting a
 single deck or lab, leave the work in the working tree and report; the maintainer commits.
+
+## The private companion repository
+
+Exam drafts and keys, quiz answer keys and generators, per-student grading lookups, and plans that
+quote in-class-only numbers live in the **private** sibling checkout `../ce414-private`, not here.
+Everything in this repository, including HTML comments and git history, is public on GitHub; the
+site build strips comments, the repository does not. If a page needs a number that lives there,
+the number is not public: rewrite the page so it does not need it. Student grades and submissions go
+in neither repository.
