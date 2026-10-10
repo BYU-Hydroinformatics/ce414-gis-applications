@@ -100,7 +100,7 @@ real ArcGIS Pro screen grabs, and none of it can land in the public repository.
 > and fill and raster volumes (Week 10), coordinate systems and GPS (Week 11), least cost paths
 > (Week 12), the final-project lecture (Week 13) — drawn from those weeks' decks
 > (`slides/week-08` … `week-13`), their QR quizzes (`docs/quizzes/`) and the Learning Suite reading
-> quizzes (generators in `tools/learning-suite-quizzes/`). Ask me whether Week 14's network analysis is
+> quizzes (generators in the private repo, `ce414-private/quizzes/learning-suite/`). Ask me whether Week 14's network analysis is
 > in scope (it is taught the same week the exam is open). Use only numbers that appear in class
 > material, keep any number that exists only in class out of public files, and use real captures from
 > the repo's images or a fresh ArcGIS Pro session. Include a coverage matrix, a key with worked answers

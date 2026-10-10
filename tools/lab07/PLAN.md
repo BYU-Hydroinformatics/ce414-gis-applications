@@ -241,7 +241,7 @@ overlap 0.776 km². **Hit rate 0.578, false-alarm ratio 0.462, CSI 0.386.**
   never reaches the river upstream of the gage's neighborhood (northmost cell 4,459,398 N); HAND at the
   same stage follows the river to the top of the box (4,463,413 N) and floods 1.75 km².
 
-## 7. Personal parameter (`personal.py` → `personal_lookup.csv`; `package_checks.json['personal']`)
+## 7. Personal parameter (`personal.py` → `ce414-private/grading-oracles/lab07_personal_lookup.csv`; `package_checks.json['personal']`)
 
 **Personal design flow Q = 900 + 12 × (last two digits of the nine-digit BYU ID) ft³/s**: 900 to
 2,088 ft³/s (just above the 2-year to between the 10- and 25-year), always **inside the rating table**.
@@ -438,6 +438,6 @@ example maps (`arcpy.mp`) → report template → the two Week 8 decks (§12) �
 `tools/lab07/`: `stage_table.py` (+ `.csv`, `_meta.json`), `fetch_dem.py`, `fetch_vectors.py`,
 `run_model.py` (+ `check_values.json` 5 m default with log-interpolated h, `sensitivity_*.json`),
 `xs_check.py` (+ `.json`), `h_sweep.py` (+ json), `bathtub.py` (+ json), `student_chain.py`
-(+ json), `gotchas.py` (+ json), `personal.py` (+ `personal_lookup.csv`), `make_extract.py`,
+(+ json), `gotchas.py` (+ json), `personal.py` (+ the private `lab07_personal_lookup.csv`), `make_extract.py`,
 `verify_package.py` (+ **`package_checks.json`, the canonical check values**).
 `C:\Ames\HAND\`: `raw\` (NWIS, FIS PDFs, REST JSON), `dem\`, `HAND.gdb`, `work\`, `pkg\`, `PkgCheck\`.

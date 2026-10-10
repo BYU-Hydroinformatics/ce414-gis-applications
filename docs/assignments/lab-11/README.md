@@ -536,7 +536,7 @@ in to BYU sites.
 > Write your BYU ID's last two digits and your Line_Weight in your report: the grader checks your
 > route against them.
 
-<!-- Personal lookup for every ending 00-99: tools/lab11/personal_lookup.csv (run_model.py personal), 53.70 to 55.01 km. -->
+<!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab11_personal_lookup.csv (tools/lab11/run_model.py personal; private repo), 53.70 to 55.01 km. -->
 
 **Then run the model from its tool dialog at least five times**, each with new output names that say
 what changed (`Route_L0`, `Accumulated_Cost_L0`, `Cost_Surface_L0`, `Major_Streams_L0`):

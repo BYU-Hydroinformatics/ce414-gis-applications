@@ -1,7 +1,8 @@
 r"""Lab 11 reference run: the page's model in arcpy, on the hosted package only.
 
     python run_model.py               baseline + step checks + sensitivity runs -> check_values.json
-    python run_model.py personal      the personal-parameter sweep -> personal_lookup.csv
+    python run_model.py personal      the personal-parameter sweep -> ../../../ce414-private/grading-oracles/lab11_personal_lookup.csv
+                                      (private repo; falls back to personal_lookup.csv here, which is git-ignored)
 
 The model (one ModelBuilder model on the page):
   Select   Major_Roads = Roads where DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial')
@@ -32,6 +33,13 @@ from arcpy.sa import (Con, DistanceAccumulation, IsNull, OptimalPathAsLine, Rast
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def private_path(here, name):
+    """Grading oracles belong in the private companion repo (../ce414-private/grading-oracles/).
+    If that checkout is absent, write beside the script; the public .gitignore keeps it out of git."""
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "grading-oracles"))
+    return os.path.join(priv, name) if os.path.isdir(priv) else os.path.join(here, name.split("_", 1)[1])
 ZIP = os.path.join(HERE, "..", "..", "docs", "data", "lab11-power-line.zip")
 ROOT = r"C:\Ames\Lab11\ref"
 DATA = os.path.join(ROOT, "lab11-power-line")
@@ -206,7 +214,7 @@ def personal():
         print(rows[-1])
         for n in (f"Cost_p{d:02d}", f"Acc_p{d:02d}", f"Back_p{d:02d}"):
             arcpy.management.Delete(n)
-    with open(os.path.join(HERE, "personal_lookup.csv"), "w", newline="") as f:
+    with open(private_path(HERE, "lab11_personal_lookup.csv"), "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader(); w.writerows(rows)
 

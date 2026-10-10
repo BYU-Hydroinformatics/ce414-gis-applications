@@ -8,7 +8,7 @@
 Usage (ArcGIS Pro python):
   run_model.py                 default run (2 m lidar, T, corridor) + writes check_values.json
   run_model.py --sweep         sensitivity runs -> sensitivity.json
-  run_model.py --personal      personal-stage lookup table -> personal_lookup.csv
+  run_model.py --personal      personal-stage lookup table -> ce414-private/grading-oracles/lab07_personal_lookup.csv
 """
 import csv
 import json

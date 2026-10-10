@@ -1,5 +1,5 @@
 """Lab 7 (HAND): the personal design flow, for every possible last two digits (00-99) of the
-nine-digit BYU ID number. Grading lookup table -> personal_lookup.csv (and the summary into
+nine-digit BYU ID number. Grading lookup table -> ../../../ce414-private/grading-oracles/lab07_personal_lookup.csv (private repo; falls back to personal_lookup.csv here, which is git-ignored) (and the summary into
 package_checks.json['personal_summary']).
 
 Rule (Step 7 of the page):
@@ -21,6 +21,13 @@ from arcpy.sa import Con, Raster
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def private_path(here, name):
+    """Grading oracles belong in the private companion repo (../ce414-private/grading-oracles/).
+    If that checkout is absent, write beside the script; the public .gitignore keeps it out of git."""
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "grading-oracles"))
+    return os.path.join(priv, name) if os.path.isdir(priv) else os.path.join(here, name.split("_", 1)[1])
 PC = r"C:\Ames\HAND\PkgCheck"
 P = os.path.join(PC, "lab07-provo-river-hand")
 G = os.path.join(P, "ProvoData.gdb")
@@ -51,7 +58,7 @@ def main():
         cells, area, b = cache[h]
         rows.append({"last_two_digits": f"{dd:02d}", "q_cfs": q, "gage_height_ft": gh, "h_m": h,
                      "wet_cells": cells, "area_km2": area, "buildings": b})
-    with open(os.path.join(HERE, "personal_lookup.csv"), "w", newline="") as f:
+    with open(private_path(HERE, "lab07_personal_lookup.csv"), "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)

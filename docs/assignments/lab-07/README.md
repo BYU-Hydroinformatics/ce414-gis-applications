@@ -14,7 +14,7 @@ gage height - 3.20 ft, uncorrected; 5 m lidar package; personal flow Q = 900 + 1
 digits of the BYU ID number; stream threshold as the sensitivity variable; buildings only; Iterate
 Field Values over the hosted stage table. Every check value was measured from the hosted zip alone
 in ArcGIS Pro 3.7.1 arcpy (tools/lab07/verify_package.py -> package_checks.json; personal.py ->
-personal_lookup.csv). GUI BUILD October 9, 2026, ArcGIS Pro 3.7.1 at 175 % (C:\Ames\Lab07HAND,
+personal_lookup.csv, kept in the private ce414-private repo, grading-oracles/). GUI BUILD October 9, 2026, ArcGIS Pro 3.7.1 at 175 % (C:\Ames\Lab07HAND,
 set up by tools/lab07/gui_project.py): both models built by hand from this page, run inside
 ModelBuilder, every check value of Steps 2-6 reproduced exactly; the dialog figures and Figure C are
 from that session. -->

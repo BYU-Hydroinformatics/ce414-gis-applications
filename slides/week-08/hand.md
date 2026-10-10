@@ -186,7 +186,7 @@ By the end of class you should be able to:
 - The **nine-digit number on your BYU ID card**, not your NetID
 - Every personal flow is **inside the rating**: no extrapolation
 
-<!-- Range 900 to 2,088 ft³/s, all below the rating's top row of 2,150 ft³/s. The grader looks up each student's h, area and building count (tools/lab07/personal_lookup.csv). -->
+<!-- Range 900 to 2,088 ft³/s, all below the rating's top row of 2,150 ft³/s. The grader looks up each student's h, area and building count (ce414-private/grading-oracles/lab07_personal_lookup.csv). -->
 
 ---
 

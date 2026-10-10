@@ -1,5 +1,5 @@
 """Lab 7 (HAND): reproduce every check value on the student page from the hosted zip ALONE,
-following the page's tool settings. Writes package_checks.json (then run personal.py for personal_lookup.csv).
+following the page's tool settings. Writes package_checks.json (then run personal.py for the private grading lookup).
 
 Student path (docs/assignments/lab-07/README.md):
   Step 0  environments: Extent, Snap Raster and Cell Size = Provo_DEM
@@ -189,7 +189,7 @@ def main():
                                "distinct_area": len(set(p["area_km2"] for p in pers)),
                                "distinct_buildings": len(set(p["buildings"] for p in pers))}
     # NOTE: this quick pass rounds h to whole centimeters; the page uses h to the millimeter, and the
-    # grading table personal_lookup.csv is written by personal.py (run it after this script).
+    # the grading lookup is written by personal.py into the private ce414-private repo (run it after this script).
     print(res["personal_summary_cm"], pers[0], pers[89], pers[2])
     # Step 7: stream-threshold runs
     res["threshold_runs"] = []

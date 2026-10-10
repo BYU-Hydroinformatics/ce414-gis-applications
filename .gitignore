@@ -11,3 +11,7 @@ slides/**/*.html
 
 # built Learning Suite quiz packages - regenerate with tools/learning-suite-quizzes/*.py
 tools/learning-suite-quizzes/*.zip
+
+# Grading oracles and quiz keys live in the private companion repo (../ce414-private); never commit them here
+tools/*/personal_lookup.csv
+tools/learning-suite-quizzes/

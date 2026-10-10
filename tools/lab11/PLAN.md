@@ -63,4 +63,4 @@ substations, and the two endpoint substations. Students do the four Selects them
 
 ## Measured
 
-See `check_values.json` (`run_model.py`) and `personal_lookup.csv` (`run_model.py personal`).
+See `check_values.json` (`run_model.py`) and `ce414-private/grading-oracles/lab11_personal_lookup.csv` (`run_model.py personal`; private repo).
