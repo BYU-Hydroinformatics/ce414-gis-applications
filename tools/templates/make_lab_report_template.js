@@ -378,6 +378,85 @@ const LABS = {
   ],
 },
 
+'12': {
+  labTitle: 'Lab 12: Fire Response Coverage, a Network Analysis',
+  labSubtitle: 'Who in Utah County lives more than four minutes’ drive from a fire station',
+  sections: [
+    { h: 'Requirements and Approach',
+      hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to measure and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
+
+    { h: 'The Data and Their Metadata',
+      hint: 'Rubric: the three metadata values and what each means for your count (2 points). Read them yourself on the UGRC pages and services linked in the Data section and in READ-ME-FIRST.txt — do not copy them from Figure A.',
+      table: { caption: 'Table 1. Metadata for the fire stations, the road network and the Census blocks.',
+               head: ['Metadata value', 'What you found', 'What it means for your count'],
+               rows: [['Fire stations: the “Last Update” date', '', ''], ['Road network: what UGRC’s minutes were estimated from', '', ''],
+                      ['Census blocks: what the layer’s description says', '', '']],
+               widths: [2600, 2400, 4360] } },
+
+    { h: 'The Model',
+      hint: 'Rubric: a description a reader could repeat from — each tool and its settings (the cutoff, the travel direction, the polygon options, the search tolerance, the selection relationship and its inversion, the buffer distance and dissolve), and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
+      table: { caption: 'Table 2. Model description — one row per tool.',
+               head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
+               rows: [['Make Service Area Analysis Layer', '', '', '', ''], ['Add Locations', '', '', '', ''], ['Solve', '', '', '', ''],
+                      ['Select Data + Copy Features (Served_Area)', '', '', '', ''], ['Select Layer By Location (network)', '', '', '', ''],
+                      ['Copy Features + Summary Statistics (network)', '', '', '', ''], ['Buffer (Crow_Area)', '', '', '', ''],
+                      ['Select Layer By Location (buffer)', '', '', '', ''], ['Copy Features + Summary Statistics (buffer)', '', '', '', '']],
+               widths: [2300, 2100, 2000, 1700, 1260] },
+      figures: [
+        { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab12.atbx) with the report as well.' },
+        { caption: 'Figure 2. The model’s tool dialog, with the cutoff and the buffer distance exposed.', size: 'medium',
+          hint: 'Rubric: a screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters (2 points).' },
+      ] },
+
+    { h: 'Check Values',
+      hint: 'Rubric: your check values from Steps 0 to 6 (1 point); they also show the model works (part of its 4 points). These come from the defaults, 4 minutes and 3.75 km.',
+      table: { caption: 'Table 3. Check values at the defaults.',
+               head: ['Check', 'Your value'],
+               rows: [['Roads, junctions, stations, blocks (features)', ''], ['One-way segments', ''], ['Served area at 4 minutes (km²)', ''],
+                      ['Blocks and people outside 4 minutes', ''], ['Buffer area (km²) and people outside it', '']],
+               widths: [5360, 4000] } },
+
+    { h: 'Where the Straight Line Is Wrong',
+      hint: 'Rubric: two places on your map, each with coordinates, a cropped figure and the reason (3 points): places where the buffer counts people the roads do not reach in four minutes, and what the roads do there. A general paragraph about network distance earns nothing here.',
+      figures: [
+        { caption: 'Figure 3. Place 1, where the buffer and the network disagree, close up.', size: 'medium',
+          hint: 'A crop of the buffer edge and the four-minute area on imagery, the coordinates labeled.' },
+        { caption: 'Figure 4. Place 2, close up.', size: 'medium',
+          hint: 'A second place, with a different reason if you can find one.' },
+      ] },
+
+    { h: 'Testing the Standard', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and at least five runs, including your BYU ID’s last two digits and cutoff, giving the cutoff, the buffer distance, the served area, the blocks and people outside and the share of the county (4 points).',
+      table: { caption: 'Table 4. Sensitivity. My BYU ID ends in __, so Cutoff_Minutes = 4 + 0.04 × __ = ______.',
+               head: ['Run', 'Cutoff (min)', 'Buffer (km)', 'Served area (km²)', 'Blocks outside', 'People outside', 'Share of county (%)'],
+               rows: [['Baseline', '4', '3.75', '', '', '', ''], ['C2', '2', '3.75', '', '', '', ''], ['C6', '6', '3.75', '', '', '', ''],
+                      ['C8', '8', '3.75', '', '', '', ''], ['Mine', '', '3.75', '', '', '', ''], ['B2_5', '4', '2.5', '', '', '', ''], ['My choice', '', '', '', '', '', '']],
+               widths: [1300, 1150, 1150, 1500, 1350, 1350, 1560] },
+      questions: [
+        'How does the share outside respond to the standard, and between which two cutoffs does it fall fastest? What does that say about where the stations are? (2 points)',
+        'Why do the buffer and the network disagree, and where? Name the two places from Figures 3 and 4. (2 points)',
+        'What does the model leave out — typical rather than emergency speeds, a 2022 stations layer, people counted where they sleep, blocks counted by their center — which way would each move your share, and what data would fix the one that matters most? (2 points)',
+      ] },
+
+    { h: 'Maps', pageBreakBefore: true,
+      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Use the same color for the four-minute area on both, so a reader can compare them.',
+      figures: [
+        { caption: 'Map 1. Fire response coverage — the 0–4 and 4–8 minute areas, the blocks outside four minutes, and the stations.', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, and the sources and dates of the data; the two service-area rings and the unserved blocks with a legend; the stations, the county and the cities readable; the headline numbers on the map; an imagery basemap.' },
+        { caption: 'Map 2. Straight line versus network — the 3.75 km buffer and the four-minute area, with the blocks the buffer claims and the roads do not.',
+          hint: 'Must carry: the buffer and the network area, each in the legend; the blocks the buffer counts as covered that the network does not, highlighted; title, neat line, north arrow and scale bar; a text box with author, date, projection and sources; the title and text box say what changed from Map 1 and give both populations.' },
+      ] },
+
+    { h: 'References', pageBreakBefore: true,
+      hint: 'Rubric: sources credited (part of the point for organized writing). Credit the UGRC network, stations and blocks, the Census, the basemap and anything else you relied on.' },
+    { h: 'AI Use Statement',
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. Cutoffs, counts, coordinate systems and areas come from your own work, never from a model.' },
+    { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
+      hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
+  ],
+},
+
 '10': {
   labTitle: 'Lab 10: Avalanche Hazard',
   labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',
@@ -866,7 +945,10 @@ if (!LABS[key]) {
   process.exit(1);
 }
 const LAB = LABS[key];
-const README = path.join(REPO, 'docs', 'assignments', `lab-${key}`, 'README.md');
+// A lab still in draft keeps its rubric in draft.md beside the stub README; use it when it exists.
+const README = [path.join(REPO, 'docs', 'assignments', `lab-${key}`, 'draft.md'),
+                path.join(REPO, 'docs', 'assignments', `lab-${key}`, 'README.md')]
+  .find((f) => fs.existsSync(f) && /^\| \*\*.+\| \/10 \|$/m.test(fs.readFileSync(f, 'utf8')));
 const OUTFILE = path.join(REPO, 'docs', 'assignments', `lab-${key}`, `lab${key}-report-template.docx`);
 
 // Read the rubric straight out of the lab page so it cannot drift from what is graded.

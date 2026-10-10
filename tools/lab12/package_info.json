@@ -1,0 +1,32 @@
+{
+ "built": "2026-10-10",
+ "network": {
+  "edges": 41460,
+  "junctions": 33872,
+  "attributes": [
+   [
+    "TravelMinutes",
+    "Cost",
+    "Minutes"
+   ],
+   [
+    "Length",
+    "Cost",
+    "Meters"
+   ]
+  ],
+  "one_way_edges": 590,
+  "travel_modes": []
+ },
+ "roads_updated": "September 23, 2026",
+ "Fire_Stations": [
+  42,
+  42
+ ],
+ "Census_Blocks": [
+  10092,
+  10092
+ ],
+ "population": 659399,
+ "zip_bytes": 20622692
+}

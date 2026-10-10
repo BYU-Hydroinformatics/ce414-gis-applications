@@ -1,0 +1,298 @@
+{
+ "arcgis_pro": "3.7.1",
+ "inputs": {
+  "Roads": 41460,
+  "Junctions": 33872,
+  "Fire_Stations": 42,
+  "Census_Blocks": 10092,
+  "population": 659399,
+  "network_attributes": [
+   [
+    "TravelMinutes",
+    "Cost",
+    "Minutes"
+   ],
+   [
+    "Length",
+    "Cost",
+    "Meters"
+   ]
+  ],
+  "travel_modes": []
+ },
+ "one_way": {
+  "edges": 590,
+  "example": {
+   "FULLNAME": "I-15 NB FWY",
+   "ONEWAY": "1",
+   "F_T_IMP_MIN": 3.0419,
+   "T_F_IMP_MIN": 304.1884,
+   "SPEED_LMT": 65,
+   "length_m": 4418.5,
+   "ratio": 100.0
+  },
+  "road_km": 7465.4
+ },
+ "stations": {
+  "EMS_Y": 34,
+  "EMS_N": 3
+ },
+ "blocks": {
+  "zero_population": 2125,
+  "urban": 0
+ },
+ "baseline": {
+  "cutoffs": [
+   4.0
+  ],
+  "located": 42,
+  "not_located": 0,
+  "rings_km2": [
+   [
+    0.0,
+    4.0,
+    194.85
+   ]
+  ],
+  "area_km2": 194.85,
+  "seconds": 11.1,
+  "population": 379054,
+  "blocks": 6341,
+  "pct_outside": 57.5
+ },
+ "crow_default": {
+  "buffer_km": 3.75,
+  "area_km2": 1070.61,
+  "population": 23203,
+  "blocks": 1365,
+  "pct_outside": 3.5
+ },
+ "rings_4_8": {
+  "cutoffs": [
+   4,
+   8
+  ],
+  "located": 42,
+  "not_located": 0,
+  "rings_km2": [
+   [
+    0.0,
+    4.0,
+    194.85
+   ],
+   [
+    4.0,
+    8.0,
+    363.13
+   ]
+  ],
+  "area_km2": 557.98,
+  "seconds": 11.9
+ },
+ "sensitivity": {
+  "cutoffs": [
+   {
+    "cutoffs": [
+     2.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      2.0,
+      52.36
+     ]
+    ],
+    "area_km2": 52.36,
+    "seconds": 10.8,
+    "population": 584055,
+    "blocks": 8887,
+    "pct_outside": 88.6
+   },
+   {
+    "cutoffs": [
+     4.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      4.0,
+      194.85
+     ]
+    ],
+    "area_km2": 194.85,
+    "seconds": 11.8,
+    "population": 379054,
+    "blocks": 6341,
+    "pct_outside": 57.5
+   },
+   {
+    "cutoffs": [
+     6.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      6.0,
+      380.26
+     ]
+    ],
+    "area_km2": 380.26,
+    "seconds": 10.1,
+    "population": 184415,
+    "blocks": 3819,
+    "pct_outside": 28.0
+   },
+   {
+    "cutoffs": [
+     8.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      8.0,
+      557.47
+     ]
+    ],
+    "area_km2": 557.47,
+    "seconds": 11.5,
+    "population": 68819,
+    "blocks": 2237,
+    "pct_outside": 10.4
+   },
+   {
+    "cutoffs": [
+     10.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      10.0,
+      677.11
+     ]
+    ],
+    "area_km2": 677.11,
+    "seconds": 11.3,
+    "population": 27748,
+    "blocks": 1639,
+    "pct_outside": 4.2
+   },
+   {
+    "cutoffs": [
+     12.0
+    ],
+    "located": 42,
+    "not_located": 0,
+    "rings_km2": [
+     [
+      0.0,
+      12.0,
+      795.44
+     ]
+    ],
+    "area_km2": 795.44,
+    "seconds": 10.6,
+    "population": 20014,
+    "blocks": 1387,
+    "pct_outside": 3.0
+   }
+  ],
+  "buffers": [
+   {
+    "buffer_km": 1.5,
+    "area_km2": 270.7,
+    "population": 327547,
+    "blocks": 5800,
+    "pct_outside": 49.7
+   },
+   {
+    "buffer_km": 2,
+    "area_km2": 440.77,
+    "population": 195950,
+    "blocks": 4070,
+    "pct_outside": 29.7
+   },
+   {
+    "buffer_km": 2.5,
+    "area_km2": 620.32,
+    "population": 101602,
+    "blocks": 2795,
+    "pct_outside": 15.4
+   },
+   {
+    "buffer_km": 3,
+    "area_km2": 801.57,
+    "population": 49295,
+    "blocks": 2007,
+    "pct_outside": 7.5
+   },
+   {
+    "buffer_km": 3.75,
+    "area_km2": 1070.61,
+    "population": 23203,
+    "blocks": 1365,
+    "pct_outside": 3.5
+   },
+   {
+    "buffer_km": 5,
+    "area_km2": 1492.06,
+    "population": 7442,
+    "blocks": 922,
+    "pct_outside": 1.1
+   }
+  ]
+ },
+ "examples": {
+  "89": {
+   "cutoffs": [
+    7.56
+   ],
+   "located": 42,
+   "not_located": 0,
+   "rings_km2": [
+    [
+     0.0,
+     7.56,
+     519.07
+    ]
+   ],
+   "area_km2": 519.07,
+   "seconds": 9.8,
+   "population": 90929,
+   "blocks": 2537,
+   "pct_outside": 13.8,
+   "digits": 89,
+   "cutoff": 7.56
+  },
+  "02": {
+   "cutoffs": [
+    4.08
+   ],
+   "located": 42,
+   "not_located": 0,
+   "rings_km2": [
+    [
+     0.0,
+     4.08,
+     201.5
+    ]
+   ],
+   "area_km2": 201.5,
+   "seconds": 10.3,
+   "population": 370716,
+   "blocks": 6247,
+   "pct_outside": 56.2,
+   "digits": 2,
+   "cutoff": 4.08
+  }
+ }
+}
