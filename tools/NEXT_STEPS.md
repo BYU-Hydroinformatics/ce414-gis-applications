@@ -134,6 +134,8 @@ while covering a team project, a video presentation and a write-up.
 
 ## 5. ArcGIS Pro capture backlog (desktop control)
 
+**Status, October 10, 2026: the lab captures are done.** Lab 5's scenario-run pop-up (Figure 14) and the six old-geodatabase-name captures on Labs 8, 9 and 10 were re-shot (`tools/screenshots/renumber_gui_projects.py` made renumbered copies of the three GUI projects under `C:\Ames\Lab08GUI`, `Lab09GUI`, `Lab10GUI`; originals in `C:\Ames\_old`). No `TODO(capture)` remains. Still open: the three `TODO(graphic)` notes that want ArcGIS Pro screenshots (`slides/week-01/data-models-refresher.md`, `slides/week-06/watershed-delineation-b.md` twice).
+
 **Why it is hard:** it needs computer use on ArcGIS Pro at 175 % scaling with the capture tooling, and
 several items need finding first.
 

@@ -8,7 +8,8 @@ Fall 2026 · Dr. Dan Ames
 
 <!-- **Revision notes.** Drafted October 5, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab09-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab09/PARITY_PLAN.md. The decisions
 it rests on are in `tools/lab09/PARITY_PLAN.md`. The dialog captures (Figures 0-8) and Figure C come
-from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab08GUI\Lab09.aprx, model
+from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab09GUI\Lab09.aprx, then
+Lab08GUI; Figures C, 0 and 3a were re-shot on October 10, 2026 from the renumbered copy, model
 ButteVolume, set up by tools/lab09/gui_project.py). ModelBuilder run 32 s; every check value
 reproduced (first point 337,632.58 E 4,806,349.71 N, 560 kept, 280,311 cells, 729.1 / 183.5 m, 53
 below, 5.145018 km3). A tool-dialog run at 250 points (1 min 10 s) gave 146 kept, 735.7 m, 0 below,
@@ -144,7 +145,7 @@ uses **Spline** (Spatial Analyst), the smooth interpolator from the Week 9 lectu
 
 ## Example Model
 
-![The finished ModelBuilder model, exported as a vector diagram. Butte_Boundary, marked P, feeds Buffer (Points_Boundary), Erase, both Extract by Mask tools and Zonal Statistics. Points_Boundary, Lab08.gdb and Number of Points, marked P, feed Create Random Points (Random_Points), then Extract Values to Points with DEM_UTM (Points_Values), Erase (Plain_Points, marked P), IDW (Plain_Surface) and Extract by Mask (2) (Plain_Butte). BigSouthernButte_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask (DEM_Butte). DEM_Butte and Plain_Butte feed Raster Calculator (Height_Above_Plain, marked P), then Raster Calculator (2) (Volume_Cell), then Zonal Statistics (Butte_Volume, marked P).](images/lab09-full-model.svg)
+![The finished ModelBuilder model, exported as a vector diagram. Butte_Boundary, marked P, feeds Buffer (Points_Boundary), Erase, both Extract by Mask tools and Zonal Statistics. Points_Boundary, Lab09.gdb and Number of Points, marked P, feed Create Random Points (Random_Points), then Extract Values to Points with DEM_UTM (Points_Values), Erase (Plain_Points, marked P), IDW (Plain_Surface) and Extract by Mask (2) (Plain_Butte). BigSouthernButte_DEM.tif, marked P, feeds Project Raster (DEM_UTM) and Extract by Mask (DEM_Butte). DEM_Butte and Plain_Butte feed Raster Calculator (Height_Above_Plain, marked P), then Raster Calculator (2) (Volume_Cell), then Zonal Statistics (Butte_Volume, marked P).](images/lab09-full-model.svg)
 
 **Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Two
 inputs, the DEM and the outline, and one number out. The upper branch rebuilds the plain from points
@@ -182,9 +183,9 @@ without the step-by-step instructions below, say so in your report.
 
     Type an environment's name in the dialog's search box to find it.
 
-![The model's Environments dialog, two searches combined: Current Workspace and Scratch Workspace Lab08.gdb; Output Coordinate System empty; Cell Size 10; Mask empty; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab09-environments.png)
+![Rows of the model's Environments dialog, gathered from three views of it: Current Workspace and Scratch Workspace Lab09.gdb; Output Coordinate System empty; Cell Size 10; Mask empty; Snap Raster DEM_UTM; and Random Number Generator with Seed 1 and Generator ACM collected algorithm 599.](images/lab09-environments.png)
 
-**Figure 0.** ModelBuilder ▸ Environments, from two searches (`workspace` and `random`). Leave
+**Figure 0.** ModelBuilder ▸ Environments: the rows that matter, gathered from the top of the dialog and from searches for `cell size` and `random`. Leave
 Output Coordinate System empty: Step 1 projects the DEM itself.
 
 > [!NOTE]
@@ -236,7 +237,7 @@ This polygon covers the butte and a ring of plain 1,500 m wide around it. The ra
    right-click the new oval ▸ **Rename** it `Number of Points`, and right-click it ▸ **Parameter**.
 2. Add **Extract Values to Points** with `Random_Points` and `DEM_UTM`, output `Points_Values`.
 
-![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab08.gdb, Output Point Feature Class Random_Points, Constraining Feature Class Points_Boundary, Number of Points Long 1000, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab09-create-random-points.png)
+![The Create Random Points dialog from ModelBuilder, with a banner suggesting Create Spatial Sampling Locations: Output Location Lab09.gdb, Output Point Feature Class Random_Points with a warning icon because it exists from an earlier run, Constraining Feature Class Points_Boundary, Number of Points Long 1000 grayed because it is a model variable, Minimum Allowed Distance 0 Meters, Create Multipoint Output unchecked.](images/lab09-create-random-points.png)
 
 **Figure 3a.** Create Random Points. Once a constraining feature class is set, the Constraining
 Extent box disappears.
