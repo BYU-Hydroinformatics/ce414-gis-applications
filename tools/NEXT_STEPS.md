@@ -1,168 +1,245 @@
-# Next steps: hand-off prompts (written October 9, 2026)
+# Next steps: the rest of Fall 2026 (written October 11, 2026)
 
-Each section below is a self-contained prompt for a fresh Claude Code session opened in this
-repository. Paste the block under **Prompt** as the first message. They are ordered by difficulty
-and by dependency: 1 before 2; 3, 4 and 5 are independent.
+Each numbered section is a self-contained prompt for a fresh Claude Code session opened in this
+repository. Paste the block under **Prompt** as the first message. The sections are in the order
+the calendar needs them; 1 and 2 are the urgent ones.
 
-State of the course on October 9, 2026: Labs 1–11 are rebuilt, GUI-built, promoted and pushed, each
-with a report template; Learning Suite due dates are set through Lab 11. Weeks 1–13 have decks.
-What remains is Lab 12, Week 14, Midterm 2, the final-project rubric, and a capture backlog.
+**State of the course on October 11, 2026.** All twelve labs are rebuilt, GUI-built in ArcGIS Pro
+3.7.1, promoted, and have report templates; Lab 12 was finished October 10 (fire-response service
+areas on the UGRC network). Weeks 1 to 14 have decks; Week 15 has no class. No `TODO(capture)` is
+left anywhere, and the only `TODO(graphic)` notes left are for generated figures, not screenshots.
+Midterm 1 is drafted (Testing Center, October 20 to 22); Midterm 2 is drafted (December 1 to 3)
+and waits on one decision. The final project has a rubric draft waiting for review. Eight commits
+since the October 9 push are **on `main` but not pushed** (`git log origin/main..HEAD`): the Lab 12
+draft, decks, promotion, the Lab 5 and Labs 8 to 10 re-shoots, and the Week 1 and 6 screenshots.
+
+**Where things live.**
+- Public site: this repository, `docs/` and `slides/`, built by `mkdocs build --strict` and the
+  deck workflow on every push to `main`. The push is what publishes.
+- Private companion: `C:\Users\dpame\code\ce414-private` (remote `danames/ce414-private`): exam
+  drafts and keys (`exams/midterm-1-2026`, `exams/midterm-2-2026`), Learning Suite quiz
+  generators, `grading-oracles/` (the per-student lookups for Labs 7, 11 and 12), and `plans/`.
+  Nothing from it goes into this repository, including HTML comments. Finished exams and keys are
+  also uploaded to the Google Drive folder *Private - exams, keys and grading*.
+- ArcGIS Pro GUI projects: `C:\Ames\LabNNGUI\LabNN.aprx` with the **current** lab numbers (Labs 8,
+  9 and 10 were renumbered copies made October 10 by `tools/screenshots/renumber_gui_projects.py`;
+  originals are in `C:\Ames\_old`). `C:\Ames\Week06\Week06_Figures.aprx` holds the Emigration
+  Creek hand-digitized and StreamStats basins; `C:\Ames\Lab01\Lab01.aprx` the Lab 1 data.
+- Capture tooling: `tools/screenshots/` (read its README first). Captures are taken at 175 %
+  display scaling (`setdpi.py 175`, launch ArcGIS Pro **after** changing it), the Claude window is
+  parked with `park.py`, and the session ends with `setdpi.py 100` and `park.py Claude 966`.
+- Learning Suite: course `cid-ahk3xMzyr311`; instructor assignments view `.../home/assignments`.
+  It holds only due dates, submission boxes, quizzes and links; content lives on the site.
 
 Every prompt assumes the agent reads `CLAUDE.md` first (it is loaded automatically) and follows
-its hard rules: ArcGIS Pro not QGIS, never fabricate a screenshot, never invent a field name or
-number, verify in ArcGIS Pro, American English, "ArcGIS Pro" in full, check every link, do not push
-without being asked.
+its hard rules: ArcGIS Pro not QGIS, never fabricate a screenshot, never invent a field name or a
+number, verify in ArcGIS Pro, American English, "ArcGIS Pro" in full, check every link, nothing
+private in the public repository, do not push without being asked.
 
 ---
 
-## 1. Lab 12: Network Analysis (largest; needs decisions from Dan)
+## 0. Needs Dan, not an agent
 
-**Status, October 10, 2026: done.** Planned, reference-run, drafted, piloted, GUI-built at 175 % and promoted (`docs/assignments/lab-12/README.md`, `tools/lab12/`). Still owed: the Learning Suite assignment (due Saturday of Week 14).
+- **Push.** `git push` publishes the eight waiting commits (Lab 12 and the capture work).
+- **Learning Suite, Lab 12.** Sign in to Learning Suite in Chrome, then an agent can add the
+  assignment: due **Saturday, December 5, 2026, 11:59 pm** (Saturday of Week 14); description =
+  a link to the page and to `docs/assignments/lab-12/lab12-report-template.docx`; multiple file
+  uploads enabled so the `.atbx` can be attached. (The October 11 attempt stopped at the BYU
+  sign-in page.)
+- **Midterm 2 scope.** Is Week 14 (network analysis) on the exam? It is taught the week the exam
+  is open, so students testing Tuesday morning will not have heard it. The draft assumes **out**.
+- **Final-project rubric.** Read `tools/final-project/RUBRIC_DRAFT.md` and say yes, or what to
+  change; section 3 below then puts it on the page.
+- **Student pilots on a lab machine.** Labs 7 to 12 were GUI-built on the instructor laptop only.
+  One student walk-through per lab, with the run times, is the check the pages still lack.
+- **Reading-quiz redesign.** The two-section (reading / class, AI allowed) idea from September 8 is
+  still undecided; the site describes the quizzes as the syllabus does.
+- **Learning Suite points visibility.** Quizzes 5 to 11 and the Final Exam are not visible to
+  students, so the percentages they see are computed on 1,030 points, not the real total.
+- **Grading each week** (see section 4 for the agent half): Lab 6 is due October 17, Lab 7
+  October 24, Lab 8 October 31, Lab 9 November 7, Lab 10 November 14, Lab 11 November 21, Lab 12
+  December 5.
 
-**Why it is hard:** a new lab from nothing, in a topic (Network Analyst) the course has not used yet,
-with a network dataset to build or source, a GUI build at 175 %, and a one-week schedule (introduced
-Tuesday of Week 14, due Saturday of Week 14, the same week as Midterm 2).
+---
+
+## 1. Midterm 2: finish the draft and write the study guide (before November 24)
+
+**Why it is first:** the exam opens December 1 and the Week 14 decks it could not see now exist.
+Students also expect a study guide like Midterm 1's (`docs/study-guides/midterm-1.md`).
 
 **Prompt**
 
-> Build Lab 12: Network Analysis for CE 414. The page `docs/assignments/lab-12/README.md` is a stub.
-> Follow `tools/lab-conversion-guide.md` section 9 ("Building a new lab from nothing") and the
-> pipeline in `tools/labs-09-11-plan.md` section 3. Use Lab 11 (`docs/assignments/lab-11/README.md`,
-> `tools/lab11/`) as the closest model: it is the most recent lab and shows the whole pattern (hosted
-> package built by a script, `run_model.py` reference run with `check_values.json`, a personal number
-> from the last two BYU ID digits with a lookup CSV, no-GUI pilot, GUI build with captures, example
-> maps with `arcpy.mp`, report template via `tools/templates/make_lab_report_template.js`).
->
-> Step 1 is a plan, not a page: write `tools/lab12/PLAN.md` proposing the analytical question, the
-> data, the one or two numbers students vary, and the personal number, then **stop and ask me to
-> decide** before building. Constraints and facts to start from:
-> - Network Analyst is licensed on this machine (`arcpy.CheckExtension("Network")` returns Available).
-> - The course is set in Utah County. UGRC's `UtahRoads` feature service (services1.arcgis.com/
->   99lidPhWCzftIe9K, layer `UtahRoads`) has ONEWAY, SPEED_LMT, DOT_FCLASS and address fields;
->   check whether UGRC publishes a prebuilt network dataset before planning to build one, and say
->   which is simpler for students in a one-week lab.
-> - Candidate questions (pick or improve): fire-station or hospital service areas in Utah County and
->   the population or buildings outside a response time; closest facility; a site-selection
->   location-allocation that echoes Lab 1. The deck and lab should contrast network distance with
->   Lab 11's cost distance and with straight-line distance.
-> - One ModelBuilder model with parameters, a sensitivity step that varies a number the answer
->   actually depends on (Lab 11 learned this the hard way: measure that the parameter moves the
->   result across the whole personal range before publishing it), two maps, rubric five rows of ten.
-> - Week 14 is also Midterm 2 week; keep the lab to about nine steps and host everything prepared.
->
-> After my decisions: build the package, the reference run, the draft (`draft.md`, search-excluded),
-> pilot it with a subagent, GUI-build it at 175 % (see the memory note on ArcGIS Pro desktop control
-> and `tools/screenshots/README.md`; computer use is granted for ArcGIS Pro only), make the example
-> maps and template, promote, and commit. Also: `docs/policies/grading.md` still says "Labs 1 to 11,
-> 550"; ask me the points for Lab 12 and update it, `tools/build_schedule.py` (LABS/DUE already list
-> Lab 12 in Week 14), and the Learning Suite assignment (due Saturday of Week 14, 11:59 pm; link the
-> page and template; allow multiple uploads for the `.atbx`). Report what you measured and what is
-> still owed. Do not push until I say so.
+> Finish Concepts Midterm 2 for CE 414 (Fall 2026). The draft, key and notes are in the private
+> repository `C:\Users\dpame\code\ce414-private\exams\midterm-2-2026\` (`2026 Midterm 2 DRAFT.md`,
+> `2026 Midterm 2 KEY.md`, `NOTES.md`, `images/`); read all three and `NOTES.md`'s coverage matrix
+> first. Nothing from that folder may be written into the public course repository. Do this:
+> (1) The Week 14 decks now exist (`slides/week-14/network-analysis-a.md`, `-b.md`, with the
+> `networks` and `service-areas` quizzes under `docs/quizzes/`); check the three items in the
+> draft's "Optional: Week 14 bank" against them and rewrite any that the lectures contradict, so
+> the bank is ready if I decide Week 14 is in. Ask me for that decision; the draft stays "out"
+> until I answer. (2) Re-read every item against the current decks and lab pages for Weeks 8 to 13
+> (Labs 7 to 11 were revised after some items were written; Lab 10's shift parameter and Lab 11's
+> Distance Accumulation chain in particular) and fix drift. (3) Re-check every figure in `images/`
+> against the current repo image; replace any that changed. (4) Write the public study guide
+> `docs/study-guides/midterm-2.md` in the exact shape of `docs/study-guides/midterm-1.md`: topics by
+> week, the formats, what to bring, the Testing Center window (December 1 to 3, Tuesday 8 am
+> start), and nothing that gives away an item; register it in `tools/build_schedule.py` the way
+> the Midterm 1 guide is (the Week 14 page links it), re-run the script, `mkdocs build --strict`,
+> commit. (5) Export the finished exam and key to PDF, upload both to the Google Drive folder
+> *Private - exams, keys and grading*, and commit the markdown in the private repository. Report the
+> coverage matrix and the "could not confirm" list. Do not push either repository.
 
 ---
 
-## 2. Week 14 decks: Network Analyst, two lectures (after task 1)
+## 2. Final exam: one problem done in ArcGIS Pro (write by November 20)
 
-**Status, October 10, 2026: done.** `slides/week-14/network-analysis-a.md` and `-b.md`, with the GUI captures from the Lab 12 build and the `networks` / `service-areas` quizzes; registered in `build_schedule.py`.
-
-**Why it is hard:** two decks with real figures and ArcGIS Pro captures, aligned with a lab that does
-not exist yet; there is no source PowerPoint for this topic.
+**Why it is hard:** `docs/policies/grading.md` promises "one question done in ArcGIS Pro in the lab
+during finals week; open book and open computer; three-hour block", and no such problem exists.
+It must be solvable in three hours from a hosted data package, gradable from a short write-up and a
+few numbers, and the numbers must be verified by a reference run.
 
 **Prompt**
 
-> Write the two Week 14 lectures on network analysis for CE 414: `slides/week-14/network-analysis-a.md`
-> (Tuesday: what a network dataset is — edges, junctions, connectivity, turns, one-way and impedance
-> attributes; shortest path versus least-cost path versus straight line; travel-time cost) and
-> `slides/week-14/network-analysis-b.md` (Thursday: service areas, closest facility and
-> location-allocation in ArcGIS Pro, then Lab 12). Read `tools/slide-conversion-guide.md`; use
-> `slides/week-12/least-cost-path-b.md` as the model for structure, figures, speaker notes and the
-> closing QR quiz (`docs/quizzes/<slug>/index.html`, `tools/make_quiz_qr.py`, `tools/check_quizzes.py`;
-> watch for the longest-option-is-the-answer tell). Every map and number comes from Lab 12's data and
-> reference run (`tools/lab12/`), drawn by a `tools/week14_*.py` script; tool captures come from a real
-> ArcGIS Pro session, never fabricated. Register both decks and quizzes in `tools/build_schedule.py`
-> (DECKS, PRACTICE; remove the Week 14 NO_DECK text), re-run it, render both decks to PNG with marp
-> (`--allow-local-files --images png`) and look at every slide, and run `mkdocs build --strict`.
-> Commit; do not push. Midterm 2 is open in the Testing Center that week: say so on Before Next Class.
+> Write the CE 414 final exam problem. The promise is in `docs/policies/grading.md`: one problem
+> solved in ArcGIS Pro in the lab during finals week, open book and open computer, three hours,
+> 100 points. Read `tools/lab-conversion-guide.md` sections 2 and 9 and two late labs
+> (`docs/assignments/lab-11/README.md`, `lab-12/README.md`) for the voice, the check-value
+> pattern and the rubric style. Propose three candidate problems first, each a new question on a
+> small hosted package that combines two or three techniques from Labs 4 to 12 (a suitability
+> model with a parameter, a watershed or HAND question, an interpolation with RMSE, a cost path, a
+> service area), with a two-line estimate of the time and the gradable outputs; I pick one. Then:
+> build the data package with a `tools/final-exam/make_package.py` and a `run_model.py` reference
+> run (`check_values.json`), as Lab 12 did; write the student handout as
+> `ce414-private/exams/final-2026/FINAL DRAFT.md` with a key, worked numbers, partial credit and a
+> rubric whose bullets sum to 100; put the data package in the private repository too (it must not
+> be public before the exam; it can move to `docs/data/` afterward). Use only real tool names and
+> parameters you have checked in ArcGIS Pro 3.7.1; mark anything unverified. Commit the private
+> repository only; report the file paths. Do not push.
 
 ---
 
-## 3. Midterm 2 (keep out of the public repo)
+## 3. Final project: put the rubric and the peer scoresheet on the page (before Week 13, November 24)
 
-**Why it is hard:** it must cover only what was taught, in the format the students were promised, with
-real ArcGIS Pro screen grabs, and none of it can land in the public repository.
+**Why it is hard:** it needs Dan's approval of `tools/final-project/RUBRIC_DRAFT.md` first (section
+0). After that it is page work plus a Word template.
 
 **Prompt**
 
-> Draft Concepts Midterm 2 for CE 414 (Fall 2026), in the format of Midterm 1:
-> `C:\Users\dpame\Downloads\Midterm1-2026\` holds `2026 Midterm 1 DRAFT.md`, `KEY.md`, `NOTES.md` and
-> `images/`. Read all three first and match them. Write the new files to
-> `C:\Users\dpame\Downloads\Midterm2-2026\` — **never inside the course repository**, which is public.
-> Format promised to students: paper and pencil in the Testing Center, closed book and notes, no
-> computer; multiple choice, fill in the blank, short answer, draw a sketch, and questions on a figure
-> or an ArcGIS Pro screen grab ("what does this tool do", "which tool would you use for X"). 100 points.
-> Coverage: from Week 8 (flood mapping, HAND) through Week 13 — interpolation and RMSE (Week 9), cut
-> and fill and raster volumes (Week 10), coordinate systems and GPS (Week 11), least cost paths
-> (Week 12), the final-project lecture (Week 13) — drawn from those weeks' decks
-> (`slides/week-08` … `week-13`), their QR quizzes (`docs/quizzes/`) and the Learning Suite reading
-> quizzes (generators in the private repo, `ce414-private/quizzes/learning-suite/`). Ask me whether Week 14's network analysis is
-> in scope (it is taught the same week the exam is open). Use only numbers that appear in class
-> material, keep any number that exists only in class out of public files, and use real captures from
-> the repo's images or a fresh ArcGIS Pro session. Include a coverage matrix, a key with worked answers
-> and partial credit, and a "could not confirm" list. Report the file paths; commit nothing.
+> Dan has reviewed `tools/final-project/RUBRIC_DRAFT.md` (apply any changes he gave you). Put
+> section A (the instructor rubric: proposal 10, presentation 40, write-up 50) and section B (the
+> peer scoresheet, 10 points of presentation notes) into `docs/assignments/final-project.md`,
+> replacing its `TODO(instructor)` comment, in the itemized-bullet style of the lab rubrics; keep
+> section C out of the public page. Build a Word template for the write-up with
+> `tools/templates/make_lab_report_template.js` (add a `final` entry; it reads a page's rubric
+> table) and a one-page scoresheet students can print or fill in. Make sure the Week 13 deck
+> (`slides/week-13/final-project-introduction.md`) and the Week 14 and 15 schedule pages
+> (`tools/build_schedule.py` DUE table) carry the same dates as the final-project page: proposal meeting by Friday of Week 14,
+> the eight-minute presentation video by Wednesday of Week 15, presentation notes by Thursday of Week 15. Check every
+> link, `mkdocs build --strict`, render the deck, commit. Do not push.
 
 ---
 
-## 4. Final project: peer scoresheet and instructor rubric
+## 4. Grading a lab (repeat each week)
 
-**Why it is hard:** it needs Dan's grading intent, and the rubric has to match the lab rubrics' style
-while covering a team project, a video presentation and a write-up.
+**Why it is an agent task:** every rebuilt lab has a reference run, and Labs 7, 11 and 12 have
+per-student lookups, so a grading pass is mostly comparison; the judgment calls go to Dan.
+
+**Prompt** (replace NN)
+
+> Grade Lab NN for CE 414. Submissions are the files Dan put in `C:\Ames\Grading\LabNN\` (student
+> work is never copied into either repository). Read `docs/assignments/lab-NN/README.md` for the
+> rubric and check values, `tools/labNN/check_values.json` for the reference run, and, for Labs 7,
+> 11 and 12, the personal lookup in `C:\Users\dpame\code\ce414-private\grading-oracles\` to check
+> each student's own parameter result. Read the memory notes on Learning Suite grading and on
+> originality checks first. For each submission produce a row: rubric item scores with a one-line
+> reason for every deduction, the check values found versus expected, and a flag for any
+> near-duplicate layout, model labels, symbology or wording across submissions (compare, do not
+> accuse; Dan decides). Write the summary to `C:\Ames\Grading\LabNN\grades.md`; do not enter
+> scores in Learning Suite until Dan says so, then do it one student at a time with a screenshot
+> before each entry, checking for pre-existing scores. Commit nothing.
+
+---
+
+## 5. Small page fixes left on the lab pages
+
+Each is a `TODO(instructor)` or `VERIFY` comment; `grep -rn "TODO(instructor)\|VERIFY" docs` lists
+them (about 25 lines, most of them historical notes that just need closing).
 
 **Prompt**
 
-> The final-project page `docs/assignments/final-project.md` has a TODO: the peer scoresheet and the
-> instructor rubric are missing. Read the page, `docs/policies/grading.md` (proposal meeting 10,
-> presentation 40, write-up 50; presentations are video only; notes on at least ten classmates'
-> presentations, 10 points), the Week 13 deck `slides/week-13/final-project-introduction.md`, and two
-> lab rubrics (`docs/assignments/lab-11/README.md` and `lab-07`) for the itemized-bullet style. Draft
-> (a) an instructor rubric for the presentation (40) and the lab-style write-up (50), itemized so the
-> bullets sum to each row's points, and (b) a one-page peer scoresheet students fill in while watching
-> classmates' videos. Show me both before editing the page; then add them, consider a Word template for
-> the write-up with `tools/templates/make_lab_report_template.js` (it reads the rubric from the page),
-> run `mkdocs build --strict`, and commit. Do not push.
+> Close the open notes on the CE 414 lab pages. `grep -rn "TODO(instructor)\|VERIFY" docs` lists
+> them. The ones that still matter: (1) `docs/assignments/lab-07/README.md`: the Jordanelle Dam
+> completion and first-storage dates (Reclamation's pages timed out on October 9; try again, and
+> the Utah Division of Water Resources or the Central Utah Project pages as second sources), and
+> the lab-machine run time once a student pilot reports it. (2) `lab-12/README.md`: the NFPA 1710
+> travel-time figures (240 s and 480 s at 90 %) are from secondary sources; confirm against the
+> current edition's text or a primary NFPA page and cite it, or soften the sentence. (3) The
+> `TODO(instructor)` lists at the foot of Labs 1 to 4 and 12: items marked DONE can be deleted,
+> the rest either done now or moved to this file. (4) `docs/policies/ai-policy.md` and
+> `university.md`: confirm the quoted university wording is current (link the source) and drop
+> the note. Never mention earlier handout versions in student-facing text; put history in HTML
+> comments. Check every link on each page you touch, `mkdocs build --strict`, commit. Do not push.
 
 ---
 
-## 5. ArcGIS Pro capture backlog (desktop control)
+## 6. Deck graphics still owed (generated figures, plus two ArcGIS Pro sessions)
 
-**Status, October 10, 2026: the lab captures are done.** Lab 5's scenario-run pop-up (Figure 14) and the six old-geodatabase-name captures on Labs 8, 9 and 10 were re-shot (`tools/screenshots/renumber_gui_projects.py` made renumbered copies of the three GUI projects under `C:\Ames\Lab08GUI`, `Lab09GUI`, `Lab10GUI`; originals in `C:\Ames\_old`). No `TODO(capture)` remains. Still open: the three `TODO(graphic)` notes that want ArcGIS Pro screenshots (`slides/week-01/data-models-refresher.md`, `slides/week-06/watershed-delineation-b.md` twice).
-
-**Why it is hard:** it needs computer use on ArcGIS Pro at 175 % scaling with the capture tooling, and
-several items need finding first.
+`grep -rn "TODO(graphic)" slides --include=*.md | grep -v retired` lists 22 notes: Week 11 has 13
+(the coordinate-systems and GPS decks), Week 5 two, Week 13 two, and one each in Weeks 2 (a plan
+file, ignore), 4, 6, 9 and 12. These want **generated** figures under CLAUDE.md rule 9, not
+screenshots. Separately, ROADMAP still lists ArcGIS Pro captures for the Week 4 remote-sensing
+deck (MODIS band slides; `tools/week04-arcgis-capture-plan.md`) and the Georectifying deck
+(Georeference tab, control points, residuals table), and an old note about Week 2 ModelBuilder A
+slides that the September 7 to 8 revision already resolved; reconcile that row.
 
 **Prompt**
 
-> Clear the remaining ArcGIS Pro capture TODOs in the CE 414 site. Read the memory note on ArcGIS Pro
-> desktop control and `tools/screenshots/README.md` first (175 % scaling with
-> `tools/screenshots/setdpi.py`, `park.py` for the Claude window, `grabdlg.py`/`cap.py`/`stitchat.py`;
-> set scaling back to 100 % and `park.py Claude 966` at the end). Computer use is granted for ArcGIS Pro
-> only. Find the work with `grep -rn "TODO(capture)\|TODO(graphic)" docs slides`: Lab 5 has three
-> capture TODOs (`docs/assignments/lab-05/README.md`; the project is `C:\Ames\Lab05GUI\Lab05.aprx`);
-> several Week 1, 3 and 6 slides want ArcGIS Pro screenshots; and earlier notes list six captures that
-> still show an old geodatabase name — find them by comparing the geodatabase names in images' visible
-> text with the names the pages now use. Never fabricate or edit a capture's content; crop and stitch
-> only. Replace each TODO with the figure, real alt text and a caption, render each page or deck and
-> look at it, run `mkdocs build --strict`, and commit. Do not push.
+> Clear the `TODO(graphic)` notes in the CE 414 decks: `grep -rn "TODO(graphic)" slides
+> --include=*.md | grep -v retired`. Read `tools/slide-conversion-guide.md` (rules 7 to 9) and
+> the memory note on the OpenAI key first. For each slide, decide whether the note is right that a
+> figure is needed (an "ask" slide deliberately bare before its evidence slide stays bare; delete
+> the note and say so); otherwise generate the figure with the OpenAI image skill, save it in the
+> deck's `images/` folder with a descriptive name, place it with the deck's existing `bg right`
+> or `h:` conventions, and write the alt text from what the image actually shows. Never put a
+> generated image where a real ArcGIS Pro capture is implied. Then, in a separate ArcGIS Pro
+> session at 175 % (read `tools/screenshots/README.md` and the desktop-control memory note), take
+> the Week 4 captures listed in `tools/week04-arcgis-capture-plan.md` and the Georeference tab,
+> control-point table and residuals captures the Georectifying deck's conversion notes ask for;
+> end with `setdpi.py 100` and `park.py Claude 966`. Render every deck you touch to PNG and look at
+> each changed slide for overflow; run `tools/stamp_decks.py`; update ROADMAP's capture rows;
+> commit. Do not push.
 
 ---
 
-## Not for an agent
+## 7. End of semester: close out and prepare Fall 2027
 
-These need Dan, a student, or a lab machine:
+Not urgent until December. CE 414 moves to Canvas for Fall 2027, which is why the site, not the
+LMS, holds the content.
 
-- **Student GUI pilots** of the rebuilt labs on a lab machine (Labs 7–11 were GUI-built on the
-  instructor laptop only).
-- **Instructor decisions** left as `TODO(instructor)` comments in the Week 4 and Week 5 decks
-  (guest-speaker slide, image rights for the Daily Mail and NOAA images, the scale-and-uncertainty
-  additions in Terrain Analysis) — `grep -rn "TODO(instructor)" slides`.
-- **Midterm 1 logistics** (calculators, time limit) recorded in `Downloads\Midterm1-2026\NOTES.md`.
-- **Lab 7:** the Jordanelle Dam completion date is still marked VERIFY (Reclamation's pages timed out).
+**Prompt**
+
+> Close out Fall 2026 for the CE 414 site. (1) `ROADMAP.md`: every row that says a thing is owed
+> or pending is checked against the repository and either marked resolved with the date and
+> commit, or kept with what is actually left; the capture and ModelBuilder-A rows are stale.
+> (2) Write `tools/CANVAS_MIGRATION.md`: the list of everything Learning Suite holds for this
+> course (assignments with due dates, the reading quizzes and where their generators live in the
+> private repository, the participation items, the exam entries, the links to site pages), so the
+> Canvas course can be built from it without opening Learning Suite; the memory note on Learning
+> Suite has the course id and the instructor views. (3) For each lab, record the lab-machine run
+> time and any student-pilot finding Dan passes on in the page's revision notes. (4) Collect the
+> semester's numbers Dan wants to keep but not publish (quiz and exam statistics, grade
+> distribution) in the private repository's `plans/`, never here. (5) Archive the semester:
+> tag `main` as `fall-2026` after the final push. Report; do not push or tag without Dan's word.
+
+---
+
+## Housekeeping an agent can do any time
+
+- `C:\Ames\_old\` holds the pre-renumbering copies of three GUI projects and
+  `C:\Ames\Lab07HAND\ParamTest.gdb` is a leftover; both can go once Dan agrees (they are not in
+  any repository).
+- `slides/week-02` still owes an anonymized prior-year report page for Part B (no PDF exists;
+  Dan said he would show named prior-year PDFs in class instead, so this may simply be dropped).
+- The Week 3 Thursday hands-on activity never got its Learning Suite participation item.
+- Memory notes under `~/.claude/projects/.../memory/` written before October 8 use the **old**
+  lab numbers (7 Avalanche, 8 Butte, 9 Interpolation); `lab-renumber-oct08.md` has the mapping.
