@@ -4,7 +4,7 @@
 
 Writes into docs/assignments/lab-12/images/:
   icon-make-service-area-analysis-layer.svg, icon-add-locations.svg, icon-solve.svg,
-  icon-select-layer-by-location.svg, icon-summary-statistics.svg
+  icon-make-feature-layer.svg, icon-select-layer-by-location.svg, icon-summary-statistics.svg
   lab12-metadata.svg     Figure A, the six metadata questions for the lab's data
 
 Metadata statements come from READ-ME-FIRST.txt (make_package.py) and from the UGRC feature
@@ -74,6 +74,16 @@ def icons():
              f"<circle cx='98' cy='68' r='14' fill='white' stroke='{GREEN}' stroke-width='2'/>"
              f"<path d='M90,68 L96,74 L107,61' fill='none' stroke='{GREEN}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/>")
     icon("solve", "Solve: runs the analysis layer and fills in its polygons; nothing is computed until it runs", body)
+
+    # Make Feature Layer: a feature class in a geodatabase becomes a layer card that can carry a selection
+    body = (f"<rect x='8' y='22' width='34' height='46' rx='4' fill='{LGRAY}' stroke='{GRAY}'/>"
+            f"<rect x='14' y='30' width='22' height='5' fill='{GRAY}'/><rect x='14' y='39' width='22' height='5' fill='{GRAY}'/>"
+            f"<rect x='14' y='48' width='22' height='5' fill='{GRAY}'/><rect x='14' y='57' width='22' height='5' fill='{GRAY}'/>"
+            + h.arrow(46, 45, 64, 45, NAVY, 2.5, 7)
+            + f"<rect x='68' y='16' width='46' height='58' rx='5' fill='white' stroke='{NAVY}' stroke-width='2'/>"
+            f"<rect x='75' y='24' width='32' height='42' fill='{LBLUE}'/>"
+            f"<rect x='80' y='34' width='18' height='18' fill='none' stroke='{ORANGE}' stroke-width='2.5' stroke-dasharray='3,2'/>")
+    icon("make-feature-layer", "Make Feature Layer: a feature class becomes a layer, a view that can carry a selection", body)
 
     # Select Layer By Location: a blob (the served area) over small block polygons; blocks whose center falls outside are picked
     body = ""

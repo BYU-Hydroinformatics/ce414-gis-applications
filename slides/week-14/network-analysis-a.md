@@ -181,7 +181,16 @@ Lab 12's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 <!-- This is the Catalog pane's network dataset wizard, as UGRC filled it in; it is why Lab 12 ships the network already built. Lab 12's package was made by exporting UGRC's definition as a template, clipping the roads to Utah County, creating the network from the template and building it, so the costs are UGRC's, unchanged. Students see the result in Network Dataset Properties in Step 1. If a student asks "could I build one from a shapefile of roads": yes, and the deck's six steps are the six decisions they would have to make. -->
 
-<!-- TODO(capture): the Network Dataset Properties dialog of Utah_County_Roads_ND open at Travel Attributes > Costs, from the Lab 12 GUI build (images/na-network-properties.png), in place of the overpass figure. -->
+---
+
+# What Lab 12 Hands You
+
+![h:400](images/na-network-properties.png)
+
+- **Network Dataset Properties** ▸ **Travel Attributes** ▸ **Costs**: `TravelMinutes` in minutes, `Length` in meters
+- Each cost is read from a field **along** and **against** the digitized direction
+
+<!-- Lab 12's Figure 1b, from the GUI build (ArcGIS Pro 3.7.1): the clipped network's properties, which Step 1 of the lab has students open. Two costs, no travel modes, no hierarchy (hence the yellow note about turn categories). The evaluators are the point: a one-way street costs its normal minutes along and 100 times that against, which is how UGRC encodes one-way without a restriction. Skippable if time is short; it is on the lab page. -->
 
 ---
 

@@ -398,8 +398,9 @@ const LABS = {
       table: { caption: 'Table 2. Model description — one row per tool.',
                head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
                rows: [['Make Service Area Analysis Layer', '', '', '', ''], ['Add Locations', '', '', '', ''], ['Solve', '', '', '', ''],
-                      ['Select Data + Copy Features (Served_Area)', '', '', '', ''], ['Select Layer By Location (network)', '', '', '', ''],
-                      ['Copy Features + Summary Statistics (network)', '', '', '', ''], ['Buffer (Crow_Area)', '', '', '', ''],
+                      ['Select Data + Copy Features (Served_Area)', '', '', '', ''], ['Make Feature Layer (Blocks_Net)', '', '', '', ''],
+                      ['Select Layer By Location (network)', '', '', '', ''], ['Copy Features + Summary Statistics (network)', '', '', '', ''],
+                      ['Buffer (Crow_Area)', '', '', '', ''], ['Make Feature Layer (Blocks_Crow)', '', '', '', ''],
                       ['Select Layer By Location (buffer)', '', '', '', ''], ['Copy Features + Summary Statistics (buffer)', '', '', '', '']],
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [

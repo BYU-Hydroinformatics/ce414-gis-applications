@@ -11,11 +11,13 @@ The model (one ModelBuilder model on the page, "Fire Response Coverage"):
   Add Locations (Facilities)         Fire_Stations
   Solve
   Select Data (Polygons) -> Copy Features                       -> Served_Area
-  Select Layer By Location  Census_Blocks HAVE_THEIR_CENTER_IN Served_Area, INVERT
+  Make Feature Layer Census_Blocks (the dataset) -> Blocks_Net
+  Select Layer By Location  Blocks_Net HAVE_THEIR_CENTER_IN Served_Area, INVERT
     -> Copy Features                                           -> Unserved_Blocks
     -> Summary Statistics (SUM PP_TOTAL, COUNT GEOID20)        -> Unserved_Population
   Buffer Fire_Stations %Buffer_Distance% (default 3.75 km), dissolve ALL -> Crow_Area
-  Select Layer By Location  Census_Blocks HAVE_THEIR_CENTER_IN Crow_Area, INVERT
+  Make Feature Layer Census_Blocks -> Blocks_Crow (its own layer, so the two selections never share one)
+  Select Layer By Location  Blocks_Crow HAVE_THEIR_CENTER_IN Crow_Area, INVERT
     -> Copy Features                                           -> Crow_Unserved
     -> Summary Statistics                                      -> Crow_Population
 Geoprocessing tools throughout (not arcpy.nax), so every default is the tool dialog's default.

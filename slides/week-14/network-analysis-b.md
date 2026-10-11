@@ -121,7 +121,21 @@ By the end of class you should be able to:
 
 <!-- The icons are Lab 12's own. The one mistake everyone makes once: run the first two and look for polygons. Nothing exists until Solve. In ArcGIS Pro 3.7.1 the first tool's parameters are Network Data Source and Layer Name; the network ships without named travel modes, so Travel Mode shows Custom and the layer uses TravelMinutes, the default cost. -->
 
-<!-- TODO(capture): Lab 12's Figures 2, 3 and 4 (Make Service Area Analysis Layer, Add Locations, the Solve / Select Data / Copy Features chain) from the GUI build, in place of the icons. -->
+---
+
+# The Same Three, as Dialogs
+
+<div class="imggrid" style="grid-template-columns: 330px 330px 330px; justify-content: center;">
+
+![](images/nab-dlg-make-service-area.png)
+
+![](images/nab-dlg-add-locations.png)
+
+![](images/nab-dlg-select-data.png)
+
+</div>
+
+<!-- Lab 12's Figures 2, 3 and 4 from the GUI build (ArcGIS Pro 3.7.1), left to right: Make Service Area Analysis Layer with one cutoff row of 4, away from facilities, dissolve, rings; Add Locations with the stations into Facilities and a 5000 m search tolerance under Advanced; Select Data, the ModelBuilder-only tool that pulls the Polygons sublayer out of the solved layer. Point out the empty Travel Mode box: the network ships without travel modes, so the default cost, TravelMinutes, is what runs. -->
 
 ---
 
@@ -207,13 +221,23 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 1. **Make Service Area Analysis Layer**: cutoff **4**, away from facilities, dissolve, rings
 2. **Add Locations** (the stations) ▸ **Solve** ▸ **Select Data** ▸ **Copy Features**: `Served_Area`
-3. **Select Layer By Location**: blocks whose **center** is in it, **inverted** ▸ **Summary Statistics**: sum of `PP_TOTAL`
-4. **Buffer** the stations 3.75 km; the same selection and sum
+3. **Make Feature Layer** from the blocks ▸ **Select Layer By Location**: blocks whose **center** is in it, **inverted** ▸ **Summary Statistics**: sum of `PP_TOTAL`
+4. **Buffer** the stations 3.75 km; its own layer of blocks, the same selection and sum
 5. Parameters: **Cutoff_Minutes**, **Buffer_Distance**
 
-<!-- Lab 12's model, step for step; the example map is its Figure 9. Two things to say before they build it: a run from the tool dialog deletes every dataset that is not a parameter, so the six outputs are parameters too; and the buffer branch's Select Layer By Location gets a precondition on Unserved_Blocks, because a selection belongs to the layer and the two branches must not run at once. Figure C, the model exported from ModelBuilder, is on the lab page. -->
+<!-- Lab 12's model, step for step; the example map is its Figure 9. Two things to say before they build it: a run from the tool dialog deletes every dataset that is not a parameter, so the six outputs are parameters too; and each branch's Select Layer By Location gets its own Make Feature Layer from the Census_Blocks dataset, because a selection belongs to the layer: two selections on one layer give both branches the same blocks (the GUI build's first dialog run put the buffer's 1,365 blocks in both counts). Figure C, the model exported from ModelBuilder, is on the lab page. -->
 
-<!-- TODO(capture): Lab 12's Figure C (the model SVG) from the GUI build, in place of the example map. -->
+---
+
+# The Model, Exported
+
+![w:1180](images/nab-lab12-model.svg)
+
+- Top: the network and the cutoff into the service-area chain; **Served_Area** out
+- Bottom: the blocks, once per branch, through **Make Feature Layer** before each selection
+- Eight **P** badges: two numbers in, six datasets out
+
+<!-- Lab 12's Figure C, exported from ModelBuilder after the GUI build. The two Make Feature Layer tools at the lower left are the thing to point at: both read the Census_Blocks dataset, and each gives its branch a layer of its own to select on. The green checks are from a completed run; the dashed-free connectors mean no preconditions are needed once the branches share nothing but the dataset. -->
 
 ---
 

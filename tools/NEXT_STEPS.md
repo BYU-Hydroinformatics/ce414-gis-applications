@@ -17,6 +17,8 @@ without being asked.
 
 ## 1. Lab 12: Network Analysis (largest; needs decisions from Dan)
 
+**Status, October 10, 2026: done.** Planned, reference-run, drafted, piloted, GUI-built at 175 % and promoted (`docs/assignments/lab-12/README.md`, `tools/lab12/`). Still owed: the Learning Suite assignment (due Saturday of Week 14).
+
 **Why it is hard:** a new lab from nothing, in a topic (Network Analyst) the course has not used yet,
 with a network dataset to build or source, a GUI build at 175 %, and a one-week schedule (introduced
 Tuesday of Week 14, due Saturday of Week 14, the same week as Midterm 2).
@@ -60,6 +62,8 @@ Tuesday of Week 14, due Saturday of Week 14, the same week as Midterm 2).
 ---
 
 ## 2. Week 14 decks: Network Analyst, two lectures (after task 1)
+
+**Status, October 10, 2026: done.** `slides/week-14/network-analysis-a.md` and `-b.md`, with the GUI captures from the Lab 12 build and the `networks` / `service-areas` quizzes; registered in `build_schedule.py`.
 
 **Why it is hard:** two decks with real figures and ArcGIS Pro captures, aligned with a lab that does
 not exist yet; there is no source PowerPoint for this topic.
