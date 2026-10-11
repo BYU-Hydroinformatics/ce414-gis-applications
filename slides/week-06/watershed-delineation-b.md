@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 6. Tuesday (Part A, watershed-delineation-a.md) covered what a watershed is and why water is managed by them, then the first three of the eight steps, ending on the flow direction grid. Today runs in three movements: how watersheds used to be delineated by hand, the same job done by USGS StreamStats, and then the rest of the eight steps (flow accumulation, the stream threshold, stream links, pour points and watersheds) finished in the Lab 5 ArcGIS Pro model. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-08</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-11</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -71,15 +71,15 @@ By the end of class you should be able to:
 
 # Watershed Delineation by Hand Digitizing — Let's Try It
 
-- Open **ArcGIS Pro**
-- Using your basemap, find **Hogle Zoo** in Salt Lake City — find **Emigration Creek**
-- Create a new blank **polygon** shapefile
-- Manually digitize the watershed that drains to this area by **clicking along ridge lines**
-- **Save** your digitized watershed and compare with your neighbors
+![bg right:42% w:96%](images/ws-digitize-in-progress.jpg)
+
+- Open **ArcGIS Pro**; find **Hogle Zoo** and **Emigration Creek** in Salt Lake City
+- **Catalog**: right-click your geodatabase ▸ **New** ▸ **Feature Class** (**Polygon**); add it to the map
+- **Edit** ▸ **Create**, pick its template, click along the **ridge lines** that drain to the zoo; **F2** finishes
+- **Save**, then compare with your neighbors
 
 <!-- Give this about fifteen minutes. Turn on a hillshade or terrain basemap so ridges are visible. The comparison at the end is the point: five students will produce five different boundaries, which sets up the StreamStats comparison that follows. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot of the Emigration Creek / Hogle Zoo area on a terrain basemap with a partially digitized polygon in progress. Not fabricated here; needs a real capture. -->
-<!-- VERIFY: exact ArcGIS Pro path for creating a new blank polygon shapefile or feature class, so the step can name the pane and menu. -->
+<!-- Capture: ArcGIS Pro 3.7.1 at 175 %, October 10, 2026, C:\Ames\Week06\Week06_Figures.aprx: the Emigration Canyon basin above Hogle Zoo on the World Topographic basemap at 1:123,239, a polygon sketch in progress (eleven vertices along the north and east ridges, the construction toolbar, the Create Features pane). The Catalog path (right-click geodatabase > New > Feature Class) was checked in the same session. -->
 
 ---
 
@@ -143,13 +143,15 @@ By the end of class you should be able to:
 
 # Compare the Two
 
+![bg right:45% w:96%](images/ws-compare-hand-streamstats.jpg)
+
 - Let's compare it to the watershed you **manually delineated**
 - **Unzip** the shapefile you downloaded and add it to your map in **ArcGIS Pro**
 - **How does it compare?** The automated basin is **more consistent** — it repeats exactly — not necessarily more accurate
 - Take a snapshot of this map, save it as an image file, and upload it to **Learning Suite** for today's classroom participation points
 
-<!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. -->
-<!-- TODO(graphic): an ArcGIS Pro screenshot showing a hand-digitized polygon and the StreamStats basin overlaid on the Emigration Creek area, as the example of what a good submission looks like. Needs a real capture. -->
+<!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. The example on the right: a quick hand-digitized basin (pink, 35.5 km2) against the StreamStats basin (black outline, 48.0 km2) for Emigration Creek at Hogle Zoo; the hand version missed about a quarter of the basin, mostly the south ridge toward Parleys Canyon. -->
+<!-- Capture: ArcGIS Pro 3.7.1 at 175 %, October 10, 2026, C:\Ames\Week06\Week06_Figures.aprx. The StreamStats basin is the one its web app delineated for the outlet 40.7495 N, 111.8160 W (its delineation response, saved as C:\Ames\Week06\streamstats\emigration_basin.json, converted with JSON To Features); the hand polygon was digitized by eye in the same session. -->
 
 ---
 

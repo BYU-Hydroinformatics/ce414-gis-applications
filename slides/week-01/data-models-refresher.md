@@ -22,7 +22,7 @@ Brigham Young University
 <!-- Week 1 review lecture. Most students have had an introductory GIS course, so this hour is a refresher on data models rather than a first exposure. The hands-on look at ArcGIS Pro comes at the end of the hour, and the full version is Lab 1. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-10-01</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-10-11</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -511,18 +511,18 @@ Each pixel (raster cell) is stored as a hexadecimal number that tells the screen
 
 # Hands on with ArcGIS Pro and Utah County sample data
 
-![bg right:38% w:94%](images/dm-lab01-example-map.jpg)
+![bg right:40% w:98%](images/dm-pro-utah-county.jpg)
 
-- Download the zip file from Learning Suite and unzip it to a folder you control
-- Start a new **ArcGIS Pro** project, then add the data from the **Catalog pane**
-- Make a map, then turn labels on from the **Labeling** tab
-- For each layer, check its **geometry type** and its **coordinate system**
+- Unzip the Learning Suite zip to a folder you control
+- New **ArcGIS Pro** project; add the data from **Catalog**
+- Make a map; labels on from the **Labeling** tab
+- Each layer: **geometry type**, **coordinate system**
 - Open an **attribute table**: one row per feature
-- Which data models are represented here — vector, raster, or TIN?
+- Which data models — vector, raster, or TIN?
 
-<!-- Do this together at the end of the hour. Keep it to about ten minutes as a look, not a tutorial; the full version is Lab 1. Add layers one at a time and ask the same question after each: what did the computer have to store in order to draw that? The map on the right is the Lab 1 example product, so this is where the same data is headed. -->
+<!-- Do this together at the end of the hour. Keep it to about ten minutes as a look, not a tutorial; the full version is Lab 1. Add layers one at a time and ask the same question after each: what did the computer have to store in order to draw that? The screenshot on the right is that data in ArcGIS Pro: the three layers in the Contents pane, the map, and the Catalog pane open to the project geodatabase. Lab 1 is where the same data is headed. -->
 
-<!-- TODO(graphic): replace the Lab 1 example map with an ArcGIS Pro screenshot of the Utah County data added to a map, with the Catalog pane visible. Capture from a real Pro session — do not fabricate. -->
+<!-- Capture: ArcGIS Pro 3.7.1 at 175 % display scaling, October 10, 2026, C:\Ames\Lab01\Lab01.aprx (the Lab 1 GUI build): UtahCountyRoads, CensusTracts2020 and Counties over the topographic basemap, Contents docked left, Catalog open to Lab01.gdb. -->
 
 ---
 
