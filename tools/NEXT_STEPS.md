@@ -1,4 +1,4 @@
-# Next steps: the rest of Fall 2026 (written October 11, 2026)
+# Next steps: the rest of Fall 2026 (written October 11, 2026; updated October 12)
 
 Each numbered section is a self-contained prompt for a fresh Claude Code session opened in this
 repository. Paste the block under **Prompt** as the first message. The sections are in the order
@@ -9,16 +9,38 @@ the calendar needs them; 1 and 2 are the urgent ones.
 areas on the UGRC network). Weeks 1 to 14 have decks; Week 15 has no class. No `TODO(capture)` is
 left anywhere, and the only `TODO(graphic)` notes left are for generated figures, not screenshots.
 Midterm 1 is drafted (Testing Center, October 20 to 22); Midterm 2 is drafted (December 1 to 3)
-and waits on one decision. The final project has a rubric draft waiting for review. Eight commits
-since the October 9 push are **on `main` but not pushed** (`git log origin/main..HEAD`): the Lab 12
-draft, decks, promotion, the Lab 5 and Labs 8 to 10 re-shoots, and the Week 1 and 6 screenshots.
+and waits on one decision. The final project has a rubric draft waiting for review. Everything
+on `main` is pushed and live (the eight commits waiting on October 11 went out with it).
+
+**Done October 12, 2026 (pushed; site deploy succeeded).**
+- **Lab 5 Step 13** (`a92c5a5`): students hit an error running Clip with the live UGRC NHD
+  service as its input (Dan sent a Learning Suite announcement on October 9). The step now adds
+  the service, selects the lines touching `Rock_Canyon_Basin` with Select By Location, exports
+  them with Data ▸ Export Features to `NHD_Local` (UTM 12N environment moved onto the export),
+  and clips the copy. Text only, **not run in the GUI**; see section 5.
+- **Sensitivity results moved to the private repo** (`8187ae8`, `dfe5ecb`; private `2d00597`,
+  `695bc67`). The `SENSITIVITY (do NOT publish)` lines from the Lab 1, 4, 5, 8, 9, 10, 11 and 12
+  migration notes, the sensitivity sections of the Lab 7 plan and the Lab 8, Lab 10 and wind-farm
+  parity plans, and the Lab 3 draft's Stansbury walk numbers are now in
+  `ce414-private/plans/lab-sensitivity-2026.md`; each public place keeps a one-line pointer. The
+  sensitivity runs in the Lab 4, 5, 10, 11 and 12 `check_values.json` files, Lab 4's
+  `site_survival.json` and Lab 7's two `sensitivity_*_base.json` files are now in
+  `ce414-private/sensitivity/`. The model scripts for Labs 4, 5, 7, 10, 11 and 12 write them there,
+  and the figure scripts for Labs 4, 5 and 12 and Weeks 12 and 14 read them from there, falling back
+  to a git-ignored file beside the script when the private checkout is absent. These script changes
+  were compiled and path-checked on the Mac but **not yet run under ArcGIS Pro**.
+  `tools/lab-conversion-guide.md` now says new labs keep only a pointer. The numbers remain in the
+  public repository's git history.
 
 **Where things live.**
 - Public site: this repository, `docs/` and `slides/`, built by `mkdocs build --strict` and the
   deck workflow on every push to `main`. The push is what publishes.
-- Private companion: `C:\Users\dpame\code\ce414-private` (remote `danames/ce414-private`): exam
-  drafts and keys (`exams/midterm-1-2026`, `exams/midterm-2-2026`), Learning Suite quiz
-  generators, `grading-oracles/` (the per-student lookups for Labs 7, 11 and 12), and `plans/`.
+- Private companion: `C:\Users\dpame\code\ce414-private` on Windows,
+  `/Users/danames/Code/ce414-private` on the Mac (remote `danames/ce414-private`; it must sit
+  beside this checkout for the model and figure scripts to find it): exam drafts and keys
+  (`exams/midterm-1-2026`, `exams/midterm-2-2026`), Learning Suite quiz generators,
+  `grading-oracles/` (the per-student lookups for Labs 7, 11 and 12), `sensitivity/` (the labs'
+  sensitivity runs), and `plans/` (including `lab-sensitivity-2026.md`).
   Nothing from it goes into this repository, including HTML comments. Finished exams and keys are
   also uploaded to the Google Drive folder *Private - exams, keys and grading*.
 - ArcGIS Pro GUI projects: `C:\Ames\LabNNGUI\LabNN.aprx` with the **current** lab numbers (Labs 8,
@@ -40,7 +62,6 @@ private in the public repository, do not push without being asked.
 
 ## 0. Needs Dan, not an agent
 
-- **Push.** `git push` publishes the eight waiting commits (Lab 12 and the capture work).
 - **Learning Suite, Lab 12.** Sign in to Learning Suite in Chrome, then an agent can add the
   assignment: due **Saturday, December 5, 2026, 11:59 pm** (Saturday of Week 14); description =
   a link to the page and to `docs/assignments/lab-12/lab12-report-template.docx`; multiple file
@@ -178,7 +199,12 @@ them (about 25 lines, most of them historical notes that just need closing).
 > the rest either done now or moved to this file. (4) `docs/policies/ai-policy.md` and
 > `university.md`: confirm the quoted university wording is current (link the source) and drop
 > the note. Never mention earlier handout versions in student-facing text; put history in HTML
-> comments. Check every link on each page you touch, `mkdocs build --strict`, commit. Do not push.
+> comments. (5) `lab-05/README.md` Step 13 (changed October 12, text only): in ArcGIS Pro, confirm
+> that Clip with the UGRC service as input fails and record the error; that Select By Location ▸
+> Data ▸ Export Features exports only the selection and honors the Output Coordinate System
+> environment; and that clipping `NHD_Local` still gives 36 lines and about 37.4 km. Close the
+> STEP 13 NHD EXPORT note in the migration notes. Check every link on each page you touch,
+> `mkdocs build --strict`, commit. Do not push.
 
 ---
 
@@ -241,5 +267,11 @@ LMS, holds the content.
 - `slides/week-02` still owes an anonymized prior-year report page for Part B (no PDF exists;
   Dan said he would show named prior-year PDFs in class instead, so this may simply be dropped).
 - The Week 3 Thursday hands-on activity never got its Learning Suite participation item.
+- **First Windows run after the sensitivity move.** Clone `danames/ce414-private` beside this
+  repository at `C:\Users\dpame\code\` if it is not there, then run any one of the changed model
+  scripts (Lab 5's `run_model.py 5000` is the quickest) and its `build_figures.py` to confirm they
+  write to and read from `ce414-private/sensitivity/`.
+- The Mac checkout has a leftover `git stash` entry (`autostash`, October 11) holding the Lab 5
+  Step 13 edit that is now committed; `git stash drop` once Dan agrees.
 - Memory notes under `~/.claude/projects/.../memory/` written before October 8 use the **old**
   lab numbers (7 Avalanche, 8 Butte, 9 Interpolation); `lab-renumber-oct08.md` has the mapping.
