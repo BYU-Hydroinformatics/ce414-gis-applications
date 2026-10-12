@@ -1,7 +1,7 @@
 """Keep the example-map scenario and test whether the example recommended site survives every
 scenario. Run after run_model.py.
 
-    python scenario.py            -> Suitable_D40 / Suitable_Polys_D40 in Check.gdb, site_survival.json
+    python scenario.py            -> Suitable_D40 / Suitable_Polys_D40 in Check.gdb, site_survival.json (in ce414-private/sensitivity/)
 """
 import arcpy, json, pathlib
 from arcpy.sa import *
@@ -31,7 +31,7 @@ def main():
             arcpy.management.CopyRaster("Suitable_Sites_s", "Suitable_D40")
             arcpy.management.CopyFeatures("Suitable_Polys_s", "Suitable_Polys_D40")
             arcpy.management.CopyRaster("Low_Tower_Density_s", "Low_Tower_Density_D40")
-    pathlib.Path(__file__).with_name("site_survival.json").write_text(json.dumps(out, indent=1))
+    pathlib.Path(rm.sensitivity_path("site_survival.json")).write_text(json.dumps(out, indent=1))
 
 
 if __name__ == "__main__":

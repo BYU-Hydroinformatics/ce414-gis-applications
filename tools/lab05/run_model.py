@@ -2,7 +2,7 @@
 
 Usage:  run_model.py [threshold ...]
 With no thresholds it runs the baseline and the sensitivity sweep. Writes check_values.json next to
-this script. Run with the ArcGIS Pro Python (arcgispro-py3).
+this script and the threshold runs to ../ce414-private/sensitivity/lab05_sensitivity.json. Run with the ArcGIS Pro Python (arcgispro-py3).
 """
 import json
 import os
@@ -14,6 +14,15 @@ import numpy as np
 from arcpy.sa import *
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def sensitivity_path(name="sensitivity.json"):
+    """Sensitivity runs are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/lab05_<name>). If that checkout is absent, use a file beside
+    the script; the public .gitignore keeps it out of git."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, "lab05_" + name) if os.path.isdir(priv) else os.path.join(here, name)
+
 ROOT = r"C:\Ames\Lab05"
 GDB = os.path.join(ROOT, "Check.gdb")
 DEM = os.path.join(ROOT, "Data", "RockCanyon_DEM.tif")
@@ -129,6 +138,8 @@ def run(th, keep=False):
 ths = [int(a) for a in sys.argv[1:]] or SWEEP
 out["runs"] = [run(th, keep=(th == BASELINE)) for th in ths]
 path = os.path.join(HERE, "check_values.json")
+with open(sensitivity_path(), "w") as fh:
+    json.dump(out.pop("runs"), fh, indent=1, default=float)
 with open(path, "w") as fh:
     json.dump(out, fh, indent=1, default=float)
-print(json.dumps({k: v for k, v in out.items() if k != "runs"}, indent=1, default=float))
+print(json.dumps(out, indent=1, default=float))

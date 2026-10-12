@@ -26,6 +26,9 @@ UTM = arcpy.SpatialReference(26912)
 BASE, SCEN = 5000, 10000
 arcpy.env.workspace = GDB
 CV = json.loads((HERE / "check_values.json").read_text())
+# the threshold runs live in the private companion repo (see run_model.py)
+_SENS = HERE.parent.parent.parent / "ce414-private" / "sensitivity" / "lab05_sensitivity.json"
+CV["runs"] = json.loads((_SENS if _SENS.exists() else HERE / "sensitivity.json").read_text())
 
 
 def rgb(r, g, b, a=100):

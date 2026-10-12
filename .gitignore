@@ -19,3 +19,4 @@ tools/learning-suite-quizzes/
 # Sensitivity results live in the private companion repo too (fallback when it is not checked out)
 tools/*/sensitivity.json
 tools/lab07/sensitivity_*_base.json
+tools/lab04/site_survival.json

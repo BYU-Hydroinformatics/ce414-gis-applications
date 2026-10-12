@@ -310,6 +310,8 @@ def build_layout(p, title, subtitle, show, lname, notes, fname):
 
 def layouts(p):
     cv = json.loads((HERE / "check_values.json").read_text())
+    sens = HERE.parent.parent.parent / "ce414-private" / "sensitivity" / "lab04_sensitivity.json"  # private repo
+    cv["scenarios"] = json.loads((sens if sens.exists() else HERE / "sensitivity.json").read_text())
     base = cv["baseline"]
     d40 = next(s for s in cv["scenarios"] if s["max_density"] == 40 and s["radius_m"] == 20000
                and s["max_slope"] == 5 and s["road_km"] == 1)

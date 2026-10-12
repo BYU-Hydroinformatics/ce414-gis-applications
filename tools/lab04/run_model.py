@@ -11,8 +11,18 @@ Inputs (downloaded as the page tells students to):
     C:\\Ames\\Lab04\\Data\\Counties\\Counties.shp           UGRC county boundaries
     C:\\Ames\\Lab04\\Data\\UDOT_Routes\\UDOT_Routes.shp     UDOT routes (ALRS)
 """
+import os
 import arcpy, json, sys, time, pathlib
 from arcpy.sa import *
+
+def sensitivity_path(name="sensitivity.json"):
+    """Sensitivity runs are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/lab04_<name>). If that checkout is absent, use a file beside
+    the script; the public .gitignore keeps it out of git."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, "lab04_" + name) if os.path.isdir(priv) else os.path.join(here, name)
+
 
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
@@ -178,6 +188,8 @@ def main():
             r = run(p, log)
             out["scenarios"].append(r)
             print({k: (round(v, 2) if isinstance(v, float) else v) for k, v in r.items()})
+    if "scenarios" in out:
+        pathlib.Path(sensitivity_path()).write_text(json.dumps(out.pop("scenarios"), indent=1))
     pathlib.Path(__file__).with_name("check_values.json").write_text(json.dumps(out, indent=1))
 
 

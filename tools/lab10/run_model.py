@@ -11,7 +11,8 @@ Steps, as the draft page has them:
      classes by its cube root (the geometric mean of the three classes), rounded.
   5. Areas by class inside the Snowbird boundary (UGRC SkiAreaBoundaries, OBJECTID 13).
 
-Writes C:\\Ames\\Lab07\\Check.gdb and tools/lab10/check_values.json.
+Writes C:\\Ames\\Lab07\\Check.gdb and tools/lab10/check_values.json; the elevation-shift runs go to
+../ce414-private/sensitivity/lab10_sensitivity.json.
 """
 import json
 import os
@@ -24,6 +25,15 @@ import numpy as np
 from arcpy.sa import Aspect, Con, Float, Int, Power, Raster, Reclassify, RemapRange, Slope
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def sensitivity_path(name="sensitivity.json"):
+    """Sensitivity runs are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/lab10_<name>). If that checkout is absent, use a file beside
+    the script; the public .gitignore keeps it out of git."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, "lab10_" + name) if os.path.isdir(priv) else os.path.join(here, name)
+
 ROOT = r"C:\Ames\Lab07"
 DEM = os.path.join(ROOT, "Data", "LittleCottonwood_DEM.tif")
 GDB = os.path.join(ROOT, "Check.gdb")
@@ -115,5 +125,6 @@ for shift in SHIFTS:
     print(shift, out["runs"][str(int(shift))]["combined_classes"], flush=True)
 
 out["seconds"] = round(time.time() - t0, 1)
+json.dump(out.pop("runs"), open(sensitivity_path(), "w"), indent=1)
 json.dump(out, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
-print(json.dumps({k: v for k, v in out.items() if k != "runs"}, indent=1))
+print(json.dumps(out, indent=1))

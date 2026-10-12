@@ -8,9 +8,9 @@ figures. Run with the ArcGIS Pro Python,
 | --- | --- |
 | `fetch_towers.py` | Queries the HIFLD *Cellular Towers in the United States (Archive)* feature service for `LocState = 'UT'` and saves `C:\Ames\Lab04\Data\hifld_towers_UT.geojson`. |
 | `make_extract.py` | Turns that GeoJSON into `UtahCellTowers.shp` plus `READ-ME-FIRST.txt` and zips them to `docs/data/lab04-utah-cell-towers.zip`. |
-| `run_model.py [--sens]` | Runs the lab's model step for step in `C:\Ames\Lab04\Check.gdb` and writes `check_values.json` (baseline, and with `--sens` twelve one-at-a-time scenarios). About 50 s for the shared steps and 45 s per run. |
+| `run_model.py [--sens]` | Runs the lab's model step for step in `C:\Ames\Lab04\Check.gdb` and writes `check_values.json` (baseline); with `--sens` it also runs twelve one-at-a-time scenarios and writes them to `ce414-private/sensitivity/lab04_sensitivity.json` (private repo). About 50 s for the shared steps and 45 s per run. |
 | `describe_zones.py` | Where the baseline's larger candidate zones are, the density range in the county, and what de-duplicating the towers changes; writes `zones.json`. |
-| `scenario.py` | Re-runs every scenario, records whether the example recommended site survives (`site_survival.json`), and keeps the density-40 run for the example scenario map. |
+| `scenario.py` | Re-runs every scenario, records whether the example recommended site survives (`ce414-private/sensitivity/lab04_site_survival.json`, private repo), and keeps the density-40 run for the example scenario map. |
 | `make_svgs.py` | The six tool icons, Figure A (metadata) and Figure B (one tower's density, computed from the documented kernel). Figure C is a ModelBuilder SVG export, not generated. |
 | `build_figures.py [checks\|layouts]` | The step check maps and the two example layouts, rendered by ArcGIS Pro through arcpy.mp into the lab's images folder. Needs ArcGIS Pro signed in for the basemaps. |
 
