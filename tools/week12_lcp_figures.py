@@ -191,6 +191,9 @@ def lab11():
     arcpy.env.workspace = FG
     arcpy.env.extent = arcpy.env.snapRaster = arcpy.env.cellSize = DEM
     ck = json.load(open(os.path.join(REPO, "tools", "lab11", "check_values.json")))
+    # the sensitivity runs live in the private companion repo (see tools/lab11/run_model.py)
+    sens = os.path.normpath(os.path.join(REPO, "..", "ce414-private", "sensitivity", "lab11_sensitivity.json"))
+    ck["sensitivity"] = json.load(open(sens if os.path.exists(sens) else os.path.join(REPO, "tools", "lab11", "sensitivity.json")))
     ex = json.load(open(os.path.join(REPO, "tools", "lab11", "explore_weights.json")))
     NUM["lab11"] = {"base": ck["base"], "straight_km": ck["straight_km"],
                     "runs": {k: ck["sensitivity"][k] for k in ("line0", "line0_5", "line2", "slope0", "slope5", "nobarrier")},

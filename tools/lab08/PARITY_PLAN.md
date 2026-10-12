@@ -75,23 +75,9 @@ method behaves. The revision keeps that design and gives it the course spine.
 - 3DEP image service, value at the highest cell (40.21415 N, 111.58865 W): 2,896.7 m (REST identify)
   vs 2,896.5 m in True_DEM. Service: Web Mercator (3857), 1 m pixels, F32, bilinear default.
 
-## Sensitivity (for setting expectations; do NOT publish)
+## Sensitivity
 
-| Run (seed 1) | Thiessen | IDW | Kriging | Checkpoint RMSE Th / IDW / Kr |
-| --- | --- | --- | --- | --- |
-| 250 points | 80.73 | 69.46 | 50.38 | 75.77 / 71.18 / 50.85 |
-| 1,000 points | 44.07 | 37.00 | 24.90 | 42.55 / 38.80 / 23.88 |
-| **2,500 (baseline)** | **28.29** | **20.71** | **14.46** | 30.38 / 23.16 / 17.12 |
-| 10,000 points | 15.71 | 10.39 | 6.90 | 15.20 / 9.85 / 7.14 |
-
-- IDW power 1 / 2 / 3 / 5: 23.98 / 20.71 / 20.20 / 21.60.
-- Kriging spherical, exponential, linear, circular all 14.46; Gaussian 24.81 (surface max 2,826.1,
-  it shaves the peaks).
-- Seeds 2–5 at 2,500: Thiessen 28.2–29.1, IDW 19.2–21.2, Kriging 13.1–14.2. The ranking never
-  changes.
-- RMSE by slope (Thiessen / IDW / Kriging): <10° 5.0 / 5.3 / 3.9; 10–25° 25.7 / 25.2 / 17.7;
-  25–35° 37.7 / 26.8 / 17.8; >35° 47.7 / 30.6 / 22.4.
-- Personal seed 4321 (oracle test): baseline row and checkpoints reproduced in one call.
+Moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 8 parity plan).
 
 ## Pilot (no-GUI, October 6, 2026)
 

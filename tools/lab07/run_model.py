@@ -24,6 +24,14 @@ from arcpy.sa import (Con, ExtractByMask, Fill, FlowAccumulation, FlowDirection,
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def sensitivity_path(here, name):
+    """Sensitivity runs are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/lab07_<name>). If that checkout is absent, write beside the
+    script; the public .gitignore keeps it out of git."""
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, "lab07_" + name) if os.path.isdir(priv) else os.path.join(here, name)
+
 ROOT = r"C:\Ames\HAND"
 GDB = os.path.join(ROOT, "HAND.gdb")
 WORK = os.path.join(ROOT, "work")
@@ -222,7 +230,7 @@ def main():
         variants.append(dict(base, cell=10, dem="ned13"))
         for v in variants:
             runs.append(evaluate(v))
-            json.dump(runs, open(os.path.join(HERE, "sensitivity_5m_base.json"), "w"), indent=1, default=float)
+            json.dump(runs, open(sensitivity_path(HERE, "sensitivity_5m_base.json"), "w"), indent=1, default=float)
         return
     r = evaluate(dict(DEFAULT), keep=True)
     r.update(info)

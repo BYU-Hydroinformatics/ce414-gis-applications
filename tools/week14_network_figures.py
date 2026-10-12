@@ -40,6 +40,9 @@ REF = r"C:\Ames\Lab12\ref\Ref.gdb"
 G = os.path.join(W, "Week14.gdb")
 UGRC = "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services"
 CK = json.load(open(os.path.join(REPO, "tools", "lab12", "check_values.json")))
+# the sensitivity runs live in the private companion repo (see tools/lab12/run_model.py)
+_SENS = os.path.normpath(os.path.join(REPO, "..", "ce414-private", "sensitivity", "lab12_sensitivity.json"))
+CK["sensitivity"] = json.load(open(_SENS if os.path.exists(_SENS) else os.path.join(REPO, "tools", "lab12", "sensitivity.json")))
 NUM = {}
 plt.rcParams.update({"font.size": 13, "axes.spines.top": False, "axes.spines.right": False})
 MAJOR = "CARTOCODE IN ('1', '2', '3', '4', '5', '7')"

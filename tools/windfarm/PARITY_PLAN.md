@@ -140,21 +140,9 @@ grid snapped to whole hundreds of meters, extent = study area.
   4,834,550 N** (43.6475 N, 97.0601 W), western Minnehaha County, **54 m from Humboldt**; 3,208.5
   km² score ≥ 7.
 
-### Sensitivity (for setting expectations; do NOT publish)
+### Sensitivity
 
-| Run | Weights (wind/town/road) | Max | km² ≥ 7 | Top site |
-| --- | --- | --- | --- | --- |
-| Course | 0.5 / 0.25 / 0.25 | 9.3143 | 3,208.5 | 656,450 E 4,834,550 N (Humboldt) |
-| Wind-first | 0.7 / 0.15 / 0.15 | 9.1257 | 2,675.1 | 653,250 E 4,843,650 N, 7.1 km from Montrose — **moves 9.6 km** |
-| Infrastructure-first | 0.2 / 0.4 / 0.4 | 9.6967 | 4,278.9 | Humboldt cell |
-| Equal | ⅓ / ⅓ / ⅓ | 9.5267 | 3,983.2 | Humboldt cell |
-| Course, spacing 10 mi | 0.5 / 0.25 / 0.25 | 9.3143 | 4,653.0 | Humboldt cell |
-
-- Personal weight (0.30 + d/200, d = 0, 11, …, 99): area 4,083.3 → 2,434.1 km², changing at every
-  step; the site moves from the Humboldt cell to the Montrose-area cell between d = 66 and 77.
-- Personal spacing (10 + d/10 mi): area 4,653.0 → 3,228.6 km²; the site never moves.
-- Lesson the TIP can hint at: the exclusions decide *how much* land is open; the weights decide
-  *where* the best cell is, and only a strong tilt toward wind moves it.
+Moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, wind-farm parity plan).
 
 ### Traps found (each becomes a WARNING box)
 

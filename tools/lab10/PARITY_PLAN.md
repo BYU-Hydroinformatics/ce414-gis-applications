@@ -74,7 +74,5 @@ promoted until Dan decides the items marked DECISION.** Lab 10 is due Saturday o
   Rule_Spread (worst − best) 0–4: 0.436 / 1.559 / 2.547 / 2.931 / 3.309. (`check_values.json`
   and `tool_checks.json` used the boundary projected first and differ in the third decimal.)
 
-- Sensitivity, geometric mean, High + Extreme (km²): −400 m 3.976; −200 m 3.936; 0 3.760;
-  +200 m 3.316; +400 m 2.465. Maximum rule Extreme: 10.613, 9.152, 8.205, 6.415, 4.289.
-  Minimum rule Extreme: 0.415, 0.406, 0.336, 0.258, 0.126. (Do not publish; the TIP hints.)
+- Sensitivity: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 10 parity plan).
 - Run time of the whole reference run: 51 s.

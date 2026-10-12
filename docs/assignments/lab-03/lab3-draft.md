@@ -922,23 +922,7 @@ VERIFIED IN THE GUI WALK, 2026-09-18 (ArcGIS Pro 3.7.1, 175% scaling):
 - The Add Data dialog will not take a typed path into a geodatabase ("Network Error"); drag from the
   Catalog pane instead.
 
-STANSBURY WALK NUMBERS (instructor only; do NOT publish). Eight control points: Promontory Point,
-Fremont Island, Stansbury Island, Antelope Island, Temple Square, Ensign Peak, Provo, Mount Nebo.
-Three reserved checks: Carrington Island, Ogden, Table Mountain (West Mountain, Utah County).
-- Run 1, affine, 8 points: total RMS 1,688 m (GUI: 1,688.06). Check errors 2,560 / 3,002 / 1,589 m,
-  mean 2,384 m.
-- Run 2, 2nd order, 8 points: total RMS 623 m (GUI: 622.57). Check errors 3,434 / 17,044 / 3,166 m,
-  mean 7,881 m.
-- Run 3, affine, 3 clustered points (Antelope Island, Temple Square, Ensign Peak): total RMS 0.000000
-  (GUI). Check errors 2,601 / 7,232 / 16,919 m, mean 8,917 m.
-  The textbook result: the higher-order run cuts RMS by almost two-thirds and more than triples the
-  real error; the clustered run reports zero and is the worst of the three.
-- Hand-drawn error lines at 1:500,000 measured 1,928 m (Carrington) and 3,650 m (Ogden) against the
-  computed 2,560 and 3,002 m. Hence the instruction to draw them at 1:50,000.
-- 1850 Great Salt Lake shoreline, traced with 42 vertices: 5,224 km2 geodesic area, 395 km perimeter
-  (GUI Calculate Geometry: 5,223.78 and 394.76). Uncertainty at most 395 x 2.384 = 942 km2, about 18%.
-- Old_Places: Phillips, Holmes and Haight farmsteads north of Salt Lake City and the City Mill.
-  Old_Routes: the ford from the south end of Antelope Island to the mainland, 2.6 km.
+STANSBURY WALK NUMBERS: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 3).
 
 COMPARED WITH THE ORIGINAL WORD HANDOUT (Lab 3 - Georectifying and Digitizing Images.docx, Google
 Drive, read 2026-09-18): the original had two sheets, points and lines only, one Location_Name

@@ -1,6 +1,6 @@
 r"""Lab 11 reference run: the page's model in arcpy, on the hosted package only.
 
-    python run_model.py               baseline + step checks + sensitivity runs -> check_values.json
+    python run_model.py               baseline + step checks + sensitivity runs -> check_values.json (sensitivity -> ../ce414-private/sensitivity/)
     python run_model.py personal      the personal-parameter sweep -> ../../../ce414-private/grading-oracles/lab11_personal_lookup.csv
                                       (private repo; falls back to personal_lookup.csv here, which is git-ignored)
 
@@ -33,6 +33,14 @@ from arcpy.sa import (Con, DistanceAccumulation, IsNull, OptimalPathAsLine, Rast
 arcpy.CheckOutExtension("Spatial")
 arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def sensitivity_path(here, lab):
+    """Sensitivity results are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/). If that checkout is absent, use a file beside the script;
+    the public .gitignore keeps it out of git."""
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, f"lab{lab}_sensitivity.json") if os.path.isdir(priv) else os.path.join(here, "sensitivity.json")
+
 
 
 def private_path(here, name):
@@ -199,6 +207,7 @@ def main():
         r["moved"] = moved(tag)
         ck["sensitivity"][tag] = r
         print(tag, r)
+    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "11"), "w"), indent=1)
     json.dump(ck, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
 
 

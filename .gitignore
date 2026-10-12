@@ -15,3 +15,7 @@ tools/learning-suite-quizzes/*.zip
 # Grading oracles and quiz keys live in the private companion repo (../ce414-private); never commit them here
 tools/*/personal_lookup.csv
 tools/learning-suite-quizzes/
+
+# Sensitivity results live in the private companion repo too (fallback when it is not checked out)
+tools/*/sensitivity.json
+tools/lab07/sensitivity_*_base.json

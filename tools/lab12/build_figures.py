@@ -31,6 +31,7 @@ FIG = r"C:\Ames\Lab12\fig.gdb"   # the figure's own data, so it never writes int
 UTM = arcpy.SpatialReference(26912)
 rgb = bf.rgb
 CK = json.loads((HERE / "check_values.json").read_text())
+CK["sensitivity"] = json.load(open(rm.sensitivity_path(str(HERE), "12")))  # private repo
 UGRC = "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services"
 
 

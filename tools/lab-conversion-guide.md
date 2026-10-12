@@ -356,7 +356,9 @@ corrected, figure provenance, site behavior. Written for the next person who rev
 **Migration notes** (bottom of the page, after the rubric), one paragraph per topic on single
 lines so they diff cleanly: the source file and date; the ArcGIS Pro version verified against and
 how (GUI, arcpy); DATA PACKAGES with build scripts, sizes and processing; VERIFIED NUMBERS;
-SENSITIVITY numbers measured "for setting expectations; do NOT publish"; CORRECTIONS carried
+a one-line SENSITIVITY pointer (the measured sensitivity results themselves go in the private
+companion repository, `ce414-private/plans/lab-sensitivity-2026.md` and its `sensitivity/` folder,
+never in this public one, not even in a comment); CORRECTIONS carried
 from earlier rounds; GUI FACTS learned; PILOT results; and a numbered `TODO(instructor)` list of
 everything that needs the instructor's decision or a person at a lab machine. Inline
 `<!-- VERIFY -->` and `<!-- TODO(instructor) -->` comments stay next to the sentence they concern.

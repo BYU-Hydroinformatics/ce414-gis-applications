@@ -1,6 +1,6 @@
 r"""Lab 12 reference run: the page's model in arcpy, on the hosted package only.
 
-    python run_model.py               baseline + step checks + sensitivity runs -> check_values.json
+    python run_model.py               baseline + step checks + sensitivity runs -> check_values.json (sensitivity -> ../ce414-private/sensitivity/)
     python run_model.py personal      the personal-cutoff sweep (BYU ID digits 00-99) -> the private
                                       repo's grading-oracles/lab12_personal_lookup.csv
 
@@ -35,6 +35,14 @@ import arcpy
 arcpy.CheckOutExtension("Network")
 arcpy.env.overwriteOutput = True
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def sensitivity_path(here, lab):
+    """Sensitivity results are not public: they live in the private companion repo
+    (../ce414-private/sensitivity/). If that checkout is absent, use a file beside the script;
+    the public .gitignore keeps it out of git."""
+    priv = os.path.normpath(os.path.join(here, "..", "..", "..", "ce414-private", "sensitivity"))
+    return os.path.join(priv, f"lab{lab}_sensitivity.json") if os.path.isdir(priv) else os.path.join(here, "sensitivity.json")
+
 
 
 def private_path(here, name):
@@ -179,6 +187,7 @@ def main():
         r["pct_outside"] = round(100 * r["population"] / pop, 1)
         r["digits"] = digits; r["cutoff"] = c
         ck["examples"][f"{digits:02d}"] = r
+    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "12"), "w"), indent=1)
     json.dump(ck, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
     print(json.dumps(ck, indent=1))
 

@@ -250,31 +250,9 @@ from the model's dialog, and says which return periods it falls between. Measure
 **100 different h, 100 different areas, 62 different building counts**; e.g. 00 → 900 ft³/s, 6.19 ft,
 h 0.911 m, 1.067 km²; 50 → 1,500, 7.15 ft, 1.204 m, 1.298 km²; 99 → 2,088, 7.93 ft, 1.442 m, 1.495 km².
 
-## 8. Sensitivity (`sensitivity_5m_base.json`; 2 m base in `sensitivity_2m_base.json`)
+## 8. Sensitivity
 
-Do not publish; for setting expectations. 100-yr row, buildings counted by centroid.
-
-| Run (5 m unless noted) | River cells | 2-yr km² | 100-yr km² | Hit | FAR | CSI | Bldg |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| **Base: T 0.05 km², corridor 30 m** | 3,191 | 1.043 | 1.751 | 0.577 | 0.462 | 0.386 | 381 |
-| T 0.01 km² | 3,513 | 1.239 | 2.070 | 0.616 | 0.517 | 0.371 | 448 |
-| T 0.02 km² | 3,340 | 1.152 | 1.950 | 0.610 | 0.501 | 0.378 | 433 |
-| T 0.1 km² | 3,110 | 0.954 | 1.615 | 0.575 | 0.452 | 0.390 | 373 |
-| T 0.2 km² | 2,912 | 0.613 | 1.213 | 0.508 | 0.418 | 0.372 | 235 |
-| T 0.5 km² | 2,640 | 0.560 | 1.101 | 0.480 | 0.392 | 0.366 | 226 |
-| Corridor 15 m | 2,680 | 0.697 | 1.332 | 0.455 | 0.403 | 0.348 | 213 |
-| Corridor 60 m | 3,936 | 1.552 | 2.474 | 0.669 | 0.584 | 0.345 | 584 |
-| 2 m lidar | 8,447 | 1.034 | 1.744 | 0.610 | 0.453 | 0.405 | 306 |
-| 3 m lidar | 5,572 | 1.028 | 1.756 | 0.608 | 0.442 | 0.411 | 293 |
-| 10 m lidar | 1,547 | 0.755 | 1.642 | 0.596 | 0.421 | 0.416 | 274 |
-| 10 m USGS 1/3″ | 1,540 | 0.964 | 1.887 | 0.618 | 0.463 | 0.403 | 286 |
-
-**Recommended sensitivity step: the stream threshold** (T = 0.01, 0.2 km² plus one of the
-student's choosing, i.e. 400 and 8,000 cells): it moves the 100-yr area by −31 % to +18 % while CSI
-barely moves — the lesson is that the *map* changes more than its *agreement*. The threshold is
-Lab 5's parameter, so it costs no new skill. The **corridor width** is as strong (15 m → 1.33 km², 60 m → 2.47 km²) and could replace it. DEM resolution is weak
-(1.64–1.89 km², CSI 0.40–0.42) — a good lecture fact, a poor student experiment. On the 2 m DEM a
-100 m corridor gave CSI 0.29 and T = 1 km² lost the upper river (CSI 0.27): both now WARNING boxes.
+Moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 7 plan). The run files are in its `sensitivity/` folder.
 
 ## 9. Data package (`make_extract.py` → `C:\Ames\HAND\pkg\lab07-provo-river-hand.zip`, **12.4 MB**)
 
