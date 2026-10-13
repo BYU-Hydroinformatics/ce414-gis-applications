@@ -124,17 +124,20 @@ def wahweap(p):
 
 
 if __name__ == "__main__":
+    import sys
     p = project()
-    common = ["Example map, CE 414, October 2026. Projection: NAD 1983 (2011) UTM zone 12N.",
-              "Elevation: USGS 1 m topobathymetric DEM of Lake Powell, 1947-2018 (Poppenga et al. 2020, lake bed surveyed 2017),",
-              "resampled to 30 m and converted from meters NAVD88 to feet NGVD29. Imagery: Esri."]
-    layout(p, "shorelines_default", "Lake Powell Shorelines, 3,500 to 3,700 ft by 10 ft",
-           "21 shorelines from one looping ModelBuilder model; main pool only (connected to the seed point near the dam)",
-           ["Result: 75.7 sq mi at 3,500 ft (just below the Sept 2026 record low of 3,516.6 ft) to 247.4 sq mi at full pool, 3,700 ft."] + common,
+    # Every string on the example layouts is a bracketed placeholder on purpose (see tools/lab05/build_figures.py):
+    # students pasted the Lab 5 examples' wording onto their own maps. The design is the example; the words are theirs.
+    common = ["[Map by YOUR NAME, CE 414, month and year. Projection: the one you used.]",
+              "[Elevation source, its survey date and vertical datum, and what you converted it to. Imagery source.]"]
+    layout(p, "shorelines_default", "[Your title: what this map shows, with the elevation range and step]",
+           "[Your subtitle: how many shorelines, from what kind of model, and which pool was kept]",
+           ["[Result: the lake area at your lowest and highest levels, and where today's level falls.]"] + common,
            "lab06-example-map-baseline.png")
-    layout(p, "shorelines_deadpool", "Lake Powell Shorelines Down to Dead Pool, 3,370 to 3,700 ft by 10 ft",
-           "Changed: the low end moved from 3,500 ft to dead pool, 3,370 ft; same 10 ft step (34 shorelines)",
-           ["Result: at dead pool the main pool is 28.2 sq mi, about 11% of the lake at full pool. Chosen to show how much of the lake is left at the levels operators plan around."] + common,
+    layout(p, "shorelines_deadpool", "[Your title for the scenario map, with its range and step]",
+           "[Changed: which value you changed, from what to what, and what stayed the same]",
+           ["[Result: what this run shows that the baseline did not. Why you chose this run to show.]"] + common,
            "lab06-example-map-scenario.png")
-    wahweap(p)
+    if "layouts" not in sys.argv:
+        wahweap(p)
     p.save()
