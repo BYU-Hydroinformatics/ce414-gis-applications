@@ -313,25 +313,23 @@ def build_layout(p, title, subtitle, th, lname, notes, fname):
 
 
 def layouts(p):
-    runs = {r["threshold"]: r for r in CV["runs"]}
-    b, s = runs[BASE], runs[SCEN]
-    nhd = CV["nhd_basin"]["km"]
-    common = ["Map by Dan Ames, CE 414, September 2026. Projection: NAD 1983 UTM zone 12N, 10 m cells.",
-              "Data: USGS 3DEP 1/3 arc-second DEM, tile n41w112 (May 2026); Utah Streams NHD (UGRC, 2016);",
-              "imagery basemap by Esri. Streams and subwatersheds derived from the DEM with a D8 model."]
-    build_layout(p, "Streams and Subwatersheds of Rock Canyon, Provo",
-                 f"Baseline: stream threshold {BASE:,} cells (0.5 sq km of contributing area)\n"
-                 f"Basin above the Rock Canyon trailhead: {CV['basin']['km2']:.2f} sq km",
+    # Every piece of wording on the example layouts is a bracketed placeholder on purpose. When the examples
+    # carried real titles, subtitles and a real text box (Fall 2026, Lab 5), about 20 of 25 students pasted
+    # that wording onto their own maps word for word. The design is the example; the words must be theirs.
+    common = ["[Map by YOUR NAME, CE 414, month and year. Projection: the one you used and its cell size.]",
+              "[Data: each source you relied on, with its date: the DEM tile, the NHD layer, the basemap.]",
+              "[How the streams and subwatersheds were derived, in one sentence.]"]
+    build_layout(p, "[Your title: what this map shows, and where]",
+                 "[Your subtitle: the threshold you used, its contributing area, and the basin area]\n"
+                 "[One more line if you need it]",
                  BASE, "Baseline map",
-                 [f"Result: {b['links']} stream segments and {b['subwatersheds']} subwatersheds; {b['stream_km']:.1f} km of stream, against "
-                  f"{nhd:.1f} km in the NHD for the same basin, most of it mapped as ephemeral."] + common,
+                 ["[Result: your segment and subwatershed counts, your stream length, and the NHD length for the same basin.]"] + common,
                  "lab05-example-map-baseline.png")
-    build_layout(p, "Rock Canyon with a Higher Stream Threshold",
-                 f"Changed: threshold raised from {BASE:,} to {SCEN:,} cells (0.5 to 1.0 sq km).\n"
-                 "Outlet, DEM and every other setting unchanged from the baseline.",
+    build_layout(p, "[Your title for the scenario map]",
+                 "[Changed: which number you changed, from what to what]\n"
+                 "[What stayed the same]",
                  SCEN, "Scenario map",
-                 [f"Result: {s['links']} segments and {s['subwatersheds']} subwatersheds (from {b['links']}); {s['stream_km']:.1f} km of stream (from {b['stream_km']:.1f}). "
-                  "Chosen to show what doubling the threshold does to a runoff model that needs 20-40 subwatersheds."] + common,
+                 ["[Result: this run's counts and length, against the baseline's. Why you chose this run to show.]"] + common,
                  "lab05-example-map-scenario.png")
 
 

@@ -604,15 +604,15 @@ Utah Geospatial Resource Center. *Utah Streams NHD* (derived from the USGS Natio
 
 ## Example Maps
 
-Two example layouts follow, one for each map the Deliverables ask for. They were laid out and exported by ArcGIS Pro against the run described on this page. They are examples, not templates: your maps will and must look different, and they must carry your name.
+Two example layouts follow, one for each map the Deliverables ask for. They were laid out and exported by ArcGIS Pro against the run described on this page. They show the *design*: what goes on the page and where. Every piece of wording on them is a bracketed placeholder on purpose. Your title, subtitle and text box are yours to write, from your own run, in your own words. A map that carries these brackets, or a title lifted from anywhere else, is not finished.
 
-![Example baseline layout titled "Streams and Subwatersheds of Rock Canyon, Provo": the basin outlined in yellow over imagery, divided into 29 translucent colored subwatersheds with white edges, the delineated streams in orange, the NHD in blue (dashed for ephemeral), and a red outlet point at the canyon mouth; below, a locator of Utah County with the basin in orange, a legend, north arrow, scale bar in kilometers, and a text box giving 29 segments and 29 subwatersheds, 22.9 km of stream against 37.4 km in the NHD, the author, date, projection and data sources.](images/lab05-example-map-baseline.png)
+![Example baseline layout: the basin outlined in yellow over imagery, divided into 29 translucent colored subwatersheds with white edges, the delineated streams in orange, the NHD in blue (dashed for ephemeral), and a red outlet point at the canyon mouth; below, a locator of Utah County with the basin in orange, a legend, north arrow, scale bar in kilometers, and a text box. The title, subtitle and text box are bracketed placeholders that say what belongs there: a title saying what the map shows and where, a subtitle with the threshold, contributing area and basin area, and a text box with the result, the author, date, projection and data sources.](images/lab05-example-map-baseline.png)
 
-**Figure 15.** The baseline map. Two things to do better than this example: label the peaks and the canyon so a reader can find their way around, and say on the map which of the NHD's lines your model does not reproduce.
+**Figure 15.** The baseline map, with placeholder wording. Two things to do better than this example: label the peaks and the canyon so a reader can find their way around, and say on the map which of the NHD's lines your model does not reproduce.
 
-![Example scenario layout titled "Rock Canyon with a Higher Stream Threshold": the same design with fewer, larger subwatersheds and a sparser orange network that no longer reaches up most side canyons, and a text box stating what changed, the new segment, subwatershed and stream-length figures against the baseline's, and why the run was chosen.](images/lab05-example-map-scenario.png)
+![Example scenario layout: the same design with fewer, larger subwatersheds and a sparser orange network that no longer reaches up most side canyons. The title, subtitle and text box are bracketed placeholders: a title for the scenario, a subtitle saying which number changed, from what to what, and what stayed the same, and a text box with this run's counts and length against the baseline's and why the run was chosen.](images/lab05-example-map-scenario.png)
 
-**Figure 16.** The kind of second map Step 14 asks for: the threshold raised from 5,000 to 10,000 cells, everything else unchanged. Your own second map should be the run that most changes what a reader would conclude, which may not be this one. The title and text box say exactly what was changed and why this run was chosen.
+**Figure 16.** The kind of second map Step 14 asks for: here the threshold was raised from 5,000 to 10,000 cells, everything else unchanged. Your own second map should be the run that most changes what a reader would conclude, which may not be this one. Your title and text box must say exactly what was changed and why you chose that run.
 
 ## Rubric for Watershed Delineation
 
