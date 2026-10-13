@@ -18,7 +18,7 @@ and Figure C is its ModelBuilder export. See the migration notes at the bottom. 
 > [!TIP]
 > **Start from the report template.** [`lab06-report-template.docx`](lab06-report-template.docx)
 > has the title block, a section for every deliverable, the tables already set up with the columns
-> the rubric asks for (including the shore-feature table and the range-and-step table), and the
+> the rubric asks for (including the table for your five personal levels), and the
 > rubric at the end ready to fill in. Open it in Word or upload it to Google Docs, replace every
 > gray italic prompt, and delete the prompts as you go. You are welcome to write your report any
 > way you like — the template is a floor, not a ceiling — but if you use it and fill in every
@@ -55,15 +55,15 @@ elevation recorded on every shoreline. Once you have seen that pattern you will 
 because most real analyses are one analysis repeated over a list of something.
 
 Like every model, this one is only as good as the choices you make in it: which elevation surface,
-in which vertical datum, at what cell size, over what range of elevations, and at what step. In
-Step 7 you will vary the range and the step, see how far the shorelines and their areas move, and
-use what moves to say how much the answer depends on those choices.
+in which vertical datum, at what cell size, over what range of elevations, and at what step. The
+range and the step are the model's parameters, so in Step 7 the same model runs the whole lake from
+dead pool up, and then five levels that are yours alone.
 
 > [!IMPORTANT]
 > **Your job — see the deliverables below.** Build one ModelBuilder model that loops over a list of
 > water-surface elevations and produces a shoreline polygon for each, with the elevation stored as
-> an attribute. Run it on Lake Powell, test the elevation range and step, find the elevation at
-> which named shore features go dry, and make two maps of the nested shorelines.
+> an attribute. Run it on Lake Powell twice, from dead pool to above full pool and at five levels
+> of your own, and make a map of each run.
 
 ## Problem Statement
 
@@ -71,14 +71,12 @@ You are given one elevation surface for the Lake Powell basin. It merges the lak
 boat-mounted multibeam sonar survey in 2017, with the land around it, mapped by airborne lidar and
 older topography. Using that surface:
 
-1. Produce the shoreline of the lake at every water-surface elevation from **3,500 ft to 3,700 ft
-   at a 10 ft step**, all in one polygon feature class, with the elevation of each stored in an
-   `Elevation` field.
-2. Report the surface area of the lake at each elevation.
-3. Map the nested shorelines.
-4. Identify the elevation at which at least two named shore features go dry — launch ramps are
-   the clearest case; a marina entrance or a landmark at the water's edge also works if you say what
-   "dry" means for it.
+1. Build one ModelBuilder model that produces the shoreline of the lake at **every water-surface
+   elevation in a list**, all in one polygon feature class, with the elevation of each stored in an
+   `Elevation` field and its area in an `AreaSqMi` field.
+2. Run it twice: once from **dead pool to above full pool, 3,370 to 3,710 ft at 10 ft**, and once
+   at **five levels of your own**, worked out from your BYU ID.
+3. Map both results: the nested shorelines of the whole lake, and your own five levels close up.
 
 ## Analysis Considerations
 
@@ -95,11 +93,11 @@ Every one of these is a decision somebody made, and every one of them can change
   2.91 ft. If the surface and your elevation list are in different units or datums, every shoreline
   is wrong by a constant, and nothing in ArcGIS Pro will tell you. Step 1 converts the surface so
   the two match.
-- **The water-surface range and step.** The default run is 3,500–3,700 ft at 10 ft: from just below
-  this fall's record low to full pool. **Full pool** is 3,700 ft; **minimum power pool**, below
-  which the dam cannot generate electricity, is 3,490 ft; **dead pool**, below which no water can
-  leave through the dam's outlets, is 3,370 ft. The range and step are model parameters, and Step 7
-  varies them.
+- **The water-surface range and step.** The main run is 3,370–3,710 ft at 10 ft: from dead pool to
+  just above full pool. **Full pool** is 3,700 ft; **minimum power pool**, below which the dam
+  cannot generate electricity, is 3,490 ft; **dead pool**, below which no water can leave through
+  the dam's outlets, is 3,370 ft; this fall's record low was 3,516.6 ft. The range and step are
+  model parameters, so the same model runs your own five levels in Step 7.
 - **Cell size.** A shoreline is only as fine as the surface's cells. A 30 m cell is wider than many
   of Lake Powell's side canyons, so narrow arms of the lake disappear or break apart at this
   resolution. A 10 m close-up of the south end of the lake is included so you can see the
@@ -128,7 +126,7 @@ Every one of these is a decision somebody made, and every one of them can change
 | File | What it is |
 | --- | --- |
 | `powell_tbdem_30m.tif` | The whole lake, 30 m cells, elevation in **meters NAVD88**. Your main input. |
-| `powell_wahweap_10m.tif` | The south end of the lake — Glen Canyon Dam, Wahweap, Lone Rock, Antelope Point — at 10 m, **meters NAVD88**. Sample ramp toes on it (see *Shore features you create*), and use it for the optional cell-size comparison at the end of Step 7. |
+| `powell_wahweap_10m.tif` | The south end of the lake — Glen Canyon Dam, Wahweap, Lone Rock, Antelope Point — at 10 m, **meters NAVD88**. Optional: run your five levels on it for a sharper close-up map. |
 | `main_pool_seed.shp` | One point in the old river channel about 2.1 km upstream of Glen Canyon Dam, under water at every elevation in this lab. It is how your model knows which water is "the lake." |
 | `powell_elevation_usbr.csv` | Reclamation's daily Lake Powell water-surface elevation, December 28, 1963 to September 30, 2026, in **feet NGVD29**. Recent values are provisional. |
 | `READ-ME-FIRST.txt` | Sources, processing, datums, and the credit line for your maps. |
@@ -147,49 +145,6 @@ yourself — in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, a
 each one does to your result.
 
 Basemaps and imagery come from ArcGIS Online; you do not download them.
-
-### Shore features you create
-
-Choose at least two named features on the shore and digitize a point for each — launch ramps
-are the clearest case. You do this at the end of Step 1, once the surface is in feet. For a launch
-ramp the elevation that matters is the **bottom (toe)** of the ramp: find it on the imagery and the
-surface, and do not click the parking lot. State in your report how you chose your features.
-
-Two numbers per feature, and they are not the same:
-
-- **Its elevation** — what you sample from the surface at the point, in feet NGVD29.
-- **The level at which it goes dry** — read from your model's output: the two shorelines it falls
-  between. With a 10 ft step that is a bracket such as "between 3,540 and 3,550 ft"; Step 7 asks how
-  the bracket changes with the step.
-
-> [!TIP]
-> **Sample a ramp on the 10 m close-up**, `wahweap_ft`. A ramp is 20–30 m wide and ends at a
-> drop-off, so a 30 m cell averages the ramp with the slope beside it: at the Wahweap Main toe the
-> 30 m surface reads about 6 ft lower than the 10 m one. A ramp is easy to find on the surface: its
-> contours are evenly spaced, straight across, and stop where the ramp ends.
-
-The National Park Service publishes the elevation below which each Lake Powell ramp is unusable,
-on its [Changing Lake Levels](https://www.nps.gov/glca/learn/changing-lake-levels.htm){ target="_blank" }
-page. Compare your elevations with theirs; expect yours within a few feet either way. The Park
-Service's cutoff includes a margin for launching, reflects ramp work done since the survey, and your
-click on a 10 m cell is not exact.
-
-> [!TIP]
-> **Check the result** on the three ramps inside the close-up:
->
-> | Ramp | Toe on `wahweap_ft` | NPS cutoff |
-> | --- | --- | --- |
-> | Wahweap Main | about **3,548** ft, where the ramp's steady grade meets a steep drop | 3,545 |
-> | Antelope Point (public) | about **3,580 to 3,590** ft, where the concrete ends on the imagery; the surface falls fast there, so your click matters | 3,588 |
-> | Wahweap Stateline Auxiliary (the ramp with courtesy docks between the Stateline and Wahweap Main ramps) | about **3,530** ft, where its steady grade levels onto a bench | 3,515 |
->
-> The Stateline Auxiliary gap is not a mistake. The surface was surveyed in 2017 and 2018; the Park
-> Service rehabilitated that ramp in 2021
-> ([NPS, July 15, 2021](https://www.nps.gov/glca/learn/news/20210715.htm){ target="_blank" }) and has
-> extended it since as the lake fell
-> ([NPS, September 30, 2021](https://www.nps.gov/glca/learn/news/20210930.htm){ target="_blank" }). A
-> surface cannot show concrete poured after it was made. Say in your report what that means for any
-> feature you sample, and what data would fix it.
 
 ## ModelBuilder Tools
 
@@ -221,6 +176,32 @@ parameters; they become the tool dialog of Step 6. `Output Layer Names`, `Count`
 Table` are extra outputs the tools always draw; you do not use them. The oval under Surface is
 Con's true value: typing `1` in the dialog draws it. The green `Elevation` oval has no arrows
 because `%Elevation%` reaches the tools by name, not by a connector — do not try to connect it.
+
+> [!NOTE]
+> **Reading the model.** Questions that come up the first time anyone looks at Figure C:
+>
+> - **It looks like two models.** It is one. Nothing is drawn from `Elevation` to `Con` because
+>   `%Elevation%` is written *inside* Con's expression and the output names; ModelBuilder draws a
+>   connector only when a whole variable is plugged into a parameter. An iterator drives every tool
+>   in the model whether a line is drawn or not. If you want the dependency visible, drag a
+>   connector from `Elevation` to `Con` and choose **Precondition**: a dashed line, no change in
+>   behavior.
+> - **Why percent signs in a name?** An oval has a *label* (what you see) and a *value* (the path).
+>   When you type `pool_%Elevation%` as an output name, the value is that path and the oval labels
+>   itself with the file name part of it. At run time `%Elevation%` in a value is replaced by the
+>   current value of the oval whose *label* is `Elevation`. Rename that oval and every reference
+>   breaks; rename `pool_%Elevation%` to "Pool" and nothing breaks.
+> - **Count** and **Output Layer Names** dangle off Select Layer By Location. They are derived
+>   outputs nothing here needs. Count should read 1 on every pass: the seed touched one polygon.
+> - **Two Calculate Fields** because each polygon needs two attributes from two places: the loop's
+>   `Elevation`, and `AreaSqMi` from its own geometry. "Pool with Elevation" and "Labeled Pool" are
+>   the same feature class as `pool_%Elevation%`, passed through with one more field each time.
+> - **Collect Values** appends one *path* per pass; `Output Values` is that list (`pool_3370;
+>   pool_3380; …`), and Merge reads it. `Output Table` is a receipt nobody reads.
+> - **Merge runs every pass**, like every tool downstream of an iterator, and the last pass leaves
+>   all the levels.
+> - **For, not another iterator,** because the levels are an arithmetic sequence three numbers
+>   describe. For counts; the other iterators read a list that already exists.
 
 ## Complete the Lab
 
@@ -291,18 +272,8 @@ and Jones, 2022), and NOAA's VERTCON gives the same 2.9 ft at the dam.
 > **3,129.5 to 4,322.4** ft. If your maximum is about 4,726.8, you forgot the datum shift. If it is
 > about 1,441, you did not convert at all.
 
-Now find on the map the dam, the old river channel, and your shore features, and digitize the
-features:
-
-1. In the **Catalog** pane, under **Databases**, right-click your project geodatabase, then
-   **New ▸ Feature Class**. Name it `shore_features`, choose **Point**, and give it the surface's
-   coordinate system, NAD 1983 (2011) UTM zone 12N.
-2. Add two fields: `Name`, type **Text**, and `Elevation`, type **Double**.
-3. Select the layer in the **Contents** pane, open the **Edit** tab, click **Create** in the
-   **Features** group, and click once on each feature. Click **Save** in the **Manage Edits** group.
-4. Type each feature's name, and its elevation in feet NGVD29 read with the **Explore** tool: from
-   `wahweap_ft` for anything inside the 10 m close-up, otherwise from `powell_ft`. Say in your
-   report which surface each one came from.
+Find on the map the dam, the old river channel, Wahweap and Antelope Point, so you know the lake
+before you flood it.
 
 > [!WARNING]
 > **The datum trap.** If you skip this step and run the loop in feet on the meters surface, Step 3
@@ -472,84 +443,72 @@ the lab machines.
 **Figure 6d.** The default run on the 10 m close-up: 21 shorelines, the lowest (darkest) drawn on
 top. The main pool there grows from 7.34 sq mi at 3,500 ft to 35.54 sq mi at 3,700 ft.
 
-### Step 7 — Test the Range and Step
+### Step 7 — Run It Twice
 
-**First, your own level.** Every student floods the lake to a different elevation, worked out from
-your **BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`.
-It is **not your NetID**, the user name of letters and numbers you use to sign in to BYU sites.
+Once the three-level test in Step 6 checks out, run the finished model from its tool dialog twice.
+Open it from the **Catalog** pane (Toolboxes ▸ Lab06.atbx ▸ Shoreline Loop) so the run goes through
+the dialog and lands in your Geoprocessing History.
 
-> **Your elevation E = 3,500 + 2 × (the last two digits of your BYU ID) ft NGVD29**
+**Run 1 — dead pool to above full pool.** From Value **3370**, To Value **3710**, By Value **10**,
+Surface `powell_ft`, Shorelines `powell_shorelines_3370_3710_10`. That is **35 levels**, from dead
+pool, below which no water can leave the dam, past full pool at 3,700 ft to a level the dam has
+never seen. Expect about eight minutes.
+
+> [!TIP]
+> **Check the result:** 35 rows in the attribute table. At **3,370 ft** the main pool is
+> **28.19 sq mi**, about 11 % of the lake at full pool; at **3,500 ft** it is **75.65 sq mi**; at
+> **3,700 ft**, **247.36 sq mi**. Look at how `AreaSqMi` grows from row to row: about half a square
+> mile per foot near the bottom and more than a square mile per foot near the top. Glen Canyon is
+> narrow at the bottom and wide at the top, and the table shows it.
+
+**Run 2 — your own five levels.** Every student runs a different set, worked out from your **BYU ID
+number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It is **not
+your NetID**, the user name of letters and numbers you use to sign in to BYU sites.
+
+> **Your starting level E = 3,450 + 2 × (the last two digits of your BYU ID) ft NGVD29.**
+> Run the model with From Value **E**, To Value **E + 40**, By Value **10**: five levels, E to
+> E + 40. Name the output `powell_shorelines_mine_E`, with your E in place of E.
 >
-> - BYU ID `123456789`: last two digits **89**, E = 3,500 + 2 × 89 = **3,678 ft**.
-> - BYU ID `987654302`: last two digits **02**, E = 3,500 + 4 = **3,504 ft**.
+> - BYU ID `123456789`: last two digits **89**, E = 3,450 + 2 × 89 = **3,628 ft**, so From 3628,
+>   To 3668, By 10.
+> - BYU ID `987654302`: last two digits **02**, E = 3,450 + 4 = **3,454 ft**, so From 3454, To
+>   3494, By 10.
 >
-> Every E is between 3,500 and 3,698 ft, inside the default range. Run the model once from its tool
-> dialog with **From Value = To Value = E** (any step; the loop runs once) and a Shorelines name
-> that says so, such as `powell_shorelines_3678`. Open that feature class's attribute table: it has
-> one row. Write in your report your BYU ID's last two digits, E, the main pool's area at E
-> (`AreaSqMi`, to 0.01), and its shoreline length at E (`Shape_Length`, in meters, as the table
-> shows it). The grader checks all four against a run at your elevation.
-
-The default run gives *a* set of shorelines, not *the* set. Run the model at least **three more
-times** from its tool dialog:
-
-1. A **finer step** — 5 ft or 2 ft — over a narrower range around today's level.
-2. A **coarser step**, such as 25 ft.
-3. A **different range** — only the elevations the lake has reached in the last ten years (read
-   them from `powell_elevation_usbr.csv`: since October 1, 2016, as high as 3,635.8 ft on July 11,
-   2017, and as low as 3,516.6 ft on September 15, 2026).
-
-   *Optional, if you have the time:* a run all the way down to dead pool, 3,370 ft. At 34 levels
-   it takes about seven minutes, and it shows how little of the lake is left at the levels the
-   operators plan around.
+> Every set lies between 3,450 and 3,688 ft, inside Run 1's range, which is the point: your five
+> rows are a finer look at one stretch of the same curve. Open the attribute table: five rows.
+> Copy its `Elevation`, `AreaSqMi` (to 0.01) and `Shape_Length` (in meters, as the table shows
+> it) into your report, with your BYU ID's last two digits and your E. The grader checks every
+> number against a run at your levels, so they have to come from your run, not from Run 1's table.
 
 > [!IMPORTANT]
-> **Give every run a new Shorelines name** that states its range and step, such as
-> `powell_shorelines_3500_3700_25`. A run that keeps the old name overwrites your baseline. Type
-> the numbers into the name yourself: in our test, building the name from `%From Value%` and the
-> other parameters wrote the right dataset but added the *previous* run's layer to the map.
+> **Give each run its own Shorelines name.** A run that keeps the old name overwrites the earlier
+> one. Type the numbers into the name yourself: in our test, building the name from
+> `%From Value%` and the other parameters wrote the right dataset but added the *previous* run's
+> layer to the map.
 
 ![The completed-run pop-up for Shoreline Loop: started 12:01:21 AM, completed 12:02:51 AM, elapsed time 1 minute 30 seconds; parameters From Value 3500, To Value 3700, By Value 25, Surface powell_ft, and Shorelines C:\Ames\Lab06GUI\Lab06.gdb\powell_shorelines_3500_3700_25.](images/lab06-run-complete.png)
 
-**Figure 7.** A 25 ft run, finished: nine levels in a minute and a half. The pop-up's **Elapsed
-Time** is the run time for your table.
-
-Choose your values deliberately and say why. For **the baseline and every run, in one table**,
-record the low elevation, the high elevation, the step, the number of shorelines, the lake area at
-the lowest and highest elevations, and the run time. Then answer, in your report:
-
-1. **Which shore features go dry, and at what elevation?** Does the answer change with the step,
-   and by how much? A 10 ft step can only say "between 3,540 and 3,550".
-2. **How much does the lake's area change per foot of elevation**, and is that rate the same at the
-   bottom of the range as at the top? What about the shape of Glen Canyon explains the difference,
-   and what is the smallest step that still shows that shape? What did the finer run add, and what
-   did it cost in run time?
-
-Pick one of your runs for your second map, and say on the map what changed and why you chose it.
-
-> [!TIP]
-> **Check the result:** dead pool, 3,370 ft, leaves a main pool of **28.19 sq mi** — about 11 % of
-> the lake at full pool. A 25 ft step from 3,500 to 3,700 gives **9** shorelines; a 5 ft step from
-> 3,500 to 3,540 gives **9**; 3,370 to 3,700 by 10 gives **34**. The lake gains about **0.54 sq mi
-> per foot** between 3,500 and 3,510 ft and about **1.11 sq mi per foot** between 3,690 and 3,700 ft.
+**Figure 7.** A finished run from the tool dialog, here nine levels at a 25 ft step in a minute and
+a half. Your runs look the same with your own values; Run 1 takes about five times as long.
 
 > [!NOTE]
-> **Optional, for the curious.** Run the default model once on the 10 m close-up (set **Surface** to
-> `wahweap_ft`) and once on the 30 m surface, and compare the shoreline in one side canyon near
-> Wahweap. That is the cell-size
-> question from the Analysis Considerations, answered with your own eyes.
+> **Optional, for the curious.** Run your five levels again on the 10 m close-up (set **Surface** to
+> `wahweap_ft`, and give the output a new name) and compare the shoreline in one side canyon near
+> Wahweap with the 30 m version. That is the cell-size question from the Analysis Considerations,
+> answered with your own eyes, and it makes a sharper Map 2 if your levels fall inside the close-up.
 
 ## Deliverables
 
-Make **two** professional map layouts:
+Make **two** professional map layouts, one per run:
 
-1. **Your baseline result** — the nested shorelines, 3,500–3,700 ft at 10 ft, symbolized so the
-   elevation of each is readable, with a few levels labeled on the map and your shore-feature points
-   labeled. An inset of one feature at the level it goes dry is optional: no points ride on it.
-2. **One scenario from Step 7** — the same model at a different range or step, whichever of your
-   runs most changes the picture. Say on the map what changed and why you chose that run to show.
+1. **Map 1 — Run 1, the whole lake.** The 35 nested shorelines from dead pool to 3,710 ft,
+   symbolized so a reader can tell low from high, with a legend, a few levels labeled on the map,
+   and dead pool, full pool and this fall's record low (3,516.6 ft) pointed out.
+2. **Map 2 — Run 2, your five levels.** Zoomed in to a part of the lake where your five shorelines
+   are visibly different, symbolized the same way as Map 1, each level labeled. The title states
+   your five levels.
 
-Write a brief report (2–3 pages of text, plus your figures and maps) covering:
+Write a brief report (2 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your
   peer reviewer
@@ -563,18 +522,15 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **the three metadata values** for the surface — the survey date (2017 multibeam for the lake
   bed), the vertical datum (NAVD88, converted to NGVD29), and the cell size (30 m) — and what each
   one means for your result
-- your **shore-feature table**: each feature, its elevation, the water-surface elevation at which it
-  goes dry, and the Park Service cutoff where one is published
-- your **range-and-step table** from Step 7 and your answers to its two questions
-- **where the shorelines are wrong and why** — the seam between surveys, the 30 m cells in narrow
-  canyons, the hollows removed in Step 4, the 2017 survey date against sediment deposited since, construction since the survey —
-  and what additional data would fix each
-- **your personal level** from Step 7: your BYU ID's last two digits, the elevation they give, the
-  main-pool area at that elevation, and the main pool's shoreline length there
+- **Run 1**: a screen capture of the attribute table of `powell_shorelines_3370_3710_10` showing
+  all 35 rows with `Elevation` and `AreaSqMi`, and two or three sentences on how the area grows per
+  foot near dead pool compared with near full pool, and what the shape of Glen Canyon has to do
+  with it
+- **Run 2**: a table with your BYU ID's last two digits, your E, and the five rows of your run
+  (`Elevation`, `AreaSqMi`, `Shape_Length`), and a sentence on where your five levels sit against
+  this fall's record low and full pool
 - **evidence that the model ran on your machine**: a screen capture of the **Geoprocessing History**
-  pane (Analysis tab ▸ History) listing your model's runs with their dates and run times, and a screen
-  capture of the **attribute table** of your baseline Shorelines feature class showing its rows with
-  `Elevation` and `AreaSqMi`
+  pane (Analysis tab ▸ History) listing both runs with their dates and run times
 - one line at the end saying what, if anything, you used AI for (see the note after the rubric)
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
@@ -622,14 +578,16 @@ carries these brackets, or a title lifted from anywhere else, is not finished.
 
 ![Example baseline layout: the whole lake on imagery with 21 nested shorelines in five classes of blue, darkest for the lowest levels, the main-pool seed point near the dam, a legend in feet NGVD29, a scale bar in miles, a north arrow, and a text box. The title, subtitle and text box are bracketed placeholders saying what belongs there: a title with the elevation range and step, a subtitle with the shoreline count and which pool was kept, and a text box with the result, author, date, projection and sources.](images/lab06-example-map-baseline.png)
 
-**Figure 8.** The baseline map, with placeholder wording. Two things to do better than this example:
-add your labeled shore-feature points, and label a few levels on the map itself so a reader does not
-have to match colors to the legend.
+**Figure 8.** A whole-lake map, with placeholder wording. Yours shows Run 1's 35 levels instead of
+these 21. Two things to do better than this example: point out dead pool, full pool and the record
+low, and label a few levels on the map itself so a reader does not have to match colors to the
+legend.
 
 ![Example scenario layout: the same design with 34 shorelines down to dead pool, the darkest classes now confined to the old river channel. The title, subtitle and text box are bracketed placeholders: a scenario title with its range and step, a subtitle saying what changed from what to what, and a text box with what this run shows and why it was chosen.](images/lab06-example-map-scenario.png)
 
-**Figure 9.** The kind of second map Step 7 asks for: here the low end was moved to dead pool,
-everything else unchanged. Your title and text box must say what changed and why you chose that run.
+**Figure 9.** The same design on a different run, here down to dead pool. Your Map 2 shows only your
+five levels, zoomed in to where they differ, with each level labeled and your five levels in the
+title.
 
 ## Rubric for the Lake Depth Explorer
 
@@ -642,11 +600,11 @@ out of this page.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the surface and what each means for your result (2)<br>• The shore-feature table: how you chose the features and the elevation at which each goes dry (2)<br>• Where the shorelines are wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, loops over the elevations, and produces one merged feature class with one labeled shoreline per elevation; the shoreline count and the areas at the default values match the check values, and the History and attribute-table captures show the runs (4)<br>• A full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2)<br>• A screen capture of the toolbox interface with the low, high, and step parameters exposed (2)<br>• A description of the model a reader could repeat from, including how the loop value reaches the tools inside it (2) | /10 |
-| **Map 1 — your baseline** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend and a few levels labeled on the map (3)<br>• Your shore-feature points, labeled (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
-| **Map 2 — one Step 7 scenario** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
-| **Range and step sensitivity** (Step 7)<br>• One table with the baseline, your personal-level run, and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each; the personal-level row carries your BYU ID digits, your elevation, the main-pool area and its shoreline length (4)<br>• Which features go dry and whether the step changes that answer (3)<br>• How the area changes per unit elevation, what the basin's shape has to do with it, the smallest step that still shows that shape, and what the finer run cost (3) | /10 |
+| **Write-up** (2 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the surface and what each means for your result (3)<br>• The two short observations: how area per foot changes from dead pool to full pool and why, and where your five levels sit against the record low and full pool (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (2) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, loops over the elevations, and produces one merged feature class with one labeled shoreline per elevation, and the History capture shows both runs (4)<br>• A full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2)<br>• A screen capture of the toolbox interface with the From, To and By parameters exposed (2)<br>• A description of the model a reader could repeat from, including how the loop value reaches the tools inside it (2) | /10 |
+| **Run 1 and Run 2** (Step 7)<br>• Run 1's attribute table captured in full: 35 rows, and the areas at 3,370, 3,500 and 3,700 ft match the check values (4)<br>• Run 2's table: your BYU ID digits, your E, and five rows of elevation, area and shoreline length that match a run at your levels (4)<br>• Both Shorelines outputs named for their levels, as Step 7 asks (2) | /10 |
+| **Map 1 — Run 1, the whole lake** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The 35 nested shorelines symbolized so low and high are readable, with a legend and a few levels labeled on the map (3)<br>• Dead pool, full pool and the record low pointed out (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
+| **Map 2 — Run 2, your five levels** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating your five levels (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The five shorelines symbolized as on Map 1, with a legend, each level labeled (3)<br>• Zoomed to a part of the lake where the five levels are visibly different (2)<br>• Basemap, scale and legibility appropriate to the view (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -657,8 +615,8 @@ out of this page.
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 >
 > **What the grader verifies.** The model figure must be a ModelBuilder export; the maps must be
-> ArcGIS Pro layout exports with selectable text; the personal-level numbers must match a run at
-> your elevation; the History capture must show your runs. A figure or map that was generated,
+> ArcGIS Pro layout exports with selectable text; Run 2's numbers must match a run at your five
+> levels; the History capture must show both runs. A figure or map that was generated,
 > redrawn or "enhanced" by AI, or a number that could not have come from a run, scores zero for
 > that part of the rubric, and the report goes to the instructor under the AI policy. You do the
 > work in ArcGIS Pro yourself: AI may not run it for you.

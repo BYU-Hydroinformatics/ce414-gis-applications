@@ -184,6 +184,86 @@ By the end of class you should be able to:
 
 ---
 
+# The Problem With Running a Model Once
+
+![bg right:40% w:95%](images/lb-lab06-example-placeholder.png)
+
+- One water level → one Con → one shoreline
+- Thirty-five levels → **thirty-five runs**, thirty-five names to type, thirty-five chances to mistype one
+- What you want: say the **list of levels once**, and let the model do the rest
+
+<!-- The map is the answer we are after: Lake Powell shorelines in one layer. Ask how long it took them to run the Lab 5 model four times for Step 14, and what went wrong. -->
+
+---
+
+# An Iterator Runs the Whole Model Once per Value
+
+![h:420 center](images/lb-iterator-loop.svg)
+
+<!-- Walk the loop with Lab 6's real values: the For iterator produces one value per run (3,370, 3,380, ... 3,710 ft); every tool after it runs once with that value; the outputs are collected and merged at the end. The iterator is the only new idea in Lab 6 — Con, Raster to Polygon and Select Layer By Location are tools students have met. -->
+
+---
+
+# Where the Iterators Live
+
+![h:470 center](images/lb-iterators-menu.png)
+
+- **ModelBuilder** tab ▸ **Insert** ▸ **Iterators** — **For** counts from a start to an end by a step
+
+<!-- Captured in ArcGIS Pro 3.7.1 on October 2, 2026 (C:\Ames\Lab06GUI\caps\iterators-menu.png, the area left of the menu blanked). Fifteen iterators, For to Iterate Workspaces. The menu is grayed out unless a model view is active. -->
+<!-- Point out that only one iterator is allowed per model, and that iterators exist only in ModelBuilder — they are why ModelBuilder is more than a diagram of tools. For counts; the other iterators read a list that already exists (rows, fields, rasters). Esri's Iterators for looping page (checked October 2, 2026): "Only one iterator can be used per model", and "If an iterator is added to a model, all tools in the model iterate for each value in the iterator." -->
+
+---
+
+# The For Iterator
+
+![h:330 center](images/lb-for-dialog.png)
+
+- **From Value** 3,500 · **To Value** 3,700 · **By Value** 10 → **21** runs (To is included); rename its output from **Value** to **Elevation**
+
+<!-- Captured from the Lab 6 GUI build, October 1, 2026. The 21-run count was confirmed by running the model: 21 shorelines. The lab's Run 1 is 3,370 to 3,710 by 10, 35 levels; the build and its check values use the 21-level default. -->
+<!-- Show the parameter route too: right-click For > Create Variable > From Parameter > From Value (and To, By), then right-click each new oval > Parameter. -->
+
+---
+
+# %Elevation% — the Value Goes Inside the Expression
+
+![bg right:40% h:86%](images/lb-con-dialog.png)
+
+- **Con** on `powell_ft`, expression `Value <= %Elevation%` (typed with **SQL Editor** on), true value `1`, false left **empty** — NoData above the water
+- Output name **wet_%Elevation%** — a different name every run, or each run overwrites the last
+- The percent signs are filled in from the oval **labeled** Elevation; the oval's own label is just display
+
+<!-- The same inline-variable idea as Lab 4 and Lab 5 (%Threshold%), now fed by the iterator. The Lab 5 lesson about Con with no third argument carries over: NoData outside the water, not 0, or Raster to Polygon draws the land as lake too. Labels versus values: an output oval auto-labels itself with the file name part of its path, percent signs included; rename the oval and the path underneath still has %Elevation%; rename the Elevation oval and every %Elevation% stops resolving. No connector is drawn for a %...% reference, so the Elevation oval looks unconnected; that is normal. -->
+<!-- Captured from the Lab 6 GUI build, October 1, 2026. Verified there: %Elevation% substitutes in both the expression and the output name (wet_3500, wet_3510, ...), and the 3,550 ft raster has 303,538 wet cells on the 30 m surface. Warn students not to switch the SQL Editor off after typing: switching it off and on cleared the expression. -->
+
+---
+
+# Collect Values, Then Merge
+
+![h:455 center](images/lb-full-model.svg)
+
+- **Collect Values** (ModelBuilder ▸ Utilities) appends each pass's output to a list; **Merge** reads the list and stacks the levels into one feature class
+
+<!-- The Lab 6 model as built in ArcGIS Pro 3.7.1, exported with Export To Graphic and laid out in four rows (same file as the lab page's Figure C). Output Values is a list of paths (pool_3370; pool_3380; ...), not data; Output Table is a receipt nobody reads; Count and Output Layer Names dangle off Select Layer By Location and should. Merge's Input Datasets list does not offer Collect Values' output: drag a connector from Output Values to Merge and choose Input Datasets. Tell students the honest version: with an iterator in a model, every tool runs once per value, Merge included, so Merge rewrites the merged output on every pass with one more shoreline; the last pass leaves them all. -->
+
+---
+
+# Start Building Today
+
+![bg right:40% h:96%](images/lb-powell-wahweap.jpg)
+
+- **Today:** Lab 6 Steps 0 to 6 — the data, the datum conversion, the loop, a three-level test
+- **Thursday in class:** we run it together at different levels, then Run 1 (35 levels) and Run 2 (your five levels from your BYU ID)
+- **Due Saturday:** the report and two maps
+- Stuck on the loop? Every dialog on the lab page is a capture of the finished model
+
+[Lab 6 — Lake Depth Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
+
+<!-- Split added October 13, 2026: Tuesday carries the concepts and the model; Thursday is for running it. Students who finish Steps 0 to 6 before Thursday can do Run 1 and Run 2 in class and leave with everything but the maps and the write-up. -->
+
+---
+
 # Thursday — Lab 6, Lake Depth Explorer
 
 ![bg right:42% w:95%](images/lb-iterator-loop.svg)
@@ -191,9 +271,9 @@ By the end of class you should be able to:
 - One ModelBuilder model that floods a lake surface at **every level in a list**
 - The lake is **Lake Powell** — one pool behind one dam, at a record low
 - Today's ideas come straight back: a **datum** to convert, an **area table** to check against
-- **New for Lab 6:** your **own** water level from your BYU ID, maps as **ArcGIS Pro PDF exports**, a **History** capture
+- **New for Lab 6:** your **own five levels** from your BYU ID, maps as **ArcGIS Pro PDF exports**, a **History** capture
 
-- Before Thursday: read the [Lab 6 page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/); questions to [office hours](https://calendly.com/dan-ames/office-hours)
+- Before Thursday: build the model, [Lab 6 Steps 0 to 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/); questions to [office hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- The diagram is a sketch of the Lab 6 model; Thursday builds it. Why Powell for the lab and the Great Salt Lake for lecture: the causeway splits the Great Salt Lake below about 4,200 ft, so "keep the water connected to one seed point" keeps only the south arm — a good report question, a bad first loop. -->
 

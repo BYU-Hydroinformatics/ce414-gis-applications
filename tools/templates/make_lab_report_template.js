@@ -258,36 +258,33 @@ const LABS = {
           hint: 'Rubric: a screen capture of the toolbox interface with the low, high, and step parameters exposed (2 points).' },
       ] },
 
-    { h: 'Shore Features',
-      hint: 'Rubric: the shore-feature table — how you chose the features and the elevation at which each goes dry (2 points). Say in a sentence how you picked them before the table, then fill one row per feature. Its elevation is what you sampled; the goes-dry level is the pair of shorelines from your model that it falls between.',
-      table: { caption: 'Table 3. Shore features, their elevations, and the water level at which each goes dry (ft NGVD29).',
-               head: ['Feature', 'What it is', 'Surface sampled', 'Its elevation', 'Goes dry between', 'NPS cutoff'],
-               rows: [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']],
-               widths: [1700, 2000, 1300, 1200, 1900, 1260] } },
-
-    { h: 'Range and Step Sensitivity', pageBreakBefore: true,
-      hint: 'Rubric: one table with the baseline and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each (4 points). Choose your values deliberately and say why. The run time is the Elapsed Time in the pop-up when a run finishes.',
-      table: { caption: 'Table 4. Range and step sensitivity — the baseline and at least three more runs.',
-               head: ['Run (what changed)', 'Low', 'High', 'Step', 'Shorelines', 'Area at lowest', 'Area at highest', 'Run time', 'What it shows'],
-               rows: [['Baseline', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''],
-                      ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
-               widths: [1200, 700, 700, 650, 1000, 1100, 1100, 960, 1950] },
-      questions: [
-        'Which shore features go dry, and at what elevation? Does the answer change with the step, and if so, how far? (2 points)',
-        'How much does the lake’s area change per unit of elevation, and is that rate the same at the bottom of the range as at the top? What about the basin’s shape explains the difference? (2 points)',
-        'What is the smallest step that still shows the shape of the basin? What did the finer runs cost? (2 points)',
+    { h: 'Run 1 — Dead Pool to Above Full Pool', pageBreakBefore: true,
+      hint: 'Rubric: Run 1’s attribute table captured in full, 35 rows, with the areas at 3,370, 3,500 and 3,700 ft matching the check values (4 points); then two or three sentences on how the area grows per foot near dead pool compared with near full pool, and what the shape of Glen Canyon has to do with it (part of the 2 points for the observations).',
+      figures: [
+        { caption: 'Figure 3. The attribute table of powell_shorelines_3370_3710_10: 35 rows with Elevation and AreaSqMi.',
+          hint: 'Rubric: a screen capture of the whole table. Widen the table or capture it in two pieces so every row shows.' },
       ] },
 
-    { h: 'Where the Shorelines Are Wrong',
-      hint: 'Rubric: where the shorelines are wrong and why, and what data would fix it (2 points). The seam between surveys, the 30 m cells in narrow canyons, the hollows removed in Step 4, the 2017 survey date against sediment and construction since — name each one and say what data would fix it.' },
+    { h: 'Run 2 — Your Five Levels',
+      hint: 'Rubric: your BYU ID’s last two digits, your E, and the five rows of your run, Elevation, AreaSqMi to 0.01 and Shape_Length in meters as the table shows it (4 points). These must come from your own run, not from Run 1’s table; the grader checks them against a run at your levels. Then one sentence on where your five levels sit against this fall’s record low (3,516.6 ft) and full pool (3,700 ft).',
+      table: { caption: 'Table 3. Run 2 — the five levels from your BYU ID.',
+               head: ['BYU ID last two digits: ____', 'E = 3,450 + 2 × digits = ______ ft', 'Elevation (ft)', 'AreaSqMi', 'Shape_Length (m)'],
+               rows: [['', '', 'E', '', ''], ['', '', 'E + 10', '', ''], ['', '', 'E + 20', '', ''], ['', '', 'E + 30', '', ''], ['', '', 'E + 40', '', '']],
+               widths: [2000, 2400, 1600, 1600, 1760] } },
+
+    { h: 'Proof the Model Ran',
+      hint: 'Rubric: part of the 4 points for a working model. A screen capture of the Geoprocessing History pane (Analysis tab ▸ History) listing both runs with their dates and run times.',
+      figures: [
+        { caption: 'Figure 4. Geoprocessing History, showing Run 1 and Run 2.', size: 'medium' },
+      ] },
 
     { h: 'Maps', pageBreakBefore: true,
-      hint: 'Both maps are full-page, 8.5 × 11. Put each on its own page. Symbolize the shorelines the same way on both, so a reader can compare them.',
+      hint: 'Both maps are full-page, 8.5 × 11, and each is also uploaded as its own PDF exported from the ArcGIS Pro layout. Put each on its own page here. Symbolize the shorelines the same way on both, so a reader can compare them.',
       figures: [
-        { caption: 'Map 1. Baseline — the nested shorelines at the default range and step.', pageBreakAfter: true,
-          hint: 'Must carry: title stating the elevation range and step; neat line, north arrow and scale bar; a text box with author, date, map projection, and the surface’s source, survey date and vertical datum; the nested shorelines symbolized so each elevation is readable, with a legend; your shore-feature points, labeled; an inset or close-up of one feature at the elevation it goes dry; basemap, scale and legibility appropriate to the lake.' },
-        { caption: 'Map 2. Scenario — a different range or step from Step 7.',
-          hint: 'Everything Map 1 needs except the inset, plus: the title and text box say what changed from Map 1 and why this run was chosen.' },
+        { caption: 'Map 1. Run 1 — the 35 nested shorelines, dead pool to 3,710 ft.', pageBreakAfter: true,
+          hint: 'Must carry: title stating the elevation range and step; neat line, north arrow and scale bar; a text box with author, date, map projection, and the surface’s source, survey date and vertical datum; the nested shorelines symbolized so low and high are readable, with a legend and a few levels labeled on the map; dead pool, full pool and the record low pointed out; basemap, scale and legibility appropriate to the lake.' },
+        { caption: 'Map 2. Run 2 — your five levels, close up.',
+          hint: 'Must carry: a title stating your five levels; neat line, north arrow and scale bar; the same text box; the five shorelines symbolized as on Map 1 with a legend and each level labeled; a view zoomed to a part of the lake where the five levels are visibly different.' },
       ] },
 
     { h: 'References', pageBreakBefore: true,

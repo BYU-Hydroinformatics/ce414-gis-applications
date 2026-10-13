@@ -1,21 +1,20 @@
-"""Lab 6 (Lake Depth Explorer): the personal water-surface elevation, for every possible last two
-digits (00-99) of the nine-digit BYU ID number. Grading lookup table ->
+"""Lab 6 (Lake Depth Explorer): the personal run, for every possible last two digits (00-99) of the
+nine-digit BYU ID number. Grading lookup table ->
 ../../../ce414-private/grading-oracles/lab06_personal_lookup.csv (private repo; falls back to
 personal_lookup.csv here, which is git-ignored).
 
-Rule (Step 7 of the page):
-  E = 3,500 + 2 * dd  ft NGVD29                   (3,500 to 3,698: inside the default range)
-  run the model with From = To = E (any step), i.e. one level, on the 30 m surface
-  report: the main-pool area at E in square miles to 0.01, and the main pool's shoreline length at E
-          (Shape_Length in the attribute table, meters) in km to 0.1
+Rule (Step 7 of the page, Oct 13 2026 version):
+  E = 3,450 + 2 * dd  ft NGVD29                   (3,450 to 3,648)
+  Run 2: From Value = E, To Value = E + 40, By Value = 10  -> five levels E, E+10, ..., E+40
+  report: the attribute table of that run: Elevation, AreaSqMi (0.01) and Shape_Length (meters)
 
-Same arithmetic as run_model.py (which reproduced the Mac key exactly on 2026-10-01): convert the
-surface to ft NGVD29, Con(ft <= E, 1), Raster to Polygon (no simplify, single part), keep the
-polygon that intersects the seed, area in square miles. Run with the ArcGIS Pro Python.
+The 100 runs share levels (every even foot from 3,450 to 3,688, 120 distinct), so each level is
+computed once. Same arithmetic as run_model.py (reproduced the Mac key exactly on 2026-10-01):
+convert the surface to ft NGVD29, Con(ft <= E, 1), Raster to Polygon (no simplify, single part),
+keep the polygon that intersects the seed, area in square miles. Run with the ArcGIS Pro Python.
 """
 import csv
 import os
-import sys
 import time
 
 import arcpy
@@ -32,8 +31,8 @@ def private_path(here, name):
 
 
 def find(name):
-    for d in (r"C:\Ames\Lab06GUI", r"C:\Ames\Pilot06\data", r"C:\Ames\Lab06Pkg\CE414_Lab06_Package\data",
-              r"C:\Ames\Lab06Pkg\CE414_Lab06_Package"):
+    for d in (r"C:\Ames\Lab06GUI", r"C:\Ames\Pilot06\data", r"C:\Ames\Lab06Pkg\CE414_Lab06_Package\data\student",
+              r"C:\Ames\Lab06Pkg\CE414_Lab06_Package\data"):
         p = os.path.join(d, name)
         if os.path.exists(p):
             return p
@@ -52,30 +51,30 @@ if not arcpy.Exists(ft_path):
     ((Raster(SURF) / 0.3048) - 2.91).save(ft_path)
 ft = Raster(ft_path)
 
-OUT = private_path(HERE, "lab06_personal_lookup.csv")
-digits = [f"{d:02d}" for d in range(100)]
-if len(sys.argv) > 1:                       # a quick subset for checking, e.g. personal.py 00 37 99
-    digits = [f"{int(a):02d}" for a in sys.argv[1:]]
-rows = []
+levels = {}
 t_all = time.time()
-for dd in digits:
-    e = 3500 + 2 * int(dd)
+for e in range(3450, 3690, 2):
     t0 = time.time()
     wet = Con(ft <= e, 1)
-    wp = os.path.join("memory", f"wet_{dd}")
+    wp = os.path.join("memory", f"wet_{e}")
     arcpy.conversion.RasterToPolygon(wet, wp, "NO_SIMPLIFY", "Value", "SINGLE_OUTER_PART")
     n_poly = int(arcpy.management.GetCount(wp)[0])
-    lyr = arcpy.management.MakeFeatureLayer(wp, f"lyr_{dd}")
+    lyr = arcpy.management.MakeFeatureLayer(wp, f"lyr_{e}")
     arcpy.management.SelectLayerByLocation(lyr, "INTERSECT", SEED)
     geoms = [r[0] for r in arcpy.da.SearchCursor(lyr, ["SHAPE@"])]
-    area = sum(g.area for g in geoms) / 2589988.110336          # m2 -> sq mi
-    length = sum(g.length for g in geoms) / 1000.0              # m -> km (the attribute table's Shape_Length, in meters)
-    n_sel = len(geoms)
+    area = sum(g.area for g in geoms) / 2589988.110336
+    length = sum(g.length for g in geoms)
     arcpy.management.Delete(lyr); arcpy.management.Delete(wp)
-    rows.append(dict(last_two_digits=dd, elevation_ft=e, pool_sqmi=round(area, 2), shoreline_km=round(length, 1),
-                     shoreline_m=round(length * 1000), water_bodies=n_poly, main_pool_polygons=n_sel,
-                     seconds=round(time.time() - t0, 1)))
-    print(rows[-1], flush=True)
+    levels[e] = dict(pool_sqmi=round(area, 2), shoreline_m=round(length), water_bodies=n_poly, main_pool_polygons=len(geoms))
+    print(e, levels[e], round(time.time() - t0, 1), "s", flush=True)
+
+OUT = private_path(HERE, "lab06_personal_lookup.csv")
 with open(OUT, "w", newline="") as f:
-    w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
-print("wrote", OUT, len(rows), "rows in", round(time.time() - t_all), "s")
+    w = csv.writer(f)
+    w.writerow(["last_two_digits", "E_ft", "level_ft", "pool_sqmi", "shoreline_m", "water_bodies", "main_pool_polygons"])
+    for dd in range(100):
+        E = 3450 + 2 * dd
+        for lv in range(E, E + 41, 10):
+            r = levels[lv]
+            w.writerow([f"{dd:02d}", E, lv, r["pool_sqmi"], r["shoreline_m"], r["water_bodies"], r["main_pool_polygons"]])
+print("wrote", OUT, "in", round(time.time() - t_all), "s")
