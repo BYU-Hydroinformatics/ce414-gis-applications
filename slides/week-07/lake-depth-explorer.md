@@ -147,6 +147,20 @@ By the end of class you should be able to:
 
 ---
 
+# Lab 6: What the Grader Verifies
+
+![bg right:40% h:96%](images/lb-lab06-example-placeholder.png)
+
+- **Your own level:** E = 3,500 + 2 × (BYU ID's last two digits) ft; report the pool's **area** and **shoreline length** there, checked against a run at E
+- **Three files:** the report, plus **each map as an ArcGIS Pro layout PDF**, text selectable
+- **Proof it ran:** a **Geoprocessing History** capture and the baseline **attribute table**
+- **The example maps' words are brackets** on purpose; yours are yours
+- An AI-made figure or map, or a number no run produced: **zero** for that part
+
+<!-- Why: Lab 5 showed three ways AI stands in for the work. Published check values make an invented number look real; the example map is a reference image an image generator can repaint; and nothing in a report proves ArcGIS Pro ran. The personal level is a number only a run at that elevation gives (it is not in the USGS table, and the shoreline length cannot be interpolated). A layout PDF is vector: selectable text, real geometry, an ArcGIS Pro producer string. History is cheap to capture and hard to fake. The AI policy is unchanged: use AI to understand a tool, fix an error, or tighten writing; not to run the lab, make the figures, or supply the numbers. -->
+
+---
+
 # How You Will Know You Are Right
 
 ![h:400 center](images/lb-powell-area.png)

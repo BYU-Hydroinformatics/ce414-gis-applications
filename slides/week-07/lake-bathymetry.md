@@ -194,11 +194,11 @@ By the end of class you should be able to:
 ![bg right:42% w:95%](images/lb-iterator-loop.svg)
 
 - One ModelBuilder model that floods a lake surface at **every level in a list**
-- The lake is **Lake Powell** — one pool behind one dam, at a new record low (3,516.6 ft, Sept 15, 2026)
+- The lake is **Lake Powell** — one pool behind one dam, at a record low
 - Today's ideas come straight back: a **datum** to convert, an **area table** to check against
+- **New for Lab 6:** your **own** water level from your BYU ID, maps as **ArcGIS Pro PDF exports**, a **History** capture
 
-- Before Thursday: read the [Lab 6 page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
-- Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
+- Before Thursday: read the [Lab 6 page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/); questions to [office hours](https://calendly.com/dan-ames/office-hours)
 
 <!-- The diagram is a sketch of the Lab 6 model; Thursday builds it. Why Powell for the lab and the Great Salt Lake for lecture: the causeway splits the Great Salt Lake below about 4,200 ft, so "keep the water connected to one seed point" keeps only the south arm — a good report question, a bad first loop. -->
 
