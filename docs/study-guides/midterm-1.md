@@ -4,6 +4,16 @@
 **Tuesday of Week 8 at 8:00 am** and closes **Thursday at 9:00 pm**; the Testing Center charges a late
 fee from 2:00 pm Thursday, so go earlier. It covers **Weeks 1–7**.
 
+**Conditions.** Paper and pencil, closed book and closed notes, with no computer, phone or other
+device. **Bring a calculator**: any calculator is allowed, as long as it is not a phone. You have
+**3 hours**, which is plenty: most students should finish in about half that.
+
+**What the questions look like.** Multiple choice; fill in the blank, matching and ordering;
+questions built on ArcGIS Pro screenshots from the labs and lectures; short hand calculations
+(the kind worked in class: a `Con()` grid, slope at a cell, D8, flow accumulation); and a few
+sketches and short answers. A short set of multiple-choice questions comes straight from the
+Bolstad reading, so review your Learning Suite reading quizzes as well as the self-check quizzes.
+
 **How to use this page.** Each week lists what you should be able to do. Turn every line into a
 question and answer it out loud without notes. If you cannot, open that week's slides (press
 <kbd>P</kbd> for the speaker notes, which carry the explanations) and the self-check quiz. The labs
@@ -17,6 +27,7 @@ there, and what the sensitivity step showed.
 - Explain what it means to call a GIS dataset a **model** — an abstraction chosen for a purpose
 - Distinguish the **vector**, **raster** and **TIN** data models, and say when each is appropriate
 - Separate a **data model** from its **file format** (vector vs. shapefile vs. geodatabase)
+- From the reading: define **topology**, and the GIS terms in Chapters 1 and 2
 
 ## Week 2 — ModelBuilder
 
@@ -26,6 +37,7 @@ there, and what the sensitivity step showed.
 - Read a ModelBuilder canvas: inputs, tools, outputs, and what the **environments** decide
 - Turn a model variable into a **parameter** so the model runs as a tool, and say why that matters
 - Judge when a smaller model is the better model; write **metadata** someone else can use
+- From the reading: classify a model as **cartographic**, **simple spatial** or **spatio-temporal**, and tell **ranking** from **weighting**
 
 ## Week 3 — Raster Analysis
 
@@ -36,6 +48,7 @@ there, and what the sensitivity step showed.
 - Write the **NDVI** equation and say why red and near-infrared are the two bands
 - Put a tool in the right family — **local**, **focal**, **zonal**, **global** — and say what a moving window does to an edge
 - Read a `Con()` expression and say what area it classifies
+- From the reading: say what a smoothing, a high-pass and a **majority** filter do
 
 ## Week 4 — Georectifying and Remote Sensing
 
@@ -46,6 +59,7 @@ there, and what the sensitivity step showed.
 - Say where **control points** belong, and why their spread beats their number; read a **residual** and a **total RMS error**, and why a small one proves nothing
 - Find visible, **near-infrared**, **thermal** and radar on the spectrum; say what an **atmospheric window** is
 - Split a color image into **bands**, read a **false-color** image, tell **multispectral** from **hyperspectral**, and name the four resolutions a satellite trades off
+- From the reading: tell a **passive** sensor from an **active** one
 
 ## Week 5 — Elevation Data and Terrain Analysis
 
@@ -64,6 +78,7 @@ there, and what the sensitivity step showed.
 - Tell a cell's **aspect** from its **D8 flow direction**, and compute D8 by hand
 - Say what **flow accumulation** counts, how a **threshold** makes streams, and why a watershed is always the watershed **of a point**
 - Read **nested hydrologic units**; write a **water balance** and say which term a DEM informs
+- From the reading: say when a pit in a DEM should be **filled** and when it should be **breached**
 
 ## Week 7 — Lake Bathymetry and Iterators
 
@@ -72,4 +87,4 @@ there, and what the sensitivity step showed.
 - Say why a **terminal lake's level** is its water balance; name four ways a lake bottom is measured
 - Explain why a level needs a **vertical datum**, and what mixing two does
 - Read an **elevation–area–volume** table, and say why one foot of level is not one foot of lake
-- Say what an **iterator** does that running a tool twice does not; use `%Value%` in an expression and an output name; gather a loop's outputs with **Collect Values** and **Merge**
+- Say what an **iterator** does that running a tool twice does not; use `%Value%` in an expression and an output name (Lab 6 renames it `%Elevation%`); gather a loop's outputs with **Collect Values** and **Merge**
