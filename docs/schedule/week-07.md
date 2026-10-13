@@ -1,5 +1,8 @@
 # Week 7: Lake Bathymetry
 
+> [!IMPORTANT] Also this week
+> - **Midterm 1 is next week**, on Weeks 1–7: read the [study guide](../study-guides/midterm-1.md) now — opens Tuesday of Week 8 at 8:00 am.
+
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides

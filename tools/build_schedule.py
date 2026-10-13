@@ -118,7 +118,8 @@ DUE = {
              other=[("In-class activity: Aspect and D8 Flow Direction (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class")]),
     7:  dict(reading=None, quiz=None, lab=6,   # Lab 6 (Lake Depth Explorer) is introduced Thursday and due the same Saturday; see ROADMAP item 4
              other=[("In-class activity: Read the USGS Lake Table (Excel)", "done in class Tuesday; upload the workbook by 9:30 am, fifteen minutes after class"),
-                    ("In-class activity: Three Lake Levels", "done in class Thursday; upload a screen capture by 9:30 am, fifteen minutes after class")]),  # Oct 1: replaces the two old Week 7 activities; Learning Suite still has the old ones
+                    ("In-class activity: Three Lake Levels", "done in class Thursday; upload a screen capture by 9:30 am, fifteen minutes after class"),
+                    ("**Midterm 1 is next week**, on Weeks 1–7: read the [study guide](../study-guides/midterm-1.md) now", "opens Tuesday of Week 8 at 8:00 am")]),  # Oct 1: replaces the two old Week 7 activities; Learning Suite still has the old ones
     8:  dict(reading=None, quiz=None, lab=7,
              other=[("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
     9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
