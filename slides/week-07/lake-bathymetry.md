@@ -47,14 +47,6 @@ By the end of class you should be able to:
 
 ---
 
-<!-- _class: lead -->
-
-# Part 1 — A Lake With No Outlet
-
-<!-- Pick up where Thursday of Week 6 ended: Rock Canyon's water ends up in the Great Salt Lake. -->
-
----
-
 # Where Rock Canyon's Water Ends Up
 
 ![h:420 center](images/lb-gsl-subregion.jpg)
@@ -62,6 +54,8 @@ By the end of class you should be able to:
 - Rock Canyon › Provo River › Utah Lake › Jordan River › **Great Salt Lake** — and the lake has **no outlet**
 
 <!-- The same map as Thursday of Week 6: the Great Salt Lake subregion (HUC4 1602, left) and the Rock Canyon end of it (right), from the USGS Watershed Boundary Dataset. Water leaves the Great Salt Lake only by evaporation. That is what makes its level such an honest gauge of the whole basin's water balance. -->
+
+<!-- Pick up where Thursday of Week 6 ended: Rock Canyon's water ends up in the Great Salt Lake. -->
 
 ---
 
@@ -75,14 +69,6 @@ By the end of class you should be able to:
 
 ---
 
-<!-- _class: lead -->
-
-# Part 2 — Measuring the Bottom
-
-<!-- A DEM of land comes from lidar or photogrammetry. Under water, light and lasers mostly fail, so bathymetry is its own craft. -->
-
----
-
 # What Bathymetry Is
 
 ![h:380 center](images/lb-bathymetry-methods.svg)
@@ -90,6 +76,8 @@ By the end of class you should be able to:
 - **Bathymetry** is the elevation of the bottom of a water body — a DEM of the part you cannot see
 
 <!-- Four methods, oldest to newest. A lead line gives one depth per drop. Single-beam sonar times an echo straight down and gives a line of points along the boat's track. Multibeam sonar sends a fan and gets a swath, close to full coverage. Airborne bathymetric lidar uses a green laser that passes through water — but only clear, shallow water; the Great Salt Lake's brine and its depth limit what it can see. Whatever the method, the points are interpolated to a grid: the same idea as Week 8. -->
+
+<!-- A DEM of land comes from lidar or photogrammetry. Under water, light and lasers mostly fail, so bathymetry is its own craft. -->
 
 ---
 
@@ -126,19 +114,13 @@ By the end of class you should be able to:
 
 ---
 
-<!-- _class: lead -->
-
-# Part 3 — Level, Area, and Volume
-
-<!-- A bathymetry surface turns a water level into a shoreline, an area and a volume. -->
-
----
-
 # Elevation–Area–Volume Curves
 
 ![h:420 center](images/lb-eav-curves.png)
 
 <!-- The USGS elevation-area-volume table for the whole lake, 0.01 ft steps, converted here to ft NGVD29. At the 2022 record low, 4,188.5 ft: about 894 sq mi and 7.08 million acre-ft. At 4,200 ft: about 1,602 sq mi and 15.7 million acre-ft. At 4,211.5 ft, the top of the table: about 2,229 sq mi and 30.5 million acre-ft. Volume curves upward because each foot of water spreads over a bigger area the higher it gets. -->
+
+<!-- A bathymetry surface turns a water level into a shoreline, an area and a volume. -->
 
 ---
 
@@ -186,6 +168,19 @@ By the end of class you should be able to:
 
 <!-- The table is in the USGS data release (doi:10.5066/P9DGG75W), file for the whole lake; it has both NAVD88 and NGVD29 columns. Answers from the table: 1,602.4 − 894.2 = 708.2 sq mi exposed between 4,200 and 4,188.5 ft; from 4,189.7 ft (929.7 sq mi) a further 100 sq mi is exposed by about 4,186.4 ft (829.5 sq mi), a drop of about 3.3 ft — have students find it themselves (checked against the CSV, October 1, 2026). -->
 <!-- The CSV is the release's Great_Salt_Lake_2023_ElevAreaVolume_total.csv, hosted unchanged as docs/data/week07-gsl-elevation-area-volume.csv (public domain, 481 KB, 4,501 rows at 0.01 ft from 4,170 to 4,215 ft NAVD88; NGVD29 = NAVD88 - 3.48 ft). Answers re-checked against it October 2, 2026: 1,602.35 sq mi at 4,200 ft and 894.20 at 4,188.5 ft NGVD29. TODO(instructor): create the matching Learning Suite activity (replaces the old Week 7 "Practicing Hydrology Tools" item). -->
+
+---
+
+# The Tool You Are About to Build
+
+![bg right:46% w:96%](images/lb-hydromap-gsl-explorer.jpg)
+
+- Pick a water level, get the **shoreline** and the **area**: that is the whole idea
+- Try it now: the [Great Salt Lake depth explorer](https://greatsaltlake.hydromap.com/?depth=4190) and the [Lake Powell depth explorer](https://lakepowell.hydromap.com/?depth=3550)
+- Drag the slider and watch the bays empty, then the arms, then the channel
+- Lab 6 builds the same thing in **ModelBuilder**: a loop over levels, a flooded surface, one shoreline polygon per level
+
+<!-- Both explorers are the hydromap.com Data Watch pages in Depth explorer mode (the Basin map card). Behind each is exactly the Lab 6 computation: a topobathymetric surface, a water level, every cell at or below it, the connected pool, its outline and area. The web app precomputed the shorelines once per foot; Lab 6 does it with a For iterator in ModelBuilder on Lake Powell's surface. The screenshot is the Great Salt Lake explorer at 4,190 ft, October 13, 2026. -->
 
 ---
 

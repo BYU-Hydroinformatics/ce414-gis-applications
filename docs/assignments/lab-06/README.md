@@ -76,7 +76,7 @@ older topography. Using that surface:
    `Elevation` field.
 2. Report the surface area of the lake at each elevation.
 3. Map the nested shorelines.
-4. Identify the elevation at which at least three named shore features go dry — launch ramps are
+4. Identify the elevation at which at least two named shore features go dry — launch ramps are
    the clearest case; a marina entrance or a landmark at the water's edge also works if you say what
    "dry" means for it.
 
@@ -150,7 +150,7 @@ Basemaps and imagery come from ArcGIS Online; you do not download them.
 
 ### Shore features you create
 
-Choose at least three named features on the shore and digitize a point for each — launch ramps
+Choose at least two named features on the shore and digitize a point for each — launch ramps
 are the clearest case. You do this at the end of Step 1, once the surface is in feet. For a launch
 ramp the elevation that matters is the **bottom (toe)** of the ramp: find it on the imagery and the
 surface, and do not click the parking lot. State in your report how you chose your features.
@@ -497,7 +497,11 @@ times** from its tool dialog:
 2. A **coarser step**, such as 25 ft.
 3. A **different range** — only the elevations the lake has reached in the last ten years (read
    them from `powell_elevation_usbr.csv`: since October 1, 2016, as high as 3,635.8 ft on July 11,
-   2017, and as low as 3,516.6 ft on September 15, 2026), or all the way down to dead pool, 3,370 ft.
+   2017, and as low as 3,516.6 ft on September 15, 2026).
+
+   *Optional, if you have the time:* a run all the way down to dead pool, 3,370 ft. At 34 levels
+   it takes about seven minutes, and it shows how little of the lake is left at the levels the
+   operators plan around.
 
 > [!IMPORTANT]
 > **Give every run a new Shorelines name** that states its range and step, such as
@@ -517,9 +521,9 @@ the lowest and highest elevations, and the run time. Then answer, in your report
 1. **Which shore features go dry, and at what elevation?** Does the answer change with the step,
    and by how much? A 10 ft step can only say "between 3,540 and 3,550".
 2. **How much does the lake's area change per foot of elevation**, and is that rate the same at the
-   bottom of the range as at the top? What about the shape of Glen Canyon explains the difference?
-3. **What is the smallest step that still shows the shape of the basin?** What did the finer runs
-   add, and what did they cost in run time?
+   bottom of the range as at the top? What about the shape of Glen Canyon explains the difference,
+   and what is the smallest step that still shows that shape? What did the finer run add, and what
+   did it cost in run time?
 
 Pick one of your runs for your second map, and say on the map what changed and why you chose it.
 
@@ -540,8 +544,8 @@ Pick one of your runs for your second map, and say on the map what changed and w
 Make **two** professional map layouts:
 
 1. **Your baseline result** — the nested shorelines, 3,500–3,700 ft at 10 ft, symbolized so the
-   elevation of each is readable, with your shore-feature points and an inset or close-up of one
-   feature at the elevation it goes dry.
+   elevation of each is readable, with a few levels labeled on the map and your shore-feature points
+   labeled. An inset of one feature at the level it goes dry is optional: no points ride on it.
 2. **One scenario from Step 7** — the same model at a different range or step, whichever of your
    runs most changes the picture. Say on the map what changed and why you chose that run to show.
 
@@ -561,7 +565,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   one means for your result
 - your **shore-feature table**: each feature, its elevation, the water-surface elevation at which it
   goes dry, and the Park Service cutoff where one is published
-- your **range-and-step table** from Step 7 and your answers to its three questions
+- your **range-and-step table** from Step 7 and your answers to its two questions
 - **where the shorelines are wrong and why** — the seam between surveys, the 30 m cells in narrow
   canyons, the hollows removed in Step 4, the 2017 survey date against sediment deposited since, construction since the survey —
   and what additional data would fix each
@@ -619,8 +623,8 @@ carries these brackets, or a title lifted from anywhere else, is not finished.
 ![Example baseline layout: the whole lake on imagery with 21 nested shorelines in five classes of blue, darkest for the lowest levels, the main-pool seed point near the dam, a legend in feet NGVD29, a scale bar in miles, a north arrow, and a text box. The title, subtitle and text box are bracketed placeholders saying what belongs there: a title with the elevation range and step, a subtitle with the shoreline count and which pool was kept, and a text box with the result, author, date, projection and sources.](images/lab06-example-map-baseline.png)
 
 **Figure 8.** The baseline map, with placeholder wording. Two things to do better than this example:
-add your shore-feature points and the close-up the rubric asks for, and label a few levels on the map
-itself so a reader does not have to match colors to the legend.
+add your labeled shore-feature points, and label a few levels on the map itself so a reader does not
+have to match colors to the legend.
 
 ![Example scenario layout: the same design with 34 shorelines down to dead pool, the darkest classes now confined to the old river channel. The title, subtitle and text box are bracketed placeholders: a scenario title with its range and step, a subtitle saying what changed from what to what, and a text box with what this run shows and why it was chosen.](images/lab06-example-map-scenario.png)
 
@@ -640,9 +644,9 @@ out of this page.
 | --- | --- |
 | **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the surface and what each means for your result (2)<br>• The shore-feature table: how you chose the features and the elevation at which each goes dry (2)<br>• Where the shorelines are wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog, loops over the elevations, and produces one merged feature class with one labeled shoreline per elevation; the shoreline count and the areas at the default values match the check values, and the History and attribute-table captures show the runs (4)<br>• A full-page model figure exported from ModelBuilder, with the iterator, the loop, and the collector readable (2)<br>• A screen capture of the toolbox interface with the low, high, and step parameters exposed (2)<br>• A description of the model a reader could repeat from, including how the loop value reaches the tools inside it (2) | /10 |
-| **Map 1 — your baseline** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• An inset or close-up of one feature at the elevation it goes dry (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
+| **Map 1 — your baseline** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend and a few levels labeled on the map (3)<br>• Your shore-feature points, labeled (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
 | **Map 2 — one Step 7 scenario** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating the elevation range and step (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the surface's source, survey date and vertical datum (1)<br>• The nested shorelines symbolized so each elevation is readable, with a legend (2)<br>• Your shore-feature points, labeled (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the lake (2) | /10 |
-| **Range and step sensitivity** (Step 7)<br>• One table with the baseline, your personal-level run, and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each; the personal-level row carries your BYU ID digits, your elevation, the main-pool area and its shoreline length (4)<br>• Which features go dry and whether the step changes that answer (2)<br>• How the area changes per unit elevation and what the basin's shape has to do with it (2)<br>• The smallest step that still shows the basin's shape, and what the finer runs cost (2) | /10 |
+| **Range and step sensitivity** (Step 7)<br>• One table with the baseline, your personal-level run, and at least three additional runs, giving the range, the step, the number of shorelines, the areas at the lowest and highest elevations, and the run time for each; the personal-level row carries your BYU ID digits, your elevation, the main-pool area and its shoreline length (4)<br>• Which features go dry and whether the step changes that answer (3)<br>• How the area changes per unit elevation, what the basin's shape has to do with it, the smallest step that still shows that shape, and what the finer run cost (3) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]

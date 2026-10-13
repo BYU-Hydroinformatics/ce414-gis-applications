@@ -69,5 +69,31 @@ for p in cell.paragraphs:
     if "number of water bodies" in p.text:
         p.text = p.text.replace("the main-pool area and the number of water bodies", "the main-pool area and its shoreline length")
 
+# 4. Oct 12 cuts: two shore features, no inset, two Step 7 questions
+for p in d.paragraphs:
+    if p.text.startswith("Must carry:") and "inset" in p.text:
+        p.text = ("Must carry: title stating the elevation range and step; neat line, north arrow and scale bar; a text "
+                  "box with author, date, map projection, and the surface's source, survey date and vertical datum; the "
+                  "nested shorelines symbolized so each elevation is readable, with a legend and a few levels labeled on "
+                  "the map; your shore-feature points, labeled; basemap, scale and legibility appropriate to the lake. "
+                  "An inset of one feature at the level it goes dry is optional.")
+    elif p.text.startswith("Everything Map 1 needs except the inset"):
+        p.text = p.text.replace("Everything Map 1 needs except the inset", "Everything Map 1 needs")
+    elif "three features" in p.text or "at least three" in p.text:
+        p.text = p.text.replace("three features", "two features").replace("at least three", "at least two")
+q2 = next((p for p in d.paragraphs if p.text.startswith("How much does the lake")), None)
+q3 = next((p for p in d.paragraphs if p.text.startswith("What is the smallest step")), None)
+if q2 is not None and q3 is not None:
+    q2.text = ("How much does the lake's area change per unit of elevation, and is that rate the same at the bottom of "
+               "the range as at the top? What about the basin's shape explains the difference, what is the smallest step "
+               "that still shows that shape, and what did the finer run cost? (3 points)")
+    ans = q3._p.getnext()                      # the "[Your answer here.]" paragraph under q3
+    if ans is not None and "answer" in "".join(ans.itertext()).lower():
+        ans.getparent().remove(ans)
+    q3._p.getparent().remove(q3._p)
+q1 = next((p for p in d.paragraphs if p.text.startswith("Which shore features go dry")), None)
+if q1 is not None and "(2 points)" in q1.text:
+    q1.text = q1.text.replace("(2 points)", "(3 points)")
+
 d.save(str(DOCX))
 print("updated", DOCX.name)

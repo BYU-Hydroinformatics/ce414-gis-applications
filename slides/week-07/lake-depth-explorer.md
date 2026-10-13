@@ -44,15 +44,9 @@ By the end of class you should be able to:
 
 ---
 
-<!-- _class: lead -->
-
-# Part 1 — One Model, Many Runs
-
----
-
 # The Problem With Running a Model Once
 
-![bg right:40% w:95%](images/lb-powell-example-map.png)
+![bg right:40% w:95%](images/lb-lab06-example-placeholder.png)
 
 - One water level → one Con → one shoreline
 - Twenty levels → **twenty runs**, twenty names to type, twenty chances to mistype one
@@ -123,12 +117,6 @@ By the end of class you should be able to:
 
 <!-- The attribute table of powell_shorelines_3500_3700_10 from the GUI-built model (October 2, 2026): 75.65 sq mi at 3,500 ft, 103.93 at 3,550, the same as the arcpy run on the slide after next. A full run took about 4.5 minutes in ModelBuilder on the build machine. -->
 
-
----
-
-<!-- _class: lead -->
-
-# Part 2 — Lab 6, Lake Depth Explorer
 
 ---
 
