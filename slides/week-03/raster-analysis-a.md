@@ -465,7 +465,7 @@ Five real datasets, one question each: **is that cell value a label, or a measur
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - It is the same call Lab 2 Step 6 makes when the threshold table turns NDVI into a map
 

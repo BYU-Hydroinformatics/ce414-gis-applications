@@ -343,7 +343,7 @@ Five calls you have to make before you propose: is the idea the right **size**, 
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that the assignment landed
+- Not graded, nothing recorded: a quick check that the assignment makes sense
 - Every answer explains itself; read the explanation before you move on
 - Item 4 is the proposal meeting in miniature — bring the feasibility table
 

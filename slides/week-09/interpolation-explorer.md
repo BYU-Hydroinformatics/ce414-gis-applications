@@ -281,7 +281,7 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 
 Five questions on error rasters, RMSE, checkpoints and sensitivity. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The sign question is the one that flips a whole map in Lab 8
 

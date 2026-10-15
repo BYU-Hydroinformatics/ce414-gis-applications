@@ -288,7 +288,7 @@ By the end of class you should be able to:
 
 Five questions on a terminal lake, measuring the bottom, datums, and what a level does to area. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The datum question is the one that will cost you an afternoon in Lab 6 if you miss it
 

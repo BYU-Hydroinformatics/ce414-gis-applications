@@ -94,7 +94,7 @@ Part A built the **Cities Near Rivers** model and ran it. By the end of class yo
 
 <!-- Put this up once everyone has drawn, and have them exchange papers before you show it. Peer grading is the point: they have to read somebody else's diagram, which is the first time most of them find out that a model is a communication device.
 
-Watch what happens when engineers see an equation. The room sits up — and then, a beat later, works out that it is a silly one. Let that land; it is the best moment in the hour.
+Watch what happens when engineers see an equation. The room sits up — and then, a beat later, works out that it is a silly one. Give them a moment with it; it is the best moment in the hour.
 
 It is also, deliberately, a WRONG equation, and the next two slides are where that comes out. N rewards piling on nodes, so the eleven-tool cookie beats the one-tool cookie every time — and the very next slide asks whether a bigger model is actually better. Do not resolve the contradiction for them. Ask who got the highest score, then ask whose model they would rather be handed if they had to bake the cookie. The answers are usually different people, and the conversation after that is the lesson. -->
 
@@ -684,7 +684,7 @@ Five questions on **turning a canvas into a tool** someone else can run.
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
 

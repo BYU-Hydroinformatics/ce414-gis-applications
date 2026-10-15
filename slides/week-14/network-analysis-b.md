@@ -293,7 +293,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 Five questions on Solve, which solver answers which question, why a buffer and a service area disagree, and what Lab 12's cutoff decides. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The buffer question is the one Lab 12's Map 2 turns on
 

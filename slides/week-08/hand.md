@@ -212,7 +212,7 @@ By the end of class you should be able to:
 
 Five questions on HAND, stream definitions, thresholds and scoring a flood map. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The stream-definition question is the one Lab 7 tests
 

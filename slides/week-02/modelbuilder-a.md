@@ -683,7 +683,7 @@ Five questions on **reading a canvas** — and the projection and dissolve calls
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - Two of them are the Buffer and projection decisions that Lab 1 charges you for
 

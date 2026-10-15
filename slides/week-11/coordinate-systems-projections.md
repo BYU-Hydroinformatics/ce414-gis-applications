@@ -734,7 +734,7 @@ Five questions: what your coordinates **measure**, what your map **gives up**, a
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read it before you move on
 - It is the check Lab 8 wants before you combine layers
 

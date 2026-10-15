@@ -563,7 +563,7 @@ Five questions on **what the computer actually stores** for a point, a line, a p
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - It is the warm-up for the graded quiz on Learning Suite and for Lab 1
 

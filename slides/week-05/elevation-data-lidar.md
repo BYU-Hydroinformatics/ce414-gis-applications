@@ -516,7 +516,7 @@ oldest, leads them; every portal capture re-shot and every fact and link re-veri
 
 Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The last two items are the ones Lab 4 will ask you again on Saturday
 

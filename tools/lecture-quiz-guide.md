@@ -2,7 +2,7 @@
 
 Every lecture deck ends with a slide carrying a QR code. A student scans it with a phone and
 gets a short, self-marking quiz on what was just taught. Nothing is recorded and nothing is
-graded — it is a two-minute check that the lecture landed, and a way to end class on a question
+graded — it is a two-minute check that the lecture made sense, and a way to end class on a question
 rather than on a list of deadlines.
 
 This file is the authority for building one. It is the companion to
@@ -155,7 +155,7 @@ on screen while the room packs up:
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that it landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - <one line tying it to the graded quiz or the lab that week>
 

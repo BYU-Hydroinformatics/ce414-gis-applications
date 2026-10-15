@@ -246,7 +246,7 @@ Lab 12's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 Five questions on junctions and connectivity, one-way streets as a cost, two impedances, UGRC's 1.5 factor, and which distance belongs to a fire engine. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The two-impedance question is the one Thursday builds on
 

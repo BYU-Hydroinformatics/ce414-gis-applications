@@ -441,7 +441,7 @@ $$
 
 Five questions, one for each of today's goals: what a watershed is, how they nest, the water balance, why **Fill** comes first, and **aspect** against **D8**. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The D8 question is the one Thursday builds on: every later step reads the flow direction grid
 

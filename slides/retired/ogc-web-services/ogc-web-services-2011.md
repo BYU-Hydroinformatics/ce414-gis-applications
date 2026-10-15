@@ -1302,7 +1302,7 @@ Five questions: **what does the service actually hand you** — a picture, the f
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The same distinction runs through this week's reading and open-book quiz
 

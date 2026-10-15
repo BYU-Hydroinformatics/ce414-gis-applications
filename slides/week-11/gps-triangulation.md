@@ -436,7 +436,7 @@ Five questions on what a receiver actually measures, and on why the position it 
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - Quiz 9 on Learning Suite is the graded one this week; this is the rehearsal for it
 

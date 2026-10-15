@@ -355,7 +355,7 @@ Same model, same data, five runs of the tool dialog:
 
 Five questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The last three items are the ideas Lab 2 Step 6 is built on
 

@@ -284,7 +284,7 @@ Realigned October 9, 2026 with the rebuilt Lab 11: General Workflow names the cu
 
 Five questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The sign of the reclassification — **high means undesirable** — is what Lab 11 punishes hardest
 

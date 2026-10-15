@@ -580,7 +580,7 @@ Five questions on **putting a scanned map in its place** — control points, and
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The last three are the ones Lab 3 Step 8 hands straight back to you
 

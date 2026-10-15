@@ -466,7 +466,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The two it drills hardest — the **pour point** and **snapping** it — decide whether Lab 5 takes an hour or an afternoon
 

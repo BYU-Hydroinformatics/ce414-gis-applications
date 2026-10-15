@@ -416,7 +416,7 @@ Six questions on **what you get out of a DEM** — contours, hillshade, aspect, 
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that it landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
 

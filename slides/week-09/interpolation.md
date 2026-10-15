@@ -834,7 +834,7 @@ Five items on the same question we spent the session on: **what is this method a
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The exponent and the neighbor count are the two knobs you turn by hand in Lab 8
 

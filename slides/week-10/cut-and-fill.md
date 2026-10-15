@@ -187,7 +187,7 @@ Nine 10 m cells of existing ground (m):
 
 Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — it is a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read the explanation before you move on
 - The sign question is the one that trips up a report
 
