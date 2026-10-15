@@ -133,10 +133,11 @@ By the end of class you should be able to:
 ![bg right:40% h:96%](images/lb-lab06-example-placeholder.png)
 
 - **Run 2's five rows** match a run at your levels
-- **Three files:** the report, plus **each map as an ArcGIS Pro layout PDF**, text selectable
-- **Proof it ran:** a **Geoprocessing History** capture showing both runs, and Run 1's **attribute table**
+- **Model figure** exported from **ModelBuilder**, not a screen capture
+- **Three files:** the report + **each map as an ArcGIS Pro layout PDF**, vector, text selectable
+- **Proof it ran:** a **Geoprocessing History** capture showing both runs
 - **The example maps' words are brackets** on purpose; yours are yours
-- An AI-made figure or map, or a number no run produced: **zero** for that part
+- An AI-made figure or map, or a number no run produced: **zero** for that part, and an AI-policy referral
 
 <!-- Why: Lab 5 showed three ways AI stands in for the work. Published check values make an invented number look real; the example map is a reference image an image generator can repaint; and nothing in a report proves ArcGIS Pro ran. A layout PDF is vector: selectable text, real geometry, an ArcGIS Pro producer string. History is cheap to capture and hard to fake. The AI policy is unchanged: use AI to understand a tool, fix an error, or tighten writing; not to run the lab, make the figures, or supply the numbers. -->
 
