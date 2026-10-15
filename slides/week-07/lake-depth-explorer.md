@@ -159,7 +159,7 @@ By the end of class you should be able to:
 
 <!-- _class: activity -->
 
-# Before You Leave
+# Final Thoughts
 
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>

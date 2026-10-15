@@ -162,40 +162,35 @@ By the end of class you should be able to:
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/fl-peaks.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: How Big, How High?** Five questions on return periods, rating curves, depth and bathtubs. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Most people miss the mortgage question
+
+**Before next class**
 
 - **Midterm 1** — in the Testing Center, open through **Thursday 9:00 pm**
 - **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm** — [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 - Look up a stream gage near your home on the USGS map: what is its largest flow on record?
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — How Big, How High?
-
-<div class="columns">
-<div>
-
-Five questions on return periods, rating curves, depth and bathtubs. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The mortgage question is the one most people miss
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/floods/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-floods-qr.png)
+![w:300 center](images/quiz-floods-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/floods/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). -->

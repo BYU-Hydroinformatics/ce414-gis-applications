@@ -471,15 +471,43 @@ Links checked 2026-09-28, all 200. The files are big (Mars MOLA 2 GB, Moon LOLA 
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:34% w:92%](images/ta-shaded-relief.jpg)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Surfaces and Returns.** Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The last two come back in Lab 4, due Saturday
+
+**Before next class**
 
 - **Lab 4 — Cell Phone Tower Placement** is due **Saturday 11:59 pm**: [assignments/lab-04](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-04/). It needs a DEM for Utah County — download it with what you learned today
 - **Thursday**: what you compute from a DEM. Slope, aspect, curvature, hillshade and viewsheds
 - **Reading**: Chapter 11 of *GIS Fundamentals* (Terrain Analysis)
 - **Quiz 5**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
+
+</div>
+<div>
+
+![w:300 center](images/quiz-elevation-lidar-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/elevation-lidar/</span>
+
+</div>
+</div>
+
+<!-- Four to five minutes, in pairs, then a show of hands on the one that splits the room: which
+echo from a single pulse comes back last. Half the room says the treetop, because it is the first
+thing the pulse hits - the answer is the ground, because it is the farthest thing the pulse reaches
+and its echo makes the longest round trip. That is the whole basis of a bare-earth model under
+forest, so it is worth ten seconds at the board. The resolution item is the other one to watch: a coarser
+grid looks the same until you look for the small drainages. If the room has no
+signal, put the URL on the board; every item reads aloud just as well. -->
 
 <!-- The one thing they must do before Thursday is get a DEM. Everything Thursday does is arithmetic on the grid they downloaded today, and Lab 4's slope step needs the same file. -->
 
@@ -504,36 +532,3 @@ returns-to-bare-earth slide; Part 3 reordered so cell size comes before the sour
 oldest, leads them; every portal capture re-shot and every fact and link re-verified
 (tools/week05_dem_sources.py). The old ta- portal captures are no longer referenced.
 -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Surfaces and Returns
-
-<div class="columns">
-<div>
-
-Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The last two items are the ones Lab 4 will ask you again on Saturday
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/elevation-lidar/</span>
-
-</div>
-<div>
-
-![w:400 center](images/quiz-elevation-lidar-qr.png)
-
-</div>
-</div>
-
-<!-- Four to five minutes, in pairs, then a show of hands on the one that splits the room: which
-echo from a single pulse comes back last. Half the room says the treetop, because it is the first
-thing the pulse hits - the answer is the ground, because it is the farthest thing the pulse reaches
-and its echo makes the longest round trip. That is the whole basis of a bare-earth model under
-forest, so it is worth ten seconds at the board. The resolution item is the other one to watch: a coarser
-grid looks the same until you look for the small drainages. If the room has no
-signal, put the URL on the board; every item reads aloud just as well. -->

@@ -190,40 +190,35 @@ By the end of class you should be able to:
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/fl-hand-map.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Height Above What?** Five questions on HAND, stream definitions, thresholds and scoring a flood map. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The stream-definition question comes back in Lab 7
+
+**Before next class**
 
 - **Midterm 1** closes **tonight, 9:00 pm** (late fee from 2:00 pm)
 - **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm**
 - Next week: **interpolation**, and Lab 8
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams; numbers from the Lab 7 package (tools/lab07/package_checks.json). -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Height Above What?
-
-<div class="columns">
-<div>
-
-Five questions on HAND, stream definitions, thresholds and scoring a flood map. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The stream-definition question is the one Lab 7 tests
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/hand/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-hand-qr.png)
+![w:300 center](images/quiz-hand-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/hand/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams; numbers from the Lab 7 package (tools/lab07/package_checks.json). -->

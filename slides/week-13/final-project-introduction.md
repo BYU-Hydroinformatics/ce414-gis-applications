@@ -312,12 +312,41 @@ That is the difference between a result and a recommendation.
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Ready to Pitch?** Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result? **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that the assignment makes sense
+- Item 4 is the proposal meeting in miniature — bring the feasibility table
+
+**Before next class**
 
 - **Read** the [Final Project page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) on the course site
 - **Start** your data-feasibility table — one row per layer
 - **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
 - **Quiz 11** (Chapter 14, Data Standards and Data Quality), open book, due **Saturday 11:59 pm** — Thursday is Thanksgiving, no class
+
+</div>
+<div>
+
+![w:300 center](images/quiz-final-project-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/final-project/</span>
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the first item. The trailhead map is what
+usually splits the room: half call it "about right" because it has a study area, a real dataset and
+a map at the end, and the other half see that nothing is being decided. That argument is the whole
+scope lesson, so let it run a minute before settling it. The all-vector siting plan is the runner-up
+- teams forget the raster half of the requirement until the model is half built. If the room has no
+signal, put the URL on the board and read the items aloud; each one works as a show of hands. -->
 
 <!-- Conversion notes (2026-09-03): built from the Learning Suite "Final Project" page (one page,
 exported to PDF Sept 2, 2026) and the peer scoresheet in Final Projects/scoresheet.docx. No slide
@@ -329,37 +358,3 @@ and the pitfalls slide. Images reuse course example maps from Labs 1, 9 (student
 and 10, and the ModelBuilder B RiversDemo captures. Open items: 2023-2025 examples and deck links,
 presentation length, how peer scores combine with the instructor grade, team accountability
 wording, whether to keep the "two new tools" rule, meeting booking method. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Ready to Pitch?
-
-<div class="columns">
-<div>
-
-Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result?
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that the assignment makes sense
-- Every answer explains itself; read the explanation before you move on
-- Item 4 is the proposal meeting in miniature — bring the feasibility table
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/final-project/</span>
-
-</div>
-<div>
-
-![w:400 center](images/quiz-final-project-qr.png)
-
-</div>
-</div>
-
-<!-- Five minutes, in pairs, then a show of hands on the first item. The trailhead map is what
-usually splits the room: half call it "about right" because it has a study area, a real dataset and
-a map at the end, and the other half see that nothing is being decided. That argument is the whole
-scope lesson, so let it run a minute before settling it. The all-vector siting plan is the runner-up
-- teams forget the raster half of the requirement until the model is half built. If the room has no
-signal, put the URL on the board and read the items aloud; each one works as a show of hands. -->

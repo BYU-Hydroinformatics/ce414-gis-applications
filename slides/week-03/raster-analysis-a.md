@@ -440,41 +440,32 @@ Utah County, July 2025, cells at or above the threshold:
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:34% w:94%](images/ra-lab2-example-map.png)
+# Final Thoughts
 
-- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Steps 0 to 3 are within reach tonight; the model is the six tools on the slide you just saw
-- **Thursday, Part B**: bring the Lab 2 project with the two bands and your NDVI raster loaded. Most of the hour is ArcGIS Pro open on your own desk
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Label or Measurement?** Five real datasets, one question each: **is that cell value a label, or a measurement?** **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- It is the same call Lab 2 Step 6 makes when the threshold table turns NDVI into a map
+
+**Before next class**
+
+- **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Steps 0 to 3 are within reach tonight
+- **Thursday, Part B**: bring the Lab 2 project with the two bands and your NDVI raster loaded
 - **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
 - **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter, which Part B opens with; NDVI itself is not in it, which is why today carried it. Say plainly that Thursday needs a working project, because the first exercise starts a few minutes in. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Label or Measurement?
-
-<div class="columns">
-<div>
-
-Five real datasets, one question each: **is that cell value a label, or a measurement?**
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- It is the same call Lab 2 Step 6 makes when the threshold table turns NDVI into a map
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-types/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-raster-types-qr.png)
+![w:300 center](images/quiz-raster-types-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-types/</span>
 
 </div>
 </div>
@@ -494,3 +485,5 @@ raster-hands-on.md became Part B for Thursday, plus new material on the threshol
   match the lab page's check values.
 - The Excel map-algebra activity stays on Tuesday per the instructor (Sept 9).
 -->
+
+<!-- Point them at the lab and connect it back: NDVI is the same cell-by-cell arithmetic, run on two bands of the same image rather than two separate grids, so extent and cell size are guaranteed to match. The reading is the local, focal, zonal, global chapter, which Part B opens with; NDVI itself is not in it, which is why today carried it. Say plainly that Thursday needs a working project, because the first exercise starts a few minutes in. -->

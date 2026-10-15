@@ -63,9 +63,10 @@ Specifically:
   `slides/theme/images/` is the one shared image folder, copied to the site by the same
   `slides/*/images` step as the per-week folders) and a **Today's Goals**
   slide: "By the end of class you should be able to:" plus 3 to 5 outcomes.
-- End with a **Before Next Class** slide: the textbook reading, the open-book quiz on Learning
-  Suite, the current lab (link to the assignments page), and office hours
-  (`https://calendly.com/dan-ames/office-hours`). Where a concept deck leads into a Thursday
+- End with one **Final Thoughts** slide: the closing QR quiz plus the before-next-class items
+  (the textbook reading, the open-book quiz on Learning Suite, the current lab linked to its
+  assignments page, and office hours, `https://calendly.com/dan-ames/office-hours`). The layout is
+  in `tools/lecture-quiz-guide.md`, "The closing slide". Where a concept deck leads into a Thursday
   session, add a short preview slide naming the lab and what the deck gives them for it.
 - Keep every speaker note from the source as an HTML comment at the bottom of its slide
   (`<!-- ... -->`). Marp shows these in presenter view. Add a note where a slide would otherwise

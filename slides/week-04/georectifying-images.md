@@ -558,38 +558,31 @@ A spline drives the total RMS to zero by construction, and can distort the map b
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Line It Up.** Five questions on **putting a scanned map in its place** — control points, and what RMS error is not. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The last three come back in Lab 3 Step 8
+
+**Before next class**
 
 - Lab 3, [Georectifying and Digitizing Historic Maps](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/), is due **Saturday 11:59 pm**
 - Read **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
 - Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Lab 3 is the hands-on version of everything in this lecture. The handout is being revised, so this slide names it and links it and nothing more; point students at the page, not at specific steps. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Line It Up
-
-<div class="columns">
-<div>
-
-Five questions on **putting a scanned map in its place** — control points, and what RMS error is not.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The last three are the ones Lab 3 Step 8 hands straight back to you
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/georectifying/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-georectifying-qr.png)
+![w:300 center](images/quiz-georectifying-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/georectifying/</span>
 
 </div>
 </div>
@@ -622,3 +615,5 @@ mean" slide swapped the watermarked bird's-eye view and the orthophoto for the L
 three-word icons) came from the OpenAI image skill; the control-point panels are Pillow overlays
 on one generated line-art map; the hydrograph figure is built by tools/week04_hydrograph_svg.py.
 The Before Next Class slide names Lab 3 and links it only, because the handout is being revised. -->
+
+<!-- Lab 3 is the hands-on version of everything in this lecture. The handout is being revised, so this slide names it and links it and nothing more; point students at the page, not at specific steps. -->

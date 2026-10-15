@@ -166,39 +166,34 @@ Nine 10 m cells of existing ground (m):
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/vo-end-area.svg)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Cut or Fill?** Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the sign question; it is a common mistake in the report
+
+**Before next class**
 
 - **Reading** — Chapter 9 of *GIS Fundamentals*; **Quiz 8** due **Saturday 11:59 pm**
 - **Lab 9 — Big Southern Butte** — due **Saturday 11:59 pm** — [Lab 9](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 10 due items from tools/build_schedule.py: Quiz 8 (Volumes and Spatial Analysis, Chapter 9) and Lab 9. Deck written October 9, 2026; figures from tools/week10_volume_figures.py, numbers in tools/week10_volume_numbers.json. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Cut or Fill?
-
-<div class="columns">
-<div>
-
-Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The sign question is the one that trips up a report
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/earthwork/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-earthwork-qr.png)
+![w:300 center](images/quiz-earthwork-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/earthwork/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Week 10 due items from tools/build_schedule.py: Quiz 8 (Volumes and Spatial Analysis, Chapter 9) and Lab 9. Deck written October 9, 2026; figures from tools/week10_volume_figures.py, numbers in tools/week10_volume_numbers.json. -->

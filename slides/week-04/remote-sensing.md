@@ -892,36 +892,31 @@ Next week the sensor points at the ground and measures **distance** instead of b
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Light and Bands.** Five questions on bands, near-infrared, false color, and satellites. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Good warm-up for Quiz 4 on Learning Suite, and for the *GIS Fundamentals* reading
+
+**Before next class**
 
 - Finish **Lab 3 — Georectifying and Digitizing Historic Maps**, due **Saturday 11:59 pm**: [assignments/lab-03](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-03/)
 - Read **Chapter 6** of *GIS Fundamentals* (Remote Sensing)
 - Take **Quiz 4** (open book) on Learning Suite — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Lab 3 is due this Saturday. Next week is elevation: LiDAR on Tuesday, terrain analysis on Thursday, and Lab 4 needs a DEM, so Tuesday is the hour that tells them where to get one. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Light and Bands
-
-<div class="columns">
-<div>
-
-Five questions on bands, near-infrared, false color, and satellites. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- Good warm-up for Quiz 4 on Learning Suite, and for the *GIS Fundamentals* reading
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/remote-sensing/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-remote-sensing-qr.png)
+![w:300 center](images/quiz-remote-sensing-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/remote-sensing/</span>
 
 </div>
 </div>
@@ -962,3 +957,5 @@ and second Japan slides are dropped, and Katrina's three images are one slide in
 section (section 6). New figures: tools/week04_remote_sensing_figures.py. ArcGIS Pro captures still
 to make: tools/week04-arcgis-capture-plan.md.
 -->
+
+<!-- Lab 3 is due this Saturday. Next week is elevation: LiDAR on Tuesday, terrain analysis on Thursday, and Lab 4 needs a DEM, so Tuesday is the hour that tells them where to get one. -->

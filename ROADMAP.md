@@ -300,7 +300,7 @@ reference pages. The short list:
 ## Definition of done, per lecture deck
 
 - [ ] Converted per `tools/slide-conversion-guide.md`, which is the authority on structure and tone
-- [ ] Title slide, a **Today's Goals** slide, and a **Before Next Class** slide
+- [ ] Title slide, a **Today's Goals** slide, and a closing **Final Thoughts** slide (quiz + before next class)
 - [ ] Every speaker note from the source carried across as an HTML comment
 - [ ] All ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording updated to ArcGIS Pro equivalents
 - [ ] Any remaining ArcMap-era screenshot explicitly flagged, not silently kept

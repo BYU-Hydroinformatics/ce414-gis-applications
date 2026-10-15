@@ -658,41 +658,32 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:90%](images/mba-pumpkin-pie.jpg)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Models and ModelBuilder.** Five questions on **reading a canvas** — and the projection and dissolve calls inside Cities Near Rivers. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Two questions cover Buffer and projection decisions in Lab 1
+
+**Before next class**
 
 - **Think about what is involved in baking a cookie** — we will do an in-class activity on this!
 - Start [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/), due **Saturday 11:59 pm**: Steps 0 to 4 are within reach tonight
 - Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
 - Take **Quiz 2** on Learning Suite — two sections, *from the reading* and *from class*; open book, open web — due **Saturday 11:59 pm**
-- Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Models and ModelBuilder
-
-<div class="columns">
-<div>
-
-Five questions on **reading a canvas** — and the projection and dissolve calls inside Cities Near Rivers.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- Two of them are the Buffer and projection decisions that Lab 1 charges you for
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/modelbuilder-basics/</span>
+- Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
 <div>
 
-![w:400 center](images/quiz-modelbuilder-basics-qr.png)
+![w:300 center](images/quiz-modelbuilder-basics-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/modelbuilder-basics/</span>
 
 </div>
 </div>
@@ -717,3 +708,5 @@ Revision notes (2026-09-07): Part A revised against slides/week-02/LECTURE_PLAN.
 - The five-kinds-of-model slide is an HTML tile strip (no AI image; two generated attempts garbled).
 - Still open: the reading chapter and quiz date on the last slide.
 -->
+
+<!-- The cookie question is the prep for Thursday's in-class exercise; no sketch is required, but anyone who brings one gets a head start. -->

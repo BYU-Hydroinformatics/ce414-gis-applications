@@ -393,7 +393,19 @@ Siting **cell towers**, **search and rescue**, **scenic protection**, **security
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Slope, Aspect, Viewshed.** Six questions on **what you get out of a DEM** — contours, hillshade, aspect, slope, and what a viewshed can and cannot tell you. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
+
+**Before next class**
 
 - **Reading:** Chapter 11 of *GIS Fundamentals* (Terrain Analysis)
 - **Quiz 5**, open book, on Learning Suite — due **Saturday 11:59 pm**
@@ -401,31 +413,12 @@ Siting **cell towers**, **search and rescue**, **scenic protection**, **security
 - **Lab 5 — Watershed Delineation** is next — see the [Lab 5 page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- TODO(graphic): no graphic on this slide; a small course-schedule or lab-thumbnail figure would carry it. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Slope, Aspect, Viewshed
-
-<div class="columns">
-<div>
-
-Six questions on **what you get out of a DEM** — contours, hillshade, aspect, slope, and what a viewshed can and cannot tell you.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/terrain-analysis/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-terrain-analysis-qr.png)
+![w:300 center](images/quiz-terrain-analysis-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/terrain-analysis/</span>
 
 </div>
 </div>
@@ -454,3 +447,5 @@ from None to Thu.
      road proximity and tower density rather than Viewshed; corrected the self-check framing so the
      viewshed question is not presented as a Lab 4 deliverable; added a scale/cell-size slide; and
      made the distinction between moving-window terrain surfaces and line-of-sight viewsheds explicit. -->
+
+<!-- TODO(graphic): no graphic on this slide; a small course-schedule or lab-thumbnail figure would carry it. -->

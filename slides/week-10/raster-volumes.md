@@ -149,40 +149,35 @@ By the end of class you should be able to:
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/vo-butte-profile.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: The Base Is the Answer.** Five questions on raster volumes, units, Surface Volume and choosing a base. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the units question; units are a common mistake in Lab 9
+
+**Before next class**
 
 - **Lab 9 — Big Southern Butte** — due **Saturday 11:59 pm**
 - **Quiz 8** (Volumes and Spatial Analysis, Chapter 9) — due **Saturday 11:59 pm**
 - Next week: **coordinate systems and GPS** refreshers, and **Lab 10 — Avalanche Hazard**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 9, 2026. Figures: tools/week10_volume_figures.py; the model diagram and example map are copied from the Lab 9 page. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — The Base Is the Answer
-
-<div class="columns">
-<div>
-
-Five questions on raster volumes, units, Surface Volume and choosing a base. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The units question is the one Lab 9 punishes
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/volumes/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-volumes-qr.png)
+![w:300 center](images/quiz-volumes-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/volumes/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 9, 2026. Figures: tools/week10_volume_figures.py; the model diagram and example map are copied from the Lab 9 page. -->

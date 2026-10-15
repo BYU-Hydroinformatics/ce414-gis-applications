@@ -660,40 +660,31 @@ The example map is not a template: yours will differ, because your stores and yo
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:32% w:88%](images/mbb-lab1-example-map-scenario.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Canvas to Tool.** Five questions on **turning a canvas into a tool** someone else can run. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
+
+**Before next class**
 
 - Finish [Lab 1](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-01/) by **Saturday 11:59 pm** — get your peer review done before the deadline, not the night of it
 - Read **Chapter 13** of *GIS Fundamentals* (Cartographic Models and Modeling)
 - Take **Quiz 2** on **Learning Suite** — two sections, *from the reading* and *from class*; open book, open web — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Canvas to Tool
-
-<div class="columns">
-<div>
-
-Five questions on **turning a canvas into a tool** someone else can run.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded: a quick check that today's material made sense
-- Every answer explains itself; read the explanation before you move on
-- The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/model-parameters/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-model-parameters-qr.png)
+![w:300 center](images/quiz-model-parameters-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/model-parameters/</span>
 
 </div>
 </div>
@@ -748,3 +739,5 @@ Revision notes (2026-09-07): Part B revised against slides/week-02/LECTURE_PLAN.
   because it invented scores; the rubric is HTML with the real point values.
 - Still open: reading chapter, quiz date, Lab 1 due date, and the anonymized prior-year page.
 -->
+
+<!-- Remind them that the lab deliverable includes the model description and the self-assessed rubric, not just the maps. -->
