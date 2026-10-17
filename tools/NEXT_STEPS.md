@@ -42,7 +42,7 @@ on `main` is pushed and live (the eight commits waiting on October 11 went out w
   `grading-oracles/` (the per-student lookups for Labs 7, 11 and 12), `sensitivity/` (the labs'
   sensitivity runs), and `plans/` (including `lab-sensitivity-2026.md`).
   Nothing from it goes into this repository, including HTML comments. Finished exams and keys are
-  also uploaded to the Google Drive folder *Private - exams, keys and grading*.
+  also uploaded to the course folder's *2026 Fall (current)/Exams and Keys (private)* (synced to Google Drive).
 - ArcGIS Pro GUI projects: `C:\Ames\LabNNGUI\LabNN.aprx` with the **current** lab numbers (Labs 8,
   9 and 10 were renumbered copies made October 10 by `tools/screenshots/renumber_gui_projects.py`;
   originals are in `C:\Ames\_old`). `C:\Ames\Week06\Week06_Figures.aprx` holds the Emigration
@@ -106,8 +106,8 @@ Students also expect a study guide like Midterm 1's (`docs/study-guides/midterm-
 > week, the formats, what to bring, the Testing Center window (December 1 to 3, Tuesday 8 am
 > start), and nothing that gives away an item; register it in `tools/build_schedule.py` the way
 > the Midterm 1 guide is (the Week 14 page links it), re-run the script, `mkdocs build --strict`,
-> commit. (5) Export the finished exam and key to PDF, upload both to the Google Drive folder
-> *Private - exams, keys and grading*, and commit the markdown in the private repository. Report the
+> commit. (5) Export the finished exam and key to PDF, upload both to the course folder's
+> *2026 Fall (current)/Exams and Keys (private)*, and commit the markdown in the private repository. Report the
 > coverage matrix and the "could not confirm" list. Do not push either repository.
 
 ---
