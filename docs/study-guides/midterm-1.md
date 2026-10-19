@@ -12,9 +12,9 @@ device. **Bring a calculator**: any calculator is allowed, as long as it is not 
 four options and exactly one best answer. The questions are grouped by week, Week 1 through Week 7.
 Some are built on ArcGIS Pro screenshots from the labs and lectures; some ask you to compare four
 figures (grids, maps or triangulations) and pick the right one; and some are short hand
-calculations of the kind worked in class. You write your answers on an **answer sheet**, the last
-page of the exam booklet, and only the answer sheet is scored. Circle answers and do scratch work in
-the booklet as you go, but leave time at the end to copy every letter onto the sheet.
+calculations of the kind worked in class. You mark your answers on the **Testing Center's answer
+sheet**, and only the answer sheet is scored. Circle answers and do scratch work in the booklet as
+you go, but leave time at the end to copy every letter onto the sheet.
 
 ## How to study for this exam
 
