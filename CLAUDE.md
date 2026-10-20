@@ -128,5 +128,5 @@ Exam drafts and keys, quiz answer keys and generators, per-student grading looku
 quote in-class-only numbers live in the **private** sibling checkout `../ce414-private`, not here.
 Everything in this repository, including HTML comments and git history, is public on GitHub; the
 site build strips comments, the repository does not. If a page needs a number that lives there,
-the number is not public: rewrite the page so it does not need it. Student grades and submissions go
-in neither repository.
+the number is not public: rewrite the page so it does not need it. Student data (rosters, BYU IDs,
+grades, feedback) may be kept in the private repository, never here.
