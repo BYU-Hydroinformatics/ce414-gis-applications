@@ -9,6 +9,16 @@ student verifies**. Working data are in `C:\Ames\HAND\`.
 
 ## 0. Status after the instructor's decisions (October 9, 2026) — read this first
 
+> **Cut to Lab 6 scale, October 19, 2026.** After the Lab 5 and Lab 6 grading reviews the instructor
+> cut the lab to two models run once each, three tools for the personal flood, two maps and a
+> two-page report, with Lab 6's rubric (Write-up / Models / Runs / Map 1 / Map 2). Gone from the
+> page: the threshold sensitivity (section 12's three reruns), the Pairwise Clip/Intersect skill
+> scores (now stated as data: hit 0.548, FAR 0.425, CSI 0.390), Join Field, the 25-year
+> verification row, the peaks file and LP3 question, and the 0.47 m channel-offset deliverable.
+> Added: History capture, Export Layout PDF rule, "what the grader verifies", toolbox upload,
+> placeholder example maps. The removed check values are kept in the page's migration notes.
+> Sections below that describe the fuller lab are the record of what was built, not what is assigned.
+
 Sections 1–15 below are the feasibility record of October 8–9. The instructor then decided (section
 14's eight questions): Provo River 10163000; **FEMA's published FIS flows** (10/25/50/100/500-yr:
 1,475 / 1,810 / 2,065 / 2,325 / 2,935 ft³/s; the 500-yr is FEMA's 0.2 % column, read from the

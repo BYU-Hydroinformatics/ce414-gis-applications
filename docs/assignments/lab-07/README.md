@@ -11,25 +11,36 @@ labs: Lab 5 (where water goes), Lab 6 (how much a lake holds), Lab 7 (how far a 
 Plan, decisions and measurements: tools/lab07/PLAN.md. The instructor's decisions of October 9,
 2026: Provo River at Provo (USGS 10163000); FEMA's published FIS flows as the design flows; h =
 gage height - 3.20 ft, uncorrected; 5 m lidar package; personal flow Q = 900 + 12 x the last two
-digits of the BYU ID number; stream threshold as the sensitivity variable; buildings only; Iterate
-Field Values over the hosted stage table. Every check value was measured from the hosted zip alone
-in ArcGIS Pro 3.7.1 arcpy (tools/lab07/verify_package.py -> package_checks.json; personal.py ->
-personal_lookup.csv, kept in the private ce414-private repo, grading-oracles/). GUI BUILD October 9, 2026, ArcGIS Pro 3.7.1 at 175 % (C:\Ames\Lab07HAND,
-set up by tools/lab07/gui_project.py): both models built by hand from this page, run inside
-ModelBuilder, every check value of Steps 2-6 reproduced exactly; the dialog figures and Figure C are
-from that session. -->
+digits of the BYU ID number; buildings only; Iterate Field Values over the hosted stage table.
+Every check value was measured from the hosted zip alone in ArcGIS Pro 3.7.1 arcpy
+(tools/lab07/verify_package.py -> package_checks.json; personal.py -> personal_lookup.csv, kept in
+the private ce414-private repo, grading-oracles/). GUI BUILD October 9, 2026, ArcGIS Pro 3.7.1 at
+175 % (C:\Ames\Lab07HAND, set up by tools/lab07/gui_project.py): both models built by hand from this
+page, run inside ModelBuilder, every check value of Steps 2-6 reproduced exactly; the dialog figures
+and Figure C are from that session.
+CUT TO LAB 6 SCALE, October 19, 2026 (instructor's decision after the Lab 5 and Lab 6 grading
+reviews): the threshold sensitivity (three HAND Builder reruns, three Flood Loop reruns, CSI
+reruns, sensitivity table and questions), the Pairwise Clip/Intersect skill-score computation, Join
+Field, the 25-year verification row, the peaks file and the two-100-year-floods question, and the
+0.47 m channel-offset deliverable were all removed. Step 1 is now the student's own flow. The lab is
+two models run once each, three tool runs for the personal flood, two maps and a two-page report;
+the rubric is Lab 6's (Write-up / Models / Runs / Map 1 / Map 2). The removed material and its
+check values are kept in the migration notes at the bottom for a future offering. -->
 
 > [!TIP]
 > **Start from the report template.** [`lab07-report-template.docx`](lab07-report-template.docx)
 > has the title block, a section for every deliverable, the tables already set up with the columns
-> the rubric asks for, and the rubric at the end ready to fill in. You are welcome to write your
-> report any way you like — the template is a floor, not a ceiling — but if you use it and fill in
-> every section, you will not have left a graded item out.
+> the rubric asks for, and the rubric at the end ready to fill in. Open it in Word or upload it to
+> Google Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome
+> to write your report any way you like — the template is a floor, not a ceiling — but if you use
+> it and fill in every section, you will not have left a graded item out.
 
 > [!NOTE]
-> **This is a one-week lab.** It is introduced on Tuesday of Week 8 and due on Saturday of the same
-> week, the week of Midterm 1. Everything that takes preparation is done for you and hosted; the
-> lab is two short models, a few tool runs and two maps.
+> **This is a one-week lab**, introduced on Tuesday of Week 8 and due on Saturday of the same week,
+> the week of Midterm 1. Everything that takes preparation is done for you and hosted. What you do:
+> build two short models and run each once (the first computes HAND, the second floods it five
+> times), run three tools for a flood of your own, make two maps, and write two pages. Plan on two
+> sittings: the models in one, the maps and the report in the other.
 
 ## Background
 
@@ -62,13 +73,12 @@ flood flow, turned into a water level by the stream gage's rating curve.
 **Figure B.** One flood, two models, measured on this lab's data. Top: a bathtub at the 100-year
 stage elevation reaches only the river below the gage; HAND's water surface follows the river all
 the way up. Bottom: across the river, HAND and FEMA's hydraulic model agree closely here — but not
-everywhere, and Step 6 asks you to find where they disagree.
+everywhere, and Step 6 asks you to find a place where they disagree.
 
 > [!IMPORTANT]
 > **Your job — see the deliverables below.** Build a model that computes HAND for the Provo River,
 > and a second model that floods it at FEMA's 10- to 500-year flows; count the buildings each flood
-> reaches; compare your 100-year flood with FEMA's; map your own design flood; and test how much the
-> answer depends on the stream threshold.
+> reaches; compare your 100-year flood with FEMA's; and flood the river at a flow of your own.
 
 ## Problem Statement
 
@@ -80,8 +90,9 @@ lidar elevation model, the gage's rating curve and those flows:
 2. Turn FEMA's 10-, 25-, 50-, 100- and 500-year flows into flood depths at the gage, and map the
    land each flood would cover.
 3. Count the buildings each flood reaches.
-4. Compare your 100-year flood with FEMA's 1%-annual-chance floodplain, and say where and why they
-   differ.
+4. Compare your 100-year flood with FEMA's 1%-annual-chance floodplain, and find one place where
+   they differ and say why.
+5. Do the same for a flow of your own, from the rating table to the buildings it reaches.
 
 ## Analysis Considerations
 
@@ -95,23 +106,24 @@ Every one of these is a decision somebody made, and every one of them can change
   diversion" — dams and reservoirs upstream hold back the snowmelt.
 - **From flow to water level.** A stream gage measures the **gage height**, the water level above
   a fixed point, and the USGS keeps a **rating** — a table of measured flow against gage height — to
-  turn one into the other. You look the flood flows up in that table (Step 1). The table stops at
-  **8.00 ft and 2,150 ft³/s**; the 100- and 500-year flows are above it, so their gage heights come
-  from extending the table's top segment along the same curve (the rating is a power law in the
-  height above 3.20 ft, so the extension is straight on a log-log plot of flow against gage height
-  minus 3.20 ft). That is a guess, and it is flagged in the stage table.
+  turn one into the other. We looked FEMA's flows up in that table for you; you look your own flow
+  up in Step 1. The table stops at **8.00 ft and 2,150 ft³/s**; the 100- and 500-year flows are
+  above it, so their gage heights come from extending the table's top segment along the same curve
+  (the rating is a power law in the height above 3.20 ft, so the extension is straight on a log-log
+  plot of flow against gage height minus 3.20 ft). That is a guess, and it is flagged in the stage
+  table.
 - **From water level to a HAND threshold.** HAND measures height above the stream, so the flood
   needs a *depth*. This lab uses the depth of water above the rating's **zero-flow level, 3.20 ft**:
   *h* = (gage height − 3.20 ft) × 0.3048, in meters. One depth is applied to the whole river, as if
   the 100-year flood were 1.53 m deep everywhere.
 - **The elevation model.** **Hydro-flattened** lidar: the river is a flat water surface at whatever
   level it had the day the lidar was flown, not the channel bed. HAND is measured from that surface,
-  while *h* is measured from the zero-flow level. They are not the same level; Step 6 asks what that
-  does to your floods.
+  while *h* is measured from the zero-flow level. They are not the same level, which is one reason
+  HAND and FEMA will not agree everywhere (Step 6); this week's lectures take it up.
 - **What counts as "the river."** A stream is a cell with more than a threshold number of cells
   draining through it, as in Lab 5: **2,000 cells** of 5 m, 0.05 km². Inside a city, that also makes
   streams of gutters and ditches, so the model keeps only stream cells within **30 m** of the
-  mapped Provo River. The threshold is the parameter Step 7 varies.
+  mapped Provo River. The threshold is a model parameter, as in Lab 5; here it stays at 2,000.
 - **What HAND cannot see.** Levees, bridges, culverts, the speed of the water, the channel's
   capacity. HAND knows only the ground and which way it slopes.
 - **Cell size and coordinate system.** **5 m** cells, in **NAD 1983 UTM Zone 12N**, meters, so that
@@ -138,12 +150,14 @@ Every one of these is a decision somebody made, and every one of them can change
 | `ProvoData.gdb\Gage` | USGS stream gage 10163000, Provo River at Provo |
 | `ProvoData.gdb\Stage_Table` | FEMA's five flood flows, each turned into a gage height and a HAND threshold (`H_M`, meters; `H_CM`, whole centimeters) |
 | `ProvoData.gdb\Buildings` | Building footprints within 1 km of the river (UGRC, from Microsoft's computer-vision footprints) |
-| `ProvoData.gdb\FEMA_Floodplain_1pct` | FEMA's riverine 1%-annual-chance flood zones (A, AE, AE floodway, AH) in the comparison area |
-| `ProvoData.gdb\Comparison_Area` | Where you compare with FEMA: within 500 m of the river, minus FEMA's Utah Lake shoreline zones |
-| `ProvoData.gdb\FEMA_Cross_Sections` | FEMA's 43 Provo River cross-sections: 1% water surface (`WSEL_REG`) and streambed (`STRMBED_EL`), feet NAVD 88 |
+| `ProvoData.gdb\FEMA_Floodplain_1pct` | FEMA's riverine 1%-annual-chance flood zones (A, AE, AE floodway, AH) within 500 m of the river |
 | `rating_10163000.csv` | The gage's rating: gage height (ft) and discharge (ft³/s), 3.42 to 8.00 ft |
-| `peaks_10163000.csv` | The gage's annual peak flows, 1903 and 1934–2024 |
 | Monitoring location 10163000 | The gage's live page at the USGS — [waterdata.usgs.gov](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" } |
+
+The zip also holds three things the steps do not use, for the curious: `Comparison_Area` (where
+FEMA's map and HAND's can fairly be compared), `FEMA_Cross_Sections` (FEMA's 43 surveyed sections,
+with the 1% water surface and the streambed in feet NAVD 88) and `peaks_10163000.csv` (the gage's
+annual peak flows since 1903).
 
 **What we already did for you.** Each of these would cost an evening and teach little that you have
 not done before:
@@ -152,15 +166,15 @@ not done before:
    the mouth of Provo Canyon to Utah Lake, and resampled it to 5 m (bilinear). Nothing else: no
    filling, no smoothing.
 2. Selected the Provo River from UGRC's NHD streams, the buildings within 1 km of it, and FEMA's
-   riverine flood zones and cross-sections from FEMA's National Flood Hazard Layer.
+   riverine flood zones from FEMA's National Flood Hazard Layer.
 3. Built the stage table. For each FEMA flow: the first row of the rating whose discharge is at
-   least the flow gives the gage height; the gage height minus 3.20 ft, in meters, is `H_M`.
-   You check one row yourself in Step 1.
+   least the flow gives the gage height; the gage height minus 3.20 ft, in meters, is `H_M`. You do
+   the same lookup for your own flow in Step 1.
 
 > [!TIP]
 > **Check the data:** `Provo_DEM.tif` is **1,718 columns × 2,124 rows** of 5 m cells, **1,366.78 to
-> 1,645.53** m, NAD 1983 UTM Zone 12N. `Buildings` has **11,122** footprints, `FEMA_Cross_Sections`
-> **43** lines, `Stage_Table` **5** rows. `Provo_River` is one feature in two parts, **17.57 km** long.
+> 1,645.53** m, NAD 1983 UTM Zone 12N. `Buildings` has **11,122** footprints and `Stage_Table`
+> **5** rows. `Provo_River` is one feature in two parts, **17.57 km** long.
 
 | `RETURN_YR` | `Q_CFS` | `GAGE_HT_FT` | `H_M` | `H_CM` | `RATING` |
 | --- | --- | --- | --- | --- | --- |
@@ -186,13 +200,12 @@ New in this lab:
 | --- | --- |
 | ![Flow Distance icon: a cell high on a slope, its dashed flow path down to a blue stream cell, and the vertical drop h marked](images/icon-flow-distance.svg){ .tool-icon }<br>**Flow Distance** (Spatial Analyst) | For every cell, the distance along its flow path to the stream it drains to. With **Vertical**, the height above that stream: HAND. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/flow-distance.htm){ target="_blank" } |
 | ![Iterate Field Values icon: a table column of H_CM values, one of them, 153, handed to a loop](images/icon-iterate-field-values.svg){ .tool-icon }<br>**Iterate Field Values** (ModelBuilder ▸ Iterators) | The loop, like Lab 6's For, but its values come from a field of a table: here, one HAND threshold per return period. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/iterate-field-value.htm){ target="_blank" } |
-| ![Join Field icon: the return period copied from the stage table onto a flood by their shared H_CM](images/icon-join-field.svg){ .tool-icon }<br>**Join Field** (Data Management) | Copies fields from one table onto another where a key field matches: the return period onto each flood. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/join-field.htm){ target="_blank" } |
 | ![Spatial Join icon: a polygon, the buildings touching it, and a count of 4 written to its row](images/icon-spatial-join.svg){ .tool-icon }<br>**Spatial Join** (Analysis) | Writes onto each feature what it touches: here, the number of buildings each flood reaches, in `Join_Count`. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/spatial-join.htm){ target="_blank" } |
 
 Tools you already know: **Fill**, **Flow Direction**, **Flow Accumulation** (Lab 5), **Raster
 Calculator** with a model variable (Lab 5), **Buffer** and **Extract by Mask** (Lab 4), and the
 loop pieces from Lab 6 — **Raster to Polygon**, **Calculate Field**, **Collect Values** and
-**Merge**. Step 6 also uses **Pairwise Clip** and **Pairwise Intersect**.
+**Merge**.
 
 ## Example Model
 
@@ -225,8 +238,8 @@ without the step-by-step instructions below, say so in your report.
    `Lab07.gdb` and `Lab07.atbx` beside it. The downloaded data stay in their own geodatabase,
    `lab07-provo-river-hand\ProvoData.gdb`.
 2. Add `Provo_DEM.tif` (click **OK** to build pyramids and statistics) and, from
-   `ProvoData.gdb`, `Provo_River`, `Gage`, `Buildings`, `FEMA_Floodplain_1pct`, `Comparison_Area` and
-   `Stage_Table`. Add an imagery basemap.
+   `ProvoData.gdb`, `Provo_River`, `Gage`, `Buildings`, `FEMA_Floodplain_1pct` and `Stage_Table`.
+   Add an imagery basemap.
 3. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
 4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
    **Properties**, set **Name** to `HANDBuilder` and **Label** to `HAND Builder`, and save.
@@ -246,40 +259,44 @@ four edges; if **Output Coordinate System** comes filled in from an earlier proj
 > box around the river corridor, Flow Distance (Step 4) follows it, and HAND covers **695,974** cells
 > instead of **697,608**: the edges of the valley drop out, with no error.
 
-### Step 1 — Read the Gage
+### Step 1 — Your Own Flow
 
-Before any GIS, check where the stage table came from. Open
+Before any GIS, do the hydrology once, by hand, for a flood that is yours alone. Open
 [the gage's page](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" } and
 `rating_10163000.csv` (Excel is fine).
 
 1. On the gage page, find the **datum**: the number to add to a gage height to get an elevation.
-   It should match `READ-ME-FIRST.txt`: **4,493.22 ft above NAVD 88**.
-2. **Verify the 25-year row by hand.** FEMA's 25-year flow is **1,810 ft³/s**. Find the first row of
-   `rating_10163000.csv` whose discharge is **at least** 1,810, read its gage height, and compute:
-    - the water-surface elevation: 4,493.22 + gage height, in feet, then × 0.3048 for meters;
-    - the HAND threshold: *h* = (gage height − 3.20) × 0.3048, in meters.
-3. Open `peaks_10163000.csv` and look at the `peak_code` column (the 1903 peak reads `6,Bd`: code
-   6, and its day is not known).
+   It should match `READ-ME-FIRST.txt`: **4,493.22 ft above NAVD 88**. That is one of the three
+   metadata values your report explains (Figure A).
+2. **Work out your design flow** from your **BYU ID number**: the **nine-digit number printed on
+   your BYU ID card**, such as `123456789`. It is **not your NetID**, the user name of letters and
+   numbers you chose and use to sign in to BYU sites.
+
+> **Your design flow Q = 900 + 12 × (the last two digits of your BYU ID) ft³/s**
+>
+> Then find the first row of `rating_10163000.csv` whose discharge is **at least** Q, read its gage
+> height, and compute *h* = (gage height − 3.20) × 0.3048 m, **to the millimeter**. That is how the
+> stage table above was built for FEMA's flows.
+>
+> - BYU ID `123456789`: last two digits **89**, Q = 900 + 12 × 89 = **1,968** ft³/s → **7.78** ft →
+>   *h* = 4.58 ft = **1.396** m.
+> - BYU ID `987654302`: last two digits **02**, Q = 900 + 24 = **924** ft³/s → **6.24** ft →
+>   *h* = 3.04 ft = **0.927** m.
+>
+> Every design flow is between 900 and 2,088 ft³/s, inside the rating table, so no extrapolation is
+> needed. Write your BYU ID's last two digits, Q, the gage height and *h* in your report: the grader
+> checks them against a run at your flow. If you would rather not use your ID digits, email the
+> instructor for a number of your own; a flood at someone else's number cannot be checked.
 
 ![The gage's rating curve: gage height in feet against discharge in cubic feet per second, a solid curve from 3.42 ft at almost no flow to 8.00 ft at 2,150 ft³/s, then a dashed extension. Five orange points mark FEMA's flows: 10-year 1,475 ft³/s at 7.11 ft, 25-year 1,810 at 7.58, 50-year 2,065 at 7.90, 100-year 2,325 at 8.21 and 500-year 2,935 at 8.89, the last two on the dashed extension. A green dashed line at 3.20 ft marks the rating's zero-flow offset, from which h is measured.](images/lab07-rating.svg)
 
 **Figure 1.** The rating turns a flow into a gage height. FEMA's 100- and 500-year flows are above
-the top of the published table.
+the top of the published table; every design flow is below it.
 
 > [!TIP]
-> **Check the result:** the row at 7.57 ft is 1,809.84 ft³/s — just short — so the answer is
-> **7.58 ft** (1,817.45 ft³/s). Elevation 4,500.80 ft = **1,371.844 m**; *h* = 4.38 ft =
-> **1.335 m**: the `Stage_Table` row for 25 years, `H_CM` **134**. Every one of the 90 peaks has code
-> **6**, "affected by regulation or diversion."
-
-> [!NOTE]
-> **Two 100-year floods.** We also fitted a Log-Pearson Type III distribution — the standard
-> flood-frequency curve — to the gage's own annual peaks, a teaching approximation of the
-> USGS method (Bulletin 17C), not a published estimate. The 100-year flow came out **3,111 ft³/s**
-> from the 32 peaks of 1993–2024, after Jordanelle Dam was finished upstream, and **2,827 ft³/s**
-> from all 89 peaks since 1934;<!-- VERIFY: Jordanelle Dam completion/first storage 1992-93 (Reclamation pages timed out on 2026-10-09). --> FEMA's is **2,325 ft³/s**. Your report says, in a few sentences, why two
-> careful estimates of "the 100-year flood" at the same gage can differ this much, and which you would
-> design to. (Look at the peak codes, the record lengths, and what upstream dams do to a flood.)
+> **Check the result:** for the example ID ending 89, the row at 7.77 ft is **1,964.76 ft³/s** —
+> just short of 1,968 — so the answer is the next row, **7.78 ft** (1,972.66 ft³/s), and
+> *h* = (7.78 − 3.20) × 0.3048 = **1.396 m**. Your own *h* goes into Step 7; for now, write it down.
 
 ### Step 2 — Condition the Surface
 
@@ -313,7 +330,7 @@ In the **HAND Builder** model, as in Lab 5:
 4. **Buffer**: input `Provo_River` (from `ProvoData.gdb`), distance **30 Meters**,
    **Dissolve Type** **Dissolve all output features into a single feature**, output `River_Corridor`.
 5. **Extract by Mask**: input raster `Stream_Cells`, mask `River_Corridor`, output `River_Cells`.
-   Make `River_Cells` a parameter, so that the tool-dialog runs of Step 7 keep it.
+   Make `River_Cells` a parameter, so that a run from the tool dialog keeps it.
 
 ![The Raster Calculator dialog in ModelBuilder: the Rasters list shows Filled_DEM, Provo_DEM.tif, Flow_Direction, Output drop raster and Flow_Accumulation; the expression reads Con("%Flow_Accumulation%" > %Threshold%, 1); the Output raster is Stream_Cells.](images/lab07-rc-streams.png)
 
@@ -385,8 +402,7 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
    in the **Rasters** list (it goes in as `"HAND"`), then type the rest:
    `Con("HAND" <= %Value% / 100, 1)`. Output `flood_%Value%`. ModelBuilder adds a `HAND` oval;
    right-click it ▸ **Parameter**. `%Value%` is replaced by each row's number before the expression
-   runs, so the first pass computes `Con("HAND" <= 119 / 100, 1)` and writes `flood_119`; when you
-   run the model as a tool on a different HAND (Step 7), the expression follows the parameter.
+   runs, so the first pass computes `Con("HAND" <= 119 / 100, 1)` and writes `flood_119`.
 
     ![The Raster Calculator dialog in the Flood Loop model: the Rasters list shows Value, Output raster, HAND and Provo_DEM.tif; the expression reads Con("HAND" <= %Value% / 100, 1); the Output raster is flood_%Value%.](images/lab07-flood-calc.png)
 
@@ -410,9 +426,12 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 
     **Figure 5d.** Merge, fed by Collect Values, so it runs once, after the last pass.
 
-7. Save, and run the model.
+7. **Save, then run the model from its tool dialog**: in the **Catalog** pane, open
+   `Lab07.atbx` and double-click **Flood Loop**. The dialog shows `HAND` and `Floods` as its
+   parameters; leave them and click **Run**. A run from the dialog lands in your **Geoprocessing
+   History** (**Analysis** tab ▸ **History**), which your report captures in Step 7.
 
-<!-- GUI build 2026-10-09 (Pro 3.7.1): (1) Iterate Field Values is under ModelBuilder tab > Insert group > Iterators; output named Value, Data Type String by default, Null Value auto-filled 0. (2) Double-clicking a map layer in Raster Calculator's Rasters list inserts "HAND" (layer name), not "%HAND%"; the run gave exactly the check cells (51,474 ... 68,538), so %Value% / 100 works with the String type. (3) Running Flood Loop from its tool dialog on HAND x 2 (C:\Ames\Lab07HAND\ParamTest.gdb) gave exactly the HAND x 2 cell counts, so "HAND" follows the parameter. (4) Calculate Field's derived output is auto-named floodpoly_String. (5) Collect Values is under Insert > Utilities and shows two outputs, Output Values and a gray Output Table. (6) A SQL where clause "Value * 100 <= 153" in Con fails in arcpy (ERROR 010416), which is why the page uses Raster Calculator. Run: 43 s inside ModelBuilder. -->
+<!-- GUI build 2026-10-09 (Pro 3.7.1): (1) Iterate Field Values is under ModelBuilder tab > Insert group > Iterators; output named Value, Data Type String by default, Null Value auto-filled 0. (2) Double-clicking a map layer in Raster Calculator's Rasters list inserts "HAND" (layer name), not "%HAND%"; the run gave exactly the check cells (51,474 ... 68,538), so %Value% / 100 works with the String type. (3) Running Flood Loop from its tool dialog on HAND x 2 (C:\Ames\Lab07HAND\ParamTest.gdb) gave exactly the HAND x 2 cell counts, so "HAND" follows the parameter and a dialog run works. (4) Calculate Field's derived output is auto-named floodpoly_String. (5) Collect Values is under Insert > Utilities and shows two outputs, Output Values and a gray Output Table. (6) A SQL where clause "Value * 100 <= 153" in Con fails in arcpy (ERROR 010416), which is why the page uses Raster Calculator. Run: 43 s inside ModelBuilder. A dialog run deletes the loop's non-parameter intermediates (the last flood_ and floodpoly_); Floods stays. -->
 
 > [!TIP]
 > **Check the result:** `Floods` has **5** rows.
@@ -427,7 +446,8 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 >
 > Area is the wet cells × 25 m², exactly, because the polygons are not simplified. If you have only
 > one row, Merge ran outside the loop; if you have many rows per value, **Create multipart
-> features** was unchecked.
+> features** was unchecked. Match each `H_CM` to its return period and flow in the stage table
+> above; the flood with `H_CM` 153 is the 100-year flood.
 
 > [!NOTE]
 > **Why centimeters?** A name such as `flood_1.53` is not allowed in a geodatabase, so the loop
@@ -436,154 +456,89 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 
 ### Step 6 — Count and Compare
 
-Run these from the Geoprocessing pane, not in a model.
+Run this from the Geoprocessing pane, not in a model.
 
-1. **Join Field**: **Input Table** `Floods`, **Input Field** `H_CM`, **Join Table**
-   `Stage_Table`, **Join Field** `H_CM`, **Transfer Method** **Select transfer fields**, **Transfer
-   Fields** `RETURN_YR` and `Q_CFS`.
-2. **Spatial Join**: **Target Features** `Floods`, **Join Features** `Buildings` (leave **Join
-   Count Field Name** at `Join_Count`), **Output Feature Class** `Floods_Buildings`, **Join
-   Operation** **Join one to one**, **Keep all target features** checked, **Match Option**
-   **Intersect**. `Join_Count` is the number of buildings each flood touches.
-3. **Compare the 100-year flood with FEMA.** Select the `H_CM` = 153 row of `Floods` and run
-   **Pairwise Clip** with `Comparison_Area` (output `HAND100_Compare`), then **Pairwise Intersect**
-   of `HAND100_Compare` and `FEMA_Floodplain_1pct` (output `Overlap100`). Sum `Shape_Area` in each
-   of the three (right-click the field ▸ **Statistics**). Then:
-    with *O* = area of `Overlap100`, *H* = area of `HAND100_Compare` (the clipped flood, not the
-    whole one) and *F* = area of `FEMA_Floodplain_1pct`:
-    - **hit rate** = *O* ÷ *F* — the share of FEMA's floodplain HAND also floods;
-    - **false-alarm ratio** = (*H* − *O*) ÷ *H* — the share of HAND's flood FEMA does not map;
-    - **critical success index**, CSI = *O* ÷ (*H* + *F* − *O*) — 1 is perfect agreement.
+**Spatial Join**: **Target Features** `Floods`, **Join Features** `Buildings` (leave **Join Count
+Field Name** at `Join_Count`), **Output Feature Class** `Floods_Buildings`, **Join Operation**
+**Join one to one**, **Keep all target features** checked, **Match Option** **Intersect**.
+`Join_Count` is the number of buildings each flood touches.
 
 ![The Spatial Join tool in the Geoprocessing pane: Target Features Floods; Join Features Buildings with Join Count Field Name Join_Count; Output Feature Class Floods_Buildings; Join Operation Join one to one; Keep all target features checked; Match Option Intersect; Search Radius empty, in Meters; Fields and Attribute Matching collapsed.](images/lab07-spatial-join.png)
 
-**Figure 6a.** Spatial Join: one row per flood, with the number of buildings it touches.
-
-![The attribute table of Floods_Buildings: five rows with Join_Count 319, 356, 388, 413 and 451; TARGET_FID 1 to 5; gridcode 1; H_CM 119, 134, 143, 153 and 173; RETURN_YR 10, 25, 50, 100 and 500; Q_CFS 1475, 1810, 2065, 2325 and 2935; NAME empty.](images/lab07-floods-buildings-table.png)
-
-**Figure 6b.** `Floods_Buildings`. The columns after `Q_CFS` (`NAME` and the rest) come from one of
-the buildings and mean nothing here.
+**Figure 6.** Spatial Join: one row per flood, with the number of buildings it touches. The columns
+after `Join_Count` and `H_CM` come from one of the buildings and mean nothing here.
 
 > [!TIP]
 > **Check the result:**
 >
-> | `RETURN_YR` | `Q_CFS` | Area (km²) | Buildings (`Join_Count`) |
-> | --- | --- | --- | --- |
-> | 10 | 1,475 | 1.2869 | 319 |
-> | 25 | 1,810 | 1.4105 | 356 |
-> | 50 | 2,065 | 1.4833 | 388 |
-> | 100 | 2,325 | 1.5673 | 413 |
-> | 500 | 2,935 | 1.7135 | 451 |
->
-> At the 100-year flood: FEMA **1.3429** km², HAND in the comparison area **1.2801** km², overlap
-> **0.7361** km² — hit rate **0.548**, false-alarm ratio **0.425**, CSI **0.390**.
+> | Return period | Flow (ft³/s) | `H_CM` | Area (km²) | Buildings (`Join_Count`) |
+> | --- | --- | --- | --- | --- |
+> | 10-year | 1,475 | 119 | 1.2869 | 319 |
+> | 25-year | 1,810 | 134 | 1.4105 | 356 |
+> | 50-year | 2,065 | 143 | 1.4833 | 388 |
+> | 100-year | 2,325 | 153 | 1.5673 | 413 |
+> | 500-year | 2,935 | 173 | 1.7135 | 451 |
 
-A CSI of 0.39 means the two maps agree on a bit more than a third of the land either one floods.
-That is typical of HAND against a detailed study, and the disagreement is not spread evenly. Put
-`FEMA_Floodplain_1pct` (symbolized by `FLD_ZONE`) over your 100-year flood and look along the whole
-river. Your report names **two places** where HAND is wrong, with coordinates and a cropped figure
-of each, and says why. Things to look for:
+**Now compare the 100-year flood with FEMA's.** Put `FEMA_Floodplain_1pct` (symbolized by
+`FLD_ZONE`, as an outline) over the `H_CM` = 153 row of `Floods`, and look along the whole river.
+We measured the agreement for you, inside the 500 m comparison area: FEMA maps **1.3429 km²**, HAND
+**1.2801 km²**, and they overlap on **0.7361 km²**. In the scores this week's lecture uses, that is
+a **hit rate of 0.548** (the share of FEMA's floodplain HAND also floods), a **false-alarm ratio of
+0.425** (the share of HAND's flood FEMA does not map) and a **critical success index, CSI, of
+0.390** (1 would be perfect agreement). Your report says in one or two sentences what those three
+numbers mean about the two maps.
+
+The disagreement is not spread evenly. Your report names **one place** where HAND and FEMA disagree,
+with its coordinates, a cropped figure, and the reason. Two kinds of place to look for:
 
 - A floodplain FEMA maps that **leaves the river** — HAND can only flood land that drains *to* the
   river.
 - HAND flooding **behind raised banks** where FEMA keeps the water in the channel — HAND does not
   know a bank is there if water would drain around it.
-- The **channel itself**: the lidar's river surface sits a median **0.47 m above FEMA's streambed**
-  at FEMA's 42 cross-sections with a water surface, while *h* is measured from the gage's
-  zero-flow level, near the bed. `FEMA_Cross_Sections` gives you the streambed and the 1% water
-  surface to check this at the section nearest your place.
 
 > [!NOTE]
 > Figure B (bottom) shows one place where they agree: at FEMA section C, just upstream of the gage,
 > HAND floods 95 m of the 123 m section and FEMA's water surface covers 105 m.
 
-### Step 7 — Test the Threshold
+### Step 7 — Your Own Flood
 
-**First, your own design flood.** Every student floods the river at a different flow, worked out
-from your **BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as
-`123456789`. It is **not your NetID**, the user name of letters and numbers you chose and use to sign
-in to BYU sites.
+Flood the river at the *h* you worked out in Step 1, with three tools from the Geoprocessing pane:
 
-> **Your design flow Q = 900 + 12 × (the last two digits of your BYU ID) ft³/s**
->
-> Then, exactly as in Step 1: the first row of `rating_10163000.csv` whose discharge is at least Q
-> gives the gage height, and *h* = (gage height − 3.20) × 0.3048 m, **to the millimeter**.
->
-> - BYU ID `123456789`: last two digits **89**, Q = 900 + 12 × 89 = **1,968** ft³/s → **7.78** ft →
->   *h* = 4.58 ft = **1.396** m.
-> - BYU ID `987654302`: last two digits **02**, Q = 900 + 24 = **924** ft³/s → **6.24** ft →
->   *h* = 3.04 ft = **0.927** m.
->
-> Every design flow is between 900 and 2,088 ft³/s, inside the rating table. Write your BYU ID's last
-> two digits, Q, the gage height and *h* in your report: the grader checks them.
-
-From the Geoprocessing pane: **Raster Calculator** `Con("HAND" <= 1.396, 1)` (your *h*), output
-`flood_mine`; **Raster to Polygon** as in Step 5; **Spatial Join** with `Buildings` as in Step 6.
+1. **Raster Calculator**: `Con("HAND" <= 1.396, 1)`, with your own *h* in place of 1.396, output
+   `flood_mine`.
+2. **Raster to Polygon**: input `flood_mine`, **Simplify polygons** unchecked, **Create multipart
+   features** checked, output `floodpoly_mine`.
+3. **Spatial Join**: target `floodpoly_mine`, join features `Buildings`, output `Mine_Buildings`,
+   with the settings of Step 6. Open its attribute table: one row, with `Shape_Area` and
+   `Join_Count`.
 
 > [!TIP]
 > **Check the result:** with the example *h* of 1.396 m, **58,193** wet cells, **1.4548** km² and
-> **376** buildings; with 0.927 m, **1.0799** km² and **258** buildings.
+> **376** buildings; with 0.927 m, **1.0799** km² and **258** buildings. Your own numbers are
+> between those of the FEMA floods on either side of your flow, or below the 10-year flood if your
+> flow is under 1,475 ft³/s (IDs ending in 00 to 47).
 
-**Then, the threshold.** Open **HAND Builder** from the **Catalog** pane (it opens as a tool) and
-run it **twice more**, with **Threshold** `400` and `8000`, and once at a threshold of your own
-choosing. Give each run's `HAND` and `River_Cells` a new name (`HAND_T400`, `River_Cells_T400`).
-Then run **Flood Loop** from the Catalog pane on each new HAND, with a new `Floods` name
-(`Floods_T400`), and Spatial Join each one with `Buildings`.
-
-> [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 8 saw it):
-> every intermediate — `Filled_DEM`, `Flow_Direction`, `Flow_Accumulation`, `Stream_Cells`,
-> `River_Corridor` — goes, and so do the loop's last `flood_` and `floodpoly_` (the earlier passes'
-> are left behind, overwritten by the new run). `HAND`, `River_Cells` and `Floods` are parameters,
-> so they stay, under the new names you typed.
-
-Record **all of it in one table**: your baseline (threshold 2,000), the three threshold runs and
-your design flood, with the threshold, the number of `River_Cells`, and the area and buildings of
-the 10- and 100-year floods (for the design-flood row, its own area and buildings).
-
-> [!TIP]
-> **Check the result:**
->
-> | Threshold (cells) | `River_Cells` | 10-yr km² | 10-yr buildings | 100-yr km² | 100-yr buildings |
-> | --- | --- | --- | --- | --- | --- |
-> | 400 | 3,513 | 1.5235 | 387 | 1.8591 | 497 |
-> | **2,000 (baseline)** | **3,191** | **1.2869** | **319** | **1.5673** | **413** |
-> | 8,000 | 2,912 | 0.7684 | 169 | 0.9739 | 257 |
-
-Then answer, in your report:
-
-1. **What did the threshold change, and why?** Compare `River_Cells` at 400 and 8,000 with the
-   baseline on the map: which cells join "the river" and which drop out, and what does that do to
-   the floods and the building counts?
-2. **Your flood against the threshold.** Where does your design flow fall against FEMA's return
-   periods — below the 10-year flow, or between two of them? Did changing your flow move the building count more or less than changing the
-   threshold did?
-3. **Which threshold would you defend?** At the 100-year flood, how does the CSI against FEMA
-   change from 400 to 8,000? Run Step 6's comparison on `Floods_T400` and `Floods_T8000`, with
-   new output names (`HAND100_Compare_T400`, `Overlap100_T400`, and so on) so that your baseline's
-   stay. Use those numbers, not the look of the map, to choose.
-
-> [!TIP]
-> For question 3, the 100-year CSI is **0.377** at 400, **0.390** at 2,000 and **0.325** at 8,000.
-> At 8,000 the upper river is no longer a stream at all — find where `River_Cells_T8000` begins.
+Then open **Analysis** tab ▸ **History**, expand the **Flood Loop** entry and the three tools you
+just ran so that their parameters and run times show, and **capture the pane** for your report. The
+History pane is how the grader knows the runs happened on your machine.<!-- TODO(capture): a History pane capture with the Flood Loop run and the three Step 7 tools expanded, from a real session. -->
 
 ## Deliverables
 
-Make **two** professional map layouts (letter size):
+Make **two** professional map layouts (letter size), each exported from ArcGIS Pro as its own PDF:
 
-1. **Your baseline floods** — the five floods (10- to 500-year), nested and symbolized so each
-   return period is readable, with a legend; the buildings the 100-year flood reaches highlighted;
-   FEMA's 1% floodplain as an outline; the river and the gage; an inset or close-up of one place
-   where HAND and FEMA disagree; an imagery basemap; a title, neat line, north arrow and scale bar;
-   and a text box with your name, the date, the map projection, and the sources and dates of the
-   elevation, the flows and the FEMA map.
-2. **Your design flood** — your own flow from Step 7 (or, if it tells a stronger story, one
-   threshold run), symbolized with a legend, with FEMA's 1% outline and the buildings it reaches
-   highlighted and counted; an imagery basemap; a title, neat line, north arrow and scale bar; and
-   a text box with your name, the date, the map projection, and the sources and dates. The title
-   and text box say what changed from Map 1 and why you chose it.
+1. **Map 1 — the five FEMA floods.** The 10- to 500-year floods nested and symbolized so each return
+   period is readable, with a legend and the return periods labeled on the map (or in a close-up
+   where they can be told apart); FEMA's 1% floodplain as an outline; the river and the gage; an
+   imagery basemap; a title, neat line, north arrow and scale bar; and a text box with your name,
+   the date, the map projection, and the sources and dates of the elevation, the flows and the FEMA
+   map.
+2. **Map 2 — your own flood.** The flood at your design flow, symbolized with a legend, the
+   buildings it reaches highlighted and their count on the map; the river and the gage; the main
+   frame zoomed to where the flood reaches buildings (an inset alone does not count); an imagery
+   basemap; a title stating your flow and *h*, a neat line, north arrow and scale bar; and a text
+   box with your name, the date, the map projection, and the sources and dates.
 
-Write a brief report (2–3 pages of text, plus your figures and maps) covering:
+Write a brief report (2 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your
   peer reviewer, with a sentence on what you changed because of them
@@ -592,27 +547,35 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   input, intermediate and output dataset with its type, and how the loop's value reaches the
   Raster Calculator expression
 - **one** full-page figure of the two models, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of each model's tool dialog; and **upload your project's
-  toolbox** (`Lab07.atbx`, in your project folder) with the report — the grader opens it to read your models
+  Graphic**), and **one** screen capture of each model's tool dialog with its parameters (the
+  threshold, `HAND` and `Floods`)
 - **the three metadata values** — the gage datum, the date of the rating, and the effective date
   of FEMA's flood study — and what each means for your result
-- **the 25-year row you verified in Step 1**, worked out step by step, and a few sentences on **why
-  two 100-year floods differ** (FEMA's 2,325 ft³/s against 3,111 and 2,827 from the peaks)
-- your **check values** from Steps 3 to 6: river cells, the HAND range, the five areas and building
-  counts, and the 100-year hit rate, false-alarm ratio and CSI
-- **where HAND is wrong**: two places, each with coordinates, a cropped figure and the reason —
-  and what the 0.47 m between the lidar's river surface and FEMA's streambed does to every flood
-- your **sensitivity table** from Step 7, with your BYU ID's last two digits, Q, gage height and
-  *h*, and your answers to its three questions
+- **the five floods**: a capture of the `Floods_Buildings` attribute table, and the five areas and
+  building counts in a table with their return periods and flows
+- **HAND against FEMA**: one or two sentences on what the hit rate, false-alarm ratio and CSI say
+  about the two maps, and **one place where they disagree**, with coordinates, a cropped figure and
+  the reason
+- **your own flood**: your BYU ID's last two digits, Q, the rating row you used, *h*, the flood's
+  area and the buildings it reaches, in one table
+- **evidence that the models ran on your machine**: the capture of the **Geoprocessing History**
+  pane from Step 7, with the Flood Loop run and the three tools expanded
 - figures numbered and referred to in the text, and every source credited
 - one line at the end saying what you used AI for, if anything (see the note under the rubric)
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
+**Upload four files**, not one: the report as a PDF, **each map as its own PDF exported from the
+ArcGIS Pro layout** (**Share** tab ▸ **Export Layout** ▸ PDF, with the default vector settings — not
+**Print**, which makes a picture of the page), and your project's toolbox, `Lab07.atbx`, from your
+project folder. The grader opens the map PDFs in a reader and checks that the title and legend text
+can be selected and the floods are drawn as shapes, not pixels, and opens the toolbox to read your
+models. Put the maps in the report too, so it reads on its own.
+
 > [!NOTE]
-> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
-> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
-> models' elements, the places you pick in Step 6 and the wording of your report are your own work.
+> **Make it yours.** Everyone works from the same data, so the five floods will match a classmate's;
+> the choices should not. Your map layouts, your color ramps and symbology, the labels you give your
+> models' elements, the place you pick in Step 6 and the wording of your report are your own work.
 > Submissions whose layouts, labels or symbology match another student's too closely are flagged
 > for follow-up.
 
@@ -640,12 +603,8 @@ Saleska, S. (2011). Height Above the Nearest Drainage — a hydrologically relev
 *Journal of Hydrology* 404, 13–29.
 [doi:10.1016/j.jhydrol.2011.03.051](https://doi.org/10.1016/j.jhydrol.2011.03.051){ target="_blank" }.
 
-England, J.F., Jr., and others (2019). *Guidelines for Determining Flood Flow Frequency — Bulletin
-17C.* U.S. Geological Survey Techniques and Methods, book 4, chapter B5.
-[doi:10.3133/tm4B5](https://doi.org/10.3133/tm4B5){ target="_blank" }.
-
-U.S. Geological Survey. Monitoring location 10163000, Provo River at Provo, UT: annual peaks and
-rating 30.0. [waterdata.usgs.gov](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" }.
+U.S. Geological Survey. Monitoring location 10163000, Provo River at Provo, UT: rating 30.0.
+[waterdata.usgs.gov](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" }.
 
 U.S. Geological Survey, Water Science School. *How Streamflow is Measured.*
 [usgs.gov](https://www.usgs.gov/special-topics/water-science-school/science/how-streamflow-measured){ target="_blank" }.
@@ -657,52 +616,72 @@ Utah Geospatial Resource Center. *NHD Streams* and *Building Footprints*.
 [gis.utah.gov — NHD streams](https://gis.utah.gov/products/sgid/water/nhd-streams/){ target="_blank" };
 [gis.utah.gov — building footprints](https://gis.utah.gov/products/sgid/location/building-footprints/){ target="_blank" }.
 
-Esri. *Flow Distance* and *Iterate Field Values*, ArcGIS Pro tool reference (linked in the tools
-table above).
+Esri. *Flow Distance*, *Iterate Field Values* and *Spatial Join*, ArcGIS Pro tool reference (linked
+in the tools table above).
 
-<!-- LINK CHECK (curl -L, 2026-10-09): 200 doi:10.1016/j.jhydrol.2011.03.051; 200 doi:10.3133/tm4B5; 200 waterdata.usgs.gov/monitoring-location/10163000/; 200 msc.fema.gov FIS 49049CV001B download; 200 hazards.fema.gov NFHL MapServer; 200 usgs.gov how-streamflow-measured; 200 elevation.nationalmap.gov 3DEP ImageServer (502 once on 2026-10-09 at 01:00, 200 later); 200 gis.utah.gov nhd-streams and building-footprints; 200 pro.arcgis.com flow-distance, iterate-field-value, join-field, spatial-join, pairwise-clip, pairwise-intersect, raster-to-polygon, collect-values, iterators-for-looping; ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab07-provo-river-hand.zip checked by mkdocs build --strict. Not used: doi:10.1111/1752-1688.12661 (Zheng et al. 2018) returns 403 to curl; fema.gov NFHL page returns 403 to curl. -->
+<!-- LINK CHECK (curl -L, 2026-10-09; re-checked 2026-10-19 for the links kept): 200 doi:10.1016/j.jhydrol.2011.03.051; 200 waterdata.usgs.gov/monitoring-location/10163000/; 200 msc.fema.gov FIS 49049CV001B download; 200 hazards.fema.gov NFHL MapServer; 200 usgs.gov how-streamflow-measured; 200 elevation.nationalmap.gov 3DEP ImageServer; 200 gis.utah.gov nhd-streams and building-footprints; 200 pro.arcgis.com flow-distance, iterate-field-value, spatial-join; 200 github.com NOAA-OWP/inundation-mapping; ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab07-provo-river-hand.zip checked by mkdocs build --strict. Removed with the October 19 cut: doi:10.3133/tm4B5 (Bulletin 17C), join-field, pairwise-clip, pairwise-intersect. -->
 
 ## Example Maps
 
-![Example baseline layout titled "Provo River Floods, 10- to 500-Year, by HAND": the study area on imagery from Utah Lake to the mouth of Provo Canyon, with the five floods nested in five blues along the Provo River, FEMA's 1% floodplain as a dashed orange outline, the 413 buildings the 100-year flood reaches in yellow, the river, the gage and a white close-up box just south of the gage. The close-up at lower left shows a neighborhood inside FEMA's floodplain that HAND leaves dry. A legend gives each flood's flow, h and area; a scale bar in kilometers, a north arrow and a text box with the result and the sources.](images/lab07-example-map-baseline.png)
+Two example layouts follow, one for each map the Deliverables ask for. They show the *design*: what
+goes on the page and where. Every piece of wording on them is a bracketed placeholder on purpose.
+Your title, subtitle and text box are yours to write, from your own runs, in your own words. A map
+that carries these brackets, or a title lifted from anywhere else, is not finished.
 
-**Figure 7.** The baseline map. Do better than this example: at the scale of the whole study area,
-the floods are thin; label the return periods on the map, or add a second close-up, so a reader
-can see them nest.
+![Example layout for Map 1: the study area on imagery from Utah Lake to the mouth of Provo Canyon, with the five floods nested in five blues along the Provo River, FEMA's 1% floodplain as a dashed orange outline, the river and the gage; a legend giving each flood's flow, h and area, a scale bar in kilometers, a north arrow and a text box. The title, subtitle and text box are bracketed placeholders saying what belongs there.](images/lab07-example-map-baseline.png)
 
-![Example design-flood layout titled "Provo River at a Design Flow of 1,968 cfs": the same study area with one flood (h = 1.396 m, 1.45 sq km), the 100-year flood as a thin blue outline for comparison, FEMA's 1% floodplain dashed in orange and the 376 buildings it reaches in yellow. The close-up at lower left is centered where the flood reaches the most buildings, just west of Interstate 15: HAND floods a whole neighborhood there that FEMA's floodplain leaves out. A text box states what changed from Map 1 and the result.](images/lab07-example-map-design.png)
+**Figure 7.** The design for Map 1, with placeholder wording. Do better than this example: at the
+scale of the whole study area the floods are thin, so label the return periods on the map, or add a
+close-up where a reader can see them nest.
 
-**Figure 8.** The design-flood map, for the example BYU ID ending 89. Your close-ups should be
-your own places, not these two.
+![Example layout for Map 2: the same study area with one flood in blue, the buildings it reaches in yellow, the river and the gage, and a white close-up box; the close-up at lower left is centered where the flood reaches the most buildings. The title, subtitle, close-up caption and text box are bracketed placeholders.](images/lab07-example-map-design.png)
+
+**Figure 8.** The design for Map 2, with placeholder wording. Your main frame should be zoomed to
+where your flood reaches buildings; this example keeps the whole reach in the main frame and shows
+the close-up as an inset, which is the weaker choice.
 
 ## Rubric for Flood Mapping with HAND
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
 
+This rubric is already laid out as a fillable table at the end of
+[`lab07-report-template.docx`](lab07-report-template.docx), so you do not have to copy it out of
+this page.
+
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (1)<br>• The three metadata values — gage datum, rating date, FEMA effective date — and what each means for your result (2)<br>• The 25-year row verified step by step, and why two 100-year floods differ, with the numbers (2)<br>• Your check values: the five flood areas and building counts, and the 100-year hit rate, false-alarm ratio and CSI (1)<br>• Where HAND is wrong: two places, each with coordinates, a cropped figure and the reason, and what the 0.47 m channel offset does to every flood (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder models** — correct and working<br>• Both models run from their tool dialogs and, at the defaults, match the check values: river cells, the HAND range, and the five flood areas (4)<br>• A full-page figure of both models exported from ModelBuilder, all tools and datasets readable (2)<br>• Screen captures of both tool dialogs with the threshold, HAND and the floods exposed as parameters (2)<br>• A description of both models a reader could repeat from, including how the loop's value reaches the expression (2) | /10 |
-| **Map 1 — your baseline floods**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the elevation, flows and FEMA map (1)<br>• The five floods nested and symbolized so each return period is readable, with a legend (2)<br>• Buildings reached by the 100-year flood highlighted, and FEMA's 1% floodplain outlined (2)<br>• An inset or close-up of one place where HAND and FEMA disagree (2)<br>• Basemap, scale and legibility appropriate to the river (2) | /10 |
-| **Map 2 — your design flood**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• Your design flood (or a threshold run), with FEMA's 1% outline, symbolized with a legend (2)<br>• The buildings it reaches highlighted, with their count (2)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 7)<br>• One table with the baseline, the three threshold runs and your design flood — with your BYU ID's last two digits, Q, gage height and *h* — giving river cells, areas and building counts (4)<br>• What the threshold changed and why, with your numbers (2)<br>• Your flood against FEMA's return periods and against the threshold's effect (2)<br>• The threshold you would defend, from the CSI (2) | /10 |
+| **Write-up** (2 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — gage datum, rating date, FEMA effective date — and what each means for your result (2)<br>• HAND against FEMA: what the hit rate, false-alarm ratio and CSI say about the two maps, and one place where they disagree, with coordinates, a cropped figure and the reason (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (2) | /10 |
+| **ModelBuilder models** — correct and working<br>• Both models built as described: HAND Builder's river cells and HAND range match the check values, and Flood Loop produces one merged feature class with five labeled floods whose areas match (4)<br>• A full-page figure of both models exported from ModelBuilder, all tools and datasets readable (2)<br>• Screen captures of both tool dialogs with the threshold, HAND and the floods exposed as parameters (2)<br>• A description of both models a reader could repeat from, including how the loop's value reaches the expression (2) | /10 |
+| **Runs** (Steps 6 and 7)<br>• The `Floods_Buildings` table captured, and the five areas and building counts in a table with their return periods and flows, matching the check values (3)<br>• Your own flood: your BYU ID's last two digits, Q, the rating row, *h*, and the flood's area and building count, matching a run at your flow (4)<br>• The Geoprocessing History capture showing the Flood Loop run and the three Step 7 tools, with their parameters (3) | /10 |
+| **Map 1 — the five FEMA floods** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating what the map shows (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the elevation, flows and FEMA map (1)<br>• The five floods nested and symbolized so each return period is readable, with a legend and the return periods labeled (3)<br>• FEMA's 1% floodplain outlined, the river and the gage shown (2)<br>• Basemap, scale and legibility appropriate to the river (2) | /10 |
+| **Map 2 — your own flood** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating your flow and *h* (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• Your flood symbolized with a legend, the river and the gage shown (2)<br>• The buildings it reaches highlighted, with their count on the map (3)<br>• Main frame zoomed to where the flood reaches buildings; basemap and legibility (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
 > **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
 > tighten your write-up, and add one line at the end of your report saying what you used it
 > for. Do not take a field name, an expression, a coordinate system, or a number from it —
-> those come from your own data, and the rubric asks you to defend every one. See the
+> those come from your own data, and the rubric asks you to defend every one. AI may not fill in
+> your tables or the template: type your own numbers from your own attribute tables. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+>
+> **What the grader verifies.** The model figure must be a ModelBuilder export; the maps must be
+> ArcGIS Pro layout exports with selectable text; your own flood's *h*, area and building count must
+> match a run at your flow; the History capture must show the runs; the toolbox must hold the two
+> models the report describes. A figure or map that was generated, redrawn or "enhanced" by AI, or a
+> number that could not have come from a run, scores zero for that part of the rubric, and the
+> report goes to the instructor under the AI policy. You do the work in ArcGIS Pro yourself: AI may
+> not run it for you.
 
-<!-- Migration notes (new lab, 2026-10-09).
+<!-- Migration notes (new lab, 2026-10-09; cut to Lab 6 scale 2026-10-19).
 SOURCE: none (new lab). Lineage: student final projects 2021 (Logan, Flow Distance, single stage), 2024 (Utah County flood-prone areas), 2025 (Mapping Flood Intervals with HAND: gage -> peak statistics -> rating -> stage -> HAND extents per return period). Plan: tools/lab07/PLAN.md.
 ARCGIS PRO: 3.7.1 arcpy, then the GUI build of 2026-10-09 (see the comment under Step 5 and FIGURES below). tools/lab07/verify_package.py extracts docs/data/lab07-provo-river-hand.zip and runs the page's path with the page's settings; probe_student_path.py tested the no-Extent trap (695,974 vs 697,608 HAND cells), the SQL where-clause failure (ERROR 010416 for 'Value * 100 <= 153'), multipart Raster to Polygon (1 row, area = cells x 25 exactly) and Spatial Join = Select Layer By Location count (413 at 100-yr). gotchas.py: stream raster with 0 off-stream inside the corridor gives the same HAND; no flow direction raster gives the same HAND; raw DEM surface 6,141 negative cells, min -1.92 m; no corridor 47.94 km2 at h 1.53 (41.74 at 1.19).
-DATA: docs/data/lab07-provo-river-hand.zip, 12,411,788 bytes, built by tools/lab07/make_extract.py (5 m) from fetch_dem.py (3DEP ImageServer exportImage at 2 m, 30 tiles, Oct 8 2026) and fetch_vectors.py (UGRC UtahStreamsNHD, Buildings; NFHL layers 28 and 14, DFIRM 49049C, Oct 8 2026). Stage table: stage_table.py (design = FEMA FIS 49049CV001B Table 9, read from the page image; rating 30.0; first row >= Q; h = (GH - 3.20) ft x 0.3048; H_CM = round(h x 100)).
-VERIFIED NUMBERS (package_checks.json): DEM 1,718 x 2,124, 1,366.78-1,645.53; Fill 1,366.92-1,645.53, 489,125 cells raised (12.228 km2), max 8.47 m; Flow_Accumulation max 1,050,227; Stream_Cells 74,866; River_Cells 3,191; HAND 697,608 cells, 0-197.95, mean 23.54; floods (cells, km2, buildings): 119 51,474 1.2869 319; 134 56,420 1.4105 356; 143 59,332 1.4833 388; 153 62,693 1.5673 413; 173 68,538 1.7135 451; 100-yr FEMA 1.3429, HAND in comparison 1.2801, overlap 0.7361, hit 0.548, FAR 0.425, CSI 0.390. Threshold runs (river cells; 10-yr km2/bldg; 100-yr km2/bldg/CSI): 400 3,513 1.5235/387 1.8591/497/0.377; 1,000 3,307 1.4163/370 1.7326/474/0.387; 4,000 3,110 1.1825/301 1.4389/397/0.394; 8,000 2,912 0.7684/169 0.9739/257/0.325. Personal (personal.py, mm h): 100 distinct h and areas, 74 distinct building counts; 89 -> 1,968 cfs, 7.78 ft, 1.396 m, 58,193 cells, 1.4548 km2, 376; 02 -> 924, 6.24, 0.927, 1.0799 km2, 258.
-OTHER MEASURED FACTS (PLAN.md, xs_check.py, profile.py): FEMA 1% depth above streambed median 1.80 m (1.49-2.07); DEM channel minus FEMA bed median 0.47 m (0.10-1.44) at 42 sections; section C: HAND wet 95 m, FEMA 105 m of 123 m; the river long profile 1,476.98 -> 1,367.05 m over 17.57 km; 100-yr stage elevation 1,372.04 m reaches the lowest 4.8 km; the D8 path from the highest river cell leaves the river at 40.23923 N, 111.68941 W (441,358 E, 4,454,538 N) and exits the box's south edge. LP3 (stage_table.py, not published flows): post-Jordanelle WY1993-2024 n=32 Q100 3,111; all systematic WY1934-2024 n=89 Q100 2,827.
-PILOT (no-GUI, 2026-10-09, C:\Ames\Pilot07\PILOT_NOTES.md): every check value on the page reproduced from the zip with arcpy (about 40, no mismatch). Fixed from its findings: the Extent warning now names Extract by Mask (it shrinks River_Cells; Flow Distance follows); Step 6 formulas name HAND100_Compare (the clipped flood; with the whole flood FAR would be 0.530 and CSI 0.339); Step 7 Q3 gives new output names so the baseline comparison is not overwritten; building counts moved from the model row to a write-up check-values bullet (they come from Spatial Join outside the models), where-wrong 3 -> 2 points; .atbx is opened to read the models (its paths point at the student's D: drive); Deliverables now list the peer-review sentence, numbered figures, the AI line, the loop-value description, Map 1 basemap and Map 2's full item list; Q2 allows a flow below the 10-year (IDs ending 00-47); rating extension described as log-log about the 3.20 ft offset (a linear extension gives 8.22/8.96 ft, not 8.21/8.89); 1903 peak code 6,Bd explained; the downloaded geodatabase renamed ProvoData.gdb (both were Lab07.gdb); the dialog-run deletion list completed; Provo_River described as one feature in two parts. Pilot measured section C HAND 96 m (page 95) and the bathtub's river length 4.6 km (page 4.8), both method-dependent.
-FIGURES: Figures A, B and 1 and the four tool icons by tools/lab07/make_svgs.py (lab07-model.svg, the drawn stand-in for Figure C, is no longer used). Dialog captures lab07-environments (composed from two grabs), -flow-direction, -rc-streams, -extract-mask, -flow-distance, -iterate-field-values, -flood-calc, -raster-to-polygon, -merge, -spatial-join (stitched from two scrolled grabs of the Geoprocessing pane), -floods-buildings-table (.png) are screen grabs (tools/screenshots/) at 175 % from the 2026-10-09 session; Figure C (lab07-model-hand.svg, lab07-model-floodloop.svg) is each model's Export To Graphic after a run, laid out by hand. Originals in C:\Ames\Lab07HAND\caps. GUI checks: Join Field labels are Input Field / Join Field; Spatial Join 3.7.1 takes a list of Join Features, each with a Join Count Field Name; Flow Distance's label is Input flow direction type. Step 6 floods and building counts reproduced exactly in the GUI (319/356/388/413/451). Not built in the GUI: Step 6 Pairwise Clip/Intersect and Step 7 (arcpy values only).
-Example maps (Figures 7 and 8): tools/lab07/build_figures.py, arcpy.mp from the GUI build's Lab07.gdb (HAND, Floods) and ProvoData.gdb; it measures every number it prints (413 and 376 buildings, 1.4548 km2, FEMA-only close-up 16.2 ha at 40.23562 N, 111.71180 W, design cluster 147 buildings).
-TODO: lab-machine run time; Jordanelle dates (VERIFY above). -->
+DATA: docs/data/lab07-provo-river-hand.zip, 12,411,788 bytes, built by tools/lab07/make_extract.py (5 m) from fetch_dem.py (3DEP ImageServer exportImage at 2 m, 30 tiles, Oct 8 2026) and fetch_vectors.py (UGRC UtahStreamsNHD, Buildings; NFHL layers 28 and 14, DFIRM 49049C, Oct 8 2026). Stage table: stage_table.py (design = FEMA FIS 49049CV001B Table 9, read from the page image; rating 30.0; first row >= Q; h = (GH - 3.20) ft x 0.3048; H_CM = round(h x 100)). The zip was not rebuilt for the October 19 cut: Comparison_Area, FEMA_Cross_Sections and peaks_10163000.csv stay in it, listed on the page as unused.
+VERIFIED NUMBERS (package_checks.json): DEM 1,718 x 2,124, 1,366.78-1,645.53; Fill 1,366.92-1,645.53, 489,125 cells raised (12.228 km2), max 8.47 m; Flow_Accumulation max 1,050,227; Stream_Cells 74,866; River_Cells 3,191; HAND 697,608 cells, 0-197.95, mean 23.54; floods (cells, km2, buildings): 119 51,474 1.2869 319; 134 56,420 1.4105 356; 143 59,332 1.4833 388; 153 62,693 1.5673 413; 173 68,538 1.7135 451; 100-yr FEMA 1.3429, HAND in comparison 1.2801, overlap 0.7361, hit 0.548, FAR 0.425, CSI 0.390 (now stated as data on the page, not computed by the student). Personal (personal.py, mm h): 100 distinct h and areas, 74 distinct building counts; 89 -> 1,968 cfs, 7.78 ft (rating rows 7.77 ft = 1,964.76, 7.78 ft = 1,972.66), 1.396 m, 58,193 cells, 1.4548 km2, 376; 02 -> 924, 6.24, 0.927, 1.0799 km2, 258.
+REMOVED 2026-10-19 (kept here for a future offering): the 25-year verification row (1,810 -> 7.57 ft = 1,809.84 just short -> 7.58 ft = 1,817.45; elevation 4,500.80 ft = 1,371.844 m; h 1.335 m, H_CM 134); the two-100-year-floods question (LP3 by method of moments, post-Jordanelle WY1993-2024 n=32 Q100 3,111; all systematic WY1934-2024 n=89 Q100 2,827; FEMA 2,325; Jordanelle completion date was never verified against Reclamation); Join Field (RETURN_YR, Q_CFS onto Floods by H_CM; its capture lab07-floods-buildings-table.png and icon-join-field.svg deleted); the Pairwise Clip / Pairwise Intersect skill-score computation (HAND100_Compare, Overlap100; with the whole flood instead of the clipped one FAR would be 0.530 and CSI 0.339); the second 'where HAND is wrong' place and the 0.47 m channel-offset discussion (DEM channel minus FEMA bed median 0.47 m, 0.10-1.44, at 42 sections); the threshold sensitivity: runs at 400 / 1,000 / 4,000 / 8,000 gave River_Cells 3,513 / 3,307 / 3,110 / 2,912; 10-yr km2/bldg 1.5235/387, 1.4163/370, 1.1825/301, 0.7684/169; 100-yr km2/bldg/CSI 1.8591/497/0.377, 1.7326/474/0.387, 1.4389/397/0.394, 0.9739/257/0.325; at 8,000 the upper river is no longer a stream. The dialog-run deletion warning (a tool-dialog run deletes every non-parameter intermediate) went with Step 7's reruns.
+OTHER MEASURED FACTS (PLAN.md, xs_check.py, profile.py): FEMA 1% depth above streambed median 1.80 m (1.49-2.07); section C: HAND wet 95 m, FEMA 105 m of 123 m; the river long profile 1,476.98 -> 1,367.05 m over 17.57 km; 100-yr stage elevation 1,372.04 m reaches the lowest 4.8 km; the D8 path from the highest river cell leaves the river at 40.23923 N, 111.68941 W (441,358 E, 4,454,538 N) and exits the box's south edge.
+PILOT (no-GUI, 2026-10-09, C:\Ames\Pilot07\PILOT_NOTES.md): every check value on the page reproduced from the zip with arcpy (about 40, no mismatch). Fixed from its findings: the Extent warning names Extract by Mask; the downloaded geodatabase renamed ProvoData.gdb (both were Lab07.gdb); Provo_River described as one feature in two parts; Q2's 'below the 10-year' case (IDs ending 00-47) is now the Step 7 TIP's last sentence. Pilot measured section C HAND 96 m (page 95) and the bathtub's river length 4.6 km (page 4.8), both method-dependent. The cut page has not been re-piloted; every number it keeps is from the same package_checks.json.
+FIGURES: Figures A, B and 1 and the three tool icons by tools/lab07/make_svgs.py. Dialog captures lab07-environments (composed from two grabs), -flow-direction, -rc-streams, -extract-mask, -flow-distance, -iterate-field-values, -flood-calc, -raster-to-polygon, -merge, -spatial-join (stitched from two scrolled grabs of the Geoprocessing pane) (.png) are screen grabs (tools/screenshots/) at 175 % from the 2026-10-09 session; Figure C (lab07-model-hand.svg, lab07-model-floodloop.svg) is each model's Export To Graphic after a run, laid out by hand. Originals in C:\Ames\Lab07HAND\caps. GUI checks: Spatial Join 3.7.1 takes a list of Join Features, each with a Join Count Field Name; Flow Distance's label is Input flow direction type. Step 6 floods and building counts reproduced exactly in the GUI (319/356/388/413/451). Not built in the GUI: Step 7's three personal-flood tools (arcpy values only) and the History pane capture (TODO(capture) in Step 7).
+Example maps (Figures 7 and 8): tools/lab07/build_figures.py, arcpy.mp from the GUI build's Lab07.gdb (HAND, Floods) and ProvoData.gdb, rebuilt 2026-10-19 with bracketed placeholder wording (Lab 5 and 6 pattern) and without the buildings and close-up on Map 1; the legend labels still carry measured numbers (areas, 376 buildings for the example ID ending 89).
+TODO: lab-machine run time; History pane capture; re-pilot the cut page if time allows. -->

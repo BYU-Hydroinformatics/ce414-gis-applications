@@ -34,7 +34,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 [Lab 6 — Lake Depth Explorer](../assignments/lab-06/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Saturday at 11:59 pm** on Learning Suite as a PDF report plus each map as its own layout PDF — 50 points.
 
 </div>
 

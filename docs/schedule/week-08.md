@@ -31,7 +31,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 [Lab 7 — Flood Mapping with HAND](../assignments/lab-07/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Saturday at 11:59 pm** on Learning Suite as a PDF report, each map as its own layout PDF, and your `Lab07.atbx` toolbox — 50 points.
 
 </div>
 

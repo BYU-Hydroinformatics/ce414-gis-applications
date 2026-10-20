@@ -95,7 +95,7 @@ By the end of class you should be able to:
 - Only the **Provo River** (a 30 m corridor) → **1.57 km²**
 - Same terrain, same depth: the **definition** did that
 
-<!-- Both panels at the Lab 7 1% depth, h = 1.527 m, on the package's filled DEM: left, HAND measured to every cell above the 2,000-cell accumulation threshold; right, only stream cells within 30 m of the mapped Provo River (the lab's model). In a city the threshold also makes streams of gutters and ditches. Lab 7's Step 7 varies the threshold for this reason. Figure and areas: tools/week08_flood_figures.py; 1.57 km² is the lab page's check value (1.5673). -->
+<!-- Both panels at the Lab 7 1% depth, h = 1.527 m, on the package's filled DEM: left, HAND measured to every cell above the 2,000-cell accumulation threshold; right, only stream cells within 30 m of the mapped Provo River (the lab's model). In a city the threshold also makes streams of gutters and ditches. Lab 7 keeps the threshold at 2,000 cells and the 30 m corridor; Lab 5 was where the threshold itself was varied. Figure and areas: tools/week08_flood_figures.py; 1.57 km² is the lab page's check value (1.5673). -->
 
 ---
 
@@ -166,13 +166,13 @@ By the end of class you should be able to:
 ![bg right:52% w:98%](images/fl-hand-chain.svg)
 
 - **The reach**: the Provo River through Provo, a **5 m lidar** DEM, prepared for you
-- **The model**: Lab 5's chain + **Flow Distance** → HAND → one **iterator** over the stage table
-- **The answer**: flooded area and **buildings** for each FEMA flow
-- **The check**: your 1% flood against **FEMA's** floodplain
+- **Two models, run once each**: Lab 5's chain + **Flow Distance** → HAND; one **iterator** over the stage table → five floods
+- **The answer**: flooded area and **buildings** for each FEMA flow, and for **your own flow**
+- **The check**: your 1% flood against **FEMA's** floodplain — one place where they disagree, and why
 
 [Lab 7 — Flood Mapping with HAND](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 
-<!-- One-week lab during Midterm 1 week, so the data come prepared: DEM, river line, buildings, FEMA floodplain and the stage table are in the package. Two models: one builds HAND, one loops Iterate Field Values over the stage table (an iterator reruns every tool in its model). Check values on the page: river 3,191 cells, HAND 697,608 cells; floods from 1.29 km² and 319 buildings (10-yr) to 1.57 km² and 413 buildings (100-yr). -->
+<!-- One-week lab during Midterm 1 week, so the data come prepared: DEM, river line, buildings, FEMA floodplain and the stage table are in the package. Two models: one builds HAND, one loops Iterate Field Values over the stage table (an iterator reruns every tool in its model). Each runs once; then three tools from the Geoprocessing pane flood the river at the student's own flow. No threshold reruns and no skill-score computation: the hit rate, false-alarm ratio and CSI are given on the page as data, and the report explains them and finds one place where HAND and FEMA disagree. Check values on the page: river 3,191 cells, HAND 697,608 cells; floods from 1.29 km² and 319 buildings (10-yr) to 1.57 km² and 413 buildings (100-yr). Deliverables: two layout PDFs, a two-page report, the .atbx, a History capture. -->
 
 ---
 

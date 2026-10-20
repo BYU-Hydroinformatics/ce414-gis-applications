@@ -159,27 +159,21 @@ def point(m, fc, name, color, size):
 
 
 def baseline_layers(m, nums, with_box):
-    """Bottom to top: the five floods (500-year first), FEMA outline, all buildings faint, buildings
-    the 100-year flood reaches, the river, the gage, and the close-up box."""
+    """Map 1 (the October 19, 2026 cut): bottom to top, the five floods (500-year first), FEMA
+    outline, the river and the gage. No buildings and no close-up on Map 1."""
     for yr in (500, 100, 50, 25, 10):
         q, hcm, km2 = nums[f"flood{yr}"]
         fill(m, "Floods", f"{yr}-year flood, {q:,} cfs, h = {hcm / 100:.2f} m ({km2:.2f} sq km)",
              rgb(*BLUES[yr]), transparency=15, query=f"RETURN_YR = {yr}")
     outline(m, "FEMA_Floodplain_1pct", "FEMA 1%-annual-chance floodplain (June 2026)", rgb(255, 80, 0), 1.6, dashed=True)
-    fill(m, "Buildings", "Other buildings", rgb(200, 200, 200, 70))
-    fill(m, "Buildings_100yr", f"Buildings reached by the 100-year flood ({nums['bldg100']})", rgb(255, 230, 0), rgb(120, 60, 0), 0.4)
     line(m, "Provo_River", "Provo River (NHD)", rgb(0, 200, 255), 1.4)
     point(m, "Gage", "USGS gage 10163000", rgb(255, 0, 160), 10)
-    if with_box:
-        outline(m, "Closeup_Box", "Close-up (lower left)", rgb(255, 255, 255), 2.0)
 
 
 def design_layers(m, nums, with_box):
-    q100, _, _ = nums["flood100"]
-    outline(m, "Floods", f"100-year flood, {q100:,} cfs, for comparison", rgb(140, 200, 255), 1.0).definitionQuery = "RETURN_YR = 100"
+    """Map 2: the personal flood, the buildings it reaches, the river, the gage, the close-up box."""
     fill(m, "Design_Flood", f"Design flood, {DESIGN['q']:,} cfs, h = {DESIGN['h']:.3f} m ({nums['design_km2']:.2f} sq km)",
          rgb(33, 113, 181), transparency=15)
-    outline(m, "FEMA_Floodplain_1pct", "FEMA 1%-annual-chance floodplain (June 2026)", rgb(255, 80, 0), 1.6, dashed=True)
     fill(m, "Buildings", "Other buildings", rgb(200, 200, 200, 70))
     fill(m, "Buildings_Mine", f"Buildings reached by the design flood ({nums['bldg_mine']})", rgb(255, 230, 0), rgb(120, 60, 0), 0.4)
     line(m, "Provo_River", "Provo River (NHD)", rgb(0, 200, 255), 1.4)
@@ -205,11 +199,15 @@ def build(p, lname, layers, nums, title, subtitle, closeup_caption, ext_key, not
     e = arcpy.Describe(os.path.join(GDB, "Floods")).extent
     pad = 350
     mf.camera.setExtent(arcpy.Extent(e.XMin - pad, e.YMin - pad, e.XMax + pad, e.YMax + pad, spatial_reference=UTM))
-    cf = lyt.createMapFrame(bf.poly(0.5, 0.5, 3.3, 3.15), cm, "Closeup")
-    cf.camera.setExtent(nums[ext_key])
-    p.createTextElement(lyt, bf.poly(0.5, 3.17, 3.3, 3.33), "POLYGON", closeup_caption, 6.5, None, "CloseupCaption")
+    if closeup_caption:
+        cf = lyt.createMapFrame(bf.poly(0.5, 0.5, 3.3, 3.15), cm, "Closeup")
+        cf.camera.setExtent(nums[ext_key])
+        p.createTextElement(lyt, bf.poly(0.5, 3.17, 3.3, 3.33), "POLYGON", closeup_caption, 6.5, None, "CloseupCaption")
+        leg_box = bf.poly(3.45, 1.4, 8.0, 3.3)
+    else:
+        leg_box = bf.poly(0.5, 1.4, 8.0, 3.3)
     style = lambda cls, name: (p.listStyleItems("ArcGIS 2D", cls, name) or [None])[0]
-    leg = lyt.createMapSurroundElement(bf.poly(3.45, 1.4, 8.0, 3.3), "LEGEND", mf, style("LEGEND", "Legend 1"), "Legend")
+    leg = lyt.createMapSurroundElement(leg_box, "LEGEND", mf, style("LEGEND", "Legend 1"), "Legend")
     for it in leg.items:
         if any(k in it.name for k in ("Imagery", "World", "Reference", "Close-up")):
             leg.removeItem(it)
@@ -230,8 +228,9 @@ def build(p, lname, layers, nums, title, subtitle, closeup_caption, ext_key, not
         sb.setDefinition(sd)
     except Exception as ex:
         print("scale:", ex)
-    p.createPredefinedGraphicElement(lyt, bf.poly(3.45, 0.5, 8.0, 1.3), "RECTANGLE", None, "Box")
-    p.createTextElement(lyt, bf.poly(3.52, 0.53, 7.95, 1.27), "POLYGON", "\n".join(notes), 6.3, None, "Notes")
+    bx0 = 3.45 if closeup_caption else 0.5
+    p.createPredefinedGraphicElement(lyt, bf.poly(bx0, 0.5, 8.0, 1.3), "RECTANGLE", None, "Box")
+    p.createTextElement(lyt, bf.poly(bx0 + 0.07, 0.53, 7.95, 1.27), "POLYGON", "\n".join(notes), 6.3, None, "Notes")
     lyt.exportToPNG(str(IMG / fname), resolution=150)
     print(fname)
 
@@ -240,28 +239,22 @@ if __name__ == "__main__":
     nums = prep()
     for k, v in nums.items():
         print(k, v)
-    lat, lon = nums["miss_ll"]
-    x, y = nums["miss_xy"]
-    where = f"{lat:.5f} N, {abs(lon):.5f} W"
     p = project()
-    common = ["Example map, CE 414, October 2026. Projection: NAD 1983 UTM zone 12N; 5 m cells.",
-              "Elevation: USGS 3DEP lidar, read October 2026. Flows and floodplain: FEMA Flood Insurance Study and",
-              "NFHL, Utah County, effective June 23, 2026. Gage: USGS 10163000. River, buildings: UGRC. Imagery: Esri, Vantor."]
+    # Every string on the example layouts is a bracketed placeholder on purpose (see
+    # tools/lab05/build_figures.py): in Lab 5 most reports pasted the examples' wording onto their own
+    # maps, and in Lab 6, with placeholders, none did. The design is the example; the words are theirs.
+    common = ["[Map by YOUR NAME, CE 414, month and year. Projection: the one you used, and the cell size.]",
+              "[Sources and dates: the elevation, FEMA's flows and map, the gage and rating, the river and buildings, the imagery.]"]
     build(p, "Baseline", baseline_layers, nums,
-          "Provo River Floods, 10- to 500-Year, by HAND",
-          "Height Above Nearest Drainage, threshold 2,000 cells; flood depth h from FEMA's flows and the gage's rating",
-          "Close-up (white box): FEMA floodplain HAND leaves dry", "closeup_ext",
-          [f"Result: {nums['bldg100']} buildings in the 100-year flood ({nums['flood100'][2]:.2f} sq km); "
-           f"{nums['flood10'][2]:.2f} sq km at 10 years to {nums['flood500'][2]:.2f} sq km at 500.",
-           f"Close-up: {nums['miss_m2'] / 1e4:.1f} ha of FEMA floodplain, centered at {where}, that HAND leaves dry."] + common,
+          "[Your title: what this map shows, where, and by what method]",
+          "[Your subtitle: the five return periods and their flows, the stream threshold, and where h comes from]",
+          None, None,
+          ["[Result: the area of the smallest and the largest flood, and what the river does between them.]"] + common,
           "lab07-example-map-baseline.png")
     build(p, "Design", design_layers, nums,
-          "Provo River at a Design Flow of 1,968 cfs",
-          f"Changed: one flood at the example BYU ID ending {DESIGN['digits']} (Q = 900 + 12 x {DESIGN['digits']}), "
-          f"gage height {DESIGN['gh']:.2f} ft, h = {DESIGN['h']:.3f} m",
-          "Close-up (white box): most buildings reached", "design_ext",
-          [f"Result: {nums['bldg_mine']} buildings and {nums['design_km2']:.2f} sq km; between FEMA's 25-year "
-           f"({nums['flood25'][0]:,} cfs) and 50-year ({nums['flood50'][0]:,} cfs) flows, so between their maps.",
-           f"Close-up: {nums['design_cluster']} of the {nums['bldg_mine']} buildings reached are in this 900 x 660 m window."] + common,
+          "[Your title: your design flow in cfs, and what it floods]",
+          "[Your subtitle: your BYU ID's last two digits, Q = 900 + 12 x those digits, the gage height and h]",
+          "[Close-up: where your flood reaches the most buildings]", "design_ext",
+          ["[Result: the flood's area and the number of buildings it reaches, and where your flow sits among FEMA's return periods.]"] + common,
           "lab07-example-map-design.png")
     p.save()

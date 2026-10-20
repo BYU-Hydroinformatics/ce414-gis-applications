@@ -141,6 +141,13 @@ DUE = {
                     ("Course evaluation (extra credit)", "Friday 11:59 pm")]),
 }
 
+# What a lab's submission consists of, where it is more than one PDF (the lab page is the authority).
+LAB_FILES_DEFAULT = "as one PDF report on Learning Suite"
+LAB_FILES = {
+    6: "on Learning Suite as a PDF report plus each map as its own layout PDF",
+    7: "on Learning Suite as a PDF report, each map as its own layout PDF, and your `Lab07.atbx` toolbox",
+}
+
 # Self-check quizzes hosted on this site (docs/quizzes/<slug>/index.html). Not graded and not in the
 # Due table; they are the web version of a deck's "your turn" slide, reachable by QR code in class and
 # by link afterwards. week: [(slug, title, one-liner)]
@@ -262,7 +269,7 @@ def week_page(w, decks):
 
     if d.get("lab"):
         body["lab"] += [lab_link(d["lab"]), "",
-                        f"Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — {LAB_PTS} points."]
+                        f"Due **Saturday at 11:59 pm** {LAB_FILES.get(d['lab'], LAB_FILES_DEFAULT)} — {LAB_PTS} points."]
 
     if d.get("quiz"):
         n, title = d["quiz"]
