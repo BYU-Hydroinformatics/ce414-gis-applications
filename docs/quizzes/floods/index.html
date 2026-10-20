@@ -33,14 +33,15 @@ CE414Quiz.start({
       explanation: "It is a probability that resets every year, which is why FEMA writes \"1% annual chance\". Two such floods can come in back-to-back years; a 100-year record need not contain one."
     },
     {
-      prompt: "A house sits in the 1% floodplain. Chance of at least one such flood during a 30-year mortgage?",
+      prompt: "Lab 7's Flood Loop iterates over H_CM, each depth in whole centimeters (153), not H_M in meters (1.53). Why?",
       options: [
-        "About 1%",
-        "About 30%",
-        "About 26%"
+        "Iterate Field Values can only read whole numbers",
+        "Each pass names its output flood_%Value%, and flood_1.53 is not a legal geodatabase name",
+        "HAND is stored in centimeters",
+        "Raster Calculator cannot handle decimals"
       ],
-      answer: "About 26%",
-      explanation: "The chance of no flood in a year is 0.99, so of none in 30 years is 0.99 to the 30th, about 0.74. One minus that is about 0.26, not 30% (chances do not simply add) and certainly not 1%."
+      answer: "Each pass names its output flood_%Value%, and flood_1.53 is not a legal geodatabase name",
+      explanation: "%Value% goes into the output name as well as the expression, and a geodatabase raster name cannot contain a period: flood_153 works, flood_1.53 does not. The expression divides it back, Con(\"HAND\" <= %Value% / 100, 1), so the flood is still measured in meters."
     },
     {
       prompt: "FEMA's 1% flow for the Provo River is above the top row of the gage's rating curve. What does that mean for its water level?",
