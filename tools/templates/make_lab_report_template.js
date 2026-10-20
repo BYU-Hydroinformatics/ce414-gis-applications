@@ -632,7 +632,7 @@ const LABS = {
       ] },
 
     { h: 'The Five Floods', pageBreakBefore: true,
-      hint: 'Rubric: the Floods_Buildings table captured, and the five areas and building counts in a table with their return periods and flows, matching the check values (3 points); the areas also show the models work (part of their 4 points). Type your own numbers from your own attribute table.',
+      hint: 'Rubric: the Floods_Buildings table captured, and the five areas and building counts in a table with their return periods and flows, matching the check values (3 points); the areas, River_Cells and the HAND range also show the models work (part of their 4 points). Type your own numbers from your own attribute tables.',
       table: { caption: 'Table 3. The five FEMA floods, from Floods_Buildings.',
                head: ['Return period', 'Flow (ft³/s)', 'H_CM', 'Area (km²)', 'Buildings (Join_Count)'],
                rows: [['10-year', '1,475', '119', '', ''], ['25-year', '1,810', '134', '', ''], ['50-year', '2,065', '143', '', ''],
@@ -649,14 +649,14 @@ const LABS = {
       table: { caption: 'Table 4. My own flood. My BYU ID ends in __.',
                head: ['Item', 'Value'],
                rows: [['Q = 900 + 12 × (last two digits) (ft³/s)', ''], ['First rating row at or above Q (gage height ft, discharge ft³/s)', ''],
-                      ['h = (gage height − 3.20) × 0.3048 (m, to the millimeter)', ''], ['Area of flood_mine (km², from Shape_Area)', ''],
-                      ['Buildings reached (Join_Count)', ''], ['Where this sits among FEMA’s return periods', '']],
+                      ['h = (gage height − 3.20) × 0.3048 (m, to the millimeter)', ''], ['Area of floodpoly_mine (km², from its Shape_Area)', ''],
+                      ['Buildings reached (Join_Count in Mine_Buildings; the Count of Select Layer By Location)', ''], ['Where this sits among FEMA’s return periods', '']],
                widths: [5360, 4000] } },
 
     { h: 'Evidence the Models Ran',
-      hint: 'Rubric: a screen capture of the Geoprocessing History pane (Analysis tab ▸ History) with the Flood Loop run and the three Step 7 tools expanded so their parameters and run times show (3 points).',
+      hint: 'Rubric: a screen capture of the Geoprocessing History pane (Analysis tab ▸ History) listing the Flood Loop run and the Step 7 tools, with the Flood Loop card open so its times and parameters show (3 points). See the lab page’s Figure 7.',
       figures: [
-        { caption: 'Figure 4. Geoprocessing History, showing the Flood Loop run and the three tools of Step 7.', size: 'medium' },
+        { caption: 'Figure 4. Geoprocessing History, listing the Flood Loop run and the Step 7 tools, with the Flood Loop card open.', size: 'medium' },
       ] },
 
     { h: 'HAND Against FEMA', pageBreakBefore: true,

@@ -113,7 +113,7 @@ By the end of class you should be able to:
 - Flooded = **every cell with HAND ≤ h**: `Con("HAND" <= h, 1)`
 - A different h for each **return period**: one **iterator**, as in Lab 6
 
-<!-- The stage table in Lab 7 does the flow-to-h step for FEMA's 10%, 4%, 2% and 1% flows; students verify one row by hand from the rating. Raster to Polygon then gives an area and a polygon to intersect with buildings. -->
+<!-- The stage table in Lab 7 does the flow-to-h step for FEMA's 10%, 4%, 2% and 1% flows; students look their own flow up in the rating by hand. Raster to Polygon then gives an area and a polygon to intersect with buildings. -->
 
 ---
 
@@ -200,7 +200,7 @@ By the end of class you should be able to:
 **Quiz: Height Above What?** Five questions on HAND, stream definitions, thresholds and scoring a flood map. **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
-- The stream-definition question comes back in Lab 7
+- Lab 7's river corridor is the stream definition, settled for you; Lab 5 was where you varied it
 
 **Before next class**
 
