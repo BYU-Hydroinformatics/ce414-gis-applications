@@ -41,8 +41,8 @@ By the end of class you should be able to:
 
 **Two hydrology ideas**
 
-- Turn a gage's **reading** into a **flow**, and a flood flow back into a **depth** above the river
 - Say why a river's flood is **not a bathtub**, and what **HAND** measures instead
+- Say what a flood **depth h** means, and why one depth floods a whole river
 
 **The rest is GIS and data analysis**
 
@@ -52,84 +52,13 @@ By the end of class you should be able to:
 
 </div>
 
-<!-- Photo: a flooded neighborhood near the confluence of the Comite and Amite Rivers, Denham Springs, Louisiana, August 13, 2016 (U.S. Geological Survey, public domain). The split in the goals is deliberate: students have said the course leans on hydrology, so name the two hydrology ideas and show that everything else today is data handling and model building. Thursday carries the rest of the hydrology (return periods, FEMA's maps and methods) and the ModelBuilder tips; today gets students to the core idea and the model so they can start the lab. -->
+<!-- Photo: a flooded neighborhood near the confluence of the Comite and Amite Rivers, Denham Springs, Louisiana, August 13, 2016 (U.S. Geological Survey, public domain). The split in the goals is deliberate: students have said the course leans on hydrology, so name the two hydrology ideas and show that everything else today is data handling and model building. Thursday carries the hydrology (the gage, the rating curve, return periods, FEMA's maps and methods) and the ModelBuilder tips; today gets students to the core idea and the model so they can start the lab. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Part 1 — From a Gage to a Depth
-
----
-
-# What a Gage Measures
-
-![bg right:48% w:98%](images/fl-gage-photo.jpg)
-
-- A **stream gage** measures **stage**, the water level, about every **15 minutes**
-- The reading goes by **satellite telemetry** to a USGS database the same hour; you can watch it live
-- Stage becomes **flow** through a rating curve (Part 2); flows become **daily means** and, once a year, the **annual peak**
-- **Provo River at Provo**, USGS 10163000: record since **1903**
-
-<!-- Photo: a USGS streamgage on the South Fork of the Ogden River near Huntsville, Utah, one of 25 Utah gages that have run for a century (USGS, public domain). The shelter houses the stage sensor, the data logger and the antenna. Most USGS gages record stage every 15 minutes and transmit hourly through the GOES satellite system to NWIS; the Lab 7 page links the live page for 10163000. What a gage does NOT measure directly is flow: that is the rating, next part. The annual peak series is the one number a year that flood frequency is built from, next slide. -->
-
----
-
-# The River's Ruler
-
-![bg right:46% w:98%](images/fl-staff-gage.jpg)
-
-- A **staff gage** is a ruler fixed in the river; the gage's sensor reads the same number automatically
-- The reading has three names that mean one thing: **stage** = **gage height** = **water level**
-- What we want has three names too: **flow** = **discharge** = **Q**, in ft³/s
-- A ruler gives you the first. How do you get the second?
-
-<!-- Photo: a USGS staff gage, public domain (credit in the closing note). Say the synonyms out loud and write them on the board in two columns; the USGS pages, FEMA's study and the Lab 7 page use all six words, and students lose the thread when "stage" on one page becomes "gage height" on the next. The staff is graduated in hundredths of a foot; the electronic sensor in the shelter from the previous slide records the same quantity every 15 minutes and is checked against the staff on every visit. -->
-
----
-
-# Same Reading, Two Rivers
-
-![bg right:55% w:98%](images/fl-two-channels.svg)
-
-* Both rulers read **4 ft**
-* **What is the difference between the two streams?**
-* The **channel**: its **cross-sectional area** sets how much water a 4-ft stage carries
-* So each gage has its own **stage → discharge** relationship, measured in the field: the **rating curve**
-
-<!-- Click through the lines. Let them answer the question before the third line appears: the answer is the size and shape of the channel, which a hydrologist summarizes as the cross-sectional area (and the velocity, which also grows with the river). Discharge is area times mean velocity; the USGS measures both by wading or from a bridge, many times across the range of stages, and fits the stage-discharge curve through those measurements. That curve is the rating, next slide. Diagram drawn for this deck; the flows are deliberately qualitative. -->
-
----
-
-# The Rating Curve
-
-![bg right:52% w:98%](images/fl-rating.png)
-
-- Each gage's own **stage → flow** curve, fitted through years of field measurements
-- Provo's current rating: **3.42 to 8.00 ft**, **6.8 to 2,150 ft³/s**
-- Read it backwards for a flood: **flow → stage**
-- FEMA's **1% and 0.2% flows are off the top** of the rating: those stages are **extrapolations**
-
-<!-- The USGS current rating for 10163000 (459 rows; the Lab 7 package, rating_10163000.csv). The dotted lines are FEMA's five flows; the 1% and 0.2% fall in the gray band beyond the last row, so Lab 7's stage table marks them extrapolated. Every student's own Lab 7 flow (900 to 2,088 ft³/s) is inside the table. A rating is built from field measurements, and floods are the hardest flows to measure, so the top of every rating is its least certain part. -->
-
----
-
-# From Flow Back to Depth
-
-![bg right:58% w:98%](images/fl-flow-to-depth.svg)
-
-- Every day the gage goes **stage → flow**
-- For a flood we go the other way: a design **flow → stage → depth** above the river
-- Provo's 1% flow, **2,325 ft³/s**, reaches **8.21 ft** on the ruler: a depth of **1.53 m**
-- Then every cell with **HAND ≤ depth** is wet (Part 3). One flow in, one map out
-
-<!-- Keep this one simple. The one subtlety is the 3.20 ft: a staff gage's zero is set below the bed so readings never go negative, so the depth of water above the river is the stage minus the reading the gage would show at zero flow (3.20 ft at Provo, from the rating's offset). Lab 7's stage table does this for FEMA's five flows and Step 1 has each student do it once for their own flow: h = (gage height − 3.20) × 0.3048 m. Not on the slide, for the curious: adding the gage datum (4,493.22 ft NAVD 88) to a stage gives a water-surface elevation, which is what the bathtub two slides on and FEMA's water surfaces use; Lab 7's metadata question asks students to find that datum on the gage page. Diagram drawn for this deck. -->
-
----
-
-<!-- _class: lead -->
-
-# Part 2 — Two Ways to Draw the Flood
+# Part 1 — Two Ways to Draw the Flood
 
 ---
 
@@ -165,7 +94,7 @@ By the end of class you should be able to:
 - A river's surface **slopes downhill** with the water: the Provo drops **110 m** across the study area
 - One flat elevation **drowns the lowland** by Utah Lake, **15.1 km²**, and **never reaches** the river above the gage
 - What we want: the **whole water surface rises by h**, up and down a river that is itself changing elevation
-- Measure every cell's **height above the river it drains to**, and a flood is "everything within h": that is **HAND**, Part 3
+- Measure every cell's **height above the river it drains to**, and a flood is "everything within h": that is **HAND**, Part 2
 
 </div>
 <div>
@@ -177,25 +106,13 @@ By the end of class you should be able to:
 </div>
 </div>
 
-<!-- Top right: HAND at the same 1% depth, 1.57 km², following the river to the canyon mouth (tools/week08_flood_figures.py). Bottom right: the river's long profile from the Lab 7 DEM (tools/lab07/profile.json, 1,477 to 1,367 m over 17.6 km). The dashed line is the bathtub at 1,372.04 m: it covers only the lowest 4.8 km, below the gage, and the big blue area on the left of the bathtub map is Utah Lake lowland, not river flood. The blue band is the HAND idea: the water surface raised by h everywhere along a sloping river; it is drawn eight times the real 1.53 m so that it shows at this scale. Ask: why not just pick a higher bathtub elevation to reach upstream? Because then the downstream end is under tens of meters of water. Part 3 builds the band from the DEM. -->
+<!-- Top right: HAND at the same 1% depth, 1.57 km², following the river to the canyon mouth (tools/week08_flood_figures.py). Bottom right: the river's long profile from the Lab 7 DEM (tools/lab07/profile.json, 1,477 to 1,367 m over 17.6 km). The dashed line is the bathtub at 1,372.04 m: it covers only the lowest 4.8 km, below the gage, and the big blue area on the left of the bathtub map is Utah Lake lowland, not river flood. The blue band is the HAND idea: the water surface raised by h everywhere along a sloping river; it is drawn eight times the real 1.53 m so that it shows at this scale. Ask: why not just pick a higher bathtub elevation to reach upstream? Because then the downstream end is under tens of meters of water. Part 2 builds the band from the DEM. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Part 3 — HAND, Height Above Nearest Drainage
-
----
-
-# Elevation Is Measured From the Wrong Place
-
-![bg right:55% w:98%](images/fl-hand-schematic.svg)
-
-- A flood cares how high you are **above the river**, not above **sea level**
-- **HAND**: Height Above Nearest Drainage — the drop from a cell to the stream cell it **drains to**
-- Every river cell has **HAND = 0**
-
-<!-- The two cells make the point: A is far higher above sea level than B, yet both sit just above their own river. On a bathtub map B floods first; on a HAND map they flood together at the same depth. Diagram drawn for this deck, not to scale. -->
+# Part 2 — HAND, Height Above Nearest Drainage
 
 ---
 
@@ -211,6 +128,10 @@ By the end of class you should be able to:
 <!-- The animation loops: (1) a synthetic valley with a river falling 45 m down the reach, (2) the river pulled down to zero and the land with it, (3) the result, HAND, and (4) a flat water surface rising through it to h = 3 m. It is an equation, not a place: a straight valley where every cell drains straight across to the river, so HAND is simply elevation minus the bed elevation at the same distance downstream. On a real DEM the "river cell it drains to" comes from D8 flow direction, which is what Flow Distance follows, and that is the next two slides. This is the whole idea of the lab in one picture: Model 1 does the pulling down; Model 2 does the filling. tools/week08_hand_flatten_gif.py. -->
 
 ---
+
+<div class="columns" style="grid-template-columns: 1fr 546px; align-items: start; gap: 28px;">
+<div>
+
 # Where Does the Water Go?
 
 - A small valley: each number is a cell's **elevation**, and the **blue** cells are the river
@@ -321,7 +242,7 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
-# Part 4 — The Lab 7 Model
+# Part 3 — The Lab 7 Model
 
 ---
 # Prepare Once, Flood Many Times
@@ -377,7 +298,7 @@ By the end of class you should be able to:
 
 ![bg right:52% w:96%](images/fl-flood-calc.png)
 
-- From Part 1: flow → **gage height** → **depth h** above the river
+- The stage table turns each FEMA **flow** into a **depth h** above the river (Thursday: how)
 - Flooded = **every cell with HAND ≤ h**: `Con("HAND" <= h, 1)`
 - A different h for each **return period**: one **iterator**, as in Lab 6
 
@@ -443,4 +364,4 @@ By the end of class you should be able to:
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and the drawn diagram fl-hand-schematic.svg (fl-gage-datum.svg was retired October 19, 2026, with the gage-height-versus-depth slide; fl-two-channels.svg and fl-flow-to-depth.svg, drawn the same day, replace it). Part 4 (three slides on the two-model design) added October 19, 2026, after the Lab 7 cut: fl-two-models.svg and fl-why-two-models.svg are hand-drawn; fl-model-hand.svg and fl-model-floodloop.svg are copies of the Lab 7 page's Figure C exports (docs/assignments/lab-07/images/lab07-model-*.svg). Timings in the notes: HAND chain about a minute on a laptop (lab page), Flood Loop 47 s from its dialog (GUI session of October 19). Opening slides revised October 19, 2026, at the instructor's request: goals split into hydrology and GIS, a FEMA-maps slide and a gage slide added, a dice slide after the probability slide (fl-dice.svg drawn). Photos, all public domain, downscaled and stripped of EXIF: fl-flood-photo.jpg, USGS "Flooded Neighborhood in Denham Springs" (Office of Communications, August 13, 2016, usgs.gov/media/images/flooded-neighborhood-denham-springs); fl-gage-photo.jpg, USGS "Utah Gauge Celebrates 100 Years of Monitoring Streamflow", South Fork Ogden River near Huntsville, station 10137500 (March 16, 2021, usgs.gov/media/images/utah-gauge-celebrates-100-years-monitoring-streamflow); fl-firm-paper.jpg, FEMA Flood Insurance Rate Map and street index, Borough of Carteret, New Jersey, panel 340257 0005 B, revised April 15, 1992, Library of Congress G3814.C3G475 1992 .U5 via Wikimedia Commons, cropped to the map, legend and title block; fl-staff-gage.jpg, USGS "USGS staff gage measuring the height of the water in the Carson River" near Brunswick Canyon, Nevada (USGS Nevada Water Science Center, February 11, 2017, usgs.gov/media/images/usgs-staff-gage-measuring-height-water-carson-river). Later the same day: the ruler, two-rivers and flow-to-depth slides (fl-two-channels.svg, fl-flow-to-depth.svg drawn; the gage-height-versus-depth slide and fl-gage-datum.svg retired); the bathtub and river slides gained diagrams under the maps (fl-bathtub-map.png and fl-hand-map-panel.png are crops of fl-bathtub-vs-hand.png, fl-river-profile.png is from tools/week08_profile_figure.py and tools/lab07/profile.json, fl-lake-bathtub.png is last week's Great Salt Lake south-arm cross-section, slides/week-07/images/lb-cross-section.png, unchanged because its source data lived in a scratch folder that is gone); the whole Lab 7 model moved here from the Thursday deck (Elevation Is Measured From the Wrong Place, HAND on the Provo River, How It Is Computed, One Threshold Floods the River, Lab 7 at a Glance, Your Own Flow), and the FEMA hydraulics slide moved the other way as Thursday's methods ladder; fl-two-models.svg is now drawn by tools/week08_two_models_svg.py with the lab pages' tool icons inlined. Reorganized again the same evening at the instructor's request: Tuesday = gage, ruler, rating, flow to depth; bathtub versus river; HAND in full (the three grid slides and the stream-definition slide came over from the Thursday deck); the Lab 7 model. The flood-frequency slides (One Number a Year, A 100-Year Flood Is a Probability, A Pair of Sixes) and FEMA's Flood Maps Are GIS moved to Thursday, and the closing quizzes swapped so Tuesday ends on Height Above What? and Thursday on How Big, How High?. -->
+<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and the drawn diagram fl-hand-schematic.svg (fl-gage-datum.svg was retired October 19, 2026, with the gage-height-versus-depth slide; fl-two-channels.svg and fl-flow-to-depth.svg, drawn the same day, replace it). Part 4 (three slides on the two-model design) added October 19, 2026, after the Lab 7 cut: fl-two-models.svg and fl-why-two-models.svg are hand-drawn; fl-model-hand.svg and fl-model-floodloop.svg are copies of the Lab 7 page's Figure C exports (docs/assignments/lab-07/images/lab07-model-*.svg). Timings in the notes: HAND chain about a minute on a laptop (lab page), Flood Loop 47 s from its dialog (GUI session of October 19). Opening slides revised October 19, 2026, at the instructor's request: goals split into hydrology and GIS, a FEMA-maps slide and a gage slide added, a dice slide after the probability slide (fl-dice.svg drawn). Photos, all public domain, downscaled and stripped of EXIF: fl-flood-photo.jpg, USGS "Flooded Neighborhood in Denham Springs" (Office of Communications, August 13, 2016, usgs.gov/media/images/flooded-neighborhood-denham-springs); fl-gage-photo.jpg, USGS "Utah Gauge Celebrates 100 Years of Monitoring Streamflow", South Fork Ogden River near Huntsville, station 10137500 (March 16, 2021, usgs.gov/media/images/utah-gauge-celebrates-100-years-monitoring-streamflow); fl-firm-paper.jpg, FEMA Flood Insurance Rate Map and street index, Borough of Carteret, New Jersey, panel 340257 0005 B, revised April 15, 1992, Library of Congress G3814.C3G475 1992 .U5 via Wikimedia Commons, cropped to the map, legend and title block; fl-staff-gage.jpg, USGS "USGS staff gage measuring the height of the water in the Carson River" near Brunswick Canyon, Nevada (USGS Nevada Water Science Center, February 11, 2017, usgs.gov/media/images/usgs-staff-gage-measuring-height-water-carson-river). Later the same day: the ruler, two-rivers and flow-to-depth slides (fl-two-channels.svg, fl-flow-to-depth.svg drawn; the gage-height-versus-depth slide and fl-gage-datum.svg retired); the bathtub and river slides gained diagrams under the maps (fl-bathtub-map.png and fl-hand-map-panel.png are crops of fl-bathtub-vs-hand.png, fl-river-profile.png is from tools/week08_profile_figure.py and tools/lab07/profile.json, fl-lake-bathtub.png is last week's Great Salt Lake south-arm cross-section, slides/week-07/images/lb-cross-section.png, unchanged because its source data lived in a scratch folder that is gone); the whole Lab 7 model moved here from the Thursday deck (Elevation Is Measured From the Wrong Place, HAND on the Provo River, How It Is Computed, One Threshold Floods the River, Lab 7 at a Glance, Your Own Flow), and the FEMA hydraulics slide moved the other way as Thursday's methods ladder; fl-two-models.svg is now drawn by tools/week08_two_models_svg.py with the lab pages' tool icons inlined. Reorganized again the same evening at the instructor's request: Tuesday = gage, ruler, rating, flow to depth; bathtub versus river; HAND in full (the three grid slides and the stream-definition slide came over from the Thursday deck); the Lab 7 model. The flood-frequency slides (One Number a Year, A 100-Year Flood Is a Probability, A Pair of Sixes) and FEMA's Flood Maps Are GIS moved to Thursday, and the closing quizzes swapped so Tuesday ends on Height Above What? and Thursday on How Big, How High?. Then the gage-to-depth slides moved to Thursday and the Elevation Is Measured From the Wrong Place slide was dropped (the flattening animation does its work); fl-hand-schematic.svg, used only by that slide, was removed. -->

@@ -7,8 +7,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — From a gage to a flood map: the river's ruler and the rating curve, a flood flow back to a depth, why a river is not a bathtub, HAND cell by cell, and Lab 7's two models.
-- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — Annual peaks and the 100-year flood as a 1% chance, FEMA's maps as GIS, how good HAND is and where it breaks, the ladder from bathtub to 2-D hydraulics, and the ModelBuilder traps in Lab 7.
+- **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — Why a river is not a bathtub, HAND cell by cell (pull the river down to zero), the stream definition, and Lab 7's two models: prepare HAND once, flood it once per flow.
+- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — Annual peaks and the 100-year flood as a 1% chance, FEMA's maps as GIS, the river's ruler and the rating curve, how good HAND is and where it breaks, the ladder from bathtub to 2-D hydraulics, and the ModelBuilder traps in Lab 7.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

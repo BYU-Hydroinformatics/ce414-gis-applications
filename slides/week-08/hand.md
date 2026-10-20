@@ -37,11 +37,11 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
-- Say what a **100-year flood** is, and what it is not
-- Say what a **FEMA flood map** claims, and how its zones are made
+- Say what a **100-year flood** is, and what a **FEMA flood map** claims
+- Turn a gage's **reading** into a **flow**, and a flood flow back into a **depth**
 - Score a flood map against another: **hit rate, false alarms, CSI**, and say where **HAND breaks**
 - Place HAND among the **ways to draw a flood**, from a bathtub to 2-D hydraulics
-- Build Lab 7's two models **without the traps**: extent, iterator, merge, dialog run, proof
+- Build Lab 7's two models **without the traps**
 
 <!-- Tuesday taught HAND and the model and started the lab; today is the rest of the hydrology, how good the cheap method is and what the expensive ones add, and the ModelBuilder details students hit between now and Saturday. Midterm 1 closes tonight. -->
 
@@ -117,7 +117,78 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
-# Part 2 — How Good Is HAND?
+# Part 2 — From a Gage to a Depth
+
+---
+
+# What a Gage Measures
+
+![bg right:48% w:98%](images/fl-gage-photo.jpg)
+
+- A **stream gage** measures **stage**, the water level, about every **15 minutes**
+- The reading goes by **satellite telemetry** to a USGS database the same hour; you can watch it live
+- Stage becomes **flow** through a rating curve (Part 2); flows become **daily means** and, once a year, the **annual peak**
+- **Provo River at Provo**, USGS 10163000: record since **1903**
+
+<!-- Photo: a USGS streamgage on the South Fork of the Ogden River near Huntsville, Utah, one of 25 Utah gages that have run for a century (USGS, public domain). The shelter houses the stage sensor, the data logger and the antenna. Most USGS gages record stage every 15 minutes and transmit hourly through the GOES satellite system to NWIS; the Lab 7 page links the live page for 10163000. What a gage does NOT measure directly is flow: that is the rating, next part. The annual peak series is the one number a year that flood frequency is built from, next slide. -->
+
+---
+
+# The River's Ruler
+
+![bg right:46% w:98%](images/fl-staff-gage.jpg)
+
+- A **staff gage** is a ruler fixed in the river; the gage's sensor reads the same number automatically
+- The reading has three names that mean one thing: **stage** = **gage height** = **water level**
+- What we want has three names too: **flow** = **discharge** = **Q**, in ft³/s
+- A ruler gives you the first. How do you get the second?
+
+<!-- Photo: a USGS staff gage, public domain (credit in the closing note). Say the synonyms out loud and write them on the board in two columns; the USGS pages, FEMA's study and the Lab 7 page use all six words, and students lose the thread when "stage" on one page becomes "gage height" on the next. The staff is graduated in hundredths of a foot; the electronic sensor in the shelter from the previous slide records the same quantity every 15 minutes and is checked against the staff on every visit. -->
+
+---
+
+# Same Reading, Two Rivers
+
+![bg right:55% w:98%](images/fl-two-channels.svg)
+
+* Both rulers read **4 ft**
+* **What is the difference between the two streams?**
+* The **channel**: its **cross-sectional area** sets how much water a 4-ft stage carries
+* So each gage has its own **stage → discharge** relationship, measured in the field: the **rating curve**
+
+<!-- Click through the lines. Let them answer the question before the third line appears: the answer is the size and shape of the channel, which a hydrologist summarizes as the cross-sectional area (and the velocity, which also grows with the river). Discharge is area times mean velocity; the USGS measures both by wading or from a bridge, many times across the range of stages, and fits the stage-discharge curve through those measurements. That curve is the rating, next slide. Diagram drawn for this deck; the flows are deliberately qualitative. -->
+
+---
+
+# The Rating Curve
+
+![bg right:52% w:98%](images/fl-rating.png)
+
+- Each gage's own **stage → flow** curve, fitted through years of field measurements
+- Provo's current rating: **3.42 to 8.00 ft**, **6.8 to 2,150 ft³/s**
+- Read it backwards for a flood: **flow → stage**
+- FEMA's **1% and 0.2% flows are off the top** of the rating: those stages are **extrapolations**
+
+<!-- The USGS current rating for 10163000 (459 rows; the Lab 7 package, rating_10163000.csv). The dotted lines are FEMA's five flows; the 1% and 0.2% fall in the gray band beyond the last row, so Lab 7's stage table marks them extrapolated. Every student's own Lab 7 flow (900 to 2,088 ft³/s) is inside the table. A rating is built from field measurements, and floods are the hardest flows to measure, so the top of every rating is its least certain part. -->
+
+---
+
+# From Flow Back to Depth
+
+![bg right:58% w:98%](images/fl-flow-to-depth.svg)
+
+- Every day the gage goes **stage → flow**
+- For a flood we go the other way: a design **flow → stage → depth** above the river
+- Provo's 1% flow, **2,325 ft³/s**, reaches **8.21 ft** on the ruler: a depth of **1.53 m**
+- Tuesday's HAND: every cell with **HAND ≤ depth** is wet. One flow in, one map out
+
+<!-- Keep this one simple. The one subtlety is the 3.20 ft: a staff gage's zero is set below the bed so readings never go negative, so the depth of water above the river is the stage minus the reading the gage would show at zero flow (3.20 ft at Provo, from the rating's offset). Lab 7's stage table does this for FEMA's five flows and Step 1 has each student do it once for their own flow: h = (gage height − 3.20) × 0.3048 m. Not on the slide, for the curious: adding the gage datum (4,493.22 ft NAVD 88) to a stage gives a water-surface elevation, which is what the bathtub two slides on and FEMA's water surfaces use; Lab 7's metadata question asks students to find that datum on the gage page. Diagram drawn for this deck. -->
+
+---
+
+<!-- _class: lead -->
+
+# Part 3 — How Good Is HAND?
 
 ---
 
@@ -203,7 +274,7 @@ Three ways to draw a flood, in order of cost:
 
 <!-- _class: lead -->
 
-# Part 3 — Building Lab 7 in ModelBuilder
+# Part 4 — Building Lab 7 in ModelBuilder
 
 ---
 
@@ -261,7 +332,7 @@ Three ways to draw a flood, in order of cost:
 
 <!-- _class: lead -->
 
-# Part 4 — Lab 7, Due Saturday
+# Part 5 — Lab 7, Due Saturday
 
 ---
 
@@ -312,4 +383,4 @@ Three ways to draw a flood, in order of cost:
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams, plus four copied from the Lab 7 page on October 19, 2026 (fl-hand-model.svg = lab07-model-hand.svg, fl-flood-calc.png = lab07-flood-calc.png, fl-example-map-floods.png and fl-example-map-own.png = lab07-example-map-baseline/-design.png; refresh the copies if the lab's figures change); numbers from the Lab 7 package (tools/lab07/package_checks.json). Edited October 19, 2026: the model slides (HAND on the Provo River, How It Is Computed, One Threshold Floods the River, Your Own Flow) moved to the Tuesday deck so Tuesday teaches the whole Lab 7 model; the methods ladder slide was added after Where HAND Breaks from Tuesday's old FEMA hydraulics slide. fl-2d-hydraulics.png is Figure 6-15 of the HEC-RAS 2D User's Manual, particle tracing over a depth layer (U.S. Army Corps of Engineers Hydrologic Engineering Center, public domain; hec.usace.army.mil/confluence/rasdocs/r2dum, Viewing 2D output, Plotting Velocity), unchanged. Later the same evening the decks were reorganized: the HAND grid slides and the stream-definition slide moved to Tuesday, the flood-frequency and FEMA-maps slides came here, Part 3 (four ModelBuilder tips slides: fl-environments.png, fl-iterate-dialog.png, fl-merge-dialog.png, fl-history.png are copies of the Lab 7 page's Figures 0, 5a, 5d and 7) was added, and the closing quizzes swapped. -->
+<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams, plus four copied from the Lab 7 page on October 19, 2026 (fl-hand-model.svg = lab07-model-hand.svg, fl-flood-calc.png = lab07-flood-calc.png, fl-example-map-floods.png and fl-example-map-own.png = lab07-example-map-baseline/-design.png; refresh the copies if the lab's figures change); numbers from the Lab 7 package (tools/lab07/package_checks.json). Edited October 19, 2026: the model slides (HAND on the Provo River, How It Is Computed, One Threshold Floods the River, Your Own Flow) moved to the Tuesday deck so Tuesday teaches the whole Lab 7 model; the methods ladder slide was added after Where HAND Breaks from Tuesday's old FEMA hydraulics slide. fl-2d-hydraulics.png is Figure 6-15 of the HEC-RAS 2D User's Manual, particle tracing over a depth layer (U.S. Army Corps of Engineers Hydrologic Engineering Center, public domain; hec.usace.army.mil/confluence/rasdocs/r2dum, Viewing 2D output, Plotting Velocity), unchanged. Later the same evening the decks were reorganized: the HAND grid slides and the stream-definition slide moved to Tuesday, the flood-frequency and FEMA-maps slides came here, Part 3 (four ModelBuilder tips slides: fl-environments.png, fl-iterate-dialog.png, fl-merge-dialog.png, fl-history.png are copies of the Lab 7 page's Figures 0, 5a, 5d and 7) was added, and the closing quizzes swapped. Then the gage-to-depth slides (What a Gage Measures, The River's Ruler, Same Reading Two Rivers, The Rating Curve, From Flow Back to Depth) moved here from Tuesday as Part 2. -->
