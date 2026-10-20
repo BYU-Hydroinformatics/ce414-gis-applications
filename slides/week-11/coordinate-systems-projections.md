@@ -676,15 +676,44 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:34% w:90%](images/crs-utm-zones-conus.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Projections and Datums.** Five questions: what your coordinates **measure**, what your map **gives up**, and what both are **measured from**. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Lab 8 needs this check before you combine layers
+
+**Before next class**
 
 - Read **Chapter 3** of *GIS Fundamentals* (Projections and Coordinate Systems)
-- Take **Quiz 10** (open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Take **Quiz 9** (Coordinate Systems and GPS, Chapters 3 and 5, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Current lab: [Lab 10 — Avalanche Hazard](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm** — check the coordinate system of every layer before you combine them
 - **Thursday:** a GPS refresher
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
+
+</div>
+<div>
+
+![w:300 center](images/quiz-coordinate-systems-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/coordinate-systems/</span>
+
+</div>
+</div>
+
+<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The Tennessee item
+     is the reliable one: the vote usually goes to UTM because UTM is the system they use, and the
+     figure earlier in the hour is the argument - match the shape of the low-distortion band to the
+     shape of the study area, and Tennessee is long east-west. The NAD 83 item splits a smaller room:
+     plenty of students read a datum name as a projection, which is exactly the confusion that makes
+     two layers land on top of each other and look fine until someone measures. If the room has no
+     signal, put the URL on the board; the items read aloud just as well, and the units question makes
+     a good one to argue out loud. -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Review - Coordinate Systems and Projections.pptx",
      56 slides (55 PDF pages; slide 14 is hidden). Converted to 57 slides: 55 source slides kept, plus a
@@ -720,39 +749,3 @@ Compare some places yourself: [thetruesize.com](https://www.thetruesize.com/)
      STRUCTURE: the course plan wants the operational material moved to Weeks 1-2 and this session rebuilt
      around lab decisions (units, distortion, datum, cell size, transformations). That decision is flagged
      at the top of the file and has not been made here; the source order is preserved. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Projections and Datums
-
-<div class="columns">
-<div>
-
-Five questions: what your coordinates **measure**, what your map **gives up**, and what both are **measured from**.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — a check that today landed
-- Every answer explains itself; read it before you move on
-- It is the check Lab 8 wants before you combine layers
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/coordinate-systems/</span>
-
-</div>
-<div>
-
-![w:400 center](images/quiz-coordinate-systems-qr.png)
-
-</div>
-</div>
-
-<!-- Five minutes, in pairs, then a show of hands on the two that split the room. The Tennessee item
-     is the reliable one: the vote usually goes to UTM because UTM is the system they use, and the
-     figure earlier in the hour is the argument - match the shape of the low-distortion band to the
-     shape of the study area, and Tennessee is long east-west. The NAD 83 item splits a smaller room:
-     plenty of students read a datum name as a projection, which is exactly the confusion that makes
-     two layers land on top of each other and look fine until someone measures. If the room has no
-     signal, put the URL on the board; the items read aloud just as well, and the units question makes
-     a good one to argue out loud. -->

@@ -252,7 +252,7 @@ Five decisions from today's workflow: criteria, **reclassify**, overlay, and rea
 
 **Scan the code**, or open the link below.
 
-- Not graded, nothing recorded — a check that today landed
+- Not graded, nothing recorded: a quick check that today's material made sense
 - Every answer explains itself; read it before you move on
 - These are the decisions every suitability model makes you write down
 

@@ -2,7 +2,7 @@
 
 Every lecture deck ends with a slide carrying a QR code. A student scans it with a phone and
 gets a short, self-marking quiz on what was just taught. Nothing is recorded and nothing is
-graded — it is a two-minute check that the lecture landed, and a way to end class on a question
+graded — it is a two-minute check that the lecture made sense, and a way to end class on a question
 rather than on a list of deadlines.
 
 This file is the authority for building one. It is the companion to
@@ -138,33 +138,38 @@ quiz, and a student has no way to tell the difference.
 
 ## The closing slide
 
-Append this as the **last** slide of the deck, after the housekeeping slide, so the code stays
-on screen while the room packs up:
+Every deck ends on **one** slide, **Final Thoughts**, that carries both the quiz and the
+before-next-class items, so students read both while they pack up. (Until October 15, 2026 these
+were two slides; the separate *Before Next Class* slide is gone.) Append it as the **last** slide:
 
 ```markdown
 ---
 
 <!-- _class: activity -->
 
-# One last thing — <short title>
+# Final Thoughts
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-<one line saying what the quiz asks, in the deck's own words>
+**Quiz: <short title>.** <one line saying what the quiz asks, in the deck's own words> **Scan the code**, or open the link under it.
 
-**Scan the code**, or open the link below.
+- Not graded, nothing recorded: a quick check that today's material made sense
+- <one plain line tying it to the graded quiz or the lab that week>
 
-- Not graded, nothing recorded — it is a check that it landed
-- Every answer explains itself; read the explanation before you move on
-- <one line tying it to the graded quiz or the lab that week>
+**Before next class**
 
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/<slug>/</span>
+- <the reading>
+- <the open-book quiz on Learning Suite, with its due time>
+- <the current lab, linked, with its due time>
+- Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
 <div>
 
-![w:400 center](images/quiz-<slug>-qr.png)
+![w:300 center](images/quiz-<slug>-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/<slug>/</span>
 
 </div>
 </div>
@@ -172,6 +177,10 @@ on screen while the room packs up:
 <!-- Speaker note: how long to give it, which item usually splits the room, and what to say if
      the room has no signal (put the URL on the board; the items read aloud just as well). -->
 ```
+
+Render it and look. If the left column reaches the footer, drop the font to `0.74em`, then
+shorten bullets; never cut the due dates. Write the quiz bullet plainly: "The datum question comes
+back in Lab 6", not "the datum question is the one that will cost you an afternoon".
 
 The URL is printed under the code on purpose. A phone with no camera permission, a dead battery
 in the back row, or a projector too dim to scan all end the same way without it.

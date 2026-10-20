@@ -271,40 +271,35 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/nab-service-areas.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Four Minutes Away.** Five questions on Solve, which solver answers which question, why a buffer and a service area disagree, and what Lab 12's cutoff decides. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The buffer question comes back in Lab 12's Map 2
+
+**Before next class**
 
 - **Lab 12 — Fire Response Coverage** — due **Saturday 11:59 pm**: [assignments/lab-12](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/)
 - **Midterm 2** closes **Thursday 9:00 pm** in the Testing Center
 - **Final project**: proposal meeting by **Friday 5:00 pm**; no class next week; the video is due Wednesday of Week 15 and the write-up Thursday
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week14_network_figures.py from Lab 12's package and reference run (tools/lab12/); the two example maps are Lab 12's Figures 9 and 10 (tools/lab12/build_figures.py). Owed: Lab 12's dialog captures (Figures 2 to 4) and Figure C from the GUI build, to replace the icons on slide 7 and the map on slide 13. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Four Minutes Away
-
-<div class="columns">
-<div>
-
-Five questions on Solve, which solver answers which question, why a buffer and a service area disagree, and what Lab 12's cutoff decides. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The buffer question is the one Lab 12's Map 2 turns on
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/service-areas/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-service-areas-qr.png)
+![w:300 center](images/quiz-service-areas-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/service-areas/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week14_network_figures.py from Lab 12's package and reference run (tools/lab12/); the two example maps are Lab 12's Figures 9 and 10 (tools/lab12/build_figures.py). Owed: Lab 12's dialog captures (Figures 2 to 4) and Figure C from the GUI build, to replace the icons on slide 7 and the map on slide 13. -->

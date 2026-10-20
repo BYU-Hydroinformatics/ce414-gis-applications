@@ -333,38 +333,31 @@ Same model, same data, five runs of the tool dialog:
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:34% w:94%](images/ra-lab2-example-map.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Which Family?** Five questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The last three questions cover the ideas behind Lab 2 Step 6
+
+**Before next class**
 
 - **Lab 2 — NDVI** is due **Saturday 11:59 pm**: [assignments/lab-02](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-02/). Step 6 needs the full sweep; you have three of its rows. The two maps and the rubric self-assessment are what remain
 - **Reading**: Chapter 10 of *GIS Fundamentals* (Topics in Raster Analysis)
 - **Quiz 3**, open book, on Learning Suite, due **Saturday 11:59 pm**
 - **Office hours**: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Remind them that the sweep table started in class is a required Lab 2 deliverable and needs finishing, and that the map they choose for the scenario should be the run that most changes what a reader would conclude. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Which Family?
-
-<div class="columns">
-<div>
-
-Five questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The last three items are the ideas Lab 2 Step 6 is built on
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-functions/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-raster-functions-qr.png)
+![w:300 center](images/quiz-raster-functions-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/raster-functions/</span>
 
 </div>
 </div>
@@ -421,3 +414,5 @@ instructor's request, immediately after the NDVI material in Part A.
   Thursday. Either drop that row from tools/build_schedule.py or point it at whatever Thursday's
   activity becomes. The Excel map-algebra activity stays on Tuesday.
 -->
+
+<!-- Remind them that the sweep table started in class is a required Lab 2 deliverable and needs finishing, and that the map they choose for the scenario should be the run that most changes what a reader would conclude. -->

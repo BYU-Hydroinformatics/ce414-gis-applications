@@ -273,31 +273,33 @@ By the end of class you should be able to:
 - Today's ideas come straight back: a **datum** to convert, an **area table** to check against
 - **New for Lab 6:** your **own five levels** from your BYU ID, maps as **ArcGIS Pro PDF exports**, a **History** capture
 
-- Before Thursday: build the model, [Lab 6 Steps 0 to 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/); questions to [office hours](https://calendly.com/dan-ames/office-hours)
-
 <!-- The diagram is a sketch of the Lab 6 model; Thursday builds it. Why Powell for the lab and the Great Salt Lake for lecture: the causeway splits the Great Salt Lake below about 4,200 ft, so "keep the water connected to one seed point" keeps only the south arm — a good report question, a bad first loop. -->
 
 ---
 
 <!-- _class: activity -->
 
-# One Last Thing — Lake Bathymetry
+# Final Thoughts
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-Five questions on a terminal lake, measuring the bottom, datums, and what a level does to area. **Scan the code**, or open the link below.
+**Quiz: Lake Bathymetry.** Five questions on a terminal lake, measuring the bottom, datums, and what a level does to area. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The datum question is the one that will cost you an afternoon in Lab 6 if you miss it
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the datum question: missing it costs time in Lab 6
 
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/bathymetry/</span>
+**Before next class**
+
+- Build the model: [Lab 6 Steps 0 to 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
+- Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
 <div>
 
-![w:400 center](images/quiz-bathymetry-qr.png)
+![w:300 center](images/quiz-bathymetry-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/bathymetry/</span>
 
 </div>
 </div>

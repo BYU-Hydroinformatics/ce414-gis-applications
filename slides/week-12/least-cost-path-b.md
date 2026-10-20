@@ -249,39 +249,34 @@ Change **one** decision in Lab 11's model. Which one moves the route **farthest*
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/lcpb-backdirection.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: What Moved the Line?** Five questions on the current tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- The line-weight question comes back in Lab 11 Step 9
+
+**Before next class**
 
 - **Lab 11 — Least Cost Path Power Line Analysis** — due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 - Next week: the **final project** (Tuesday), and Thanksgiving
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck (itself converted from "CE 414 Week 11 - Least Cost Path Analysis.pptx"); realigned the same day with the rebuilt Lab 11. Figures and numbers: tools/week12_lcp_figures.py (toy grids, and Lab 11's reference run from tools/lab11/run_model.py; numbers in tools/week12_lcp_numbers.json). The Cost Distance capture is from an ArcGIS Pro 3.7.1 session at 175 %; the other two tool captures are Lab 11's Figures 7a and 7b. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — What Moved the Line?
-
-<div class="columns">
-<div>
-
-Five questions on the current tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The line-weight question is the one Lab 11's Step 9 turns on
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/cost-paths/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-cost-paths-qr.png)
+![w:300 center](images/quiz-cost-paths-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/cost-paths/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck (itself converted from "CE 414 Week 11 - Least Cost Path Analysis.pptx"); realigned the same day with the rebuilt Lab 11. Figures and numbers: tools/week12_lcp_figures.py (toy grids, and Lab 11's reference run from tools/lab11/run_model.py; numbers in tools/week12_lcp_numbers.json). The Cost Distance capture is from an ArcGIS Pro 3.7.1 session at 175 %; the other two tool captures are Lab 11's Figures 7a and 7b. -->

@@ -30,15 +30,21 @@ This mirrors what was done for CCE 114 Geomatics. Where the two courses differ, 
 Everything originates in Dr. Ames's course folder, which is **not** in this repo:
 
 ```
-/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
-├── Labs/                    Lab 1–10 .docx  (Lab 1 was corrected Sept 3, 2026)
-│   └── Old/2026_pre_refresh/   archived originals
-├── Lectures/2026/           the 15 current .pptx decks
-│   └── ../Old/2026_pre_pro_refresh/  archived originals
-├── _screenshots_2026/       new ArcGIS Pro captures, with a README
-├── recommended_plan.md      the living course-improvement plan — READ THIS
-├── SCREENSHOT_SHOT_LIST.md  evidence-based audit of every image in every deck and lab
-└── NEXT_AGENT_HANDOFF.md    prior handoff (Lab 1 data package, Citrix notes)
+~/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/   (reorganized Oct 16, 2026)
+├── README.md                          start here
+├── 2026 Fall (current)/
+│   ├── Planning notes/
+│   │   ├── recommended_plan.md        the living course-improvement plan — READ THIS
+│   │   ├── SCREENSHOT_SHOT_LIST.md    evidence-based audit of every image in every deck and lab
+│   │   └── NEXT_AGENT_HANDOFF.md      prior handoff (Lab 1 data package, Citrix notes)
+│   ├── Screenshots/                   new ArcGIS Pro captures, with a README
+│   └── Lab Data/                      _lab_data_2026/, Lab 1 Data/, Solutions/
+├── Source files (pre-website)/
+│   ├── Labs 2026 (Word)/              Lab 1–10 .docx  (Lab 1 was corrected Sept 3, 2026)
+│   └── Lectures 2026 (PowerPoint)/    the 15 current .pptx decks
+└── Archive (before 2026)/
+    ├── Labs/2026_pre_refresh/         archived lab originals
+    └── Lectures/2026_pre_pro_refresh/ archived deck originals
 ```
 
 `recommended_plan.md` and `SCREENSHOT_SHOT_LIST.md` are the two documents worth reading in full
@@ -121,7 +127,7 @@ units, projected CRS, Intersect-vs-Clip, rubric total), so the text is in good s
 
 ```bash
 python3 tools/docx2md.py \
-  "/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Labs/Lab 1 - Walmart Site Selection.docx" \
+  "$HOME/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/Source files (pre-website)/Labs 2026 (Word)/Lab 1 - Walmart Site Selection.docx" \
   docs/assignments/lab-01
 ```
 
@@ -131,7 +137,7 @@ table renders.
 > [!WARNING]
 > **Lab 1's screenshots are gated.** They still show the old workflow — `CensusBlocks2010`,
 > `!POP100!/!SqMiles!`, `CARTO = 1/2/3/6`. Do **not** re-shoot them until the data validation in
-> `Labs/Lab 1 Data/2026-09-02/ARCGIS_PRO_VALIDATION_CHECKLIST.md` passes. Migrating the text with
+> `2026 Fall (current)/Lab Data/Lab 1 Data/2026-09-02/ARCGIS_PRO_VALIDATION_CHECKLIST.md` passes. Migrating the text with
 > the old images is fine and expected; just flag them.
 
 ### 2. Week 1 and Week 2 lecture decks
@@ -260,7 +266,7 @@ constraints below were all found the hard way in September 2026:
   resolution (2940×1912), then crop the region with Pillow. Bring Chrome to the front first and
   make sure its window is fully on screen, or captures clip.
 
-Existing captures and the shot list live in the course folder under `_screenshots_2026/`.
+Existing captures live in the course folder under `2026 Fall (current)/Screenshots/`, and the shot list under `2026 Fall (current)/Planning notes/`.
 
 **Lab screenshot verification pass (Sept 3, 2026):** the per-lab image plan, the reasons the
 first attempt stalled at the Citrix door, and the Mac-side capture helper are in
@@ -300,7 +306,7 @@ reference pages. The short list:
 ## Definition of done, per lecture deck
 
 - [ ] Converted per `tools/slide-conversion-guide.md`, which is the authority on structure and tone
-- [ ] Title slide, a **Today's Goals** slide, and a **Before Next Class** slide
+- [ ] Title slide, a **Today's Goals** slide, and a closing **Final Thoughts** slide (quiz + before next class)
 - [ ] Every speaker note from the source carried across as an HTML comment
 - [ ] All ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording updated to ArcGIS Pro equivalents
 - [ ] Any remaining ArcMap-era screenshot explicitly flagged, not silently kept

@@ -444,40 +444,39 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Follow the Water.** Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the **pour point** and **snapping** questions; getting them right saves time in Lab 5
+
+**Before next class**
 
 - **Lab 5 — Watershed Delineation** is due **Saturday 11:59 pm** — [Lab 5](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
 - Take **Quiz 6** (Watershed Delineation, open book) on Learning Suite — due **Saturday 11:59 pm**
 - **Lab 6 — Lake Depth Explorer** is next — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Revision notes (2026-10-05, later): the two parts were swapped so class runs manual delineation, then StreamStats, then the ArcGIS Pro steps. Part 1 is now "Manual Watershed Delineation" (the two Hog Pen Creek slides merged into one, the hand-drawn divide revealed on a click, then the Emigration Creek activity and the StreamStats slides); Part 2 is steps 4 to 8, the Example Model and Back to Lab 5. The StreamStats goal moved to the top of Today's Goals, and its question moved to the top of the Follow the Water quiz, so goals and questions stay in the same order. -->
-<!-- Restructure notes (2026-10-05): this deck now opens at step 4 (flow accumulation), carrying steps 4 to 8, the Example Model and the Back to Lab 5 slide over from Part A, and keeps the hand-versus-StreamStats delineation. Its old Part 1 (what a watershed is, Powell, anatomy, nesting, water balance, functions) moved to the start of Part A. See the restructure notes in watershed-delineation-a.md. -->
-<!-- Split notes (2026-10-01): this deck is Parts 2 and 3 of the original Week 6 deck (source "CE 414 Week 6 - Watershed Delineation.pptx"; its conversion notes stay in watershed-delineation.md). New here: the title and goals, the "Watersheds Nest" map (USGS WBD units around Rock Canyon, replacing a 490 px management-units diagram), the water-balance figure (on Lab 5's basin outline, replacing two small hydrologic-cycle images), the terrain-processing panels rebuilt from Lab 5's data (replacing a 584 px nine-panel figure), and the bridge to Week 7. Figures from tools/week06_figures.py and tools/week06_water_balance_svg.py. Still third-party and small: the Orange County watershed diagram (450 px) and the processes-and-functions diagram (600 px); kept because they are sourced illustrations, flagged for replacement. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Follow the Water
-
-<div class="columns">
-<div>
-
-Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The two it drills hardest — the **pour point** and **snapping** it — decide whether Lab 5 takes an hour or an afternoon
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/basins/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-basins-qr.png)
+![w:300 center](images/quiz-basins-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/basins/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs, then a show of hands on the consistent-versus-accurate item: most of the room will say the automated basin is more accurate, and the deck's claim is narrower than that. The threshold item is the other one worth a word: raising it thins the network, and nothing about the terrain changed. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+
+<!-- Revision notes (2026-10-05, later): the two parts were swapped so class runs manual delineation, then StreamStats, then the ArcGIS Pro steps. Part 1 is now "Manual Watershed Delineation" (the two Hog Pen Creek slides merged into one, the hand-drawn divide revealed on a click, then the Emigration Creek activity and the StreamStats slides); Part 2 is steps 4 to 8, the Example Model and Back to Lab 5. The StreamStats goal moved to the top of Today's Goals, and its question moved to the top of the Follow the Water quiz, so goals and questions stay in the same order. -->
+
+<!-- Restructure notes (2026-10-05): this deck now opens at step 4 (flow accumulation), carrying steps 4 to 8, the Example Model and the Back to Lab 5 slide over from Part A, and keeps the hand-versus-StreamStats delineation. Its old Part 1 (what a watershed is, Powell, anatomy, nesting, water balance, functions) moved to the start of Part A. See the restructure notes in watershed-delineation-a.md. -->
+
+<!-- Split notes (2026-10-01): this deck is Parts 2 and 3 of the original Week 6 deck (source "CE 414 Week 6 - Watershed Delineation.pptx"; its conversion notes stay in watershed-delineation.md). New here: the title and goals, the "Watersheds Nest" map (USGS WBD units around Rock Canyon, replacing a 490 px management-units diagram), the water-balance figure (on Lab 5's basin outline, replacing two small hydrologic-cycle images), the terrain-processing panels rebuilt from Lab 5's data (replacing a 584 px nine-panel figure), and the bridge to Week 7. Figures from tools/week06_figures.py and tools/week06_water_balance_svg.py. Still third-party and small: the Orange County watershed diagram (450 px) and the processes-and-functions diagram (600 px); kept because they are sourced illustrations, flagged for replacement. -->

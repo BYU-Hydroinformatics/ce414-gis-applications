@@ -40,7 +40,7 @@ Two lab names that had been plain text were also linked:
 > - `414 - ModelBuilder A.pptx` → `fileId=d0c504a5-DwuP-rQih-CUdX-Qie897b38949`
 
 This is recoverable but more manual than the lab rollback. The `.pptx` files were not deleted —
-they are still in the Learning Suite file store and in the course folder under `Lectures/2026/`.
+they are still in the Learning Suite file store and in the course folder under `Source files (pre-website)/Lectures 2026 (PowerPoint)/` (formerly `Lectures/2026/`).
 To restore one, re-embed the file through the CKEditor file picker in the schedule cell rather
 than pasting a recorded `fileId`.
 

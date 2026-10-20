@@ -333,7 +333,8 @@ that would never fill, and pieces of the lake that 30 m cells cut off where a ca
 than a cell. Keep only the water connected to the dam:
 
 1. **Raster to Polygon** on the wet raster, with **Simplify polygons** unchecked (so the polygon
-   follows the cells exactly and the area is exact) and **Create multipart features** unchecked.
+   follows the cells exactly and the area is exact; see the note below Figure 4a) and **Create
+   multipart features** unchecked.
    Output `wetpoly_%Elevation%`.
 2. **Select Layer By Location**: input `wetpoly_%Elevation%` (the model variable, straight from the
    list; no Make Feature Layer is needed), relationship **Intersect**, selecting features
@@ -345,6 +346,20 @@ than a cell. Keep only the water connected to the dam:
 ![The Raster to Polygon dialog from ModelBuilder: Input raster wet_%Elevation%, Field VALUE, Output polygon features wetpoly_%Elevation%, Simplify polygons unchecked, Create multipart features unchecked, Maximum vertices per polygon feature empty.](images/lab06-raster-to-polygon.png)
 
 **Figure 4a.** Raster to Polygon, with both boxes unchecked.
+
+> [!NOTE]
+> **Why are my shorelines stair-stepped when my neighbor's are smooth?** It is the **Simplify
+> polygons** box. Unchecked, each polygon edge runs along the cell edges, so every shoreline is a
+> staircase of 30 m steps. Checked (the tool's default), ArcGIS Pro smooths the staircase into
+> lines that cut across the corners of the cells, so the shoreline looks like a curve.
+>
+> - **Unchecked** keeps the most detail: the polygon is exactly the wet cells, and the area is the
+>   cell count times the cell area. Every check value on this page was measured this way.
+> - **Checked** usually makes the better-looking map, but the smoothed line no longer follows the
+>   cells exactly, so the area comes out a little different from the cell count.
+>
+> Either is acceptable; choose the one you want. If you check it, your areas will not match the
+> check values exactly. Say in your report which you used.
 
 ![The Select Layer By Location dialog from ModelBuilder: Input Features wetpoly_%Elevation%, Relationship Intersect, Selecting Features main_pool_seed, Search Distance empty in Meters, Selection Type New selection, Invert Spatial Relationship unchecked.](images/lab06-select-by-location.png)
 
@@ -496,6 +511,32 @@ a half. Your runs look the same with your own values; Run 1 takes about five tim
 > `wahweap_ft`, and give the output a new name) and compare the shoreline in one side canyon near
 > Wahweap with the 30 m version. That is the cell-size question from the Analysis Considerations,
 > answered with your own eyes, and it makes a sharper Map 2 if your levels fall inside the close-up.
+
+### Step 8 — Symbolize the Shorelines
+
+Every pool contains every pool below it, so the polygons sit on top of one another. With the
+default symbology the biggest one covers the rest, and the map shows one patch of water. Two
+settings fix that: a color for each level, and a drawing order that puts the small, low pools on
+top. Do this for each run's layer:
+
+1. Right-click the layer ▸ **Symbology**. Set **Primary symbology** to **Graduated Colors** and
+   **Field** to `Elevation`.
+2. Set **Classes** so each level gets its own color: 5 for your Run 2 layer, and as many as ArcGIS
+   Pro allows for Run 1. If ArcGIS Pro will not go as high as 35, use fewer classes so that each
+   color covers a band of levels, as in Figure 8.
+3. Pick a **Color scheme** that runs from white or pale blue to dark blue. Better still, choose
+   your own colors: the map is yours, and it does not have to match the examples. Whatever you
+   choose, make the low levels the dark end, since that is the deep water. If the scheme runs the
+   wrong way, reverse it.
+4. Open the **Advanced symbology options** tab of the Symbology pane (verify the tab name in your
+   version), expand **Feature drawing order**, check **Enable feature drawing order**, and choose
+   `Elevation`. Then set the sort so the *highest* levels draw first and the lowest last. If you
+   still see a single color, the sort is the wrong way round: reverse it.
+
+> [!TIP]
+> **Check the result:** you see nested rings of color, darkest in the old river channel and
+> lightest along the outer shoreline, as in Figure 8. Use the same colors on both maps so that a
+> level looks the same on Map 1 and Map 2.
 
 ## Deliverables
 

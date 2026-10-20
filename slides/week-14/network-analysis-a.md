@@ -224,40 +224,35 @@ Lab 12's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/nab-one-station-rings.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Along the Roads.** Five questions on junctions and connectivity, one-way streets as a cost, two impedances, UGRC's 1.5 factor, and which distance belongs to a fire engine. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Thursday builds on the two-impedance question
+
+**Before next class**
 
 - **Midterm 2** is open in the Testing Center **Tuesday 8:00 am to Thursday 9:00 pm** this week (late fee from Thursday 2:00 pm); Weeks 8 to 13
 - **Lab 12 — Fire Response Coverage** — due **Saturday 11:59 pm**: [assignments/lab-12](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/)
 - Thursday: service areas, closest facility, location-allocation, and Lab 12's model in ArcGIS Pro
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week14_network_figures.py from Lab 12's package and reference run (tools/lab12/). Network facts (connectivity by subtype, evaluators, global turn delays, no elevation model) are read from UGRC's network template, tools/lab12/ugrc_network_template.xml. Owed: a real capture of Network Dataset Properties from the Lab 12 GUI build. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Along the Roads
-
-<div class="columns">
-<div>
-
-Five questions on junctions and connectivity, one-way streets as a cost, two impedances, UGRC's 1.5 factor, and which distance belongs to a fire engine. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The two-impedance question is the one Thursday builds on
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/networks/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-networks-qr.png)
+![w:300 center](images/quiz-networks-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/networks/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
+
+<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week14_network_figures.py from Lab 12's package and reference run (tools/lab12/). Network facts (connectivity by subtype, evaluators, global turn delays, no elevation model) are read from UGRC's network template, tools/lab12/ugrc_network_template.xml. Owed: a real capture of Network Dataset Properties from the Lab 12 GUI build. -->

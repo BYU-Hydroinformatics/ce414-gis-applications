@@ -84,7 +84,7 @@ midterms, where AI is not available.
 
 **AI is not permitted.** These are closed-book, concept-based exams in the Testing Center. Prepare
 with AI as much as you like beforehand — practice questions, concept review, having a topic
-explained until it lands — but the exam itself is you.
+explained until it makes sense — but the exam itself is you.
 
 ### Final exam
 

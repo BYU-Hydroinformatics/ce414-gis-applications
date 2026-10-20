@@ -250,11 +250,41 @@ Brigham Young University
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: Cheapest or Shortest?** Five questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Watch the reclassification sign in Lab 11: **high means undesirable**
+
+**Before next class**
 
 - **Lab 11 — Least Cost Path Power Line Analysis** uses today's tools, due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
-- Take **Quiz 11** (Chapter 5, GPS and GNSS Data, open book) on **Learning Suite** — due **Saturday 11:59 pm**
+- Take **Quiz 10** (Least Cost Paths, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
+
+</div>
+<div>
+
+![w:300 center](images/quiz-least-cost-path-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/least-cost-path/</span>
+
+</div>
+</div>
+
+<!-- Four to five minutes, in pairs, then a show of hands on the item that splits the room every
+     time: what a single cell of the cost surface actually stores. Half the class picks "the total
+     cost of the cheapest route to that cell", because that is the raster they just watched get
+     built - so name the difference out loud. A cell of the cost surface is a price for crossing
+     that one cell; the accumulated cost raster is the running total of the cheapest way to reach
+     it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
+     well. -->
 
 <!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.
 No source slides were dropped; there were no hidden slides and no speaker notes in the original, so every
@@ -272,36 +302,3 @@ The student example map (images/lcp-example-map-power-lines.jpg) still carries i
 "Name / Date / Projection" text block; kept, and used in the speaker notes as a rubric reminder.
 Nothing outside slides/week-11/ was created or modified.
 Realigned October 9, 2026 with the rebuilt Lab 11: General Workflow names the current tools; the model overview is Lab 11's exported Figure C (lcp-lab11-model.svg), replacing the illegible lcp-full-model-overview.png; the Lab 11 preview uses the lab's example map. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Cheapest or Shortest?
-
-<div class="columns">
-<div>
-
-Five questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The sign of the reclassification — **high means undesirable** — is what Lab 11 punishes hardest
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/least-cost-path/</span>
-
-</div>
-<div>
-
-![w:400 center](images/quiz-least-cost-path-qr.png)
-
-</div>
-</div>
-
-<!-- Four to five minutes, in pairs, then a show of hands on the item that splits the room every
-     time: what a single cell of the cost surface actually stores. Half the class picks "the total
-     cost of the cheapest route to that cell", because that is the raster they just watched get
-     built - so name the difference out loud. A cell of the cost surface is a price for crossing
-     that one cell; the accumulated cost raster is the running total of the cheapest way to reach
-     it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
-     well. -->

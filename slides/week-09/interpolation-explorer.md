@@ -259,40 +259,35 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
 
-![bg right:30% w:94%](images/ie-example-baseline.png)
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
+<div>
+
+**Quiz: How Wrong Is the Surface?** Five questions on error rasters, RMSE, checkpoints and sensitivity. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the sign question: a wrong sign flips the whole map in Lab 8
+
+**Before next class**
 
 - **Quiz 7** — open book, Chapter 12, due **Saturday 11:59 pm**
 - **Lab 8 — Interpolation Explorer** — due **Saturday 11:59 pm** — [Lab 8](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/); start Steps 0 and 1 in class
 - Next week: **cut, fill, and raster volumes**, and **Lab 9 — Big Southern Butte**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 9, Quiz 8 and Chapter 14 this Saturday; Lab 8 is due the Saturday of Week 10. Deck written October 8, 2026. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — How Wrong Is the Surface?
-
-<div class="columns">
-<div>
-
-Five questions on error rasters, RMSE, checkpoints and sensitivity. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The sign question is the one that flips a whole map in Lab 8
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/rmse/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-rmse-qr.png)
+![w:300 center](images/quiz-rmse-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/rmse/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs, then a show of hands on the checkpoint item: most of the room expects 200 points to be too few to rank the methods. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->

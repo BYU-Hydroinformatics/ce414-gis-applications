@@ -413,39 +413,32 @@ It is better for your receiver to get a fix on **well distributed** satellites t
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Where Am I?** Five questions on what a receiver actually measures, and on why the position it reports is never exactly where you are. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Quiz 9 on Learning Suite is the graded one this week; this is the rehearsal for it
+
+**Before next class**
 
 - Read **Chapter 5** of *GIS Fundamentals* (GPS and GNSS Data)
-- Take **Quiz 11** (open book) on **Learning Suite** — due **Saturday of next week**
+- Take **Quiz 9** (Coordinate Systems and GPS, Chapters 3 and 5, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Finish [**Lab 10 — Avalanche Hazard**](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/), due **Saturday 11:59 pm**
 - Next week: **least cost paths**, and **Lab 11 — Least Cost Path Power Line Analysis**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- TODO(graphic): a "what's due this week" visual, or a screenshot of the Final Project proposal template. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Where Am I?
-
-<div class="columns">
-<div>
-
-Five questions on what a receiver actually measures, and on why the position it reports is never exactly where you are.
-
-**Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- Quiz 11 on Learning Suite is the graded one this week; this is the rehearsal for it
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/gps/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-gps-qr.png)
+![w:300 center](images/quiz-gps-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/gps/</span>
 
 </div>
 </div>
@@ -480,3 +473,5 @@ TODO(graphic) — no images were generated in this pass, per instruction. Conten
 TODO(instructor) — topics the plan lists as instructor decisions, recorded in place and deliberately NOT written: selective-availability framing and current policy; current GNSS constellations (the deck is GPS-only and never mentions GLONASS, Galileo, BeiDou or QZSS); atmospheric-delay depth and dual-frequency correction; multipath mitigation; the DOP family and what a field crew should do with a reported DOP; SBAS/WAAS, RTK, network RTK and PPP; coordinate reference frames and datums. Also: the deck title retitle, the course number, and the reading chapter.
 
 VERIFY items: the travel-time decimal (slide "B. Range (How Far Away?)"); the error-magnitude table, which is the source deck's own figures and was not independently checked; the classroom measurements in the Air Force One activity, which are specific to one room; the "Correction = Bx-5, By+3" label inside the DGPS worked-example figure, which is written as a coordinate rather than an offset; and the Before Next Class schedule, which was reconstructed from the repository's assignment order because the source deck has no wrap-up slide. -->
+
+<!-- TODO(graphic): a "what's due this week" visual, or a screenshot of the Final Project proposal template. -->

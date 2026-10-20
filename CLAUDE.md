@@ -43,7 +43,7 @@ A lab that was wrong in Word should not be wrong in Markdown.
 5. **Do not reproduce copyrighted material** — song lyrics, long textbook passages — even when a
    source slide contains them. Keep the reference, describe it in a line.
 6. **Preserve originals.** The Word and PowerPoint sources live outside this repo. If you edit them,
-   archive the original first (see the `Old/` folders in the course directory).
+   archive the original first (the course folder's `Archive (before 2026)/` holds earlier versions).
 6a. **`docs/schedule/` is generated.** `tools/build_schedule.py` rewrites every `docs/schedule/week-NN.md`,
    `docs/schedule/README.md`, and the Schedule section of `mkdocs.yml` from its `DECKS` and `DUE`
    tables. Edit the tables and re-run the script; hand edits to those files are overwritten (notes
@@ -68,15 +68,23 @@ rubric that Labs 1 and 2 set, and the revise-pilot-promote workflow every later 
 Not in this repo:
 
 ```
-/Users/danames/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/
-├── Labs/                        Lab 1–10 .docx
-├── Lectures/2026/               the 15 current .pptx decks
-├── _screenshots_2026/           new ArcGIS Pro captures + README
-├── recommended_plan.md          living course-improvement plan
-└── SCREENSHOT_SHOT_LIST.md      image-by-image audit of every deck and lab
+~/ames-sync/Work/Teaching/CE 414 Engineering Applications of GIS/   (synced to Google Drive)
+├── README.md                              start here: what each folder holds
+├── 2026 Fall (current)/
+│   ├── Exams and Keys (private)/          final exam copies and keys, past years' exams
+│   ├── Lab Data/                          _lab_data_2026/, Lab 1 Data/, Solutions/, Lab 6 package
+│   ├── Reading Quizzes/                   Learning Suite quiz keys, Quiz 2 build
+│   ├── Screenshots/                       ArcGIS Pro captures + README
+│   └── Planning notes/                    recommended_plan.md, SCREENSHOT_SHOT_LIST.md
+├── Source files (pre-website)/
+│   ├── Labs 2026 (Word)/                  the Lab 1–10 .docx the site was built from
+│   └── Lectures 2026 (PowerPoint)/        the 2026 .pptx decks
+├── Reference/                             Bolstad PDF and other references
+└── Archive (before 2026)/                 older labs, lectures, syllabi, past years
 ```
 
-Those last two are worth reading in full before a large piece of work.
+The two planning notes are worth reading in full before a large piece of work. The folder was
+reorganized on October 16, 2026; its `MOVES-2026-10-16.txt` maps every old path to its new one.
 
 ## How to build and check
 

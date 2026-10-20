@@ -133,10 +133,11 @@ By the end of class you should be able to:
 ![bg right:40% h:96%](images/lb-lab06-example-placeholder.png)
 
 - **Run 2's five rows** match a run at your levels
-- **Three files:** the report, plus **each map as an ArcGIS Pro layout PDF**, text selectable
-- **Proof it ran:** a **Geoprocessing History** capture showing both runs, and Run 1's **attribute table**
+- **Model figure** exported from **ModelBuilder**, not a screen capture
+- **Three files:** the report + **each map as an ArcGIS Pro layout PDF**, vector, text selectable
+- **Proof it ran:** a **Geoprocessing History** capture showing both runs
 - **The example maps' words are brackets** on purpose; yours are yours
-- An AI-made figure or map, or a number no run produced: **zero** for that part
+- An AI-made figure or map, or a number no run produced: **zero** for that part, and an AI-policy referral
 
 <!-- Why: Lab 5 showed three ways AI stands in for the work. Published check values make an invented number look real; the example map is a reference image an image generator can repaint; and nothing in a report proves ArcGIS Pro ran. A layout PDF is vector: selectable text, real geometry, an ArcGIS Pro producer string. History is cheap to capture and hard to fake. The AI policy is unchanged: use AI to understand a tool, fix an error, or tighten writing; not to run the lab, make the figures, or supply the numbers. -->
 
@@ -156,37 +157,34 @@ By the end of class you should be able to:
 
 ---
 
-# Before Next Class
-
-- **Lab 6 — Lake Depth Explorer** (Lake Powell) — due **Saturday, October 17** — [Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)
-- Next week: **flood mapping** — bathtub models, flood inundation, and HAND, for Lab 7 — and **Midterm 1** in the Testing Center — [study guide](https://byu-hydroinformatics.github.io/ce414-gis-applications/study-guides/midterm-1/)
-- Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
-
-<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:\Ames\Lab06GUI\caps); lb-todo-dem.svg on the Tuesday deck is still a placeholder. -->
-
----
-
 <!-- _class: activity -->
 
-# One Last Thing — Lake Depth Explorer
+# Final Thoughts
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-Five questions on iterators, %Value%, and checking a loop's answer. **Scan the code**, or open the link below.
+**Quiz: Lake Depth Explorer.** Five questions on iterators and %Value%. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The output-name question is the one that silently wipes out a run
+- Not graded, though similar questions may appear on the midterm
+- Note the critical output-name question: if you get it wrong, outputs are overwritten
 
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/iterators/</span>
+**Before next class**
+
+- **[Lab 6](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-06/)** due **Saturday, October 17**
+- Next week: **flood mapping** for Lab 7, and **Midterm 1** in the Testing Center ([study guide](https://byu-hydroinformatics.github.io/ce414-gis-applications/study-guides/midterm-1/))
+- Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
 <div>
 
-![w:400 center](images/quiz-iterators-qr.png)
+![w:300 center](images/quiz-iterators-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/iterators/</span>
 
 </div>
 </div>
 
-<!-- Four minutes, in pairs, then a show of hands on the output-name item. If the room has no signal, put the URL on the board. -->
+<!-- Quiz and "before next class" share one closing slide (October 15, 2026) so students read both while packing up. Four minutes, in pairs, then a show of hands on the output-name item. If the room has no signal, put the URL on the board. -->
+
+<!-- Week 7 decks drafted October 1, 2026; Thursday reworked the same night for Lab 6 at Lake Powell (lecture stays on the Great Salt Lake). Powell figures: tools/week07_powell_figures.py and tools/lab06/build_figures.py. Figures: tools/week07_figures.py (USGS gage, USGS EAV table, hydromap shorelines, HydroShare cross-section, ArcGIS Pro maps) and tools/week07_diagrams_svg.py (drawn diagrams and the screenshot placeholders, lb-todo-*.svg). The Thursday deck's lb-todo-*.svg placeholders were replaced on October 2, 2026 with captures from the Lab 6 GUI build (lb-iterators-menu, lb-for-dialog, lb-con-dialog, lb-full-model, lb-run-result; originals in C:\Ames\Lab06GUI\caps); lb-todo-dem.svg on the Tuesday deck is still a placeholder. -->

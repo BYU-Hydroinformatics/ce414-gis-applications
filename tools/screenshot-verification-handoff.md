@@ -73,7 +73,7 @@ What was learned that makes the next attempt faster:
 - Typed paths work inside ArcGIS Pro's own dialogs (Add Data ▸ Name box), just not in Explorer.
 - Dead ends, do not retry: canvas `toDataURL` + fetch/beacon/WebSocket to localhost (CSP and
   Chrome's Local Network Access prompt block it); the extension's `zoom` images cannot be saved.
-- Data prepared on the Mac for the next attempt, in the course folder's `_lab_data_2026/`:
+- Data prepared on the Mac for the next attempt, in the course folder's `2026 Fall (current)/Lab Data/_lab_data_2026/`:
   `lab-03/Escondido_1893_historic_map.jpg` (USGS 1893 Escondido sheet rendered from the GeoPDF),
   `lab-02/` Landsat 8 path 38 row 32, 2020-07-30, bands 4 and 5 plus MTL, and `dem-utah/` the
   four USGS 1 arc-second tiles n40w112, n40w113, n41w112, n41w113.
@@ -81,7 +81,7 @@ What was learned that makes the next attempt faster:
 ## If the work moves to a local Windows machine instead of Citrix
 
 Everything above that is Citrix-specific stops mattering. What carries over: the per-lab image
-plan below, the prepared data in the course folder's `_lab_data_2026/`, and the capture
+plan below, the prepared data in the course folder's `2026 Fall (current)/Lab Data/_lab_data_2026/`, and the capture
 standards (100 % scale, crop tight to the pane, keep the tool title bar, PNG for anything with
 text). On a local machine ArcGIS Pro reads the course folder directly, `Win+Shift+S` snips
 straight to a file, and there is no drive bridge or sign-in dance. Record the exact Pro version
@@ -116,13 +116,13 @@ migration-notes comment; every page currently says "NOT VERIFIED".
 ## Data: what is on `F:` today
 
 Only Lab 1 has a prepared package:
-`Labs/Lab 1 Data/2026-09-02/` — `CE414_Lab1_BaseData_2026-09-02.gdb`, four GeoJSONs, the student
+`2026 Fall (current)/Lab Data/Lab 1 Data/2026-09-02/` — `CE414_Lab1_BaseData_2026-09-02.gdb`, four GeoJSONs, the student
 zip, and `ARCGIS_PRO_VALIDATION_CHECKLIST.md` (items 1–4 done, everything from "add the layers to
 the map" onward still unchecked). `In Class Activities/Utah Raster Analysis/UtahRasterExercise.gdb`
 may hold a Utah DEM usable for raster-tool dialog shots; check its contents before downloading.
 
 Every other lab's data must be fetched first. Suggested drop folder: a new
-`_lab_data_2026/lab-NN/` under the course folder, downloaded on the Mac side.
+`2026 Fall (current)/Lab Data/_lab_data_2026/lab-NN/` under the course folder, downloaded on the Mac side.
 
 | Lab | Data needed | Source named in the lab page |
 | --- | --- | --- |

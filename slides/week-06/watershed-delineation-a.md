@@ -417,7 +417,19 @@ $$
 
 ---
 
-# Before Next Class
+<!-- _class: activity -->
+
+# Final Thoughts
+
+<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
+<div>
+
+**Quiz: Which Way Does Water Go?** Five questions, one for each of today's goals: what a watershed is, how they nest, the water balance, why **Fill** comes first, and **aspect** against **D8**. **Scan the code**, or open the link under it.
+
+- Not graded, nothing recorded: a quick check that today's material made sense
+- Note the D8 question: every step on Thursday reads the flow direction grid
+
+**Before next class**
 
 - **Thursday:** the rest of the eight steps — flow accumulation, the stream threshold, stream links, pour points and watersheds — then delineate one **by hand** in **ArcGIS Pro** and with **StreamStats**
 - Start **Lab 5** now: Steps 0–4 use only what today covered — [Lab 5](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-05/)
@@ -425,34 +437,22 @@ $$
 - **Quiz 6** and **Lab 5** are both due **Saturday 11:59 pm**
 - Questions? Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
-<!-- Revision notes (2026-10-05, later): dropped the "Remember This Map?" population-cartogram slide (too much of a diversion before Powell); added click-to-reveal questions on Powell (why basin-shaped states), on the Rock Canyon anatomy slide (do you live in a watershed?) and on hydrologic slope (how it differs from standard slope); cut "Why Watersheds Are Important" to bullets and replaced the field-visit photo with three public-domain Utah photos (mountain, valley, desert); added the USGS, Watershed Boundary Dataset and HUC-level explanation to the nesting slide; rewrote the standard slope and aspect slide in Week 5's notation (Z0 to Z8, dZ/dx and dZ/dy kernels, the textbook aspect formula), which reproduces ArcGIS Pro's 57.8 and 250.3 degrees on the Lab 5 cells. -->
-<!-- Restructure notes (2026-10-05): Week 6 was re-cut so both decks carry half of the eight steps. Part A now opens with the watershed theory (Parts 1 of the old Thursday deck: what a watershed is, Powell, why they matter, anatomy, nesting, water balance, functions) and runs steps 1 to 3, the DEM to flow direction. Part B opens at flow accumulation, finishes the steps and the Lab 5 model, then does the hand-versus-StreamStats delineation. Dropped from Part A: the "Three Settings That Decide Lab 5" slide (it leaned on Fill, snapping and the threshold before any were taught), the "Watershed Delineation" big-question slide, and the non-Esri (TauDEM, QGIS, GRASS) D8 encoding slide (and, from Part B, the TauDEM flow-accumulation convention slide); the title slide's "adapted from" credit line was removed, and slides whose figures were traced from D. Maidment's (UT Austin) course materials now carry a Credit note instead. The decks were renamed watershed-delineation-a and -b to match the other two-part weeks. Rebuilt: the slope-and-aspect slide (crisp window figure plus the slope and aspect formulas as MathJax), the pour-point figure (a center cell with a question mark and eight coded arrows), the pit-fill map (zoomed on the pit), and the two flow-direction grid slides combined into one. The Excel activity moved to just before the flow direction grid. -->
-<!-- Split notes (2026-10-01): the deck was split in two for Tuesday and Thursday. Part 1 (the mechanics) stays here under the same file name, so the Learning Suite link for Tuesday still works; Parts 2 and 3 (the theory and the hand-versus-StreamStats activity) moved to what-is-a-watershed.md. Rebuilt in ArcGIS Pro from Lab 5's data by tools/week06_figures.py: the elevation surface, the flow-direction grid, the threshold comparison (replacing the ArcView 200-cell screenshot), the grid-code link figure, the 10 m drainage-path map (replacing the 30 m scanned-topo figure), the labeled subwatersheds, and the subwatersheds on imagery. -->
-<!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 6 - Watershed Delineation.pptx", 57 slides, none hidden. All 57 source slides are represented; 62 slides here (source slide 1 became the title slide, source slide 38 — a bare "Day 2" text slide — became the Part 2 divider, and five slides were added: Today's Goals, the Part 1 and Part 3 `lead` dividers, a Lab 5 preview, and Before Next Class). No slides dropped. The nine "Summary of Steps" slides are near-duplicates that each highlight a different step; all nine are kept as roadmap markers with the active step in bold, and are intentionally text-only. Source slides 2 and 3 carry the same student-at-a-computer illustration; slide 2 now uses the workflow diagram instead, so the illustration appears once. The workflow diagram appears twice by design (preview on the big-question slide, payoff on "Example Model"). Shape-built slides (D8 grids, flow accumulation grids, slope equations, annotated StreamStats captures) were re-rendered from the PDF at 200 dpi and cropped, since the underlying art is PowerPoint shapes or WMF that browsers cannot display. Stale ArcView-era screenshots kept and flagged: ws-flow-direction-arcview.jpg, ws-streams-200-cell-threshold.png, ws-vectorized-streams-gridcode.png, ws-subwatersheds-stream-segments.png. ws-delineated-subwatersheds-streams.png is only 203x161 px in the source and is soft on a projector. Open instructor decisions are marked TODO(instructor): the 200-cell threshold's "18 hectares or 13.5 acres" unit mismatch (kept verbatim), a scale/resolution sensitivity question, validation against the NHD or StreamStats, the reading chapter, and the ocwatersheds.com citation link. TODO(graphic) marks four slides that need real captures or figures; no images were generated. Schedule links carry VERIFY comments. Software wording: the source already says ArcGIS Pro on the hands-on slides; no ArcGIS 9 / ArcMap / ArcToolbox wording was found in the text, only in the legacy screenshots. -->
-
----
-
-<!-- _class: activity -->
-
-# One Last Thing — Which Way Does Water Go?
-
-<div class="columns">
-<div>
-
-Five questions, one for each of today's goals: what a watershed is, how they nest, the water balance, why **Fill** comes first, and **aspect** against **D8**. **Scan the code**, or open the link below.
-
-- Not graded, nothing recorded — it is a check that today landed
-- Every answer explains itself; read the explanation before you move on
-- The D8 question is the one Thursday builds on: every later step reads the flow direction grid
-
-<span style="font-size: 0.5em; color: #4a5568; white-space: nowrap;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/watersheds/</span>
-
 </div>
 <div>
 
-![w:400 center](images/quiz-watersheds-qr.png)
+![w:300 center](images/quiz-watersheds-qr.png)
+
+<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/watersheds/</span>
 
 </div>
 </div>
 
 <!-- Four minutes, in pairs, then a show of hands on the D8 item: the code is a label for a direction, not a measurement, and it is written in the cell the water leaves. The Fill item is the other one worth a word out loud: real sinks exist, and Fill does not know the difference. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+
+<!-- Revision notes (2026-10-05, later): dropped the "Remember This Map?" population-cartogram slide (too much of a diversion before Powell); added click-to-reveal questions on Powell (why basin-shaped states), on the Rock Canyon anatomy slide (do you live in a watershed?) and on hydrologic slope (how it differs from standard slope); cut "Why Watersheds Are Important" to bullets and replaced the field-visit photo with three public-domain Utah photos (mountain, valley, desert); added the USGS, Watershed Boundary Dataset and HUC-level explanation to the nesting slide; rewrote the standard slope and aspect slide in Week 5's notation (Z0 to Z8, dZ/dx and dZ/dy kernels, the textbook aspect formula), which reproduces ArcGIS Pro's 57.8 and 250.3 degrees on the Lab 5 cells. -->
+
+<!-- Restructure notes (2026-10-05): Week 6 was re-cut so both decks carry half of the eight steps. Part A now opens with the watershed theory (Parts 1 of the old Thursday deck: what a watershed is, Powell, why they matter, anatomy, nesting, water balance, functions) and runs steps 1 to 3, the DEM to flow direction. Part B opens at flow accumulation, finishes the steps and the Lab 5 model, then does the hand-versus-StreamStats delineation. Dropped from Part A: the "Three Settings That Decide Lab 5" slide (it leaned on Fill, snapping and the threshold before any were taught), the "Watershed Delineation" big-question slide, and the non-Esri (TauDEM, QGIS, GRASS) D8 encoding slide (and, from Part B, the TauDEM flow-accumulation convention slide); the title slide's "adapted from" credit line was removed, and slides whose figures were traced from D. Maidment's (UT Austin) course materials now carry a Credit note instead. The decks were renamed watershed-delineation-a and -b to match the other two-part weeks. Rebuilt: the slope-and-aspect slide (crisp window figure plus the slope and aspect formulas as MathJax), the pour-point figure (a center cell with a question mark and eight coded arrows), the pit-fill map (zoomed on the pit), and the two flow-direction grid slides combined into one. The Excel activity moved to just before the flow direction grid. -->
+
+<!-- Split notes (2026-10-01): the deck was split in two for Tuesday and Thursday. Part 1 (the mechanics) stays here under the same file name, so the Learning Suite link for Tuesday still works; Parts 2 and 3 (the theory and the hand-versus-StreamStats activity) moved to what-is-a-watershed.md. Rebuilt in ArcGIS Pro from Lab 5's data by tools/week06_figures.py: the elevation surface, the flow-direction grid, the threshold comparison (replacing the ArcView 200-cell screenshot), the grid-code link figure, the 10 m drainage-path map (replacing the 30 m scanned-topo figure), the labeled subwatersheds, and the subwatersheds on imagery. -->
+
+<!-- Conversion notes (2026-09-03): Source deck "CE 414 Week 6 - Watershed Delineation.pptx", 57 slides, none hidden. All 57 source slides are represented; 62 slides here (source slide 1 became the title slide, source slide 38 — a bare "Day 2" text slide — became the Part 2 divider, and five slides were added: Today's Goals, the Part 1 and Part 3 `lead` dividers, a Lab 5 preview, and Before Next Class). No slides dropped. The nine "Summary of Steps" slides are near-duplicates that each highlight a different step; all nine are kept as roadmap markers with the active step in bold, and are intentionally text-only. Source slides 2 and 3 carry the same student-at-a-computer illustration; slide 2 now uses the workflow diagram instead, so the illustration appears once. The workflow diagram appears twice by design (preview on the big-question slide, payoff on "Example Model"). Shape-built slides (D8 grids, flow accumulation grids, slope equations, annotated StreamStats captures) were re-rendered from the PDF at 200 dpi and cropped, since the underlying art is PowerPoint shapes or WMF that browsers cannot display. Stale ArcView-era screenshots kept and flagged: ws-flow-direction-arcview.jpg, ws-streams-200-cell-threshold.png, ws-vectorized-streams-gridcode.png, ws-subwatersheds-stream-segments.png. ws-delineated-subwatersheds-streams.png is only 203x161 px in the source and is soft on a projector. Open instructor decisions are marked TODO(instructor): the 200-cell threshold's "18 hectares or 13.5 acres" unit mismatch (kept verbatim), a scale/resolution sensitivity question, validation against the NHD or StreamStats, the reading chapter, and the ocwatersheds.com citation link. TODO(graphic) marks four slides that need real captures or figures; no images were generated. Schedule links carry VERIFY comments. Software wording: the source already says ArcGIS Pro on the hands-on slides; no ArcGIS 9 / ArcMap / ArcToolbox wording was found in the text, only in the legacy screenshots. -->
