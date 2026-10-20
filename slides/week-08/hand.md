@@ -37,10 +37,10 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
-- Say what **HAND** measures, why it beats elevation for floods, and what it leaves out
-- Build it from a DEM: **Lab 5's chain + Flow Distance**
-- Turn a flood depth into a **flood map** with one threshold
+- Say what **HAND** measures, cell by cell, and why it beats elevation for floods
+- Say what the **stream definition** does to a HAND map, and what HAND leaves out
 - Score a flood map against another: **hit rate, false alarms, CSI**
+- Place HAND among **three ways to draw a flood**, from a bathtub to 2-D hydraulics
 - Say what **Lab 7** asks for, and how you will know you are right
 
 ---
@@ -50,6 +50,10 @@ By the end of class you should be able to:
 # Part 1 — Height Above What?
 
 ---
+
+
+<div class="columns" style="grid-template-columns: 1fr 546px; align-items: start; gap: 28px;">
+<div>
 
 # Elevation Is Measured From the Wrong Place
 
@@ -62,10 +66,6 @@ By the end of class you should be able to:
 <!-- The two cells make the point: A is far higher above sea level than B, yet both sit just above their own river. On a bathtub map B floods first; on a HAND map they flood together at the same depth. Diagram drawn for this deck, not to scale. -->
 
 ---
-
-<div class="columns" style="grid-template-columns: 1fr 546px; align-items: start; gap: 28px;">
-<div>
-
 # Where Does the Water Go?
 
 - A small valley: each number is a cell's **elevation**, and the **blue** cells are the river
@@ -149,32 +149,11 @@ By the end of class you should be able to:
 * <span class="tryit">Does a real flood rise the same depth at the canyon mouth and at Utah Lake?</span>
 * <span class="tryit">When would you still pay for a hydraulic model?</span>
 
-<!-- Suggested answers. (1) No. FEMA's own 1% flood on the Provo River sits 1.5 to 2.1 m above the streambed across its cross-sections in the Lab 7 area (Tuesday's FEMA slide); a steep reach runs shallower and faster, a bridge or a narrow channel backs the water up behind it, and HAND gives every one of them the same h. The figure shows both; it is a diagram, not to scale. (2) When a decision rides on the exact line: a flood insurance map, a bridge or levee design, a building at the edge of the floodplain. HAND is for a first look, a whole region at once, or a forecast that has to be ready in minutes, which is why NOAA's Office of Water Prediction runs it for the National Water Model. -->
+<!-- Suggested answers. (1) No. FEMA's own 1% flood on the Provo River sits 1.5 to 2.1 m above the streambed across its cross-sections in the Lab 7 area (the methods slide later today); a steep reach runs shallower and faster, a bridge or a narrow channel backs the water up behind it, and HAND gives every one of them the same h. The figure shows both; it is a diagram, not to scale. (2) When a decision rides on the exact line: a flood insurance map, a bridge or levee design, a building at the edge of the floodplain. HAND is for a first look, a whole region at once, or a forecast that has to be ready in minutes, which is why NOAA's Office of Water Prediction runs it for the National Water Model. -->
 
 ---
 
-# HAND on the Provo River
 
-![bg right:58% w:98%](images/fl-hand-map.png)
-
-- Left: elevation, **1,367 to 1,646 m**: a ramp toward the mountains
-- Right: **HAND**, 0 to 198 m: the floodplain shows up as a **ribbon** along the river
-- About **11%** of the cells are within **2 m** of the river
-
-<!-- The Lab 7 package's HAND raster (697,608 cells). White cells do not drain to the mapped Provo River inside the study area, so they have no HAND; that is correct, not a bug, and students will see it. Elevation range from the filled DEM. Numbers: tools/week08_flood_numbers.json. -->
-
----
-
-# How It Is Computed
-
-![h:330 center](images/fl-hand-model.svg)
-
-- **Fill → Flow Direction → Flow Accumulation → streams**: Lab 5, then a **30 m river corridor**
-- **Flow Distance**, distance type **Vertical**: HAND, down the path the water takes
-
-<!-- The figure is Lab 7's HAND Builder model, exported from ModelBuilder after a run in the October 9, 2026 GUI build (the lab page's Figure C, lab07-model-hand.svg). Flow Distance (Spatial Analyst) with Vertical distance and D8 is HAND; checked in ArcGIS Pro 3.7.1's arcpy for the Lab 7 study (tools/lab07/PLAN.md). Two traps the study measured: running on the unfilled DEM leaves thousands of negative HAND cells, and defining "stream" as every cell above an accumulation threshold, with no river corridor, makes every gully a river (next slide). -->
-
----
 
 # The Stream Is the Big Choice
 
@@ -195,17 +174,6 @@ By the end of class you should be able to:
 
 ---
 
-# One Threshold Floods the River
-
-![bg right:52% w:96%](images/fl-flood-calc.png)
-
-- From Tuesday: flow → **gage height** → **depth h** above the river
-- Flooded = **every cell with HAND ≤ h**: `Con("HAND" <= h, 1)`
-- A different h for each **return period**: one **iterator**, as in Lab 6
-
-<!-- The figure is the Flood Loop model's Raster Calculator in ArcGIS Pro (Lab 7, Figure 5b): Iterate Field Values hands each row's H_CM to %Value%, so the expression reads Con("HAND" <= %Value% / 100, 1) and each pass writes flood_%Value%. Centimeters because a name such as flood_1.53 is not allowed in a geodatabase. The stage table in Lab 7 does the flow-to-h step for FEMA's five flows (10%, 4%, 2%, 1% and 0.2%); students do the same lookup by hand for their own flow in Step 1. Raster to Polygon then gives an area and a polygon, and Spatial Join counts the buildings it touches. -->
-
----
 
 # Bathtub and HAND, Same Depth
 
@@ -244,6 +212,32 @@ By the end of class you should be able to:
 <!-- The study found HAND flooding beside the confined upper reach and missing FEMA's overflow zone that leaves the river southward below the gage; the lidar channel sits about 0.47 m above FEMA's bed (Section T on the figure shows it). HAND's strength is scale: NOAA's Office of Water Prediction maps floods for the National Water Model with HAND: https://github.com/NOAA-OWP/inundation-mapping (checked October 9, 2026). -->
 
 ---
+# An Even More Accurate, and Costly, Method
+
+<style scoped>.popup ul { list-style: none; padding-left: 0; margin-left: 0; } .popup li::marker { content: ""; }</style>
+
+<div class="columns" style="grid-template-columns: 1.15fr 1fr; font-size: 0.86em;">
+<div>
+
+Three ways to draw a flood, in order of cost:
+
+* **Bathtub**: one elevation, one Con. Right for a lake
+* **HAND**: one depth above the river, from a DEM and flow direction. Lab 7; NOAA runs it nationwide
+* **1-D hydraulics** (HEC-RAS): the water surface computed section by section from **cross-sections**, roughness and bridges. FEMA's **AE zone**: **43 sections** in the Lab 7 reach, a median 1% depth of **1.8 m**. Months per river
+* **2-D hydraulics** (HEC-RAS 2D, Delft3D): a **mesh** over the whole floodplain, **depth and velocity** in every cell as the flood rises and falls. Days of computing per event
+
+</div>
+<div class="popup">
+
+![w:500](images/fl-fema-xs.png)
+
+* ![w:500](images/fl-2d-hydraulics.png)
+
+</div>
+</div>
+
+<!-- Click through the ladder. Top right: FEMA NFHL cross-section lines for Utah County (effective June 23, 2026; WSEL_REG and STRMBED_EL, converted from feet NAVD 88), sampled against the Lab 7 5 m lidar DEM; the median and range are over the 42 sections with a riverine 1% water surface (one, near Utah Lake, carries -8888 because the lake controls it); depths 1.5 to 2.1 m. Section T shows the lidar channel bottom sitting above FEMA's streambed, the "lidar can't see under water" point from the previous slide. The last click brings up a 2-D model result: particle traces over a depth layer from the HEC-RAS 2D User's Manual (U.S. Army Corps of Engineers, public domain). The ladder is accuracy against cost: a bathtub is a minute, HAND an hour, a 1-D FEMA study months and a 2-D model days of computer time per flood; each step buys physics the one below leaves out (slope, then velocity and storage, then two-dimensional flow across the floodplain). Ask which one a city should use to decide where to sandbag tonight, and which one to decide where to let a developer build. -->
+---
 
 <!-- _class: lead -->
 
@@ -266,20 +260,6 @@ By the end of class you should be able to:
 
 ---
 
-# Your Own Flow
-
-![bg right:40% h:88%](images/fl-example-map-own.png)
-
-> **Your flow = 900 + 12 × (last two digits of your BYU ID) ft³/s**
-
-- BYU ID `123456789` → **89** → 900 + 12 × 89 = **1,968 ft³/s**
-- The **nine-digit number on your BYU ID card**, not your NetID
-- Every personal flow is **inside the rating**: no extrapolation
-- At 1,968 ft³/s: **7.78 ft**, *h* = **1.396 m**, **376 buildings** (right)
-
-<!-- The figure is the lab page's example layout for Map 2 (Figure 9), drawn at the example ID's flow: 1,968 ft³/s, 7.78 ft, h = 1.396 m, 1.4548 km², 376 buildings, the lab's Step 7 check values. Its main frame shows the whole reach with a close-up inset, which the lab calls the weaker choice: the student's main frame should be zoomed to the buildings. Range 900 to 2,088 ft³/s, all below the rating's top row of 2,150 ft³/s. The grader looks up each student's h, area and building count (ce414-private/grading-oracles/lab07_personal_lookup.csv). -->
-
----
 
 <!-- _class: activity -->
 

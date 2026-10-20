@@ -1,87 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17">
-  <title>Lab 7's two models: HAND Builder prepares the terrain once; Flood Loop floods it once per flow</title>
-  <rect width="1200" height="560" fill="#ffffff"/>
-  <defs>
-    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker>
-    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2b6cb0"/></marker>
-  </defs>
-
-  <!-- Model 1 -->
-  <rect x="30" y="40" width="520" height="400" rx="16" fill="#f3f7fb" stroke="#2b6cb0" stroke-width="2.5"/>
-  <text x="290" y="78" text-anchor="middle" font-size="24" font-weight="700" fill="#1a202c">Model 1 — HAND Builder</text>
-  <text x="290" y="106" text-anchor="middle" font-size="18" fill="#2b6cb0" font-weight="600">prepare the terrain · runs ONCE</text>
-
-  <!-- inputs -->
-  <rect x="60" y="140" width="130" height="46" rx="23" fill="#cfe3f7" stroke="#2b6cb0"/>
-  <text x="125" y="169" text-anchor="middle" font-size="16" fill="#1a202c">Provo_DEM.tif</text>
-  <rect x="60" y="300" width="130" height="46" rx="23" fill="#cfe3f7" stroke="#2b6cb0"/>
-  <text x="125" y="329" text-anchor="middle" font-size="16" fill="#1a202c">Provo_River</text>
-
-  <!-- chain pills -->
-  <g font-size="15" fill="#1a202c" text-anchor="middle">
-    <rect x="215" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="261" y="169">Fill</text>
-    <rect x="325" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="371" y="163">Flow</text><text x="371" y="180">Direction</text>
-    <rect x="435" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="481" y="163">Flow</text><text x="481" y="180">Accumulation</text>
-    <rect x="435" y="220" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="481" y="243">Threshold</text><text x="481" y="260">(2,000 cells)</text>
-    <rect x="215" y="300" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="261" y="323">Buffer</text><text x="261" y="340">30 m</text>
-    <rect x="325" y="300" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="371" y="323">Extract</text><text x="371" y="340">by Mask</text>
-    <rect x="325" y="380" width="92" height="46" rx="8" fill="#ffffff" stroke="#c05621" stroke-width="2"/><text x="371" y="403" font-weight="700">Flow</text><text x="371" y="420" font-weight="700">Distance</text>
-  </g>
-  <!-- chain arrows -->
-  <g stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)">
-    <path d="M190,163 L213,163"/><path d="M307,163 L323,163"/><path d="M417,163 L433,163"/>
-    <path d="M481,186 L481,218"/><path d="M435,243 L371,298"/>
-    <path d="M190,323 L213,323"/><path d="M307,323 L323,323"/>
-    <path d="M371,346 L371,378"/>
-    <path d="M261,186 L261,290 L323,395"/><path d="M371,186 L371,298" stroke-dasharray="4 4"/>
-  </g>
-  <text x="140" y="250" font-size="13" fill="#4a5568">Filled_DEM and Flow_Direction</text>
-  <text x="140" y="268" font-size="13" fill="#4a5568">also feed Flow Distance</text>
-
-  <!-- HAND output -->
-  <ellipse cx="640" cy="403" rx="62" ry="30" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
-  <text x="640" y="399" text-anchor="middle" font-size="20" font-weight="700" fill="#22543d">HAND</text>
-  <text x="640" y="418" text-anchor="middle" font-size="12" fill="#22543d">height above the river, m</text>
-  <path d="M417,403 L576,403" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)"/>
-
-  <!-- Model 2 -->
-  <rect x="730" y="40" width="440" height="400" rx="16" fill="#fff7f0" stroke="#c05621" stroke-width="2.5"/>
-  <text x="950" y="78" text-anchor="middle" font-size="24" font-weight="700" fill="#1a202c">Model 2 — Flood Loop</text>
-  <text x="950" y="106" text-anchor="middle" font-size="18" fill="#c05621" font-weight="600">run the floods · one pass per flow</text>
-
-  <rect x="760" y="140" width="130" height="46" rx="23" fill="#fbd9c2" stroke="#c05621"/>
-  <text x="825" y="163" text-anchor="middle" font-size="15" fill="#1a202c">Stage_Table</text>
-  <text x="825" y="180" text-anchor="middle" font-size="12" fill="#1a202c">five h values (H_CM)</text>
-
-  <g font-size="15" fill="#1a202c" text-anchor="middle">
-    <rect x="920" y="140" width="110" height="46" rx="8" fill="#ffffff" stroke="#c05621" stroke-width="2"/><text x="975" y="163" font-weight="700">Iterate</text><text x="975" y="180" font-weight="700">Field Values</text>
-    <rect x="1050" y="140" width="100" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="1100" y="158">Con(</text><text x="1100" y="175">HAND ≤ h, 1)</text>
-    <rect x="1050" y="220" width="100" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="1100" y="243">Raster to</text><text x="1100" y="260">Polygon</text>
-    <rect x="920" y="220" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="975" y="243">Calculate</text><text x="975" y="260">Field (H_CM)</text>
-    <rect x="790" y="220" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="845" y="243">Collect</text><text x="845" y="260">Values</text>
-    <rect x="790" y="300" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="845" y="329">Merge</text>
-  </g>
-  <g stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)">
-    <path d="M890,163 L918,163"/><path d="M1030,163 L1048,163"/>
-    <path d="M1100,186 L1100,218"/><path d="M1050,243 L1032,243"/><path d="M920,243 L902,243"/>
-    <path d="M845,266 L845,298"/>
-  </g>
-  <!-- HAND into Con -->
-  <path d="M700,395 C740,330 800,120 1048,170" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)" stroke-dasharray="7 5"/>
-  <text x="760" y="372" font-size="13" fill="#2b6cb0" font-weight="600">HAND is Model 2's input</text>
-
-  <!-- loop bracket -->
-  <path d="M905,125 L1165,125 L1165,280 L905,280" stroke="#c05621" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
-  <text x="1160" y="298" text-anchor="end" font-size="13" fill="#c05621" font-weight="600">runs 5 times, once per h</text>
-
-  <!-- Floods output -->
-  <ellipse cx="1000" cy="403" rx="80" ry="30" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
-  <text x="1000" y="399" text-anchor="middle" font-size="20" font-weight="700" fill="#22543d">Floods</text>
-  <text x="1000" y="418" text-anchor="middle" font-size="12" fill="#22543d">5 polygons, 10- to 500-year</text>
-  <path d="M900,323 L1000,323 L1000,371" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
-
-  <!-- footer -->
-  <text x="290" y="500" text-anchor="middle" font-size="17" fill="#4a5568">Fill, Flow Direction, Flow Accumulation, Flow Distance: the slow part, about a minute</text>
-  <text x="950" y="500" text-anchor="middle" font-size="17" fill="#4a5568">Five Cons and five polygons: under a minute for all of them</text>
-  <text x="600" y="540" text-anchor="middle" font-size="18" fill="#1a202c" font-weight="600">Prepare once. Flood many times.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16">
+<title>Lab 7's two models: HAND Builder prepares the terrain once; Flood Loop floods it once per flow</title>
+<rect width="1200" height="640" fill="#ffffff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2b6cb0"/></marker></defs>
+<rect x="24" y="30" width="600" height="470" rx="16" fill="#f3f7fb" stroke="#2b6cb0" stroke-width="2.5"/>
+<text x="324" y="66" text-anchor="middle" font-size="24" fill="#1a202c" font-weight="700">Model 1 — HAND Builder</text>
+<text x="324" y="92" text-anchor="middle" font-size="17" fill="#2b6cb0" font-weight="700">prepare the terrain · runs ONCE</text>
+<rect x="44" y="136" width="118" height="44" rx="22" fill="#cfe3f7" stroke="#2b6cb0"/>
+<text x="103.0" y="163.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Provo_DEM.tif</text>
+<rect x="190" y="112" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="219.0" y="118" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><path d='M8,30 L30,48 L44,70 L58,62 L70,44 L90,52 L112,78 L112,84 L8,84 Z' fill='#e6eaee' stroke='#9aa5b1' stroke-width='1.5'/><path d='M38,62 L44,70 L58,62 L60,62 Z' fill='none'/><path d='M37.3,59 L44,70 L58,62 L60.7,59 Z' fill='#e8862a' fill-opacity='0.85'/><line x1='30' y1='59' x2='72' y2='59' stroke='#e8862a' stroke-width='1.2' stroke-dasharray='3 2'/><path d='M72,40 C84,30 96,36 104,46' fill='none' stroke='#0062b8' stroke-width='1.8'/><polygon points='104.0,46.0 97.4,43.6 102.8,39.1' fill='#0062b8'/></svg>
+<text x="249.0" y="176" text-anchor="middle" font-size="12.5" fill="#1a202c">Fill</text>
+<rect x="336" y="112" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="365.0" y="118" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='15' y='5' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='41' y='5' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='67' y='5' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='15' y='31' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='41' y='31' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='67' y='31' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='15' y='57' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='41' y='57' width='26' height='26' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='67' y='57' width='26' height='26' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><line x1='23.1' y1='13.1' x2='34.4' y2='24.4' stroke='#002e5d' stroke-width='1.6'/><polygon points='34.4,24.4 29.5,23.1 33.1,19.5' fill='#002e5d'/><line x1='49.1' y1='13.1' x2='60.4' y2='24.4' stroke='#002e5d' stroke-width='1.6'/><polygon points='60.4,24.4 55.5,23.1 59.1,19.5' fill='#002e5d'/><line x1='80.0' y1='11.0' x2='80.0' y2='27.0' stroke='#002e5d' stroke-width='1.6'/><polygon points='80.0,27.0 77.5,22.7 82.5,22.7' fill='#002e5d'/><line x1='23.1' y1='39.1' x2='34.4' y2='50.4' stroke='#002e5d' stroke-width='1.6'/><polygon points='34.4,50.4 29.5,49.1 33.1,45.5' fill='#002e5d'/><line x1='49.1' y1='39.1' x2='60.4' y2='50.4' stroke='#002e5d' stroke-width='1.6'/><polygon points='60.4,50.4 55.5,49.1 59.1,45.5' fill='#002e5d'/><line x1='80.0' y1='37.0' x2='80.0' y2='53.0' stroke='#002e5d' stroke-width='1.6'/><polygon points='80.0,53.0 77.5,48.7 82.5,48.7' fill='#002e5d'/><line x1='21.0' y1='70.0' x2='37.0' y2='70.0' stroke='#002e5d' stroke-width='1.6'/><polygon points='37.0,70.0 32.7,72.5 32.7,67.5' fill='#002e5d'/><line x1='47.0' y1='70.0' x2='63.0' y2='70.0' stroke='#002e5d' stroke-width='1.6'/><polygon points='63.0,70.0 58.7,72.5 58.7,67.5' fill='#002e5d'/></svg>
+<text x="395.0" y="176" text-anchor="middle" font-size="12.5" fill="#1a202c">Flow</text>
+<text x="395.0" y="190" text-anchor="middle" font-size="12.5" fill="#1a202c">Direction</text>
+<rect x="482" y="112" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="511.0" y="118" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='12' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='32' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='52' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='72' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='12' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='32' y='25' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='52' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='72' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='12' y='45' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='32' y='45' width='20' height='20' fill='#f6b77a' stroke='#9aa5b1' stroke-width='0.8'/><rect x='52' y='45' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='72' y='45' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='12' y='65' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='32' y='65' width='20' height='20' fill='#e8862a' stroke='#9aa5b1' stroke-width='0.8'/><rect x='52' y='65' width='20' height='20' fill='#e8862a' stroke='#9aa5b1' stroke-width='0.8'/><rect x='72' y='65' width='20' height='20' fill='#b85f12' stroke='#9aa5b1' stroke-width='0.8'/><path d='M96,75 L108,75' stroke='#002e5d' stroke-width='2'/><polygon points='112.0,75.0 105.9,78.5 105.9,71.5' fill='#002e5d'/></svg>
+<text x="541.0" y="176" text-anchor="middle" font-size="12.5" fill="#1a202c">Flow</text>
+<text x="541.0" y="190" text-anchor="middle" font-size="12.5" fill="#1a202c">Accumulation</text>
+<path d="M162,158 L188,158" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M308,158 L334,158" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M454,158 L480,158" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="482" y="236" width="118" height="44" rx="22" fill="#fde68a" stroke="#b7791f"/>
+<text x="541.0" y="256.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Threshold</text>
+<text x="541.0" y="270.0" text-anchor="middle" font-size="12.5" fill="#1a202c">2,000 cells</text>
+<path d="M541,204 L541,234" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<text x="470" y="300" text-anchor="end" font-size="12.5" fill="#4a5568">Raster Calculator: cells draining</text>
+<text x="470" y="316" text-anchor="end" font-size="12.5" fill="#4a5568">more than the threshold are stream</text>
+<rect x="44" y="362" width="118" height="44" rx="22" fill="#cfe3f7" stroke="#2b6cb0"/>
+<text x="103.0" y="389.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Provo_River</text>
+<rect x="190" y="338" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<text x="249.0" y="382.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Buffer</text>
+<text x="249.0" y="396.0" text-anchor="middle" font-size="12.5" fill="#1a202c">30 m corridor</text>
+<rect x="336" y="338" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="365.0" y="344" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='18' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='9' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='18' y='21' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='21' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='21' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='21' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='21' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='21' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='18' y='33' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='33' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='33' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='33' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='33' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='33' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='18' y='45' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='45' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='45' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='45' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='45' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='45' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='18' y='57' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='57' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='57' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='57' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='57' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='57' width='12' height='12' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='18' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='42' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='54' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='66' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><rect x='78' y='69' width='12' height='12' fill='#e6eaee' stroke='#9aa5b1' stroke-width='0.8'/><ellipse cx='60' cy='45' rx='36' ry='29' fill='none' stroke='#e8862a' stroke-width='2.4'/></svg>
+<text x="395.0" y="402" text-anchor="middle" font-size="12.5" fill="#1a202c">Extract</text>
+<text x="395.0" y="416" text-anchor="middle" font-size="12.5" fill="#1a202c">by Mask</text>
+<rect x="482" y="338" width="118" height="92" rx="10" fill="#ffffff" stroke="#c05621" stroke-width="2"/>
+<svg x="511.0" y="344" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><path d='M4,20 L40,34 L62,62 L70,70 L78,62 L100,40 L116,30 L116,86 L4,86 Z' fill='#e6eaee' stroke='#9aa5b1'/><rect x='64' y='64' width='12' height='8' fill='#0062b8'/><circle cx='26' cy='29' r='4' fill='#e8862a'/><path d='M28,32 L42,38 L58,58 L66,66' fill='none' stroke='#002e5d' stroke-width='2' stroke-dasharray='3,2'/><line x1='22' y1='29' x2='22' y2='68' stroke='#e8862a' stroke-width='2'/><line x1='16' y1='68' x2='64' y2='68' stroke='#e8862a' stroke-width='1' stroke-dasharray='2,2'/><text x='8' y='52' font-size='14' font-weight='bold' fill='#e8862a' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>h</text></svg>
+<text x="541.0" y="402" text-anchor="middle" font-size="12.5" fill="#1a202c" font-weight="700">Flow Distance</text>
+<text x="541.0" y="416" text-anchor="middle" font-size="12.5" fill="#1a202c" font-weight="700">(Vertical)</text>
+<path d="M162,384 L188,384" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M308,384 L334,384" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M454,384 L480,384" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M541,280 L541,300 L420,300 L420,336" stroke="#4a5568" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<path d="M249,204 L249,320 L470,320 L470,336" stroke="#4a5568" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="262" y="262" text-anchor="start" font-size="12" fill="#4a5568">Filled_DEM and</text>
+<text x="262" y="277" text-anchor="start" font-size="12" fill="#4a5568">Flow_Direction too</text>
+<ellipse cx="672" cy="384" rx="46" ry="30" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
+<text x="672" y="381" text-anchor="middle" font-size="19" fill="#22543d" font-weight="700">HAND</text>
+<text x="672" y="398" text-anchor="middle" font-size="10.5" fill="#22543d">height above river</text>
+<path d="M600,384 L624,384" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)"/>
+<text x="324" y="470" text-anchor="middle" font-size="15" fill="#4a5568">Fill, Flow Direction, Flow Accumulation, Flow Distance: the slow part, about a minute</text>
+<rect x="740" y="30" width="436" height="470" rx="16" fill="#fff7f0" stroke="#c05621" stroke-width="2.5"/>
+<text x="958" y="66" text-anchor="middle" font-size="24" fill="#1a202c" font-weight="700">Model 2 — Flood Loop</text>
+<text x="958" y="92" text-anchor="middle" font-size="17" fill="#c05621" font-weight="700">run the floods · one pass per flow</text>
+<rect x="760" y="136" width="118" height="44" rx="22" fill="#fbd9c2" stroke="#c05621"/>
+<text x="819.0" y="156.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Stage_Table</text>
+<text x="819.0" y="170.0" text-anchor="middle" font-size="12.5" fill="#1a202c">five h values</text>
+<rect x="906" y="112" width="118" height="92" rx="10" fill="#ffffff" stroke="#c05621" stroke-width="2"/>
+<svg x="935.0" y="118" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='6' y='8' width='46' height='74' fill='white' stroke='#002e5d' stroke-width='1.4'/><rect x='6' y='8' width='46' height='14' fill='#002e5d'/><text x='29' y='19' font-size='9' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>H_CM</text><text x='29' y='34' font-size='9.5' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>119</text><text x='29' y='45' font-size='9.5' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>134</text><text x='29' y='56' font-size='9.5' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>143</text><text x='29' y='67' font-size='9.5' font-weight='bold' fill='#e8862a' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>153</text><text x='29' y='78' font-size='9.5' font-weight='normal' fill='#1c2733' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>173</text><line x1='56' y1='64' x2='71.8' y2='64.0' stroke='#e8862a' stroke-width='2'/><polygon points='76.0,64.0 69.9,67.5 69.9,60.5' fill='#e8862a'/><path d='M96,30 A18,18 0 1 1 79,52' fill='none' stroke='#e8862a' stroke-width='3'/><polygon points='79.0,52.0 85.1,57.1 77.6,59.9' fill='#e8862a'/><text x='97' y='52' font-size='12' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>153</text></svg>
+<text x="965.0" y="176" text-anchor="middle" font-size="12.5" fill="#1a202c" font-weight="700">Iterate</text>
+<text x="965.0" y="190" text-anchor="middle" font-size="12.5" fill="#1a202c" font-weight="700">Field Values</text>
+<rect x="1040" y="112" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="1069.0" y="118" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='8' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='28' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='48' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='68' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='8' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='28' y='25' width='20' height='20' fill='#0062b8' stroke='#9aa5b1' stroke-width='0.8'/><rect x='48' y='25' width='20' height='20' fill='#0062b8' stroke='#9aa5b1' stroke-width='0.8'/><rect x='68' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='8' y='45' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='28' y='45' width='20' height='20' fill='#0062b8' stroke='#9aa5b1' stroke-width='0.8'/><rect x='48' y='45' width='20' height='20' fill='#0062b8' stroke='#9aa5b1' stroke-width='0.8'/><rect x='68' y='45' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='8' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='28' y='65' width='20' height='20' fill='#0062b8' stroke='#9aa5b1' stroke-width='0.8'/><rect x='48' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='68' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><text x='38' y='40' font-size='11' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text><text x='58' y='40' font-size='11' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text><text x='38' y='60' font-size='11' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text><text x='58' y='60' font-size='11' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text><text x='38' y='80' font-size='11' font-weight='bold' fill='white' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>1</text><text x='104' y='34' font-size='18' font-weight='bold' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>≤</text><text x='104' y='54' font-size='10' font-weight='normal' fill='#002e5d' text-anchor='middle' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>level</text></svg>
+<text x="1099.0" y="176" text-anchor="middle" font-size="12.5" fill="#1a202c">Con: HAND ≤ h</text>
+<path d="M878,158 L904,158" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M1024,158 L1038,158" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="760" y="250" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="789.0" y="256" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='10' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='5' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='50' y='5' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='70' y='5' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='10' y='25' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='25' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='50' y='25' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='70' y='25' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='10' y='45' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='45' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='50' y='45' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='70' y='45' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='10' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='30' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><rect x='50' y='65' width='20' height='20' fill='#fdebd9' stroke='#9aa5b1' stroke-width='0.8'/><rect x='70' y='65' width='20' height='20' fill='white' stroke='#9aa5b1' stroke-width='0.8'/><path d='M30,5 L70,5 L70,45 L90,45 L90,65 L70,65 L70,85 L50,85 L50,65 L30,65 L30,45 L10,45 L10,25 L30,25 Z' fill='none' stroke='#e8862a' stroke-width='3'/></svg>
+<text x="819.0" y="314" text-anchor="middle" font-size="12.5" fill="#1a202c">Raster to</text>
+<text x="819.0" y="328" text-anchor="middle" font-size="12.5" fill="#1a202c">Polygon</text>
+<rect x="906" y="250" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<text x="965.0" y="294.0" text-anchor="middle" font-size="12.5" fill="#1a202c">Calculate Field</text>
+<text x="965.0" y="308.0" text-anchor="middle" font-size="12.5" fill="#1a202c">(stamp h)</text>
+<rect x="1040" y="250" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="1069.0" y="256" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><path d='M10,18 l14,-6 l8,10 l-6,12 l-14,0 Z' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='22' y1='40' x2='89.0' y2='30.4' stroke='#9aa5b1' stroke-width='1.2'/><polygon points='92.0,30.0 88.1,33.1 87.4,28.1' fill='#9aa5b1'/><path d='M34,22 l14,-6 l8,10 l-6,12 l-14,0 Z' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='46' y1='40' x2='89.0' y2='45.6' stroke='#9aa5b1' stroke-width='1.2'/><polygon points='92.0,46.0 87.4,47.9 88.0,43.0' fill='#9aa5b1'/><path d='M58,26 l14,-6 l8,10 l-6,12 l-14,0 Z' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='70' y1='40' x2='89.9' y2='59.9' stroke='#9aa5b1' stroke-width='1.2'/><polygon points='92.0,62.0 87.2,60.7 90.7,57.2' fill='#9aa5b1'/><rect x='92' y='20' width='22' height='50' rx='3' fill='white' stroke='#002e5d' stroke-width='2'/><rect x='96' y='25' width='14' height='10' fill='#cfe3f7' stroke='#0062b8'/><rect x='96' y='40' width='14' height='10' fill='#cfe3f7' stroke='#0062b8'/><rect x='96' y='55' width='14' height='10' fill='#cfe3f7' stroke='#0062b8'/><text x='30' y='82' font-size='11' font-weight='normal' fill='#002e5d' text-anchor='start' font-family='Segoe UI, Roboto, Helvetica, Arial, sans-serif'>pass 1, 2, 3 ...</text></svg>
+<text x="1099.0" y="314" text-anchor="middle" font-size="12.5" fill="#1a202c">Collect</text>
+<text x="1099.0" y="328" text-anchor="middle" font-size="12.5" fill="#1a202c">Values</text>
+<path d="M1099,204 L1099,226 L819,226 L819,248" stroke="#4a5568" stroke-width="2" fill="none" stroke-dasharray="" marker-end="url(#a)"/>
+<path d="M878,296 L904,296" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M1024,296 L1038,296" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="906" y="376" width="118" height="92" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<svg x="935.0" y="382" width="60" height="45" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid meet"><rect x='8' y='10' width='30' height='18' rx='3' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='40' y1='19' x2='69.2' y2='42.7' stroke='#9aa5b1' stroke-width='1.4'/><polygon points='72.0,45.0 66.1,44.1 69.9,39.4' fill='#9aa5b1'/><rect x='8' y='34' width='30' height='18' rx='3' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='40' y1='43' x2='68.4' y2='44.8' stroke='#9aa5b1' stroke-width='1.4'/><polygon points='72.0,45.0 66.6,47.7 67.0,41.7' fill='#9aa5b1'/><rect x='8' y='58' width='30' height='18' rx='3' fill='#cfe3f7' stroke='#0062b8' stroke-width='1.5'/><line x1='40' y1='67' x2='69.0' y2='47.0' stroke='#9aa5b1' stroke-width='1.4'/><polygon points='72.0,45.0 69.4,50.4 66.0,45.5' fill='#9aa5b1'/><rect x='76' y='22' width='38' height='46' rx='4' fill='#fdebd9' stroke='#e8862a' stroke-width='2.5'/><line x1='80' y1='34' x2='110' y2='34' stroke='#e8862a' stroke-width='1.5'/><line x1='80' y1='45' x2='110' y2='45' stroke='#e8862a' stroke-width='1.5'/><line x1='80' y1='56' x2='110' y2='56' stroke='#e8862a' stroke-width='1.5'/></svg>
+<text x="965.0" y="440" text-anchor="middle" font-size="12.5" fill="#1a202c">Merge</text>
+<path d="M1099,342 L1099,360 L965,360 L965,374" stroke="#4a5568" stroke-width="2" fill="none" stroke-dasharray="" marker-end="url(#a)"/>
+<path d="M748,104 L1168,104 L1168,350 L748,350 Z" stroke="#c05621" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
+<text x="756" y="366" text-anchor="start" font-size="12.5" fill="#c05621" font-weight="700">inside the loop: runs 5 times, once per h</text>
+<path d="M718,372 C740,300 760,120 1038,140" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)" stroke-dasharray="7 5"/>
+<text x="800" y="118" text-anchor="start" font-size="12" fill="#2b6cb0" font-weight="700">HAND: Model 2's input</text>
+<ellipse cx="1090" cy="422" rx="60" ry="28" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
+<text x="1090" y="419" text-anchor="middle" font-size="19" fill="#22543d" font-weight="700">Floods</text>
+<text x="1090" y="436" text-anchor="middle" font-size="10.5" fill="#22543d">5 polygons, 10- to 500-yr</text>
+<path d="M1024,422 L1028,422" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<text x="958" y="470" text-anchor="middle" font-size="15" fill="#4a5568">five Cons, five polygons: under a minute in all</text>
+<text x="600" y="560" text-anchor="middle" font-size="20" fill="#1a202c" font-weight="700">Prepare once. Flood many times.</text>
+<text x="600" y="590" text-anchor="middle" font-size="14" fill="#4a5568">Tool icons are the lab pages' own (Labs 4 to 7).</text>
 </svg>

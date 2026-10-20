@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18">
+  <title>The same reading on a staff gage, 4 feet, in a small creek and in a wide river: the creek carries little flow, the river carries a great deal</title>
+  <rect width="1200" height="620" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c05621"/></marker>
+    <pattern id="gnd" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#a0aec0" stroke-width="2"/></pattern>
+  </defs>
+
+  <!-- Panel titles -->
+  <text x="300" y="46" text-anchor="middle" font-size="26" font-weight="700" fill="#1a202c">A creek</text>
+  <text x="880" y="46" text-anchor="middle" font-size="26" font-weight="700" fill="#1a202c">A river</text>
+
+  <!-- Left: narrow channel. Ground surface at y=200 on both sides; bed at y=440; water surface at y=300 (4 ft of 6 on the staff). -->
+  <g>
+    <path d="M60,200 L200,200 L270,440 L330,440 L400,200 L540,200 L540,560 L60,560 Z" fill="url(#gnd)" stroke="#718096" stroke-width="2"/>
+    <!-- water: polygon between banks below the water line y=300 -->
+    <path d="M229,300 L270,440 L330,440 L371,300 Z" fill="#63b3ed" fill-opacity="0.85" stroke="#2b6cb0" stroke-width="2"/>
+    <rect x="236" y="452" width="128" height="26" rx="6" fill="#ffffff" stroke="#2b6cb0"/>
+    <text x="300" y="471" text-anchor="middle" font-size="16" fill="#1a365d" font-weight="600">area: small</text>
+  </g>
+
+  <!-- Right: wide channel, same bed depth and same water line -->
+  <g>
+    <path d="M620,200 L690,200 L760,440 L1060,440 L1130,200 L1180,200 L1180,560 L620,560 Z" fill="url(#gnd)" stroke="#718096" stroke-width="2"/>
+    <path d="M719,300 L760,440 L1060,440 L1101,300 Z" fill="#63b3ed" fill-opacity="0.85" stroke="#2b6cb0" stroke-width="2"/>
+    <text x="910" y="385" text-anchor="middle" font-size="20" fill="#1a365d" font-weight="700">cross-sectional area: large</text>
+  </g>
+
+  <!-- Staff gages: a white board from the bed (y=440, 0 ft) to y=176 (6 ft); 44 px per foot -->
+  <g id="staffL" transform="translate(300 0)">
+    <rect x="-14" y="170" width="28" height="276" fill="#fffff0" stroke="#2d3748" stroke-width="2"/>
+    <g stroke="#2d3748" stroke-width="2">
+      <line x1="-14" y1="440" x2="0" y2="440"/><line x1="-14" y1="396" x2="0" y2="396"/><line x1="-14" y1="352" x2="0" y2="352"/>
+      <line x1="-14" y1="308" x2="0" y2="308"/><line x1="-14" y1="264" x2="0" y2="264"/><line x1="-14" y1="220" x2="0" y2="220"/><line x1="-14" y1="176" x2="0" y2="176"/>
+      <line x1="-14" y1="418" x2="-6" y2="418"/><line x1="-14" y1="374" x2="-6" y2="374"/><line x1="-14" y1="330" x2="-6" y2="330"/><line x1="-14" y1="286" x2="-6" y2="286"/><line x1="-14" y1="242" x2="-6" y2="242"/><line x1="-14" y1="198" x2="-6" y2="198"/>
+    </g>
+    <g font-size="12" fill="#1a202c" text-anchor="start">
+      <text x="3" y="444">0</text><text x="3" y="400">1</text><text x="3" y="356">2</text><text x="3" y="312">3</text><text x="3" y="268">4</text><text x="3" y="224">5</text><text x="3" y="180">6</text>
+    </g>
+  </g>
+  <use href="#staffL" transform="translate(610 0)"/>
+
+  <!-- water-line readings (water surface at y=300 is not exactly the 4-ft tick at 264; make the water line 4 ft: y = 440-176 = 264). Redraw water at y=264 instead -->
+  <!-- (overlay to raise the water to the 4-ft mark) -->
+  <path d="M218,264 L229,300 L371,300 L382,264 Z" fill="#63b3ed" fill-opacity="0.85" stroke="#2b6cb0" stroke-width="2"/>
+  <path d="M708,264 L719,300 L1101,300 L1112,264 Z" fill="#63b3ed" fill-opacity="0.85" stroke="#2b6cb0" stroke-width="2"/>
+  <line x1="180" y1="264" x2="420" y2="264" stroke="#2b6cb0" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="650" y1="264" x2="1160" y2="264" stroke="#2b6cb0" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <!-- Readings -->
+  <g font-size="20" font-weight="700" fill="#2b6cb0">
+    <text x="130" y="250">stage 4 ft</text>
+    <text x="640" y="250" text-anchor="start">stage 4 ft</text>
+  </g>
+
+  <!-- Flow arrows and labels -->
+  <g font-size="22" font-weight="700" fill="#c05621" text-anchor="middle">
+    <text x="300" y="520">Q: a few ft³/s</text>
+    <text x="900" y="520">Q: thousands of ft³/s</text>
+  </g>
+  <path d="M250,540 L350,540" stroke="#c05621" stroke-width="3" fill="none" marker-end="url(#a)"/>
+  <path d="M780,540 L1020,540" stroke="#c05621" stroke-width="6" fill="none" marker-end="url(#a)"/>
+
+  <text x="600" y="600" text-anchor="middle" font-size="19" fill="#4a5568">Same reading on the ruler. Same depth. Not the same river.</text>
+</svg>

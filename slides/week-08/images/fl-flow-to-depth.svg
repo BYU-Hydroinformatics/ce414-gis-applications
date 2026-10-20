@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18">
+  <title>From a flow back to a depth, then to a flood map: a design flow, the rating read backwards, the stage, the depth above the river, and the HAND test</title>
+  <rect width="1200" height="520" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker>
+  </defs>
+
+  <!-- Row 1: the everyday direction -->
+  <text x="40" y="52" font-size="20" font-weight="700" fill="#4a5568">Every day, at the gage:</text>
+  <rect x="40" y="76" width="260" height="70" rx="12" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+  <text x="170" y="105" text-anchor="middle" font-size="20" font-weight="700" fill="#1a365d">stage</text>
+  <text x="170" y="130" text-anchor="middle" font-size="15" fill="#1a365d">gage height · water level</text>
+  <path d="M300,111 L450,111" stroke="#4a5568" stroke-width="2.5" fill="none" marker-end="url(#a)"/>
+  <text x="375" y="100" text-anchor="middle" font-size="15" fill="#4a5568">the rating</text>
+  <rect x="452" y="76" width="260" height="70" rx="12" fill="#fff5eb" stroke="#c05621" stroke-width="2"/>
+  <text x="582" y="105" text-anchor="middle" font-size="20" font-weight="700" fill="#7b341e">flow</text>
+  <text x="582" y="130" text-anchor="middle" font-size="15" fill="#7b341e">discharge · Q</text>
+
+  <!-- Row 2: backwards, for a flood -->
+  <text x="40" y="210" font-size="20" font-weight="700" fill="#4a5568">For a flood, read it backwards:</text>
+
+  <rect x="40" y="236" width="230" height="92" rx="12" fill="#fff5eb" stroke="#c05621" stroke-width="2"/>
+  <text x="155" y="266" text-anchor="middle" font-size="19" font-weight="700" fill="#7b341e">a design flow</text>
+  <text x="155" y="291" text-anchor="middle" font-size="15" fill="#7b341e">FEMA's 1 %: 2,325 ft³/s</text>
+  <text x="155" y="312" text-anchor="middle" font-size="15" fill="#7b341e">or your own Q</text>
+
+  <path d="M270,282 L330,282" stroke="#4a5568" stroke-width="2.5" fill="none" marker-end="url(#a)"/>
+  <text x="300" y="268" text-anchor="middle" font-size="13" fill="#4a5568">rating,</text>
+  <text x="300" y="302" text-anchor="middle" font-size="13" fill="#4a5568">backwards</text>
+
+  <rect x="332" y="236" width="200" height="92" rx="12" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+  <text x="432" y="266" text-anchor="middle" font-size="19" font-weight="700" fill="#1a365d">stage</text>
+  <text x="432" y="294" text-anchor="middle" font-size="18" fill="#1a365d">8.21 ft</text>
+
+  <path d="M532,282 L612,282" stroke="#4a5568" stroke-width="2.5" fill="none" marker-end="url(#a)"/>
+  <text x="572" y="266" text-anchor="middle" font-size="13" fill="#4a5568">minus the</text>
+  <text x="572" y="302" text-anchor="middle" font-size="13" fill="#4a5568">zero-flow reading</text>
+
+  <rect x="614" y="236" width="230" height="92" rx="12" fill="#e6fffa" stroke="#2c7a7b" stroke-width="2"/>
+  <text x="729" y="266" text-anchor="middle" font-size="19" font-weight="700" fill="#234e52">depth above the river</text>
+  <text x="729" y="294" text-anchor="middle" font-size="18" fill="#234e52">h = 8.21 − 3.20 ft</text>
+  <text x="729" y="316" text-anchor="middle" font-size="18" font-weight="700" fill="#234e52">= 5.01 ft = 1.53 m</text>
+
+  <path d="M844,282 L904,282" stroke="#4a5568" stroke-width="2.5" fill="none" marker-end="url(#a)"/>
+  <text x="874" y="268" text-anchor="middle" font-size="13" fill="#4a5568">Thursday</text>
+
+  <rect x="906" y="236" width="260" height="92" rx="12" fill="#f0fff4" stroke="#2f855a" stroke-width="2"/>
+  <text x="1036" y="266" text-anchor="middle" font-size="17" font-weight="700" fill="#22543d">every cell with</text>
+  <text x="1036" y="292" text-anchor="middle" font-size="18" font-family="Consolas, Menlo, monospace" fill="#22543d">HAND ≤ h</text>
+  <text x="1036" y="316" text-anchor="middle" font-size="17" font-weight="700" fill="#22543d">is wet</text>
+
+  <!-- footer -->
+  <text x="600" y="400" text-anchor="middle" font-size="19" fill="#1a202c" font-weight="600">One flow in, one depth out, one map.</text>
+  <text x="600" y="432" text-anchor="middle" font-size="15" fill="#4a5568">3.20 ft is what the Provo gage reads when the river would carry no flow: the ruler's zero sits below the bed.</text>
+  <text x="600" y="458" text-anchor="middle" font-size="15" fill="#4a5568">Lab 7, Step 1: you do this line once, for your own flow.</text>
+</svg>
