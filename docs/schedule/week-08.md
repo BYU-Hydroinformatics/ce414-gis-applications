@@ -7,8 +7,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — From a flow to a flooded map: annual peaks and the 100-year flood as a 1% chance, the rating curve, gage height versus depth, the bathtub model, and what FEMA does instead.
-- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — HAND, height above nearest drainage: Lab 5's chain plus Flow Distance, the stream definition, one threshold per flood, scoring a flood map against FEMA's, and Lab 7.
+- **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — From a gage to a flood map: the river's ruler and the rating curve, a flood flow back to a depth, why a river is not a bathtub, HAND cell by cell, and Lab 7's two models.
+- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — Annual peaks and the 100-year flood as a 1% chance, FEMA's maps as GIS, how good HAND is and where it breaks, the ladder from bathtub to 2-D hydraulics, and the ModelBuilder traps in Lab 7.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -20,8 +20,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [How Big, How High?](../quizzes/floods/index.html) — Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one.
 - [Height Above What?](../quizzes/hand/index.html) — Six questions on what HAND measures, which cells flood when the river rises, the tool that computes HAND, why the stream definition matters, and how to score a flood map.
+- [How Big, How High?](../quizzes/floods/index.html) — Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one.
 
 </div>
 
