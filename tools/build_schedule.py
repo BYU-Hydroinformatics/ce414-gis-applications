@@ -186,7 +186,7 @@ PRACTICE = {
     8: [("floods", "How Big, How High?",
          "Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one."),
         ("hand", "Height Above What?",
-         "Five questions on what HAND measures, the tool that computes it, why the stream definition matters, and how to score a flood map.")],
+         "Six questions on what HAND measures, which cells flood when the river rises, the tool that computes HAND, why the stream definition matters, and how to score a flood map.")],
     9: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust."),
         ("rmse", "How Wrong Is the Surface?",

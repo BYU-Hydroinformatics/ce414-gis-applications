@@ -21,7 +21,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [How Big, How High?](../quizzes/floods/index.html) — Five questions on what a 100-year flood means, a rating curve, depth above the river, and when a bathtub model is the right one.
-- [Height Above What?](../quizzes/hand/index.html) — Five questions on what HAND measures, the tool that computes it, why the stream definition matters, and how to score a flood map.
+- [Height Above What?](../quizzes/hand/index.html) — Six questions on what HAND measures, which cells flood when the river rises, the tool that computes HAND, why the stream definition matters, and how to score a flood map.
 
 </div>
 
