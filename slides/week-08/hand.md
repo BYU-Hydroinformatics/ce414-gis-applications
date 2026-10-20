@@ -33,7 +33,7 @@ Dr. Dan Ames
 
 # Today's Goals
 
-![bg right:42% w:96%](images/fl-hand-schematic.svg)
+![bg right:42% w:96%](images/fl-hand-chain.svg)
 
 By the end of class you should be able to:
 
@@ -77,12 +77,12 @@ By the end of class you should be able to:
 
 # How It Is Computed
 
-![w:1100 center](images/fl-hand-chain.svg)
+![h:330 center](images/fl-hand-model.svg)
 
-- **Fill → Flow Direction → Flow Accumulation → streams**: Lab 5, unchanged
+- **Fill → Flow Direction → Flow Accumulation → streams**: Lab 5, then a **30 m river corridor**
 - **Flow Distance**, distance type **Vertical**: HAND, down the path the water takes
 
-<!-- Flow Distance (Spatial Analyst) with Vertical distance and D8 is HAND; checked in ArcGIS Pro 3.7.1's arcpy for the Lab 7 study (tools/lab07/PLAN.md). Two traps the study measured: running on the unfilled DEM leaves thousands of negative HAND cells, and defining "stream" as every cell above an accumulation threshold, with no river corridor, makes every gully a river (next slide). -->
+<!-- The figure is Lab 7's HAND Builder model, exported from ModelBuilder after a run in the October 9, 2026 GUI build (the lab page's Figure C, lab07-model-hand.svg). Flow Distance (Spatial Analyst) with Vertical distance and D8 is HAND; checked in ArcGIS Pro 3.7.1's arcpy for the Lab 7 study (tools/lab07/PLAN.md). Two traps the study measured: running on the unfilled DEM leaves thousands of negative HAND cells, and defining "stream" as every cell above an accumulation threshold, with no river corridor, makes every gully a river (next slide). -->
 
 ---
 
@@ -107,13 +107,13 @@ By the end of class you should be able to:
 
 # One Threshold Floods the River
 
-![bg right:50% w:96%](images/fl-gage-datum.svg)
+![bg right:52% w:96%](images/fl-flood-calc.png)
 
 - From Tuesday: flow → **gage height** → **depth h** above the river
 - Flooded = **every cell with HAND ≤ h**: `Con("HAND" <= h, 1)`
 - A different h for each **return period**: one **iterator**, as in Lab 6
 
-<!-- The stage table in Lab 7 does the flow-to-h step for FEMA's five flows (10%, 4%, 2%, 1% and 0.2%); students do the same lookup by hand for their own flow in Step 1. Raster to Polygon then gives an area and a polygon, and Spatial Join counts the buildings it touches. -->
+<!-- The figure is the Flood Loop model's Raster Calculator in ArcGIS Pro (Lab 7, Figure 5b): Iterate Field Values hands each row's H_CM to %Value%, so the expression reads Con("HAND" <= %Value% / 100, 1) and each pass writes flood_%Value%. Centimeters because a name such as flood_1.53 is not allowed in a geodatabase. The stage table in Lab 7 does the flow-to-h step for FEMA's five flows (10%, 4%, 2%, 1% and 0.2%); students do the same lookup by hand for their own flow in Step 1. Raster to Polygon then gives an area and a polygon, and Spatial Join counts the buildings it touches. -->
 
 ---
 
@@ -163,7 +163,7 @@ By the end of class you should be able to:
 
 # Lab 7 at a Glance
 
-![bg right:45% w:98%](images/fl-hand-chain.svg)
+![bg right:40% h:88%](images/fl-example-map-floods.png)
 
 - **The reach**: the Provo River, **5 m lidar**, prepared for you
 - **Two models, run once each**: **HAND**, then an **iterator** → five floods
@@ -172,21 +172,22 @@ By the end of class you should be able to:
 
 [Lab 7 — Flood Mapping with HAND](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 
-<!-- One-week lab during Midterm 1 week, so the data come prepared: DEM, river line, buildings, FEMA floodplain and the stage table are in the package. Two models: one builds HAND, one loops Iterate Field Values over the stage table (an iterator reruns every tool in its model). Each runs once; then three tools from the Geoprocessing pane flood the river at the student's own flow. No threshold reruns and no skill-score computation: the hit rate, false-alarm ratio and CSI are given on the page as data, and the report explains them and finds one place where HAND and FEMA disagree. Check values on the page: river 3,191 cells, HAND 697,608 cells; floods from 1.29 km² and 319 buildings (10-yr) to 1.57 km² and 413 buildings (100-yr). Deliverables: two layout PDFs, a two-page report, the .atbx, a History capture. -->
+<!-- The figure is the lab page's example layout for Map 1 (Figure 7), made with arcpy.mp from the GUI build's Floods: the five floods nested, FEMA's 1% outline, the gage. Its wording is bracketed placeholders on purpose; point out that the floods are thin at this scale, which is why the rubric wants the return periods labeled or a close-up. One-week lab during Midterm 1 week, so the data come prepared: DEM, river line, buildings, FEMA floodplain and the stage table are in the package. Two models: one builds HAND, one loops Iterate Field Values over the stage table (an iterator reruns every tool in its model). Each runs once; then three tools from the Geoprocessing pane flood the river at the student's own flow. No threshold reruns and no skill-score computation: the hit rate, false-alarm ratio and CSI are given on the page as data, and the report explains them and finds one place where HAND and FEMA disagree. Check values on the page: river 3,191 cells, HAND 697,608 cells; floods from 1.29 km² and 319 buildings (10-yr) to 1.57 km² and 413 buildings (100-yr). Deliverables: two layout PDFs, a two-page report, the .atbx, a History capture. -->
 
 ---
 
 # Your Own Flow
 
-![bg right:40% w:96%](images/fl-rating.png)
+![bg right:40% h:88%](images/fl-example-map-own.png)
 
 > **Your flow = 900 + 12 × (last two digits of your BYU ID) ft³/s**
 
 - BYU ID `123456789` → **89** → 900 + 12 × 89 = **1,968 ft³/s**
 - The **nine-digit number on your BYU ID card**, not your NetID
 - Every personal flow is **inside the rating**: no extrapolation
+- At 1,968 ft³/s: **7.78 ft**, *h* = **1.396 m**, **376 buildings** (right)
 
-<!-- Range 900 to 2,088 ft³/s, all below the rating's top row of 2,150 ft³/s. The grader looks up each student's h, area and building count (ce414-private/grading-oracles/lab07_personal_lookup.csv). -->
+<!-- The figure is the lab page's example layout for Map 2 (Figure 8), drawn at the example ID's flow: 1,968 ft³/s, 7.78 ft, h = 1.396 m, 1.4548 km², 376 buildings, the lab's Step 7 check values. Its main frame shows the whole reach with a close-up inset, which the lab calls the weaker choice: the student's main frame should be zoomed to the buildings. Range 900 to 2,088 ft³/s, all below the rating's top row of 2,150 ft³/s. The grader looks up each student's h, area and building count (ce414-private/grading-oracles/lab07_personal_lookup.csv). -->
 
 ---
 
@@ -221,4 +222,4 @@ By the end of class you should be able to:
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams; numbers from the Lab 7 package (tools/lab07/package_checks.json). -->
+<!-- Deck written October 9, 2026. Figures: tools/week08_flood_figures.py and three drawn diagrams, plus four copied from the Lab 7 page on October 19, 2026 (fl-hand-model.svg = lab07-model-hand.svg, fl-flood-calc.png = lab07-flood-calc.png, fl-example-map-floods.png and fl-example-map-own.png = lab07-example-map-baseline/-design.png; refresh the copies if the lab's figures change); numbers from the Lab 7 package (tools/lab07/package_checks.json). -->
