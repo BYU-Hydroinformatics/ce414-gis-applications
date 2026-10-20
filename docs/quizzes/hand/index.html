@@ -32,6 +32,17 @@ CE414Quiz.start({
       explanation: "HAND follows the path the water takes (the flow direction) to the stream and measures the vertical drop along it. Sea level and straight-line distance ignore where the water actually goes."
     },
     {
+      prompt: "Cell A is at 22.8 m and its water runs downhill to a river cell at 21.8 m. Cell B, farther down the valley, is at 22.0 m and drains to the river at 20.0 m. The river rises 1.5 m. Which cells flood?",
+      options: [
+        "Only B, because it is lower",
+        "Only A",
+        "Both, because both are within 3 m of the river",
+        "Neither"
+      ],
+      answer: "Only A",
+      explanation: "HAND is A's 22.8 − 21.8 = 1.0 m and B's 22.0 − 20.0 = 2.0 m. Only cells with HAND at most 1.5 m flood, so the higher cell floods and the lower one stays dry: what counts is the height above the river each cell drains to, not the elevation."
+    },
+    {
       prompt: "Which tool turns Lab 5's chain into HAND?",
       options: [
         "Flow Distance, vertical",
@@ -74,7 +85,7 @@ CE414Quiz.start({
       explanation: "The false-alarm ratio is the share of your flooded area that FEMA calls dry. The hit rate only asks how much of FEMA's floodplain you caught, so a map that floods everything scores a perfect hit rate; CSI counts both errors at once."
     }
   ],
-  perfectNote:  "All five. On to Lab 7.",
+  perfectNote:  "All six. On to Lab 7.",
   goodNote:     "Good. Reread the explanations you missed before Lab 7, Step 3.",
   tryAgainNote: "HAND is the vertical drop to the stream a cell drains to, the stream definition drives it, and a cell floods when HAND is at most h. Look at those slides again."
 });

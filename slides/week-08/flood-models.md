@@ -23,7 +23,7 @@ Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Tuesday of Week 8, the third of the water weeks: Lab 5 found where the water goes, Lab 6 measured how much a lake holds, and this week asks how high a river rises and what it covers. Today is the hydrology and the simplest flood model; Thursday is HAND and Lab 7. Midterm 1 is open in the Testing Center all week. The title image is three of FEMA's own cross-sections of the Provo River in Provo, with the 1% water surface over the lidar ground. -->
+<!-- Tuesday of Week 8, the third of the water weeks: Lab 5 found where the water goes, Lab 6 measured how much a lake holds, and this week asks how high a river rises and what it covers. Today is the hydrology and the simplest flood model; Thursday is HAND and the rest of Lab 7. Lab 7 opens today and is due Saturday: its Step 1, each student's own flow turned into a gage height and h from the rating, needs only today's material, so point them at it before Thursday. Midterm 1 is open in the Testing Center all week. The title image is three of FEMA's own cross-sections of the Provo River in Provo, with the 1% water surface over the lidar ground. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -70,9 +70,9 @@ By the end of class you should be able to:
 
 - **1% chance every year**, not "once a century" — FEMA says **1% annual chance**
 - Over a 30-year mortgage: 1 − 0.99³⁰ ≈ **26%** chance of at least one
-- FEMA's flows for this reach: **1,475 · 1,810 · 2,065 · 2,325 ft³/s** for 10%, 4%, 2%, 1%
+- FEMA's flows for this reach: **1,475 · 1,810 · 2,065 · 2,325 · 2,935 ft³/s** for 10%, 4%, 2%, 1%, 0.2%
 
-<!-- Blue: the 90 annual peaks ranked and plotted at (n+1)/rank, the simplest empirical return period. Orange: FEMA's published flows for the Provo River "3 miles above tie-in to Utah Lake", Utah County Flood Insurance Study, Table 9 (49049CV001B); the 0.2% flow is 2,935. Ask the room why two measured years sit above FEMA's 1% flow. Answers worth hearing: short records, regulation, a fitted distribution versus the raw ranks. A simple Log-Pearson III fit to this gage's own peaks since 1993 gives about 3,111 ft³/s for the 1% flow (tools/lab07, labeled a teaching approximation, not Bulletin 17C), 34% above FEMA's; two defensible "100-year floods" can differ that much. -->
+<!-- Blue: the 90 annual peaks ranked and plotted at (n+1)/rank, the simplest empirical return period. Orange: FEMA's published flows for the Provo River "3 miles above tie-in to Utah Lake", Utah County Flood Insurance Study, Table 9 (49049CV001B): the five flows Lab 7 floods. Ask the room why two measured years sit above FEMA's 1% flow. Answers worth hearing: short records, regulation, a fitted distribution versus the raw ranks. A simple Log-Pearson III fit to this gage's own peaks since 1993 gives about 3,111 ft³/s for the 1% flow (tools/lab07, labeled a teaching approximation, not Bulletin 17C), 34% above FEMA's; two defensible "100-year floods" can differ that much. This is for class discussion only: Lab 7 uses FEMA's flows and does not ask it. -->
 
 ---
 
@@ -89,9 +89,9 @@ By the end of class you should be able to:
 - The gage measures **gage height**; the **rating** converts it to flow
 - Provo's current rating: **3.42 to 8.00 ft**, **6.8 to 2,150 ft³/s**
 - Read it backwards for a flood: **flow → gage height**
-- FEMA's **1% flow is off the top** of the rating: that level is an **extrapolation**
+- FEMA's **1% and 0.2% flows are off the top** of the rating: those levels are **extrapolations**
 
-<!-- The USGS current rating for 10163000 (459 rows; the Lab 7 package, rating_10163000.csv). The dotted lines are FEMA's 10%, 4%, 2% and 1% flows; only the 1% falls in the gray band beyond the last measured row. A rating is built from field measurements, and floods are the hardest flows to measure, so the top of every rating is its least certain part. -->
+<!-- The USGS current rating for 10163000 (459 rows; the Lab 7 package, rating_10163000.csv). The dotted lines are FEMA's five flows; the 1% and 0.2% fall in the gray band beyond the last row, so Lab 7's stage table marks them extrapolated. Every student's own Lab 7 flow (900 to 2,088 ft³/s) is inside the table. A rating is built from field measurements, and floods are the hardest flows to measure, so the top of every rating is its least certain part. -->
 
 ---
 
@@ -102,9 +102,9 @@ By the end of class you should be able to:
 - **Gage height** is read from the staff's own zero, the **gage datum**
 - Water elevation = **datum + gage height**
 - **Depth** = gage height − the **zero-flow offset** (3.20 ft at Provo)
-- Lab 7 floods the land by **depth**, so the datum cancels out
+- HAND needs only the **depth**; the datum turns a gage height into an **elevation**, for a bathtub or for FEMA's water surface
 
-<!-- Numbers from the USGS site record and the rating file: gage datum 4,493.22 ft NAVD 88; the rating's offset is 3.20 ft (the gage height at which flow would be zero). Lab 7 uses depth above the river, h = gage height − 3.20 ft, converted to meters, which is why Thursday's HAND model never needs the datum. Diagram drawn for this deck (not to scale). -->
+<!-- Numbers from the USGS site record and the rating file: gage datum 4,493.22 ft NAVD 88; the rating's offset is 3.20 ft (the gage height at which flow would be zero). Lab 7 uses depth above the river, h = gage height − 3.20 ft, converted to meters, so the datum never enters h or Thursday's HAND model; it is what converts a gage height to an elevation, which the bathtub on the next slides and FEMA's 1% water surface (in feet NAVD 88) both need. Lab 7 Step 1 has students read the datum off the gage page, and the report asks what it means for their result: this slide is the answer's starting point. Diagram drawn for this deck (not to scale). -->
 
 ---
 
@@ -122,7 +122,7 @@ By the end of class you should be able to:
 - Right for **lakes and coasts**: Lab 6's Lake Powell shorelines were bathtubs
 - One **Con** on the DEM: `Con("DEM" <= 1372.04, 1)`
 
-<!-- 1,372.04 m NAVD 88 is the 1% water elevation at the gage in the Lab 7 stage table (FEMA's 2,325 ft³/s, gage height 8.21 ft, extrapolated above the rating; tools/lab07/package_checks.json). A lake's surface really is flat, so the bathtub is the right model there; that is exactly what Lab 6 did at Lake Powell. -->
+<!-- 1,372.04 m NAVD 88 is the 1% water elevation at the gage, ELEV_M in the Lab 7 Stage_Table: (4,493.22 + 8.21 ft) × 0.3048 (FEMA's 2,325 ft³/s, gage height 8.21 ft, extrapolated above the rating; tools/lab07/package_checks.json). A lake's surface really is flat, so the bathtub is the right model there; that is exactly what Lab 6 did at Lake Powell. -->
 
 ---
 
@@ -143,11 +143,11 @@ By the end of class you should be able to:
 ![bg right:55% w:98%](images/fl-fema-xs.png)
 
 - **1-D hydraulics** (HEC-RAS): cross-sections, roughness, bridges, and a **sloping water surface**
-- FEMA's study of this reach: **42 sections** inside the Lab 7 area
+- FEMA's study of this reach: **43 sections** inside the Lab 7 area
 - Median 1% depth above the streambed: **1.8 m**
 - Accurate, and **expensive**: one study per reach, redone every few years
 
-<!-- FEMA NFHL cross-section lines for Utah County (effective June 23, 2026; WSEL_REG and STRMBED_EL attributes, converted from feet NAVD 88), sampled against the Lab 7 5 m lidar DEM. Depths range 1.5 to 2.1 m. Section T shows the lidar channel bottom sitting above FEMA's streambed: lidar cannot see through water, and that comes back Thursday. -->
+<!-- FEMA NFHL cross-section lines for Utah County (effective June 23, 2026; WSEL_REG and STRMBED_EL attributes, converted from feet NAVD 88), sampled against the Lab 7 5 m lidar DEM. The median and range are over the 42 sections with a riverine 1% water surface (one, near Utah Lake, carries −8888 because the lake controls it). Depths range 1.5 to 2.1 m. Section T shows the lidar channel bottom sitting above FEMA's streambed: lidar cannot see through water, and that comes back Thursday. -->
 
 ---
 
@@ -232,7 +232,7 @@ By the end of class you should be able to:
 **Before next class**
 
 - **Midterm 1** — in the Testing Center, open through **Thursday 9:00 pm**
-- **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm** — [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
+- **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm**: do **Step 1**, your own flow from the rating, now — [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 - Look up a stream gage near your home on the USGS map: what is its largest flow on record?
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 

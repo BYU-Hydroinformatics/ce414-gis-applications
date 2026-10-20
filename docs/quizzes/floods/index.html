@@ -61,7 +61,7 @@ CE414Quiz.start({
         "The DEM has no vertical datum to use"
       ],
       answer: "HAND is also a height above the river",
-      explanation: "Depth is gage height minus the zero-flow offset, a height above the river bottom, which is exactly what HAND measures for every cell. The gage datum cancels out, so it never enters the model."
+      explanation: "Depth is gage height minus the zero-flow offset, a height above the river, which is exactly what HAND measures for every cell. The gage datum never enters h; you need it only to turn a gage height into an elevation, as a bathtub or FEMA's water surface does."
     },
     {
       prompt: "When is a bathtub model (one flat water elevation) the right flood model?",

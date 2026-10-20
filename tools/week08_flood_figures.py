@@ -69,14 +69,12 @@ gh = [a for a, b in rt]; cfs = [b for a, b in rt]
 NUM["rating"] = dict(rows=len(rt), gh_min=min(gh), gh_max=max(gh), q_min=min(cfs), q_max=max(cfs))
 fig, ax = plt.subplots(figsize=(10, 5.2))
 ax.plot(cfs, gh, color="#2b6cb0", lw=3, label="USGS rating: gage height for each flow")
-ax.axvspan(max(cfs), 3100, color="#e2e8f0")
+ax.axvspan(max(cfs), 3200, color="#e2e8f0")
 ax.text(max(cfs) + 30, min(gh) + 0.3, "beyond the\nrating:\nextrapolated", color="#4a5568")
-for k, v in FEMA.items():
-    if k == "0.2%":
-        continue
+for k, v in FEMA.items():   # all five, so the 0.2% (500-year) flow Lab 7 floods shows beyond the rating too
     ax.axvline(v, color="#c05621", ls=":", lw=1.5)
     ax.text(v + 15, max(gh) - 0.35, k, color="#c05621")
-ax.set_xlim(0, 3100); ax.set_xlabel("flow (ft³/s)"); ax.set_ylabel("gage height (ft)")
+ax.set_xlim(0, 3200); ax.set_xlabel("flow (ft³/s)"); ax.set_ylabel("gage height (ft)")
 ax.legend(frameon=False, loc="lower right")
 save(fig, "fl-rating.png")
 
