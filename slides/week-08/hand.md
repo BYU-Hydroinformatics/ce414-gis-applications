@@ -359,10 +359,10 @@ Three ways to draw a flood, in order of cost:
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: How Big, How High?** Six questions on return periods, rating curves, depth, bathtubs, the Flood Loop's centimeters and scoring a flood map.
+**Quiz: How Big, How High?** Six questions: the 100-year flood, how good HAND is, and the Lab 7 tools.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
-- The centimeters question comes back in Lab 7, Step 5
+- The last two questions come back in Lab 7, Step 5
 
 **Before next class**
 

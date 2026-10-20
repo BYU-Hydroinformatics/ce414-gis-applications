@@ -16,7 +16,7 @@
 CE414Quiz.start({
   title: "How Big, How High?",
   subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part B<br>" +
-            "From a flood flow to a depth, and how good the map is. For each item, decide what the number " +
+            "The 100-year flood, how good HAND is, and the Lab 7 tools. For each item, decide what the number " +
             "<strong>actually means</strong>.",
   badge: "Flood call",
   deckUrl: "../../slides/week-08/hand.html",
@@ -33,33 +33,11 @@ CE414Quiz.start({
       explanation: "It is a probability that resets every year, which is why FEMA writes \"1% annual chance\". Two such floods can come in back-to-back years; a 100-year record need not contain one."
     },
     {
-      prompt: "Lab 7's Flood Loop iterates over H_CM, each depth in whole centimeters (153), not H_M in meters (1.53). Why?",
-      options: [
-        "Iterate Field Values can only read whole numbers",
-        "Each pass names its output flood_%Value%, and flood_1.53 is not a legal geodatabase name",
-        "HAND is stored in centimeters",
-        "Raster Calculator cannot handle decimals"
-      ],
-      answer: "Each pass names its output flood_%Value%, and flood_1.53 is not a legal geodatabase name",
-      explanation: "%Value% goes into the output name as well as the expression, and a geodatabase raster name cannot contain a period: flood_153 works, flood_1.53 does not. The expression divides it back, Con(\"HAND\" <= %Value% / 100, 1), so the flood is still measured in meters."
-    },
-    {
-      prompt: "FEMA's 1% flow for the Provo River is above the top row of the gage's rating curve. What does that mean for its water level?",
-      options: [
-        "Its level is extrapolated",
-        "The flood cannot be mapped at all",
-        "The gage has failed and must be replaced",
-        "The flow must be reduced to the top row"
-      ],
-      answer: "Its level is extrapolated",
-      explanation: "A rating is built from field measurements, and the largest floods are the hardest to measure. Above the last row, the level comes from extending the curve: usable, but the least certain part of the answer."
-    },
-    {
       prompt: "Why does Lab 7 flood the land by depth above the river instead of by water elevation?",
       options: [
-        "Depth is always measured in feet",
+        "Depth is always measured in feet, like the gage readings",
         "HAND is also a height above the river",
-        "The DEM has no vertical datum to use"
+        "The DEM has no vertical datum to compare elevations against"
       ],
       answer: "HAND is also a height above the river",
       explanation: "Depth is gage height minus the zero-flow offset, a height above the river, which is exactly what HAND measures for every cell. The gage datum never enters h; you need it only to turn a gage height into an elevation, as a bathtub or FEMA's water surface does."
@@ -84,11 +62,33 @@ CE414Quiz.start({
       ],
       answer: "A high false-alarm ratio",
       explanation: "The false-alarm ratio is the share of your flooded area that FEMA calls dry. The hit rate only asks how much of FEMA's floodplain you caught, so a map that floods everything scores a perfect hit rate; CSI counts both errors at once."
+    },
+    {
+      prompt: "Lab 7's Flood Loop iterates over H_CM, each depth in whole centimeters (153), not H_M in meters (1.53). Why?",
+      options: [
+        "Iterate Field Values can only read whole numbers from a table",
+        "flood_%Value% would become flood_1.53, which is not a legal raster name",
+        "HAND is stored in centimeters, so the threshold has to match it",
+        "Raster Calculator rounds a decimal threshold to the nearest meter"
+      ],
+      answer: "flood_%Value% would become flood_1.53, which is not a legal raster name",
+      explanation: "%Value% goes into the output name as well as the expression, and a geodatabase raster name cannot contain a period: flood_153 works, flood_1.53 does not. The expression divides it back, Con(\"HAND\" <= %Value% / 100, 1), so the flood is still measured in meters."
+    },
+    {
+      prompt: "Your Flood Loop runs, but Floods has one row instead of five. The stage table has five rows. What went wrong?",
+      options: [
+        "Merge was not fed by Collect Values, so it kept only the last pass",
+        "Create multipart features was unchecked in Raster to Polygon",
+        "Raster to Polygon simplified the polygons and merged the floods together",
+        "HAND was built without the Extent environment set to the DEM"
+      ],
+      answer: "Merge was not fed by Collect Values, so it kept only the last pass",
+      explanation: "Collect Values gathers one polygon per pass, and Merge, fed from its Output Values, combines all five at the end. Fed straight from Calculate Field, Merge sees only the current pass and keeps the last flood. An unchecked multipart box does the opposite: dozens of rows per flood."
     }
   ],
   perfectNote:  "All six. On to Lab 7.",
   goodNote:     "Good. Reread the explanations you missed before Lab 7.",
-  tryAgainNote: "A 100-year flood is a 1% chance every year, a rating turns flow into a water level, a bathtub only suits a flat water surface, and the false-alarm ratio is the share of your flood the other map calls dry. Look at those slides again."
+  tryAgainNote: "A 100-year flood is a 1% chance every year, a bathtub only suits a flat water surface, the false-alarm ratio is the share of your flood the other map calls dry, and the Flood Loop counts in centimeters and collects before it merges. Look at those slides again."
 });
 </script>
 </body>
