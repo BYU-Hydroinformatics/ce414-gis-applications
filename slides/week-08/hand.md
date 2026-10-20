@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 8. Tuesday ended on the bathtub's failure on a river and FEMA's expensive fix. Today: a terrain-only model that floods a whole river with one number, built from Lab 5's own chain plus one tool, and Lab 7, which does it on the Provo River and checks the answer against FEMA's new map. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -113,7 +113,7 @@ By the end of class you should be able to:
 - Flooded = **every cell with HAND ≤ h**: `Con("HAND" <= h, 1)`
 - A different h for each **return period**: one **iterator**, as in Lab 6
 
-<!-- The stage table in Lab 7 does the flow-to-h step for FEMA's 10%, 4%, 2% and 1% flows; students look their own flow up in the rating by hand. Raster to Polygon then gives an area and a polygon to intersect with buildings. -->
+<!-- The stage table in Lab 7 does the flow-to-h step for FEMA's five flows (10%, 4%, 2%, 1% and 0.2%); students do the same lookup by hand for their own flow in Step 1. Raster to Polygon then gives an area and a polygon, and Spatial Join counts the buildings it touches. -->
 
 ---
 
@@ -163,12 +163,12 @@ By the end of class you should be able to:
 
 # Lab 7 at a Glance
 
-![bg right:52% w:98%](images/fl-hand-chain.svg)
+![bg right:45% w:98%](images/fl-hand-chain.svg)
 
-- **The reach**: the Provo River through Provo, a **5 m lidar** DEM, prepared for you
-- **Two models, run once each**: Lab 5's chain + **Flow Distance** → HAND; one **iterator** over the stage table → five floods
-- **The answer**: flooded area and **buildings** for each FEMA flow, and for **your own flow**
-- **The check**: your 1% flood against **FEMA's** floodplain — one place where they disagree, and why
+- **The reach**: the Provo River, **5 m lidar**, prepared for you
+- **Two models, run once each**: **HAND**, then an **iterator** → five floods
+- **The answer**: flooded area and **buildings**, for FEMA's flows and **your own**
+- **The check**: your 1% flood against **FEMA's**: where they differ, and why
 
 [Lab 7 — Flood Mapping with HAND](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 
