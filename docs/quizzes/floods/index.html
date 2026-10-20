@@ -15,11 +15,11 @@
 <script>
 CE414Quiz.start({
   title: "How Big, How High?",
-  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part A<br>" +
-            "From a flood flow to a flooded map. For each item, decide what the number " +
+  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part B<br>" +
+            "From a flood flow to a depth, and how good the map is. For each item, decide what the number " +
             "<strong>actually means</strong>.",
   badge: "Flood call",
-  deckUrl: "../../slides/week-08/flood-models.html",
+  deckUrl: "../../slides/week-08/hand.html",
   questions: [
     {
       prompt: "What does \"the 100-year flood\" mean?",
@@ -73,11 +73,21 @@ CE414Quiz.start({
       ],
       answer: "A lake with a level surface",
       explanation: "A lake's surface really is flat, which is why Lab 6's shorelines were bathtubs. A river's surface slopes downhill, so one flat elevation drowns the low ground near its mouth and never reaches the river upstream."
+    },
+    {
+      prompt: "Your flood map and FEMA's overlap well, but yours also floods a lot of land FEMA calls dry. Which score shows that?",
+      options: [
+        "A high false-alarm ratio",
+        "A high hit rate",
+        "A low number of misses"
+      ],
+      answer: "A high false-alarm ratio",
+      explanation: "The false-alarm ratio is the share of your flooded area that FEMA calls dry. The hit rate only asks how much of FEMA's floodplain you caught, so a map that floods everything scores a perfect hit rate; CSI counts both errors at once."
     }
   ],
-  perfectNote:  "All five. You are ready for Thursday's HAND model.",
+  perfectNote:  "All six. On to Lab 7.",
   goodNote:     "Good. Reread the explanations you missed before Lab 7.",
-  tryAgainNote: "A 100-year flood is a 1% chance every year, a rating turns flow into a water level, and a bathtub only suits a flat water surface. Look at those slides again."
+  tryAgainNote: "A 100-year flood is a 1% chance every year, a rating turns flow into a water level, a bathtub only suits a flat water surface, and the false-alarm ratio is the share of your flood the other map calls dry. Look at those slides again."
 });
 </script>
 </body>

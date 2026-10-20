@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 8. Tuesday ended on the bathtub's failure on a river and FEMA's expensive fix. Today: a terrain-only model that floods a whole river with one number, built from Lab 5's own chain plus one tool, and Lab 7, which does it on the Provo River and checks the answer against FEMA's new map. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-20</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -359,7 +359,7 @@ Three ways to draw a flood, in order of cost:
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: How Big, How High?** Five questions on return periods, rating curves, depth and bathtubs.
+**Quiz: How Big, How High?** Six questions on return periods, rating curves, depth, bathtubs and scoring a flood map.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
 - Most people miss the mortgage question

@@ -398,14 +398,14 @@ By the end of class you should be able to:
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: Height Above What?** Six questions on HAND, flooding a grid by HAND, stream definitions and scoring a flood map. **Scan the code**, or open the link under it.
+**Quiz: Height Above What?** Six questions on HAND, flooding a grid by HAND, stream definitions and why Lab 7 is two models. **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
 
 **Before next class**
 
 - **Midterm 1** — in the Testing Center, open through **Thursday 9:00 pm**
-- **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm**: do **Step 1**, your own flow from the rating, now — [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
+- **Lab 7 — Flood Mapping with HAND** — due **Saturday 11:59 pm**: build the two models now (**Steps 0 and 2–5**); Step 1, your own flow, uses Thursday's rating — [Lab 7](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-07/)
 - Look up a stream gage near your home on the USGS map: what is its largest flow on record?
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 

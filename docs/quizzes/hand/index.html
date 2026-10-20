@@ -15,11 +15,11 @@
 <script>
 CE414Quiz.start({
   title: "Height Above What?",
-  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part B<br>" +
+  subtitle: "CE 414 &middot; Week 8 &mdash; Flood Mapping, Part A<br>" +
             "One depth floods a whole river. For each item, decide what the HAND model " +
             "<strong>is doing with the terrain</strong>.",
   badge: "HAND call",
-  deckUrl: "../../slides/week-08/hand.html",
+  deckUrl: "../../slides/week-08/flood-models.html",
   questions: [
     {
       prompt: "What does a cell's HAND value measure?",
@@ -75,19 +75,20 @@ CE414Quiz.start({
       explanation: "The model floods every cell with HAND less than or equal to h, one threshold for the whole river. Elevation and distance to the gage play no part; that is both HAND's strength and its limit."
     },
     {
-      prompt: "Your flood map and FEMA's overlap well, but yours also floods a lot of land FEMA calls dry. Which score shows that?",
+      prompt: "Why is Lab 7 two models, HAND Builder and Flood Loop, instead of one?",
       options: [
-        "A high false-alarm ratio",
-        "A high hit rate",
-        "A low number of misses"
+        "A model can have only one parameter",
+        "An iterator reruns every tool in its model, so one model would rebuild HAND for every flood",
+        "Flow Distance cannot run inside a model with an iterator",
+        "The stage table has to live in a different geodatabase"
       ],
-      answer: "A high false-alarm ratio",
-      explanation: "The false-alarm ratio is the share of your flooded area that FEMA calls dry. The hit rate only asks how much of FEMA's floodplain you caught, so a map that floods everything scores a perfect hit rate; CSI counts both errors at once."
+      answer: "An iterator reruns every tool in its model, so one model would rebuild HAND for every flood",
+      explanation: "An iterator drives every tool in its model, not just the ones after it. Put the HAND chain in the same model as the loop and Fill, Flow Direction, Flow Accumulation and Flow Distance run five times for one identical raster. Two models build HAND once and repeat only the cheap flooding steps; HAND is the one thing that passes between them."
     }
   ],
   perfectNote:  "All six. On to Lab 7.",
   goodNote:     "Good. Reread the explanations you missed before Lab 7, Step 3.",
-  tryAgainNote: "HAND is the vertical drop to the stream a cell drains to, the stream definition drives it, and a cell floods when HAND is at most h. Look at those slides again."
+  tryAgainNote: "HAND is the vertical drop to the stream a cell drains to, the stream definition drives it, a cell floods when HAND is at most h, and the slow HAND chain runs once, in its own model. Look at those slides again."
 });
 </script>
 </body>
