@@ -33,21 +33,58 @@ Dr. Dan Ames
 
 # Today's Goals
 
-![bg right:42% w:96%](images/fl-rating.png)
+![bg right:45% w:98%](images/fl-flood-photo.jpg)
+
+<div style="font-size: 0.92em;">
 
 By the end of class you should be able to:
 
+**Two hydrology ideas**
+
 - Say what a **100-year flood** is, and what it is not
-- Turn a **flow** into a **water level** with a rating curve, and a water level into a **depth**
-- Draw a **bathtub** flood map, and say when it is the right model
-- Say what FEMA does instead, and why a river needs it
+- Say what a **FEMA flood map** claims, and how FEMA makes one
+
+**The rest is GIS and data analysis**
+
+- Turn a gage's **record** into a flow, a **water level** and a **depth**
+- Draw a **bathtub** flood map with one Con, and say when it is the right model
 - Say why **Lab 7 is two models**, and what passes between them
+
+</div>
+
+<!-- Photo: a flooded neighborhood near the confluence of the Comite and Amite Rivers, Denham Springs, Louisiana, August 13, 2016 (U.S. Geological Survey, public domain). The split in the goals is deliberate: students have said the course leans on hydrology, so name the two hydrology ideas (a return period and what FEMA asserts) and show that everything else today is data handling and map making. Each of the five is a slide or two. -->
 
 ---
 
 <!-- _class: lead -->
 
-# Part 1 — How Big Is the Flood?
+# Part 1 — Flood Maps, and How Big a Flood Is
+
+---
+
+# FEMA's Flood Maps Are GIS
+
+![bg right:48% w:98%](images/fl-firm-paper.jpg)
+
+- Since the 1970s FEMA has mapped flood hazard for the **National Flood Insurance Program**: the **Flood Insurance Rate Map**, FIRM
+- Paper panels, then digital **DFIRM** databases, now the **National Flood Hazard Layer**: a live GIS service
+- Every zone is a **return period**: **AE** is the 1%-annual-chance (100-year) floodplain; shaded X the 0.2%
+- Utah County's new map: effective **June 23, 2026**. Lab 7's FEMA layer is cut from it
+
+<!-- The image is a scanned paper FIRM panel (Library of Congress, public domain), the kind of sheet a lender or city planner read by hand before the maps went digital. Congress created the NFIP in 1968 and required countywide FIRMs in 1973; FEMA took the program over in 1979, prototyped a digital FIRM in the 1990s and converted the paper inventory from 2005 on (Map Modernization); the NFHL is the live product and is what the Lab 7 package queried for FEMA_Floodplain_1pct and FEMA_Cross_Sections. The point for a GIS class: a flood map is a polygon layer with a zone attribute, and every zone boundary is a claim about a return period. Which raises the question the next slides answer: what is a return period, and where does the number come from? -->
+
+---
+
+# What a Gage Measures
+
+![bg right:48% w:98%](images/fl-gage-photo.jpg)
+
+- A **stream gage** measures **stage**, the water level, about every **15 minutes**
+- The reading goes by **satellite telemetry** to a USGS database the same hour; you can watch it live
+- Stage becomes **flow** through a rating curve (Part 2); flows become **daily means** and, once a year, the **annual peak**
+- **Provo River at Provo**, USGS 10163000: record since **1903**
+
+<!-- Photo: a USGS streamgage on the South Fork of the Ogden River near Huntsville, Utah, one of 25 Utah gages that have run for a century (USGS, public domain). The shelter houses the stage sensor, the data logger and the antenna. Most USGS gages record stage every 15 minutes and transmit hourly through the GOES satellite system to NWIS; the Lab 7 page links the live page for 10163000. What a gage does NOT measure directly is flow: that is the rating, next part. The annual peak series is the one number a year that flood frequency is built from, next slide. -->
 
 ---
 
@@ -55,8 +92,8 @@ By the end of class you should be able to:
 
 ![bg right:55% w:98%](images/fl-peaks.png)
 
-- A stream gage records flow every few minutes; the **annual peak** is the largest of each year
-- **Provo River at Provo** (USGS 10163000): **90** annual peaks, 1903 to 2024
+- From every year's record, keep the **largest flow**: the **annual peak**
+- **Provo River at Provo**: **90** annual peaks, 1903 to 2024
 - The record: **2,520 ft³/s** in 1952
 - Every peak is flagged **regulated**: dams upstream shape every flood
 
@@ -73,6 +110,32 @@ By the end of class you should be able to:
 - FEMA's flows for this reach: **1,475 · 1,810 · 2,065 · 2,325 · 2,935 ft³/s** for 10%, 4%, 2%, 1%, 0.2%
 
 <!-- Blue: the 90 annual peaks ranked and plotted at (n+1)/rank, the simplest empirical return period. Orange: FEMA's published flows for the Provo River "3 miles above tie-in to Utah Lake", Utah County Flood Insurance Study, Table 9 (49049CV001B): the five flows Lab 7 floods. Ask the room why two measured years sit above FEMA's 1% flow. Answers worth hearing: short records, regulation, a fitted distribution versus the raw ranks. A simple Log-Pearson III fit to this gage's own peaks since 1993 gives about 3,111 ft³/s for the 1% flow (tools/lab07, labeled a teaching approximation, not Bulletin 17C), 34% above FEMA's; two defensible "100-year floods" can differ that much. This is for class discussion only: Lab 7 uses FEMA's flows and does not ask it. -->
+
+---
+
+# A Pair of Sixes
+
+<style scoped>.dice ul { list-style: none; padding-left: 0; margin-left: 0; } .dice li::marker { content: ""; }</style>
+
+<div class="columns" style="grid-template-columns: 1fr 1.1fr; align-items: center;">
+<div class="dice">
+
+* ![w:420](images/fl-dice.svg)
+
+</div>
+<div style="font-size: 1.05em;">
+
+* **What is the chance of rolling a pair of sixes?**
+* **Will it happen every 36 rolls?**
+* **Can it happen twice in a row?**
+* A 100-year flood is a pair of sixes on a **100-sided** die: **1 in 100**, every year, with no memory of last year
+
+</div>
+</div>
+
+<!-- Each line appears on a click (press the right arrow). Let them answer before the next one. One in 36, about 2.8%. No: 36 rolls give about a 64% chance of at least one pair of sixes (1 − (35/36)^36), and many sets of 36 rolls have none. Yes: twice in a row is 1 in 1,296, rare but ordinary, and the second roll does not know about the first. Then the bridge: a 1% annual-chance flood is the same kind of statement, which is why Provo can have 1952 and 1983 in one lifetime and why a 30-year mortgage carries a 26% chance of seeing one. Dice drawn for this deck. -->
+
+---
 
 ---
 
@@ -142,7 +205,7 @@ By the end of class you should be able to:
 
 ![bg right:55% w:98%](images/fl-fema-xs.png)
 
-- **1-D hydraulics** (HEC-RAS): cross-sections, roughness, bridges, and a **sloping water surface**
+- How the **AE zone** on the FIRM is drawn: **1-D hydraulics** (HEC-RAS), with cross-sections, roughness, bridges, and a **sloping water surface**
 - FEMA's study of this reach: **43 sections** inside the Lab 7 area
 - Median 1% depth above the streambed: **1.8 m**
 - Accurate, and **expensive**: one study per reach, redone every few years
@@ -248,4 +311,4 @@ By the end of class you should be able to:
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). Part 4 (three slides on the two-model design) added October 19, 2026, after the Lab 7 cut: fl-two-models.svg and fl-why-two-models.svg are hand-drawn; fl-model-hand.svg and fl-model-floodloop.svg are copies of the Lab 7 page's Figure C exports (docs/assignments/lab-07/images/lab07-model-*.svg). Timings in the notes: HAND chain about a minute on a laptop (lab page), Flood Loop 47 s from its dialog (GUI session of October 19). -->
+<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). Part 4 (three slides on the two-model design) added October 19, 2026, after the Lab 7 cut: fl-two-models.svg and fl-why-two-models.svg are hand-drawn; fl-model-hand.svg and fl-model-floodloop.svg are copies of the Lab 7 page's Figure C exports (docs/assignments/lab-07/images/lab07-model-*.svg). Timings in the notes: HAND chain about a minute on a laptop (lab page), Flood Loop 47 s from its dialog (GUI session of October 19). Opening slides revised October 19, 2026, at the instructor's request: goals split into hydrology and GIS, a FEMA-maps slide and a gage slide added, a dice slide after the probability slide (fl-dice.svg drawn). Photos, all public domain, downscaled and stripped of EXIF: fl-flood-photo.jpg, USGS "Flooded Neighborhood in Denham Springs" (Office of Communications, August 13, 2016, usgs.gov/media/images/flooded-neighborhood-denham-springs); fl-gage-photo.jpg, USGS "Utah Gauge Celebrates 100 Years of Monitoring Streamflow", South Fork Ogden River near Huntsville, station 10137500 (March 16, 2021, usgs.gov/media/images/utah-gauge-celebrates-100-years-monitoring-streamflow); fl-firm-paper.jpg, FEMA Flood Insurance Rate Map and street index, Borough of Carteret, New Jersey, panel 340257 0005 B, revised April 15, 1992, Library of Congress G3814.C3G475 1992 .U5 via Wikimedia Commons, cropped to the map, legend and title block. -->
