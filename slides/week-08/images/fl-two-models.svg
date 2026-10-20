@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17">
+  <title>Lab 7's two models: HAND Builder prepares the terrain once; Flood Loop floods it once per flow</title>
+  <rect width="1200" height="560" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2b6cb0"/></marker>
+  </defs>
+
+  <!-- Model 1 -->
+  <rect x="30" y="40" width="520" height="400" rx="16" fill="#f3f7fb" stroke="#2b6cb0" stroke-width="2.5"/>
+  <text x="290" y="78" text-anchor="middle" font-size="24" font-weight="700" fill="#1a202c">Model 1 — HAND Builder</text>
+  <text x="290" y="106" text-anchor="middle" font-size="18" fill="#2b6cb0" font-weight="600">prepare the terrain · runs ONCE</text>
+
+  <!-- inputs -->
+  <rect x="60" y="140" width="130" height="46" rx="23" fill="#cfe3f7" stroke="#2b6cb0"/>
+  <text x="125" y="169" text-anchor="middle" font-size="16" fill="#1a202c">Provo_DEM.tif</text>
+  <rect x="60" y="300" width="130" height="46" rx="23" fill="#cfe3f7" stroke="#2b6cb0"/>
+  <text x="125" y="329" text-anchor="middle" font-size="16" fill="#1a202c">Provo_River</text>
+
+  <!-- chain pills -->
+  <g font-size="15" fill="#1a202c" text-anchor="middle">
+    <rect x="215" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="261" y="169">Fill</text>
+    <rect x="325" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="371" y="163">Flow</text><text x="371" y="180">Direction</text>
+    <rect x="435" y="140" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="481" y="163">Flow</text><text x="481" y="180">Accumulation</text>
+    <rect x="435" y="220" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="481" y="243">Threshold</text><text x="481" y="260">(2,000 cells)</text>
+    <rect x="215" y="300" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="261" y="323">Buffer</text><text x="261" y="340">30 m</text>
+    <rect x="325" y="300" width="92" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="371" y="323">Extract</text><text x="371" y="340">by Mask</text>
+    <rect x="325" y="380" width="92" height="46" rx="8" fill="#ffffff" stroke="#c05621" stroke-width="2"/><text x="371" y="403" font-weight="700">Flow</text><text x="371" y="420" font-weight="700">Distance</text>
+  </g>
+  <!-- chain arrows -->
+  <g stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M190,163 L213,163"/><path d="M307,163 L323,163"/><path d="M417,163 L433,163"/>
+    <path d="M481,186 L481,218"/><path d="M435,243 L371,298"/>
+    <path d="M190,323 L213,323"/><path d="M307,323 L323,323"/>
+    <path d="M371,346 L371,378"/>
+    <path d="M261,186 L261,290 L323,395"/><path d="M371,186 L371,298" stroke-dasharray="4 4"/>
+  </g>
+  <text x="140" y="250" font-size="13" fill="#4a5568">Filled_DEM and Flow_Direction</text>
+  <text x="140" y="268" font-size="13" fill="#4a5568">also feed Flow Distance</text>
+
+  <!-- HAND output -->
+  <ellipse cx="640" cy="403" rx="62" ry="30" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
+  <text x="640" y="399" text-anchor="middle" font-size="20" font-weight="700" fill="#22543d">HAND</text>
+  <text x="640" y="418" text-anchor="middle" font-size="12" fill="#22543d">height above the river, m</text>
+  <path d="M417,403 L576,403" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)"/>
+
+  <!-- Model 2 -->
+  <rect x="730" y="40" width="440" height="400" rx="16" fill="#fff7f0" stroke="#c05621" stroke-width="2.5"/>
+  <text x="950" y="78" text-anchor="middle" font-size="24" font-weight="700" fill="#1a202c">Model 2 — Flood Loop</text>
+  <text x="950" y="106" text-anchor="middle" font-size="18" fill="#c05621" font-weight="600">run the floods · one pass per flow</text>
+
+  <rect x="760" y="140" width="130" height="46" rx="23" fill="#fbd9c2" stroke="#c05621"/>
+  <text x="825" y="163" text-anchor="middle" font-size="15" fill="#1a202c">Stage_Table</text>
+  <text x="825" y="180" text-anchor="middle" font-size="12" fill="#1a202c">five h values (H_CM)</text>
+
+  <g font-size="15" fill="#1a202c" text-anchor="middle">
+    <rect x="920" y="140" width="110" height="46" rx="8" fill="#ffffff" stroke="#c05621" stroke-width="2"/><text x="975" y="163" font-weight="700">Iterate</text><text x="975" y="180" font-weight="700">Field Values</text>
+    <rect x="1050" y="140" width="100" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="1100" y="158">Con(</text><text x="1100" y="175">HAND ≤ h, 1)</text>
+    <rect x="1050" y="220" width="100" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="1100" y="243">Raster to</text><text x="1100" y="260">Polygon</text>
+    <rect x="920" y="220" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="975" y="243">Calculate</text><text x="975" y="260">Field (H_CM)</text>
+    <rect x="790" y="220" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="845" y="243">Collect</text><text x="845" y="260">Values</text>
+    <rect x="790" y="300" width="110" height="46" rx="8" fill="#ffffff" stroke="#4a5568"/><text x="845" y="329">Merge</text>
+  </g>
+  <g stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M890,163 L918,163"/><path d="M1030,163 L1048,163"/>
+    <path d="M1100,186 L1100,218"/><path d="M1050,243 L1032,243"/><path d="M920,243 L902,243"/>
+    <path d="M845,266 L845,298"/>
+  </g>
+  <!-- HAND into Con -->
+  <path d="M700,395 C740,330 800,120 1048,170" stroke="#2b6cb0" stroke-width="3" fill="none" marker-end="url(#ab)" stroke-dasharray="7 5"/>
+  <text x="760" y="372" font-size="13" fill="#2b6cb0" font-weight="600">HAND is Model 2's input</text>
+
+  <!-- loop bracket -->
+  <path d="M905,125 L1165,125 L1165,280 L905,280" stroke="#c05621" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
+  <text x="1160" y="298" text-anchor="end" font-size="13" fill="#c05621" font-weight="600">runs 5 times, once per h</text>
+
+  <!-- Floods output -->
+  <ellipse cx="1000" cy="403" rx="80" ry="30" fill="#c6f6d5" stroke="#2f855a" stroke-width="2.5"/>
+  <text x="1000" y="399" text-anchor="middle" font-size="20" font-weight="700" fill="#22543d">Floods</text>
+  <text x="1000" y="418" text-anchor="middle" font-size="12" fill="#22543d">5 polygons, 10- to 500-year</text>
+  <path d="M900,323 L1000,323 L1000,371" stroke="#4a5568" stroke-width="2" fill="none" marker-end="url(#a)"/>
+
+  <!-- footer -->
+  <text x="290" y="500" text-anchor="middle" font-size="17" fill="#4a5568">Fill, Flow Direction, Flow Accumulation, Flow Distance: the slow part, about a minute</text>
+  <text x="950" y="500" text-anchor="middle" font-size="17" fill="#4a5568">Five Cons and five polygons: under a minute for all of them</text>
+  <text x="600" y="540" text-anchor="middle" font-size="18" fill="#1a202c" font-weight="600">Prepare once. Flood many times.</text>
+</svg>

@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 8, the third of the water weeks: Lab 5 found where the water goes, Lab 6 measured how much a lake holds, and this week asks how high a river rises and what it covers. Today is the hydrology and the simplest flood model; Thursday is HAND and Lab 7. Midterm 1 is open in the Testing Center all week. The title image is three of FEMA's own cross-sections of the Provo River in Provo, with the 1% water surface over the lidar ground. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -41,6 +41,7 @@ By the end of class you should be able to:
 - Turn a **flow** into a **water level** with a rating curve, and a water level into a **depth**
 - Draw a **bathtub** flood map, and say when it is the right model
 - Say what FEMA does instead, and why a river needs it
+- Say why **Lab 7 is two models**, and what passes between them
 
 ---
 
@@ -162,6 +163,60 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: lead -->
+
+# Part 4 — Lab 7 Is Two Models
+
+---
+
+# Prepare Once, Flood Many Times
+
+![bg right:58% w:98%](images/fl-two-models.svg)
+
+- **Model 1, HAND Builder**: Lab 5's chain plus **Flow Distance** → one raster, **HAND**
+- **Model 2, Flood Loop**: an **iterator** over the stage table floods that raster **once per flow**
+- Model 1 is **data preparation**; Model 2 is the **experiment**
+- The only thing that passes between them is **HAND**
+
+<!-- The shape of the lab in one picture. Model 1 is the terrain work students already know from Lab 5 (Fill, Flow Direction, Flow Accumulation, a stream threshold), with one new tool, Flow Distance, which measures each cell's height above the river it drains to. It is run once and its product is the HAND raster. Model 2 takes HAND as an input parameter and, for each row of the stage table (the five FEMA flows turned into depths, H_CM in centimeters), runs Con("HAND" <= h, 1), turns the wet cells into a polygon, stamps the depth on it, and merges the five into one Floods layer. Students build both in Lab 7; the page's Steps 2 to 4 are Model 1, Step 5 is Model 2. Thursday opens Model 1's dialogs. -->
+
+---
+
+# Why Not One Model?
+
+![bg right:58% w:98%](images/fl-why-two-models.svg)
+
+- The rule: an iterator reruns **every tool in its model**, not just the ones after it
+- One model → the whole HAND chain runs **five times** for **one** answer
+- Two models → the slow chain runs **once**; only the cheap loop repeats
+
+<!-- Lab 6 got away with one model because nothing upstream of its loop was expensive: its Merge ran on every pass, and the page said so and shrugged. Here the HAND chain is about a minute on a laptop, so five copies of it is five minutes of waiting for an identical raster each time, and longer on the lab machines. Esri's own guidance for this case is the one on the slide: put the loop in its own model. The more advanced form of the same idea is to drop Flood Loop into HAND Builder as a tool, so the outer model has no iterator and runs everything once; mention it, and that it is not required this week. Ask: which tools in Lab 7's chain would you least like to run five times? -->
+
+---
+
+# How the Two Models Connect
+
+<div class="columns" style="grid-template-columns: 1fr 1fr; font-size: 0.9em;">
+<div>
+
+![w:560](images/fl-model-hand.svg)
+
+**HAND Builder.** `HAND` is marked **P**, a parameter: the model's product.
+
+</div>
+<div>
+
+![w:560](images/fl-model-floodloop.svg)
+
+**Flood Loop.** `HAND` is marked **P** here too: the model's input. Run it from its tool dialog and it lands in your History.
+
+</div>
+</div>
+
+<!-- Both exports are from the lab's GUI build, the same figures as the page's Figure C. The point to make: a model parameter is how a model talks to the outside. In Model 1 the P on HAND means "keep this and hand it out"; in Model 2 the P on HAND means "ask for this when I start". The Floods oval is Model 2's P, its product. When students open Flood Loop from the Catalog pane, the dialog asks for HAND and Floods, nothing else; if HAND is not a layer in their map the box shows a red error, and the fix is to browse to Lab07.gdb\HAND. The run takes about 47 seconds from the dialog and is the one the History capture must show. -->
+
+---
+
 <!-- _class: activity -->
 
 # Final Thoughts
@@ -193,4 +248,4 @@ By the end of class you should be able to:
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). -->
+<!-- Deck written October 9, 2026, for the restructured Week 8 (tools/build_schedule.py). Figures: tools/week08_flood_figures.py (peaks, frequency, rating, FEMA sections, HAND map) and two drawn diagrams (fl-gage-datum.svg, fl-hand-schematic.svg). Part 4 (three slides on the two-model design) added October 19, 2026, after the Lab 7 cut: fl-two-models.svg and fl-why-two-models.svg are hand-drawn; fl-model-hand.svg and fl-model-floodloop.svg are copies of the Lab 7 page's Figure C exports (docs/assignments/lab-07/images/lab07-model-*.svg). Timings in the notes: HAND chain about a minute on a laptop (lab page), Flood Loop 47 s from its dialog (GUI session of October 19). -->

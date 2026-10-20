@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 8. Tuesday ended on the bathtub's failure on a river and FEMA's expensive fix. Today: a terrain-only model that floods a whole river with one number, built from Lab 5's own chain plus one tool, and Lab 7, which does it on the Provo River and checks the answer against FEMA's new map. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
