@@ -253,7 +253,11 @@ But first: why do we need differential correction?
 
 # Error Sources: Multipath
 
-![bg right:44% w:88%](images/gps-multipath-building.png)
+<style scoped>
+section { font-size: 23px; }
+</style>
+
+![bg right:40% w:88%](images/gps-multipath-building.png)
 
 A reflected signal takes a longer path, so its range comes out **too long**.
 
@@ -263,6 +267,8 @@ What helps:
 - An antenna that rejects low and reflected signals (a **ground plane** or **choke ring**)
 - An **elevation mask**: ignore satellites low on the horizon
 - **Stay longer**, or come back at another time: the satellites move, and so does the reflection
+
+Differential correction **cannot** remove it: the base station sees different reflections.
 
 <!-- Multipath is local to the rover, so differential correction does not remove it: the base station a few kilometers away sees different reflections. That is why it gets its own list. Survey practice: occupy the point long enough to average, or re-occupy it at a different time of day. -->
 
