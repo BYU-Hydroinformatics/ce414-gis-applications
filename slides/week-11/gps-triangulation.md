@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 11. A refresher: most students met GPS in the introductory geomatics course, so move quickly through the signal material and spend the time on error, geometry, and correction, and on the one link back to Tuesday: a receiver reports coordinates in a datum, and that datum has to meet your project's. The file keeps its old name (gps-triangulation) so the published link does not change; the deck teaches trilateration, distances rather than angles, and says so. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — GPS and Trilateration<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — GPS and Trilateration<span class="updated">Last Updated: 2026-10-21</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---

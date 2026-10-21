@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 11. A refresher: students met datums and projections in the introductory course, and they have been choosing coordinate systems in every lab since Week 1, mostly by accepting what a dialog proposed. Parts 1 and 2 review the concepts. Part 3 turns them into the decisions ArcGIS Pro asks for: which coordinate system, Define or Project, and which transformation, with numbers measured at BYU. Lab 10's Step 1 is the worked example. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Coordinate Systems and Projections<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Coordinate Systems and Projections<span class="updated">Last Updated: 2026-10-21</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
