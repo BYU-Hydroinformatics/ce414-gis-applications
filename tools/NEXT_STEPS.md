@@ -242,6 +242,27 @@ slides that the September 7 to 8 revision already resolved; reconcile that row.
 Not urgent until December. CE 414 moves to Canvas for Fall 2027, which is why the site, not the
 LMS, holds the content.
 
+**Lab order for Fall 2027 (Dan, October 20, 2026).** Reorder the middle labs so they get
+progressively harder, with the terrain/surface labs first and the water labs last:
+
+| New order | Lab (2026 number) |
+|---|---|
+| 1st | Cell-tower viewshed (Lab 4) |
+| 2nd | Avalanche hazard (Lab 10) |
+| 3rd | Big Southern Butte volume (Lab 9) |
+| 4th | Interpolation Explorer, Y Mountain (Lab 8) |
+| 5th | Watershed delineation, Rock Canyon (Lab 5) |
+| 6th | Lake Powell bathymetry levels (Lab 6) |
+| 7th | HAND flood mapping (Lab 7) |
+
+Labs 1–3 and 11–12 (least-cost path, network) are not part of this reorder; confirm with Dan
+where they sit. Doing it means renumbering the lab folders, moving the matching lecture weeks in
+`slides/week-NN/` and the `DECKS`/`DUE` tables in `tools/build_schedule.py`, and fixing every
+cross-reference between labs (a lab that says "as in Lab 5" or reuses an earlier lab's data or
+model). Check one ordering question with Dan first: the Butte lab builds a Spline surface, so
+moving it ahead of the Interpolation Explorer means students meet Spline before the lab that
+compares the interpolators.
+
 **Prompt**
 
 > Close out Fall 2026 for the CE 414 site. (1) `ROADMAP.md`: every row that says a thing is owed
