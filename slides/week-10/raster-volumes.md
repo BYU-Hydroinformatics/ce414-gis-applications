@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 10, written to be studied on your own: there is no class meeting this week. Tuesday's cut and fill was a difference of two surfaces that both exist: the ground and a design. Here the bottom surface is one nobody can see: the plain under Big Southern Butte, which Lab 9 rebuilds by interpolation (Week 9's methods) before it measures the dome. The title image is a profile through the summit from the Lab 9 DEM. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-10-21</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
