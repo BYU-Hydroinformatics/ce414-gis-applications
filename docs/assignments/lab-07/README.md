@@ -39,7 +39,7 @@ check values are kept in the migration notes at the bottom for a future offering
 > **This is a one-week lab**, assigned in Week 8 and due on Saturday of that week, the week of
 > Midterm 1. Everything that takes preparation is done for you and hosted. What you do:
 > build two short models and run each once (the first computes HAND, the second floods it five
-> times), run three tools for a flood of your own, make two maps, and write two pages. Plan on two
+> times), run five tools for a flood of your own, make two maps, and write two pages. Plan on two
 > sittings: the models in one, the maps and the report in the other.
 
 ## Background
@@ -68,7 +68,7 @@ HAND is built from the tools you used in Lab 5 — Fill, Flow Direction, Flow Ac
 stream threshold — plus one new tool, **Flow Distance**. The depth *h* comes from hydrology: a
 flood flow, turned into a water level by the stream gage's rating curve.
 
-![Two measured panels. Top: the Provo River's long profile, falling from about 1,477 m at the mouth of Provo Canyon to about 1,367 m at Utah Lake over 17.6 km. A thin blue band 1.53 m thick follows the river line the whole way: the HAND water surface. A dashed orange horizontal line at 1,372.04 m, the 100-year stage elevation at the gage, crosses the river at the gage, so a bathtub at that level covers only the lowest 4.8 km of the river. Bottom: FEMA cross-section C, 123 m long, just upstream of the gage: the ground, FEMA's 1% water surface at 1,373.49 m as a dashed green line, and blue bars where HAND floods at h = 1.53 m; HAND floods 95 m of the section, FEMA 105 m.](images/lab07-profile.svg)
+![Two measured panels. Top: the Provo River's long profile, falling from about 1,477 m at the mouth of Provo Canyon to about 1,367 m at Utah Lake over 17.6 km. A thin blue band 1.53 m thick follows the river line the whole way: the HAND water surface. A dashed orange horizontal line at 1,372.04 m, the 100-year stage elevation at the gage, crosses the river at the gage, so a bathtub at that level covers only the lowest 4.8 km of the river. Bottom: FEMA cross-section C, 123 m long, just upstream of the gage: the ground, FEMA's 1% water surface at 1,373.49 m as a dashed green line, and blue bars where HAND floods at h = 1.53 m; HAND floods about 95 m of the section, FEMA about 105 m.](images/lab07-profile.svg)
 
 **Figure B.** One flood, two models, measured on this lab's data. Top: a bathtub at the 100-year
 stage elevation reaches only the river below the gage; HAND's water surface follows the river all
@@ -185,6 +185,10 @@ not done before:
 | 50 | 2,065 | 7.90 | 1.433 | 143 | within table |
 | 100 | 2,325 | 8.21 | 1.527 | 153 | extrapolated |
 | 500 | 2,935 | 8.89 | 1.733 | 173 | extrapolated |
+
+The two extrapolated gage heights are shown rounded to 0.01 ft after *h* was computed from the
+curve, which is why the 500-year row reads 1.733 m where the rounded gage height would give 1.734.
+`H_CM`, the value the model uses, is 173 either way.
 
 ![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the lab's data. What: bare-earth elevation in meters above NAVD 88 on 5 m cells, and FEMA's peak flows turned into gage heights and h. Where: the Provo River from Provo Canyon's mouth to Utah Lake in NAD 1983 UTM 12N; gage 10163000 at 40.23926 N, 111.71119 W, datum 4,493.22 ft above NAVD 88. When: lidar from 3DEP projects flown 2013 to 2023, read October 8, 2026; rating 30.0 in force since April 26, 2023, provisional; FEMA flows and map effective June 23, 2026. Why: national best-available elevation, a gage to measure the river's flow, a FEMA study for flood insurance maps. How: hydro-flattened airborne lidar resampled from 2 m to 5 m; all 90 peaks coded 6, regulation or diversion. Who: USGS, FEMA and UGRC; public data. A footer warns that HAND is measured from the DEM's water surface while h is measured from the gage's zero-flow level.](images/lab07-metadata.svg)
 
@@ -503,7 +507,7 @@ with its coordinates, a cropped figure, and the reason. Two kinds of place to lo
 
 > [!NOTE]
 > Figure B (bottom) shows one place where they agree: at FEMA section C, just upstream of the gage,
-> HAND floods 95 m of the 123 m section and FEMA's water surface covers 105 m.
+> HAND floods about 95 m of the 123 m section and FEMA's water surface covers about 105 m.
 
 ### Step 7 — Your Own Flood
 
@@ -537,7 +541,8 @@ your report. The History pane is how the grader knows the runs happened on your 
 ![The Geoprocessing History pane listing, newest first, Export Features, Select Layer By Location, Spatial Join, Raster to Polygon, Raster Calculator and Flood Loop with their times, each with a green check; the Flood Loop entry's card is open over the map, reading Started today at 7:02:30 PM, Completed 7:03:17 PM, Elapsed Time 47 Seconds, Tool Path Lab07.atbx\FloodLoop, with the HAND and Floods parameters.](images/lab07-history.png)
 
 **Figure 7.** The History pane after Steps 5 to 7, with the Flood Loop card open. Yours lists the
-same six runs with your own times.
+same six runs with your own times. The paths start with `C:\` because this was captured on an
+instructor machine; yours start with `D:\`.
 
 ## Deliverables
 
@@ -600,7 +605,8 @@ models. Put the maps in the report too, so it reads on its own.
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your
-> reviewer in the report and say in a sentence what you changed because of them.
+> reviewer in the report, paste their peer-review stamp, and say in a sentence what you changed
+> because of them.
 
 **Credit line for your maps:** Elevation: USGS 3D Elevation Program lidar (read October 2026,
 5 m). Flows and floodplain: FEMA Flood Insurance Study and National Flood Hazard Layer, Utah County
@@ -703,5 +709,6 @@ PILOT (no-GUI, 2026-10-09, C:\Ames\Pilot07\PILOT_NOTES.md): every check value on
 FIGURES: Figures A, B and 1 and the three tool icons by tools/lab07/make_svgs.py. Dialog captures lab07-environments (composed from two grabs), -flow-direction, -rc-streams, -extract-mask, -flow-distance, -iterate-field-values, -flood-calc, -raster-to-polygon, -merge, -spatial-join (stitched from two scrolled grabs of the Geoprocessing pane) (.png) are screen grabs (tools/screenshots/) at 175 % from the 2026-10-09 session; Figure C (lab07-model-hand.svg, lab07-model-floodloop.svg) is each model's Export To Graphic after a run, laid out by hand. Originals in C:\Ames\Lab07HAND\caps. GUI checks: Spatial Join 3.7.1 takes a list of Join Features, each with a Join Count Field Name; Flow Distance's label is Input flow direction type. Step 6 floods and building counts reproduced exactly in the GUI (319/356/388/413/451). GUI SESSION 2026-10-19 (Pro 3.7.1 at 175 %, C:\Ames\Lab07HAND): Flood Loop run from its tool dialog (47 s; the HAND parameter had to be re-pointed at Lab07.gdb\HAND because HAND was not in the map, which a student following Step 5 will have), then Step 7's Raster Calculator (3 s), Raster to Polygon (2 s), Spatial Join (2 s), Select Layer By Location (Count 376) and Export Features (Mine_Reached), all with the page's names; lab07-history.png is the History pane with the Flood Loop card open (cap.py full-screen grab cropped; the taskbar strip under the pane painted with the pane background). Completed-run popups for Flood Loop and Select Layer By Location are in caps\ (not on the page). Step 7 item 4 (Select Layer By Location + Export Features) was added that day after the re-pilot found that Map 2's highlighted buildings had no step producing them.
 RE-PILOT (no-GUI, 2026-10-19, C:\Ames\Pilot07b\PILOT_REPORT.md, propy.bat): all 38 check values on the cut page reproduced from the zip to the last digit, rubric sums checked, template rubric matches the page, Week 8 page and the Thursday slide agree with the page. Text fixes made from it: Step 7's reached-buildings step; River_Cells and the HAND range named in the deliverables; the HAND Builder dialog capture says how to open the dialog; the H_CM = 153 selection explained; Comparison_Area described as where the Step 6 agreement was measured; Stage_Table's AEP_PCT and ELEV_M named; the 'introduced Tuesday' wording dropped (the Thursday deck carries Lab 7); two speaker notes in slides/week-08/hand.md updated (rating lookup is the student's own flow; the stream definition is settled in Lab 7).
 Example maps (Figures 8 and 9): tools/lab07/build_figures.py, arcpy.mp from the GUI build's Lab07.gdb (HAND, Floods) and ProvoData.gdb, rebuilt 2026-10-19 with bracketed placeholder wording (Lab 5 and 6 pattern) and without the buildings and close-up on Map 1; the legend labels still carry measured numbers (areas, 376 buildings for the example ID ending 89).
+PILOT 2 (no-GUI, 2026-10-20, C:\Ames\Pilot07b\PILOT_NOTES.md, propy.bat, on the page after b3e1f87): 44 of 46 numbers reproduced to the digit from the zip; the two others are Figure B's sampling-dependent section C widths (97/107 m vs 95/105) and bathtub reach (4.6 vs 4.8 km), now written as "about". Fixed from it: the one-week note said three Step 7 tools (five since the reached-buildings step); the template's HAND Against FEMA section had no prose prompt (prose: true in make_lab_report_template.js); the stage table's 500-yr H_M 1.733 vs the rounded-gage-height 1.734 now explained under the table; the peer-review box asks for the stamp the template asks for; Figure 7's caption explains the C:\ paths. Not changed: the lidar 2013-2023 line in Figure A (from 3DEP project metadata, not in the package); HAND Builder's dialog also exposes Provo_DEM.tif and River_Cells.
 RUN TIMES (2026-10-20, this machine, a lab-machine equivalent, ArcGIS Pro 3.7.1): both models run from Lab07.atbx through arcpy (tools in C:\Ames\Lab07Time\time_models.py, outputs to Time.gdb): HAND Builder 40.5 s, Flood Loop 35.2 s (47 s from the tool dialog in the Figure 7 session); Step 7 tools (time_tools.py): Raster Calculator 3.3 s, Raster to Polygon 1.0 s, Spatial Join 0.9 s, Select Layer By Location 0.6 s, Export Features 0.7 s. Every check value reproduced exactly in those runs (3,191 river cells; HAND 0-197.95 mean 23.54; five areas; 58,193 / 1.4548 / 376). Running the .atbx models outside the project needs layers named Provo_DEM.tif, Provo_River and Stage_Table (the model's environments and inputs were picked from the map). -->
 

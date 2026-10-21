@@ -659,7 +659,7 @@ const LABS = {
         { caption: 'Figure 4. Geoprocessing History, listing the Flood Loop run and the Step 7 tools, with the Flood Loop card open.', size: 'medium' },
       ] },
 
-    { h: 'HAND Against FEMA', pageBreakBefore: true,
+    { h: 'HAND Against FEMA', pageBreakBefore: true, prose: true,
       hint: 'Rubric: one or two sentences on what the hit rate (0.548), false-alarm ratio (0.425) and CSI (0.390) say about the two maps, and one place where HAND and FEMA disagree, with coordinates, a cropped figure and the reason (3 points). A general paragraph about HAND earns nothing here; name the place.',
       figures: [
         { caption: 'Figure 5. Where HAND and FEMA disagree, close up.', size: 'medium',
@@ -1180,7 +1180,7 @@ for (const s of LAB.sections) {
   }));
   if (s.hint) body.push(hint(s.h === 'AI Use Statement' ? s.hint + AI_ADVICE : s.hint));
   if (s.rubric) { body.push(rubricTable()); continue; }
-  if (!s.table && !s.figures && !s.questions) body.push(placeholder());
+  if ((!s.table && !s.figures && !s.questions) || s.prose) body.push(placeholder());  // prose: a section that scores writing as well as its figure
   for (const t of [s.table, s.table2].filter(Boolean)) {
     if (t === s.table) body.push(placeholder());
     body.push(simpleTable(t));
