@@ -74,7 +74,7 @@ By the end of class you should be able to:
 - The replacement: **Distance Accumulation**
 - The same goes for **Cost Back Link** and **Cost Path**
 
-<!-- A capture of the Geoprocessing pane in ArcGIS Pro 3.7.1, October 9, 2026. The notice is the tool's own; it links to Esri's deprecation page. Tuesday's lecture and Lab 11's current handout were written with the legacy tools; the concepts carry over unchanged, and Part 2 shows the two sets give the same route on Lab 11's data. -->
+<!-- A capture of the Geoprocessing pane in ArcGIS Pro 3.7.1, October 9, 2026. The notice is the tool's own; it links to Esri's deprecation page. Tuesday's deck and Lab 11 both use the current tools; the legacy names matter only because students will meet them in older tutorials and papers. -->
 
 ---
 
@@ -115,7 +115,7 @@ By the end of class you should be able to:
 - **Distance Accumulation**: a cell's total includes **its whole cost**; the source cell's own cost does not count
 - Along a long route the totals **agree**; they differ by **half a cell's cost** at the ends
 
-<!-- Both tools' real output on the same six 100 m cells, cost 1, 1, 4, 1, 1, 1, from the left. Legacy: 100 + (1+4)/2 x 100 = 350 at the dark cell; Distance Accumulation: 100 + 4 x 100 = 500. By the next cell both say 600. This is the rule Tuesday's grid slide described for the legacy tool; do not apply the "average of two cells" arithmetic to Distance Accumulation's numbers. Skip this slide if time is short. -->
+<!-- Both tools' real output on the same six 100 m cells, cost 1, 1, 4, 1, 1, 1, from the left. Legacy: 100 + (1+4)/2 x 100 = 350 at the dark cell; Distance Accumulation: 100 + 4 x 100 = 500. By the next cell both say 600. Tuesday's hand grid used Distance Accumulation's rule (a move costs the cell you enter), so its numbers match this tool, not the legacy one. Skip this slide if time is short. -->
 
 ---
 
@@ -264,6 +264,7 @@ Change **one** decision in Lab 11's model. Which one moves the route **farthest*
 **Before next class**
 
 - **Lab 11 — Least Cost Path Power Line Analysis** — due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
+- Take **Quiz 10** (Least Cost Paths, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Next week: the **final project** (Tuesday), and Thanksgiving
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
