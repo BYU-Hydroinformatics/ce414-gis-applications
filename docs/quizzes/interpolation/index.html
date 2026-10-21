@@ -43,14 +43,15 @@ CE414Quiz.start({
       explanation: "The weights are one over distance raised to that exponent, so a larger exponent concentrates weight on the nearest points and pushes the surface toward the nearest-sample answer. The number of neighbors is a separate knob: using more of them smooths the surface but does not remove the bull's-eye rings around isolated points, because the exponent, not the neighbor count, is what concentrates the weight."
     },
     {
-      prompt: "Kriging is described as similar to IDW. Where does it differ?",
+      prompt: "You run Create Thiessen Polygons, then Polygon to Raster, and leave its Value field at OBJECTID. What does the surface show?",
+      detail: "Polygon to Raster fills in the Value field by itself, and nothing reports an error.",
       options: [
-        "It uses only the nearest sample point",
-        "The data's spatial structure sets the weights",
-        "It requires the samples to lie on a regular grid"
+        "Elevations, because each polygon carries its point's value",
+        "The polygons' ID numbers, not elevations",
+        "Nothing; the tool fails without an elevation field"
       ],
-      answer: "The data's spatial structure sets the weights",
-      explanation: "IDW's weights come from an exponent you choose before you look at the data. Kriging first models how quickly the variable stops being similar as distance grows — that is what the fitted variogram model records — and then uses the minimum variance method to set the weights, so the data decide how far influence reaches."
+      answer: "The polygons' ID numbers, not elevations",
+      explanation: "Polygon to Raster writes whatever field you name into the cells. OBJECTID is just the row number of each polygon, so the result is a staircase of 1, 2, 3 … with no elevations in it, and it runs without complaint. Choose the field that holds the sampled value (RASTERVALU in Lab 8), and make sure Create Thiessen Polygons kept it: its Output Fields must be All fields, not Only feature ID."
     },
     {
       prompt: "Which of these could NOT return your measured values unchanged?",
@@ -65,7 +66,7 @@ CE414Quiz.start({
     },
     {
       prompt: "You have no true surface to compare against. How do you judge the interpolation?",
-      detail: "The class-vote slides had the original surface beside the six results. A real project never does.",
+      detail: "The example base slides had the true contours beside the samples. A real project never does.",
       options: [
         "Hold points back and compare them to the surface",
         "Pick the surface that looks the smoothest overall",

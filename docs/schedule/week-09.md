@@ -4,8 +4,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Interpolation](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation.html) — Estimating a surface from points: sampling designs, Thiessen polygons, IDW, splines, and kriging, and how to judge which one to trust.
-- **Thursday** — [Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation-explorer.html) — How wrong is the surface? Error rasters, RMSE and what it hides, checkpoints when there is no truth, whether a ranking survives a change, and Lab 8.
+- **Tuesday** — [Sampling, Nearest Neighbor, and IDW](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation.html) — Estimating a surface from points: sampling designs, Thiessen (nearest neighbor) polygons, fixed-radius averaging and IDW, by hand and in ArcGIS Pro, and which methods give the measured values back.
+- **Thursday** — [Kriging and Interpolation Error](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation-explorer.html) — Kriging and the semivariogram (nugget, sill, range, and three models), then how wrong each surface is: error rasters, RMSE, checkpoints, a six-method test, and Lab 8.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

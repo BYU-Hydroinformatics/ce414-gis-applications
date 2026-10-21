@@ -10,14 +10,18 @@ footer: "CE 414 · Week 9 — Interpolation"
 
 ![bg right:45% w:95%](images/ip-surface-3d-kriged.png)
 
+![w:110](../theme/images/byu-medallion.svg)
+
 # Sampling and Interpolation
 
+## Nearest Neighbor and IDW
+
 CE 414 Engineering Applications of GIS
-Dr. Dan Ames
 Civil & Construction Engineering
 Brigham Young University
+Dr. Dan Ames
 
-<!-- Let's learn about sampling and interpolation. This is now one Tuesday session (Thursday is Interpolation Explorer and Lab 8): it runs from sampling design through splines to kriging, so skip optional slides as time requires. The surface on the right is the end product of everything we do today — a continuous surface built from a scatter of measured points. -->
+<!-- Tuesday of Week 9: sampling design, then the two interpolators that weight points by a rule you choose, nearest neighbor (Thiessen) and IDW. Thursday is kriging, which lets the data choose the weights, then how to measure a surface's error, and Lab 8. Slides marked optional in these notes can be skipped as time requires. The surface on the right is where Thursday ends up: a kriged surface built from a scatter of measured points. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 9 — Interpolation<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -29,28 +33,31 @@ Brigham Young University
 
 ![bg right:30% w:90%](images/ip-linear-interpolation-equation.png)
 
-By the end of these sessions you should be able to:
+By the end of class you should be able to:
 
 - Explain why we **sample** instead of measuring everywhere
 - Compare four **sampling designs** and say when each is appropriate
-- Describe how **Thiessen polygons**, **fixed-radius averaging**, **IDW**, **trend surfaces**, **splines**, and **kriging** each turn points into a surface
-- Read a **variogram** and name its parts
-- Say why two methods can give different answers from the same data
+- Build a **Thiessen** (nearest neighbor) surface, by hand and in ArcGIS Pro
+- Compute an **IDW** estimate and say what its **exponent** does
+- Say which methods give the **measured values back**
 
-<!-- Everything on the right-hand figure is the whole idea in miniature: an unknown value y at position x, estimated as a weighted blend of two known values. Every method in this deck is a more elaborate version of that one picture. That figure comes back several times on purpose. -->
+Thursday: **kriging**, how wrong a surface is, and **Lab 8**
+
+<!-- Everything on the right-hand figure is the whole idea in miniature: an unknown value y at position x, estimated as a weighted blend of two known values. Every method this week is a more elaborate version of that one picture. That figure comes back several times on purpose. -->
 
 ---
 
 <!-- _class: activity -->
 
-# Activity: Estimate the Temperature in Provo
+# Activity: Air Temperature Interpolation
 
 ![bg right:38% h:92%](images/ip-utah-activity-map.png)
 
-- Consider three cities in Utah: **Moab**, **American Fork**, and **Cedar City**
-- Look up the current air temperature for those three cities on weather.com or an equivalent site
-- Given those three temperatures, **estimate the current temperature in Provo**
+- Three Utah cities: **Moab**, **American Fork**, and **Cedar City**
+- Look up the current air temperature in each on weather.com or an equivalent site
+- From those three, **estimate the current temperature in Provo**
 - Write down your number *and* the rule you used to get it
+- **Graded, 5 points:** upload a screen capture or photo of your work to Learning Suite by **9:30 am**, fifteen minutes after class
 
 <!-- Give them three or four minutes. Collect several answers and, more importantly, several rules: nearest city, plain average, distance-weighted average, adjust for elevation. Those four answers are Thiessen, a global mean, IDW, and a trend surface. Name them now, then spend the rest of the session making each one precise. -->
 
@@ -210,6 +217,8 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 <!-- Cluster sampling is the design that budgets produce. It buys many observations cheaply, but the observations are not independent: points inside one cluster tell you nearly the same thing. -->
 
+<!-- Optional: skip if time is short. Systematic and random carry the main contrast. -->
+
 ---
 
 # Adaptive Sampling
@@ -230,6 +239,22 @@ The landscape on the left is the real, fully known surface. In practice you neve
 <!-- Adaptive is the best design and the hardest to execute, because it needs prior knowledge of the thing you are going out to measure. In practice it means a coarse first pass followed by targeted infill. Fixed the source's "can not" to "cannot." -->
 
 <!-- TODO(instructor): decide how much of sampling design belongs in CE 414 versus the statistics prerequisite, and whether to add a slide on sample size and spacing. -->
+
+<!-- Optional: skip if time is short. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Class Vote: Which Sampling Design Works Best Here?
+
+![bg right:52% w:80%](images/ip-compare-sampling-designs.png)
+
+**Original surface:**
+
+![h:390 center](images/ip-original-surface.png)
+
+<!-- Vote now, while the four designs are fresh, and before discussing any of them. The interesting argument is between adaptive and random: adaptive puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
 
 ---
 
@@ -256,7 +281,7 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 <!-- The last bullet is the honest one and it is where the rest of a career in this material lives: hold points back, interpolate without them, and compare. Everything else on this slide is bookkeeping. -->
 
-<!-- TODO(instructor): decide whether to teach train/test validation explicitly this week — holding out a subset, computing RMSE and bias, and talking about uncertainty in the interpolated surface — or to leave it to the lab. If it stays, it probably needs its own slide rather than one bullet. -->
+<!-- Thursday makes the last bullet concrete: a six-methods test with 60 points held back, RMSE, and checkpoints in Lab 8. -->
 
 ---
 
@@ -277,6 +302,8 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 - Estimate points of a given value (say 10 °C) and connect them into a line, then estimate the next value (say 20 °C) — lines of different values may not cross
 
 <!-- Point out that the raster path and the contour path are two renderings of the same estimated surface, not two different analyses. In practice you interpolate to a raster and derive contours from it. -->
+
+<!-- Optional: skip if time is short. Lab 8 works only in rasters. -->
 
 ---
 
@@ -299,7 +326,7 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 </div>
 </div>
 
-<!-- This pair is the reference for the next twenty slides. Left is the truth, which in a real project you never have. Right is everything the interpolator gets to see. Every method that follows is judged by how close it comes to the left panel using only the right panel. -->
+<!-- This pair is the reference for the rest of the session and for kriging on Thursday. Left is the truth, which in a real project you never have. Right is everything the interpolator gets to see. Every method that follows is judged by how close it comes to the left panel using only the right panel. -->
 
 ---
 
@@ -324,7 +351,7 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 2. Find the **perpendicular bisector** of each line
 3. Connect the bisectors and assign the resulting polygon the value of the center point
 
-<!-- Walk the four panels in order. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool; students should still be able to draw it by hand on an exam. -->
+<!-- Walk the four panels in order. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
 
 ---
 
@@ -378,6 +405,29 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 
 ---
 
+# Thiessen Polygons in ArcGIS Pro
+
+<div class="columns" style="align-items:start">
+<div>
+
+![w:470 center](images/ip-pro-thiessen.png)
+
+**Create Thiessen Polygons**: Output Fields **All fields**
+
+</div>
+<div>
+
+![h:390 center](images/ip-pro-polygon-to-raster.png)
+
+**Polygon to Raster**: Value field = the **sampled value**
+
+</div>
+</div>
+
+<!-- Both captures are from the Lab 8 model in ArcGIS Pro 3.7.1, where RASTERVALU is the field holding each sample's elevation. Two defaults give a surface with no elevations in it and no error: Create Thiessen Polygons opens at Output Fields "Only feature ID", which drops the sampled value, and Polygon to Raster fills Value field with OBJECTID, which makes a surface of polygon numbers. Create Thiessen Polygons needs an Advanced license; the lab machines have it. -->
+
+---
+
 # Fixed-Radius Local Averaging
 
 <div class="columns">
@@ -409,6 +459,8 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 
 <!-- Read the diagram top to bottom. The input sample layer floats above the output raster; each output cell takes the average of whatever samples fall inside its circle. Point at the cell that got three samples and the cell that got one, and ask which value they trust more. Nothing in the method distinguishes them — the output carries no record of how many points went into each cell. -->
 
+<!-- Optional: skip if time is short. -->
+
 ---
 
 # Fixed Radius: The Result
@@ -416,6 +468,8 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 ![h:480 center](images/ip-fixed-radius-result.png)
 
 <!-- Original surface on the left, fixed-radius result on the right. The interpolated surface is visibly blockier and the fine drainage detail on the left is gone. It also does not pass through the measured values — this is a non-exact method, which comes back at the end of the session. -->
+
+<!-- Optional: skip if time is short. -->
 
 ---
 
@@ -428,7 +482,7 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 - The weight of each sample point is in **inverse proportion to the distance**
 - The farther away a point is, the less weight it carries in defining the unsampled location
 
-<!-- IDW is the first method that uses more than one point and treats them unequally. Corrected the source's "nearby know points" to "known points." -->
+<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Corrected the source's "nearby know points" to "known points." -->
 
 ---
 
@@ -473,7 +527,7 @@ Two factors dominate the interpolated surface:
 - The size of the exponent **n** affects the shape of the surface — a larger *n* means the closer points are more influential
 - A **larger number of sample points** results in a smoother surface
 
-<!-- These are the only two knobs students will turn in the lab, so make them concrete. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. -->
+<!-- These are two of the choices Lab 8 varies: the power (2, then 1, 3 and each student's own) and the number of sample points (250, 2,500, 10,000). The lab holds the neighbor count at 12; the next two slides show what that setting does. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. -->
 
 ---
 
@@ -482,6 +536,8 @@ Two factors dominate the interpolated surface:
 ![h:470 center](images/ip-idw-linear-6nn.png)
 
 <!-- Original surface on the left, IDW with exponent one and the six nearest points on the right. Point out the small closed contour rings around isolated sample points — the "bull's-eyes" that are the signature artifact of IDW. -->
+
+<!-- Optional: skip if time is short. One of these two IDW comparisons is enough. -->
 
 ---
 
@@ -497,7 +553,37 @@ Two factors dominate the interpolated surface:
 
 ![h:430 center](images/ip-surface-3d-idw.png)
 
-<!-- Compare this against the Thiessen surface from earlier. IDW is continuous — no cliffs at polygon edges — but it is not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. -->
+<!-- Compare this against the Thiessen surface from earlier, and keep both in mind for Thursday's kriged surface. IDW is continuous — no cliffs at polygon edges — but it is not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. -->
+
+---
+
+# IDW in ArcGIS Pro
+
+![bg right:42% h:84%](images/ie-idw.png)
+
+- **Spatial Analyst ▸ IDW** (3D Analyst and Geostatistical Analyst have their own)
+- **Z value field**: the sampled value
+- **Power**: the exponent *n*; 2 by default
+- **Search radius**: **Variable**, the **12** nearest points by default
+- **Output cell size**: set it, or IDW picks one from the points
+
+<!-- The capture is the IDW tool inside the Lab 8 model, with Power exposed as a model parameter (the IDW Power oval). Lab 8 also sets Cell Size, Snap Raster and Extent as environments so every surface lands on the same 30 m cells as the true DEM; without them nothing reports an error, but Thursday's subtraction compares cells that do not line up. -->
+
+---
+
+# Does the Surface Give the Points Back?
+
+![bg right:40% w:94%](images/ip-fixed-radius-diagram.png)
+
+Interpolate, then read the surface **at the sample points**:
+
+- **Thiessen**: yes — the nearest point *is* the sample
+- **IDW**: yes — at distance 0 the sample takes all the weight
+- **Fixed-radius averaging**: **no** — it blends the sample with its neighbors
+
+A method that returns the samples is **exact**. Thursday: is **kriging**?
+
+<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. ArcGIS Pro's IDW gave the sample values back exactly in the six-methods test that Thursday shows (tools/week08_interpolation_figures.py). -->
 
 ---
 
@@ -510,7 +596,8 @@ Fits a statistical model — a **trend surface** — through the measured points
 
 ![w:480](images/ip-trend-surface-equation.png)
 
-- Where **Z** is the value at any point *x*
+- Where **Z** is the value at any point (*x*, *y*)
+- The equation is **second order**; the figure shows a **third-order** surface
 - Where the **a** terms are coefficients estimated in a regression model
 
 </div>
@@ -522,6 +609,8 @@ Fits a statistical model — a **trend surface** — through the measured points
 </div>
 
 <!-- Trend surface is regression, not local interpolation: every sample point influences every part of the surface. That is why the result on the right looks nothing like the original — it captures the regional slope and discards local detail on purpose. -->
+
+<!-- Optional: skip if time is short. Trend surfaces and splines are not in Lab 8. -->
 
 ---
 
@@ -545,245 +634,20 @@ Fits a statistical model — a **trend surface** — through the measured points
 
 <!-- Combined the source's text slide with the figure that followed it. Splines give the smoothest-looking result of anything in this deck, which is not the same as the most accurate: the surface can overshoot well past the range of the measured values between widely spaced points. Corrected "are use to interpolate" to "are used to interpolate." -->
 
----
-
-<!-- _class: lead -->
-
-# Kriging
-
-## Interpolation that estimates its own weights
-
-<!-- The source deck labeled this "Day 2: Kriging." Everything before this point weights points by a rule you choose; kriging derives the weights from the data itself. -->
+<!-- Optional: skip if time is short. Lab 9 next week uses a spline in one run. -->
 
 ---
 
-# Kriging
+# Thursday: Kriging
 
-A statistically based estimator of spatial variables. It separates the data into three components:
+![bg right:45% w:96%](images/ip-surface-3d-kriged.png)
 
-- **Spatial trend** — an increase or decrease in a variable that depends on direction; for example, temperature may decrease toward the northwest
-- **Autocorrelation** — the tendency for points near each other to have similar values
-- **Random** — statistically defined by a probability function
+- Thiessen and IDW weight the points by a **rule you choose**
+- **Kriging** measures how fast similarity fades with distance, then sets the weights **from the data**
+- Then: **how wrong** is each surface, in meters?
+- And **Lab 8**: rebuild Y Mountain three ways and measure the error
 
-Kriging creates a mathematical model, which is then used to estimate values across the surface.
-
-![w:1100 center](images/ip-trend-autocorrelated-random.png)
-
-<!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
-
-<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 10 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
-
----
-
-# Kriging: Lag Distance
-
-<div class="columns">
-<div>
-
-- $Z_i$ is a variable at a sample point
-- $h_i$ is the distance between sample points
-- Every possible pair $Z_i, Z_j$ defines a distance $h_{ij}$ and differs by the amount $Z_i - Z_j$
-
-The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j*. There is a subset of points in any sample set that are a given lag distance apart.
-
-</div>
-<div>
-
-![w:490 center](images/ip-lag-distance.png)
-
-</div>
-</div>
-
-<!-- Corrected the source's "is know as" to "is known as." The red numbers on the figure are the lag distances for each pair. With four points there are six pairs; with a hundred points there are 4,950, which is why the next step is to bin them. -->
-
----
-
-# Kriging: Spatial Autocorrelation
-
-<div class="columns">
-<div>
-
-- Higher autocorrelation means points near each other are alike
-- That provides substantial information about nearby locations
-
-*h* here is the width of one cell.
-
-</div>
-<div>
-
-![w:540 center](images/ip-spatial-autocorrelation.png)
-
-</div>
-</div>
-
-<!-- Top row: a spatially autocorrelated layer, and its scatter of nearby pairs falls on a line. Bottom row: an uncorrelated layer, and the same scatter is a cloud. That contrast is the entire justification for interpolating at all — if the bottom panel were your data, no method in this deck would beat the global mean. Fixed the source's "Higher autocorrelations indicates" to "Higher autocorrelation means." -->
-
----
-
-# Kriging: Semi-variance
-
-<div class="columns">
-<div>
-
-- $Z_i$ is the measured variable at one point
-- $Z_j$ is another at distance *h* away
-- *n* is the number of pairs that are approximately *h* distance apart
-
-Semi-variance may be calculated for any *h*.
-
-When nearby points are similar, $Z_i - Z_j$ is small, so the semi-variance is small. High spatial autocorrelation means points near each other have similar Z values.
-
-</div>
-<div>
-
-![w:460 center](images/ip-semivariance-equation.png)
-
-</div>
-</div>
-
-<!-- Semi-variance is a dissimilarity measure: it goes up as points get less alike. The "semi" is the factor of one half in front of the sum. -->
-
----
-
-# The Variogram
-
-<div class="columns">
-<div>
-
-When calculating the semi-variance for a particular *h*, a **tolerance** is used, since few *h* values will be exactly identical.
-
-Plot the semi-variance across a range of lag distances and you get a **variogram**.
-
-Semi-variance is usually small at small lag distances and increases to a constant value as the lag distance *h* increases.
-
-</div>
-<div>
-
-![w:520 center](images/ip-variogram-fitted.png)
-
-</div>
-</div>
-
-<!-- Merged the source's tolerance slide with the variogram slide that immediately followed it. The jagged line is the semi-variance actually calculated from the data; the smooth line is the model fitted to it. Only the smooth line is used to interpolate. -->
-
----
-
-# Nugget, Sill, and Range
-
-![bg right:48% w:95%](images/ip-semivariogram-model.png)
-
-- **Range** — the distance where the model levels out; points closer than the range are autocorrelated, points farther apart are not
-- **Sill** — the semivariance the model reaches at the range
-- **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
-
-<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: 150 random elevation samples from Little Cottonwood Canyon, 11,175 pairs binned every 300 m, a spherical model fitted - range about 3,360 m, sill about 63,000 m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Ask: what would put a nugget here? (GPS elevations with a few meters of error, or samples much farther apart than the gullies.) The source deck's idealized Figure 9-14 with hand-drawn red marks is no longer used on this slide. -->
-
----
-
-# From Variogram to Surface
-
-- A set of sample points is used to estimate the shape of the variogram
-- A **variogram model** is made — a line is fit through the set of semi-variance points
-- The variogram model is then used to interpolate the entire surface
-
-**Kriging is similar to IDW**, but kriging uses the **minimum variance method** to calculate the weights, rather than applying an arbitrary or less precise weighting scheme.
-
-<!-- Combined two consecutive text-only slides from the source. The comparison in the second half is the sentence worth remembering: IDW's weights come from a rule you picked, kriging's weights come from the data's own spatial structure. -->
-
-![w:820 center](images/ip-semivariogram-real.png)
-
-<!-- Left: the semivariogram cloud, every pair of the 150 samples. Right: the pairs binned every 300 m and a spherical model fitted to the bins. The model, not the cloud, sets kriging's weights. -->
-
----
-
-# Kriged Result
-
-![h:480 center](images/ip-kriging-result.png)
-
-<!-- Original surface on the left, kriged interpolation on the right. Compare it against the IDW panels from earlier: the bull's-eyes are gone, because the weights now reflect how quickly the variable actually decorrelates with distance instead of a fixed 1/d^n rule. -->
-
----
-
-# Kriging Surface
-
-![h:430 center](images/ip-surface-3d-kriged.png)
-
-<!-- The 3D view of the same result. Set this beside the Thiessen and IDW surfaces from earlier in the deck: stepped, kinked, and smooth. Same points, three surfaces. -->
-
----
-
-# Same Points, Six Methods
-
-![w:1180 center](images/ip-six-methods.png)
-
-<!-- Optional slide; it answers "how would you judge which one to trust" with a test students can run. 150 random points of a real 30 m DEM (Little Cottonwood Canyon, 2,180-3,490 m) interpolated by six ArcGIS Pro tools, and each surface checked at 60 hold-out points the methods never saw. Root-mean-square error at the hold-out points: kriging with a 300 m lag 87 m, natural neighbor 98, IDW 101, spline 108, Thiessen 114, kriging with the default lag 142, 2nd-order trend 228 - and just using the mean of the samples 218. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting (kriging's default lag here) can do worse than a much simpler one. tools/week08_interpolation_figures.py; numbers in tools/week08_interpolation_numbers.json. This addresses the earlier TODO about teaching train/test validation; Dan to decide whether it stays. -->
-
----
-
-# Which One to Trust?
-
-![w:960 center](images/ip-holdout-error.png)
-
-- Hold some points out, interpolate without them, and **measure the error** where you know the answer
-
-<!-- Optional, with the slide before it. The orange bar is the lowest error. Kriging with a sensible lag wins here; kriging with the tool's default lag loses to every method but the trend. The dotted line is the error of ignoring location entirely and guessing the mean of the 150 samples (218 m). -->
-
----
-
-# Exact and Non-exact Methods
-
-Read each surface back at its own sample points:
-
-![w:780 center](images/ip-exactness-test.png)
-
-**Exact:** Thiessen, natural neighbor, IDW, spline, kriging with no nugget · **Not exact:** trend, kriging with a large nugget
-
-<!-- The test, run in ArcGIS Pro on 150 samples snapped to 30 m cell centers (tools/week08_interpolation_figures.py): Thiessen, Natural Neighbor, IDW and kriging with a 300 m lag give the sample value back exactly; the regularized spline is off by 0.01 m on average (it is built to pass through the points, the regularization relaxes that slightly); the 2nd-order trend misses by 166 m on average; and Kriging with the tool's default lag fitted a model that is almost all nugget (nugget 39,666 m2 of a 42,459 m2 sill, range 30 m) and misses by 95 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. Fixed-radius averaging (earlier in the deck) is also not exact: it averages several samples near each point. -->
-
----
-
-<!-- _class: quiz -->
-
-# Class Vote: Which Sampling Design Works Best Here?
-
-![bg right:52% w:80%](images/ip-compare-sampling-designs.png)
-
-**Original surface:**
-
-![h:390 center](images/ip-original-surface.png)
-
-<!-- Vote on all four before discussing any of them. The interesting argument is between adaptive and random: adaptive puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
-
----
-
-<!-- _class: quiz -->
-
-# Class Vote: Which Interpolation Method Works Best Here?
-
-![bg right:52% w:80%](images/ip-compare-methods.png)
-
-**Original surface:**
-
-![h:390 center](images/ip-original-surface.png)
-
-<!-- Same points, six methods, one truth to compare against. Push the class past "which is prettiest" to "which one reproduces the drainage pattern on the left." Then note that in a real project you cannot run this comparison, because you never have the left panel — which is why withholding sample points matters. -->
-
----
-
-# The Methods in ArcGIS Pro
-
-| Method | ArcGIS Pro tool — what you set |
-| --- | --- |
-| Thiessen polygons | **Create Thiessen Polygons**, then Polygon to Raster |
-| Natural neighbor | **Natural Neighbor** |
-| IDW | **IDW** — power, how many neighbors |
-| Spline | **Spline** — regularized or tension |
-| Kriging | **Kriging** — model, lag size |
-| Trend surface | **Trend** — polynomial order |
-
-All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
-
-<!-- Every tool in this table produced a surface in tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the parameters named are the ones the six-methods slide varies. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
+<!-- The surface is the kriged version of the same example points, also the title image. Set it beside the Thiessen and IDW surfaces: stepped, kinked, smooth. -->
 
 ---
 
@@ -794,16 +658,16 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
 <div>
 
-**Quiz: Points Into Surfaces.** Five items on the same question we spent the session on: **what is this method actually doing with the points?** **Scan the code**, or open the link under it.
+**Quiz: Points Into Surfaces.** Five items on the question we spent the session on: **what is this method actually doing with the points?** **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
-- The exponent and the neighbor count are the two knobs you turn by hand in Lab 8
+- The **exponent** and the **number of points** are two of the choices you test in Lab 8
 
 **Before next class**
 
 - **Reading:** Chapter 12 of *GIS Fundamentals* (Sampling and Interpolation)
 - **Quiz 7**, open book, on Learning Suite, due **Saturday 11:59 pm**
-- [Lab 8 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) is introduced Thursday and due **Saturday 11:59 pm**; [Lab 9 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/), next week, uses interpolation to find a volume
+- [Lab 8 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/) is introduced Thursday and due **Saturday 11:59 pm**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
@@ -816,12 +680,6 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. If the room has no signal, put the URL on the board; the items read aloud just as well, and the two class-vote slides are still on screen behind you. -->
+<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
 
-<!-- Point them at Lab 8 specifically: it is where the exponent and neighbor-count knobs from the IDW slides get turned by hand. -->
-
-<!-- The method-to-tool slide asked for here now precedes this one. -->
-
-<!-- TODO(instructor): the plan notes a Big Southern Butte example. Decide where it belongs in the sequence — the note is that it should be taught only after the methods above are established — and whether it replaces or supplements the class-vote slides. -->
-
-<!-- Conversion notes (2026-09-03): source "CE 414 Week 8 - Interpolation.pptx", 48 slides, 4:3, converted to 46 Marp slides. No hidden slides in the source. No slides dropped outright; five pairs of source slides were merged because the second was a figure or a continuation of the first: 19+20 (fixed-radius text and figure), 30+31 (trend-surface text/equation and result figure), 32+33 (splines text and figure), 39+40 (tolerance and variogram), and 42+43 (variogram model and the IDW comparison). Source slide 10 is an exact repeat of source slide 4; it is kept, as the source intended, but rendered as a section-divider rather than a duplicate content slide. Source slide 17's title "Theissen" corrected to "Thiessen" — that was the only occurrence of the misspelling; slides 14, 18, 46 and 48 already spelled it correctly. Other objective fixes: "Can not"/"can not" to "cannot" (slides 3, 9); "Some circles many contain no points" to "may contain" (19); "nearby know points" to "known points" (23); "are use to interpolate" to "are used to" (32); "dependson" to "depends on" (35); "is know as the lag distance" to "is known as" (36); "Higher autocorrelations indicates points near each other are alike" to "Higher autocorrelation means..." (37). No ArcGIS 9 / ArcMap / ArcCatalog / ArcToolbox wording appears anywhere in the source deck, so no software-version substitutions were needed; the deck names no GIS software at all, which is itself flagged as a TODO(instructor) above. No screenshots of any GIS user interface exist in this deck, so there are no stale ArcMap-era captures to re-shoot — every figure is a textbook diagram, a scanned figure, a rendered surface, or a hand-drawn equation. The recurring handwritten linear-interpolation figure is kept once on each slide where the source used it (source slides 4, 11, 12, 14, 18, 23, 26) plus the goals and closing slides; it is a deliberate motif, not a duplicate. Five slides that were built from PowerPoint shapes were captured as 200 dpi renders and cropped: the Thiessen construction panels (15), the annotated lag-distance figure (36), the annotated idealized variogram (41), and the two class-vote comparison grids (47, 48). Kriging terminology on the nugget/sill/range slide and the exact/non-exact list is carried over verbatim and flagged with VERIFY comments rather than rewritten. Four slides carry TODO(graphic) markers where no source image exists (the Provo activity, the kriging-components slide, the variogram-to-surface slide, and the exact/non-exact slide); per this pass's instructions no AI images were generated. -->
+<!-- Conversion notes: source "CE 414 Week 8 - Interpolation.pptx" (48 slides), converted September 3, 2026; the spelling fixes are in git history. Split October 20, 2026: kriging, the six-methods comparison, the exactness test, the method vote and the ArcGIS Pro tool table moved to Thursday (interpolation-explorer.md); sampling, Thiessen and IDW stay here, with new ArcGIS Pro slides from the Lab 8 captures. Figures: tools/week08_interpolation_figures.py. -->

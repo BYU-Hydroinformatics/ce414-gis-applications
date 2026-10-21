@@ -15,12 +15,32 @@
 <script>
 CE414Quiz.start({
   title: "How Wrong Is the Surface?",
-  subtitle: "CE 414 &middot; Week 9 &mdash; Interpolation Explorer<br>" +
-            "You rebuilt a DEM from points. For each item, decide what the error tells you " +
+  subtitle: "CE 414 &middot; Week 9 &mdash; Kriging and Interpolation Error<br>" +
+            "You rebuilt a DEM from points. For each item, decide what kriging or the error tells you " +
             "<strong>and what it does not</strong>.",
   badge: "Error call",
   deckUrl: "../../slides/week-09/interpolation-explorer.html",
   questions: [
+    {
+      prompt: "Kriging is described as similar to IDW. Where does it differ?",
+      options: [
+        "It uses only the nearest sample point",
+        "The data's spatial structure sets the weights",
+        "It requires the samples to lie on a regular grid"
+      ],
+      answer: "The data's spatial structure sets the weights",
+      explanation: "IDW's weights come from an exponent you choose before you look at the data. Kriging first models how quickly the variable stops being similar as distance grows — that is what the fitted semivariogram model records — and then uses the minimum variance method to set the weights, so the data decide how far influence reaches."
+    },
+    {
+      prompt: "A fitted semivariogram is almost all nugget: the nugget is nearly as large as the sill. What will the kriged surface do?",
+      options: [
+        "Pass exactly through every sample point",
+        "Treat nearby points as barely related, and smooth toward the mean",
+        "Turn into the Thiessen surface"
+      ],
+      answer: "Treat nearby points as barely related, and smooth toward the mean",
+      explanation: "The nugget is the semivariance at almost zero distance. If it is nearly the whole sill, the model says even close neighbors are almost unrelated, so kriging gives no point much extra weight and the surface flattens toward the average. It also stops returning the measured values: kriging is exact only when the nugget is zero. The six-methods test in today's deck showed this happening with the tool's default lag on 150 points."
+    },
     {
       prompt: "Your error raster is the true DEM minus the surface. A cell reads +40. What happened there?",
       options: [
@@ -76,9 +96,9 @@ CE414Quiz.start({
       explanation: "Each method's checkpoint RMSE moved by a few meters from one set to the next, but the same points judge all three surfaces, so a set that lands on hard ground makes every method look worse together. 200 checkpoints were enough to choose a method, and loose for quoting its accuracy."
     }
   ],
-  perfectNote:  "All five. You are ready for Lab 8's error maps and its checkpoint question.",
+  perfectNote:  "All of them. You are ready for Lab 8's kriging runs, its error maps and its checkpoint question.",
   goodNote:     "Good. Reread the explanations you missed before you start Lab 8 Step 6.",
-  tryAgainNote: "Error is truth minus surface, RMSE squares it so every miss counts, and checkpoints are how you judge a surface when there is no truth. Look at those slides again."
+  tryAgainNote: "Kriging lets the semivariogram set the weights, error is truth minus surface, RMSE squares it so every miss counts, and checkpoints are how you judge a surface when there is no truth. Look at those slides again."
 });
 </script>
 </body>
