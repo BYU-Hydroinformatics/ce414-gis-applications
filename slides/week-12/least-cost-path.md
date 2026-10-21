@@ -3,6 +3,8 @@ marp: true
 theme: ce414
 paginate: true
 footer: "CE 414 · Week 12 — Least Cost Path Analysis, Part A"
+style: |
+  strong { color: #0062b8; }
 ---
 
 <!-- _class: lead -->
@@ -10,16 +12,18 @@ footer: "CE 414 · Week 12 — Least Cost Path Analysis, Part A"
 
 ![bg right:42% w:100%](images/lcp-dem-least-cost-path.jpg)
 
+![w:110](../theme/images/byu-medallion.svg)
+
 # Least Cost Path Analysis
 
 ## Part A — Cost Surfaces and the Cheapest Route
 
 CE 414 Engineering Applications of GIS
-Dr. Dan Ames
 Civil & Construction Engineering
 Brigham Young University
+Dr. Dan Ames
 
-<!-- Concepts lecture for Week 11. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. -->
+<!-- Tuesday of Week 12. This deck sets up Lab 11, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. The middle of the hour is a hand calculation on a 5 by 5 grid; it is the algorithm, done once by people, before ArcGIS Pro does it on a million cells. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 12 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-10-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -34,8 +38,8 @@ Brigham Young University
 - By the end of class you should be able to:
   - Say what a **cost surface** is, and why it is not a map of distance
   - Build one by reclassifying and combining rasters with **map algebra**
-  - Explain what the **accumulated cost** and **back link** rasters each store
-  - Trace a least-cost path from a destination back to its source
+  - Explain what the **accumulated cost** and **back direction** rasters each store
+  - Compute an accumulated cost by hand, and trace the cheapest path from a destination back to its source
   - Name the ArcGIS Pro tools that do each step, and their current replacements
 
 <!-- Frame the hour. The whole lecture is one idea repeated at three scales: a cell has a cost, a path is the sum of cell costs, and the cheapest path is not usually the shortest one. -->
@@ -48,7 +52,7 @@ Brigham Young University
 
 - What is the **"cost"** Google Maps is minimizing here? Distance? Travel time? Traffic?
 - This route runs from the **NSA Utah Data Center** in Bluffdale south toward **Spanish Fork Canyon** — the two endpoints of Lab 11
-- More on the [NSA Utah Data Center](https://nsa.gov1.info/utah-data-center/), code named "Bumblehive"
+- More on the [Utah Data Center](https://en.wikipedia.org/wiki/Utah_Data_Center) in Bluffdale
 
 <div class="imggrid" style="grid-template-columns: repeat(2, 1fr); margin-top:0.3em;">
 
@@ -87,6 +91,8 @@ Brigham Young University
 
 # General Workflow
 
+![w:1100 center](images/lcp-workflow.png)
+
 1. Combine your raster data sets into a **"virtual terrain"**, where **high values are undesirable** paths and **low values are desirable** paths
 2. Identify a **start point** (source) and an **end point** (destination) for the path of interest
 3. Run **Distance Accumulation** to create the **accumulated cost raster** and the **back direction raster**
@@ -94,7 +100,7 @@ Brigham Young University
 
 <!-- These are the steps as Lab 11 runs them, with ArcGIS Pro's current tools. The source slide named Cost Distance, Cost Path and a final Raster to Polyline; Optimal Path As Line makes the polyline itself. The legacy names come back on the deprecation slide. The next slide shows the whole Lab 11 model, so students can see how much of it is step 1. -->
 
-<!-- TODO(graphic): a clean five-step schematic of this workflow — input rasters, reclassify, Raster Calculator, cost surface, source/destination, accumulated cost + back link, path. Not generated here; needs a real figure. -->
+<!-- The figure (tools/week12_parta_figures.py) draws the same steps as Lab 11 runs them: three boxes build the cost surface, two route across it. -->
 
 ---
 
@@ -144,7 +150,7 @@ Brigham Young University
 
 ![w:400 center](images/lcp-cost-surface-workflow.png)
 
-<p style="text-align:center;font-size:0.55em;margin-top:0.1em;"><a href="https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/iet-gtd.2016.1119">ietresearch.onlinelibrary.wiley.com/doi/10.1049/iet-gtd.2016.1119</a></p>
+<p style="text-align:center;font-size:0.55em;margin-top:0.1em;">de Lima et al. (2016), <i>IET Generation, Transmission &amp; Distribution</i>, <a href="https://doi.org/10.1049/iet-gtd.2016.1119">doi:10.1049/iet-gtd.2016.1119</a></p>
 
 </div>
 </div>
@@ -190,33 +196,73 @@ Brigham Young University
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: activity -->
 
-# Step 2: accumulated cost, back link, and the path
+# Your Turn: The Cheapest Path by Hand
+
+![bg right:44% w:94%](images/lcp-hand-grid-ask.png)
+
+Each number is the **cost of entering** that cell. Start at **S**.
+
+1. Moves go **up, down, left or right** only
+2. For each cell, write the **cheapest total** to reach it from S
+3. Then find the cheapest path to **D**, and its total
+
+Is it the straight line across the top?
+
+<!-- Pairs, five to eight minutes, on paper. The rule they need: a cell's total is the smallest (neighbor's total + this cell's cost) over its four neighbors; work outward from S and keep updating until nothing changes. The straight line across the top costs 1 + 3 + 9 + 1 = 14. Do not give the answer away: the next slide has it. Four neighbors and cost-of-entering is a simplification for hand work; ArcGIS Pro also moves diagonally (about 1.414 times the cost), and Thursday shows exactly how it charges a move. -->
 
 ---
 
-# Cost Distance and Back Link rasters
+# Check Your Work
+
+![h:430 center](images/lcp-hand-grid-answer.png)
+
+The cheapest path costs **12**, through the 3s and the middle row; the straight line across the top costs **14**.
+
+<!-- Left: the path. Right: every cell's accumulated cost, and an arrow pointing to the neighbor its cheapest total came from. Start at D (12) and follow the arrows: 12, 11, 10, 9, 8, 7, 4, 1, 0. That walk is exactly what Optimal Path As Line does. The path is unique (the script checks), and it takes eight moves against the straight line's four, and is still cheaper. Solved exactly in tools/week12_parta_figures.py; numbers in tools/week12_parta_numbers.json. -->
+
+---
+
+# What You Just Built
+
+![bg right:46% w:96%](images/lcp-hand-grid-answer.png)
+
+- The right-hand grid is the **accumulated cost raster**: the cheapest total from S to every cell
+- The arrows are the **back direction raster**: which neighbor that total came from
+- ArcGIS Pro's **Distance Accumulation** makes both, from the source
+- **Optimal Path As Line** starts at D and follows the arrows home
+- You needed **every** cell's total to be sure of D's
+
+<!-- The point of the exercise: the algorithm is not clever, it is thorough. It prices every cell in the raster from the source, which is why Distance Accumulation is the slowest step in Lab 11's model. -->
+
+---
+
+<!-- _class: lead -->
+
+# Step 2: accumulated cost, back direction, and the path
+
+---
+
+# Accumulated Cost and Back Direction, on Lab 11
 
 <div class="columns" style="grid-template-columns: 1.05fr 1fr;">
 <div>
 
-- **Cost distance** (accumulated cost): for every cell, the **cheapest total cost of reaching it from the source**. Light = cheap to reach, dark = expensive
-- **Back link** (back direction): for every cell, **which neighbor to step to next** on the way home to the source — coded 0–8
-- **Cost Path** starts at the destination and follows the back link raster cell by cell until it reaches the source
+- **Accumulated cost**: for every cell, the **cheapest total cost of reaching it from the source**
+- **Back direction**: for every cell, **which way to step** on the way home to the source; Distance Accumulation stores it as a compass angle (Thursday)
+- **Optimal Path As Line** starts at the destination and follows the back direction until it reaches the source
 - That is why the path is computed **backward**
 
 </div>
 <div>
 
-![h:520 center](images/lcp-cost-distance-backlink-arcmap.png)
+![h:470 center](images/lcpb-accumulation.png)
 
 </div>
 </div>
 
-<!-- The two rasters are the whole algorithm. The accumulated cost raster says how much; the back link raster says which way. Ask students what would happen if you only had the accumulated cost raster: you could still walk downhill through it, but the back link raster stores that answer once instead of recomputing it. Note the concentric shape of the accumulated cost raster around the source, and how it bulges where crossing is cheap. -->
-
-<!-- TODO(instructor): this figure is a scanned page from an ArcMap-era tutorial. It shows the ArcMap Table Of Contents, the CostDistance and Backlink layers, and numbered steps 10-11. Needs a fresh ArcGIS Pro capture of the same two rasters in the Contents pane. Not fabricated; kept as-is so the content is not lost. -->
+<!-- The same two rasters as the hand grid, on Lab 11's real cost surface (the figure is Thursday's, computed from the lab's reference run). Note the shape: the accumulated cost spreads out from the source like a ripple and runs ahead where crossing is cheap. The legacy tools called the second raster "back link" and coded it 0 to 8 by neighbor; Distance Accumulation codes it as an angle. Same idea. -->
 
 ---
 
@@ -224,14 +270,18 @@ Brigham Young University
 
 ![bg right:34% w:95%](images/lcp-wind-turbines.jpg)
 
-- **Power lines** — [ScienceDirect, S0195925510001393](https://www.sciencedirect.com/science/article/pii/S0195925510001393)
-- **Ecology**, wildlife corridors and connectivity — [ScienceDirect, S0301479719305912](https://www.sciencedirect.com/science/article/pii/S0301479719305912)
-- **Roads** — [ScienceDirect, S0143622805000378](https://www.sciencedirect.com/science/article/pii/S0143622805000378)
+<style scoped>
+section { font-size: 24px; }
+</style>
+
+- **Power lines** — Bagli, Geneletti and Orsi (2011), "Routeing of power lines through least-cost path analysis and multicriteria evaluation to minimise environmental impacts," *Environmental Impact Assessment Review* — [doi:10.1016/j.eiar.2010.10.003](https://doi.org/10.1016/j.eiar.2010.10.003)
+- **Ecology** — Balbi et al. (2019), "Ecological relevance of least cost path analysis: An easy implementation method for landscape urban planning," *Journal of Environmental Management* — [doi:10.1016/j.jenvman.2019.04.124](https://doi.org/10.1016/j.jenvman.2019.04.124)
+- **Roads** — Atkinson et al. (2005), "Multi-criteria evaluation and least cost path analysis for an arctic all-weather road," *Applied Geography* — [doi:10.1016/j.apgeog.2005.08.001](https://doi.org/10.1016/j.apgeog.2005.08.001)
 - In every one of them, the hard part is **not the algorithm** — it is deciding what a cell should cost
 
 <!-- Three published applications, all using the same two rasters. Use them to make the point that the engineering judgment lives entirely in the cost surface. Ask what a cell should cost near a school, a wetland, or a scenic corridor, and let the disagreement stand. -->
 
-<!-- TODO(instructor): the source slide gives only bare DOIs/links for these three papers. Add author, year, and title so students can cite them, and confirm each link still resolves. -->
+
 
 ---
 
@@ -286,19 +336,4 @@ Brigham Young University
      it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
      well. -->
 
-<!-- Conversion notes (2026-09-03): source "CE 414 Week 11 - Least Cost Path Analysis.pptx", 9 slides, converted to 16.
-No source slides were dropped; there were no hidden slides and no speaker notes in the original, so every
-presenter note here is new. Added: a Today's Goals slide, two lead section dividers, a dedicated full-size
-slide for the ModelBuilder overview, a "Current tool names in ArcGIS Pro" slide, a Lab 11 preview, and a
-Before Next Class slide. The legacy Cost Distance / Cost Back Link / Cost Path workflow was deliberately NOT
-rewritten: Lab 11's steps, screenshots and rubric use the same legacy tools, and the two have to change
-together. The deprecation is stated on its own slide instead.
-Stale imagery: images/lcp-cost-distance-backlink-arcmap.png is a scanned ArcMap-era tutorial page and needs a
-Pro capture; images/lcp-full-model-overview.png is an illegible zoomed-out ModelBuilder canvas and needs a
-re-export from ModelBuilder. Both are flagged inline.
-The arcgis.com quotation on the "Why Least-Cost Path?" slide was condensed to short attributed fragments
-rather than reproduced in full; the original slide did not cite which arcgis.com page it came from.
-The student example map (images/lcp-example-map-power-lines.jpg) still carries its placeholder
-"Name / Date / Projection" text block; kept, and used in the speaker notes as a rubric reminder.
-Nothing outside slides/week-11/ was created or modified.
-Realigned October 9, 2026 with the rebuilt Lab 11: General Workflow names the current tools; the model overview is Lab 11's exported Figure C (lcp-lab11-model.svg), replacing the illegible lcp-full-model-overview.png; the Lab 11 preview uses the lab's example map. -->
+<!-- Revision notes (2026-10-21): built from the September 3 conversion of "CE 414 Week 11 - Least Cost Path Analysis.pptx" and its October 9 realignment with Lab 11. Added a hand calculation (a 5 x 5 grid solved exactly, with a unique cheapest path of 12 against 14 for the straight line) and a slide tying it to Distance Accumulation and Optimal Path As Line; the workflow slide has a computed schematic; the ArcMap-era scanned figure is replaced by Lab 11's accumulated cost raster (file deleted); the three application papers have full citations checked against Crossref; the Utah Data Center link went to a parody site and now goes to Wikipedia; "back link" is "back direction" except where the legacy tools are meant. Figures: tools/week12_parta_figures.py. -->
