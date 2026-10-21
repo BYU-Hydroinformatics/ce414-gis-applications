@@ -1,0 +1,42 @@
+{
+  "conus_center": [
+    39.83,
+    -98.58
+  ],
+  "conus_scale_error_pct": {
+    "Salt Lake City": -0.21,
+    "Louisville": -0.23,
+    "Miami": 2.34,
+    "Spokane": 0.87,
+    "Amarillo": -0.79,
+    "Brownsville": 0.48
+  },
+  "tennessee": {
+    "utm16": {
+      "max_abs_ppm": 2394,
+      "min_ppm": -400,
+      "max_ppm": 2394
+    },
+    "spcs": {
+      "max_abs_ppm": 58,
+      "min_ppm": -52,
+      "max_ppm": 58
+    }
+  },
+  "byu_uofu": {
+    "byu_utm": [
+      444780,
+      4455907
+    ],
+    "uofu_utm": [
+      428927,
+      4513000
+    ],
+    "dx_m": -15853,
+    "dy_m": 57093,
+    "utm_distance_m": 59253,
+    "ellipsoid_distance_m": 59274,
+    "dlat_deg": 0.5131,
+    "dlon_deg": -0.1928
+  }
+}

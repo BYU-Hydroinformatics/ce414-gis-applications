@@ -1,0 +1,62 @@
+{
+  "transformations_nad27_to_nad83_utah": [
+    "NAD_1927_To_WGS_1984_79_CONUS + WGS_1984_(ITRF00)_To_NAD_1983",
+    "NAD_1927_To_WGS_1984_79_CONUS + NAD_1983_To_WGS_1984_5",
+    "NAD_1927_To_WGS_1984_79_CONUS + NAD_1983_To_WGS_1984_Utah_50",
+    "NAD_1927_To_WGS_1984_79_CONUS + NAD_1983_To_WGS_1984_4",
+    "NAD_1927_To_WGS_1984_6 + WGS_1984_(ITRF00)_To_NAD_1983",
+    "NAD_1927_To_WGS_1984_6 + NAD_1983_To_WGS_1984_5"
+  ],
+  "transformations_wgs84_to_nad83_2011_utah": [
+    "WGS_1984_(ITRF08)_To_NAD_1983_2011",
+    "WGS_1984_(ITRF00)_To_NAD_1983_2011",
+    "ITRF_2000_To_WGS_1984 + ITRF_2000_To_NAD_1983_2011",
+    "NAD_1983_HARN_To_WGS_1984_2 + NAD_1983_HARN_To_NAD_1983_2011",
+    "NAD_1983_HARN_To_WGS_1984_3 + NAD_1983_HARN_To_NAD_1983_2011",
+    "WGS_1984_(ITRF00)_To_NAD_1983_CORS96 + NAD_1983_CORS96_To_NAD_1983_2011"
+  ],
+  "nad27_choice_gap_m": {
+    "BYU": {
+      "first_listed": "NAD_1927_To_WGS_1984_79_CONUS + WGS_1984_(ITRF00)_To_NAD_1983",
+      "vs": "NAD_1927_To_NAD_1983_NADCON",
+      "gap_m": 1.19
+    },
+    "University of Utah": {
+      "first_listed": "NAD_1927_To_WGS_1984_79_CONUS + WGS_1984_(ITRF00)_To_NAD_1983",
+      "vs": "NAD_1927_To_NAD_1983_NADCON",
+      "gap_m": 1.2
+    }
+  },
+  "nad83_to_nad27": {
+    "BYU": {
+      "transformation": "NAD_1927_To_NAD_1983_NADCON",
+      "nad27_lon": -111.648545,
+      "nad27_lat": 40.251845,
+      "ground_shift_m": 64.4,
+      "dx_m": 64.3,
+      "dy_m": 4.5
+    },
+    "University of Utah": {
+      "transformation": "NAD_1927_To_NAD_1983_NADCON",
+      "nad27_lon": -111.841332,
+      "nad27_lat": 40.764954,
+      "ground_shift_m": 65.1,
+      "dx_m": 64.9,
+      "dy_m": 5.3
+    }
+  },
+  "wgs84_to_nad83_2011": {
+    "BYU": {
+      "transformation": "WGS_1984_(ITRF08)_To_NAD_1983_2011",
+      "ground_shift_m": 1.19,
+      "dx_m": 0.98,
+      "dy_m": -0.68
+    },
+    "University of Utah": {
+      "transformation": "WGS_1984_(ITRF08)_To_NAD_1983_2011",
+      "ground_shift_m": 1.2,
+      "dx_m": 0.98,
+      "dy_m": -0.69
+    }
+  }
+}
