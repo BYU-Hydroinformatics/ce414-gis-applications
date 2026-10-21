@@ -124,7 +124,10 @@ DUE = {
              other=[("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
     9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
-    10: dict(reading="Chapter 9", quiz=(8, "Volumes and Spatial Analysis"), lab=9, other=[]),
+    # Fall 2026 only: the instructor is away Week 10, so there is no class. Remove after November 5.
+    10: dict(reading="Chapter 9", quiz=(8, "Volumes and Spatial Analysis"), lab=9,
+             other=[("**No class on Tuesday, November 3, or Thursday, November 5**",
+                     "study the two slide decks below on your own and work on Lab 9")]),
     11: dict(reading="Chapters 3 and 5", quiz=(9, "Coordinate Systems and GPS"), lab=10, other=[]),
     12: dict(reading=None, quiz=(10, "Least Cost Paths"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.

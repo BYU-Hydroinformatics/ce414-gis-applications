@@ -1,5 +1,8 @@
 # Week 10: Cut, Fill, and Raster Volumes
 
+> [!IMPORTANT] Also this week
+> - **No class on Tuesday, November 3, or Thursday, November 5** — study the two slide decks below on your own and work on Lab 9.
+
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides
