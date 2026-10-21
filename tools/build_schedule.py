@@ -125,9 +125,9 @@ DUE = {
     9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
     # Fall 2026 only: the instructor is away Week 10, so there is no class. Remove after November 5.
-    10: dict(reading="Chapter 9", quiz=(8, "Volumes and Spatial Analysis"), lab=9,
+    10: dict(reading=None, quiz=(8, "Cut, Fill, and Raster Volumes"), lab=9,   # no reading; Quiz 8 is built from the two decks
              other=[("**No class on Tuesday, November 3, or Thursday, November 5**",
-                     "study the two slide decks below on your own and work on Lab 9")]),
+                     "study the two slide decks below on your own and work on Lab 9; Quiz 8 is built from those two decks, not from the textbook")]),
     11: dict(reading="Chapters 3 and 5", quiz=(9, "Coordinate Systems and GPS"), lab=10, other=[]),
     12: dict(reading=None, quiz=(10, "Least Cost Paths"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.

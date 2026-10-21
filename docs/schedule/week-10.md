@@ -1,7 +1,7 @@
 # Week 10: Cut, Fill, and Raster Volumes
 
 > [!IMPORTANT] Also this week
-> - **No class on Tuesday, November 3, or Thursday, November 5** — study the two slide decks below on your own and work on Lab 9.
+> - **No class on Tuesday, November 3, or Thursday, November 5** — study the two slide decks below on your own and work on Lab 9; Quiz 8 is built from those two decks, not from the textbook.
 
 <div class="week-card week-card--slides" markdown>
 
@@ -39,9 +39,7 @@ Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 ## :material-book-open-page-variant: Reading Quiz
 
-Read Chapter 9 of *GIS Fundamentals*, 7th edition (Bolstad).
-
-**Quiz 8 — Volumes and Spatial Analysis** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+**Quiz 8 — Cut, Fill, and Raster Volumes** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 
