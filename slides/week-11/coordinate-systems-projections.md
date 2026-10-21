@@ -714,24 +714,44 @@ On this projection:
 
 ---
 
+# ArcGIS Pro Fills One In for You
+
+![h:480 center](images/crs-pro-project-transformation-list.png)
+
+<!-- Project, NAD 1927 points to NAD 1983 UTM Zone 12N. ArcGIS Pro proposes a transformation the moment both coordinate systems are set, and opens a list of alternatives. Read the first entry: it goes through WGS 84. The next slide is what that choice costs. -->
+
+---
+
 # Choosing a Transformation
 
-![bg right:44% w:96%](images/crs-lab10-project-raster.png)
+<style scoped>
+section { font-size: 26px; }
+</style>
+
+![bg right:40% w:94%](images/crs-lab10-project-raster.png)
 
 Measured at BYU with ArcGIS Pro:
 
 | Datum change | Shift |
 | --- | ---: |
 | NAD 1927 → NAD 1983, skipped | **64 m** |
-| NAD 1927 → NAD 1983: first one listed vs NADCON | **1.2 m** |
+| Default offered vs NADCON | **1.2 m** |
 | WGS 1984 → NAD 1983 (2011) | **1.2 m** |
 | NAD 1983 → NAD 1983 | none needed |
 
-ArcGIS Pro lists **44** NAD 1927 → NAD 1983 transformations valid in Utah.
+ArcGIS Pro lists **44** NAD 1927 → NAD 1983 transformations valid in Utah. The one it fills in is **not** NADCON.
 
-<!-- Numbers from tools/week11_arcgis_numbers.json (arcpy ListTransformations over Utah's extent, PointGeometry.projectAs). Skipping a needed transformation costs tens of meters; choosing a poor one costs about a meter; WGS 84 to NAD 83 (2011), the GPS case on Thursday, is about a meter at BYU. The first entry arcpy lists for NAD 27 to NAD 83 is a composite through WGS 84, not NADCON, so "the first one offered" is not automatically the best. The capture on the right is Lab 10's Project Raster: Geographic Transformation is empty because the DEM is already NAD 1983, the same datum as the output. -->
+<!-- The previous slide's capture is the Project tool in ArcGIS Pro 3.7.1 with Campuses_NAD27 as input and NAD 1983 UTM Zone 12N as output: Pro fills in NAD_1927_To_WGS_1984_79_CONUS + WGS_1984_(ITRF00)_To_NAD_1983, a composite through WGS 84, and the list under it starts with more composites. NAD_1927_To_NAD_1983_NADCON, the grid transformation NGS built for exactly this change, is further down. The two land 1.2 m apart at BYU. Numbers from tools/week11_arcgis_numbers.json (arcpy ListTransformations over Utah's extent, PointGeometry.projectAs). Skipping a needed transformation costs tens of meters; choosing a poor one costs about a meter; WGS 84 to NAD 83 (2011), the GPS case on Thursday, is about a meter. The capture on the right is Lab 10's Project Raster: Geographic Transformation is empty because the DEM is already NAD 1983. -->
 
-<!-- TODO(capture): an ArcGIS Pro capture of the Project tool with Campuses_NAD27 as input and NAD 1983 UTM Zone 12N as output, showing the Geographic Transformation list it proposes, and of Map Properties > Transformation. C:\Ames\Week11\Week11.aprx is built for it. Desktop control was declined on October 20, so this slide uses the Lab 10 capture instead. -->
+---
+
+# Every Map Has a Transformation Tab
+
+![h:400 center](images/crs-pro-map-transformation.png)
+
+**Map Properties ▸ Transformation**: the datum changes ArcGIS Pro is making **just to draw** your layers
+
+<!-- The same project's Map Properties, Transformation page. Two rows: the Topographic basemap is WGS 1984 and the NAD 1927 layer is NAD 1927, and the map is NAD 1983, so ArcGIS Pro is transforming both on the fly to draw them, each with a transformation it chose. Drawing on the fly is fine for looking; for analysis, Project the data yourself with a transformation you chose and wrote down. -->
 
 ---
 
@@ -753,7 +773,11 @@ ArcGIS Pro lists **44** NAD 1927 → NAD 1983 transformations valid in Utah.
 
 ![bg right:40% w:94%](images/crs-lab10-project-raster.png)
 
-- **Step 1 — Project the DEM.** Slope needs elevation and cell size in the **same unit**. On the unprojected degrees, Slope still runs: median **24.5°** instead of **27.3°**, and no error message
+<style scoped>
+section { font-size: 26px; }
+</style>
+
+- **Step 1 — Project the DEM.** No transformation needed: NAD 1983 in, NAD 1983 out. Slope needs elevation and cell size in the **same unit**. On the unprojected degrees, Slope still runs: median **24.5°** instead of **27.3°**, and no error message
 - **Step 8 — Measure Snowbird.** UGRC's `Shape__Area` reads **18.7 million m²** for an area of **10.78 km²**: Web Mercator stretches areas by about **1.73** at 40.6° N
 
 <!-- Both numbers are from Lab 10's verification run and are on the lab page. Slope on the unprojected DEM uses the Planar method by default and comes out about 3 degrees low at the median; the Geodesic method (median 27.5) copes with degrees, Planar does not. The Web Mercator factor is 1 / cos² of the latitude: 1 / cos²(40.6°) = 1.73. Neither mistake throws an error. That is the whole lesson of today: the software will compute whatever you give it. -->
@@ -817,4 +841,4 @@ COMPUTED, NOT SOURCED: the BYU-Utah UTM coordinates (the old slide's pair did no
 
 RESOLVED FLAGS: Lambert naming is "Lambert Conformal Conic" throughout; the conic drill answer is "secant, conic" with the normal-vs-oblique point in the notes; the spheroid/ellipsoid question now asks for the smooth mathematical surface and notes ArcGIS Pro's "spheroid"; the QGIS transformation screenshot is gone (file deleted) and the slide carries an ArcGIS Pro capture and measured numbers; the geodesy and registration questions have graphics; Lab 8 on the closing slide is Lab 10.
 
-STILL OWED: the ArcGIS Pro captures of the Project tool's transformation list and of Map Properties > Transformation (TODO on "Choosing a Transformation"); desktop control was declined in this session. -->
+ArcGIS Pro captures (October 21, Pro 3.7.1 at 175 %): the Project tool's transformation list and Map Properties > Transformation, from C:\Ames\Week11\Week11.aprx. -->

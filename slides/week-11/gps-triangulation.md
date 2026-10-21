@@ -457,7 +457,7 @@ A modern receiver uses **all of them at once**: more satellites, better geometry
 section { font-size: 25px; }
 </style>
 
-![bg right:40% w:96%](images/crs-registration-byu.png)
+![bg right:46% w:98%](images/gps-pro-xy-table-to-point.png)
 
 - A plain GPS fix is in **WGS 1984**; a TURN or OPUS solution comes back in **NAD 1983 (2011)**
 - At BYU the two differ by about **1.2 m**: nothing for a trail map, everything for a survey
@@ -466,7 +466,7 @@ section { font-size: 25px; }
 
 <!-- This is Tuesday's lesson arriving from the field. The 1.2 m is ArcGIS Pro's WGS_1984_(ITRF08)_To_NAD_1983_2011 at BYU (tools/week11_arcgis_numbers.json); Esri's own support note puts the WGS 84 / NAD 83 gap at about a meter, and it grows a little every year because NAD 83 is fixed to the North American plate and WGS 84 is not. The map is Tuesday's: a wrong datum label puts BYU 64 m off for NAD 27; for WGS 84 against NAD 83 the same mistake costs about a meter. -->
 
-<!-- TODO(capture): an ArcGIS Pro capture of XY Table To Point with C:\Ames\Week11\gps_points.csv as input and GCS WGS 1984 as the coordinate system. Desktop control was declined on October 20, so the slide uses Tuesday's registration map. -->
+<!-- The capture is XY Table To Point in ArcGIS Pro 3.7.1 on a two-row CSV of receiver fixes (Name, Latitude, Longitude): it finds the Longitude and Latitude columns by itself and defaults to GCS_WGS_1984. That default is right for a plain GPS fix and wrong for a TURN or OPUS solution, which is NAD 1983 (2011); change it before you run, then Project to the analysis system. -->
 
 ---
 
@@ -506,4 +506,4 @@ section { font-size: 25px; }
 
 RESOLVED: title is "GPS and Trilateration" (file name kept so the link survives); the "CCE 214 Geomatics" subtitle is gone; the travel time is 0.0674 s (20,206 km), not 0.674 s; the Air Force One activity is a set-up procedure for any room instead of one classroom's measurements; the scanned DOP drawings of unknown origin and the DGPS diagram with the mislabeled correction are replaced by computed figures (tools/week11_gps_figures.py); the error table is rewritten around the two numbers gps.gov publishes, since the per-source table circulating online is uncited; new slides cover dual-frequency ionospheric correction, multipath mitigation, reading DOP, SBAS/RTK/network RTK (TURN)/PPP/OPUS, the other GNSS, and which datum a receiver reports; selective availability is updated (2000 turn-off, 2007 GPS III decision, jamming and spoofing today). Facts and URLs were checked on October 20, 2026; gps.gov moved its pages in 2026 and the old /systems/gps/ URLs are 404.
 
-STILL OWED: an ArcGIS Pro capture of XY Table To Point (TODO on the datum slide). The selective-availability chart was prepared by a government contractor (Overlook Systems) for the GPS Support Center; it is credited in the notes, but its public-domain status is not stated on the archive page. -->
+ArcGIS Pro capture (October 21): XY Table To Point on C:\Ames\Week11\gps_points.csv. The selective-availability chart was prepared by a government contractor (Overlook Systems) for the GPS Support Center; it is credited in the notes, but its public-domain status is not stated on the archive page. -->
