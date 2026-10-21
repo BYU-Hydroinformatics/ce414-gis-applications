@@ -1,16 +1,19 @@
 r"""Lab 11 example layouts, rendered by ArcGIS Pro (arcpy.mp) from run_model.py's reference outputs in
-C:\Ames\Lab11\ref\Ref.gdb (run run_model.py first). Map 1 is the baseline route with the cost surface
-as an inset ("virtual terrain"); Map 2 adds the page's example personal run (BYU ID ending 89,
-Line_Weight 1.09) and the Line_Weight 0 run. Reuses the Lab 5 layout helpers.
+C:\Ames\Lab11\ref\Ref.gdb (run run_model.py first). Map 1 is the baseline: the 4 and 8 minute service
+areas, the blocks outside 4 minutes and the stations. Map 2 is the straight-line contrast: the 3.75 km
+buffer beside the 4 minute network area, with the blocks the buffer counts as covered but the roads
+do not. Reuses the Lab 5 layout helpers.
 
     python build_figures.py
-Writes docs/assignments/lab-11/images/lab11-example-map-baseline.png and -scenario.png, and prints
+Writes docs/assignments/lab-11/images/lab11-example-map-baseline.png and -crow.png, and prints
 every number the layouts state.   ArcGIS Pro Python.
 """
 import importlib.util
-import math
+import json
 import os
 import pathlib
+import urllib.parse
+import urllib.request
 
 import arcpy
 
@@ -27,28 +30,30 @@ APRX = r"C:\Ames\Lab11\Lab11_Figures.aprx"
 FIG = r"C:\Ames\Lab11\fig.gdb"   # the figure's own data, so it never writes into Ref.gdb
 UTM = arcpy.SpatialReference(26912)
 rgb = bf.rgb
-DIGITS = 89
-LW = round(0.005 * DIGITS, 3)
-
-
-def length_km(fc):
-    return sum(r[0] for r in arcpy.da.SearchCursor(os.path.join(G, fc), ["SHAPE@LENGTH"])) / 1000
+CK = json.loads((HERE / "check_values.json").read_text())
+CK["sensitivity"] = json.load(open(rm.sensitivity_path(str(HERE), "12")))  # private repo
+UGRC = "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services"
 
 
 def prep():
     rm.setup()
-    arcpy.env.workspace = os.path.join(r"C:\Ames\Lab11", "fig.gdb")
-    if not arcpy.Exists(arcpy.env.workspace):
-        arcpy.management.CreateFileGDB(r"C:\Ames\Lab11", "fig.gdb")
-    tag = f"p{DIGITS:02d}"   # written by run_model.py personal; Map 2 waits for it
-    ep = os.path.join(SRC, "Endpoints")
-    xy = {r[0]: r[1] for r in arcpy.da.SearchCursor(ep, ["Role", "SHAPE@XY"])}
-    arcpy.management.CreateFeatureclass(FIG, "Straight_Line", "POLYLINE", spatial_reference=UTM)
-    with arcpy.da.InsertCursor(os.path.join(FIG, "Straight_Line"), ["SHAPE@"]) as cur:
-        cur.insertRow([arcpy.Polyline(arcpy.Array([arcpy.Point(*xy["Source"]), arcpy.Point(*xy["Destination"])]), UTM)])
-    mine = length_km(f"Route_{tag}") if arcpy.Exists(os.path.join(G, f"Route_{tag}")) else None
-    return {"base": length_km("Route_base"), "mine": mine, "l0": length_km("Route_line0"),
-            "straight": math.dist(xy["Source"], xy["Destination"]) / 1000, "tag": tag}
+    arcpy.env.workspace = FIG
+    if not arcpy.Exists(FIG):
+        arcpy.management.CreateFileGDB(os.path.dirname(FIG), os.path.basename(FIG))
+    if not arcpy.Exists(os.path.join(FIG, "Utah_County")):
+        q = urllib.parse.urlencode({"where": "NAME = 'UTAH'", "outFields": "NAME,FIPS", "returnGeometry": "true", "outSR": 26912, "f": "json"})
+        with urllib.request.urlopen(f"{UGRC}/UtahCountyBoundaries/FeatureServer/0/query", q.encode(), timeout=120) as r:
+            jp = os.path.join(os.path.dirname(FIG), "county.json"); open(jp, "w").write(r.read().decode())
+        arcpy.conversion.JSONToFeatures(jp, os.path.join(FIG, "Utah_County"))
+    # blocks the buffer counts as covered but the network does not: unserved by the roads, center inside the buffer
+    lyr = arcpy.management.MakeFeatureLayer(os.path.join(G, "Unserved_base"), "ub")
+    arcpy.management.SelectLayerByLocation(lyr, "HAVE_THEIR_CENTER_IN", os.path.join(G, "Crow_base"))
+    arcpy.management.CopyFeatures(lyr, os.path.join(FIG, "Crow_Only"))
+    pop = int(sum(r[0] or 0 for r in arcpy.da.SearchCursor(os.path.join(FIG, "Crow_Only"), ["PP_TOTAL"])))
+    n = lambda fc, where: int(arcpy.management.GetCount(arcpy.management.MakeFeatureLayer(fc, "n_" + os.path.basename(fc), where))[0])
+    return {"crow_only_people": pop, "crow_only_blocks": int(arcpy.management.GetCount(os.path.join(FIG, "Crow_Only"))[0]),
+            "crow_only_populated": n(os.path.join(FIG, "Crow_Only"), "PP_TOTAL > 0"),
+            "unserved_populated": n(os.path.join(G, "Unserved_base"), "PP_TOTAL > 0")}
 
 
 def project():
@@ -66,9 +71,13 @@ def add(m, path, name):
     return lyr
 
 
-def line(m, path, name, color, width, dashed=False):
+def poly(m, path, name, fill, outline, width, transparency=0, dashed=False, where=None):
     lyr = add(m, path, name)
-    sym = lyr.symbology; sym.renderer.symbol.color = color; sym.renderer.symbol.size = width; lyr.symbology = sym
+    if where:
+        lyr.definitionQuery = where
+    sym = lyr.symbology; s = sym.renderer.symbol
+    s.color = fill; s.outlineColor = outline; s.outlineWidth = width
+    lyr.symbology = sym; lyr.transparency = transparency
     if dashed:
         d = lyr.getDefinition("V3")
         for sl in d.renderer.symbol.symbol.symbolLayers:
@@ -79,30 +88,35 @@ def line(m, path, name, color, width, dashed=False):
     return lyr
 
 
-def poly(m, path, name, fill, outline, width, transparency=0):
-    lyr = add(m, path, name)
-    sym = lyr.symbology; s = sym.renderer.symbol
-    s.color = fill; s.outlineColor = outline; s.outlineWidth = width
-    lyr.symbology = sym; lyr.transparency = transparency
+def rings(m, path, name4, name8):
+    """The two-cutoff service area, one color per ring (ToBreak 4 and 8)."""
+    lyr = add(m, path, "rings")
+    sym = lyr.symbology
+    sym.updateRenderer("UniqueValueRenderer")
+    sym.renderer.fields = ["ToBreak"]
+    for grp in sym.renderer.groups:
+        for it in grp.items:
+            v = float(it.values[0][0])
+            it.label = name4 if v <= 4 else name8
+            it.symbol.color = rgb(30, 90, 200, 100) if v <= 4 else rgb(120, 170, 240, 100)
+            it.symbol.outlineColor = rgb(255, 255, 255, 60); it.symbol.outlineWidth = 0.4
+    lyr.symbology = sym
+    lyr.name = "Drive time from the nearest fire station"
+    d = lyr.getDefinition("V3")
+    for grp in d.renderer.groups:
+        grp.heading = ""
+    lyr.setDefinition(d)
     return lyr
 
 
-def endpoints(m):
-    lyr = add(m, os.path.join(SRC, "Endpoints"), "Substations: source (Spanish Fork Canyon) and destination (Bluffdale)")
+def stations(m):
+    lyr = add(m, rm.STATIONS, "Fire stations (42)")
     sym = lyr.symbology; s = sym.renderer.symbol
-    s.applySymbolFromGallery("Square 3"); s.color = rgb(255, 0, 0); s.size = 11; lyr.symbology = sym
+    s.applySymbolFromGallery("Circle 3"); s.color = rgb(220, 0, 0); s.size = 9; lyr.symbology = sym
     return lyr
 
 
-def base_layers(m):
-    poly(m, os.path.join(SRC, "Cities"), "City limits", rgb(255, 255, 255, 0), rgb(255, 190, 120), 0.8)
-    poly(m, os.path.join(G, "Major_Lakes"), "Lakes and marshes over 1 sq km (barrier)", rgb(70, 110, 200, 60), rgb(200, 220, 255), 0.8)
-    line(m, os.path.join(G, "Major_Roads"), "Major roads", rgb(200, 200, 200), 0.8)
-    line(m, os.path.join(G, "Existing_Lines"), "Existing transmission lines (46-345 kV)", rgb(255, 230, 0), 1.0)
-    line(m, os.path.join(FIG, "Straight_Line"), "Straight line between the substations", rgb(225, 225, 225), 1.4, dashed=True)
-
-
-def layout(p, lname, m, title, subtitle, notes, fname, inset=None, inset_caption=None):
+def layout(p, lname, m, title, subtitle, notes, fname):
     lyt = p.createLayout(8.5, 11, "INCH", lname)
     p.createPredefinedGraphicElement(lyt, bf.poly(0.35, 0.35, 8.15, 10.65), "RECTANGLE", None, "Neatline")
     for txt, y, sz, nm in ((title, 10.28, 17, "Title"), (subtitle, 9.98, 9, "Subtitle")):
@@ -112,19 +126,13 @@ def layout(p, lname, m, title, subtitle, notes, fname, inset=None, inset_caption
         except Exception as ex:
             print("anchor:", ex)
     mf = lyt.createMapFrame(bf.poly(0.5, 3.35, 8.0, 9.75), m, "Main")
-    ext = arcpy.Describe(os.path.join(FIG, "Straight_Line")).extent
-    pad = 6000
+    ext = arcpy.Describe(os.path.join(G, "Served_rings")).extent
+    pad = 3000
     mf.camera.setExtent(arcpy.Extent(ext.XMin - pad, ext.YMin - pad, ext.XMax + pad, ext.YMax + pad, spatial_reference=UTM))
     style = lambda cls, name: (p.listStyleItems("ArcGIS 2D", cls, name) or [None])[0]
-    lx0 = 0.5
-    if inset is not None:
-        imf = lyt.createMapFrame(bf.poly(0.5, 0.5, 3.0, 3.15), inset, "Inset")
-        imf.camera.setExtent(mf.camera.getExtent())
-        p.createTextElement(lyt, bf.poly(0.5, 3.17, 3.3, 3.33), "POLYGON", inset_caption, 6.5, None, "InsetCaption")
-        lx0 = 3.15
-    leg = lyt.createMapSurroundElement(bf.poly(lx0, 1.4, 8.0, 3.3), "LEGEND", mf, style("LEGEND", "Legend 1"), "Legend")
+    leg = lyt.createMapSurroundElement(bf.poly(0.5, 1.4, 8.0, 3.3), "LEGEND", mf, style("LEGEND", "Legend 1"), "Legend")
     for it in leg.items:
-        if any(k in it.name for k in ("Imagery", "World", "Reference")):
+        if any(k in it.name for k in ("Imagery", "World", "Reference", "Utah County")):
             leg.removeItem(it)
     leg.title = ""; leg.fittingStrategy = "AdjustColumnsAndFont"
     if leg.isOverflowing:
@@ -141,57 +149,54 @@ def layout(p, lname, m, title, subtitle, notes, fname, inset=None, inset_caption
         sd.subdivisions = 1; sd.divisionsBeforeZero = 0; sd.labelFrequency = "Divisions"
         sb.setDefinition(sd)
     except Exception as ex:
-        print("scale:", ex)
-    p.createPredefinedGraphicElement(lyt, bf.poly(lx0, 0.5, 8.0, 1.3), "RECTANGLE", None, "Box")
-    p.createTextElement(lyt, bf.poly(lx0 + 0.07, 0.53, 7.95, 1.27), "POLYGON", "\n".join(notes), 6.3, None, "Notes")
-    lyt.exportToPNG(str(IMG / fname), resolution=150)
-    print(fname)
+        print("scale bar:", ex)
+    p.createPredefinedGraphicElement(lyt, bf.poly(0.5, 0.5, 8.0, 1.3), "RECTANGLE", None, "TextBoxFrame")
+    p.createTextElement(lyt, bf.poly(0.57, 0.53, 7.95, 1.27), "POLYGON", notes[0] + "\n" + " ".join(notes[1:]), 6.5, None, "Notes")
+    out = IMG / fname
+    lyt.exportToPNG(str(out), resolution=150)
+    print("exported", out)
 
 
-def main():
-    n = prep()
-    for k, v in n.items():
-        print(k, v)
-    p = project()
-    common = ["Example map, CE 414, October 2026. Projection: NAD 1983 UTM zone 12N; 30 m cells.",
-              "Elevation: USGS 3DEP. Roads, lakes, streams, city limits, transmission lines and substations:",
-              "Utah Geospatial Resource Center, read October 2026. Imagery: Esri, Earthstar Geographics."]
-    m = bf.new_map(p, "Baseline", "Imagery")
-    base_layers(m)
-    line(m, os.path.join(G, "Route_base"), f"Least-cost route, weights 1 and 1 ({n['base']:.2f} km)", rgb(255, 40, 40), 3.0)
-    endpoints(m)
-    inset = bf.new_map(p, "Cost surface")
-    cs = add(inset, os.path.join(G, "Cost_base"), "Cost surface")
-    sym = cs.symbology
-    sym.updateColorizer("RasterStretchColorizer")
-    try:
-        sym.colorizer.colorRamp = p.listColorRamps("Magma")[0]
-    except Exception as ex:
-        print("ramp:", ex)
-    cs.symbology = sym
-    line(inset, os.path.join(G, "Route_base"), "Route", rgb(0, 255, 255), 1.5)
-    layout(p, "Baseline", m,
-           "A Least-Cost Route for a Power Line, Spanish Fork Canyon to Bluffdale",
-           "Cost = slope + roads + cities + existing lines (each scored 1 to 10, weights 1) + 10 per river cell; lakes are barriers",
-           [f"Result: {n['base']:.2f} km against {n['straight']:.2f} km in a straight line; nearly all of it beside existing lines."] + common,
-           "lab11-example-map-baseline.png", inset, "Inset: the cost surface (dark = cheap) and the route")
-    if n["mine"] is None:
-        print("Route_" + n["tag"] + " not there yet: Map 2 skipped")
-        p.save()
-        return
-    m2 = bf.new_map(p, "Scenario", "Imagery")
-    base_layers(m2)
-    line(m2, os.path.join(G, "Route_base"), f"Baseline, Line_Weight 1 ({n['base']:.2f} km)", rgb(255, 40, 40), 2.2)
-    line(m2, os.path.join(G, f"Route_{n['tag']}"), f"Example personal run, Line_Weight {LW:.3f} ({n['mine']:.2f} km)", rgb(0, 230, 255), 2.2)
-    line(m2, os.path.join(G, "Route_line0"), f"Line_Weight 0: no reward for existing lines ({n['l0']:.2f} km)", rgb(200, 90, 255), 2.2)
-    endpoints(m2)
-    layout(p, "Scenario", m2,
-           "What Moves the Route? Three Line Weights",
-           f"Changed: the weight on the existing-line score; slope weight 1 throughout. Example BYU ID ending {DIGITS}: Line_Weight {LW:.3f}",
-           [f"Result: at Line_Weight 0 the route leaves the existing lines and runs {n['l0']:.2f} km; at {LW:.3f} it moves partway."] + common,
-           "lab11-example-map-scenario.png")
-    p.save()
+def layouts(p, extra):
+    b, c = CK["baseline"], CK["crow_default"]
+    pop = CK["inputs"]["population"]
+    r8 = next(r for r in CK["sensitivity"]["cutoffs"] if r["cutoffs"][0] == 8)
+    common = ["Map by Dan Ames, CE 414, October 2026. Projection: NAD 1983 UTM zone 12N.",
+              "Data: UGRC Utah Street Network (roads through September 2026; travel minutes are UGRC's, for typical traffic, not",
+              "emergency driving), UGRC Fire Stations (last update September 2022), 2020 Census blocks (UGRC); imagery basemap by Esri."]
+    # Map 1
+    m = bf.new_map(p, "Baseline map", "Imagery")
+    poly(m, os.path.join("C:\\Ames\\Lab11\\fig.gdb", "Utah_County"), "Utah County", rgb(0, 0, 0, 0), rgb(255, 255, 255), 1.2)
+    poly(m, os.path.join(G, "Unserved_base"), f"Populated blocks whose center is more than 4 minutes from a station ({extra['unserved_populated']:,} of {b['blocks']:,} blocks; {b['population']:,} people)",
+         rgb(255, 140, 0, 90), rgb(255, 140, 0, 160), 0.4, where="PP_TOTAL > 0")
+    rings(m, os.path.join(G, "Served_rings"), "Within 4 minutes", "4 to 8 minutes")
+    stations(m)
+    layout(p, "Baseline map", m, "Fire Response Coverage in Utah County",
+           f"Baseline: 4 minutes of driving from the 42 fire stations, along the road network\n"
+           f"{b['population']:,} of {pop:,} residents ({b['pct_outside']} %) live in blocks whose center is outside that reach",
+           [f"Result: the 4-minute service area covers {b['area_km2']:,.1f} sq km and the 8-minute area {r8['area_km2']:,.1f} sq km; "
+            f"{r8['population']:,} people ({r8['pct_outside']} %) are outside 8 minutes."] + common,
+           "lab11-example-map-baseline.png")
+    # Map 2
+    m2 = bf.new_map(p, "Crow map", "Imagery")
+    poly(m2, os.path.join("C:\\Ames\\Lab11\\fig.gdb", "Utah_County"), "Utah County", rgb(0, 0, 0, 0), rgb(255, 255, 255), 1.2)
+    poly(m2, os.path.join(G, "Served_base"), "Within 4 minutes along the roads", rgb(30, 90, 200, 100), rgb(255, 255, 255, 60), 0.4)
+    poly(m2, os.path.join(G, "Crow_base"), "Within 3.75 km in a straight line (4 minutes at 35 mph)", rgb(0, 0, 0, 0), rgb(255, 230, 0), 1.8, dashed=True)
+    poly(m2, os.path.join("C:\\Ames\\Lab11\\fig.gdb", "Crow_Only"),
+         f"Blocks the buffer counts as covered but the roads do not ({extra['crow_only_blocks']:,} blocks, {extra['crow_only_people']:,} people)",
+         rgb(255, 140, 0, 110), rgb(255, 140, 0), 0.5)
+    stations(m2)
+    layout(p, "Crow map", m2, "Straight-Line Distance versus Network Distance",
+           f"Changed: the same 4 minutes measured as the crow flies (3.75 km) instead of along the roads\n"
+           f"Buffer: {c['population']:,} people outside ({c['pct_outside']} %); network: {b['population']:,} outside ({b['pct_outside']} %)",
+           [f"Result: the buffer covers {c['area_km2']:,.1f} sq km against the network's {b['area_km2']:,.1f}; "
+            f"{extra['crow_only_people']:,} people live in blocks the buffer reaches that four minutes of driving does not."] + common,
+           "lab11-example-map-crow.png")
 
 
 if __name__ == "__main__":
-    main()
+    extra = prep()
+    print(extra)
+    p = project()
+    layouts(p, extra)
+    p.save()

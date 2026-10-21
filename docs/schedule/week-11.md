@@ -1,11 +1,11 @@
-# Week 11: Coordinate Systems and GPS
+# Week 11: Least Cost Path
 
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Coordinate Systems and Projections](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/coordinate-systems-projections.html) — A refresher: datums, projections, and coordinate systems as decisions — distortion, units, and choosing a CRS for analysis.
-- **Thursday** — [GPS and Positioning](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/gps-triangulation.html) — A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.
+- **Tuesday** — [Least Cost Path Analysis, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path.html) — Cost surfaces and the cheapest route across them, with a power-line corridor as the example.
+- **Thursday** — [Least Cost Path Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path-b.html) — ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 10's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -17,8 +17,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Projections and Datums](../quizzes/coordinate-systems/index.html) — Five questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting.
-- [Where Am I?](../quizzes/gps/index.html) — Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.
+- [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one.
+- [What Moved the Line?](../quizzes/cost-paths/index.html) — Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.
 
 </div>
 
@@ -26,7 +26,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 ## :material-flask: Lab Assignment
 
-[Lab 10 — Avalanche Hazard](../assignments/lab-10/README.md)
+[Lab 10 — Least Cost Path Power Line Analysis](../assignments/lab-10/README.md)
 
 Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
@@ -36,9 +36,7 @@ Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
 
 ## :material-book-open-page-variant: Reading Quiz
 
-Read Chapters 3 and 5 of *GIS Fundamentals*, 7th edition (Bolstad).
-
-**Quiz 9 — Coordinate Systems and GPS** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
+**Quiz 9 — Least Cost Paths** on Learning Suite: open book, done independently. Due **Saturday at 11:59 pm** — 20 points.
 
 </div>
 

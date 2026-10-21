@@ -1,91 +1,136 @@
 {
- "Major_Roads": 1377,
- "Major_Lakes": 7,
- "Major_Streams": 319,
- "Existing_Lines": 241,
+ "arcgis_pro": "3.7.1",
  "inputs": {
-  "Roads": 8937,
-  "Lakes": 967,
-  "Streams": 4086,
-  "Cities": 34,
-  "Power_Lines": 292,
-  "Endpoints": 2
+  "Roads": 41460,
+  "Junctions": 33872,
+  "Fire_Stations": 42,
+  "Census_Blocks": 10092,
+  "population": 659399,
+  "network_attributes": [
+   [
+    "TravelMinutes",
+    "Cost",
+    "Minutes"
+   ],
+   [
+    "Length",
+    "Cost",
+    "Meters"
+   ]
+  ],
+  "travel_modes": []
  },
- "dem": {
-  "cols": 1719,
-  "rows": 2124,
-  "cell": 30.0,
-  "min": 1314.9735107422,
-  "max": 3568.3735351562
+ "one_way": {
+  "edges": 590,
+  "example": {
+   "FULLNAME": "I-15 NB FWY",
+   "ONEWAY": "1",
+   "F_T_IMP_MIN": 3.0419,
+   "T_F_IMP_MIN": 304.1884,
+   "SPEED_LMT": 65,
+   "length_m": 4418.5,
+   "ratio": 100.0
+  },
+  "road_km": 7465.4
  },
- "slope": {
-  "min": 0.0,
-  "max": 71.81330871582031,
-  "mean": 11.2132
+ "stations": {
+  "EMS_Y": 34,
+  "EMS_N": 3
  },
- "Road_Distance": {
-  "min": 0.0,
-  "max": 24515.212890625,
-  "mean": 6202.1855
+ "blocks": {
+  "zero_population": 2125,
+  "urban": 0
  },
- "City_Distance": {
-  "min": 0.0,
-  "max": 14923.39453125,
-  "mean": 3147.5289
+ "baseline": {
+  "cutoffs": [
+   4.0
+  ],
+  "located": 42,
+  "not_located": 0,
+  "rings_km2": [
+   [
+    0.0,
+    4.0,
+    194.85
+   ]
+  ],
+  "area_km2": 194.85,
+  "seconds": 11.1,
+  "population": 379054,
+  "blocks": 6341,
+  "pct_outside": 57.5
  },
- "Line_Distance": {
-  "min": 0.0,
-  "max": 15571.271484375,
-  "mean": 3115.888
+ "crow_default": {
+  "buffer_km": 3.75,
+  "area_km2": 1070.61,
+  "population": 23203,
+  "blocks": 1365,
+  "pct_outside": 3.5
  },
- "Slope_Score": {
-  "1": 1848647,
-  "2": 324957,
-  "4": 259000,
-  "6": 249393,
-  "8": 501985,
-  "10": 459492
+ "rings_4_8": {
+  "cutoffs": [
+   4,
+   8
+  ],
+  "located": 42,
+  "not_located": 0,
+  "rings_km2": [
+   [
+    0.0,
+    4.0,
+    194.85
+   ],
+   [
+    4.0,
+    8.0,
+    363.13
+   ]
+  ],
+  "area_km2": 557.98,
+  "seconds": 11.9
  },
- "Road_Score": {
-  "1": 646624,
-  "3": 374134,
-  "6": 835970,
-  "10": 1794428
- },
- "City_Score": {
-  "1": 1055936,
-  "2": 198582,
-  "4": 228810,
-  "6": 254776,
-  "8": 293203,
-  "10": 1619849
- },
- "Line_Score": {
-  "1": 614688,
-  "5": 1084196,
-  "10": 1952272
- },
- "River_Cells": 9713,
- "straight_km": 52.79,
- "base": {
-  "length_km": 56.09,
-  "total_cost": 744018.2,
-  "river_crossings": 4,
-  "pct_within_1km_road": 92.8,
-  "pct_within_500m_line": 99.7,
-  "pct_city_score_10": 100.0,
-  "slope_weight": 1.0,
-  "line_weight": 1.0,
-  "barrier": true
- },
- "Cost_base": {
-  "min": 4.0,
-  "max": 48.0,
-  "mean": 23.6865
- },
- "Acc_base": {
-  "min": 0.0,
-  "max": 1116187.375,
-  "mean": 566466.7829
+ "examples": {
+  "89": {
+   "cutoffs": [
+    7.56
+   ],
+   "located": 42,
+   "not_located": 0,
+   "rings_km2": [
+    [
+     0.0,
+     7.56,
+     519.07
+    ]
+   ],
+   "area_km2": 519.07,
+   "seconds": 9.8,
+   "population": 90929,
+   "blocks": 2537,
+   "pct_outside": 13.8,
+   "digits": 89,
+   "cutoff": 7.56
+  },
+  "02": {
+   "cutoffs": [
+    4.08
+   ],
+   "located": 42,
+   "not_located": 0,
+   "rings_km2": [
+    [
+     0.0,
+     4.08,
+     201.5
+    ]
+   ],
+   "area_km2": 201.5,
+   "seconds": 10.3,
+   "population": 370716,
+   "blocks": 6247,
+   "pct_outside": 56.2,
+   "digits": 2,
+   "cutoff": 4.08
+  }
  }
 }

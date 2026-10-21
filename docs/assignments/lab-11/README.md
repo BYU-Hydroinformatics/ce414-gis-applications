@@ -1,47 +1,24 @@
-# Lab 11: Least Cost Path Power Line Analysis
+# Lab 11: Fire Response Coverage, a Network Analysis
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Routing a high-voltage line from Spanish Fork Canyon to Bluffdale, and finding out which decisions move it*
+*Who in Utah County lives more than four minutes' drive from a fire station, and how much does that answer depend on how you measure distance?*
 
-<!-- **Revision notes.** Rebuilt October 9, 2026 from the September migration of the Word handout,
-reviewed as docs/assignments/lab-11/draft.md and promoted the same day.
-The plan, the
-decisions and every measured number are in `tools/lab11/PLAN.md` and
-`tools/lab11/check_values.json`.
+<!-- **Revision notes.** New lab, drafted October 10, 2026 from `tools/lab11/PLAN.md` (nine
+decisions accepted by the instructor the same day), reviewed as docs/assignments/lab-11/draft.md,
+GUI-built and promoted the same day. Every number on this page is from
+`tools/lab11/check_values.json` (`run_model.py`, ArcGIS Pro 3.7.1), measured on the hosted package.
+Figures 0-8 and Figure C are from the GUI build of October 10, 2026 (ArcGIS Pro 3.7.1 at 175 %,
+`C:\Ames\Lab11GUI`, `tools/lab11/gui_project.py`, verified by `check_gui.py`); Figures A, B, 9 and 10
+are generated (`make_svgs.py`, `figure_b.py`, `build_figures.py`). The GUI build changed the model
+in one place: each branch's Select Layer By Location now works on its own Make Feature Layer
+(`Blocks_Net`, `Blocks_Crow`) from the dataset. Two selections on one map layer gave the buffer's
+blocks to both branches in a tool-dialog run, and a precondition did not fix it; two Selects on
+the dataset path collided on the derived layer name and the dialog run failed. -->
 
-*Changes to what the lab asks students to do:* one hosted data package (`lab11-power-line.zip`,
-18.0 MB) instead of six downloads, a county mosaic and a county buffer, clip and intersect; the
-endpoints are two real substations from UGRC's transmission layer, not typed coordinates; the
-buffers and Multiple Ring Buffer are replaced by straight-line distance rasters (Distance
-Accumulation with no cost raster) reclassified to scores; terrain enters as **slope**, not raw
-elevation; the cost surface is a weighted **sum** with two model parameters (**Slope_Weight**,
-**Line_Weight**) instead of a product; lakes and marshes over 1 km² are the only hard barrier; a Step 9 sensitivity
-table with a personal line weight from the BYU ID; two maps; the toolbox (`Lab11.atbx`) is
-uploaded with the report; "where the route is unrealistic" must name two places on the student's
-own route; rubric in five parts of ten, total 50.
-
-*Corrections:* the deprecated Cost Distance / Cost Back Link / Cost Path / Raster to Polyline chain
-is replaced by Distance Accumulation and Optimal Path As Line (ArcGIS Pro 3.7.1 shows Cost Distance's
-own deprecation notice); "cell size 100" with no unit is now 30 m in NAD 1983 UTM Zone 12N with the
-extent, snap raster and cell size all set; the road corridor was an absolute barrier (NoData outside
-2 km) while everything else was a cost, without saying so — now one barrier, stated and explained;
-"lower elevations are more suitable" is replaced by slope; "network analysis" (this is a raster cost
-analysis); the "new NSA Data Center" is "the data center at Bluffdale"; the field names `AreaSqKm`,
-`IsMajor`, `DOT_FCLASS` and `LAYER` and every SQL value are verified against the package; the dead
-Resources for the Future link is removed; the rubric's untotaled rows are replaced.
-
-*Figures:* Figure A and the three tool icons are generated SVG (`tools/lab11/make_svgs.py`).
-Figure C and Figures 0–8 come from the GUI build of October 9, 2026 (ArcGIS Pro 3.7.1 at 175 %,
-`C:\Ames\Lab11GUI`, `tools/lab11/gui_project.py`): the model was built from this page, run inside
-ModelBuilder and from its tool dialog, and every check value in Steps 1–8 matched
-(`tools/lab11/check_gui.py`). The GUI build changed the page in three places: the endpoints are
-split by two Selects in the model, not definition-query layers; the barrier is not a dialog
-parameter (a Select output cannot be cleared from the dialog), so Step 9 no longer offers a
-no-barrier run; Reclassify rows are typed, since the table is empty before the model runs. Figure B and the example maps are drawn from the package and the reference run
-(tools/lab11/figure_b.py, build_figures.py). The Word-era images were deleted on promotion. -->
+<!-- PILOT (no-GUI, 2026-10-10, C:\Ames\Pilot12\PILOT_NOTES.md): all 45 check values reproduced from the zip alone with the geoprocessing tools and the page's settings; the personal formula is monotone and every ending differs (00 379,054 ... 99 70,267). Fixed from its 18 findings: the 3.7.1 dialog labels Network Data Source / Layer Name and Travel Mode "Custom"; Search Tolerance is under Advanced; Cutoffs is a multivalue list (one value per row), so "4 8" became "add a row with 8"; Shape_Area quoted to the decimal; a Make Feature Layer in front of each Select Layer By Location (first a precondition, which the GUI build showed does not order a dialog run; see the revision notes), since a selection belongs to the layer; the two-places item was scored twice (write-up 3 + sensitivity 2), so the sensitivity bullet is now the why; the Map 2 selection has a published check value (4,976 blocks, 355,851 people); city labels added to Map 1's deliverable; the _Rings run named so its eight-minute counts are not pasted as the headline; the buffer-area column in the Step 9 table; the 00/50/75 cutoff coincidences; the solve time. Figure B before Figure A is the repo's convention (Lab 10). -->
 
 > [!TIP]
 > **Start from the report template.** [`lab11-report-template.docx`](lab11-report-template.docx)
@@ -51,107 +28,109 @@ no-barrier run; Reclassify rows are typed, since the table is empty before the m
 > every section, you will not have left a graded item out.
 
 > [!NOTE]
-> **This is a one-week lab**, due Saturday of Week 12. Everything that takes preparation is done
-> for you and hosted: you build one model, run it six times, and make two maps.
-
-<!-- PILOT (no-GUI, 2026-10-09, C:\Ames\Pilot11\PILOT_NOTES.md): all 39 check values reproduced from the zip alone. Fixed from its findings: personal Line_Weight formula changed to 0.005 x digits (above about 0.6 the route stays within 300 m of the baseline: 1.09 moved 6 m, 0.8 199 m, 0.4 2,542 m, 0.22 2,905 m); maps now use the downloaded layers with definition queries, since a dialog run deletes the Select outputs; the major lakes are Utah Lake, Deer Creek Reservoir, White Lake and four unnamed swamp/marsh waterbodies (not five unnamed, not all open water); four -> six Selects in Figure C caption and deliverables; the crossing caveat dropped (Pairwise Intersect gives exactly 4 single points for every run); Week 12 deck link qualified (the deck uses an earlier 100 m setup, 68.86 km); orphan blank lines, Major_Streams_L0 in the naming example, pyramids prompt and Figure 8 alt text fixed. -->
+> **This is a one-week lab**, due Saturday of Week 12. Everything that
+> takes preparation is done for you and hosted, including the road network: you build one model,
+> run it six times, and make two maps.
 
 ## Background
 
-Aging infrastructure in the United States, and new demand on top of it, means new transmission
-lines. Before a utility can build one, it has to find a route for it. The placement of a utility
-line is a hard modeling problem. Left to itself, the cheapest path between two points is a straight
-line, but engineering limits and terrain make a straight line rare, and public opinion matters as
-much as either. Opposition summed up as NIMBY (Not In My Back Yard) and BANANA (Build Absolutely
-Nothing Anywhere Near Anything) can force a utility to rethink a route and the process that chose
-it (Vajjhala and Fischbeck, 2006).
+When a fire is reported, the question that matters is not how far away the nearest engine is but
+how long it takes to arrive. The standard that career fire departments in the United States are
+measured against, NFPA 1710, sets a **travel time** for the first engine of **240 seconds**, four
+minutes, at 90 percent of incidents, and 480 seconds for the full first alarm (NFPA, 2020). Travel
+time is the part of the response the road network controls: it starts when the engine leaves the
+station and ends when it arrives, and it does not include the dispatch or the turnout.
+<!-- VERIFY against the current edition of NFPA 1710 (secondary sources read October 9, 2026 agree on
+240 s / 480 s travel time at the 90th percentile); the reference links NFPA's own page. -->
 
-A GIS professional on a siting project is asked to adjust the model's inputs again and again and to
-produce paths that weigh many factors at once (Meehan, 2007). That is why the
-work belongs in a model: added layers, changed weights and new requirements all change the least
-cost path, and a model can be re-run as many times as it takes to reach a route everyone involved
-can accept. This lab introduces a few of the processes and requirements used to model a least cost
-path for a power line. It does not model the public's behavior; Step 9 asks you what that leaves out.
+Four minutes of driving is not a circle on a map. An engine follows streets, stops where the street
+stops, cannot cross a lake or a freeway without an interchange, and covers a mile of arterial in a
+fraction of the time it takes to wind through a subdivision. The area a station can reach in four
+minutes is an irregular shape that follows the roads, and the people inside it are the people its
+engines can reach in time. The way to find that shape is **network analysis**: distance measured
+along a **network** of connected road segments, each with a cost in minutes, rather than across
+the map.
 
-A least cost path works on a **cost surface**: a raster in which every cell says how expensive it is
-to build across it. You decide what makes a cell expensive — steep ground, distance from a road you
-could build from, nearness to a city, distance from an existing line whose corridor you could share,
-a river to cross — and give each a score. Then ArcGIS Pro accumulates the cost outward from the start
-and walks the cheapest way home from the end.
+This is the third way this course has measured distance, and the three belong side by side:
 
-The route you get is the cheapest route **for the costs you chose**, and nothing more. Every score
-and every weight in this lab is a decision, and several of them are close calls. In Step 9 you will
-vary the weights, see how far the route moves, and use what moves to say which decisions the answer
-really depends on, and which ones hardly matter.
+| Lab | Distance | How it is measured | What it ignores |
+| --- | --- | --- | --- |
+| Lab 1 | **Straight-line** | a buffer around the roads and the stores | that nobody travels in a straight line |
+| Lab 10 | **Cost distance** | accumulated across a raster of cell costs, in any direction | that travel in a vehicle happens on roads |
+| Lab 11 | **Network distance** | along the road segments, each costed in minutes, through the junctions that join them | everything off the road network |
 
-![Shaded relief of the study area, about 52 by 64 km, with Utah Lake and the other lakes and marshes over 1 square kilometer in blue, the existing 46 to 345 kV transmission lines in yellow and the major roads in gray. A green triangle marks the source, the substation at the mouth of Spanish Fork Canyon in the southeast; a red square marks the destination, the substation at Point of the Mountain, Bluffdale, in the northwest. A dashed black line joins them and is labeled 52.79 km straight line; it crosses the east side of Utah Lake.](images/lab11-study-area.png)
+Each is right for its question. A power line crosses country, so Lab 10's cost surface fits it. A
+fire engine does not, so this lab puts the engines on the roads, and in Step 6 it measures the same
+four minutes as a straight-line buffer, the way Lab 1 would have, to see how far wrong that is.
 
-**Figure B.** The study area. The straight line between the substations crosses Utah Lake, a barrier;
-the existing lines and roads run up the valley east of it.
+The road network you will use was built by the Utah Geospatial Resource Center from its statewide
+roads layer. Every segment carries UGRC's estimate of the minutes it takes to drive, in each
+direction, from the posted speed limit and the road class, with surface-street times multiplied by
+1.5 for signals and congestion. That estimate is a model too: it is "typical network travel, and
+not the expedited travel of emergency response vehicles" (UGRC, 2022), so the four-minute area it
+draws is an engine driving like everyone else. Step 9 asks what that leaves out.
+
+![A map of Utah County: the road network in gray with highways darker, the 42 fire stations as red dots strung along the Wasatch Front from Lehi to Santaquin and out to Eagle Mountain and Cedar Fort, and the Census blocks shaded by population density from pale yellow to dark red, densest in Provo, Orem and the cities along I-15; the county outline in black, Utah Lake unshaded in the middle.](images/lab11-study-area.png)
+
+**Figure B.** The study area. Utah County's 42 fire stations, its road network, and where its
+659,399 residents were counted in 2020. Most people live within a few kilometers of a station; the
+question is how many live within four minutes.
 
 > [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one ModelBuilder model that turns slope, roads,
-> cities, existing lines and streams into a cost surface and routes a power line across it; run it
-> from the study area's two substations; test how much the route depends on the weights; and make
-> two maps.
+> **Your job — see the deliverables below.** Build one ModelBuilder model that draws the area
+> within a chosen number of minutes of the fire stations along the road network, counts the people
+> in the Census blocks outside it, and draws the same reach as a straight-line buffer for comparison;
+> run it at four minutes and at your own personal cutoff; test how much the answer depends on the
+> cutoff; and make two maps.
 
 ## Problem Statement
 
-A new high-voltage line is needed from an existing substation at the mouth of Spanish Fork Canyon,
-in the area of the wind park there, to an existing substation at the Point of the Mountain in
-Bluffdale, near the data center at Bluffdale. Both substations are features of the Utah Geospatial
-Resource Center's transmission-line layer. Using an elevation model and the roads, lakes, streams,
-city boundaries and existing power lines between them:
+Utah County's fire departments operate 42 stations, from Lehi to Santaquin and from Cedar Fort to
+the mouth of Provo Canyon. Using UGRC's road network for the county, the station locations and the
+2020 Census blocks:
 
-1. Build a cost surface that scores every 30 m cell on slope, distance to a major road, nearness to
-   a city, distance to an existing line, and whether it is a major stream.
-2. Find the least cost route from the source substation to the destination substation, around the
-   major lakes.
-3. Report its length, its total accumulated cost, and how many major streams it crosses.
-4. Re-run the model with the weights changed, and say what moved the route and why.
+1. Find the area that an engine can reach within **four minutes** of driving from the nearest
+   station, along the roads.
+2. Count the residents who live in Census blocks whose center is outside that area, and say what
+   share of the county that is.
+3. Measure the same four minutes as a **straight-line distance** instead, and compare the two
+   answers.
+4. Re-run the model with the cutoff changed, and say how much the answer depends on the standard.
 
 ## Analysis Considerations
 
 Every one of these is a decision somebody made, and every one of them can change the answer.
 
-- **The endpoints are substations.** `Endpoints` holds two existing substations, copied from UGRC's
-  transmission layer (its object IDs **2185** and **1350**, kept in the field `UGRC_OID`): the
-  **Source** at the mouth of Spanish Fork Canyon (40.0808° N, 111.5837° W) and the **Destination** at
-  the Point of the Mountain, Bluffdale (40.4662° N, 111.9473° W). A new line starts and ends where it
-  can connect to the grid. The straight line between them is **52.79 km**.
-- **Cell size and coordinate system.** **30 m** cells, in **NAD 1983 UTM Zone 12N**, meters, so that
-  every cell is the same size and distances and costs are in meters. The extent, snap raster and cell
-  size of every raster are set from `Elevation.tif`.
-- **Slope, not elevation.** Lower ground is not cheaper to build on; steep ground is more expensive:
-  harder access, harder tower foundations. So terrain enters as **slope in degrees**, scored 1 to 10.
-  Elevation itself is not in the cost.
-- **Four scores, 1 to 10, higher = more expensive.** The class breaks are this lab's choices, not an
-  engineering standard. You will defend or change them in your report.
-
-    | Score | From | 1 (cheap) … 10 (expensive) |
-    | --- | --- | --- |
-    | `Slope_Score` | slope, degrees | 0–5: **1**, 5–10: **2**, 10–15: **4**, 15–20: **6**, 20–30: **8**, over 30: **10** |
-    | `Road_Score` | distance to a major road | within 1 km: **1**, 1–2 km: **3**, 2–5 km: **6**, over 5 km: **10** |
-    | `City_Score` | distance to a city boundary (0 inside a city) | within 1 km: **10**, 1–2 km: **8**, 2–3 km: **6**, 3–4 km: **4**, 4–5 km: **2**, over 5 km: **1** |
-    | `Line_Score` | distance to an existing kV line | within 500 m: **1**, 0.5–2 km: **5**, over 2 km: **10** |
-
-    A road you can build from is cheap access; a city is right-of-way you would have to buy through
-    neighborhoods; an existing line is a corridor you can share.
-- **Equal weights by default.** The cost of a cell is the sum of the four scores, with **Slope_Weight**
-  and **Line_Weight** multiplying the slope and line scores. Both are **1** by default, which says
-  every factor matters equally. Nobody knows that, so the two weights are **model parameters** and
-  Step 9 changes them.
-- **One hard barrier: lakes and marshes over 1 km².** A **barrier** is a cell the route may never enter; a **cost** is a
-  cell it may cross if nothing cheaper exists. Only waterbodies over 1 km² — Utah Lake, Deer Creek
-  Reservoir, White Lake and four unnamed marshes — are barriers. Cities stay a cost, not a barrier: both
-  substations are inside cities, and most of the valley floor between them is municipal.
-- **A major stream adds 10 per cell.** Each cell a major stream passes through adds **10** to the
-  cost, so a route crosses a river where it has to, and does not run along one.
-- **Distances are straight-line.** Distance to a road, a city or a line is measured as the crow
-  flies, not along the ground or a road network.
-- **What the model ignores.** Right-of-way and who owns the land; tower placement and span lengths;
-  line capacity and voltage; existing lines that are full; and public opinion. None of these is in
-  the data, and your report says what each would change.
+- **The network is UGRC's, clipped to Utah County.** It holds **41,460** road segments joined at
+  **33,872** junctions, and two costs: **TravelMinutes**, the default, and **Length** in meters.
+  TravelMinutes is UGRC's estimate for typical traffic. Nothing in it is yours to edit; the
+  decisions below are.
+- **Four minutes, from the facilities outward.** The cutoff is NFPA 1710's first-engine travel time.
+  The service area is drawn **away from** the stations (the direction an engine drives), not toward
+  them. The cutoff is a **model parameter**, and Step 9 changes it.
+- **One-way streets are a penalty, not a wall.** In UGRC's network the wrong direction on a one-way
+  segment costs 100 times the right direction (**590** segments in the county are one-way). An engine
+  with its lights on may legally drive against a one-way street; a 100-times penalty says "almost
+  never", which is one defensible way to model it.
+- **People are counted by block center.** A Census block is "covered" when its center point falls
+  inside the service area, and every one of its residents counts as covered; otherwise none of them
+  do. Blocks are small in the cities (most are a few hundred meters across) and huge in the
+  mountains, where almost nobody lives, so the rule is fair where it matters. **2,125** of the
+  county's **10,092** blocks have no residents at all.
+- **Residents, where they slept on April 1, 2020.** The Census counts people at home. The daytime
+  population of a block, where people work or study, is not in the data.
+- **The straight-line comparison uses the speed limit.** Four minutes at **35 mph** is 2.33 miles,
+  **3.75 km**: the distance a Lab 1 style buffer would use for the same standard. It, too, is a
+  parameter.
+- **Dissolved rings, standard detail.** The service areas from all 42 stations are **dissolved** into
+  one shape per cutoff, so that a block near two stations is not counted twice, and drawn as
+  **rings** when more than one cutoff is given (0–4 minutes, 4–8 minutes). **Standard** polygon
+  detail is the default and is what every check value on this page was measured with.
+- **What the model ignores.** Turnout time and dispatch; the speed an engine actually drives;
+  which stations are staffed around the clock; whether a station has an engine or only an
+  ambulance (**34** of the 42 are marked `EMS` = Y, **3** N, and five say nothing); traffic by time of
+  day; and any station opened since the layer's 2022 update. Your report says what each would
+  change.
 
 ## Data
 
@@ -159,70 +138,78 @@ Every one of these is a decision somebody made, and every one of them can change
 > **Set up your folder before you download anything.** On the lab machines, work on the **D:
 > drive**: one folder for this class named after you, `D:\Smith\`, and one folder per lab inside
 > it, `D:\Smith\Lab11\`. The **C: drive is locked**, and a **network drive** is slow enough to make
-> ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
-> them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> ArcGIS Pro hang. **Never use a space** in a folder or file name you create. **Back up your lab
+> folder at the end of every session.** The full set of conventions is on the
+> [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
 
-- **Download:** [`lab11-power-line.zip`](../../data/lab11-power-line.zip) (18.0 MB). Unzip it into
-  your Lab11 folder — the files are in a `lab11-power-line` folder inside it — and read
+- **Download:** [`lab11-fire-response.zip`](../../data/lab11-fire-response.zip) (20.6 MB). Unzip it
+  into your Lab11 folder — the files are in a `lab11-fire-response` folder inside it — and read
   `READ-ME-FIRST.txt`.
+- **Utah County boundary:** <https://opendata.gis.utah.gov/datasets/utah-county-boundaries/explore>
+    - The one layer you fetch yourself, as in Lab 1: on the *Explore* page click **Download** (the
+      cloud icon) and take the **Shapefile**, then select Utah County and export it to your project
+      geodatabase as `Utah_County`. Nothing in the model depends on it; it is the frame of your maps
+      and the layer whose **About** page you will read for the metadata questions.
 
-Every layer is a prepared extract, clipped to one box, **39.98–40.55° N, 112.05–111.45° W**, from the
-mouth of Spanish Fork Canyon to Bluffdale, and stored in NAD 1983 UTM Zone 12N:
+Everything else is a prepared extract for Utah County, stored in NAD 1983 UTM Zone 12N:
 
 | Layer | What it is | Where it comes from |
 | --- | --- | --- |
-| `Elevation.tif` | Ground elevation, meters above NAVD 88, 30 m cells | USGS [3D Elevation Program](https://www.usgs.gov/3d-elevation-program){ target="_blank" } (3DEP), read from the 3DEP elevation image service and exported at 30 m with bilinear resampling |
-| `PowerLineData.gdb\Roads` | Road centerlines that UDOT gives a functional class (`DOT_FCLASS`) | UGRC [Road Centerlines](https://gis.utah.gov/products/sgid/transportation/road-centerlines/){ target="_blank" } (UtahRoads) |
-| `PowerLineData.gdb\Lakes` | Every NHD waterbody in the box, with `AreaSqKm` | UGRC [NHD Lakes](https://gis.utah.gov/products/sgid/water/nhd-lakes/){ target="_blank" } |
-| `PowerLineData.gdb\Streams` | Every NHD flowline in the box, with `IsMajor` | UGRC [NHD Streams](https://gis.utah.gov/products/sgid/water/nhd-streams/){ target="_blank" } |
-| `PowerLineData.gdb\Cities` | Municipal boundaries | UGRC [Municipal Boundaries](https://gis.utah.gov/products/sgid/boundaries/municipal/){ target="_blank" } |
-| `PowerLineData.gdb\Power_Lines` | Transmission lines (`LAYER` `KV-46`, `KV-138`, `KV-345`) and substations (`LAYER` `SUB-...`) | UGRC TransmissionLines, a live feature service with no product page: [the service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/TransmissionLines/FeatureServer/0){ target="_blank" } |
-| `PowerLineData.gdb\Endpoints` | The two substations, `Role` = `Source` / `Destination` | Copied from `Power_Lines` (`UGRC_OID` 2185 and 1350) |
-| `Major_Roads`, `Major_Lakes`, `Major_Streams`, `Existing_Lines` | The subsets the model uses | **You make them**, in Step 1 |
+| `FireResponse.gdb\Network\Utah_County_Roads_ND` | A **network dataset**, already built: the roads joined at their junctions, with the costs `TravelMinutes` and `Length` | UGRC [Utah Street Network](https://gis.utah.gov/data/transportation/street-network-analysis/){ target="_blank" }, the state's prebuilt network, clipped to the county and rebuilt from UGRC's own network template |
+| `FireResponse.gdb\Network\Roads` | The network's 41,460 road segments, with `FULLNAME`, `CARTOCODE`, `ONEWAY`, `SPEED_LMT`, `F_T_IMP_MIN` and `T_F_IMP_MIN` (UGRC's minutes in each direction) | UGRC [Road Centerlines](https://gis.utah.gov/products/sgid/transportation/road-centerlines/){ target="_blank" }, through the network above |
+| `FireResponse.gdb\Fire_Stations` | 42 points, with `NAME`, `ADDRESS`, `CITY` and `EMS` | UGRC [Fire Stations](https://gis.utah.gov/products/sgid/society/fire-stations/){ target="_blank" } (`COUNTY` = UTAH) |
+| `FireResponse.gdb\Census_Blocks` | 10,092 polygons, with `GEOID20`, `PP_TOTAL` (people), `HU_TOTAL` (housing units), `ALAND20` | UGRC [CensusBlocks2020](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/CensusBlocks2020/FeatureServer/0){ target="_blank" } (`COUNTYFP20` = 049), the 2020 Census counts |
+| `Utah_County` | The county boundary | **You download it**, above |
 
-**What we already did for you.** Read each layer from its source on October 9, 2026, clipped it to
-the box, and kept only the fields the lab uses plus `UGRC_OID`, the feature's object ID in the UGRC
-service. Field values were not changed. There is no layer here for you to create and defend; the
-weights you choose in Step 9 play that role.
+**What we already did for you.** Read each layer from its UGRC service on October 10, 2026, kept the
+fields the lab uses plus `UGRC_OID` (the feature's object ID in the UGRC service), exported the road
+segments with Utah County on either side, and rebuilt the network dataset from UGRC's template so its
+cost definition is UGRC's, unchanged. Field values were not changed, and nothing was filtered: every
+station and every block in the county is here.
 
 > [!TIP]
-> **Check the data:** `Elevation.tif` is **1,719 columns × 2,124 rows** of 30 m cells, **1,314.97 to
-> 3,568.37** m, NAD 1983 UTM Zone 12N. In `PowerLineData.gdb`: `Roads` **8,937** features, `Lakes`
-> **967**, `Streams` **4,086**, `Cities` **34**, `Power_Lines` **292**, `Endpoints` **2**.
+> **Check the data:** in `FireResponse.gdb`, `Roads` **41,460** features and
+> `Utah_County_Roads_ND_Junctions` **33,872**; `Fire_Stations` **42**; `Census_Blocks` **10,092**,
+> and the sum of `PP_TOTAL` (right-click the field ▸ **Statistics**) is **659,399**.
 
-![Infographic titled "Reading the metadata: the six questions from CCE 114", six cards answered for this lab's data. What: Elevation.tif is ground elevation in meters above NAVD 88 on 30 m cells; roads with a UDOT class; NHD lakes and streams; city limits; power lines (KV-46, 138 and 345) and substations. Where: 39.98 to 40.55 N, 112.05 to 111.45 W, the mouth of Spanish Fork Canyon to Bluffdale, NAD 1983 UTM zone 12N in meters for every layer, while the services themselves serve Web Mercator. When: all read October 9, 2026; roads "Last Update 08/05/2026"; cities and lakes edited October 1, 2026; streams and power lines March 7, 2026; a last-edit date is not when a feature was mapped. Why: roads for cartography, address location and UDOT's linear referencing; cities for "cartography and approximate boundary identification"; 3DEP as the national best-available elevation. How: city boundaries change only when certified by the Lieutenant Governor's Office; 3DEP exported at 30 m, bilinear, and every layer clipped to the box; the power-line layer does not say. Who: USGS (3DEP, the NHD) and the Utah Geospatial Resource Center (roads with UDOT, cities, power lines); public data, credit each source. An orange footer: the power-line layer's whole description is "Electrical transmission facilities in Utah" — no source, no date of mapping, no accuracy; your route leans on it, so say what you would want to know before trusting it and what a missing or misplaced line would do to your route.](images/lab11-metadata.svg)
+![Infographic titled "Reading the metadata: the six questions from CCE 114", six cards answered for this lab's data. What: a road network of segments joined at junctions, each with minutes to drive it (41,460 edges); 42 fire stations; 10,092 Census blocks with the 2020 count of people, PP_TOTAL. Where: Utah County only, NAD 1983 UTM zone 12N, meters, every layer; the services themselves serve Web Mercator. When: roads updated through September 23, 2026; stations "Last Update: September 22, 2022" (the service re-saved March 2026); blocks: Census Day, April 1, 2020; four different dates. Why: roads for cartography and address location and UDOT's linear referencing, "a network analysis dataset can also be derived"; stations "to show the locations"; blocks: no why. How: minutes "estimated from the CARTOCODE field and the SPEED_LMT field", surface streets times 1.5, "typical network travel, and not the expedited travel of emergency response vehicles". Who: the Utah Geospatial Resource Center (roads, the network, stations); the U.S. Census Bureau (blocks, published by UGRC); public data under CC BY. An orange footer: the stations layer says Last Update September 22, 2022 and the blocks layer has no description at all; a station opened since 2022 is not in your model, and a block's people are where they slept on April 1, 2020; say what each does to your count and which you would fix first.](images/lab11-metadata.svg)
 
 **Figure A.** The six metadata questions, applied to this lab's data. Confirm three values yourself
 and copy them into your report: the **"Last Update"** date in the description of the
-[UtahRoads service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UtahRoads/FeatureServer/0){ target="_blank" };
-what the municipal boundaries are **for**, from the description of the
-[UtahMunicipalBoundaries service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UtahMunicipalBoundaries/FeatureServer/0){ target="_blank" };
-and what the [TransmissionLines service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/TransmissionLines/FeatureServer/0){ target="_blank" }'s
-metadata says, and what it does not. Say what each one means for your route.
+[FireStations service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/FireStations/FeatureServer/0){ target="_blank" };
+what UGRC says its travel minutes were **estimated from**, on the
+[Utah Street Network page](https://gis.utah.gov/data/transportation/street-network-analysis/){ target="_blank" };
+and what the [CensusBlocks2020 service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/CensusBlocks2020/FeatureServer/0){ target="_blank" }'s
+description says (look for it). Say what each one means for your count of people outside four
+minutes.
 
 ## ModelBuilder Tools
 
-New in this lab:
+New in this lab, all from the **Network Analyst** toolbox unless marked:
 
 | Tool | What it does |
 | --- | --- |
-| ![Distance Accumulation icon: rings of growing cost spreading from a dark source cell, squeezed where they meet an expensive orange patch marked times 10](images/icon-distance-accumulation.svg){ .tool-icon }<br>**Distance Accumulation** (Spatial Analyst) | For every cell, the cheapest total cost of reaching it from a source, spreading slowly through expensive cells and never through a barrier; it also writes the **back direction**, the way home. With no cost raster it gives plain straight-line distance, so this lab uses it for both jobs. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/distance-accumulation.htm){ target="_blank" } |
-| ![Optimal Path As Line icon: a cost grid with a dark expensive block in the middle; a dashed straight line from the green source to the red destination crosses it, while the orange route goes around it](images/icon-optimal-path-as-line.svg){ .tool-icon }<br>**Optimal Path As Line** (Spatial Analyst) | Walks from a destination back to the source along the back direction raster, and draws the cheapest route as a line feature class. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/optimal-path-as-line.htm){ target="_blank" } |
-| ![Polyline to Raster icon: a river line drawn across a grid, and every cell it passes through filled blue](images/icon-polyline-to-raster.svg){ .tool-icon }<br>**Polyline to Raster** (Conversion) | Turns lines into cells: every cell a line passes through takes the value of a field you choose, and every other cell is NoData. Here, the major streams become river cells. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/conversion/polyline-to-raster.htm){ target="_blank" } |
+| ![Make Service Area Analysis Layer icon: a red station dot on a small street grid, with the streets reachable from it drawn in navy and two blue rings around it](images/icon-make-service-area-analysis-layer.svg){ .tool-icon }<br>**Make Service Area Analysis Layer** | Creates an empty **analysis layer** on a network dataset: a group layer with sublayers for Facilities, Polygons and Lines, and the settings of the analysis (the cutoffs, the travel direction, how the polygons are drawn). It computes nothing yet. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-service-area-analysis-layer.htm){ target="_blank" } |
+| ![Add Locations icon: three red map pins above a street grid, each with a dashed line down to an orange dot on the nearest street](images/icon-add-locations.svg){ .tool-icon }<br>**Add Locations** | Loads features into one sublayer of an analysis layer, here the fire stations into **Facilities**, and snaps each to the nearest street within the search tolerance. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/add-locations.htm){ target="_blank" } |
+| ![Solve icon: the street grid with the reachable streets drawn in green and a green check mark](images/icon-solve.svg){ .tool-icon }<br>**Solve** | Runs the analysis layer: walks the network outward from every facility until the cutoff and fills in the Polygons sublayer. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/solve.htm){ target="_blank" } |
+| ![Make Feature Layer icon: a geodatabase feature class symbol on the left and, through an arrow, a layer card with a small selection outline on it](images/icon-make-feature-layer.svg){ .tool-icon }<br>**Make Feature Layer** (Data Management) | Makes a **layer** from a feature class: a view of the data that can carry a selection, without copying it. A selection belongs to a layer, so each branch of this model gets its own. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/make-feature-layer.htm){ target="_blank" } |
+| ![Select Layer By Location icon: a grid of small block squares with a center dot in each, under a blue ellipse; the squares whose dot falls outside the ellipse are outlined in orange](images/icon-select-layer-by-location.svg){ .tool-icon }<br>**Select Layer By Location** (Data Management) | Selects features of one layer by where they sit relative to another: here, the blocks whose **center** is inside the service area, **inverted** to keep the ones outside. It selects on a layer, so it follows Make Feature Layer. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/select-layer-by-location.htm){ target="_blank" } |
+| ![Summary Statistics icon: a table of rows collapsing, through an arrow, into a single navy box marked with a sigma](images/icon-summary-statistics.svg){ .tool-icon }<br>**Summary Statistics** (Analysis) | Writes one table row with statistics of a field over the features it is given: the **sum** of `PP_TOTAL` over the unserved blocks, and their count. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/summary-statistics.htm){ target="_blank" } |
 
-Tools you already know: **Select** (Lab 1), **Slope** (Lab 10), **Reclassify** (Lab 2), and
-**Raster Calculator** with model variables (Labs 5 and 10).
+Also used: **Select Data** (ModelBuilder), which pulls one sublayer, the Polygons, out of the
+analysis layer so the next tool can read it ([tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/select-data.htm){ target="_blank" });
+**Copy Features** (Data Management), which writes a layer or a selection to a feature class; and
+**Buffer** (Lab 1).
 
 ## Example Model
 
-![The Power Line Route model exported from ModelBuilder, laid out left to right. Roads, Lakes, Streams and Power_Lines each go through a Select to Major_Roads, Major_Lakes, Major_Streams (marked P) and Existing_Lines; Cities, Major_Roads and Existing_Lines each go to a Distance Accumulation that makes City_Distance, Road_Distance and Line_Distance, plus three unused outputs each; Elevation.tif goes through Slope to Slope_Degrees; four Reclassify tools make Slope_Score, Road_Score, City_Score and Line_Score; Polyline to Raster makes River_Cells; Raster Calculator takes the four scores, River_Cells, Slope_Weight and Line_Weight (both marked P) and makes Cost_Surface (P). Endpoints goes through two Selects to Source_Point and Destination_Point; a fourth Distance Accumulation takes Source_Point, Major_Lakes as the barrier and Cost_Surface and makes Accumulated_Cost (P) and Back_Direction; Optimal Path As Line takes Destination_Point, Accumulated_Cost and Back_Direction and makes Route (P). Every tool carries a green check from a completed run.](images/lab11-model.svg)
+![The Fire Response Coverage model exported from ModelBuilder, laid out left to right. Utah_County_Roads_ND and Cutoff_Minutes (marked P) feed Make Service Area Analysis Layer, whose Service Area layer goes with Fire_Stations into Add Locations and then Solve; Select Data takes the Polygons out and Copy Features writes Served_Area (P). Below, the Census_Blocks dataset feeds two Make Feature Layer tools, Blocks_Net and Blocks_Crow. Blocks_Net goes into Select Layer By Location with Served_Area, then Copy Features makes Unserved_Blocks (P) and Summary Statistics makes Unserved_Population (P). Above, Fire_Stations and Buffer_Distance (P) feed Buffer, which makes Crow_Area (P); Blocks_Crow goes into a second Select Layer By Location with Crow_Area, then Copy Features and Summary Statistics make Crow_Unserved (P) and Crow_Population (P). Every tool carries a green check from a completed run.](images/lab11-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Six
-selections and an elevation model in; five score rasters in the middle; one cost surface; one
-route out. The elements marked `P` are the model parameters — the two weights and the outputs you keep —
-and they become the tool dialog of Step 8. ModelBuilder numbers repeated tools itself:
-*Select (2)*, *Distance Accumulation (3)*.
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
+The network, the stations and the blocks in; one service area, one buffer, a layer of blocks for
+each; two counts of people out. The elements
+marked `P` are the model parameters — the cutoff in minutes, the buffer distance and the outputs you
+keep — and they become the tool dialog of Step 8.
 
 ## Complete the Lab
 
@@ -233,9 +220,9 @@ without the step-by-step instructions below, say so in your report.
 ## Step-by-Step Solution
 
 > [!NOTE]
-> **Build it once, build it to be changed.** The steps walk through the route at the default
-> weights. Step 9 re-runs the same model six times with the weights changed, so give every dataset
-> a readable name as you go.
+> **Build it once, build it to be changed.** The steps walk through the model at four minutes.
+> Step 9 re-runs the same model six times with the cutoff changed, so give every dataset a readable
+> name as you go.
 
 > [!NOTE]
 > **Every check value on this page** was measured on the files you download, with the settings
@@ -247,443 +234,463 @@ without the step-by-step instructions below, say so in your report.
 1. Create a new project named `Lab11` in `D:\Smith\Lab11\` with the **Map** template; if you already
    made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes `Lab11.gdb`
    and `Lab11.atbx` beside it. The downloaded data stay in their own geodatabase,
-   `lab11-power-line\PowerLineData.gdb`.
-2. Add `Elevation.tif` (if ArcGIS Pro offers to build pyramids or statistics, click **OK**) and, from
-   `PowerLineData.gdb`, `Roads`, `Lakes`, `Streams`, `Cities` and `Power_Lines`. Add an imagery
-   basemap.
-3. Add `Endpoints` too. It holds both substations; the model separates them in Step 1.
-4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
-5. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
-   **Properties**, set **Name** to `PowerLineRoute` and **Label** to `Power Line Route`, and save.
-6. On the **ModelBuilder** tab click **Environments** and set:
-    - **Current Workspace** and **Scratch Workspace**: your project geodatabase, `Lab11.gdb`
-    - **Output Coordinate System**: NAD 1983 UTM Zone 12N (the same as every layer in the package)
-    - **Extent**: choose `Elevation.tif` from the list of the map's layers
-    - **Snap Raster**: `Elevation.tif`
-    - **Cell Size**: `Elevation.tif` (30)
+   `lab11-fire-response\FireResponse.gdb`.
+2. Confirm **Network Analyst** is licensed (**Project** ▸ **Licensing** ▸ **Esri Extensions**). The
+   Network Analyst tools stay gray without it.
+3. In the **Catalog** pane, add a folder connection to your Lab11 folder, open `FireResponse.gdb`,
+   and add `Fire_Stations`, `Census_Blocks` and, from the `Network` feature dataset, the network
+   dataset `Utah_County_Roads_ND` (it draws as a group layer with `Edges`, `Junctions` and `Dirty Areas` under it). Add
+   `Utah_County` from your own geodatabase and an imagery basemap.
+4. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
+   **Properties**, set **Name** to `FireResponseCoverage` and **Label** to `Fire Response Coverage`,
+   and save.
+5. On the **ModelBuilder** tab click **Environments** and set **Current Workspace** and **Scratch
+   Workspace** to your project geodatabase, `Lab11.gdb`, and **Output Coordinate System** to NAD 1983
+   UTM Zone 12N (the same as every layer in the package). No raster environments this time: nothing
+   in this lab is a raster.
 
-![The PowerLineRoute model's Environments dialog: Current Workspace and Scratch Workspace Lab11.gdb; Output Coordinate System NAD_1983_UTM_Zone_12N; Extent with Top 4489350, Left 410340, Right 461910 and Bottom 4425630 in NAD 1983 UTM Zone 12N; Parallel Processing collapsed; under Raster Analysis, Cell Size Elevation.tif, Cell Size Projection Method Convert units, Mask empty, Cell Alignment Default, Snap Raster Elevation.tif.](images/lab11-environments.png)
+<!-- TODO(recapture): images/lab11-environments.png still shows Lab12.gdb from the GUI project as it was named before the October 21, 2026 renumbering; re-shoot it in C:\Ames\Lab11GUI\Lab11.aprx after the rename in tools/NEXT_STEPS.md, and then make the alt text say Lab11. -->
+![The FireResponseCoverage model's Environments dialog: Current Workspace and Scratch Workspace Lab12.gdb; Output Coordinate System NAD_1983_UTM_Zone_12N; Geographic Transformations empty; Processing Extent with its X and Y Extent collapsed; Parallel Processing fields empty.](images/lab11-environments.png)
 
-**Figure 0.** ModelBuilder ▸ **Environments**. Choosing `Elevation.tif` for the Extent fills in its
-four edges.
-
-> [!TIP]
-> **Check the result:** after Steps 2 and 3, every raster the model makes is **1,719 columns × 2,124
-> rows** of **30 m** cells, exactly the size of `Elevation.tif` (the layer's **Properties** ▸
-> **Source** ▸ **Raster Information**). A distance raster of another size means the Extent or Cell
-> Size environment was not set.
-
-### Step 1 — Select the Layers
-
-Add six **Select** tools to the model, each from the downloaded layer, with these expressions
-(turn on **SQL Editor** and type them exactly; the check mark under the box should say **The SQL
-expression is valid**):
-
-| Input | Output | Expression |
-| --- | --- | --- |
-| `Roads` | `Major_Roads` | `DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial')` |
-| `Lakes` | `Major_Lakes` | `AreaSqKm > 1` |
-| `Streams` | `Major_Streams` | `IsMajor = 1` |
-| `Power_Lines` | `Existing_Lines` | `LAYER LIKE 'KV-%'` |
-| `Endpoints` | `Source_Point` | `Role = 'Source'` |
-| `Endpoints` | `Destination_Point` | `Role = 'Destination'` |
-
-The power-line layer holds both lines and substations; the substations' `LAYER` values begin with
-`SUB-`, and `KV-%` keeps only the lines. The last two split the endpoints into one point each.
-To make the next Select quickly, copy and paste one on the canvas, then change its input,
-expression and output; type the output name **after** validating the expression, which can reset it.
-
-![The Select dialog: Input Features Roads; Output Feature Class Major_Roads; Expression with SQL Editor on, reading DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial'), and a check mark with The SQL expression is valid.](images/lab11-select-roads.png)
-
-**Figure 1.** Select, with the expression typed in the SQL editor.
+**Figure 0.** ModelBuilder ▸ **Environments**. Two workspaces and a coordinate system are all this
+model needs.
 
 > [!TIP]
-> **Check the result:** `Major_Roads` **1,377** features, `Major_Lakes` **7** (Utah Lake, Deer Creek
-> Reservoir, White Lake and four unnamed marshes), `Major_Streams` **319**, `Existing_Lines` **241**; `Source_Point` and `Destination_Point` **1** each. An output with the
-> same count as its input — 8,937 roads, 292 power lines — means the expression was not applied; 292
-> power lines include the **51** substations.
+> **Check the result:** in the Catalog pane, `Roads` has **41,460** features and
+> `Utah_County_Roads_ND_Junctions` **33,872** (the network's **Properties** ▸ **General** page says
+> **85,272** edges, two per road segment, one each way); `Fire_Stations` has **42** rows and
+> `Census_Blocks` **10,092**. If the network dataset will not add, or adds without its edges, Network
+> Analyst is not licensed on this machine.
 
-### Step 2 — Compute Slope
+### Step 1 — Look at the Network
 
-Add **Slope** (Spatial Analyst) with `Elevation.tif` as the input, **Output measurement** **Degree**
-(the default), and output `Slope_Degrees`. The dialog suggests the **Surface Parameters** tool
-instead; Slope is the one this lab uses.
+Before you use the network, see what it is made of.
 
-![The Slope dialog with a banner suggesting the Surface Parameters tool: Input raster Elevation.tif; Output raster Slope_Degrees; Output measurement Degree; Method Planar; Z factor 1; Target device for analysis GPU then CPU.](images/lab11-slope.png)
+1. In the **Catalog** pane, right-click `Utah_County_Roads_ND` ▸ **Properties**. The **General**
+   page says the network is built, with one edge source, `Roads`, and its system junctions
+   (Figure 1a). Under **Travel Attributes** ▸ **Costs** are two costs, `TravelMinutes` (the default,
+   in minutes) and `Length` (meters); click `TravelMinutes` and scroll its **Properties** down to
+   **Evaluators**: along a segment's digitized direction it reads the field `F_T_IMP_MIN`, against it
+   `T_F_IMP_MIN` (Figure 1b).
+2. Open the `Roads` attribute table and **Select By Attributes** with `ONEWAY IN ('1', '2')`: these
+   are the one-way segments. Find the longest `I-15 NB FWY` segment among them (sort by
+   `Shape_Length`) and compare its `F_T_IMP_MIN` with its `T_F_IMP_MIN`.
 
-**Figure 2.** Slope, in degrees.
+<!-- TODO(recapture): images/lab11-network-general.png still shows the old GUI project path from the GUI project as it was named before the October 21, 2026 renumbering; re-shoot it in C:\Ames\Lab11GUI\Lab11.aprx after the rename in tools/NEXT_STEPS.md, and then make the alt text say Lab11. -->
+![The Network Dataset Properties dialog for Utah_County_Roads_ND, General page: Data Type File Geodatabase Network Dataset, the database path, Feature Dataset Network; Build Status Built, Build Time 10/10/2026; Edges 85272, Junctions 33872, Turns 0; Sources Roads (Edge) and Utah_County_Roads_ND_Junctions (Junction, System); Indexes with Service-Area Index checked.](images/lab11-network-general.png)
 
-> [!TIP]
-> **Check the result:** `Slope_Degrees` runs from **0 to 71.81°**, mean **11.21°** (the layer's
-> **Properties** ▸ **Source** ▸ **Statistics**). A maximum above 90 means **Percent rise** was chosen.
+**Figure 1a.** The network dataset's **General** page: built, one edge source and its system
+junctions. The edge count is twice the road count because every segment is an edge in each
+direction.
 
-### Step 3 — Measure Distances
+![The Network Dataset Properties dialog at Travel Attributes, Costs tab: a banner says some properties cannot be edited because the network dataset is used by network layers in opened maps; the cost list shows Time, TravelMinutes in Minutes, and Distance, Length in Meters; below, TravelMinutes's Evaluators table lists Roads (Along) Field Script !F_T_IMP_MIN!, Roads (Against) Field Script !T_F_IMP_MIN!, and Default Constant 0.](images/lab11-network-costs.png)
 
-Add **Distance Accumulation** three times. Each takes one layer as **Input Raster or Feature
-Sources** and nothing else: leave **Input Raster or Feature Barriers**, **Input Surface Raster** and
-**Input Cost Raster** empty.
-
-| Input Raster or Feature Sources | Output Distance Accumulation Raster |
-| --- | --- |
-| `Major_Roads` | `Road_Distance` |
-| `Cities` (the downloaded layer) | `City_Distance` |
-| `Existing_Lines` | `Line_Distance` |
-
-With no cost raster, every cell costs 1 per meter, so the "accumulated cost" is simply the
-straight-line distance in meters to the nearest source. One tool does both jobs in this lab: here it
-measures distance, and in Step 7 it accumulates cost.
-
-![The Distance Accumulation dialog: Input Raster or Feature Sources Major_Roads; Output Distance Accumulation Raster Road_Distance; Input Raster or Feature Barriers, Input Surface Raster, Input Cost Raster and Output Back Direction Raster empty; Distance Method Planar; four optional groups collapsed.](images/lab11-distance-roads.png)
-
-**Figure 3.** Distance Accumulation with a source and nothing else: straight-line distance.
+**Figure 1b.** **Travel Attributes** ▸ **Costs**: the two costs, and the evaluators that read
+`TravelMinutes` from a field in each direction.
 
 > [!TIP]
-> **Check the result:** `Road_Distance` reaches **24,515 m**, `City_Distance` **14,923 m**, and
-> `Line_Distance` **15,571 m**. `City_Distance` is **0** inside every city, because a polygon source
-> covers its own cells.
-
-### Step 4 — Score the Factors
-
-Add **Reclassify** four times, one for each table in the Analysis Considerations. For the last row
-of each distance table, end the range at **100000** — larger than any distance in the box.
-The table is empty until the model has run, so type the rows: click a **Start** cell, type, and press
-**Tab** to move to **End** and **New**; ArcGIS Pro adds its own **NODATA** row. To make the next
-Reclassify, copy one, change its input, and clear the rows with **Remove all remap records**.
-
-| Input raster | Rows (start – end: new value) | Output raster |
-| --- | --- | --- |
-| `Slope_Degrees` | 0–5: 1; 5–10: 2; 10–15: 4; 15–20: 6; 20–30: 8; 30–90: 10 | `Slope_Score` |
-| `Road_Distance` | 0–1000: 1; 1000–2000: 3; 2000–5000: 6; 5000–100000: 10 | `Road_Score` |
-| `City_Distance` | 0–1000: 10; 1000–2000: 8; 2000–3000: 6; 3000–4000: 4; 4000–5000: 2; 5000–100000: 1 | `City_Score` |
-| `Line_Distance` | 0–500: 1; 500–2000: 5; 2000–100000: 10 | `Line_Score` |
-
-A value exactly on a break goes to the lower range: a cell exactly 1,000 m from a road scores 1.
-
-![The Reclassify dialog: Input raster City_Distance; Reclass field VALUE; rows 0 to 1000 new 10, 1000 to 2000 new 8, 2000 to 3000 new 6, 3000 to 4000 new 4, 4000 to 5000 new 2, 5000 to 100000 new 1, then NODATA to NODATA; Output raster City_Score; Change missing values to NoData unchecked.](images/lab11-reclassify-city.png)
-
-**Figure 4.** The city score: the nearer the city, the more expensive.
-
-> [!TIP]
-> **Check the result** (cells in each class; the layer's attribute table lists them):
->
-> | Score | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 |
-> | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-> | `Slope_Score` | 1,848,647 | 324,957 | | 259,000 | | 249,393 | 501,985 | 459,492 |
-> | `Road_Score` | 646,624 | | 374,134 | | | 835,970 | | 1,794,428 |
-> | `City_Score` | 1,055,936 | 198,582 | | 228,810 | | 254,776 | 293,203 | 1,619,849 |
-> | `Line_Score` | 614,688 | | | | 1,084,196 | | | 1,952,272 |
->
-> `Road_Score`, `City_Score` and `Line_Score` each add up to **3,651,156** cells, the whole box.
-> `Slope_Score` adds up to **3,643,474**: 7,682 fewer, the one-cell ring around the edge of the box,
-> where Slope has no neighbors on one side and writes NoData. If a score raster has
-> NoData anywhere else, a range has a gap.
-
-### Step 5 — Mark the Rivers
-
-Add **Polyline to Raster** with `Major_Streams` as the **Input Features** and **Value field**
-`IsMajor` — every major stream has `IsMajor` = 1 — and output `River_Cells`. Leave **Cell
-assignment type** at **Maximum length**; the cell size comes from the environment.
-
-Any field that holds 1 on every feature works.
-
-![The Polyline to Raster dialog: Input Features Major_Streams; Value field IsMajor; Output Raster Dataset River_Cells; Cell assignment type Maximum length; Priority field NONE; Cellsize Elevation.tif; Build raster attribute table checked.](images/lab11-polyline-to-raster.png)
-
-**Figure 5.** Every cell a major stream passes through becomes a river cell.
-
-> [!TIP]
-> **Check the result:** `River_Cells` has **9,713** cells, all with the value 1; every other cell is
-> NoData.
-
-### Step 6 — Build the Cost
-
-1. On the **ModelBuilder** tab click **Variable**, choose **Double**, and click **OK**. Right-click
-   the new oval ▸ **Rename** ▸ `Slope_Weight`, double-click it and type `1`, and right-click it ▸
-   **Parameter**. Do the same for `Line_Weight`, also `1`.
-2. Add **Raster Calculator** with this expression, and output `Cost_Surface`:
-
-```text
-%Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%" + Con(IsNull("%River_Cells%"), 0, 10)
-```
-
-Double-click a raster in the **Rasters** list and it goes in as `"%Slope_Score%"`; type the weights
-as `%Slope_Weight%` and `%Line_Weight%`, without quotation marks, since they are numbers.
-
-The last term turns river cells into 10 and every other cell into 0: `IsNull` is true where
-`River_Cells` is NoData. Without it, every cell off a river would be NoData in the sum. Type the
-output name last; Raster Calculator can replace a typed name with a default when the expression
-changes. Make `Cost_Surface` a parameter, so that a run from the tool dialog keeps it.
-
-![The Raster Calculator dialog, widened so the expression fits on one line: %Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%" + Con(IsNull("%River_Cells%"), 0, 10); Output raster Cost_Surface.](images/lab11-cost-calc.png)
-
-**Figure 6.** The cost surface: four scores, two weights and the river crossings. Drag the dialog's
-corner to widen it.
-
-> [!TIP]
-> **Check the result:** `Cost_Surface` runs from **4 to 48**, mean **23.69**. A minimum of 4 is a
-> cell scoring 1 on every factor, off a river. If your minimum is not 4, a weight is not 1 or a score
-> raster has NoData; if most of the box is NoData, the `Con(IsNull(...))` term is missing.
+> **Check the result:** **590** segments are one-way. The longest one-way `I-15 NB FWY` segment is
+> **4,418.5 m** long with a posted **65** mph: `F_T_IMP_MIN` **3.0419** minutes along it, and
+> `T_F_IMP_MIN` **304.1884** against it, exactly **100** times more. That ratio is UGRC's one-way
+> rule, and it is a cost, not a prohibition.
 
 > [!NOTE]
-> **Why a sum, and why weights.** Adding scores says a steep cell next to a road is still expensive
-> for being steep; each factor adds its own cost. A weight of 2 says that factor matters twice as much
-> as the others; 0 removes it. Reclassify's table cannot be a parameter, but a number in Raster
-> Calculator can, which is why the weights live here.
+> **Why minutes, not meters.** A network can carry any cost. Length makes the nearest station the
+> one fewest meters away by road; minutes make it the one an engine reaches first, which is what a
+> response standard measures. Both are in this network; the lab uses minutes. The Week 12 Tuesday
+> lecture walks through how UGRC built the network: sources, connectivity, elevation, attributes
+> and evaluators, the decisions you are being spared.
 
-### Step 7 — Route the Line
+### Step 2 — Make the Service Area Layer
 
-1. Add **Distance Accumulation** again:
-    - **Input Raster or Feature Sources**: `Source_Point`
-    - **Output Distance Accumulation Raster**: `Accumulated_Cost`
-    - **Input Raster or Feature Barriers**: `Major_Lakes`
-    - **Input Surface Raster**: empty
-    - **Input Cost Raster**: `Cost_Surface`
-    - **Output Back Direction Raster**: `Back_Direction`
-2. Add **Optimal Path As Line**:
-    - **Input Raster or Feature Destinations**: `Destination_Point` (**Destination Field** fills
-      in with `UGRC_OID`; leave it)
-    - **Input Distance Accumulation Raster**: `Accumulated_Cost`
-    - **Input Back Direction or Flow Direction Raster**: `Back_Direction`
-    - **Output Optimal Path as Line**: `Route`
-    - **Path Type**: **Each zone** (with one destination, it does not matter)
-3. Make `Accumulated_Cost` and `Route` parameters. Save the model and run it inside ModelBuilder
-   (**Run** on the ModelBuilder tab). It took about a minute and a half on a laptop.
+Add **Make Service Area Analysis Layer** to the model:
 
+- **Network Data Source**: `Utah_County_Roads_ND`
+- **Layer Name**: `Service Area`
+- **Travel Mode**: the network has no named travel modes, so this box is **empty** and its list has
+  nothing in it; leave it, and the layer uses the network's default cost, `TravelMinutes`
+- **Travel Direction**: **Away from facilities**
+- **Cutoffs**: `4`
+- **Time of Day**: empty
+- **Output Geometry** ▸ **Polygon Detail**: **Standard**; **Geometry at Overlaps**: **Dissolve**;
+  **Geometry at Cutoffs**: **Rings**
 
+Leave everything else, including the **Analysis Workspace** and **Locations** sections, at its
+default.
 
-![The Distance Accumulation dialog for the route: Input Raster or Feature Sources Source_Point; Output Distance Accumulation Raster Accumulated_Cost; Input Raster or Feature Barriers Major_Lakes; Input Surface Raster empty; Input Cost Raster Cost_Surface; Output Back Direction Raster Back_Direction; Distance Method Planar.](images/lab11-distance-route.png)
+![The Make Service Area Analysis Layer dialog: Network Data Source Utah_County_Roads_ND; Layer Name Service Area; Travel Mode empty; Travel Direction Away from facilities; Cutoffs with one row, 4, and an Add another button; Time of Day collapsed; Output Geometry expanded with Output Type Polygons, Polygon Detail Standard, Geometry at Overlaps Dissolve, Geometry at Cutoffs Rings.](images/lab11-make-service-area.png)
 
-**Figure 7a.** The cost accumulated outward from the source substation, around the lakes.
-
-![The Optimal Path As Line dialog: Input Raster or Feature Destinations Destination_Point; Destination Field UGRC_OID; Input Distance Accumulation Raster Accumulated_Cost; Input Back Direction or Flow Direction Raster Back_Direction; Output Optimal Path as Line Route; Path Type Each zone; Create Network Paths unchecked.](images/lab11-optimal-path.png)
-
-**Figure 7b.** The route walked home from the destination.
-
-Then measure three things about the route:
-
-- **Its length:** the `Shape_Length` field of `Route`, in meters. If `Route` has more than one row,
-  add them.
-- **The total accumulated cost:** on the **Map** tab click **Explore**, and click `Accumulated_Cost`
-  exactly at the `Destination` point (zoom in until one cell is clearly visible). The pop-up gives the
-  cell's value.
-- **The major streams it crosses:** run **Pairwise Intersect** of `Route` and `Major_Streams` with
-  **Output Type** **Point**, and count the points it makes.
+**Figure 2.** The analysis layer: four minutes, outward, one dissolved shape per cutoff.
 
 > [!TIP]
-> **Check the result:** `Route` is **56.09 km** long; the straight line between the substations is
-> **52.79 km**. The accumulated cost at the destination is **744,018**, and `Accumulated_Cost` reaches
-> **1,116,187** at the far corner of the box. The route crosses **4** major streams. If your route is
-> close to the straight line, bending only around the lakes, Distance Accumulation got no cost raster.
+> **Check the result:** nothing is computed yet. Run the tool from the model and a group layer
+> named **Service Area** appears in the Contents pane with **Facilities**, **Polygons** and **Lines**
+> (and more) under it, all empty.
+
+### Step 3 — Add the Stations
+
+Add **Add Locations**:
+
+- **Input Network Analysis Layer**: `Service Area` (the output of Step 2)
+- **Sub Layer**: **Facilities**
+- **Input Locations**: `Fire_Stations`
+- Under **Advanced**, **Search Tolerance**: `5000 Meters` (the default) — how far a station may sit
+  from the nearest street and still be snapped to it
+
+Leave the field mappings and the rest at their defaults.
+
+![The Add Locations dialog: Input Network Analysis Layer Service Area; Sub Layer Facilities; Input Locations Fire_Stations; Field Mappings Use Geometry with the Name property mapped to the NAME field; Append to Existing Locations checked; Snap to Network unchecked; Advanced expanded with Search Tolerance 5000 Meters and Sort Field empty.](images/lab11-add-locations.png)
+
+**Figure 3.** The 42 stations become the analysis layer's facilities, each snapped to a street.
+
+> [!TIP]
+> **Check the result:** run the model so far and open the **Facilities** sublayer's table: **42**
+> rows, every one with `Status` **OK** (0). A station with `Status` "Not located" sits farther from a
+> street than the tolerance; none of these do.
+
+### Step 4 — Solve and Export
+
+1. Add **Solve** with the `Service Area` layer as its **Input Network Analysis Layer**. Its output is
+   the same layer, now with polygons in it.
+2. Add **Select Data** (search for it; it is in the ModelBuilder toolbox) with the solved layer as
+   its **Input Data Element** and **Polygons** as the **Child Data Element**.
+3. Add **Copy Features** with that Polygons element as its input and `Served_Area` as the output
+   feature class. The analysis layer lives only in the map; the copy is the feature class your maps
+   and the next step use.
+4. Run the model inside ModelBuilder (**Run** on the ModelBuilder tab). The solve takes a few
+   seconds.
+
+![The Select Data dialog: Input Data Element Service Area (3), the solved layer; Child Data Element Polygons.](images/lab11-select-data.png)
+
+**Figure 4.** Solve fills the analysis layer; Select Data takes its Polygons out; Copy Features
+keeps them.
+
+> [!TIP]
+> **Check the result:** `Served_Area` is **1** feature (all 42 stations' areas dissolved together,
+> a multipart polygon) with `FromBreak` 0, `ToBreak` 4 and `Shape_Area` **194,852,812.5 m²**, that
+> is **194.85 km²**. For your first map you will want two rings: **Cutoffs** is a list, one value per
+> row, so add a second row with `8`, run again, and `Served_Area` has **2** features, **194.85 km²**
+> (0–4 minutes) and **363.13 km²** (4–8 minutes). Remove the `8` before Step 5, or your counts will
+> be for eight minutes.
+
+### Step 5 — Count the People Outside
+
+1. Add **Make Feature Layer** (Data Management). For **Input Features** click the folder icon and
+   browse to `FireResponse.gdb` ▸ `Census_Blocks` (the dataset in the geodatabase, not the layer in
+   the map); **Output Layer**: `Blocks_Net`.
+2. Add **Select Layer By Location**:
+    - **Input Features**: `Blocks_Net`
+    - **Relationship**: **Have their center in**
+    - **Selecting Features**: `Served_Area`
+    - **Selection Type**: **New selection**
+    - **Invert spatial relationship**: **checked** — keep the blocks whose center is *outside*
+3. Add **Copy Features** with the selected layer (the green `Blocks_Net (2)` that Select Layer By
+   Location puts out) as input and `Unserved_Blocks` as output.
+4. Add **Summary Statistics** with `Unserved_Blocks` as the **Input Table**, output
+   `Unserved_Population`, and two **Statistics Fields**: `PP_TOTAL` **Sum** and `GEOID20` **Count**.
+   The Field list shows `PP_TOTAL` by its alias, **Total Population**.
+
+A block is one shape with one number of residents. "Center in" asks where that shape's center point
+falls, which is the same rule for a small city block and a hundred-square-kilometer mountain block;
+Step 9 asks you whether that is fair.
 
 > [!NOTE]
-> **Reading the two rasters.** `Accumulated_Cost` is cost × meters: a step across one 30 m cell of cost
-> 4 adds 120. At the destination, 744,018 over 56,090 m is an average cost of about 13 per meter
-> along the route. `Back_Direction` says which way to step to get home, in **degrees**: **0** marks the
-> source, **90** means go east, 180 south, 270 west and 360 north. The Week 12 Thursday deck reads one cell by cell on an earlier, coarser version of this setup ([Least Cost Path Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/least-cost-path-b.html){ target="_blank" }); its numbers are not this lab's.
+> **Why a layer first.** Select Layer By Location does not make a new dataset; it marks a
+> **selection on a layer**, and Copy Features copies the marked features. A selection belongs to
+> the layer, so if Step 6's second selection used the same layer, whichever tool ran last would
+> win, and the model could copy the wrong blocks. Make Feature Layer gives each branch its own
+> layer from the same dataset, and browsing to the dataset (rather than picking the map layer)
+> keeps any selection you have made in the map out of the model.
+
+![The Make Feature Layer dialog: Input Features Census_Blocks (2), the dataset browsed to in FireResponse.gdb; Output Layer Blocks_Net; an empty Expression builder with an Add Clause button; Workspace or Feature Dataset empty; a Field Info table listing the fields with Visible checked.](images/lab11-make-feature-layer.png)
+
+**Figure 5a.** Make Feature Layer: the blocks as a layer of their own, `Blocks_Net`.
+
+![The Select Layer By Location dialog: Input Features Blocks_Net; Relationship Have their center in; Selecting Features Served_Area; Search Distance empty, Meters; Selection Type New selection; Invert Spatial Relationship checked.](images/lab11-select-by-location.png)
+
+**Figure 5b.** Have their center in, inverted: the blocks outside four minutes.
+
+![The Summary Statistics dialog: Input Table Unserved_Blocks; Output Table Unserved_Population; Statistics Fields with two rows, 10001 Total Population (the PP_TOTAL field, shown by its alias) with Sum and GEOID20 with Count; Case Fields empty.](images/lab11-summary-statistics.png)
+
+**Figure 5c.** Summary Statistics: the sum of the people and the count of the blocks.
+
+> [!TIP]
+> **Check the result:** `Unserved_Blocks` has **6,341** features. `Unserved_Population` is one row:
+> `SUM_PP_TOTAL` **379,054** and `COUNT_GEOID20` **6,341**. That is **57.5 %** of the county's
+> 659,399 residents more than four minutes' drive from a station, by UGRC's typical-traffic minutes.
+> A sum near 280,000 means the box was not inverted (you counted the people *inside*); a sum of
+> 659,399 means the selection was empty and Copy Features copied every block.
+
+### Step 6 — Compare the Straight Line
+
+Now measure the same four minutes the way Lab 1 would have.
+
+1. Add **Buffer** with `Fire_Stations` as input, **Distance** `3.75 Kilometers`, **Dissolve Type**
+   **Dissolve all output features into a single feature**, and output `Crow_Area`. (3.75 km is four
+   minutes at 35 mph, a typical arterial speed limit: 35 × 4 ÷ 60 = 2.33 miles.)
+2. Add a second **Make Feature Layer** from the same `Census_Blocks` dataset, **Output Layer**
+   `Blocks_Crow` (select the first one on the canvas, copy and paste it, and change the output name).
+3. Add a second **Select Layer By Location** on `Blocks_Crow`, **Have their center in** `Crow_Area`,
+   **inverted**; a **Copy Features** of the selected layer to `Crow_Unserved`; and a **Summary
+   Statistics** to `Crow_Population` with the same two statistics.
+
+The two branches now share the dataset and nothing else, so it does not matter which runs first.
+
+![The Buffer dialog, with a banner suggesting the Pairwise Buffer tool: Input Features Fire_Stations:1; Output Feature Class Crow_Area; Distance 3.75 Kilometers as a Linear Unit; Method Planar; Dissolve Type Dissolve all output features into a single feature.](images/lab11-buffer.png)
+
+**Figure 6.** The crow's four minutes: 3.75 km, dissolved. `Fire_Stations:1` is the second copy
+of the stations on the canvas.
+
+> [!TIP]
+> **Check the result:** `Crow_Area` is **1** feature of **1,070.61 km²**, five and a half times the
+> network's 194.85 km². `Crow_Population`: `SUM_PP_TOTAL` **23,203**, `COUNT_GEOID20` **1,365**: the
+> buffer says **3.5 %** of the county is beyond four minutes; the roads say 57.5 %. Both are "four
+> minutes". Map 2 is about why they differ. If `Unserved_Population` now reads 23,203 too, both
+> selections ran on one layer: check that each Select Layer By Location has its own Make Feature
+> Layer in front of it.
+
+### Step 7 — Set Model Parameters
+
+Step 9 runs the model six times, so make the two numbers you will change, and everything you will
+keep, parameters.
+
+1. Right-click **Make Service Area Analysis Layer** ▸ **Create Variable** ▸ **From Parameter** ▸
+   **Cutoffs**. Rename the new oval `Cutoff_Minutes` and right-click it ▸ **Parameter**. Cutoffs is a
+   list, so the tool dialog of Step 8 shows it as a small table with one value per row.
+2. Right-click **Buffer** ▸ **Create Variable** ▸ **From Parameter** ▸ **Distance [value or
+   field]**. Rename it `Buffer_Distance` and make it a parameter.
+3. Make the six outputs parameters too: `Served_Area`, `Unserved_Blocks`, `Unserved_Population`,
+   `Crow_Area`, `Crow_Unserved` and `Crow_Population`. (A run from the tool dialog deletes every
+   dataset that is not a parameter, as in Labs 5, 7 and 10.)
+4. Save the model, then **Export** ▸ **Export To Graphic** as SVG, full page: that is the model
+   figure your report needs.
+
+![The context menu on the Make Service Area Analysis Layer tool, opened to Create Variable, then From Parameter, listing Layer Name, Travel Mode, Travel Direction, Cutoffs, Time of Day, Time Zone, Output Type, Polygon Detail, Geometry at Overlaps, Geometry at Cutoffs, Polygon Trim Distance and more; the model canvas behind it.](images/lab11-create-variable-cutoffs.png)
+
+**Figure 7.** The cutoff becomes a variable, and then a parameter.
+
+> [!TIP]
+> **Check the result:** a `P` beside eight elements: the two numbers and the six outputs. Figure C
+> above shows where they sit.
 
 ### Step 8 — Run the Tool
 
-Step 9 runs the model six times, so make each run cheap: everything you will change or keep must be
-a parameter.
+1. Save, and close the model's tab. In the **Catalog** pane, open `Lab11.atbx` and double-click
+   **Fire Response Coverage**: it opens as a tool in the Geoprocessing pane.
+2. Run it once at the defaults, `4` and `3.75 Kilometers`, with new output names — `Served_Area_Base`,
+   `Unserved_Blocks_Base`, `Unserved_Population_Base`, `Crow_Area_Base`, `Crow_Unserved_Base`,
+   `Crow_Population_Base` — and check the two sums.
+3. **Then run it at your own cutoff.** Every student runs a different cutoff, worked out from your
+   **BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It
+   is **not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU
+   sites.
 
-1. Check that these are parameters (right-click ▸ **Parameter**; a `P` appears beside each):
-   `Slope_Weight`, `Line_Weight`, `Major_Streams` (so the crossings can be counted after every run),
-   `Cost_Surface`, `Accumulated_Cost` and `Route`.
-2. Save, and close the model's tab. In the **Catalog** pane, open `Lab11.atbx` and double-click
-   **Power Line Route**: it opens as a tool in the Geoprocessing pane.
-3. Run it once at the defaults, with new output names — `Route_Base`, `Accumulated_Cost_Base`,
-   `Cost_Surface_Base`, `Major_Streams_Base` — and measure the route as in Step 7. A yellow warning
-   that a dataset already exists only means it will be replaced.
+> **Your Cutoff_Minutes = 4 + 0.04 × (the last two digits of your BYU ID)**, from 4.00 to 7.96
+> minutes.
+>
+> - BYU ID `123456789`: last two digits **89**, cutoff = 4 + 0.04 × 89 = **7.56** minutes: served area
+>   **519.07 km²**, **2,537** blocks and **90,929** people outside (**13.8 %**).
+> - BYU ID `987654302`: last two digits **02**, cutoff = 4 + 0.04 × 2 = **4.08** minutes: served area
+>   **201.50 km²**, **6,247** blocks and **370,716** people outside (**56.2 %**).
+>
+> Write your BYU ID's last two digits and your cutoff in your report: the grader checks your
+> numbers against them. Name the outputs `_Mine`. If your cutoff happens to equal one of Step 9's
+> runs (digits `00` give 4.00, `50` give 6.00, `75` give 7.00), run it anyway, say so, and add one
+> more run of your own choice so the table still has five that differ.
 
+<!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab11_personal_lookup.csv (tools/lab11/run_model.py personal; private repo). -->
 
+![The Fire Response Coverage tool in the Geoprocessing pane: Buffer_Distance 3.75 Kilometers as a Linear Unit; Served_Area Served_Area_Base; Unserved_Blocks Unserved_Blocks_Base; Unserved_Population Unserved_Population_Base; Crow_Area Crow_Area_Base; Crow_Unserved Crow_Unserved_Base; Crow_Population Crow_Population_Base; Cutoff_Minutes as a one-row list holding 4, with an Add another button; a Run button.](images/lab11-tool-dialog.png)
 
-![The Power Line Route tool in the Geoprocessing pane: Slope_Weight 1; Line_Weight 1; Route Route_Base; Accumulated_Cost Accumulated_Cost_Base; Cost_Surface Cost_Surface_Base; Major_Streams Major_Streams_Base.](images/lab11-tool-dialog.png)
+**Figure 8a.** The model as a tool. The parameters appear in the order they were made, so
+`Cutoff_Minutes` is last, as a list with one row. Give every output a new name for each run.
 
-**Figure 8.** The model as a tool. Give every output a new name for each run.
+<!-- TODO(recapture): images/lab11-run-complete.png still shows Lab12.atbx, Lab12.gdb from the GUI project as it was named before the October 21, 2026 renumbering; re-shoot it in C:\Ames\Lab11GUI\Lab11.aprx after the rename in tools/NEXT_STEPS.md, and then make the alt text say Lab11. -->
+![The completed-run pop-up for Fire Response Coverage (lab12): Started, Completed and an Elapsed Time of 46 seconds; the Tool Path in Lab12.atbx; a Parameters tab listing Buffer_Distance 3.75 Kilometers, the six _Base outputs with their Lab12.gdb paths, and Cutoff_Minutes 4.](images/lab11-run-complete.png)
+
+**Figure 8b.** The pop-up when the run finishes; a dialog run of the whole model took **46 s**.
 
 > [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter** (Labs 5, 7 and 10 saw
-> it): `Major_Roads`, `Existing_Lines`, `Slope_Degrees`, the three distance rasters, the four score
-> rasters, `River_Cells`, `Back_Direction`, `Major_Lakes`, `Source_Point` and `Destination_Point` all
-> go, including the copies the earlier run inside ModelBuilder made. That is why the datasets you need later are parameters. Make your Step 4 and
-> Step 5 checks from the run inside ModelBuilder, before any dialog run, and for your maps use the
-> downloaded layers (`Roads`, `Lakes`, `Power_Lines`, `Endpoints`) with **definition queries**
-> holding the same expressions as the Selects, not the model's outputs.
+> **A run from the tool dialog deletes everything that is not a parameter**, including the
+> `Service Area` analysis layer's contents from the run inside ModelBuilder. For your maps use the
+> `_Base` and `_Mine` outputs, which are parameters and survive, together with the downloaded
+> `Fire_Stations` and `Census_Blocks` layers.
 
 > [!TIP]
-> **Check the result:** at the defaults, the dialog run reproduces Step 7 exactly: `Route_Base` is
-> **56.09 km**, with **744,018** at the destination and **4** crossings. If it does not, a parameter
-> was left at a value from testing.
+> **Check the result:** at the defaults, the dialog run reproduces Steps 4 to 6 exactly: **194.85 km²**,
+> **379,054** people outside, **23,203** outside the buffer. If it does not, a parameter was left at
+> a value from testing, or a `_Base` output name points at an old dataset.
 
-### Step 9 — Test the Weights
+### Step 9 — Test the Standard
 
-The default route is *an* answer, not *the* answer. It is the cheapest route only if slope, roads,
-cities and existing lines each matter exactly as much as the others, and nobody decided that; it is
-simply what weights of 1 say. Before you defend a route, find out which of those weights it depends
-on.
+Four minutes is *a* standard, not *the* answer. The share of the county outside it is whatever four
+minutes of UGRC's typical-traffic minutes says, and nobody decided that the right number for Utah
+County is four. Before you report a share, find out how much it depends on the cutoff.
 
-**First, your own line weight.** Every student routes the line with a different **Line_Weight**,
-worked out from your **BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as
-`123456789`. It is **not your NetID**, the user name of letters and numbers you chose and use to sign
-in to BYU sites.
+**Run the model from its tool dialog at least five more times**, each with new output names that say
+what changed (`Served_Area_C2`, `Unserved_Blocks_C2`, `Unserved_Population_C2`, and so on):
 
-> **Your Line_Weight = 0.005 × (the last two digits of your BYU ID)**, from 0 to 0.495.
->
-> - BYU ID `123456789`: last two digits **89**, Line_Weight = 0.005 × 89 = **0.445**: route
->   **54.95 km**, accumulated cost at the destination **707,263**, **4** major streams crossed.
-> - BYU ID `987654302`: last two digits **02**, Line_Weight = 0.005 × 2 = **0.010**: route
->   **53.70 km**, accumulated cost at the destination **652,118**, **4** major streams crossed.
->
-> Write your BYU ID's last two digits and your Line_Weight in your report: the grader checks your
-> route against them.
-
-<!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab11_personal_lookup.csv (tools/lab11/run_model.py personal; private repo), 53.70 to 55.01 km. -->
-
-**Then run the model from its tool dialog at least five times**, each with new output names that say
-what changed (`Route_L0`, `Accumulated_Cost_L0`, `Cost_Surface_L0`, `Major_Streams_L0`):
-
-| Run | Slope_Weight | Line_Weight |
+| Run | Cutoff_Minutes | Buffer_Distance |
 | --- | --- | --- |
-| Baseline (Step 8) | 1 | 1 |
-| `L0` | 1 | **0** |
-| `L2` | 1 | **2** |
-| `S5` | **5** | 1 |
-| Yours | 1 | **your Line_Weight** |
+| Baseline (Step 8) | 4 | 3.75 km |
+| `C2` | **2** | 3.75 km |
+| `C6` | **6** | 3.75 km |
+| `C8` | **8** | 3.75 km |
+| Mine (Step 8) | **your cutoff** | 3.75 km |
+| `B2_5` | 4 | **2.5 km** |
 | Your choice | ? | ? |
 
-For the last run, choose something deliberately and say why: set slope to 0 to remove it, push one
-weight far up, or try a Line_Weight between 0 and yours to see where the route starts to move.
+For the last run, choose something deliberately and say why: a cutoff of 10 or 12 to see when the
+share stops falling, a buffer that gives the same share as the network's four minutes, or a cutoff
+between 4 and yours.
 
-Record **all of it in one table**: for the baseline and every run, the Slope_Weight, the Line_Weight,
-the route length in km, the total accumulated cost at the destination, the
-number of major streams crossed, and **the largest distance between the run's route and the
-baseline's**. Measure that last one with the **Measure** tool (**Map** tab ▸ **Measure**) at the place
-where the two lines are farthest apart, to the nearest 100 m.
+Record **all of it in one table**: for the baseline and every run, the cutoff, the buffer distance,
+the served area and the buffer area in km², the number of blocks outside the network area, the people
+outside it, and the share of the county's 659,399 residents that is; for the buffer runs, the people
+outside the buffer. (A buffer run leaves the served area at 194.85 km²; what changes is the buffer's
+area and its count.)
 
 Then answer, in your report:
 
-1. **Which weight moved the route, and which barely did — and why?** Put each run's route on the
-   baseline map and look at where the baseline runs before you explain it.
-2. **How much longer than the straight line is your route, and what is it buying with the extra
-   kilometers?** Use your own run's length and the 52.79 km straight line, and point to the places on
-   the map where the route bends.
-3. **What does the cost surface leave out?** Right-of-way, landowners, the public opinion the
-   Background raises, line capacity: say what each would do to your route and what data you would add
-   to the model to include it.
+1. **How does the share outside respond to the standard?** Plot people outside against the cutoff
+   from your table, or read it off. Between which two cutoffs does it fall fastest, and what does
+   that say about where Utah County's stations are?
+2. **Why do the buffer and the network disagree?** Put `Crow_Area_Base` over `Served_Area_Base`
+   and select the blocks of `Unserved_Blocks_Base` whose center is in `Crow_Area_Base`: the people the
+   buffer claims and the roads do not reach in four minutes (at the defaults, **4,976** blocks and
+   **355,851** people). Using the two places you describe in the write-up, say what the roads do
+   there that a circle cannot see: a lake, a freeway with no interchange, a canyon, a subdivision with
+   one way in, a 25 mph grid of local streets.
+3. **What does the model leave out?** UGRC's minutes are for typical traffic, not an engine running
+   with lights and siren; the stations layer is dated 2022; people are counted where they sleep; a
+   block is covered or not by its center point. Say what each would do to your share, which way, and
+   what data you would add to fix the one that matters most.
 
-Your second map shows your own route and one other run beside the baseline; say on the map what
-changed and why.
+Your second map shows the buffer and the network area together, with the blocks the buffer claims
+and the network does not; say on the map what changed and give both counts of people outside, the
+buffer's and the network's.
 
 > [!TIP]
-> Look at where the baseline route runs. Nearly all of it hugs existing lines, and in a flat valley,
-> slope is low almost everywhere the route could go. One weight moves the route kilometers; the other
-> barely moves it at all.
+> Look at where the four-minute area is. It is a string of small shapes around the stations, and
+> the stations are in the cities. One cutoff of a few minutes more takes in whole cities; a few more
+> after that takes in almost nobody, because almost nobody is left. The buffer, meanwhile, covers
+> the lake.
 
 ## Deliverables
 
 Make **two** professional map layouts (letter size):
 
-1. **Your baseline route** — `Route_Base` and the two substations, clearly symbolized, over the
-   existing lines, the major roads, the cities and the major lakes, with a legend; an **inset of the
-   cost surface**, the "virtual terrain" the route crossed, with its own legend; an imagery basemap;
-   a title, neat line, north arrow and scale bar; and a text box with your name, the date, the map
-   projection, and the sources and dates of the data.
-2. **Your route and one other run** — the baseline, your personal Line_Weight route and one other
-   run from Step 9 (whichever most changes the picture), each distinguishable in the legend, with the
-   endpoints, the existing lines and an imagery basemap; a title, neat line, north arrow and scale
-   bar; and a text box with your name, the date, the map projection, and the sources and dates. The
-   title and text box say what changed from Map 1 and why.
+1. **Fire response coverage** — the 0–4 and 4–8 minute service areas (the two-row run of Step 4, or
+   a dialog run with `4` and `8` as the cutoffs, named `_Rings`; its counts are for eight minutes, so
+   the headline numbers come from `_Base`), the blocks outside four minutes, and the 42 stations, over
+   the county boundary and an imagery basemap, with the cities labeled and a legend; the headline
+   numbers (people outside four minutes, share of the county) on the map; a title, neat line, north arrow and scale bar; and a text box
+   with your name, the date, the map projection, and the sources and dates of the data.
+2. **Straight line versus network** — `Crow_Area_Base` and `Served_Area_Base` together, each
+   distinguishable in the legend, with the blocks the buffer counts as covered that the network does
+   not (select them: `Unserved_Blocks_Base` whose center is in `Crow_Area_Base`), the stations, the
+   county and an imagery basemap; a title, neat line, north arrow and scale bar; and a text box
+   with your name, the date, the projection and the sources. The title and text box say what
+   changed from Map 1 and give both counts of people outside, the buffer's and the network's.
 
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your
   peer reviewer, with a sentence on what you changed because of them
 - the requirements of the project and your approach to solving it
-- **a description of your model** a reader could repeat from: each tool and its settings, the six
-  Select expressions, the four score tables, the Raster Calculator expression, and every input,
-  intermediate and output dataset with its type
+- **a description of your model** a reader could repeat from: each tool and its settings (the
+  cutoff, the travel direction, the polygon options, the search tolerance, the selection
+  relationship and its inversion, the buffer distance and dissolve), and every input, intermediate
+  and output dataset with its type
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its tool dialog with the weights and the
-  route exposed as parameters; and **upload your project's toolbox** (`Lab11.atbx`, in your project
+  Graphic**), and **one** screen capture of its tool dialog with the cutoff and the buffer distance
+  exposed as parameters; and **upload your project's toolbox** (`Lab11.atbx`, in your project
   folder) with the report — the grader opens it to read your model
-- **the three metadata values** — the Roads "Last Update" date, what the municipal boundaries are
-  for, and what the power-line layer's metadata does and does not say — and what each means for your
-  route
-- your **check values** from Steps 1 to 7: the six selection counts, the `Cost_Surface` range, and
-  the route's length, accumulated cost and stream crossings at the defaults
-- **where the route is unrealistic**: two places on **your** route, each with coordinates, a cropped
-  figure and the reason, and what data would fix it
-- your **sensitivity table** from Step 9, with your BYU ID's last two digits and your Line_Weight,
-  and your answers to its three questions
+- **the three metadata values** — the stations' "Last Update" date, what UGRC's minutes were
+  estimated from, and what the blocks layer's description says — and what each means for your count
+- your **check values** from Steps 0 to 6: the four layer counts, the one-way count, the served
+  area, the people and blocks outside at four minutes, and the buffer's area and people outside
+- **where the straight line is wrong**: two places on **your** map, each with coordinates, a cropped
+  figure and the reason
+- your **sensitivity table** from Step 9, with your BYU ID's last two digits and your cutoff, and
+  your answers to its three questions
 - figures numbered and referred to in the text, and every source credited
 - one line at the end saying what you used AI for, if anything (see the note under the rubric)
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
 > [!NOTE]
-> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's; the
-> choices should not. Your map layouts, your color ramps and symbology, the labels you give your
-> model's elements, your own-choice run, the places you pick as unrealistic and the wording of your
-> report are your own work. Submissions whose layouts, labels or symbology match another student's
-> too closely are flagged for follow-up.
+> **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's at
+> the defaults; the choices should not. Your map layouts, your colors and symbology, the labels you
+> give your model's elements, your own-choice run, the places you pick where the buffer is wrong and
+> the wording of your report are your own work. Submissions whose layouts, labels or symbology match
+> another student's too closely are flagged for follow-up.
 
 > [!IMPORTANT]
 > **Peer review before you submit.** Have another student in the class read your report against
 > the rubric and give you feedback, then act on that feedback before the deadline. Name your
 > reviewer in the report and say in a sentence what you changed because of them.
 
-**Credit line for your maps:** Elevation: USGS 3D Elevation Program (3DEP), 30 m. Roads, lakes,
-streams, cities and power lines: Utah Geospatial Resource Center (UGRC), read October 2026.
+**Credit line for your maps:** Road network: Utah Geospatial Resource Center (UGRC) Utah Street
+Network, roads through September 2026; travel minutes are UGRC's estimate for typical traffic. Fire
+stations: UGRC, last update September 2022. Population: 2020 Census blocks, U.S. Census Bureau via
+UGRC. Imagery: Esri.
 
 ## References
 
-Meehan, B. (2007). *Case Studies in GIS: Empowering Electric and Gas Utilities with GIS.* Redlands,
-California: Esri Press.
+National Fire Protection Association (2020). *NFPA 1710: Standard for the Organization and Deployment
+of Fire Suppression Operations, Emergency Medical Operations, and Special Operations to the Public by
+Career Fire Departments.* Quincy, Massachusetts: NFPA.
+[nfpa.org](https://www.nfpa.org/codes-and-standards/nfpa-1710-standard-development/1710){ target="_blank" }.
 
-Schmidt, A.J. (2009). Implementing a GIS methodology for siting high voltage electric transmission
-lines. *Papers in Resource Analysis* 11. Winona, Minnesota: Saint Mary's University of Minnesota
-University Central Services Press.
+Esri. *Service area analysis layer*, ArcGIS Pro help; *Make Service Area Analysis Layer*, *Add
+Locations* and *Solve*, ArcGIS Pro tool reference.
+[Service area analysis](https://pro.arcgis.com/en/pro-app/latest/help/analysis/networks/service-area-analysis-layer.htm){ target="_blank" };
+[Make Service Area Analysis Layer](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-service-area-analysis-layer.htm){ target="_blank" };
+[Add Locations](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/add-locations.htm){ target="_blank" };
+[Solve](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/solve.htm){ target="_blank" }.
 
-Vajjhala, S.P., and Fischbeck, P.S. (2006). *Quantifying Siting Difficulty: A Case Study of U.S.
-Transmission Line Siting.* Discussion Paper 06-03. Washington, D.C.: Resources for the Future.
-[rff.org](https://www.rff.org/publications/working-papers/quantifying-siting-difficulty-a-case-study-of-us-transmission-line-siting/){ target="_blank" }.
+Utah Geospatial Resource Center. *Utah Street Network Dataset*, *Fire Stations*, *Road Centerlines* and
+*CensusBlocks2020*.
+[Utah Street Network](https://gis.utah.gov/data/transportation/street-network-analysis/){ target="_blank" };
+[Fire Stations](https://gis.utah.gov/products/sgid/society/fire-stations/){ target="_blank" };
+[Road Centerlines](https://gis.utah.gov/products/sgid/transportation/road-centerlines/){ target="_blank" };
+[CensusBlocks2020 service](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/CensusBlocks2020/FeatureServer/0){ target="_blank" }.
 
-Esri. *Distance Accumulation* and *Optimal Path As Line*, ArcGIS Pro tool reference.
-[Distance Accumulation](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/distance-accumulation.htm){ target="_blank" };
-[Optimal Path As Line](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/optimal-path-as-line.htm){ target="_blank" }.
+Utah Geospatial Resource Center (2022). *Fire Station Travel Times* (feature service; the note that its
+travel times are "based on typical network travel, and not the expedited travel of emergency
+response vehicles").
+[Fire Station Travel Times](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/Fire_Station_Travel_Times/FeatureServer){ target="_blank" }.
 
-Utah Geospatial Resource Center. *Road Centerlines*, *NHD Lakes*, *NHD Streams*, *Municipal
-Boundaries* and *TransmissionLines*. [gis.utah.gov](https://gis.utah.gov/products/sgid/transportation/road-centerlines/){ target="_blank" }
-(the layer pages are linked in the Data section).
+U.S. Census Bureau. *2020 Census.*
+[census.gov](https://www.census.gov/programs-surveys/decennial-census/decade/2020/2020-census-main.html){ target="_blank" }.
 
-U.S. Geological Survey. *3D Elevation Program.*
-[usgs.gov](https://www.usgs.gov/3d-elevation-program){ target="_blank" }.
-
-<!-- LINK CHECK (curl -L, 2026-10-09): 200 rff.org Quantifying Siting Difficulty page (and its PDF at media.rff.org); 200 gis.utah.gov road-centerlines, nhd-lakes, nhd-streams, municipal; 200 services1.arcgis.com TransmissionLines, UtahRoads and UtahMunicipalBoundaries FeatureServer/0; 200 pro.arcgis.com distance-accumulation, optimal-path-as-line, polyline-to-raster; 200 byu-hydroinformatics.github.io week-12 least-cost-path-b.html; usgs.gov/3d-elevation-program returns 403 to curl (usgs.gov blocks scripts) and must be opened in a browser; reported 200 earlier on 2026-10-09. ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab11-power-line.zip checked by mkdocs build --strict. -->
+<!-- LINK CHECK (curl -L, 2026-10-10): 200 opendata.gis.utah.gov utah-county-boundaries/explore; 200 gis.utah.gov fire-stations, street-network-analysis, road-centerlines; 200 services1.arcgis.com FireStations/0, CensusBlocks2020/0, Fire_Station_Travel_Times; 200 pro.arcgis.com service-area-analysis-layer, make-service-area-analysis-layer, add-locations, solve, select-layer-by-location, summary-statistics, select-data; 200 nfpa.org 1710; 200 census.gov 2020-census-main. No UGRC product page exists for CensusBlocks2020 (gis.utah.gov/products/sgid/demographic/census-blocks-2020/ is 404), so the service layer is linked. ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab11-fire-response.zip checked by mkdocs build --strict. -->
 
 ## Example Maps
 
-![Example baseline layout titled "A Least-Cost Route for a Power Line, Spanish Fork Canyon to Bluffdale": imagery with city limits, the lakes and marshes over 1 square kilometer, major roads, existing transmission lines in yellow, the dashed straight line, and the 56.09 km least-cost route in red running up the east side of Utah Lake beside existing lines; an inset of the cost surface with the route; a legend, scale bar, north arrow and a text box with the result and the sources.](images/lab11-example-map-baseline.png)
+![Example baseline layout titled "Fire Response Coverage in Utah County": imagery with the county outline, the 0 to 4 minute service area in dark blue and the 4 to 8 minute ring in light blue strung along the cities from Lehi to Santaquin, the populated blocks whose center is more than four minutes from a station in orange, and the 42 stations as red dots; a legend, scale bar, north arrow and a text box with the result and the sources.](images/lab11-example-map-baseline.png)
 
-**Figure 9.** The baseline map. Do better than this example: label the places the route bends and
-why, and give the cost-surface inset its own legend.
+**Figure 9.** The baseline map. Do better than this example: label the cities, and say on the map
+which ones the four-minute area leaves out.
 
-![Example scenario layout titled "What Moves the Route? Three Line Weights": the same base with three routes, the baseline at Line_Weight 1 (56.09 km, red), the example personal run at Line_Weight 0.445 (54.95 km, cyan) and Line_Weight 0 (53.70 km, purple), which leaves the existing lines and runs nearer the straight line; a text box says what changed.](images/lab11-example-map-scenario.png)
+![Example comparison layout titled "Straight-Line Distance versus Network Distance": the same base with the 3.75 km buffer as a yellow dashed outline, the four-minute network area in blue inside it, and the populated blocks the buffer counts as covered but the roads do not in orange; a text box gives both populations and what changed.](images/lab11-example-map-crow.png)
 
-**Figure 10.** The scenario map, for the example BYU ID ending 89. They are examples, not templates:
-your maps carry your name and show your own runs.
+**Figure 10.** The comparison map. They are examples, not templates: your maps carry your name and
+show your own runs.
 
-## Rubric for Least Cost Path Power Line Analysis
+## Rubric for Fire Response Coverage
 
 Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
 what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — the Roads "Last Update" date, what the municipal boundaries are for, what the power-line metadata does and does not say — and what each means for your route (2)<br>• Your check values from Steps 1 to 7: the selection counts, the cost range, and the route's length, accumulated cost and crossings (1)<br>• Where the route is unrealistic: two places on your route, each with coordinates, a cropped figure and the reason, and what data would fix it (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the defaults, matches the check values: a 56.09 km route, 744,018 at the destination, 4 crossings (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the two weights and the route exposed as parameters, and `Lab11.atbx` uploaded (2)<br>• A description of the model a reader could repeat from, with the Select expressions, the score tables and the cost expression (2) | /10 |
-| **Map 1 — your baseline route**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the data (1)<br>• The route and the two substations clearly symbolized, with a legend (2)<br>• Existing lines, major roads, cities and major lakes symbolized and readable (2)<br>• An inset of the cost surface, the "virtual terrain", with its legend (2)<br>• Imagery basemap, scale and legibility appropriate to the route (2) | /10 |
-| **Map 2 — your route and one other run**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• The baseline, your personal route and one other run, each distinguishable in the legend (2)<br>• The endpoints and the existing lines shown, so a reader can see what the routes follow (2)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Imagery basemap, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least five runs — including your BYU ID's last two digits and Line_Weight — giving the weights, length, accumulated cost, crossings and the largest distance from the baseline (4)<br>• Which weight moved the route and which barely did, and why (2)<br>• How much longer than the straight line your route is, and what the extra kilometers buy (2)<br>• What the cost surface leaves out, and what you would add (2) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — the stations' "Last Update" date, what UGRC's minutes were estimated from, what the blocks layer's description says — and what each means for your count (2)<br>• Your check values from Steps 0 to 6: the layer counts, the one-way count, the served area, the people and blocks outside at four minutes, the buffer's area and people (1)<br>• Where the straight line is wrong: two places on your map, each with coordinates, a cropped figure and the reason (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the defaults, matches the check values: 194.85 km² served, 379,054 people outside, 23,203 outside the buffer (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters, and `Lab11.atbx` uploaded (2)<br>• A description of the model a reader could repeat from, with every tool's settings and every dataset (2) | /10 |
+| **Map 1 — fire response coverage**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the data (1)<br>• The 0–4 and 4–8 minute areas and the blocks outside four minutes symbolized, with a legend (2)<br>• The stations, the county and the cities readable against the basemap (2)<br>• The headline numbers on the map: people outside four minutes and the share of the county (2)<br>• Imagery basemap, scale and legibility appropriate to the county (2) | /10 |
+| **Map 2 — straight line versus network**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• The buffer and the network area both shown and distinguishable in the legend (2)<br>• The blocks the buffer counts as covered that the network does not, highlighted (2)<br>• Title and text box say what changed from Map 1 and give both counts of people outside (2)<br>• Imagery basemap, scale and legibility (2) | /10 |
+| **Sensitivity** (Step 9)<br>• One table with the baseline and at least five runs — including your BYU ID's last two digits and cutoff — giving the cutoff, the buffer distance, the served area, the blocks and people outside and the share (4)<br>• How the share responds to the standard, and between which cutoffs it falls fastest (2)<br>• Why the buffer and the network disagree: the people the buffer claims and the roads do not reach, and what the roads do at your two places (2)<br>• What the model leaves out, which way each would move your share, and what data would fix the one that matters most (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -693,13 +700,12 @@ what to submit.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Migration notes (rebuild drafted 2026-10-09).
-SOURCE: the September 3, 2026 migration of "Lab 10 - Least Cost Path Power Line Analysis.docx" (replaced by this page on promotion), rebuilt to tools/lab-conversion-guide.md from tools/lab11/PLAN.md (design accepted by the instructor October 6, 2026 in tools/labs-09-11-plan.md sections 6 and 8). Background voice, the NIMBY/BANANA paragraph and the references are carried from it; "network analysis" corrected to a raster cost analysis; the in-text "Meehan, 2003" now cites the 2007 title (confirmed: Esri Press 2007).
-ARCGIS PRO: 3.7.1, arcpy only (tools/lab11/run_model.py on the hosted zip, extracted to C:\Ames\Lab11\ref; check_values.json). Cost Distance shows its own deprecation notice naming Distance Accumulation (seen in the GUI October 9, 2026, Week 12 deck). Distance Accumulation and Optimal Path As Line dialog labels on the page are from the Week 12 Thursday deck's captures (lcpb-distance-accumulation.png, lcpb-optimal-path.png), run there on definition-query layers Source and Destination. GUI BUILD 2026-10-09 (C:\Ames\Lab11GUI): every step built by hand from the page, run inside ModelBuilder and from the tool dialog; every check value of Steps 1-8 matched (tools/lab11/check_gui.py). GUI facts: double-clicking a model raster in Raster Calculator inserts "%Name%"; Select output names reset after validating the SQL, so type them last; the Reclassify table is empty before a run (type rows, Tab between cells); a Select output (Major_Lakes) cannot be cleared as a dialog parameter; Polyline to Raster accepts IsMajor; the tool-dialog run took about 1.5 minutes and deletes every non-parameter dataset.
-DATA PACKAGE: docs/data/lab11-power-line.zip, 17,984,171 bytes (18.0 MB), built by tools/lab11/make_package.py on 2026-10-09: Elevation.tif from the 3DEP ImageServer exportImage (30 m, bilinear, F32, UTM 12N; box 410,340-461,910 E, 4,425,630-4,489,350 N), 1,719 x 2,124, 1,314.97-3,568.37 m; PowerLineData.gdb from UGRC feature services (UtahRoads where DOT_FCLASS not empty 9,031 -> 8,937 after clip; UtahLakesNHD 985 -> 967; UtahStreamsNHD 4,141 -> 4,086; UtahMunicipalBoundaries 35 -> 34; TransmissionLines 294 -> 292); Endpoints = centers of UGRC TransmissionLines substations OBJECTID 2185 (Source, 450,234 E 4,436,883 N, 40.08075 N 111.58370 W; 428 m from the handout's source coordinate) and 1350 (Destination, 419,692 E 4,479,936 N, 40.46622 N 111.94729 W; 1,095 m from the handout's destination coordinate), probe_endpoints.py and endpoint_chips.py. READ-ME-FIRST.txt inside. Endpoint scenario wording: "the data center at Bluffdale" replaces the handout's "new NSA Data Center"; no capacities or dates claimed for the wind park or the data center.
-VERIFIED NUMBERS (check_values.json): selections Major_Roads 1,377, Major_Lakes 7, Major_Streams 319, Existing_Lines 241 (292 - 241 = 51 substations); Slope_Degrees 0-71.81, mean 11.2132; Road_Distance max 24,515.2 (mean 6,202.2); City_Distance max 14,923.4 (mean 3,147.5); Line_Distance max 15,571.3 (mean 3,115.9); Slope_Score 1:1,848,647 2:324,957 4:259,000 6:249,393 8:501,985 10:459,492 (sum 3,643,474 = 3,651,156 - 7,682, the outer ring); Road_Score 1:646,624 3:374,134 6:835,970 10:1,794,428; City_Score 1:1,055,936 2:198,582 4:228,810 6:254,776 8:293,203 10:1,619,849; Line_Score 1:614,688 5:1,084,196 10:1,952,272 (each sums to 3,651,156); River_Cells 9,713 (value field IsMajor in the GUI build; run_model.py uses a field One = 1, same cells; MAXIMUM_LENGTH); Cost_base 4-48, mean 23.6865; Acc_base max 1,116,187.4 (mean 566,466.8); baseline route 56.09 km, total cost 744,018.2 at the destination (GetCellValue), 4 river crossings (Pairwise Intersect points merged within one 30 m cell), 92.8 % within 1 km of a major road, 99.7 % within 500 m of an existing line, 100 % with City_Score 10; straight line 52.79 km.
+<!-- Migration notes (new lab, drafted 2026-10-10).
+SOURCE: none; written from tools/lab11/PLAN.md (fire response coverage with Service Area, UGRC's prebuilt network, block centroids, cutoff minutes as the personal number, all 42 stations, no optional extra, 50 points, NFPA 1710 with a verify caveat), the nine decisions accepted by the instructor on October 10, 2026.
+ARCGIS PRO: 3.7.1, arcpy only so far (tools/lab11/run_model.py on the hosted zip, extracted to C:\Ames\Lab11\ref; check_values.json). Geoprocessing tools, not arcpy.nax, so every default is the dialog's. GUI BUILD 2026-10-10 (C:\Ames\Lab11GUI, Lab11.aprx, gui_project.py): every step built by hand from the page in ArcGIS Pro 3.7.1 at 175 %, run inside ModelBuilder and from the tool dialog; every check value of Steps 0-6 matched both ways (tools/lab11/check_gui.py; dialog run 46 s). GUI facts: Make Service Area Analysis Layer's labels are Network Data Source and Layer Name; the Travel Mode box is empty with an empty list on a network with no travel modes; Cutoffs ships three rows (5, 10, 15) that must be removed to one; Search Tolerance sits under Advanced in Add Locations; Select Data lives in the ModelBuilder ribbon's Utilities menu (Insert group), not in the Geoprocessing search; Create Variable > From Parameter lists Cutoffs; the derived output of Select Layer By Location cannot be renamed by hand; the tool's parameter order is creation order (Buffer_Distance first, Cutoff_Minutes last). The model design changed in the build: two Select Layer By Location tools on one map layer share one selection (the first dialog run put the buffer's 1,365 blocks in Unserved_Blocks_Base); a precondition from Unserved_Blocks did not order the dialog run; two Selects fed the dataset path both derived a layer named Census_Blocks_Layer and the dialog run failed silently after 9 s; a Make Feature Layer per branch (Blocks_Net, Blocks_Crow) fixed it, and the ModelBuilder run and the dialog run then matched the reference.
+DATA PACKAGE: docs/data/lab11-fire-response.zip, 20,622,692 bytes (20.6 MB), built by tools/lab11/make_package.py on 2026-10-10: UGRC Utah Street Network (UtahRoadsNetworkAnalysis.gdb, 414,082 edges statewide, roads updated through 2026-09-23) exported where COUNTY_L or COUNTY_R = '49049' (41,460 edges, NETSUBTYPE kept for the template's connectivity) and rebuilt with CreateNetworkDatasetFromTemplate + BuildNetwork from UGRC's own template (tools/lab11/ugrc_network_template.xml, renamed Utah_County_Roads_ND; 33,872 junctions); FireStations COUNTY = 'UTAH' (42); CensusBlocks2020 COUNTYFP20 = '049' (10,092; PP_TOTAL sum 659,399; UR20 is blank for every block and was dropped). The network has no travel modes (arcpy.nax.ReplaceNetworkTravelModes fails without a message on the clipped copy; the GP tool runs on the default cost); add "Driving Time" in the GUI build if the dialog is confusing without it. No turns, no elevation model.
+VERIFIED NUMBERS (check_values.json): one-way 590; I-15 NB FWY longest one-way segment 4,418.5 m, SPEED_LMT 65, F_T 3.0419 / T_F 304.1884 (x100.0); 7,465.4 km of road; stations EMS Y 34, N 3, blank 5; blocks with PP_TOTAL = 0: 2,125; baseline cutoff 4: 42 located, 194.85 km2 (1 feature), Unserved 6,341 blocks, 379,054 people, 57.5 %; rings 4 8: 194.85 + 363.13 km2; crow 3.75 km: 1,070.61 km2, 1,365 blocks, 23,203 people, 3.5 %; examples 89 -> 7.56 min: 519.07 km2, 2,537 blocks, 90,929 people, 13.8 %; 02 -> 4.08 min: 201.50 km2, 6,247 blocks, 370,716, 56.2 %. Block centers by HAVE_THEIR_CENTER_IN (the feasibility run used Feature To Point INSIDE and got 374,769; the page uses the tool the students use).
 SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 11).
-CORRECTIONS (from the Word-era page): deprecated Cost Distance / Cost Back Link / Cost Path / Raster to Polyline -> Distance Accumulation + Optimal Path As Line; elevation multiplier ("lower is more suitable") -> slope score; product of rasters -> weighted sum; road corridor as NoData barrier -> road distance score; Multiple Ring Buffer and Buffers -> straight-line distance rasters; "cell size 100" (no unit) -> 30 m, UTM 12N, extent/snap/cell size set; six downloads + county mosaic/buffer/clip -> one hosted package; typed endpoint coordinates -> two UGRC substations; dead RFF link removed; rubric with no total and an unscored row -> five rows of ten. Field names AreaSqKm, IsMajor, DOT_FCLASS (values Interstate, Other Freeway, Principal Arterial) and LAYER (KV-%, SUB-...) verified against the package. Step 8 adds Major_Streams, Cost_Surface and Accumulated_Cost as parameters beyond the plan's four, because a dialog run deletes non-parameters and Step 9 needs the cost at the destination, the crossings and Map 1's cost inset for every run.
-FIGURES: Figure A (lab11-metadata.svg) and the three icons by tools/lab11/make_svgs.py, from READ-ME-FIRST.txt and the UGRC service descriptions read 2026-10-09. Figure B (lab11-study-area.png) by tools/lab11/figure_b.py from the package. Figures 0-8 are screen grabs (tools/screenshots/) at 175 % from the 2026-10-09 GUI build (C:\Ames\Lab11GUI, tools/lab11/gui_project.py); Figure 0 composed from two grabs; Figure C (lab11-model.svg) is the model's Export To Graphic after a run, auto-laid-out. Figures 9-10 (example maps) by tools/lab11/build_figures.py (arcpy.mp, from the reference run). The Word-era images were deleted on promotion.
-REFERENCES: Meehan 2007 confirmed (Esri Press, ISBN 9781589480254; the in-text "2003" of the source handout was wrong). RFF DP 06-03 at rff.org (the old rff.org/rff/documents link is dead).
-TODO(instructor): 1. Learning Suite due date (Saturday of Week 12) and a link to the page and the template. 2. GUI pilot by a student at a lab machine is still owed (the GUI build here was on the instructor laptop). -->
+FIGURES: Figure A (lab11-metadata.svg) and the five icons by tools/lab11/make_svgs.py from READ-ME-FIRST.txt and the UGRC descriptions read 2026-10-10; Figure B (lab11-study-area.png) by figure_b.py from the package and the live county boundary; Figures 9-10 by build_figures.py (arcpy.mp, from the reference run). Figures 0-8 and C: owed to the GUI build.
+REFERENCES: NFPA 1710 240 s / 480 s travel time at 90 % from secondary sources (Fire Engineering, DC FEMS, a North Davis fire agenda quoting 5.2.4.1.1); VERIFY the current edition. UGRC Fire_Station_Travel_Times service description quoted verbatim.
+TODO(instructor): 1. Learning Suite due date (Saturday of Week 12, 11:59 pm), link to the page and the template, multiple uploads for the .atbx. 2. docs/policies/grading.md "Labs 1 to 12, 600". 3. GUI pilot by a student at a lab machine; confirm the lab machines' ArcGIS Pro version opens a 3.7-built network dataset. -->

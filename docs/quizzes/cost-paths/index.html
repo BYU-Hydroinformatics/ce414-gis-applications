@@ -6,7 +6,7 @@
   <title>CE 414 — What Moved the Line?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which of Lab 11's weights actually move the route, and what a corridor shows.">
+  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which of Lab 10's weights actually move the route, and what a corridor shows.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -15,11 +15,11 @@
 <script>
 CE414Quiz.start({
   title: "What Moved the Line?",
-  subtitle: "CE 414 &middot; Week 12 &mdash; Least Cost Path Analysis, Part B<br>" +
+  subtitle: "CE 414 &middot; Week 11 &mdash; Least Cost Path Analysis, Part B<br>" +
             "The algorithm is exact; the decisions are yours. For each item, decide " +
             "<strong>what the tool or the cost surface is doing</strong>.",
   badge: "Route call",
-  deckUrl: "../../slides/week-12/least-cost-path-b.html",
+  deckUrl: "../../slides/week-11/least-cost-path-b.html",
   questions: [
     {
       prompt: "Cost Distance is deprecated in ArcGIS Pro. Which tool gives you both the accumulated cost raster and the back direction raster?",
@@ -43,7 +43,7 @@ CE414Quiz.start({
       explanation: "The back direction is a compass angle: 0 marks the source itself, 90 is east, 180 south, 270 west, 360 north. It is a direction, not a cost; the accumulated cost raster holds the cost."
     },
     {
-      prompt: "In Lab 11, raising Slope_Weight from 1 to 5 moves the route by at most about 560 m. Why so little?",
+      prompt: "In Lab 10, raising Slope_Weight from 1 to 5 moves the route by at most about 560 m. Why so little?",
       options: [
         "Distance Accumulation ignores weights above 1",
         "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
@@ -53,7 +53,7 @@ CE414Quiz.start({
       explanation: "A weight multiplies a score; if the score is the same along every route the line could take, multiplying it changes every route's cost alike and cannot choose between them. In mountains, slope would move the line."
     },
     {
-      prompt: "Lab 11's route lies within 500 m of an existing transmission line for 99.7% of its length. Which change should move it most?",
+      prompt: "Lab 10's route lies within 500 m of an existing transmission line for 99.7% of its length. Which change should move it most?",
       options: [
         "Setting Line_Weight to 0",
         "Removing the lake barrier",
@@ -73,8 +73,8 @@ CE414Quiz.start({
       explanation: "Add the accumulated cost from the source to the accumulated cost from the destination: each cell gets the cost of the best route forced through it. Cells near the minimum are where a nearly-as-good route could go; that is how an engineer finds alternatives."
     }
   ],
-  perfectNote:  "All five. On to Lab 11.",
-  goodNote:     "Good. Reread the explanations you missed before you build the Lab 11 cost surface.",
+  perfectNote:  "All five. On to Lab 10.",
+  goodNote:     "Good. Reread the explanations you missed before you build the Lab 10 cost surface.",
   tryAgainNote: "The back direction raster is a compass angle, a score that is equal along every candidate route cannot move it, and a corridor adds two accumulations. Look at those slides again."
 });
 </script>

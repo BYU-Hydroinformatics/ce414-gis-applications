@@ -70,7 +70,7 @@ Kriging creates a mathematical model, which is then used to estimate values acro
 
 <!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
 
-<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 10 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
+<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 12 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
 
 ---
 

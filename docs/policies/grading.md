@@ -23,7 +23,7 @@ Below 60 % is an E.
 
 ## What is graded
 
-Point values are from the Learning Suite assignments view (September 8, 2026) plus Lab 12, added
+Point values are from the Learning Suite assignments view (September 8, 2026) plus Lab 11 (Network Analysis), added
 October 10, 2026: 1,320 points in all. The grade is points-based, so the percentages below are simply each component's share of the
 total and will shift a little if points are added or dropped during the semester.
 

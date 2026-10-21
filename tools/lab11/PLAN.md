@@ -1,66 +1,202 @@
-# Lab 11 (Least Cost Path Power Line) — rebuild plan
+# Lab 11 (Network Analysis) — plan for the instructor's decisions
 
-Written October 9, 2026. Design source: `tools/labs-09-11-plan.md` section 6, whose recommendations
-the instructor accepted on October 6, 2026. This file records how they were applied, the two choices
-that plan left open, and everything measured. Authority for "done": `tools/lab-conversion-guide.md`.
+Written October 9, 2026, from `tools/NEXT_STEPS.md` section 1. This is step 1 of
+`tools/lab-conversion-guide.md` section 9: the analytical question, the data, the numbers the student
+varies, and the personal number, with everything below **measured** in ArcGIS Pro 3.7.1's Python on
+October 9 (`feasibility_network.py`, `feasibility_population.py`, working folder `C:\Ames\Lab11\`).
+Nothing has been built for students yet. **Stop here and decide the numbered items at the end.**
 
-## Accepted decisions (labs-09-11-plan.md, section 6 and section 8)
+## 1. The question (proposed)
 
-1. **Distance Accumulation + Optimal Path As Line** replace Cost Distance / Cost Back Link / Cost Path /
-   Raster to Polyline. (Verified in ArcGIS Pro 3.7.1, October 9: Cost Distance shows its own
-   deprecation notice naming Distance Accumulation.)
-2. **Slope, not raw elevation**, as the terrain cost. ("Lower is cheaper" is not a defensible
-   engineering cost; steepness is. The Week 12 Part B deck measured the old elevation multiplier:
-   on its own it gives nearly the straight line.)
-3. **Personal numbers from the BYU ID** (section 8, item 1). Applied as a personal **line weight**,
-   `0.005 × last two digits` (0 to 0.495); `run_model.py personal` writes the lookup. (First set at
-   0.20 + 0.01 × digits; the no-GUI pilot of Oct 9 found any weight above about 0.6 stays within 300 m of
-   the baseline, so about 60 of 100 students would have had the baseline route.)
-4. **Upload the toolbox (`Lab11.atbx`)** with the report (section 8, item 2), as in Labs 7 and 10.
-5. **Judgment tied to their own map** (section 8, item 4): "where the route is unrealistic" must name
-   a place on their route with coordinates and a cropped figure.
+> **Fire response coverage in Utah County.** Which residents live more than four minutes' drive
+> from the nearest fire station, how many are there, and how much does that answer depend on the
+> response standard and on measuring distance along the roads instead of in a straight line?
 
-## The two choices the plan left open (made here; the instructor may override)
+Why this one, of the three candidates in the hand-off:
 
-- **Hard barriers: open water only.** Lakes over 1 km² (Utah Lake, Deer Creek Reservoir and five
-  unnamed waterbodies in the box) go in Distance Accumulation's barrier input. City cores stay a cost,
-  because the endpoints themselves are in cities and Utah County's valley is nearly all municipal.
-- **Scenario wording.** Kept: a line from the mouth of Spanish Fork Canyon (the wind park) to
-  Bluffdale (the data center), but the endpoints are now **two existing substations** read from the
-  UGRC TransmissionLines layer (OBJECTID 2185, 428 m from the handout's source coordinate, and 1350,
-  1,095 m from its destination coordinate), not typed coordinates. "New NSA data center" becomes
-  "the data center at Bluffdale". (`probe_endpoints.py`, `endpoint_chips.py`.)
+- It uses the one Network Analyst solver students can learn in a week (**Service Area**), and it
+  carries a real engineering standard to vary: NFPA 1710's 240-second travel time for the first
+  engine and 480 seconds for the full first alarm (secondary sources only so far; the page will say
+  "verify the current edition" until the standard itself is checked).
+- It closes the course's distance arc explicitly: Lab 1 buffered roads and stores (**straight-line**
+  distance), Lab 10 accumulated cost across terrain (**cost distance**), Lab 11 travels the road
+  network (**network distance**). Step 6 puts a Lab 1 style buffer beside the service area on the same
+  map, and the numbers are far apart (section 5).
+- Closest Facility and Location-Allocation are both one more analysis layer in the same model and
+  can be the optional "going further" extra (at most five rubric points), not the spine; Week 12 is
+  also Midterm 2 week.
 
-## The model
+## 2. The network: use UGRC's prebuilt dataset, clipped to Utah County (measured, recommended)
 
-Cost = Slope_Weight × Slope_Score + Road_Score + City_Score + Line_Weight × Line_Score + Crossing, where
+UGRC publishes two prebuilt Network Analyst datasets, both file geodatabases on Google Drive:
 
-| Score | From | Classes |
+| Product | What it is | Verdict |
 | --- | --- | --- |
-| Slope_Score | Slope (degrees) of the 30 m DEM | 0–5: 1, 5–10: 2, 10–15: 4, 15–20: 6, 20–30: 8, > 30: 10 |
-| Road_Score | distance to a major road (Interstate, Other Freeway, Principal Arterial) | ≤ 1 km: 1, 1–2 km: 3, 2–5 km: 6, > 5 km: 10 |
-| City_Score | distance to a city boundary (0 inside) | ≤ 1 km: 10, then 8, 6, 4, 2 by kilometer to 5 km, beyond: 1 |
-| Line_Score | distance to an existing kV line | ≤ 500 m: 1, 0.5–2 km: 5, > 2 km: 10 |
-| Crossing | a major stream cell (IsMajor = 1, Polyline to Raster) | 10, else 0 |
+| [Utah Street Network](https://gis.utah.gov/data/transportation/street-network-analysis/) | Statewide `UtahRoadsNetworkAnalysis.gdb` (224 MB zipped, 447 MB unzipped): feature dataset `NetworkDataset` in NAD 1983 UTM 12N with `Roads` (414,082 edges, UGRC roads updated through September 23, 2026), 362,238 junctions, and a **built** network dataset `UtahRoadsNetwork` with two cost attributes, **TravelMinutes** (default) and **Length** (meters). No turns, no elevation model, **no travel modes**, no restriction attributes. | **Use it.** |
+| [Multimodal Network](https://gis.utah.gov/products/sgid/transportation/multimodal-network/) | Wasatch Front auto + bike + pedestrian + 2019 transit, from a 2018 pilot; pedestrian data densified only within half a mile of 50 sites. | Not for this lab: the extra modes are noise for a fire-response question and the transit data is 2019. |
 
-Distances are straight-line, made with Distance Accumulation with no cost raster (the same tool the
-route uses). Parameters: **Slope_Weight** (1) and **Line_Weight** (1), plus the barrier input,
-which a student can clear in the tool dialog to test "barrier versus cost".
+How UGRC's network costs travel (from the `Roads` fields the template evaluates): `F_T_IMP_MIN` and
+`T_F_IMP_MIN` are minutes in each direction, estimated from `SPEED_LMT` and `CARTOCODE`, with surface
+streets multiplied by 1.5 for signals and congestion. **One-way streets are not a restriction but a
+penalty:** the wrong direction costs 100 times the right one (590 one-way edges in Utah County, every
+one asymmetric). The page and the deck should say so, because it is a good example of "the network is
+a model too": an engine can legally drive the wrong way with its lights on, and a 100× penalty is one
+defensible way to say "almost never".
 
-**Why these two parameters (measured, October 9).** The first design exposed Slope_Weight and a
-river Crossing_Cost. Neither moved the route: slope weight 0 to 2, crossing cost 0 to 20 and removing
-the lake barrier all kept it within a few hundred meters of the baseline (`check_values.json` of
-that run, superseded). 99.7 % of the route lies within 500 m of an existing kV line, so the
-co-location score dominates. `explore_weights.py` (`explore_weights.json`): Line_Weight 0 puts only
-26 % of the route within 300 m of the baseline (53.7 km); 0.5 keeps 74 %; road weight 0 keeps 55 %;
-slope weight 5 keeps 94 %; city weight 0 keeps 100 %. So the student varies Line_Weight (which moves
-the route kilometers) and Slope_Weight (which, in a flat valley, barely does); the contrast is the
-lesson, and the personal number is a Line_Weight in the range where the route responds.
+**Clip and rebuild, do not ask students to build.** `CreateTemplateFromNetworkDataset` on UGRC's
+network, `ExportFeatures` of the 41,460 Utah County edges (`COUNTY_L` or `COUNTY_R` = `'49049'`),
+`CreateNetworkDatasetFromTemplate`, `BuildNetwork`: 28 seconds end to end, and the student receives
+UGRC's own cost definition unchanged in a county-sized geodatabase (about 15 MB zipped, to be
+measured). Building a network dataset from raw `UtahRoads` is a Catalog-pane wizard with a dozen
+decisions (sources, connectivity, elevation fields, attributes, evaluators, travel modes, build); it is
+the right content for the Tuesday deck, not for a one-week lab in exam week. Service Area from all 42
+stations at two cutoffs solves in 10 seconds.
 
-Data: `docs/data/lab11-power-line.zip` (`make_package.py`): 3DEP at 30 m in UTM 12N, UGRC roads with a
-UDOT functional class, all NHD lakes and streams in the box, municipalities, transmission lines and
-substations, and the two endpoint substations. Students do the four Selects themselves.
+Two things to verify in the GUI build before promotion:
 
-## Measured
+- **Travel modes.** UGRC's network has none, and `arcpy.nax.ReplaceNetworkTravelModes` fails on the
+  clipped copy without a message (tried four ways). The geoprocessing tool runs without one (it uses
+  the default cost, TravelMinutes), so the lab works either way, but a named **Driving Time** mode in
+  the dialog is clearer; add it in **Network Dataset Properties ▸ Travel Modes** during the GUI build
+  and check it survives the zip.
+- **Lab-machine version.** Everything is built in ArcGIS Pro 3.7.1; a network dataset built in 3.7
+  must open on the lab machines' version (confirm it is also 3.7).
 
-See `check_values.json` (`run_model.py`) and `ce414-private/grading-oracles/lab11_personal_lookup.csv` (`run_model.py personal`; private repo).
+## 3. The other data
+
+| Layer | Source (all UGRC feature services, as in Lab 10's `make_package.py`) | In Utah County |
+| --- | --- | --- |
+| Fire stations | `FireStations` (`NAME`, `ADDRESS`, `CITY`, `EMS` = Y/N/blank; layer dated September 2022) | **42** points, including Camp Williams and the UVU fire academy |
+| Census blocks 2020 | `CensusBlocks2020` (`GEOID20`, `PP_TOTAL`, `HU_TOTAL`, `ALAND20`) | **10,092** blocks, **659,399** people |
+| Roads network | UGRC Utah Street Network, clipped (section 2) | 41,460 edges |
+| County boundary | `UtahCountyBoundaries` | 1 |
+| Alternatives considered | Licensed hospitals (`LicensedHealthCareFacilities`, `LICENSE_TYPE = 'Hospital'`, 12 in the county, four of them psychiatric or specialty); EMS agencies (`EmergencyMedicalServices`, 30); building footprints (`Buildings`, 191,855 polygons); address points (`UtahAddressPoints`, 248,791) | Hospitals are a weaker question (patients travel to them; 12 facilities, no standard to vary). Buildings and address points are "every door" demand and would make a fine optional extra but are too heavy for the required path. |
+
+Demand is **people, by block centroid** (Feature To Point, inside): a block is "covered" when its
+centroid falls inside the service-area polygon. That is what UGRC's own
+[Fire Station Travel Times](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/Fire_Station_Travel_Times/FeatureServer)
+layer (2, 4 and 6 minute rings, March 2022, "typical network travel, not expedited emergency travel")
+leaves out, and it is the honest unit for "how many residents". Students also download one layer live
+(the county boundary or the stations) so the metadata questions have something to bite on, as in
+Labs 1 and 10.
+
+## 4. The model and the steps (about nine)
+
+One ModelBuilder model, `Lab11.atbx`, with the cutoff exposed:
+
+```
+Fire_Stations ─┐
+Network ───────┴─ Make Service Area Analysis Layer (cutoffs = %Cutoff_Minutes%, from facilities,
+                   standard detail, dissolve overlaps, rings)
+               ─ Add Locations (Facilities) ─ Solve ─ Select Data (Polygons) ─ Copy Features → Served_Area
+Block_Points ─── Select Layer By Location (INTERSECT Served_Area, INVERT) ─ Copy Features → Unserved_Blocks
+               ─ Summary Statistics (SUM PP_TOTAL) → Unserved_Population
+Fire_Stations ── Buffer (%Buffer_Distance%, dissolve) → Crow_Area   (Step 6; same selection → Crow_Unserved)
+```
+
+| Step | Title | Check value (measured) |
+| --- | --- | --- |
+| 0 | Set Up the Project | network dataset opens: 41,460 edges; Network Analyst extension on |
+| 1 | Look at the Network | one named road's `F_T_IMP_MIN` versus `T_F_IMP_MIN`; the 100× one-way penalty; 590 one-way edges |
+| 2 | Place the Stations | 42 stations located, 0 unlocated (5 km search tolerance) |
+| 3 | Make the Service Area Layer | layer in the Contents pane with Facilities, Polygons |
+| 4 | Solve and Export | 4-minute area **197.3 km²**, 4–8 ring **373.0 km²** |
+| 5 | Count the People Outside | **374,769** of 659,399 outside 4 minutes (56.8 %); 64,015 outside 8 minutes (9.7 %) |
+| 6 | Compare the Straight Line | 2.5 km buffer leaves **101,007** outside (15.3 %); 3 km, 50,815 (7.7 %) |
+| 7 | Set Model Parameters | Cutoff_Minutes and Buffer_Distance exposed; model SVG |
+| 8 | Run the Tool | personal cutoff run (section 5) |
+| 9 | Test the Standard | the sensitivity table, three questions, Map 2 |
+
+Rubric: Write-up 10, Model 10, Map 1 (service-area rings, uncovered blocks, stations) 10, Map 2 (the
+straight-line buffer beside the network area for the same minutes, with the two populations in the
+text box) 10, Sensitivity 10. Deliverables list matches item for item; `.atbx` uploaded.
+
+## 5. The numbers the student varies, and the personal number (measured)
+
+**Cutoff minutes** moves the answer across the whole range, which is what Lab 10 taught us to check
+before publishing:
+
+| Cutoff (min) | People outside | % |
+| --- | --- | --- |
+| 2 | 583,002 | 88.4 |
+| 3 | 493,127 | 74.8 |
+| 4 | 374,769 | 56.8 |
+| 5 | 274,105 | 41.6 |
+| 6 | 181,107 | 27.5 |
+| 7 | 116,270 | 17.6 |
+| 8 | 64,015 | 9.7 |
+| 10 | 26,375 | 4.0 |
+| 12 | 18,373 | 2.8 |
+
+Straight-line buffers around the same 42 stations, for Step 6's contrast:
+
+| Buffer | People outside | % |
+| --- | --- | --- |
+| 1.5 km | 330,003 | 50.0 |
+| 2 km | 196,111 | 29.7 |
+| 2.5 km | 101,007 | 15.3 |
+| 3 km | 50,815 | 7.7 |
+| 4 km | 18,994 | 2.9 |
+
+The teaching point writes itself: four minutes at a 35 mph limit is 3.75 km as the crow flies, which
+"covers" 97 % of the county; along the roads at UGRC's typical speeds it covers 43 %.
+
+**Personal number (proposed):** `Cutoff_Minutes = 4 + 0.04 × (last two digits of the BYU ID)`, 4.00 to
+7.96 minutes, which spans 56.8 % down to about 10 % outside: every student gets a different population
+and the grader reproduces it with `run_model.py --digits NN` (the lookup CSV comes from the reference
+run, one solve per value, about 10 s each). The published check values stay at 4 and 8 minutes.
+
+**Second number:** the buffer distance in Step 6 (default 2.5 km; the student also tries the "4 minutes
+at the speed limit" distance). Not personal.
+
+**Not proposed as a parameter, but worth a sentence in the deck:** UGRC's 1.5× surface-street factor.
+An engine running code three is faster than UGRC's "typical" driver, so the 56.8 % is an upper bound.
+If Dan wants a second *network* sensitivity, the package network can carry a second cost attribute
+`ResponseMinutes = TravelMinutes / 1.5` and a second travel mode, and Step 9 adds one run with it
+(decision 4).
+
+## 6. Fit with Week 12
+
+Tuesday deck (`network-analysis-a`): what a network dataset is, edges, junctions, connectivity,
+one-way and impedance, how UGRC built this one (the wizard the students are spared), and the three
+distances side by side. Thursday deck (`network-analysis-b`): Service Area, Closest Facility and
+Location-Allocation in ArcGIS Pro, then Lab 11 live on the package. Midterm 2 is open Tuesday to
+Thursday; the lab is due Saturday 11:59 pm.
+
+## Decisions for the instructor
+
+1. **The question:** fire-station response coverage with Service Area, as above? (Alternatives:
+   hospitals; a Lab 1 style site selection with Location-Allocation, which I would keep as the
+   optional extra.)
+2. **The network:** UGRC's prebuilt Street Network clipped to Utah County and hosted, students never
+   build one? (Recommend yes; the build is deck material.)
+3. **Demand unit:** people by 2020 block centroid (recommend), or address points?
+4. **Sensitivity:** cutoff minutes only, with the straight-line buffer as the contrast (recommend), or
+   also the emergency-speed travel mode?
+5. **Personal number:** `4 + 0.04 × digits` minutes (4.00 to 7.96)? Any other range is one line to change.
+6. **Which stations:** all 42 as published, or drop Camp Williams and the UVU academy (one Select step,
+   check value 40)? Recommend keeping all 42 and letting the metadata question ask whether they belong.
+7. **Optional extra (at most five points):** Location-Allocation for one new station that covers the
+   most uncovered people, or Closest Facility from a student-chosen address? Or no extra, since it is
+   exam week (recommend none).
+8. **Lab 11 points** for `docs/policies/grading.md`: 50, making "Labs 1 to 12, 600"?
+9. **NFPA 1710** as the stated standard, with the "verify the current edition" caveat, or a plainer
+   "the city's own four-minute goal"?
+
+## What happens after the decisions
+
+`make_package.py` (clip and rebuild the network, fetch stations, blocks and boundary, READ-ME, zip to
+`docs/data/lab11-fire-response.zip`), `run_model.py` (baseline, step checks, cutoff sweep, personal
+lookup), `draft.md`, icons and Figure A/B, no-GUI pilot, GUI build at 175 % in `C:\Ames\Lab11GUI\`,
+example maps, template, promote, `build_schedule.py` and `grading.md`, Learning Suite. Commit;
+no push until asked.
+
+## Measured (October 9, 2026, ArcGIS Pro 3.7.1)
+
+- UGRC Utah Street Network: 414,082 edges, 362,238 junctions statewide; attributes TravelMinutes
+  (minutes, default) and Length (meters); no travel modes, turns, elevation model or restrictions.
+- Utah County clip: 41,460 edges; template 27 KB; export 17 s, create and build 9 s.
+- 590 one-way edges, all with the reverse direction costed at 100× (`F_T_IMP_MIN` vs `T_F_IMP_MIN`).
+- 42 stations, all located at 5 km tolerance; Service Area at 4 and 8 min solved in 10 s;
+  4-min area 197.3 km², 4 to 8 min ring 373.0 km².
+- Blocks: 10,092; population 659,399; the cutoff and buffer tables above.

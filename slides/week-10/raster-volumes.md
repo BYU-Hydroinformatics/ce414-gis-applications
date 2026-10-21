@@ -198,7 +198,7 @@ Area × mean height **must** equal the sum. If it does not, the units are wrong 
 
 - **Quiz 8**, built from this week's two decks — due **Saturday 11:59 pm**
 - **Lab 9 — Big Southern Butte** — due **Saturday 11:59 pm**
-- Next week, back in class: **coordinate systems and GPS** refreshers, and **Lab 10 — Avalanche Hazard**
+- Next week, back in class: **least cost paths**, and **Lab 10 — Least Cost Path Power Line Analysis**
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>

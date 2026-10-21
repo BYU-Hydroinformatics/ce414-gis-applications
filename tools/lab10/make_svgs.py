@@ -1,16 +1,21 @@
-"""Generate the Lab 10 tool icons and Figure A as SVG with real text (same helpers and palette as Lab 6).
+"""Generate the Lab 10 tool icons and Figure A as SVG with real text (Lab 6 helpers and palette).
 
     python make_svgs.py
 
 Writes into docs/assignments/lab-10/images/:
-  icon-slope.svg, icon-aspect.svg, icon-cell-statistics.svg, icon-tabulate-area.svg
-  lab10-dem-metadata.svg   Figure A, the six metadata questions for the Little Cottonwood extract
+  icon-distance-accumulation.svg, icon-optimal-path-as-line.svg, icon-polyline-to-raster.svg
+  lab10-metadata.svg     Figure A, the six metadata questions for the lab's data
 
-Every metadata statement comes from the tile (USGS_13_n41w112, Last-Modified 2026-05-20, as
-recorded for Lab 5) and the extract's READ-ME-FIRST.txt (tools/lab10/make_extract.py).
+Metadata statements come from READ-ME-FIRST.txt (make_package.py) and from the UGRC feature
+services' own layer descriptions and last-edit dates, read October 9, 2026 (see PLAN.md):
+  UtahRoads: "Last Update: 08/05/2026"; "a multi-purpose statewide roads dataset for cartography and
+    range based-address location", "the base geometry for ... UDOT's highway linear referencing system".
+  UtahMunicipalBoundaries: "for cartography and approximate boundary identification"; changes
+    "through certification by the Lt. Governor's Office"; service last edited 2026-10-01.
+  UtahLakesNHD last edited 2026-10-01; UtahStreamsNHD 2026-03-07 (no description).
+  TransmissionLines: description "Electrical transmission facilities in Utah"; last edited 2026-03-07.
 """
 import importlib.util
-import math
 import pathlib
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -19,88 +24,89 @@ h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
 h.OUT = HERE.parents[1] / "docs" / "assignments" / "lab-10" / "images"
 NAVY, BLUE, LBLUE, GRAY, LGRAY, ORANGE, LORANGE, INK = h.NAVY, h.BLUE, h.LBLUE, h.GRAY, h.LGRAY, h.ORANGE, h.LORANGE, h.INK
-text, arrow, arrowhead, grid, icon = h.text, h.arrow, h.arrowhead, h.grid, h.icon
+GREEN, LGREEN = h.GREEN, h.LGREEN
+text, arrow, icon = h.text, h.arrow, h.icon
+
+
+def svg_open(W, H, label, title):
+    return [f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}' role='img' "
+            f"aria-label='{h.esc(label)}'>", f"<title>{h.esc(title)}</title>", f"<rect width='{W}' height='{H}' fill='white'/>"]
 
 
 def icons():
-    # Slope: a hillside with the angle marked
-    body = (f"<path d='M8,82 L100,82 L100,22 Z' fill='{LGRAY}' stroke='{GRAY}' stroke-width='1.5'/>"
-            f"<path d='M8,82 L100,22' stroke='{ORANGE}' stroke-width='3'/>"
-            f"<path d='M34,82 A26,26 0 0 0 30,68' fill='none' stroke='{NAVY}' stroke-width='1.8'/>"
-            + text(44, 76, "38°", 13, "bold", NAVY))
-    icon("slope", "Slope: the steepness of each cell, in degrees", body)
-
-    # Aspect: a compass rose with the downslope direction
-    body = (f"<circle cx='60' cy='45' r='34' fill='white' stroke='{GRAY}' stroke-width='1.5'/>"
-            + text(60, 24, "N", 11, "bold", NAVY, "middle") + text(84, 49, "E", 11, "normal", GRAY, "middle")
-            + text(60, 73, "S", 11, "normal", GRAY, "middle") + text(36, 49, "W", 11, "normal", GRAY, "middle")
-            + arrow(60, 45, 80, 25, ORANGE, 3, 9))
-    icon("aspect", "Aspect: the compass direction each slope faces", body)
-
-    # Cell Statistics: three grids, one cell picked out, become one grid holding their maximum
+    # Distance Accumulation: rings of growing cost spreading from a source cell, squeezed by an expensive patch
     body = ""
-    for k, (x, y) in enumerate(((6, 6), (14, 14), (22, 22))):
-        body += grid(x, y, 3, 3, 13, lambda r, c: LORANGE if (r, c) == (1, 1) else "white")
-    body += text(41, 51, "5", 10, "bold", INK, "middle")
-    body += arrow(68, 45, 84, 45, NAVY, 2, 6)
-    body += grid(88, 26, 3, 3, 10, lambda r, c: ORANGE if (r, c) == (1, 1) else "white")
-    body += text(103, 82, "max", 11, "bold", NAVY, "middle")
-    icon("cell-statistics", "Cell Statistics: a statistic of several rasters, cell by cell, such as the maximum", body)
+    for r, op in ((40, 0.25), (30, 0.4), (20, 0.6), (10, 0.85)):
+        body += f"<ellipse cx='34' cy='46' rx='{r + 8}' ry='{r}' fill='{BLUE}' fill-opacity='{op}'/>"
+    body += (f"<rect x='70' y='14' width='40' height='64' fill='{LORANGE}' stroke='{ORANGE}'/>"
+             + text(90, 50, "×10", 12, "bold", ORANGE, "middle")
+             + f"<rect x='29' y='41' width='10' height='10' fill='{NAVY}'/>")
+    icon("distance-accumulation", "Distance Accumulation: the cheapest total cost to reach every cell from a source, "
+         "spreading slowly through expensive cells", body)
 
-    # Tabulate Area: a zone outlined over classed cells, and the table of areas it produces
-    tones = [LBLUE, LORANGE, ORANGE, LBLUE]
-    body = grid(6, 10, 4, 4, 15, lambda r, c: tones[(r + c) % 4])
-    body += f"<path d='M10,16 L56,12 L62,60 L18,66 Z' fill='none' stroke='{NAVY}' stroke-width='2.5'/>"
-    body += arrow(70, 40, 80, 40, NAVY, 2, 6)
-    body += f"<rect x='82' y='16' width='34' height='48' fill='white' stroke='{NAVY}' stroke-width='1.5'/>"
-    for k in range(4):
-        body += f"<line x1='82' y1='{28 + k * 12}' x2='116' y2='{28 + k * 12}' stroke='{GRAY}' stroke-width='1'/>"
-    body += f"<line x1='96' y1='16' x2='96' y2='64' stroke='{GRAY}' stroke-width='1'/>"
-    body += text(89, 26, "1", 8, "bold", NAVY, "middle") + text(106, 26, "km²", 8, "bold", NAVY, "middle")
-    icon("tabulate-area", "Tabulate Area: the area of each class inside each zone, in a table", body)
+    # Optimal Path As Line: a line walked home from the destination to the source across a cost grid
+    body = ""
+    for i in range(6):
+        for j in range(4):
+            dark = (i, j) in ((2, 1), (2, 2), (3, 1), (3, 2))
+            body += (f"<rect x='{4 + i * 19}' y='{8 + j * 19}' width='19' height='19' "
+                     f"fill='{'#8c6d4f' if dark else '#f2e6d0'}' stroke='white' stroke-width='0.8'/>")
+    body += (f"<polyline points='13,74 32,74 51,74 70,74 89,55 108,17' fill='none' stroke='{ORANGE}' stroke-width='3.5'/>"
+             f"<line x1='13' y1='74' x2='108' y2='17' stroke='{NAVY}' stroke-width='1.2' stroke-dasharray='3,2'/>"
+             f"<rect x='8' y='69' width='10' height='10' fill='{GREEN}'/><rect x='103' y='12' width='10' height='10' fill='#c00000'/>")
+    icon("optimal-path-as-line", "Optimal Path As Line: the cheapest route from a destination back to the source, "
+         "drawn as a line, around the expensive cells rather than straight through them", body)
+
+    # Polyline to Raster: a river line becoming a chain of cells
+    body = ""
+    for i in range(6):
+        for j in range(4):
+            on = (i, j) in ((0, 0), (1, 0), (1, 1), (2, 1), (3, 2), (4, 2), (4, 3), (5, 3))
+            body += (f"<rect x='{4 + i * 19}' y='{8 + j * 19}' width='19' height='19' "
+                     f"fill='{BLUE if on else 'white'}' stroke='{LGRAY}' stroke-width='0.8'/>")
+    body += f"<path d='M4,12 C30,16 34,34 52,36 S78,52 90,58 S110,80 118,84' fill='none' stroke='{NAVY}' stroke-width='2.2'/>"
+    icon("polyline-to-raster", "Polyline to Raster: every cell a river line passes through becomes a river cell", body)
 
 
 def metadata_card():
-    W, H = 1000, 500
+    W, H = 1000, 540
     cards = [
         ("WHAT", "What do the data represent?",
-         ["Bare-earth ground elevation in METERS above",
-          "NAVD 88, 32-bit floating point. Cells of",
-          "1/3 arc-second: about 10.3 m north-south",
-          "and 7.8 m east-west at 40.6° N."]),
+         ["Elevation.tif: ground elevation, METERS above",
+          "NAVD 88, 30 m cells. Roads with a UDOT class;",
+          "NHD lakes and streams; city limits; power",
+          "lines (KV-46/138/345) and substations."]),
         ("WHERE", "Where, and in what coordinate system?",
-         ["Upper Little Cottonwood Canyon, with Snowbird",
-          "and Alta: 111.70° to 111.58° W, 40.53° to 40.61° N.",
-          "Stored in latitude/longitude (GCS NAD 1983):",
-          "project it before Slope and Aspect (Step 1)."]),
+         ["39.98-40.55° N, 112.05-111.45° W: the mouth",
+          "of Spanish Fork Canyon to Bluffdale. NAD 1983",
+          "UTM zone 12N, meters, for every layer. The",
+          "services themselves serve Web Mercator."]),
         ("WHEN", "When were the data collected?",
-         ["Tile n41w112 published May 20, 2026.",
-          "A mosaic of sources collected between 1946",
-          "and 2023; the tile metadata does not say",
-          "which one covers this canyon."]),
+         ["All read October 9, 2026. Roads: 'Last Update",
+          "08/05/2026'. Cities and lakes edited Oct 1,",
+          "2026; streams and power lines Mar 7, 2026.",
+          "A last-edit date is not when it was mapped."]),
         ("WHY", "Why were they created?",
-         ["The 3D Elevation Program's national seamless",
-          "layer: general-purpose 'best available'",
-          "elevation for science, mapping and resource",
-          "management. Not made for avalanche terrain."]),
+         ["Roads: cartography, address location and",
+          "UDOT's linear referencing. Cities: 'cartography",
+          "and APPROXIMATE boundary identification'.",
+          "3DEP: the national best-available elevation."]),
         ("HOW", "How were they collected and processed?",
-         ["Lidar, older contour-based models and radar,",
-          "resampled to one grid and one datum. Bare",
-          "earth: the ground, without trees, buildings,",
-          "lift towers or the winter snowpack."]),
+         ["City boundaries change only when certified by",
+          "the Lt. Governor's Office. We exported 3DEP at",
+          "30 m (bilinear) and clipped every layer to",
+          "the box. The power-line layer does not say."]),
         ("WHO", "Who maintains them, and may you use them?",
-         ["U.S. Geological Survey, The National Map.",
-          "Public domain; no use restrictions.",
-          "Credit the USGS 3D Elevation Program",
-          "and name the tile in your report."]),
+         ["USGS (3DEP, the NHD), the Utah Geospatial",
+          "Resource Center (roads with UDOT, cities,",
+          "power lines). Public data; credit each",
+          "source on your maps and in your report."]),
     ]
-    s = [f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}' role='img' "
-         "aria-label='The six metadata questions applied to the Little Cottonwood Canyon DEM'>",
-         "<title>The six metadata questions, applied to the Little Cottonwood Canyon DEM</title>",
-         f"<rect width='{W}' height='{H}' fill='white'/>",
-         text(20, 34, "Reading the DEM's metadata: the six questions from CCE 114", 20, "bold", NAVY),
-         text(20, 56, "Every answer comes from the tile's metadata file and READ-ME-FIRST.txt in the extract. Check them yourself.", 12, fill="#5b6770")]
-    cw, ch, gx, gy = 310, 155, 20, 75
+    s = svg_open(W, H, "The six metadata questions applied to the Lab 10 data",
+                 "The six metadata questions, applied to the power line data")
+    s += [text(20, 34, "Reading the metadata: the six questions from CCE 114", 20, "bold", NAVY),
+          text(20, 56, "Every answer comes from READ-ME-FIRST.txt and the UGRC services' own layer descriptions. Check them yourself.", 12, fill="#5b6770")]
+    cw, ch, gx, gy = 310, 160, 20, 75
     for i, (tag, q, body) in enumerate(cards):
         x = gx + (i % 3) * (cw + 15)
         y = gy + (i // 3) * (ch + 15)
@@ -109,14 +115,16 @@ def metadata_card():
         s.append(text(x + 12, y + 23, tag, 15, "bold", "white"))
         s.append(text(x + 82, y + 23, q, 11, fill="white"))
         s += [text(x + 12, y + 60 + k * 19, line, 11.5) for k, line in enumerate(body)]
-    s.append(f"<rect x='20' y='{H - 80}' width='960' height='62' rx='8' fill='{ORANGE}'/>")
-    s.append(text(32, H - 54, "For avalanche terrain, HOW matters most: the model sees the ground, not the snow a skier stands on.", 12.5, "bold", "white"))
-    s.append(text(32, H - 32, "Drifts, cornices and wind slabs reshape slopes every winter, and none of that is in a bare-earth DEM. Your report has to say so.", 12.5, "bold", "white"))
+    s.append(f"<rect x='20' y='{H - 100}' width='960' height='82' rx='8' fill='{ORANGE}'/>")
+    s.append(text(32, H - 72, "The power-line layer's whole description is 'Electrical transmission facilities in Utah': no source, no date of", 12.5, "bold", "white"))
+    s.append(text(32, H - 50, "mapping, no accuracy. Your route leans on it. Say in your report what you would want to know before you", 12.5, "bold", "white"))
+    s.append(text(32, H - 28, "trusted it, and what a missing or misplaced line would do to your route.", 12.5, "bold", "white"))
     s.append("</svg>")
-    (h.OUT / "lab10-dem-metadata.svg").write_text("\n".join(s), encoding="utf-8")
+    (h.OUT / "lab10-metadata.svg").write_text("\n".join(s), encoding="utf-8")
 
 
 if __name__ == "__main__":
+    h.OUT.mkdir(parents=True, exist_ok=True)
     icons()
     metadata_card()
-    print("wrote icons and Figure A to", h.OUT)
+    print("ok", sorted(p.name for p in h.OUT.glob("*.svg")))

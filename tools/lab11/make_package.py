@@ -1,27 +1,29 @@
-r"""Lab 11 (Least Cost Path Power Line): build the student data package.
+r"""Lab 11 (Fire Response Coverage, Network Analyst): build the student data package.
 
-    docs/data/lab11-power-line.zip
-      lab11-power-line/
-        Elevation.tif          USGS 3DEP elevation, exported at 30 m in NAD 1983 UTM zone 12N
-        PowerLineData.gdb/
-          Roads                UGRC UtahRoads with a UDOT functional class (DOT_FCLASS not empty)
-          Lakes                UGRC UtahLakesNHD (NHD High Resolution waterbodies), all in the box
-          Streams              UGRC UtahStreamsNHD (NHD High Resolution flowlines), all in the box
-          Cities               UGRC UtahMunicipalBoundaries
-          Power_Lines          UGRC TransmissionLines: kV lines and substations
-          Endpoints            two existing substations from Power_Lines, Role = Source / Destination
+    docs/data/lab11-fire-response.zip
+      lab11-fire-response/
+        FireResponse.gdb/
+          Network/                      feature dataset, NAD 1983 UTM zone 12N
+            Roads                       UGRC Utah Street Network edges inside Utah County (41,460)
+            Utah_County_Roads_ND        the network dataset, BUILT, costs TravelMinutes (default) + Length
+            Utah_County_Roads_ND_Junctions
+          Fire_Stations                 UGRC FireStations, COUNTY = 'UTAH' (42)
+          Census_Blocks                 UGRC CensusBlocks2020, COUNTYFP20 = '049' (10,092; PP_TOTAL = people)
         READ-ME-FIRST.txt
 
-The box is the Week 12 lecture's (tools/week12_lcp_data.py): 39.98-40.55 N, 112.05-111.45 W,
-snapped outward to a 30 m grid. Endpoints are the UGRC substation features nearest the original
-handout's coordinates (tools/lab11/probe_endpoints.py): OBJECTID 2185 at the mouth of Spanish Fork
-Canyon (428 m from the handout's point) and OBJECTID 1350 at Point of the Mountain, Bluffdale
-(1,095 m from it).   ArcGIS Pro Python.
+The network is UGRC's prebuilt Utah Street Network (gis.utah.gov/data/transportation/street-network-analysis/,
+a statewide file geodatabase on Google Drive), clipped to Utah County and rebuilt from UGRC's own
+network-dataset template, so the TravelMinutes cost (F_T_IMP_MIN / T_F_IMP_MIN per direction, with
+one-way streets costed 100x in the wrong direction) is exactly UGRC's. Students never build a network.
+The county boundary is NOT in the package: students download it from UGRC themselves (Data section).
+
+    python make_package.py            builds C:\Ames\Lab11\build\, zips to docs/data/, writes package_info.json
+ArcGIS Pro Python (3.7.1). Needs the UGRC gdb at UGRC_GDB (downloaded once; see download_network()).
 """
 import datetime
 import json
-import math
 import os
+import re
 import shutil
 import urllib.parse
 import urllib.request
@@ -32,31 +34,36 @@ import arcpy
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.join(HERE, "..", "..")
 W = r"C:\Ames\Lab11\build"
-PKG = os.path.join(W, "lab11-power-line")
-GDB = os.path.join(PKG, "PowerLineData.gdb")
-ZIP = os.path.join(REPO, "docs", "data", "lab11-power-line.zip")
+PKG = os.path.join(W, "lab11-fire-response")
+GDB = os.path.join(PKG, "FireResponse.gdb")
+ZIP = os.path.join(REPO, "docs", "data", "lab11-fire-response.zip")
+UGRC_ZIP_URL = "https://drive.usercontent.google.com/download?id=1NmMCS8HjxFPF-K6XjaV0FznhS0ejwqRc&export=download&confirm=t"
+UGRC_DIR = r"C:\Ames\Lab11\ugrc_network"
+UGRC_GDB = os.path.join(UGRC_DIR, "UtahRoadsNetworkAnalysis.gdb")
+UGRC_ND = os.path.join(UGRC_GDB, "NetworkDataset", "UtahRoadsNetwork")
+TEMPLATE = os.path.join(HERE, "ugrc_network_template.xml")      # kept in the repo: UGRC's ND definition
+ND_NAME = "Utah_County_Roads_ND"
 UTM = arcpy.SpatialReference(26912)
-WGS = arcpy.SpatialReference(4326)
-BOX_LL = (-112.05, 39.98, -111.45, 40.55)
-CELL = 30.0
 UGRC = "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services"
-DEM_SVC = "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage"
+COUNTY = "49049"
+ROAD_FIELDS = ["FULLNAME", "CARTOCODE", "ONEWAY", "SPEED_LMT", "DOT_FCLASS", "DOT_HWYNAM", "ACCESSCODE", "VERT_LEVEL",
+               "COUNTY_L", "COUNTY_R", "INCMUNI_L", "INCMUNI_R", "UPDATED", "UNIQUE_ID",
+               "IMPED_MIN", "F_T_IMP_MIN", "T_F_IMP_MIN", "IMPED_PED", "NETSUBTYPE"]
 LAYERS = {
-    "Roads": ("UtahRoads", "DOT_FCLASS IS NOT NULL AND DOT_FCLASS <> ''",
-              "FULLNAME,DOT_RTNAME,DOT_FCLASS,DOT_SRFTYP,DOT_AADT"),
-    "Lakes": ("UtahLakesNHD", "1=1", "GNIS_Name,AreaSqKm,FType_Text,FCode_Text,IsMajor"),
-    "Streams": ("UtahStreamsNHD", "1=1", "GNIS_Name,LengthKM,FType_Text,FCode_Text,IsMajor"),
-    "Cities": ("UtahMunicipalBoundaries", "1=1", "NAME,COUNTYNBR,POPLASTESTIMATE"),
-    "Power_Lines": ("TransmissionLines", "1=1", "LAYER"),
+    "Fire_Stations": ("FireStations", "COUNTY = 'UTAH'", "NAME,TELEPHONE,ADDRESS,CITY,STATE,ZIP,COUNTY,EMS"),
+    "Census_Blocks": ("CensusBlocks2020", "COUNTYFP20 = '049'", "GEOID20,TRACTCE20,BLOCKCE20,ALAND20,AWATER20,PP_TOTAL,HU_TOTAL,HU_OCC,GQ_TOTAL"),
 }
-ENDPOINT_OIDS = {"Source": 2185, "Destination": 1350}
+arcpy.env.overwriteOutput = True
 
 
-def utm_box():
-    pts = [arcpy.PointGeometry(arcpy.Point(x, y), WGS).projectAs(UTM).firstPoint
-           for x in BOX_LL[0::2] for y in BOX_LL[1::2]]
-    return (math.floor(min(p.X for p in pts) / CELL) * CELL, math.floor(min(p.Y for p in pts) / CELL) * CELL,
-            math.ceil(max(p.X for p in pts) / CELL) * CELL, math.ceil(max(p.Y for p in pts) / CELL) * CELL)
+def download_network():
+    if arcpy.Exists(UGRC_ND):
+        return
+    os.makedirs(UGRC_DIR, exist_ok=True)
+    z = os.path.join(UGRC_DIR, "UtahStreetNetwork.zip")
+    print("downloading UGRC Utah Street Network (about 224 MB)...")
+    urllib.request.urlretrieve(UGRC_ZIP_URL, z)
+    zipfile.ZipFile(z).extractall(UGRC_DIR)
 
 
 def post(url, params):
@@ -64,156 +71,148 @@ def post(url, params):
         return json.load(r)
 
 
-def fetch(name, svc, where, fields, box):
+def fetch(name, svc, where, fields):
+    """One UGRC feature service layer, by attribute query, into GDB\\name with UGRC_OID kept."""
     url = f"{UGRC}/{svc}/FeatureServer/0/query"
-    env = json.dumps({"xmin": box[0], "ymin": box[1], "xmax": box[2], "ymax": box[3], "spatialReference": {"wkid": 26912}})
-    base = {"where": where, "geometry": env, "geometryType": "esriGeometryEnvelope", "inSR": 26912,
-            "spatialRel": "esriSpatialRelIntersects", "f": "json"}
-    oids = sorted(post(url, dict(base, returnIdsOnly="true")).get("objectIds") or [])
+    oids = sorted(post(url, {"where": where, "returnIdsOnly": "true", "f": "json"}).get("objectIds") or [])
     fcs = []
     for i in range(0, len(oids), 400):
         d = post(url, {"objectIds": ",".join(map(str, oids[i:i + 400])), "outFields": "OBJECTID," + fields,
                        "returnGeometry": "true", "outSR": 26912, "f": "json"})
-        # JSON To Features renumbers the ObjectID; keep UGRC's as its own field
         d["fields"] = [f for f in d["fields"] if f["name"] != "UGRC_OID"] + [{"name": "UGRC_OID", "type": "esriFieldTypeInteger", "alias": "UGRC_OID"}]
         for ft in d["features"]:
             ft["attributes"]["UGRC_OID"] = ft["attributes"]["OBJECTID"]
         p = os.path.join(W, "raw", f"{name}_{i // 400:03d}.json")
+        os.makedirs(os.path.dirname(p), exist_ok=True)
         json.dump(d, open(p, "w"))
         fc = f"memory\\{name}_{i // 400}"
         arcpy.conversion.JSONToFeatures(p, fc)
         fcs.append(fc)
-    merged = f"memory\\{name}_all"
-    arcpy.management.Merge(fcs, merged)
-    clip = arcpy.Polygon(arcpy.Array([arcpy.Point(box[0], box[1]), arcpy.Point(box[0], box[3]),
-                                      arcpy.Point(box[2], box[3]), arcpy.Point(box[2], box[1])]), UTM)
     out = os.path.join(GDB, name)
-    arcpy.analysis.Clip(merged, clip, out)
-    # keep the source OBJECTID as UGRC_OID; drop Shape__ fields the service adds
+    arcpy.management.Merge(fcs, out)
     for f in arcpy.ListFields(out):
         if f.name.lower().startswith("shape__"):
             arcpy.management.DeleteField(out, f.name)
     return len(oids), int(arcpy.management.GetCount(out)[0])
 
 
-def dem(box):
-    out = os.path.join(PKG, "Elevation.tif")
-    tiles, step = [], 1000 * CELL
-    y = box[1]
-    while y < box[3]:
-        x = box[0]
-        while x < box[2]:
-            x2, y2 = min(x + step, box[2]), min(y + step, box[3])
-            p = {"bbox": f"{x},{y},{x2},{y2}", "bboxSR": 26912, "imageSR": 26912,
-                 "size": f"{int(round((x2 - x) / CELL))},{int(round((y2 - y) / CELL))}", "format": "tiff",
-                 "pixelType": "F32", "noData": -9999, "interpolation": "RSP_BilinearInterpolation", "f": "image"}
-            t = os.path.join(W, "tiles", f"t_{int(x)}_{int(y)}.tif")
-            os.makedirs(os.path.dirname(t), exist_ok=True)
-            for _ in range(4):
-                try:
-                    if not os.path.exists(t):
-                        urllib.request.urlretrieve(DEM_SVC + "?" + urllib.parse.urlencode(p), t)
-                    break
-                except Exception as e:
-                    print("retry", t, e)
-            arcpy.management.DefineProjection(t, UTM)
-            tiles.append(t)
-            x = x2
-        y = y2
-    arcpy.management.MosaicToNewRaster(tiles, W, "dem_mosaic.tif", UTM, "32_BIT_FLOAT", CELL, 1, "FIRST")
-    arcpy.management.CopyRaster(os.path.join(W, "dem_mosaic.tif"), out, nodata_value="-9999")
-    arcpy.management.CalculateStatistics(out)
-    return out
+def network():
+    """Clip UGRC's edges to Utah County and rebuild the network from UGRC's own template, renamed."""
+    arcpy.CheckOutExtension("Network")
+    if not os.path.exists(TEMPLATE):
+        arcpy.nax.CreateTemplateFromNetworkDataset(UGRC_ND, TEMPLATE)
+    fd = os.path.join(GDB, "Network")
+    arcpy.management.CreateFeatureDataset(GDB, "Network", UTM)
+    src = os.path.join(UGRC_GDB, "NetworkDataset", "Roads")
+    where = f"COUNTY_L = '{COUNTY}' OR COUNTY_R = '{COUNTY}'"
+    # export every field (a field map drops the NETSUBTYPE subtypes the template's connectivity needs),
+    # then delete the ones the lab does not use
+    roads = os.path.join(fd, "Roads")
+    arcpy.conversion.ExportFeatures(src, roads, where)
+    drop = [f.name for f in arcpy.ListFields(roads) if not f.required and f.name not in ROAD_FIELDS]
+    arcpy.management.DeleteField(roads, drop)
+    arcpy.management.AddField(os.path.join(fd, "Roads"), "UGRC_OID", "LONG")
+    # UGRC_OID = the source OBJECTID, matched through UNIQUE_ID
+    ids = {r[0]: r[1] for r in arcpy.da.SearchCursor(src, ["UNIQUE_ID", "OID@"], where)}
+    with arcpy.da.UpdateCursor(os.path.join(fd, "Roads"), ["UNIQUE_ID", "UGRC_OID"]) as cur:
+        for row in cur:
+            row[1] = ids.get(row[0])
+            cur.updateRow(row)
+    # the template names the network and its junctions after UGRC's; rename both for the package
+    xml = open(TEMPLATE, encoding="utf-8").read()
+    xml = xml.replace("UtahRoadsNetwork_Junctions", ND_NAME + "_Junctions").replace("<Name>UtahRoadsNetwork</Name>", f"<Name>{ND_NAME}</Name>")
+    tmp = os.path.join(W, "nd_template.xml")
+    open(tmp, "w", encoding="utf-8").write(xml)
+    arcpy.nax.CreateNetworkDatasetFromTemplate(tmp, fd)
+    nd = os.path.join(fd, ND_NAME)
+    arcpy.nax.BuildNetwork(nd)
+    d = arcpy.Describe(nd)
+    oneway = int(arcpy.management.GetCount(arcpy.management.MakeFeatureLayer(os.path.join(fd, "Roads"), "ow", "ONEWAY IN ('1', '2')"))[0])
+    return {"edges": int(arcpy.management.GetCount(os.path.join(fd, "Roads"))[0]),
+            "junctions": int(arcpy.management.GetCount(os.path.join(fd, ND_NAME + "_Junctions"))[0]),
+            "attributes": [(a.name, a.usageType, a.units) for a in d.attributes],
+            "one_way_edges": oneway, "travel_modes": list(arcpy.nax.GetTravelModes(nd).keys())}
 
 
-README = """READ ME FIRST: CE 414 Lab 11, Least Cost Path Power Line
-=================================================================
+README = """READ ME FIRST: CE 414 Lab 11, Fire Response Coverage (Network Analysis)
+========================================================================
 
 Built {date} by tools/lab11/make_package.py in the course repository
-(github.com/BYU-Hydroinformatics/ce414-gis-applications). Every layer is clipped to one box:
-39.98 to 40.55 N, 112.05 to 111.45 W (NAD 1983 UTM zone 12N: {xmin:.0f} to {xmax:.0f} E,
-{ymin:.0f} to {ymax:.0f} N), from the mouth of Spanish Fork Canyon to Bluffdale.
+(github.com/BYU-Hydroinformatics/ce414-gis-applications). Everything is in Utah County, Utah, in
+NAD 1983 UTM zone 12N (EPSG 26912), meters.
 
-Coordinate system: NAD 1983 UTM zone 12N (EPSG 26912), meters, for every file.
+FireResponse.gdb\\Network\\Utah_County_Roads_ND      the road network (a network dataset, already built)
+  Source: UGRC's Utah Street Network dataset, gis.utah.gov/data/transportation/street-network-analysis/,
+  a statewide network dataset UGRC derives from its Utah Roads layer and republishes monthly. We
+  exported the {edges:,} road segments with Utah County on either side (COUNTY_L or COUNTY_R =
+  '49049'; roads updated through {roads_updated}) and rebuilt the network from UGRC's own network
+  template, so its definition is UGRC's, not ours:
+    TravelMinutes  (cost, minutes, the default)  minutes to drive the segment, taken from the fields
+                   F_T_IMP_MIN (in the direction the line was digitized) and T_F_IMP_MIN (against it).
+                   UGRC estimated them from the posted speed limit (SPEED_LMT) and the road class
+                   (CARTOCODE), and multiplied surface-street times by 1.5 for signals and congestion.
+                   On a one-way street (ONEWAY = 1 or 2) the wrong direction costs 100 times the right
+                   one: a penalty, not a restriction. {one_way:,} segments are one-way.
+    Length         (cost, meters)
+  No turns, no elevation fields (overpasses connect where endpoints coincide) and no live traffic.
+  UGRC's note on its own travel times: "based on typical network travel, and not the expedited
+  travel of emergency response vehicles."
+  Roads keeps these UGRC fields: {road_fields}, and UGRC_OID (the segment's OBJECTID in UGRC's
+  network geodatabase). NETSUBTYPE (1 limited access and ramps, 2 other) is the subtype the network's
+  connectivity rules are written on; leave it alone.
 
-Elevation.tif
-  USGS 3D Elevation Program (3DEP), best-available elevation, read from the 3DEP elevation image
-  service (elevation.nationalmap.gov, 3DEPElevation/ImageServer) on {date}, exported at 30 m
-  cells with bilinear resampling. Meters above NAVD 88. {cols} columns x {rows} rows,
-  {zmin:.1f} to {zmax:.1f} m. Public domain (USGS).
+FireResponse.gdb\\Fire_Stations      {stations} points
+  UGRC FireStations (gis.utah.gov/products/sgid/society/fire-stations/), COUNTY = 'UTAH'. Fields NAME,
+  TELEPHONE, ADDRESS, CITY, STATE, ZIP, COUNTY, EMS (Y / N / blank), UGRC_OID. The layer's own
+  description says "Last Update: September 22, 2022". It includes every station the layer lists,
+  including Camp Williams (a military post) and the Utah Fire and Rescue Academy at UVU.
 
-PowerLineData.gdb (from the Utah Geospatial Resource Center, UGRC, read {date};
-gis.utah.gov; State Geographic Information Database layers, public)
-  Roads         UtahRoads (statewide road centerlines), only the segments UDOT gives a functional
-                class (DOT_FCLASS not empty). {Roads} features.
-  Lakes         UtahLakesNHD (NHD High Resolution waterbodies), every waterbody in the box.
-                {Lakes} features.
-  Streams       UtahStreamsNHD (NHD High Resolution flowlines), every flowline in the box.
-                {Streams} features.
-  Cities        UtahMunicipalBoundaries. {Cities} features.
-  Power_Lines   TransmissionLines: lines (LAYER KV-46, KV-138, KV-345, by voltage in kV) and
-                substations (LAYER SUB-...). {Power_Lines} features.
-  Endpoints     Two existing substations copied from the TransmissionLines layer (UGRC OBJECTID
-                2185 and 1350), with Role = Source (the mouth of Spanish Fork Canyon) and
-                Role = Destination (Point of the Mountain, Bluffdale). Points at the center of
-                each substation feature.
+FireResponse.gdb\\Census_Blocks      {blocks:,} polygons, {pop:,} people
+  UGRC CensusBlocks2020 (2020 Decennial Census blocks with population), COUNTYFP20 = '049'. Fields
+  GEOID20, TRACTCE20, BLOCKCE20, ALAND20 and AWATER20 (m2), PP_TOTAL (people),
+  HU_TOTAL and HU_OCC (housing units, occupied), GQ_TOTAL (group quarters), UGRC_OID.
 
-Nothing else was done to the data: no field values were changed. Fields were limited to the ones
-listed in the lab, plus UGRC_OID (the feature's OBJECTID in the UGRC service).
+What we did: read each layer from its UGRC feature service on {date}, kept the fields above, and
+rebuilt the network for the county. Field values were not changed. What we did not do: nothing was
+filtered beyond the county; every station and every block in the county is here.
 
-Credit line for maps: Elevation: USGS 3DEP, 30 m. Roads, water, cities and power lines: Utah
-Geospatial Resource Center (UGRC), {month}.
+Not in the package: the Utah County boundary. Download it yourself from UGRC (the Data section says
+where); it is the one layer you fetch live, and its metadata page is part of the lab.
+
+License: UGRC publishes its data under a Creative Commons Attribution license; credit "Utah
+Geospatial Resource Center (UGRC)" on your maps. Census counts are from the U.S. Census Bureau.
 """
 
 
 def main():
-    arcpy.env.overwriteOutput = True
+    download_network()
     if os.path.exists(W):
         shutil.rmtree(W)
-    os.makedirs(os.path.join(W, "raw"))
     os.makedirs(PKG)
-    arcpy.management.CreateFileGDB(PKG, "PowerLineData.gdb")
-    box = utm_box()
-    info = {"box_utm": box}
-    d = dem(box)
-    r = arcpy.Raster(d)
-    info["dem"] = {"cols": r.width, "rows": r.height, "min": r.minimum, "max": r.maximum}
+    arcpy.management.CreateFileGDB(PKG, "FireResponse.gdb")
+    info = {"built": datetime.date.today().isoformat()}
+    info["network"] = network()
+    info["roads_updated"] = max(r[0] for r in arcpy.da.SearchCursor(os.path.join(GDB, "Network", "Roads"), ["UPDATED"]) if r[0]).strftime("%B %d, %Y")
     for name, (svc, where, fields) in LAYERS.items():
-        info[name] = fetch(name, svc, where, fields, box)
-        out = os.path.join(GDB, name)
+        info[name] = fetch(name, svc, where, fields)
         print(name, info[name])
-    # endpoints: centers of the two substation features
-    pl = os.path.join(GDB, "Power_Lines")
-    src_field = "UGRC_OID"
-    ep = os.path.join(GDB, "Endpoints")
-    arcpy.management.CreateFeatureclass(GDB, "Endpoints", "POINT", spatial_reference=UTM)
-    arcpy.management.AddField(ep, "Role", "TEXT", field_length=12)
-    arcpy.management.AddField(ep, "UGRC_OID", "LONG")
-    with arcpy.da.InsertCursor(ep, ["SHAPE@", "Role", "UGRC_OID"]) as cur:
-        for role, oid in ENDPOINT_OIDS.items():
-            rows = [r for r in arcpy.da.SearchCursor(pl, [src_field, "SHAPE@"]) if r[0] == oid]
-            assert rows, (role, oid, src_field)
-            c = rows[0][1].centroid
-            cur.insertRow([arcpy.PointGeometry(c, UTM), role, oid])
-            ll = arcpy.PointGeometry(c, UTM).projectAs(WGS).firstPoint
-            info[role] = {"x": c.X, "y": c.Y, "lat": ll.Y, "lon": ll.X, "ugrc_oid": oid}
-    today = datetime.date.today()
-    open(os.path.join(PKG, "READ-ME-FIRST.txt"), "w", newline="\r\n").write(README.format(
-        date=today.isoformat(), month=today.strftime("%B %Y"), xmin=box[0], ymin=box[1], xmax=box[2], ymax=box[3],
-        cols=r.width, rows=r.height, zmin=r.minimum, zmax=r.maximum,
-        **{k: info[k][1] for k in LAYERS}))
-    if os.path.exists(ZIP):
-        os.remove(ZIP)
+    info["population"] = int(sum(r[0] or 0 for r in arcpy.da.SearchCursor(os.path.join(GDB, "Census_Blocks"), ["PP_TOTAL"])))
+    open(os.path.join(PKG, "READ-ME-FIRST.txt"), "w", encoding="utf-8").write(README.format(
+        date=datetime.date.today().strftime("%B %d, %Y"), edges=info["network"]["edges"], roads_updated=info["roads_updated"],
+        one_way=info["network"]["one_way_edges"], road_fields=", ".join(ROAD_FIELDS), stations=info["Fire_Stations"][1],
+        blocks=info["Census_Blocks"][1], pop=info["population"]))
+    arcpy.management.Compact(GDB)
+    os.makedirs(os.path.dirname(ZIP), exist_ok=True)
     with zipfile.ZipFile(ZIP, "w", zipfile.ZIP_DEFLATED) as z:
         for root, _, files in os.walk(PKG):
             for f in files:
                 if f.endswith(".lock"):
                     continue
-                full = os.path.join(root, f)
-                z.write(full, os.path.relpath(full, W))
+                p = os.path.join(root, f)
+                z.write(p, os.path.relpath(p, W))
     info["zip_bytes"] = os.path.getsize(ZIP)
-    json.dump(info, open(os.path.join(HERE, "package_info.json"), "w"), indent=1)
-    print(json.dumps(info, indent=1))
+    json.dump(info, open(os.path.join(HERE, "package_info.json"), "w"), indent=1, default=str)
+    print(json.dumps(info, indent=1, default=str))
 
 
 if __name__ == "__main__":

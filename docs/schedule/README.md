@@ -16,10 +16,10 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [8](week-08.md) | Flood Mapping and Midterm 1 | Lab 7 — Flood Mapping with HAND |
 | [9](week-09.md) | Interpolation | Lab 8 — Interpolation Explorer |
 | [10](week-10.md) | Cut, Fill, and Raster Volumes | Lab 9 — Big Southern Butte |
-| [11](week-11.md) | Coordinate Systems and GPS | Lab 10 — Avalanche Hazard |
-| [12](week-12.md) | Least Cost Path | Lab 11 — Least Cost Path Power Line Analysis |
+| [11](week-11.md) | Least Cost Path | Lab 10 — Least Cost Path Power Line Analysis |
+| [12](week-12.md) | Network Analysis | Lab 11 — Network Analysis |
 | [13](week-13.md) | The Final Project | — |
-| [14](week-14.md) | Network Analysis and Midterm 2 | Lab 12 — Network Analysis |
+| [14](week-14.md) | Midterm 2 and Avalanche Hazard | Lab 12 — Avalanche Hazard |
 | [15](week-15.md) | Final Project Due | — |
 
 ## Exams

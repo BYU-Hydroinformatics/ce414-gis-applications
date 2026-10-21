@@ -45,14 +45,14 @@ QUIZZES = {
     "rmse":                 9,
     "earthwork":           10,
     "volumes":             10,
-    "least-cost-path":     12,
-    "cost-paths":          12,
-    "coordinate-systems":  11,
+    "least-cost-path":     11,
+    "cost-paths":          11,
+    "networks":            12,
+    "service-areas":       12,
     "final-project":       13,
-    "gps":                 11,
-    "networks":            14,
-    "service-areas":       14,
 }
+# Retired October 21, 2026 with the Week 11 refreshers (slides/retired/week-11-crs-gps/):
+# "coordinate-systems", "gps".
 
 # 860 px square matches the pilot code and is more than enough for a 1280x720 slide.
 TARGET_PX = 860

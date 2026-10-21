@@ -296,8 +296,8 @@ const LABS = {
   ],
 },
 
-'11': {
-  labTitle: 'Lab 11: Least Cost Path Power Line Analysis',
+'10': {
+  labTitle: 'Lab 10: Least Cost Path Power Line Analysis',
   labSubtitle: 'A least-cost route for a power line from Spanish Fork Canyon to Bluffdale',
   sections: [
     { h: 'Requirements and Approach',
@@ -322,7 +322,7 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab11.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab10.atbx) with the report as well.' },
         { caption: 'Figure 2. The model’s tool dialog, with the two weights and the route exposed.', size: 'medium',
           hint: 'Rubric: a screen capture of the tool dialog with the two weights and the route exposed as parameters (2 points).' },
       ] },
@@ -375,8 +375,8 @@ const LABS = {
   ],
 },
 
-'12': {
-  labTitle: 'Lab 12: Fire Response Coverage, a Network Analysis',
+'11': {
+  labTitle: 'Lab 11: Fire Response Coverage, a Network Analysis',
   labSubtitle: 'Who in Utah County lives more than four minutes’ drive from a fire station',
   sections: [
     { h: 'Requirements and Approach',
@@ -402,7 +402,7 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab12.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab11.atbx) with the report as well.' },
         { caption: 'Figure 2. The model’s tool dialog, with the cutoff and the buffer distance exposed.', size: 'medium',
           hint: 'Rubric: a screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters (2 points).' },
       ] },
@@ -455,8 +455,8 @@ const LABS = {
   ],
 },
 
-'10': {
-  labTitle: 'Lab 10: Avalanche Hazard',
+'12': {
+  labTitle: 'Lab 12: Avalanche Hazard',
   labSubtitle: 'Terrain-based avalanche hazard screening from slope, aspect, and elevation',
   sections: [
     { h: 'Requirements and Approach',

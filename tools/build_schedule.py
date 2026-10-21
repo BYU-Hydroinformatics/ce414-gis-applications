@@ -40,7 +40,14 @@ Lab 7 HAND (Week 8, with Midterm 1), Lab 8 Interpolation Explorer (9), Lab 9 Big
 Lab 10 Avalanche Hazard (11, with refresher lectures on projections and GPS), Lab 11 Least Cost Path (12),
 no lab in Week 13 (final project introduced Tuesday; Thanksgiving), Lab 12 Network Analysis (14), and no
 class in Week 15 (final project due by the last day of classes). The OGC Web Services and Raster-Based
-Spatial Analysis decks were retired to slides/retired/ (not built)."""
+Spatial Analysis decks were retired to slides/retired/ (not built).
+
+Settled October 21, 2026 (and kept for Fall 2027): the Week 11 coordinate systems and GPS refreshers
+are dropped (CCE 114 teaches both; decks and their two self-check quizzes are in
+slides/retired/week-11-crs-gps/). Least cost paths move up to Week 11 and network analysis to Week 12,
+so both are taught before Midterm 2. The labs were renumbered to match: Least Cost Path is Lab 10
+(Week 11), Network Analysis Lab 11 (Week 12), and Avalanche Hazard, which needs only Week 5 tools,
+is Lab 12, due in Week 14 with Midterm 2. Quiz 9 is Least Cost Paths, Quiz 10 Network Analysis."""
 import re
 from pathlib import Path
 
@@ -72,23 +79,22 @@ DECKS = [
     (9,  "interpolation-explorer",         "Kriging and Interpolation Error",            "Kriging and the semivariogram (nugget, sill, range, and three models), then how wrong each surface is: error rasters, RMSE, checkpoints, a six-method test, and Lab 8.", "Thu"),
     (10, "cut-and-fill",                   "Cut and Fill",                               "Earthwork as the difference of two surfaces: cut and fill cell by cell, the balance grade of a level pad, ArcGIS Pro's Cut Fill tool, average end area for roads, and what a grid volume leaves out.", "Tue"),
     (10, "raster-volumes",                 "Volumes with Rasters",                       "How much rock is in a mountain: height times cell area summed, Raster Calculator and Zonal Statistics versus Surface Volume, why the base surface decides the answer, and Lab 9.", "Thu"),
-    (11, "coordinate-systems-projections", "Coordinate Systems and Projections",        "A refresher: datums, projections, and coordinate systems as decisions — distortion, units, and choosing a CRS for analysis.", "Tue"),
-    (11, "gps-triangulation",              "GPS and Positioning",                        "A refresher: how satellite positioning works, what limits its accuracy, and what that means for field data.", "Thu"),
-    (12, "least-cost-path",                "Least Cost Path Analysis, Part A",           "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
-    (12, "least-cost-path-b",              "Least Cost Path Analysis, Part B",           "ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 11's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.", "Thu"),
-    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),    (14, "network-analysis-a",             "Network Analysis, Part A",                   "Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.", "Tue"),
-    (14, "network-analysis-b",             "Network Analysis, Part B",                   "Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 12.", "Thu"),
+    (11, "least-cost-path",                "Least Cost Path Analysis, Part A",           "Cost surfaces and the cheapest route across them, with a power-line corridor as the example.", "Tue"),
+    (11, "least-cost-path-b",              "Least Cost Path Analysis, Part B",           "ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 10's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.", "Thu"),
+    (12, "network-analysis-a",             "Network Analysis, Part A",                   "Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.", "Tue"),
+    (12, "network-analysis-b",             "Network Analysis, Part B",                   "Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 11.", "Thu"),
+    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Interpolation Explorer",
-        9:"Big Southern Butte",10:"Avalanche Hazard",11:"Least Cost Path Power Line Analysis",
-        12:"Network Analysis"}
+        9:"Big Southern Butte",10:"Least Cost Path Power Line Analysis",11:"Network Analysis",
+        12:"Avalanche Hazard"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 13)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
                8:"Flood Mapping and Midterm 1",9:"Interpolation",10:"Cut, Fill, and Raster Volumes",
-               11:"Coordinate Systems and GPS",12:"Least Cost Path",13:"The Final Project",
-               14:"Network Analysis and Midterm 2",15:"Final Project Due"}
+               11:"Least Cost Path",12:"Network Analysis",13:"The Final Project",
+               14:"Midterm 2 and Avalanche Hazard",15:"Final Project Due"}
 DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
 # Weeks whose page should point at the final project page. The project is introduced in Week 13 and
 # runs to the end, and the page is not in the site menu — these pointers are how students reach it.
@@ -97,6 +103,7 @@ FINAL_PROJECT_WEEKS = (13, 14, 15)
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
     13: "Thursday is Thanksgiving, no class.",
+    14: "No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12 and the final project proposal meetings.",
     15: "No class this week. Work on your final project and submit it by the last day of classes.",
 }
 
@@ -128,14 +135,15 @@ DUE = {
     10: dict(reading=None, quiz=(8, "Cut, Fill, and Raster Volumes"), lab=9,   # no reading; Quiz 8 is built from the two decks
              other=[("**No class on Tuesday, November 3, or Thursday, November 5**",
                      "study the two slide decks below on your own and work on Lab 9; Quiz 8 is built from those two decks, not from the textbook")]),
-    11: dict(reading="Chapters 3 and 5", quiz=(9, "Coordinate Systems and GPS"), lab=10, other=[]),
-    12: dict(reading=None, quiz=(10, "Least Cost Paths"), lab=11, other=[]),
+    11: dict(reading=None, quiz=(9, "Least Cost Paths"), lab=10, other=[]),
+    12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
-    # Quizzes 8-11 follow the lectures (Oct 9): Week 10 volumes, Week 11 the two refreshers in one quiz,
-    # Week 12 least cost paths, Week 13 data standards. Week 14 (Midterm 2, Lab 12) has no quiz.
-    13: dict(reading="Chapter 14", quiz=(11, "Data Standards and Data Quality"), lab=None, other=[]),
+    # Quizzes 8-11 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
+    # network analysis, Week 13 data standards. Week 14 (Midterm 2, Lab 12) has no quiz.
+    13: dict(reading="Chapter 14", quiz=(11, "Data Standards and Data Quality"), lab=None,
+             other=[("**Midterm 2 is next week**, on Weeks 8–13: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
     14: dict(reading=None, quiz=None, lab=12,
-             other=[("**Midterm 2** — closed book, concept based, in the Testing Center", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
+             other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–13 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
     15: dict(reading=None, quiz=None, lab=None,
              other=[("Final project **presentation video** (eight minutes; post the link on the class Google document)", "Wednesday 11:59 pm"),
@@ -198,18 +206,14 @@ PRACTICE = {
           "Five questions on cut versus fill, raising a pad's grade, the balance grade, the sign of Cut Fill's VOLUME, and what a grid volume leaves out."),
          ("volumes", "The Base Is the Answer",
           "Five questions on a cell's volume, why a DEM must be projected first, when Surface Volume is enough, and why the base surface decides a mountain's volume.")],
-    11: [("coordinate-systems", "Projections and Datums",
-          "Five questions on datums against projections, what every projection has to give up, and why a coordinate system is a decision rather than a setting."),
-         ("gps", "Where Am I?",
-          "Five questions on how a receiver turns a radio signal into a position: what it measures, why the extra satellite pays for the receiver's own clock, why satellite geometry matters, and what differential correction cannot remove.")],
-    12: [("least-cost-path", "Cheapest or Shortest?",
+    11: [("least-cost-path", "Cheapest or Shortest?",
           "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one."),
          ("cost-paths", "What Moved the Line?",
           "Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.")],
-    14: [("networks", "Along the Roads",
+    12: [("networks", "Along the Roads",
           "Five questions on what a network dataset is made of: junctions and connectivity, one-way streets as a cost, two impedances that give two routes, what UGRC's 1.5 factor stands for, and which distance belongs to a fire engine."),
          ("service-areas", "Four Minutes Away",
-          "Five questions on Solve, which solver answers which question, why a buffer and a service area disagree about the same four minutes, and what Lab 12's cutoff decides.")],
+          "Five questions on Solve, which solver answers which question, why a buffer and a service area disagree about the same four minutes, and what Lab 11's cutoff decides.")],
     13: [("final-project", "Ready to Pitch?",
           "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.")],
 }

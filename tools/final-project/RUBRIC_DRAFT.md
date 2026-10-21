@@ -1,7 +1,7 @@
 # Final project: instructor rubric and peer scoresheet (DRAFT for review)
 
 Drafted October 9, 2026 from `docs/assignments/final-project.md`, `docs/policies/grading.md`,
-`slides/week-13/final-project-introduction.md` (slides and speaker notes), the Lab 7 and Lab 11
+`slides/week-13/final-project-introduction.md` (slides and speaker notes), the Lab 7 and Lab 10
 rubrics, `tools/lab-conversion-guide.md` section 2, and `tools/templates/make_lab_report_template.js`.
 Nothing on the site has been edited. Sections A and B are written in the voice of the lab pages and
 are meant to be pasted in once approved; section C is for the instructor only.

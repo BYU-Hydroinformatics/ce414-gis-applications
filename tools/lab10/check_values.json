@@ -1,29 +1,91 @@
 {
+ "Major_Roads": 1377,
+ "Major_Lakes": 7,
+ "Major_Streams": 319,
+ "Existing_Lines": 241,
+ "inputs": {
+  "Roads": 8937,
+  "Lakes": 967,
+  "Streams": 4086,
+  "Cities": 34,
+  "Power_Lines": 292,
+  "Endpoints": 2
+ },
  "dem": {
-  "min": 2177.97705078125,
-  "max": 3499.4345703125,
-  "cols": 1023,
-  "rows": 896,
-  "cell": 10.0
+  "cols": 1719,
+  "rows": 2124,
+  "cell": 30.0,
+  "min": 1314.9735107422,
+  "max": 3568.3735351562
  },
- "snowbird_km2": 10.781,
- "slope_max": 77.81876373291016,
- "slope_classes": {
-  "0": 0.0,
-  "1": 4.985,
-  "2": 1.667,
-  "3": 0.793,
-  "4": 1.289,
-  "5": 2.047
+ "slope": {
+  "min": 0.0,
+  "max": 71.81330871582031,
+  "mean": 11.2132
  },
- "aspect_classes": {
-  "0": 0.0,
-  "1": 0.571,
-  "2": 2.053,
-  "3": 2.768,
-  "4": 3.492,
-  "5": 1.896
+ "Road_Distance": {
+  "min": 0.0,
+  "max": 24515.212890625,
+  "mean": 6202.1855
  },
- "flat_cells_total": 480,
- "seconds": 51.0
+ "City_Distance": {
+  "min": 0.0,
+  "max": 14923.39453125,
+  "mean": 3147.5289
+ },
+ "Line_Distance": {
+  "min": 0.0,
+  "max": 15571.271484375,
+  "mean": 3115.888
+ },
+ "Slope_Score": {
+  "1": 1848647,
+  "2": 324957,
+  "4": 259000,
+  "6": 249393,
+  "8": 501985,
+  "10": 459492
+ },
+ "Road_Score": {
+  "1": 646624,
+  "3": 374134,
+  "6": 835970,
+  "10": 1794428
+ },
+ "City_Score": {
+  "1": 1055936,
+  "2": 198582,
+  "4": 228810,
+  "6": 254776,
+  "8": 293203,
+  "10": 1619849
+ },
+ "Line_Score": {
+  "1": 614688,
+  "5": 1084196,
+  "10": 1952272
+ },
+ "River_Cells": 9713,
+ "straight_km": 52.79,
+ "base": {
+  "length_km": 56.09,
+  "total_cost": 744018.2,
+  "river_crossings": 4,
+  "pct_within_1km_road": 92.8,
+  "pct_within_500m_line": 99.7,
+  "pct_city_score_10": 100.0,
+  "slope_weight": 1.0,
+  "line_weight": 1.0,
+  "barrier": true
+ },
+ "Cost_base": {
+  "min": 4.0,
+  "max": 48.0,
+  "mean": 23.6865
+ },
+ "Acc_base": {
+  "min": 0.0,
+  "max": 1116187.375,
+  "mean": 566466.7829
+ }
 }

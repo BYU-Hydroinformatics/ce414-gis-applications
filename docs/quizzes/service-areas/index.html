@@ -6,7 +6,7 @@
   <title>CE 414 — Four Minutes Away</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: what a service area is, what Solve does, closest facility against location-allocation, why a buffer and a service area disagree, and what Lab 12's cutoff decides.">
+  <meta name="description" content="CE 414 in-class quiz: what a service area is, what Solve does, closest facility against location-allocation, why a buffer and a service area disagree, and what Lab 11's cutoff decides.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -15,11 +15,11 @@
 <script>
 CE414Quiz.start({
   title: "Four Minutes Away",
-  subtitle: "CE 414 &middot; Week 14 &mdash; Network Analysis, Part B<br>" +
+  subtitle: "CE 414 &middot; Week 12 &mdash; Network Analysis, Part B<br>" +
             "Three solvers, one network. For each item, decide " +
             "<strong>which analysis answers the question, and what it assumes</strong>.",
   badge: "Solver call",
-  deckUrl: "../../slides/week-14/network-analysis-b.html",
+  deckUrl: "../../slides/week-12/network-analysis-b.html",
   questions: [
     {
       prompt: "You run Make Service Area Analysis Layer and Add Locations, and the map shows the stations but no polygons. What is missing?",
@@ -66,7 +66,7 @@ CE414Quiz.start({
       explanation: "The buffer assumes the engine drives 35 mph in every direction at once, across the lake if need be. The network makes it follow roads at UGRC's typical-traffic minutes, with signals and turns; four minutes of that reaches a few kilometers along a few streets. Same standard, two models of movement."
     },
     {
-      prompt: "In Lab 12 the four-minute cutoff is a model parameter and every student runs a different one. What is the lab asking you to find out?",
+      prompt: "In Lab 11 the four-minute cutoff is a model parameter and every student runs a different one. What is the lab asking you to find out?",
       options: [
         "The one true response-time standard for Utah County",
         "How much the answer depends on the standard",
@@ -77,8 +77,8 @@ CE414Quiz.start({
       explanation: "Four minutes is a standard somebody chose. Varying it shows how much of the answer is the standard and how much is the road network and where people live: a few minutes more takes in whole cities, and after that the share stops falling because almost nobody is left."
     }
   ],
-  perfectNote:  "All five. On to Lab 12.",
-  goodNote:     "Good. Reread the explanations you missed before you build the Lab 12 model.",
+  perfectNote:  "All five. On to Lab 11.",
+  goodNote:     "Good. Reread the explanations you missed before you build the Lab 11 model.",
   tryAgainNote: "Solve is what computes, each solver answers a different question, and a buffer and a service area are two models of the same four minutes. Look at those slides again."
 });
 </script>

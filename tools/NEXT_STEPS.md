@@ -32,6 +32,26 @@ on `main` is pushed and live (the eight commits waiting on October 11 went out w
   `tools/lab-conversion-guide.md` now says new labs keep only a pointer. The numbers remain in the
   public repository's git history.
 
+**Done October 21, 2026 (not yet pushed).** The course was reorganized, and the same order is
+kept for Fall 2027:
+- **Week 11 refreshers dropped.** The coordinate systems and GPS decks and their two self-check
+  quizzes are retired to `slides/retired/week-11-crs-gps/` (CCE 114 teaches both); their figure
+  scripts are in `tools/retired/week11-crs-gps/`.
+- **Least cost paths moved to Week 11 and network analysis to Week 12**, so both come before
+  Midterm 2. Week 14 has no lecture: Midterm 2, open lab, proposal meetings.
+- **Labs renumbered:** Least Cost Path is now **Lab 10** (due Nov 14), Network Analysis **Lab 11**
+  (Nov 21), Avalanche Hazard **Lab 12** (Dec 5). Folders, image and zip names, report templates,
+  `tools/labNN/`, `tools/weekNN_*`, the private grading lookups (`lab10_`, `lab11_`) and
+  sensitivity files moved with them. The six GUI captures that still show the old geodatabase and
+  toolbox names carry `TODO(recapture)` (see Housekeeping).
+- **Reading quizzes:** Quiz 9 is Least Cost Paths, Quiz 10 Network Analysis (both built from the
+  decks; banks in `ce414-private/quizzes/learning-suite/quiz09_*` and `quiz10_*`), Quiz 11 Data
+  Standards.
+- **Midterm 2** rebuilt as 100 multiple-choice items on Weeks 8 to 13
+  (`ce414-private/exams/midterm-2-2026-mc/`); public study guide `docs/study-guides/midterm-2.md`.
+- **Learning Suite updated** (lab titles and descriptions, quiz titles and dates, the Week 11 to 14
+  schedule items); what it said before is in `learning-suite-snapshots/2026-10-21-renumber.md`.
+
 **Where things live.**
 - Public site: this repository, `docs/` and `slides/`, built by `mkdocs build --strict` and the
   deck workflow on every push to `main`. The push is what publishes.
@@ -62,13 +82,17 @@ private in the public repository, do not push without being asked.
 
 ## 0. Needs Dan, not an agent
 
-- **Learning Suite, Lab 12.** Sign in to Learning Suite in Chrome, then an agent can add the
-  assignment: due **Saturday, December 5, 2026, 11:59 pm** (Saturday of Week 14); description =
-  a link to the page and to `docs/assignments/lab-12/lab12-report-template.docx`; multiple file
-  uploads enabled so the `.atbx` can be attached. (The October 11 attempt stopped at the BYU
-  sign-in page.)
-- **Midterm 2 scope.** Is Week 14 (network analysis) on the exam? It is taught the week the exam
-  is open, so students testing Tuesday morning will not have heard it. The draft assumes **out**.
+- **Quizzes 9 and 10 questions.** Learning Suite still holds the old Spatial Analysis and
+  Projections questions under the new titles. Delete them in the quiz editor and import
+  `quiz09-qti.zip` and `quiz10-qti.zip` from `ce414-private/quizzes/learning-suite/` (the browser
+  pane cannot upload files). Quiz 9 opens November 10.
+- **Old Quiz 11 (GPS and GNSS).** It is in the "ignore" category but still counts 20 points
+  toward the 1,335 total; "Do not include in final grade" is grayed out while "Score cannot be
+  dropped" is checked. Uncheck that and exclude it, or delete it.
+- **Midterm 2 barcode.** Page 1 of `2026 Midterm 2 MC.docx` has a placeholder for the Testing
+  Center barcode. Then export both PDFs and upload them to *Exams and Keys (private)*.
+- **Midterm 1 v4 source.** The 100-item `items.py`/`build.py` the given exam was built from is
+  not in the private repository (only the 80-item proposal is); commit it from the Windows machine.
 - **Final-project rubric.** Read `tools/final-project/RUBRIC_DRAFT.md` and say yes, or what to
   change; section 3 below then puts it on the page.
 - **Student pilots on a lab machine.** Labs 7 to 12 were GUI-built on the instructor laptop only.
@@ -245,18 +269,19 @@ LMS, holds the content.
 **Lab order for Fall 2027 (Dan, October 20, 2026).** Reorder the middle labs so they get
 progressively harder, with the terrain/surface labs first and the water labs last:
 
-| New order | Lab (2026 number) |
+| New order | Lab (2026 number, after the October 21 renumbering) |
 |---|---|
 | 1st | Cell-tower viewshed (Lab 4) |
-| 2nd | Avalanche hazard (Lab 10) |
-| 3rd | Big Southern Butte volume (Lab 9) |
-| 4th | Interpolation Explorer, Y Mountain (Lab 8) |
-| 5th | Watershed delineation, Rock Canyon (Lab 5) |
-| 6th | Lake Powell bathymetry levels (Lab 6) |
-| 7th | HAND flood mapping (Lab 7) |
+| 2nd | Big Southern Butte volume (Lab 9) |
+| 3rd | Interpolation Explorer, Y Mountain (Lab 8) |
+| 4th | Watershed delineation, Rock Canyon (Lab 5) |
+| 5th | Lake Powell bathymetry levels (Lab 6) |
+| 6th | HAND flood mapping (Lab 7) |
 
-Labs 1–3 and 11–12 (least-cost path, network) are not part of this reorder; confirm with Dan
-where they sit. Doing it means renumbering the lab folders, moving the matching lecture weeks in
+**Updated October 21, 2026:** Avalanche Hazard is no longer second. Fall 2027 ends the way Fall
+2026 now does: least cost path (Lab 10), then network analysis (Lab 11), both before Midterm 2,
+then Avalanche Hazard as the last lab in Midterm 2 week (Lab 12), with no coordinate systems or
+GPS lectures. Labs 1–3 stay first. Doing it means renumbering the lab folders, moving the matching lecture weeks in
 `slides/week-NN/` and the `DECKS`/`DUE` tables in `tools/build_schedule.py`, and fixing every
 cross-reference between labs (a lab that says "as in Lab 5" or reuses an earlier lab's data or
 model). Check one ordering question with Dan first: the Butte lab builds a Spline surface, so
@@ -294,5 +319,12 @@ compares the interpolators.
   write to and read from `ce414-private/sensitivity/`.
 - The Mac checkout has a leftover `git stash` entry (`autostash`, October 11) holding the Lab 5
   Step 13 edit that is now committed; `git stash drop` once Dan agrees.
+- **Windows rename after the October 21 renumbering.** Close ArcGIS Pro and run
+  `python tools/screenshots/renumber_gui_projects_oct21.py` (dry run), then with `--go`: it renames
+  `C:\Ames\Lab10GUI`, `Lab11GUI`, `Lab12GUI` and the `Lab10`/`Lab11`/`Lab12` reference-run folders
+  to the new numbers. Then re-shoot the six captures marked `TODO(recapture)` in
+  `docs/assignments/lab-1[012]/` (environments dialogs and completed-run pop-ups, plus Lab 11's
+  Network Dataset Properties), and re-run `tools/week12_network_figures.py` so `nab-baseline.png`
+  says Lab 11.
 - Memory notes under `~/.claude/projects/.../memory/` written before October 8 use the **old**
   lab numbers (7 Avalanche, 8 Butte, 9 Interpolation); `lab-renumber-oct08.md` has the mapping.
