@@ -1,0 +1,47 @@
+[
+  {
+    "id": "fl-divider-measuring-flow",
+    "file": "fl-divider-measuring-flow.png",
+    "prompt": "A hydrologist in chest waders standing waist-deep in a rushing mountain river, holding an enormous yardstick upright in the water with a look of total determination, while the river itself has a cartoon face and is splashing him mischievously; a fish leaps past looking unimpressed \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "fe9ce1cfb321"
+  },
+  {
+    "id": "fl-divider-how-big",
+    "file": "fl-divider-how-big.png",
+    "prompt": "A grumpy storm-cloud character with arms, floating over a tiny river town, about to throw a giant pair of dice; below, the little houses have worried faces and one house is quietly putting on a life jacket \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "5e333417233f"
+  },
+  {
+    "id": "fl-divider-how-good",
+    "file": "fl-divider-how-good.png",
+    "prompt": "Side-by-side showdown: on the left a huge, expensive, blinking supercomputer sweating as it slowly draws a flood map; on the right a tiny relaxed pixelated grid character in sunglasses sipping lemonade, having already drawn almost the same flood map; meme-style smug comparison \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "e493a3f32a37"
+  },
+  {
+    "id": "fl-divider-modelbuilder-tips",
+    "file": "fl-divider-modelbuilder-tips.png",
+    "prompt": "A frazzled college student at a desktop computer in a computer lab, buried in a tangled spaghetti of flowchart boxes and arrows that spill out of the monitor and wrap around the chair, coffee cups everywhere, one arrow tied in a knot; the student is calmly pulling out one correct arrow with a triumphant expression \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "41bd5bb8b03c"
+  },
+  {
+    "id": "fl-divider-lab-due",
+    "file": "fl-divider-lab-due.png",
+    "prompt": "A college student calmly typing at a desktop computer while floodwater rises around the desk to knee height, wearing a snorkel and a pool float, a rubber duck floating by; a wall calendar with a weekend day circled in red behind them, deadline energy, 'this is fine' meme vibe without the dog \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "b5a27a668ea5"
+  }
+]

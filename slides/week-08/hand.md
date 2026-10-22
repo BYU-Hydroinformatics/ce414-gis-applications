@@ -58,6 +58,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/fl-divider-measuring-flow.jpg)
+
 # Part 1 — Measuring Flow in Rivers
 
 ---
@@ -130,6 +132,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/fl-divider-how-big.jpg)
 
 # Part 2 — How Big Is the Flood?
 
@@ -214,6 +218,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/fl-divider-how-good.jpg)
+
 # Part 3 — How Good Is HAND?
 
 ---
@@ -295,6 +301,8 @@ Four ways to draw a flood, cheapest first:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/fl-divider-modelbuilder-tips.jpg)
+
 # Part 4 — Final Tips for Lab 7 in ModelBuilder
 
 ---
@@ -354,6 +362,8 @@ Four ways to draw a flood, cheapest first:
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/fl-divider-lab-due.jpg)
 
 # Part 5 — Lab 7, Due Saturday
 
