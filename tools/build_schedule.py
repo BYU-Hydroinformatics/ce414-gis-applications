@@ -93,7 +93,7 @@ LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 13)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
                8:"Flood Mapping and Midterm 1",9:"Interpolation",10:"Cut, Fill, and Raster Volumes",
-               11:"Least Cost Path",12:"Network Analysis",13:"The Final Project",
+               11:"Least Cost Path",12:"Network Analysis",13:"Final Project Intro",
                14:"Midterm 2 and Avalanche Hazard",15:"Final Project Due"}
 DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
 # Weeks whose page should point at the final project page. The project is introduced in Week 13 and

@@ -18,7 +18,7 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [10](week-10.md) | Cut, Fill, and Raster Volumes | Lab 9 — Big Southern Butte |
 | [11](week-11.md) | Least Cost Path | Lab 10 — Least Cost Path Power Line Analysis |
 | [12](week-12.md) | Network Analysis | Lab 11 — Network Analysis |
-| [13](week-13.md) | The Final Project | — |
+| [13](week-13.md) | Final Project Intro | — |
 | [14](week-14.md) | Midterm 2 and Avalanche Hazard | Lab 12 — Avalanche Hazard |
 | [15](week-15.md) | Final Project Due | — |
 
