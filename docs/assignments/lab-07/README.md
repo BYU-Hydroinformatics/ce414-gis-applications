@@ -473,7 +473,10 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 > | 153 | 62,693 | 1.5673 |
 > | 173 | 68,538 | 1.7135 |
 >
-> Area is the wet cells × 25 m², exactly, because the polygons are not simplified. If you have only
+> Area is the wet cells × 25 m², exactly, because the polygons are not simplified. The **Wet cells**
+> column is only here to help you check your results; **you do not need to compute it** or put it in
+> your report. If you want to, add a Long field to `Floods` and calculate it as `!Shape_Area! / 25`;
+> if your areas match, your cell counts do too. If you have only
 > one row, Merge ran outside the loop; if you have many rows per value, **Create multipart
 > features** was unchecked. Match each `H_CM` to its return period and flow in the stage table
 > above; the flood with `H_CM` 153 is the 100-year flood.
