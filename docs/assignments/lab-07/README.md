@@ -315,9 +315,11 @@ In the **HAND Builder** model, as in Lab 5:
 2. **Flow Direction**: input `Filled_DEM`, **Flow direction type** **D8**, output
    `Flow_Direction`.
 
+![The part of the HAND Builder model Step 2 builds: Provo_DEM.tif, marked P, into Fill, which makes Filled_DEM; Filled_DEM into Flow Direction, which makes Flow_Direction and an Output drop raster.](images/lab07-model-step2.png){ style="width: 658px" }
+
 ![The Flow Direction tool dialog opened from ModelBuilder: Input surface raster Filled_DEM; Output flow direction raster Flow_Direction; Force all edge cells to flow outward unchecked; Output drop raster empty; Flow direction type D8; Method Planar.](images/lab07-flow-direction.png)
 
-**Figure 2.** Flow Direction at its defaults: **Force all edge cells to flow outward** unchecked,
+**Figure 2.** Step 2's part of the model (top), and Flow Direction at its defaults: **Force all edge cells to flow outward** unchecked,
 **D8**, **Planar**.
 
 > [!TIP]
@@ -340,14 +342,18 @@ In the **HAND Builder** model, as in Lab 5:
 5. **Extract by Mask**: input raster `Stream_Cells`, mask `River_Corridor`, output `River_Cells`.
    Make `River_Cells` a parameter, so that a run from the tool dialog keeps it.
 
+![The part of the HAND Builder model that finds stream cells: Flow_Direction into Flow Accumulation, which makes Flow_Accumulation; Flow_Accumulation and Threshold, marked P, into Raster Calculator, which makes Stream_Cells.](images/lab07-model-step3a.png){ style="width: 652px" }
+
 ![The Raster Calculator dialog in ModelBuilder: the Rasters list shows Filled_DEM, Provo_DEM.tif, Flow_Direction, Output drop raster and Flow_Accumulation; the expression reads Con("%Flow_Accumulation%" > %Threshold%, 1); the Output raster is Stream_Cells.](images/lab07-rc-streams.png)
 
-**Figure 3a.** The stream threshold. Double-click `Flow_Accumulation` in the **Rasters** list to put
+**Figure 3a.** The stream threshold: its part of the model (top) and the Raster Calculator dialog. Double-click `Flow_Accumulation` in the **Rasters** list to put
 `"%Flow_Accumulation%"` in the expression, and type `%Threshold%` yourself.
+
+![The part of the HAND Builder model that keeps only the river: Provo_River into Buffer, which makes River_Corridor; River_Corridor and Stream_Cells into Extract by Mask, which makes River_Cells, marked P.](images/lab07-model-step3b.png){ style="width: 658px" }
 
 ![The Extract by Mask dialog: Input raster Stream_Cells; mask River_Corridor; Output raster River_Cells; Extraction Area Inside; Analysis Extent with Top 4463550, Left 436190, Right 444780 and Bottom 4452930, NAD 1983 UTM Zone 12N.](images/lab07-extract-mask.png)
 
-**Figure 3b.** Extract by Mask. With the Extent environment set, **Analysis Extent** fills in with
+**Figure 3b.** The river corridor and Extract by Mask (top), and the Extract by Mask dialog. With the Extent environment set, **Analysis Extent** fills in with
 the DEM's edges, not the corridor's.
 
 > [!TIP]
@@ -375,9 +381,11 @@ Add **Flow Distance** (Spatial Analyst):
 Make `HAND` a parameter. Save the model and run it inside ModelBuilder. When ArcGIS Pro asks whether
 to build pyramids for `HAND`, click **Yes**.
 
+![The part of the HAND Builder model Step 4 adds: Filled_DEM, Flow_Direction and River_Cells, marked P, all into Flow Distance, which makes HAND, marked P.](images/lab07-model-step4.png){ style="width: 902px" }
+
 ![The Flow Distance dialog: Input stream raster River_Cells; Input surface raster Filled_DEM; Output raster HAND; Input flow direction raster Flow_Direction; Distance type Vertical; Input flow direction type D8; Statistics type Minimum.](images/lab07-flow-distance.png)
 
-**Figure 4.** Flow Distance. **Vertical**, **D8** and **Minimum** are the defaults; the flow
+**Figure 4.** Flow Distance takes three earlier outputs (top). **Vertical**, **D8** and **Minimum** are the defaults; the flow
 direction raster is not, so choose `Flow_Direction`.
 
 > [!TIP]
@@ -402,9 +410,11 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
    Leave **Data Type** at **String**. Its green output is `Value`, the threshold in centimeters for
    one row at a time.
 
+    ![The start of the Flood Loop model: Stage_Table into Iterate Field Values, which makes Value.](images/lab07-model-step5a.png){ style="width: 390px" }
+
     ![The Iterate Field Values dialog: Input Table Stage_Table; Field H_CM; Data Type String; Unique Values checked; Skip Null Values unchecked; Null Value 0.](images/lab07-iterate-field-values.png)
 
-    **Figure 5a.** Iterate Field Values: one pass per `H_CM` in the stage table.
+    **Figure 5a.** The loop (top) and Iterate Field Values: one pass per `H_CM` in the stage table.
 
 3. Add `HAND` to the map from your project geodatabase. **Raster Calculator**: double-click `HAND`
    in the **Rasters** list (it goes in as `"HAND"`), then type the rest:
@@ -412,27 +422,38 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
    right-click it ▸ **Parameter**. `%Value%` is replaced by each row's number before the expression
    runs, so the first pass computes `Con("HAND" <= 119 / 100, 1)` and writes `flood_119`.
 
+    ![The Flood Loop model's Raster Calculator: Value and HAND, marked P, into Raster Calculator, which makes flood_%Value%.](images/lab07-model-step5b.png){ style="width: 694px" }
+
     ![The Raster Calculator dialog in the Flood Loop model: the Rasters list shows Value, Output raster, HAND and Provo_DEM.tif; the expression reads Con("HAND" <= %Value% / 100, 1); the Output raster is flood_%Value%.](images/lab07-flood-calc.png)
 
-    **Figure 5b.** One flood per pass. Type the output name last.
+    **Figure 5b.** One flood per pass: `Value` and `HAND` in, `flood_%Value%` out. Type the output name last.
 
 4. **Raster to Polygon**: input `flood_%Value%`, **Simplify polygons** unchecked, **Create
    multipart features** checked, output `floodpoly_%Value%`. Each flood becomes one row.
 
+    ![The Flood Loop model's Raster to Polygon: flood_%Value% into Raster to Polygon, which makes floodpoly_%Value%.](images/lab07-model-step5c.png){ style="width: 390px" }
+
     ![The Raster to Polygon dialog: Input raster flood_%Value%; Field VALUE; Output polygon features floodpoly_%Value%; Simplify polygons unchecked; Create multipart features checked; Maximum vertices per polygon feature empty.](images/lab07-raster-to-polygon.png)
 
-    **Figure 5c.** Raster to Polygon, unsimplified and multipart.
+    **Figure 5c.** Raster to Polygon in the model (top) and its dialog, unsimplified and multipart.
 
 5. **Calculate Field**: input `floodpoly_%Value%`, **Field Name** `H_CM` (a new field), **Field
    Type** **Long (32-bit integer)**, `H_CM =` `%Value%`. Its output oval is labeled
    `floodpoly_String`; that is only ModelBuilder's name for it.
+
+    ![The Flood Loop model's Calculate Field: floodpoly_%Value% into Calculate Field, which makes floodpoly_String.](images/lab07-model-step5-calc.png){ style="width: 390px" }
+
+    **Figure 5d.** Calculate Field stamps each pass's `H_CM` on its polygon.
+
 6. **Collect Values** (ModelBuilder tab ▸ **Insert** group ▸ **Utilities** ▸ **Collect Values**):
    **Input Value** `floodpoly_String`. Add **Merge** and drag from Collect Values' **Output Values**
    onto Merge, choosing **Input Datasets**, as in Lab 6. Output `Floods`; make `Floods` a parameter.
 
+    ![The end of the Flood Loop model: floodpoly_String into Collect Values, which makes Output Values and Output Table; Output Values into Merge, which makes Floods, marked P.](images/lab07-model-step5d.png){ style="width: 658px" }
+
     ![The Merge dialog: Input Datasets floodpoly_String, grayed because it comes from Collect Values; Output Dataset Floods; Field Matching Mode Automatically generate fields consolidated from all inputs; Add source information to output unchecked.](images/lab07-merge.png)
 
-    **Figure 5d.** Merge, fed by Collect Values, so it runs once, after the last pass.
+    **Figure 5e.** Merge, fed by Collect Values (top), so it runs once, after the last pass.
 
 7. **Save, then run the model from its tool dialog**: in the **Catalog** pane, open
    `Lab07.atbx` and double-click **Flood Loop**. The dialog shows `HAND` and `Floods` as its
