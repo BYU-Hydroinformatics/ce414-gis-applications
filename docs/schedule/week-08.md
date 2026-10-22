@@ -8,7 +8,7 @@
 ## :material-presentation-play: Presentation Slides
 
 - **Tuesday** — [Flood Mapping, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html) — Why a river is not a bathtub, HAND cell by cell (pull the river down to zero), the stream definition, and Lab 7's two models: prepare HAND once, flood it once per flow.
-- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — Annual peaks and the 100-year flood as a 1% chance, FEMA's maps as GIS, the river's ruler and the rating curve, how good HAND is and where it breaks, the ladder from bathtub to 2-D hydraulics, and the ModelBuilder traps in Lab 7.
+- **Thursday** — [Flood Mapping, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html) — Measuring flow in rivers (the river's ruler and the rating curve), annual peaks and the 100-year flood as a 1% chance, FEMA's maps as GIS, how good HAND is against FEMA's map, the ladder from bathtub to 2-D hydraulics, and final tips for Lab 7 in ModelBuilder.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -21,7 +21,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Height Above What?](../quizzes/hand/index.html) — Six questions on what HAND measures, which cells flood when the river rises, the tool that computes HAND, why the stream definition matters, and why Lab 7 is two models.
-- [How Big, How High?](../quizzes/floods/index.html) — Six questions on what a 100-year flood means, why HAND floods by depth, when a bathtub is the right model, scoring a flood map, and two Lab 7 ModelBuilder traps.
+- [How Big, How High?](../quizzes/floods/index.html) — Six questions on how a gage reading becomes a flow, what a 100-year flood means, when a bathtub is the right model, scoring a flood map, and two Lab 7 ModelBuilder mistakes.
 
 </div>
 

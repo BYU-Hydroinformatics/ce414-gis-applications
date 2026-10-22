@@ -33,14 +33,15 @@ CE414Quiz.start({
       explanation: "It is a probability that resets every year, which is why FEMA writes \"1% annual chance\". Two such floods can come in back-to-back years; a 100-year record need not contain one."
     },
     {
-      prompt: "Why does Lab 7 flood the land by depth above the river instead of by water elevation?",
+      prompt: "A stream gage measures stage, the water level. How does that reading become a flow?",
       options: [
-        "Depth is always measured in feet, like the gage readings",
-        "HAND is also a height above the river",
-        "The DEM has no vertical datum to compare elevations against"
+        "Through the gage's rating curve, built from field measurements",
+        "The gage measures the flow directly with a sensor in the water",
+        "Stage times the width of the river gives the flow",
+        "FEMA's flood study converts each reading to a flow"
       ],
-      answer: "HAND is also a height above the river",
-      explanation: "Depth is gage height minus the zero-flow offset, a height above the river, which is exactly what HAND measures for every cell. The gage datum never enters h; you need it only to turn a gage height into an elevation, as a bathtub or FEMA's water surface does."
+      answer: "Through the gage's rating curve, built from field measurements",
+      explanation: "The USGS measures the flow by hand many times, across low and high water, and fits a stage-to-flow curve for that gage: the rating curve. Every gage has its own, because every channel is different. For a flood, Lab 7 reads it backwards: flow to stage, then stage to a depth above the river."
     },
     {
       prompt: "When is a bathtub model (one flat water elevation) the right flood model?",

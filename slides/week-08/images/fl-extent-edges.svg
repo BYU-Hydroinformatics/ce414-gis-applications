@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 700" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="22">
+  <title>Why the Extent environment matters in HAND Builder. Left, Extent set to the DEM: HAND covers the whole valley. Right, no Extent: Extract by Mask makes River_Cells only as large as the box around the river corridor, Flow Distance follows that box, and the valley edges outside it get no HAND value, with no error. A schematic, not to scale.</title>
+  <rect width="860" height="700" fill="#ffffff"/>
+  <defs>
+    <pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="12" height="12" fill="#feb2b2"/>
+      <line x1="0" y1="0" x2="0" y2="12" stroke="#e53e3e" stroke-width="3"/>
+    </pattern>
+    <!-- the valley: a DEM rectangle, a river and its 30 m corridor -->
+    <g id="river">
+      <path d="M 250,50 C 245,120 215,160 220,225 C 226,300 175,330 160,385 C 148,430 120,450 100,470"
+            fill="none" stroke="#90cdf4" stroke-width="34" stroke-linecap="round" opacity="0.8"/>
+      <path d="M 250,50 C 245,120 215,160 220,225 C 226,300 175,330 160,385 C 148,430 120,450 100,470"
+            fill="none" stroke="#2b6cb0" stroke-width="4"/>
+    </g>
+  </defs>
+
+  <!-- left panel: Extent set -->
+  <text x="200" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#22543d">Extent set to the DEM</text>
+  <g transform="translate(30,70)">
+    <rect x="0" y="0" width="340" height="520" fill="#c6f6d5" stroke="#2f855a" stroke-width="3"/>
+    <use href="#river"/>
+    <text x="170" y="545" text-anchor="middle" font-size="21" fill="#22543d">HAND covers the whole valley</text>
+    <text x="170" y="572" text-anchor="middle" font-size="21" font-weight="700" fill="#22543d">697,608 cells</text>
+  </g>
+
+  <!-- right panel: no Extent -->
+  <text x="650" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#9b2c2c">No Extent</text>
+  <g transform="translate(480,70)">
+    <rect x="0" y="0" width="340" height="520" fill="url(#hatch)" stroke="#9b2c2c" stroke-width="3"/>
+    <!-- the box around the river corridor: what River_Cells, and so HAND, is cut to -->
+    <rect x="74" y="26" width="200" height="468" fill="#c6f6d5" stroke="#2d3748" stroke-width="3" stroke-dasharray="10 7"/>
+    <use href="#river"/>
+    <text x="180" y="545" text-anchor="middle" font-size="21" fill="#9b2c2c">edges outside the box: no HAND</text>
+    <text x="180" y="572" text-anchor="middle" font-size="21" font-weight="700" fill="#9b2c2c">695,974 cells, and no error</text>
+  </g>
+
+  <!-- legend -->
+  <g transform="translate(30,660)" font-size="19" fill="#2d3748">
+    <rect x="0" y="-16" width="40" height="20" fill="none" stroke="#2d3748" stroke-width="3" stroke-dasharray="10 7"/>
+    <text x="50" y="0">box around the river corridor (River_Cells)</text>
+    <rect x="470" y="-16" width="28" height="20" fill="url(#hatch)"/>
+    <text x="508" y="0">lost, no message</text>
+    <text x="800" y="0" text-anchor="end" font-size="16" fill="#718096">not to scale</text>
+  </g>
+</svg>

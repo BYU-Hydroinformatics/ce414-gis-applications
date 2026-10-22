@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 700" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="22">
+  <title>What Collect Values and Merge do in Lab 7's Flood Loop. The iterator runs the loop five times, once per depth (119, 134, 143, 153 and 173 cm). Each pass makes one flood polygon with its H_CM stamped on it. Collect Values holds all five outputs, and Merge, outside the loop, stacks them into one feature class, Floods, with five rows.</title>
+  <rect width="860" height="700" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/>
+    </marker>
+  </defs>
+
+  <!-- the loop -->
+  <rect x="20" y="20" width="380" height="600" rx="16" fill="#f7fafc" stroke="#a0aec0" stroke-width="2.5" stroke-dasharray="10 7"/>
+  <text x="210" y="56" text-anchor="middle" font-size="24" font-weight="700" fill="#2d3748">inside the loop</text>
+  <text x="210" y="84" text-anchor="middle" font-size="19" fill="#4a5568">one pass per row of Stage_Table</text>
+
+  <g font-size="20">
+    <g transform="translate(50,108)">
+      <rect width="320" height="84" rx="10" fill="#fff5eb" stroke="#c05621" stroke-width="2.5"/>
+      <path d="M 24,60 C 50,20 90,64 120,30 C 140,12 170,50 200,36" fill="none" stroke="#c05621" stroke-width="14" stroke-linecap="round" opacity="0.55"/>
+      <text x="300" y="34" text-anchor="end" font-weight="700" fill="#7b341e">pass 1</text>
+      <text x="300" y="64" text-anchor="end" fill="#1a202c">H_CM = 119</text>
+    </g>
+    <g transform="translate(50,206)">
+      <rect width="320" height="84" rx="10" fill="#fff5eb" stroke="#c05621" stroke-width="2.5"/>
+      <path d="M 24,60 C 50,20 90,64 120,30 C 140,12 170,50 200,36" fill="none" stroke="#c05621" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
+      <text x="300" y="34" text-anchor="end" font-weight="700" fill="#7b341e">pass 2</text>
+      <text x="300" y="64" text-anchor="end" fill="#1a202c">H_CM = 134</text>
+    </g>
+    <g transform="translate(50,304)">
+      <rect width="320" height="84" rx="10" fill="#fff5eb" stroke="#c05621" stroke-width="2.5"/>
+      <path d="M 24,60 C 50,20 90,64 120,30 C 140,12 170,50 200,36" fill="none" stroke="#c05621" stroke-width="21" stroke-linecap="round" opacity="0.55"/>
+      <text x="300" y="34" text-anchor="end" font-weight="700" fill="#7b341e">pass 3</text>
+      <text x="300" y="64" text-anchor="end" fill="#1a202c">H_CM = 143</text>
+    </g>
+    <g transform="translate(50,402)">
+      <rect width="320" height="84" rx="10" fill="#fff5eb" stroke="#c05621" stroke-width="2.5"/>
+      <path d="M 24,60 C 50,20 90,64 120,30 C 140,12 170,50 200,36" fill="none" stroke="#c05621" stroke-width="24" stroke-linecap="round" opacity="0.55"/>
+      <text x="300" y="34" text-anchor="end" font-weight="700" fill="#7b341e">pass 4</text>
+      <text x="300" y="64" text-anchor="end" fill="#1a202c">H_CM = 153</text>
+    </g>
+    <g transform="translate(50,500)">
+      <rect width="320" height="84" rx="10" fill="#fff5eb" stroke="#c05621" stroke-width="2.5"/>
+      <path d="M 24,60 C 50,20 90,64 120,30 C 140,12 170,50 200,36" fill="none" stroke="#c05621" stroke-width="28" stroke-linecap="round" opacity="0.55"/>
+      <text x="300" y="34" text-anchor="end" font-weight="700" fill="#7b341e">pass 5</text>
+      <text x="300" y="64" text-anchor="end" fill="#1a202c">H_CM = 173</text>
+    </g>
+  </g>
+  <text x="210" y="606" text-anchor="middle" font-size="18" fill="#4a5568">each pass: one polygon, its depth stamped on it</text>
+
+  <!-- arrows into Collect Values -->
+  <g stroke="#4a5568" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <path d="M 372,150 C 410,150 420,300 452,330"/>
+    <path d="M 372,248 C 410,248 420,320 452,338"/>
+    <path d="M 372,346 L 452,346"/>
+    <path d="M 372,444 C 410,444 420,372 452,354"/>
+    <path d="M 372,542 C 410,542 420,392 452,362"/>
+  </g>
+
+  <!-- Collect Values -->
+  <rect x="456" y="296" width="180" height="100" rx="50" fill="#e9d8fd" stroke="#6b46c1" stroke-width="2.5"/>
+  <text x="546" y="338" text-anchor="middle" font-weight="700" fill="#44337a">Collect</text>
+  <text x="546" y="366" text-anchor="middle" font-weight="700" fill="#44337a">Values</text>
+  <text x="546" y="424" text-anchor="middle" font-size="18" fill="#4a5568">holds all five</text>
+
+  <!-- Merge, outside the loop -->
+  <line x1="636" y1="346" x2="676" y2="346" stroke="#4a5568" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="680" y="300" width="160" height="92" rx="12" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2.5"/>
+  <text x="760" y="354" text-anchor="middle" font-size="24" font-weight="700" fill="#1a365d">Merge</text>
+  <text x="760" y="424" text-anchor="middle" font-size="18" fill="#4a5568">outside the loop</text>
+
+  <!-- the result -->
+  <line x1="760" y1="440" x2="760" y2="476" stroke="#4a5568" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(640,482)" font-size="19">
+    <rect width="200" height="196" fill="#ffffff" stroke="#2d3748" stroke-width="2"/>
+    <rect width="200" height="34" fill="#2d3748"/>
+    <text x="100" y="24" text-anchor="middle" font-weight="700" fill="#ffffff">Floods: 5 rows</text>
+    <text x="20" y="62" fill="#1a202c">H_CM 119</text>
+    <text x="20" y="94" fill="#1a202c">H_CM 134</text>
+    <text x="20" y="126" fill="#1a202c">H_CM 143</text>
+    <text x="20" y="158" fill="#1a202c">H_CM 153</text>
+    <text x="20" y="190" fill="#1a202c">H_CM 173</text>
+  </g>
+</svg>
