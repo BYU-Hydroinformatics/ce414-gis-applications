@@ -128,6 +128,8 @@ Also used when **changing cell size**, when data are **missing or unsuitable**, 
 
 <!-- _class: lead -->
 
+![bg right:55%](images/ip-divider-gold.jpg)
+
 # Scenario: Distribution of a Mineral Deposit
 
 ## Gold nuggets under a landscape
@@ -259,6 +261,8 @@ The landscape on the left is the real, fully known surface. In practice you neve
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/ip-divider-surface.jpg)
 
 # From Samples to a Surface
 

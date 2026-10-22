@@ -48,6 +48,8 @@ By the end of class you should be able to:
 ---
 <!-- _class: lead -->
 
+![bg right:55%](images/ip-divider-kriging.jpg)
+
 # Part 1 — Kriging
 
 ## Interpolation that estimates its own weights
@@ -246,6 +248,8 @@ Lab 8 runs all three on Y Mountain
 
 <!-- _class: lead -->
 
+![bg right:55%](images/ip-divider-how-wrong.jpg)
+
 # Part 2 — How Wrong Is the Surface?
 
 ## When you have the truth
@@ -323,6 +327,8 @@ $$
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/ip-divider-which-trust.jpg)
 
 # Part 3 — Which One to Trust?
 
@@ -408,6 +414,8 @@ All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen 
 
 <!-- _class: lead -->
 
+![bg right:55%](images/ip-divider-survive.jpg)
+
 # Part 4 — Does the Answer Survive?
 
 ---
@@ -444,6 +452,8 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/ip-divider-explorer.jpg)
 
 # Part 5 — Lab 8, Interpolation Explorer
 

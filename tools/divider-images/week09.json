@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ip-divider-gold",
+    "file": "ip-divider-gold.png",
+    "prompt": "An old-time prospector with a pickaxe and a tiny shovel staring in dismay at a huge empty valley; a cutaway of the ground shows gold nuggets scattered unevenly underground where he cannot see them; his mule shrugs beside him \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "3b9545e81fd2"
+  },
+  {
+    "id": "ip-divider-surface",
+    "file": "ip-divider-surface.png",
+    "prompt": "A cheerful field scientist has pushed a handful of colorful survey stakes into a flat field at different heights and is draping a giant bedsheet over them, which forms a smooth rolling hilly surface; a curious dog peeks under the edge of the sheet \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "833d2145f598"
+  },
+  {
+    "id": "ip-divider-kriging",
+    "file": "ip-divider-kriging.png",
+    "prompt": "A detective in a trench coat with a magnifying glass in front of a corkboard covered in pinned dots connected by red yarn of many different lengths, wild-eyed conspiracy-board meme energy, papers and coffee cups everywhere \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "da912ca89f95"
+  },
+  {
+    "id": "ip-divider-how-wrong",
+    "file": "ip-divider-how-wrong.png",
+    "prompt": "A nervous cartoon 3D terrain landscape character with a face sits at a school desk, sweating, while a stern teacher holding an answer key marks big red circles and check marks all over its hills and valleys \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "ee10329da9ab"
+  },
+  {
+    "id": "ip-divider-which-trust",
+    "file": "ip-divider-which-trust.png",
+    "prompt": "Three cartoon hilly terrain surfaces with faces standing in a police lineup against a height chart wall, each looking innocent, while a confused witness on the other side of the one-way glass scratches their head trying to pick one \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "fec0dc2b3e27"
+  },
+  {
+    "id": "ip-divider-survive",
+    "file": "ip-divider-survive.png",
+    "prompt": "A small brave map character with a face and tiny legs standing firm on an obstacle course while a mischievous engineer at a control panel cranks three giant dials and dodgeballs fly at it; the map is dented but determined and still standing \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "a6744f4f026c"
+  },
+  {
+    "id": "ip-divider-explorer",
+    "file": "ip-divider-explorer.png",
+    "prompt": "An adventurer in a pith helmet and safari gear with binoculars climbing a mountain made of glowing dots and grid squares, about to plant a plain flag at the summit; far below, a small base camp tent with a desktop computer on a folding table \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-1",
+    "sha256": "38dd748dffab"
+  }
+]
