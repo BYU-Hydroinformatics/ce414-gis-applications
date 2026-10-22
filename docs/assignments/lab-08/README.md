@@ -136,7 +136,7 @@ Every one of these is a decision somebody made, and every one of them can change
   your Lab08 folder — the files are in a `lab08-y-mountain` folder inside it — and read
   `READ-ME-FIRST.txt`.
 
-**What we already did for you.** Every step below is one you have done in an earlier lab, so we did
+**What we already did for you.** The steps below prepare the data rather than teach the lab, so we did
 them once, carefully, and handed you the results; your model starts where the interpolation starts.
 
 1. **Project Raster** (Labs 4 and 5): `YMountain_DEM.tif` to NAD 1983 UTM Zone 12N, bilinear,
@@ -145,7 +145,7 @@ them once, carefully, and handed you the results; your model starts where the in
    inside it with its corners on the 30 m grid. The result is `True_DEM`.
 3. **Create Random Points**: 250, 2,500 and 10,000 points inside `Study_Area`, with the
    **Random Number Generator** environment set to seed 1, so the points are the same every time.
-4. **Extract Values to Points** (Lab 9): the `True_DEM` value under each point, written to
+4. **Extract Values to Points**: the `True_DEM` value under each point, written to
    `RASTERVALU`.
 
 We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.

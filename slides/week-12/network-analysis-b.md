@@ -191,7 +191,6 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 # The Question and the Data
 
-<!-- TODO(graphic): nab-baseline.png's title still reads "Lab 12's baseline"; re-run tools/week12_network_figures.py on the Windows machine (the script now says Lab 11). -->
 
 ![bg right:50% w:98%](images/nab-baseline.png)
 

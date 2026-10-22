@@ -201,7 +201,7 @@ PRACTICE = {
     9: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust."),
         ("rmse", "How Wrong Is the Surface?",
-         "Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.")],
+         "Seven questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.")],
     10: [("earthwork", "Cut or Fill?",
           "Five questions on cut versus fill, raising a pad's grade, the balance grade, the sign of Cut Fill's VOLUME, and what a grid volume leaves out."),
          ("volumes", "The Base Is the Answer",

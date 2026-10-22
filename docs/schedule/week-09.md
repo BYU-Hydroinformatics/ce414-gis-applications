@@ -20,7 +20,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Points Into Surfaces](../quizzes/interpolation/index.html) — Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.
-- [How Wrong Is the Surface?](../quizzes/rmse/index.html) — Five questions on what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.
+- [How Wrong Is the Surface?](../quizzes/rmse/index.html) — Seven questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.
 
 </div>
 

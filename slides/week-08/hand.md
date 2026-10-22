@@ -252,7 +252,7 @@ By the end of class you should be able to:
 <div class="columns" style="grid-template-columns: 1.15fr 1fr; font-size: 0.8em;">
 <div>
 
-Three ways to draw a flood, in order of cost:
+Four ways to draw a flood, in order of cost:
 
 * **Bathtub**: one elevation, one Con. Right for a lake
 * **HAND**: one depth above the river, from a DEM and flow direction. Lab 7; NOAA runs it nationwide
