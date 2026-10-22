@@ -269,16 +269,35 @@ four edges; if **Output Coordinate System** comes filled in from an earlier proj
 
 ### Step 1 — Your Own Flow
 
-Before any GIS, do the hydrology once, by hand, for a flood that is yours alone. Open
-[the gage's page](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" } and
-`rating_10163000.csv` (Excel is fine).
+Before any GIS, do the hydrology once, by hand, for a flood that is yours alone. This step uses
+two sources, and they hold different things:
 
-1. On the gage page, find the **datum**: the number to add to a gage height to get an elevation.
-   It should match `READ-ME-FIRST.txt`: **4,493.22 ft above NAVD 88**. That is one of the three
-   metadata values your report explains (Figure A).
+| Source | What it holds |
+| --- | --- |
+| `rating_10163000.csv` (open it in Excel) | Two columns, `gage_height_ft` and `discharge_cfs`, one row for every 0.01 ft from 3.42 to 8.00 ft. **No datum and no elevations.** |
+| [The gage's USGS page](https://waterdata.usgs.gov/monitoring-location/10163000/){ target="_blank" } | The **gage datum**, under **Important information about this monitoring location** near the bottom of the page |
+
+Three different heights come up at one gage, and it helps to keep them apart:
+
+- **Gage height** is what the gage reads: feet above the gage's own zero, a reference point set
+  low enough that readings stay positive. Every number in the CSV's first column is a gage height.
+- **Gage datum**, **4,493.22 ft** above NAVD 88, is the elevation of that zero. Add it to a gage
+  height to get the water surface's elevation above sea level: a gage height of 7.78 ft is a water
+  surface at 4,501.00 ft NAVD 88.
+- **Zero-flow level**, a gage height of **3.20 ft**, is where the water stands when the river
+  stops flowing. Flood depth *h* is measured from here, because HAND is measured from the stream.
+
+You **do not use the datum to compute *h***. *h* is the difference between two gage heights, so
+the datum would cancel out. You look it up because it is one of the three metadata values your
+report explains (Figure A): it is what ties the gage's readings to the DEM's elevations.
+
+1. **Find the datum.** On the gage page, scroll to **Important information about this monitoring
+   location**. It says to add **4,493.22 feet** to a gage height to get an elevation in NAVD 88.
+   Check that it matches the `Gage` entry in `READ-ME-FIRST.txt` and write it in your report.
 2. **Work out your design flow** from your **BYU ID number**: the **nine-digit number printed on
    your BYU ID card**, such as `123456789`. It is **not your NetID**, the user name of letters and
    numbers you chose and use to sign in to BYU sites.
+3. **Look up your gage height** in `rating_10163000.csv` and compute *h*, as the box below shows.
 
 > **Your design flow Q = 900 + 12 × (the last two digits of your BYU ID) ft³/s**
 >
