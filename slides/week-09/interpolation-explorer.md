@@ -466,11 +466,11 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 - **Ground:** Y Mountain, a **30 m** DEM, `True_DEM`
 - **Points:** **250**, **2,500**, **10,000**
 - **Model:** points → Thiessen, IDW, kriging → error → **RMSE**
-- **Then:** five dialog runs, **200 checkpoints**
+- **Then:** five dialog runs, one at **your own** IDW power
 
 [Lab 8 — Interpolation Explorer](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-08/)
 
-<!-- The figure is the finished Lab 8 model, exported from ModelBuilder. Sample Points, IDW Power and the Semivariogram are its input parameters; the three error rasters and three RMSE tables are its outputs. Two things to warn about: set the Extent environment to True_DEM in Step 0, or IDW and kriging cover less ground at 250 points; and finish Map 1 and the checkpoints before the first run from the tool dialog, because a dialog run deletes everything that is not a parameter, including the surfaces. -->
+<!-- The figure is the finished Lab 8 model, exported from ModelBuilder. Sample Points, IDW Power and the Semivariogram are its input parameters; the three error rasters and three RMSE tables are its outputs. Two things to warn about: set the Extent environment to True_DEM in Step 0, or IDW and kriging cover less ground at 250 points; and finish Map 1 before the first run from the tool dialog, because a dialog run deletes everything that is not a parameter, including the surfaces. -->
 
 ---
 

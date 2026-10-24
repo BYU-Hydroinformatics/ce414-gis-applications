@@ -55,23 +55,14 @@ for n in (250, 2500, 10000):
     first = next(arcpy.da.SearchCursor(fc, ["SHAPE@X", "SHAPE@Y"], sql_clause=(None, "ORDER BY OBJECTID")))
     res[fc] = dict(n=len(v), min=round(min(v), 1), max=round(max(v), 1), first=[round(first[0], 1), round(first[1], 1)],
                    fields=[f.name for f in arcpy.ListFields(fc)], runs=run(fc, f"n{n}"))
-# Step 8 on the course's 2,500 points: two parameter runs, the 200 hosted checkpoints, and every
+# Step 8 on the course's 2,500 points: two parameter runs and every
 # personal IDW power: 1 + (last two digits of the 9-digit BYU ID) / 40, so 1.000 ... 3.475 (grading table).
 res["param_runs"] = {"IDW 1 / exponential": run("Sample_Points_2500", "a", 1, "EXPONENTIAL"),
                      "IDW 3 / Gaussian": run("Sample_Points_2500", "b", 3, "GAUSSIAN")}
-base = {"Thiessen": f"TH_n2500", "IDW": None, "Kriging": None}
-Idw("Sample_Points_2500", "RASTERVALU", 30, 2, RadiusVariable(12)).save("IDW_base")
-Kriging("Sample_Points_2500", "RASTERVALU", KrigingModelOrdinary("SPHERICAL"), 30, RadiusVariable(12)).save("KR_base")
-arcpy.management.CopyFeatures("Checkpoints", "CP")
-arcpy.sa.ExtractMultiValuesToPoints("CP", [[TRUE, "TRUE_Z"], ["TH_n2500", "TH_Z"], ["IDW_base", "IDW_Z"], ["KR_base", "KR_Z"]])
-rows = list(arcpy.da.SearchCursor("CP", ["TRUE_Z", "TH_Z", "IDW_Z", "KR_Z"]))
-res["checkpoints"] = {m: round(math.sqrt(sum((r[0] - r[i]) ** 2 for r in rows) / len(rows)), 2)
-                      for i, m in ((1, "Thiessen"), (2, "IDW"), (3, "Kriging"))}
-res["checkpoints"]["n"] = len(rows); res["checkpoints"]["fields"] = [f.name for f in arcpy.ListFields("Checkpoints")]
 res["personal_power"] = {}
 for d in range(100):
     pw = 1 + d / 40
     res["personal_power"][d] = dict(power=pw, idw_rmse=rmse(Idw("Sample_Points_2500", "RASTERVALU", 30, pw, RadiusVariable(12)), f"pp{d}")["rmse"])
-print("checkpoints", res["checkpoints"]); print("personal", {d: v["idw_rmse"] for d, v in res["personal_power"].items()})
+print("personal", {d: v["idw_rmse"] for d, v in res["personal_power"].items()})
 json.dump(res, open(os.path.join(HERE, "package_checks.json"), "w"), indent=1)
 print(json.dumps({k: (v if k == "true_dem" else {kk: vv for kk, vv in v.items() if kk != "runs"}) for k, v in res.items() if k.startswith(("true", "Sample"))}, indent=1))

@@ -40,9 +40,6 @@ WHAT
   Study_Area (250, 2,500 and 10,000 of them), each carrying the True_DEM cell value under it in
   the field RASTERVALU (meters). These are the samples you interpolate from.
 
-  Lab08.gdb / Checkpoints - 200 more random points inside Study_Area, drawn separately and never
-  used to interpolate. Lab 8, Step 8 tests each rebuilt surface at these points.
-
 WHERE
   Provo, Utah County, Utah: the BYU campus and the valley floor in the west, the mountain front
   with the block Y, Y Mountain and the mouth of Rock Canyon in the east.
@@ -85,8 +82,6 @@ PROCESSING
      algorithm 599), 250, 2,500 and 10,000 points.
   5. Extract Values to Points from True_DEM, which writes RASTERVALU; the CID field Create Random
      Points adds was deleted.
-  Checkpoints
-  6. Create Random Points inside Study_Area, seed 99, 200 points; no values attached (CID deleted).
   Scripts: tools/lab08/fetch_dem.py, run_model.py and make_extract.py in the course repo.
 
 LICENSE
@@ -107,10 +102,6 @@ for n in (250, 2500, 10000):
     arcpy.conversion.ExportFeatures(os.path.join(CHECK, f"Points_n{n}_s1"), out)
     arcpy.management.DeleteField(out, "CID")
     print(out, arcpy.management.GetCount(out)[0], [f.name for f in arcpy.ListFields(out)])
-out = os.path.join(gdb, "Checkpoints")
-arcpy.conversion.ExportFeatures(os.path.join(CHECK, "Checkpoints"), out)
-arcpy.management.DeleteField(out, "CID")
-print(out, arcpy.management.GetCount(out)[0], [f.name for f in arcpy.ListFields(out)])
 arcpy.management.ClearWorkspaceCache()
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with zipfile.ZipFile(OUT, "w", zipfile.ZIP_DEFLATED) as z:

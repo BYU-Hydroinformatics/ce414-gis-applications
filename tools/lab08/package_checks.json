@@ -329,16 +329,6 @@
    }
   }
  },
- "checkpoints": {
-  "Thiessen": 30.38,
-  "IDW": 23.16,
-  "Kriging": 17.12,
-  "n": 200,
-  "fields": [
-   "OBJECTID",
-   "Shape"
-  ]
- },
  "personal_power": {
   "0": {
    "power": 1.0,

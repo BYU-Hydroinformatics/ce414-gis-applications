@@ -732,18 +732,17 @@ const LABS = {
       ] },
 
     { h: 'Testing the Choices', pageBreakBefore: true,
-      hint: 'Rubric: one table with your baseline and the five Step 8 runs, including run 5 at your own IDW power with your BYU ID’s last two digits, the RMSE of all three methods in every row, and a row with your baseline’s three checkpoint RMSEs (4 points).',
+      hint: 'Rubric: one table with your baseline and the five Step 8 runs, including run 5 at your own IDW power with your BYU ID’s last two digits, and the RMSE of all three methods in every row (4 points).',
       table: { caption: 'Table 4. Sensitivity. My BYU ID ends in __ , so my IDW power is 1 + __ ÷ 40 = ______.',
                head: ['Run', 'Sample points, IDW power, semivariogram', 'Thiessen RMSE (m)', 'IDW RMSE (m)', 'Kriging RMSE (m)'],
-               rows: [['Baseline (Step 7)', 'Sample_Points_2500, 2, Spherical', '', '', ''], ['Baseline, 200 checkpoints', 'RMSE at the checkpoints', '', '', ''],
+               rows: [['Baseline (Step 7)', 'Sample_Points_2500, 2, Spherical', '', '', ''],
                       ['1', 'Sample_Points_250, 2, Spherical', '', '', ''], ['2', 'Sample_Points_10000, 2, Spherical', '', '', ''],
                       ['3', 'Sample_Points_2500, 1, Exponential', '', '', ''], ['4', 'Sample_Points_2500, 3, Gaussian', '', '', ''],
                       ['5 (my power)', 'Sample_Points_2500, ____, Spherical', '', '', '']],
                widths: [1700, 3060, 1540, 1500, 1560] },
       questions: [
-        'Which method wins, and does the ranking survive? Rank the methods at 250, 2,500 and 10,000 points, with your numbers. (2 points)',
-        'Which parameter mattered, and which barely did? Compare the IDW powers (1, 2, 3 and yours) and the semivariogram model with the number of points. (2 points)',
-        'Could you have known without the truth? Compare each checkpoint RMSE with the RMSE over all 67,337 cells. (2 points)',
+        'Which method wins, and does the ranking survive? Rank the methods at 250, 2,500 and 10,000 points, with your numbers. (3 points)',
+        'Which parameter mattered, and which barely did? Compare the IDW powers (1, 2, 3 and yours) and the semivariogram model with the number of points. (3 points)',
       ] },
 
     { h: 'Maps', pageBreakBefore: true,

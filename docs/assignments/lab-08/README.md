@@ -32,6 +32,14 @@ and IDW/Kriging now fill RASTERVALU by themselves (the CID default came from Cre
 tool-dialog runs on the course's sets, and the per-student element is run 5's IDW power = 1 + (last
 two digits of the nine-digit BYU ID) / 40. Checkpoints (seed 99) are hosted in the zip.
 
+*Checkpoints cut October 23, 2026 (instructor's request, to lighten the lab for students falling
+behind):* the Step 8 checkpoint test (Extract Multi Values to Points on 200 hosted checkpoints, three
+squared-difference fields, Summary Statistics, checkpoint RMSEs), its table row and the "could you
+have known without the truth?" question are gone; its 2 rubric points went one each to the other two
+questions (now 4 / 3 / 3). `Checkpoints` was removed from the zip (rebuilt by make_extract.py and
+re-verified by verify_package.py). Judging a surface from checkpoints is still taught in the Week 9
+Thursday deck (Part 3) and its quiz.
+
 *Figures:* Figures A and B are generated from the data (`tools/lab08/make_svgs.py`); the example
 maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a
 GUI build in ArcGIS Pro 3.7.1 at 175 % on October 7, 2026 (`C:\Ames\Lab08GUI\Lab08.aprx`, then
@@ -127,7 +135,6 @@ Every one of these is a decision somebody made, and every one of them can change
 | --- | --- | --- |
 | `lab08-y-mountain\Lab08.gdb\True_DEM` | The DEM projected to UTM 12N at 30 m and cut to the study rectangle: the truth | Prepared for you, in the zip |
 | `lab08-y-mountain\Lab08.gdb\Sample_Points_250`, `_2500`, `_10000` | Random points in the rectangle, each with the `True_DEM` value under it in `RASTERVALU` | Prepared for you, in the zip |
-| `lab08-y-mountain\Lab08.gdb\Checkpoints` | 200 more random points in the rectangle, never used to interpolate; Step 8 tests the surfaces at them | Prepared for you, in the zip |
 | `lab08-y-mountain\Lab08.gdb\Study_Area` | The study rectangle, on `True_DEM`'s 30 m grid | Prepared for you, in the zip |
 | `YMountain_DEM.tif` | The source: USGS 3D Elevation Program, 1/3 arc-second DEM, tile n41w112 | In the zip, for its metadata and for Step 1 |
 | 3DEP elevation image service | The same elevations, served live | A web service you add in Step 1 |
@@ -147,8 +154,6 @@ them once, carefully, and handed you the results; your model starts where the in
    **Random Number Generator** environment set to seed 1, so the points are the same every time.
 4. **Extract Values to Points**: the `True_DEM` value under each point, written to
    `RASTERVALU`.
-
-We drew `Checkpoints` the same way, 200 points with a different seed, and attached no values.
 
 > [!TIP]
 > **Check the data:** `True_DEM` has **67,337** cells with values, from **1,368.5 to 2,896.5** m
@@ -218,7 +223,7 @@ without the step-by-step instructions below, say so in your report.
    made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes a project
    geodatabase and toolbox beside it, `Lab08.gdb` and `Lab08.atbx`. The downloaded data stay in their
    own `lab08-y-mountain\Lab08.gdb`; this page always says which of the two it means.
-2. Add `True_DEM`, `Study_Area`, `Checkpoints` and the three `Sample_Points_` layers from
+2. Add `True_DEM`, `Study_Area` and the three `Sample_Points_` layers from
    `lab08-y-mountain\Lab08.gdb`, and `YMountain_DEM.tif` (click **OK** to build pyramids and
    statistics).
 3. Confirm Spatial Analyst is licensed and that your license level is **Advanced** (**Project** ▸
@@ -487,27 +492,14 @@ ModelBuilder.
 The ranking at the defaults is *a* result, not *the* result. It came from one set of random points
 and three sets of default parameters. Find out how much of it survives a change.
 
-**First, the checkpoints and Map 1.** Your Step 7 run is your **baseline**, and its surfaces are
-still on disk because you ran it inside ModelBuilder. Use them now, before any run from the tool
-dialog (see the warning below). In real work you would not have a true DEM; you would hold back some
-measured points and test against them. `Checkpoints` is 200 such points, drawn separately from the
-samples and never used to interpolate:
-
-1. **Extract Multi Values to Points** on `Checkpoints` (from the downloaded geodatabase; export a
-   copy to your project geodatabase first, so the download stays clean) with `True_DEM` (output field
-   name `TRUE_Z`), `Thiessen_Surface` (`TH_Z`), `IDW_Surface` (`IDW_Z`) and `Kriging_Surface`
-   (`KR_Z`).
-2. **Calculate Field** three times, new Double fields: `SQ_TH` = `(!TRUE_Z! - !TH_Z!) ** 2`,
-   `SQ_IDW` = `(!TRUE_Z! - !IDW_Z!) ** 2`, `SQ_KR` = `(!TRUE_Z! - !KR_Z!) ** 2`.
-3. **Summary Statistics** on your copy of `Checkpoints`: the **Mean** of `SQ_TH`, `SQ_IDW` and
-   `SQ_KR`. The square root of each mean is that method's **checkpoint RMSE**.
-
-Then make Map 1 (see the Deliverables) from the baseline's surfaces and error rasters.
+**First, Map 1.** Your Step 7 run is your **baseline**, and its surfaces are still on disk because
+you ran it inside ModelBuilder. Make Map 1 (see the Deliverables) from the baseline's surfaces and
+error rasters now, before any run from the tool dialog (see the warning below).
 
 > [!WARNING]
-> **Finish Map 1 and the checkpoints before the first dialog run.** A run from the tool dialog deletes
-> everything that is not a parameter (Lab 5 saw it), including the three surfaces Map 1 and
-> the checkpoints need. The downloaded data are inputs, so they are never deleted.
+> **Finish Map 1 before the first dialog run.** A run from the tool dialog deletes everything that is
+> not a parameter (Lab 5 saw it), including the three surfaces Map 1 needs. The downloaded data are
+> inputs, so they are never deleted.
 
 **Then the tool dialog.** Save the model, close it, and open it from the **Catalog** pane
 (**Toolboxes** ▸ `Lab08.atbx` ▸ **Interpolation Explorer**). Run it **five times**, giving every
@@ -549,8 +541,7 @@ Lag size may show empty in the dialog; Kriging fills it in.
 > Step 7 run (28.29 and 14.46). With the example power of 3.225, IDW's RMSE is **20.29** m.
 
 Record **all of it in one table**: your baseline (Step 7) and the five runs, each with the sample
-points, the IDW power and semivariogram model, and the RMSE of all three methods, plus one more row
-with the three checkpoint RMSEs of your baseline.
+points, the IDW power and semivariogram model, and the RMSE of all three methods.
 
 Then answer, in your report:
 
@@ -561,9 +552,6 @@ Then answer, in your report:
    yours) and the semivariogram model did with what the number of points did. Before you explain the
    Gaussian run, look at its `Error_Kriging` map (an output, so the dialog run keeps it): where are its
    largest positive errors, the places the surface came out too low?
-3. **Could you have known without the truth?** Compare each method's checkpoint RMSE with its RMSE
-   over all 67,337 cells. Would 200 checkpoints have told a client the right ranking, and how far off
-   would the number you quoted have been?
 
 > [!TIP]
 > Before you run the 10,000-point set, predict its RMSEs from your 250 and 2,500 results. Then look
@@ -607,7 +595,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   (**Properties** ▸ **Source** ▸ **Statistics**), whichever is farther from zero. To find it, give
   the layer a two-class symbology with the break just short of that value, so that one cell stands
   out, and click it with **Explore** to read its coordinates
-- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its three questions
+- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your IDW power, and your answers to its two questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
@@ -663,7 +651,7 @@ what to submit.
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and, on the course's 2,500 points, matches the three RMSE check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline comparison sheet**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The true DEM with the sample points and the three surfaces on one elevation scale, with a legend (2)<br>• The three error maps on one diverging scale with the same breaks, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Layout, scale and legibility: a reader can compare the panels at a glance (2) | /10 |
 | **Map 2 — one Step 8 scenario**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The scenario's three error maps on Map 1's error scale, with a legend (2)<br>• Every panel labeled with its method, parameters and RMSE (2)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Layout, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row, and a row with your baseline's three checkpoint RMSEs (4)<br>• Which method wins and whether the ranking survives, with your numbers (2)<br>• Which parameter mattered and which barely did, with your numbers (2)<br>• What the checkpoints would and would not have told you (2) | /10 |
+| **Sensitivity** (Step 8)<br>• One table with your baseline and the five Step 8 runs — including run 5 at your own IDW power, with your BYU ID's last two digits — the RMSE of all three methods in every row (4)<br>• Which method wins and whether the ranking survives, with your numbers (3)<br>• Which parameter mattered and which barely did, with your numbers (3) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
