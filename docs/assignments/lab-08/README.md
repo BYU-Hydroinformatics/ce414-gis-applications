@@ -313,6 +313,10 @@ Every tool that follows takes `Sample Points` — choose it under **Model Variab
 list, not the map layer of the same set — so that changing this one input in Step 8 changes all three
 methods at once.
 
+![The model after Step 2: Sample Points, marked P, into Create Thiessen Polygons, not yet filled in.](images/lab08-model-step2.png){ style="width: 256px" }
+
+**Figure 2.** The model after Step 2: `Sample Points`, a parameter, feeding the first tool.
+
 > [!NOTE]
 > **Why make the points a parameter?** In Step 8 you run the model on 250 and 10,000 points as well.
 > With the points as a parameter, each of those runs is one choice in the tool dialog.
@@ -325,13 +329,17 @@ methods at once.
    `RASTERVALU`, **Cell assignment type** Cell center, **Cellsize** 30 (it fills in from the
    environment), output `Thiessen_Surface`.
 
+![The start of the Thiessen branch in the model: Sample Points, marked P, into Create Thiessen Polygons, which makes Thiessen_Polygons.](images/lab08-model-step3a.png){ style="width: 390px" }
+
 ![The Create Thiessen Polygons dialog from ModelBuilder: Input Features Sample Points, Output Feature Class Thiessen_Polygons, Output Fields All fields.](images/lab08-thiessen-polygons.png)
 
-**Figure 3a.** Create Thiessen Polygons, with **All fields**.
+**Figure 3a.** Create Thiessen Polygons in the model (top) and its dialog, with **All fields**.
+
+![The rest of the Thiessen branch: Thiessen_Polygons into Polygon to Raster, which makes Thiessen_Surface.](images/lab08-model-step3b.png){ style="width: 390px" }
 
 ![The Polygon to Raster dialog from ModelBuilder: Input Features Thiessen_Polygons, Value field RASTERVALU, Output Raster Dataset Thiessen_Surface, Cell assignment type Cell center, Priority field NONE, Cellsize 30, Build raster attribute table checked.](images/lab08-polygon-to-raster.png)
 
-**Figure 3b.** Polygon to Raster, with the value field changed to `RASTERVALU`.
+**Figure 3b.** Polygon to Raster in the model (top) and its dialog, with the value field changed to `RASTERVALU`.
 
 > [!WARNING]
 > **Two defaults here give a surface with no elevations in it.** Create Thiessen Polygons opens at
@@ -352,9 +360,11 @@ by itself), **Output cell size** `30`, **Power** 2, **Search radius** Variable w
 `IDW_Surface`. Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **Power**,
 rename the new oval `IDW Power` (select it and press **Ctrl+R**), and make it a parameter.
 
+![The IDW branch in the model: Sample Points and IDW Power, both marked P, into IDW, which makes IDW_Surface.](images/lab08-model-step4.png){ style="width: 658px" }
+
 ![The IDW dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output raster IDW_Surface, Output cell size 30, Power 2, Search radius Variable with Number of points 12 and Maximum distance empty, Input barrier polyline features empty.](images/lab08-idw.png)
 
-**Figure 4.** IDW.
+**Figure 4.** IDW in the model, with its `IDW Power` variable (top), and its dialog.
 
 > [!TIP]
 > **Check the result:** `IDW_Surface` runs from **1,368.7 to 2,885.5** m. IDW is a weighted average,
@@ -370,9 +380,11 @@ Then right-click the tool ▸ **Create Variable** ▸ **From Parameter** ▸ **S
 properties**, rename the oval `Semivariogram`, and make it a parameter. In the tool dialog it shows
 the same controls as here: in Step 8 you pick another model from its **Semi-variogram model** list.
 
+![The Kriging branch in the model: Sample Points and Semivariogram, both marked P, into Kriging, which makes Kriging_Surface and an unused Output variance of prediction raster.](images/lab08-model-step5.png){ style="width: 658px" }
+
 ![The Kriging dialog from ModelBuilder: Input point features Sample Points, Z value field RASTERVALU, Output surface raster Kriging_Surface, Kriging method Ordinary, Semi-variogram model Spherical, Lag size 30, Major range, Partial sill and Nugget empty, Output cell size 30, Search radius Variable with Number of points 12, Output variance of prediction raster empty.](images/lab08-kriging.png)
 
-**Figure 5.** Kriging. The range, sill and nugget stay empty: Kriging fits them to your points.
+**Figure 5.** Kriging in the model, with its `Semivariogram` variable (top), and its dialog. The range, sill and nugget stay empty: Kriging fits them to your points.
 
 > [!TIP]
 > **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
@@ -396,9 +408,11 @@ means the surface came out too **low** there; a negative error, too **high**. Gi
 diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
 50, 100 m), so that the same color means the same error on every map.
 
+![One error branch in the model: True_DEM and Thiessen_Surface into Raster Calculator, which makes Error_Thiessen.](images/lab08-model-step6.png){ style="width: 390px" }
+
 ![The Raster Calculator dialog from ModelBuilder, widened: the Rasters list shows Thiessen_Surface, IDW_Surface, Kriging_Surface, Output variance of prediction raster and IDW Power, with True_DEM further down the list; the expression reads "%True_DEM%" - "%Thiessen_Surface%"; Output raster Error_Thiessen.](images/lab08-rc-error.png)
 
-**Figure 6.** The Thiessen error. Type the output name last and check it before **OK**: Raster
+**Figure 6.** The Thiessen error: `True_DEM` and `Thiessen_Surface` in, `Error_Thiessen` out. Type the output name last and check it before **OK**: Raster
 Calculator puts back the old name when the expression changes.
 
 > [!TIP]
@@ -436,17 +450,23 @@ Finally make the outputs parameters: the three error rasters and the three `RMSE
 `Sample Points`, `IDW Power` and `Semivariogram`, that is nine. Save, and run the model inside
 ModelBuilder.
 
+![Error_Thiessen into a second Raster Calculator, labeled Raster Calculator (5), which makes SqError_Thiessen.](images/lab08-model-step7a.png){ style="width: 390px" }
+
 ![The Raster Calculator dialog from ModelBuilder: the expression reads Square("%Error_Thiessen%"); Output raster SqError_Thiessen.](images/lab08-rc-square.png)
 
-**Figure 7a.** Squaring the Thiessen error.
+**Figure 7a.** Squaring the Thiessen error, in the model (top) and in its dialog.
+
+![SqError_Thiessen and Study_Area into Zonal Statistics as Table, which makes RMSE_Thiessen and an unused Output Join Layer.](images/lab08-model-step7b.png){ style="width: 390px" }
 
 ![The Zonal Statistics as Table dialog from ModelBuilder: Input Raster or Feature Zone Data Study_Area, Zone Field OBJECTID, Input Value Raster SqError_Thiessen, Output Table RMSE_Thiessen, Ignore NoData in Calculations checked, Statistics Type Mean, Calculate Circular Statistics and Process as Multidimensional unchecked, Output Join Layer empty.](images/lab08-zonal-table.png)
 
-**Figure 7b.** Zonal Statistics as Table, with **Mean**.
+**Figure 7b.** Zonal Statistics as Table in the model (top) and its dialog, with **Mean**.
+
+![RMSE_Thiessen into Calculate Field, whose output is renamed RMSE Thiessen and marked P.](images/lab08-model-step7c.png){ style="width: 390px" }
 
 ![The Calculate Field dialog from ModelBuilder: Input Table RMSE_Thiessen, Field Name RMSE with a warning that it is a new field, Field Type Double (64-bit floating point), Expression Type Python, Fields list OBJECTID, OBJECTID_1, COUNT, AREA, MEAN, and the expression RMSE = math.sqrt(!MEAN!).](images/lab08-calculate-field.png)
 
-**Figure 7c.** Calculate Field. The warning beside Field Name only says the field will be added.
+**Figure 7c.** Calculate Field in the model, its output renamed `RMSE Thiessen` (top), and its dialog. The warning beside Field Name only says the field will be added.
 
 > [!TIP]
 > **Check the result:** each table has one row (the zone field appears as `OBJECTID_1`) with
