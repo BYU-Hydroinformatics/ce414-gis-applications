@@ -285,7 +285,7 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 <!-- The last bullet is the honest one and it is where the rest of a career in this material lives: hold points back, interpolate without them, and compare. Everything else on this slide is bookkeeping. -->
 
-<!-- Thursday makes the last bullet concrete: a six-methods test with 60 points held back, RMSE, and checkpoints in Lab 8. -->
+<!-- Thursday makes the last bullet concrete: a six-methods test with 60 points held back, RMSE, and checkpoints. -->
 
 ---
 

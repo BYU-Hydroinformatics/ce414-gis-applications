@@ -353,7 +353,7 @@ $$
 - Read each surface at the checkpoints, and compute the RMSE there
 - Measure the error **where you know the answer**; do not eyeball
 
-<!-- The bars are the six-methods test on the previous slide: 60 points held back on Little Cottonwood Canyon. The orange bar is the lowest error; the dotted line is the error of ignoring location and guessing the mean of the 150 samples (218 m). In Lab 8 the Checkpoints feature class is 200 such points, drawn separately from the sample points. Extract Multi Values to Points reads the truth and all three surfaces at each checkpoint in one tool. -->
+<!-- The bars are the six-methods test on the previous slide: 60 points held back on Little Cottonwood Canyon. The orange bar is the lowest error; the dotted line is the error of ignoring location and guessing the mean of the 150 samples (218 m). Lab 8 does not compute checkpoints (its all-cell RMSE already uses the truth), so these two slides carry the lesson. In practice, Extract Multi Values to Points reads every surface at each checkpoint in one tool. -->
 
 ---
 
@@ -363,7 +363,7 @@ $$
 
 - Each number **wanders by about ±3 m** — but the **ranking** came out the same in **every** draw
 
-<!-- The Lab 8 baseline surfaces (2,500 points, defaults), read at 2,000 different random sets of 200 cells, not the lab's own Checkpoints. 90 % of the draws fall within: Thiessen 24.0 to 32.6 m, IDW 17.6 to 24.0, kriging 11.5 to 17.6, around the all-cell values 28.29, 20.71 and 14.46. Yet in all 2,000 draws kriging beat IDW and IDW beat Thiessen, because the same checkpoints judge all three surfaces: a set of points that happens to land on hard ground makes every method look worse together. Lesson: 200 checkpoints are good for choosing a method and loose for quoting its accuracy to a client. Lab 8's third question asks exactly this of each student's own checkpoints. Numbers: tools/week09_interpolation_numbers.json, from tools/week09_interpolation_figures.py. -->
+<!-- The Lab 8 baseline surfaces (2,500 points, defaults), read at 2,000 different random sets of 200 cells. 90 % of the draws fall within: Thiessen 24.0 to 32.6 m, IDW 17.6 to 24.0, kriging 11.5 to 17.6, around the all-cell values 28.29, 20.71 and 14.46. Yet in all 2,000 draws kriging beat IDW and IDW beat Thiessen, because the same checkpoints judge all three surfaces: a set of points that happens to land on hard ground makes every method look worse together. Lesson: 200 checkpoints are good for choosing a method and loose for quoting its accuracy to a client. This is the class's only look at checkpoints; Lab 8 does not ask for them. Numbers: tools/week09_interpolation_numbers.json, from tools/week09_interpolation_figures.py. -->
 
 <!-- Optional: skip if time is short. The ranking point can be made in one sentence. -->
 
