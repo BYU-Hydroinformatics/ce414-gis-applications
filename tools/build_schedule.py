@@ -148,7 +148,6 @@ DUE = {
     15: dict(reading=None, quiz=None, lab=None,
              other=[("Final project **presentation video** (eight minutes; post the link on the class Google document)", "Wednesday 11:59 pm"),
                     ("Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed", "Wednesday 11:59 pm"),
-                    ("Attendance record on the class Google document", "Wednesday 11:59 pm"),
                     ("Final project **lab assignment** (each team member submits)", "Thursday 11:59 pm"),
                     ("Notes on at least ten classmates' presentation videos", "Thursday 11:59 pm"),
                     ("Course evaluation (extra credit)", "Friday 11:59 pm")]),

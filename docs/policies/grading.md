@@ -35,7 +35,7 @@ total and will shift a little if points are added or dropped during the semester
 | Final exam | 100 | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
 | Final project | 100 total | Proposal meeting 10, presentation 40, lab-style write-up 50. See the [Final Project](../assignments/final-project.md) page. |
 | In-class activities (9) | 5 each, 45 total | Uploaded to Learning Suite the day they happen. Only presented in class. |
-| Attendance | 25 | Record your attendance on the class Google document; missed classes are subtracted. |
+| Attendance | 25 | Check in on Learning Suite during each class session; each class day is an equal share of the 25 points. |
 | Peer review | 20 | Review and stamp at least ten classmates' lab reports, two points each, and turn in a memo at the end listing whom you reviewed. |
 | Final project presentation notes | 10 | Notes on at least ten classmates' presentations. |
 
@@ -54,6 +54,11 @@ Participation** category, about 8 %.
 Regular attendance in class and lab sessions is critical. Some quiz and exam material is not in
 the book and is only presented in class, and the in-class activities are where the concepts get
 locked in.
+
+Check in on the Learning Suite **Class Attendance** item during each class session, on the day of
+class. Days when class is canceled are marked excused for
+everyone and count as attended, so your Learning Suite grade shows your attendance points as the
+semester goes rather than only at the end.
 
 ## Late work policy
 
