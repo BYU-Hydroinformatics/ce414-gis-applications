@@ -67,6 +67,13 @@ environments, building and running the model, and making the maps. The parts the
 most — the criteria you chose, the sensitivity analysis, and what you say the result does not
 prove — should come out of your own head, and you should be able to defend them without notes.
 
+AI may also do the clerical work of a report: moving numbers you produced into a table, laying
+out a table from your own model export or attribute table, fixing formatting. Every value in that
+table must come from your own run, and you check each one against your attribute tables before you
+submit. A wrong number is yours, whoever typed it. What AI may not do is supply a number, a field
+name or an expression of its own, or write the parts of the report the rubric asks you to reason
+through.
+
 Disclose in one line at the end of the report.
 
 ### Reading quizzes

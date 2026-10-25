@@ -741,9 +741,10 @@ this page.
 > **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
 > tighten your write-up, and add one line at the end of your report saying what you used it
 > for. Do not take a field name, an expression, a coordinate system, or a number from it —
-> those come from your own data, and the rubric asks you to defend every one. AI may not fill in
-> your tables or the template: type your own numbers from your own attribute tables. See the
-> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+> those come from your own data, and the rubric asks you to defend every one. AI may do the
+> clerical work, such as moving your own numbers into a table or laying out the model table from
+> your own export, but every value must come from your own attribute tables and you check each
+> one. See the [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 >
 > **What the grader verifies.** The model figure must be a ModelBuilder export; the maps must be
 > ArcGIS Pro layout exports with selectable text; your own flood's *h*, area and building count must

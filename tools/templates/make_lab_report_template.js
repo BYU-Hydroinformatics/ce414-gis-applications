@@ -678,7 +678,7 @@ const LABS = {
     { h: 'References', pageBreakBefore: true,
       hint: 'Rubric: sources credited (part of the points for organized writing). Credit the elevation, the FEMA study and map, the USGS gage and rating, UGRC’s river and buildings, Nobre and others (2011), and anything else you relied on.' },
     { h: 'AI Use Statement',
-      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. AI may not fill in your tables or this template. Expressions, areas, counts and coordinates come from your own work, never from a model.' },
+      hint: 'Course policy: one line saying what you used AI for. If you used none, say that. AI may do clerical work such as moving your own numbers into a table, but every value comes from your own attribute tables and you check each one. Expressions, areas, counts and coordinates come from your own work, never from a model.' },
     { h: 'Self-Graded Rubric', pageBreakBefore: true, rubric: true,
       hint: 'Rubric: this rubric pasted in with your self-assessment in every row (part of the point for organized writing). Put a score in every row, honestly arrived at. The grader compares yours with theirs.' },
   ],
