@@ -55,8 +55,7 @@ Regular attendance in class and lab sessions is critical. Some quiz and exam mat
 the book and is only presented in class, and the in-class activities are where the concepts get
 locked in.
 
-Check in on the Learning Suite **Class Attendance** item during each class session, on the day of
-class. Days when class is canceled are marked excused for
+Check in on the Learning Suite **Class Attendance** item during each class session. Days when class is canceled are marked excused for
 everyone and count as attended, so your Learning Suite grade shows your attendance points as the
 semester goes rather than only at the end.
 
