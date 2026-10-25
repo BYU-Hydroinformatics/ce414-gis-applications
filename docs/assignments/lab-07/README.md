@@ -598,8 +598,10 @@ Make **two** professional map layouts (letter size), each exported from ArcGIS P
    the date, the map projection, and the sources and dates of the elevation, the flows and the FEMA
    map.
 2. **Map 2 — your own flood.** The flood at your design flow, symbolized with a legend, the
-   buildings it reaches highlighted and their count on the map; the river and the gage; the main
-   frame zoomed to where the flood reaches buildings (an inset alone does not count); an imagery
+   buildings it reaches highlighted and their count on the map; the river; the gage, in the main
+   frame or in a small locator inset that shows the whole reach with the main frame's extent
+   outlined; the main frame zoomed to where the flood reaches buildings (an inset alone does not
+   count); an imagery
    basemap; a title stating your flow and *h*, a neat line, north arrow and scale bar; and a text
    box with your name, the date, the map projection, and the sources and dates.
 
@@ -705,7 +707,17 @@ close-up where a reader can see them nest.
 
 **Figure 9.** The design for Map 2, with placeholder wording. Your main frame should be zoomed to
 where your flood reaches buildings; this example keeps the whole reach in the main frame and shows
-the close-up as an inset, which is the weaker choice.
+the close-up as an inset, which is the weaker choice. At every design flow the flood reaches
+buildings right beside the gage, so a main frame that takes in both the gage and the largest
+cluster of reached buildings is possible. If you zoom in tighter than that, show the gage in a
+locator inset instead.
+
+<!-- Oct 25, 2026: a student asked before the deadline whether Map 2 could drop the gage when the
+main frame is zoomed to the buildings. Locator-inset option added. Checked with the package data
+(tools/lab07 HAND, last two digits 00, 50, 99): the nearest reached building is 42 m from the gage
+and 61 to 102 reached buildings lie within 1 km of it; the densest 1 km box of reached buildings is
+centered 1.7 to 2.0 km east of the gage. -->
+
 
 ## Rubric for Flood Mapping with HAND
 
@@ -722,7 +734,7 @@ this page.
 | **ModelBuilder models** — correct and working<br>• Both models built as described: HAND Builder's river cells and HAND range match the check values, and Flood Loop produces one merged feature class with five labeled floods whose areas match (4)<br>• A full-page figure of both models exported from ModelBuilder, all tools and datasets readable (2)<br>• Screen captures of both tool dialogs with the threshold, HAND and the floods exposed as parameters (2)<br>• A description of both models a reader could repeat from, including how the loop's value reaches the expression (2) | /10 |
 | **Runs** (Steps 6 and 7)<br>• The `Floods_Buildings` table captured, and the five areas and building counts in a table with their return periods and flows, matching the check values (3)<br>• Your own flood: your BYU ID's last two digits, Q, the rating row, *h*, and the flood's area and building count, matching a run at your flow (4)<br>• The Geoprocessing History capture listing the Flood Loop run and the Step 7 tools, with the Flood Loop card open (3) | /10 |
 | **Map 1 — the five FEMA floods** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating what the map shows (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the elevation, flows and FEMA map (1)<br>• The five floods nested and symbolized so each return period is readable, with a legend and the return periods labeled (3)<br>• FEMA's 1% floodplain outlined, the river and the gage shown (2)<br>• Basemap, scale and legibility appropriate to the river (2) | /10 |
-| **Map 2 — your own flood** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating your flow and *h* (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• Your flood symbolized with a legend, the river and the gage shown (2)<br>• The buildings it reaches highlighted, with their count on the map (3)<br>• Main frame zoomed to where the flood reaches buildings; basemap and legibility (2) | /10 |
+| **Map 2 — your own flood** (full page, 8.5 × 11, uploaded as a layout PDF)<br>• Title stating your flow and *h* (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• Your flood symbolized with a legend, the river shown, and the gage shown in the main frame or a locator inset (2)<br>• The buildings it reaches highlighted, with their count on the map (3)<br>• Main frame zoomed to where the flood reaches buildings; basemap and legibility (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]

@@ -672,7 +672,7 @@ const LABS = {
         { caption: 'Map 1. The five FEMA floods, with FEMA’s 1% floodplain, the river and the gage.', pageBreakAfter: true,
           hint: 'Must carry: a title saying what the map shows; neat line, north arrow and scale bar; a text box with author, date, map projection, and the sources and dates of the elevation, flows and FEMA map; the five floods nested with a legend and the return periods labeled; FEMA’s outline, the river and the gage; an imagery basemap, legible when printed.' },
         { caption: 'Map 2. My own flood, and the buildings it reaches.',
-          hint: 'Must carry: a title stating your flow and h; neat line, north arrow and scale bar; the same text box items as Map 1; your flood with a legend, the river and the gage; the buildings it reaches highlighted with their count on the map; the main frame zoomed to where the flood reaches buildings (an inset alone does not count).' },
+          hint: 'Must carry: a title stating your flow and h; neat line, north arrow and scale bar; the same text box items as Map 1; your flood with a legend and the river; the gage, in the main frame or in a locator inset that outlines the main frame’s extent; the buildings it reaches highlighted with their count on the map; the main frame zoomed to where the flood reaches buildings (an inset alone does not count).' },
       ] },
 
     { h: 'References', pageBreakBefore: true,
