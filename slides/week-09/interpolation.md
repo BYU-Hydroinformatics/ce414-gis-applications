@@ -227,9 +227,9 @@ li[data-bespoke-marp-fragment="active"] .ls-pop { animation: tryit-pop 0.45s eas
 
 ---
 
-# The Scenario
+# The Gold Prospecting Scenario
 
-The map on the left is the real, fully known gold grade. In practice you never see it — you only get the handful of points you choose to sample.
+The map on the left is the real, fully known gold grade, in **grams of gold per tonne of rock** (g/t). In practice you never see it — you only get the handful of points you choose to sample.
 
 <div class="columns">
 <div>
@@ -246,7 +246,7 @@ The map on the left is the real, fully known gold grade. In practice you never s
 </div>
 </div>
 
-<!-- Left: the true gold grade in grams per tonne, made up for this scenario (tools/week09_tuesday_figures.py): a northeast-trending vein, a dozen ore pods of different sizes, and background variation. Right: the cartoon reason we care. The next four slides sample this same map. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
+<!-- Left: the true gold grade in grams of gold per tonne of rock (g/t, the unit assays report), made up for this scenario (tools/week09_tuesday_figures.py): a northeast-trending vein, a dozen ore pods of different sizes, and background variation. Right: the cartoon reason we care. The next four slides sample this same map. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
 
 ---
 
@@ -327,7 +327,7 @@ The map on the left is the real, fully known gold grade. In practice you never s
 
 - Without a way to identify where the feature varies most, you need several visits; sample density cannot be changed on the spot
 
-<!-- Adaptive is the best design and the hardest to execute, because it needs prior knowledge of the thing you are going out to measure. In practice it means a coarse first pass followed by targeted infill. Fixed the source's "can not" to "cannot." -->
+<!-- Adaptive is the best design and the hardest to execute, because it needs prior knowledge of the thing you are going out to measure. In practice it means a coarse first pass followed by targeted infill. The figure does exactly that: 24 points scattered at random, then 72 more placed at random but weighted toward high grade, so the dots look random yet crowd on and around the richest pods. Fixed the source's "can not" to "cannot." -->
 
 <!-- TODO(instructor): decide how much of sampling design belongs in CE 414 versus the statistics prerequisite, and whether to add a slide on sample size and spacing. -->
 
@@ -345,7 +345,7 @@ The map on the left is the real, fully known gold grade. In practice you never s
 
 ![h:360 center](images/ip-gold-grade.png)
 
-<!-- Vote now, while the four designs are fresh, and before discussing any of them. Each design has the same 96 points on the same map. The interesting argument is between adaptive and random: adaptive (a coarse first pass, then infill where the grade changes fastest) puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
+<!-- Vote now, while the four designs are fresh, and before discussing any of them. Each design has the same 96 points on the same map. The interesting argument is between adaptive and random: adaptive (24 points at random, then 72 more at random but weighted toward the richest ground, so they crowd on and around the hot spots) puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
 
 ---
 

@@ -26,7 +26,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
-from scipy.ndimage import gaussian_filter, sobel
+from scipy.ndimage import gaussian_filter
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 IMG = ROOT / "slides" / "week-09" / "images"
@@ -126,18 +126,18 @@ designs = {"systematic": np.c_[gx.ravel(), gy.ravel()],
            "random": np.c_[rng.uniform(8, NX - 8, N), rng.uniform(8, NY - 8, N)]}
 centers = np.c_[rng.uniform(30, NX - 30, 12), rng.uniform(30, NY - 30, 12)]
 designs["cluster"] = np.vstack([c + rng.normal(0, 9, (8, 2)) for c in centers])
-# Adaptive: a coarse first pass on a 4 x 6 grid, then 72 infill points drawn where the grade changes fastest.
-grad = np.hypot(sobel(gaussian_filter(g, 6), 0), sobel(gaussian_filter(g, 6), 1))
-grad[:8], grad[-8:], grad[:, :8], grad[:, -8:] = 0, 0, 0, 0
-p = (grad / grad.sum()).ravel()
+# Adaptive: a first pass of 24 points scattered at random, then 72 infill points also placed at random but
+# weighted by the grade (cubed, so the richest ground dominates), so the dots crowd on and around the hot spots.
+rich = gaussian_filter(g, 5) ** 3
+rich[:8], rich[-8:], rich[:, :8], rich[:, -8:] = 0, 0, 0, 0
+p = (rich / rich.sum()).ravel()
 pick = rng.choice(p.size, 72, replace=False, p=p)
-cx, cy = np.meshgrid(np.linspace(35, NX - 35, 4), np.linspace(35, NY - 35, 6))
-designs["adaptive"] = np.vstack([np.c_[cx.ravel(), cy.ravel()],
+designs["adaptive"] = np.vstack([np.c_[rng.uniform(8, NX - 8, 24), rng.uniform(8, NY - 8, 24)],
                                  np.clip(np.c_[pick % NX, pick // NX] + rng.uniform(-3, 3, (72, 2)), 8, [NX - 8, NY - 8])])
 
 fig, ax = plt.subplots(figsize=(4.4, 5.6), dpi=200)
 im = gold_axes(ax)
-cb = fig.colorbar(im, ax=ax, fraction=0.05, pad=0.03); cb.set_label("Gold grade (g/t)", color=NAVY)
+cb = fig.colorbar(im, ax=ax, fraction=0.05, pad=0.03); cb.set_label("Gold grade (grams of gold per tonne of rock)", color=NAVY)
 fig.tight_layout(); fig.savefig(IMG / "ip-gold-grade.png"); plt.close(fig)
 
 for name, pts in designs.items():
