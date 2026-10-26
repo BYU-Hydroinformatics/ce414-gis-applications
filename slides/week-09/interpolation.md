@@ -149,7 +149,6 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 .gr ul { list-style: none; margin: 0; padding: 0; }
 .gr li { margin: 0; }
 .gr-cartoon { position: absolute; left: 70px; top: 118px; width: 300px; height: 300px; border-radius: 10px; }
-.gr-ph { display: flex; align-items: center; justify-content: center; text-align: center; background: #f4f6f9; border: 2px dashed #9aa6b6; color: #7d8ba0; font-size: 0.55em; padding: 1em; box-sizing: border-box; }
 .gr-layer { position: absolute; left: 440px; top: 112px; width: 790px; height: 489px; }
 .gr-say { position: absolute; left: 70px; width: 350px; font-size: 0.6em; line-height: 1.3; }
 .gr-say strong { color: #002e5d; }
@@ -158,7 +157,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s ease-out both; }
 </style>
 
-<div class="gr-cartoon gr-ph">TODO(graphic): cartoon of a mom marking her daughter's height on the wall</div>
+<img class="gr-cartoon" src="images/ip-growth-wall-cartoon.jpg" alt="Cartoon of a mom marking her daughter's height on a door frame">
 
 <img class="gr-layer" src="images/ip-growth-points.png" alt="Her height on each birthday from 1 to 18">
 
@@ -172,7 +171,7 @@ li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s eas
 
 </div>
 
-<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation from Today's Goals, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). -->
+<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation from Today's Goals, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. -->
 
 ---
 
