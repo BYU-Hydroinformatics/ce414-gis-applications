@@ -1,0 +1,69 @@
+{
+  "dem": "USGS 3DEP 3DEPElevation ImageServer, 30 m, EPSG:26912",
+  "extent_utm": [
+    441600,
+    4467700,
+    448800,
+    4474900
+  ],
+  "n_samples": 150,
+  "truth_range_m": [
+    1831,
+    3569
+  ],
+  "kriging_spherical": {
+    "sill_partial": 183646.654,
+    "range_km": 4.559,
+    "nugget": 0.0
+  },
+  "methods": {
+    "thiessen": {
+      "rmse_m": 123.7,
+      "mean_abs_at_samples_m": 0.0,
+      "range_m": [
+        1990,
+        3535
+      ]
+    },
+    "idw6": {
+      "rmse_m": 103.4,
+      "mean_abs_at_samples_m": 0.0,
+      "range_m": [
+        1990,
+        3535
+      ]
+    },
+    "idw12": {
+      "rmse_m": 110.3,
+      "mean_abs_at_samples_m": 0.0,
+      "range_m": [
+        1990,
+        3535
+      ]
+    },
+    "trend": {
+      "rmse_m": 219.8,
+      "mean_abs_at_samples_m": 163.36,
+      "range_m": [
+        1037,
+        3102
+      ]
+    },
+    "spline": {
+      "rmse_m": 75.7,
+      "mean_abs_at_samples_m": 0.0,
+      "range_m": [
+        1944,
+        3562
+      ]
+    },
+    "kriging": {
+      "rmse_m": 85.5,
+      "mean_abs_at_samples_m": 0.0,
+      "range_m": [
+        1990,
+        3535
+      ]
+    }
+  }
+}

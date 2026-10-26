@@ -8,7 +8,7 @@ footer: "CE 414 · Week 9 — Interpolation"
 <!-- _class: lead -->
 <!-- _paginate: skip -->
 
-![bg right:45% w:95%](images/ip-surface-3d-kriged.png)
+![bg right:45% w:95%](images/ip-tp-kriged-3d.png)
 
 ![w:110](../theme/images/byu-medallion.svg)
 
@@ -378,48 +378,26 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ---
 
-# Interpolation: Rasters and Contours
-
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
-
-Usually used for **point-to-raster** data. Some methods instead produce **contour lines** — vector lines of uniform value.
-
-**Raster surface**
-
-- Values are measured at a set of sample points
-- Raster layer boundaries and cell dimensions are established
-- The interpolation method estimates the value for the center of each unmeasured grid cell
-
-**Contour lines: an iterative process**
-
-- Estimate points of a given value (say 10 °C) and connect them into a line, then estimate the next value (say 20 °C) — lines of different values may not cross
-
-<!-- Point out that the raster path and the contour path are two renderings of the same estimated surface, not two different analyses. In practice you interpolate to a raster and derive contours from it. -->
-
-<!-- Optional: skip if time is short. Lab 8 works only in rasters. -->
-
----
-
-# Example Base
+# The Elevation Interpolation Scenario
 
 <div class="columns" style="align-items:start">
 <div>
 
-![h:430 center](images/ip-contour-map-base.png)
+![h:330 center](images/ip-tp-dem-3d.png)
 
-**Elevation contours** — the true surface
+**DEM for Mount Timpanogos, Utah** — the "true" surface
 
 </div>
 <div>
 
-![h:430 center](images/ip-sample-points-values.png)
+![h:400 center](images/ip-tp-samples.png)
 
-**Sampled locations and values**
+**150 sampled locations and values**
 
 </div>
 </div>
 
-<!-- This pair is the reference for the rest of the session and for kriging on Thursday. Left is the truth, which in a real project you never have. Right is everything the interpolator gets to see. Every method that follows is judged by how close it comes to the left panel using only the right panel. -->
+<!-- This pair is the reference for the rest of the session. Left is the truth: USGS 3DEP elevation, 30 m, a 7.2 km square around the summit of Mount Timpanogos, 1,831 to 3,569 m. In a real project you never have it. Right is everything the interpolator gets to see: 150 cells drawn at random, colored by their elevation. Every method that follows is judged by how close it comes to the left panel using only the right panel. Figures: tools/week09_elevation_figures.py (numpy, scipy and pykrige, not ArcGIS Pro; they are figures, not screenshots). Replaced the Bolstad contour figures October 25, 2026. -->
 
 ---
 
@@ -455,28 +433,28 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 <div class="columns" style="grid-template-columns: 1fr 1fr 1.25fr; align-items:start; font-size: 0.8em;">
 <div>
 
-![h:390 center](images/ip-sample-points-values.png)
+![h:390 center](images/ip-tp-samples.png)
 
 **Sampled locations and values**
 
 </div>
 <div>
 
-![h:390 center](images/ip-thiessen-polygons-map.png)
+![h:390 center](images/ip-tp-thiessen-polygons.png)
 
 **Thiessen polygons**
 
 </div>
 <div>
 
-![w:100%](images/ip-surface-3d-thiessen.png)
+![w:100%](images/ip-tp-thiessen-3d.png)
 
 **The surface:** flat inside each polygon, a jump at every edge
 
 </div>
 </div>
 
-<!-- Same points, now partitioned, then shown in 3D. Note the dense cluster on the right of the map: where samples crowd together the polygons become tiny slivers, and where samples are sparse a single polygon can cover a large area with one measured value. The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. Merged October 25, 2026 from four slides (concept, construction, points to polygons, 3D surface). -->
+<!-- Same 150 points, now partitioned, then shown in 3D. Where random samples happen to crowd together the polygons become slivers, and where they are sparse a single polygon covers a large area with one measured value. Against the DEM this surface is off by 124 m RMSE (tools/week09_elevation_numbers.json). The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. Merged October 25, 2026 from four slides (concept, construction, points to polygons, 3D surface). -->
 
 ---
 
@@ -558,14 +536,14 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 <div class="columns" style="grid-template-columns: 1.35fr 1fr; align-items:start; font-size: 0.78em;">
 <div>
 
-![w:100%](images/ip-idw-squared-6-vs-12.png)
+![w:100%](images/ip-tp-idw-6-vs-12.png)
 
 Exponent 2: **6** nearest points (left) vs **12** (right)
 
 </div>
 <div>
 
-![w:80% center](images/ip-surface-3d-idw.png)
+![h:210 center](images/ip-tp-idw-3d.png)
 
 - A larger exponent **n** gives the **closer points** more influence
 - **More sample points** give a **smoother** surface
@@ -574,7 +552,7 @@ Exponent 2: **6** nearest points (left) vs **12** (right)
 </div>
 </div>
 
-<!-- These are two of the choices Lab 8 varies: the power (2, then 1, 3 and each student's own) and the number of sample points (250, 2,500, 10,000). The lab holds the neighbor count at 12. Left figure: both panels use exponent two; more neighbors smooths the surface without removing the bull's-eyes, because the exponent, not the neighbor count, is what concentrates weight on the nearest point. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. Right: compare against the Thiessen surface and keep both in mind for Thursday's kriged surface. IDW is continuous (no cliffs at polygon edges) but not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. Merged October 25, 2026 from "What Changes the IDW Surface", the two IDW comparison figures (the linear 6-point one was dropped) and the 3D surface. -->
+<!-- These are two of the choices Lab 8 varies: the power (2, then 1, 3 and each student's own) and the number of sample points (250, 2,500, 10,000). The lab holds the neighbor count at 12. Left figure: both panels use exponent two on the Timpanogos samples; more neighbors smooths the surface without removing the bull's-eyes (the closed contour rings around single points), because the exponent, not the neighbor count, is what concentrates weight on the nearest point. Against the DEM, 6 neighbors scored 103 m RMSE and 12 scored 110 m: smoother is not automatically better. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. Right: compare against the Thiessen surface and keep both in mind for Thursday's kriged surface. IDW is continuous (no cliffs at polygon edges) but not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. Merged October 25, 2026 from "What Changes the IDW Surface", the two IDW comparison figures (the linear 6-point one was dropped) and the 3D surface. -->
 
 ---
 
@@ -599,9 +577,9 @@ Exponent 2: **6** nearest points (left) vs **12** (right)
 
 **Trend surface:** one polynomial fit through **all** the points by regression
 
-![w:380](images/ip-trend-surface-equation.png)
+$Z = a_0 + a_1x + a_2y + a_3x^2 + a_4y^2 + a_5xy$
 
-![h:300 center](images/ip-trend-surface-result.png)
+![w:100%](images/ip-tp-trend.png)
 
 The regional slope, with the local detail gone
 
@@ -610,14 +588,14 @@ The regional slope, with the local detail gone
 
 **Spline:** joined polynomial pieces, bent to pass **through** the points, like a drafter's flexible ruler
 
-![h:300 center](images/ip-spline-result.png)
+![w:100%](images/ip-tp-spline.png)
 
 The smoothest-looking result, but it can **overshoot** between distant points
 
 </div>
 </div>
 
-<!-- Both fit polynomials; the difference is reach. In the trend equation the a terms are regression coefficients and the equation is second order. Trend surface is regression, not local interpolation: every sample point influences every part of the surface, which is why its result looks nothing like the original (the figure is a third-order surface). A spline is built from local polynomial pieces joined smoothly, and is forced through the measured points; it gives the smoothest-looking result in this deck, which is not the same as the most accurate: the surface can overshoot well past the range of the measured values between widely spaced points. Trend surfaces are not in Lab 8; Lab 9 next week uses a spline in one run. Merged October 25, 2026 from two slides. -->
+<!-- Both fit polynomials; the difference is reach. In the trend equation the a terms are regression coefficients and the equation is second order. Trend surface is regression, not local interpolation: every sample point influences every part of the surface, which is why its result looks nothing like the original: one tilted dome for a whole mountain (2nd order, the same equation as on the slide; 220 m RMSE against the DEM). A spline is built from local polynomial pieces joined smoothly, and is forced through the measured points; it gives the smoothest-looking result in this deck, which is not the same as the most accurate: the surface can overshoot well past the range of the measured values between widely spaced points. The spline in the figure is a thin-plate spline, the best of today's methods against this DEM at 76 m RMSE. Trend surfaces are not in Lab 8; Lab 9 next week uses a spline in one run. Merged October 25, 2026 from two slides. -->
 
 ---
 
@@ -634,20 +612,20 @@ Interpolate, then read the surface **at the sample points**:
 
 A method that returns the samples is **exact**. Thursday: is **kriging**?
 
-<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows (ArcGIS Pro, 150 samples, tools/week08_interpolation_figures.py): Thiessen and IDW give the sample values back exactly, the regularized spline is off by 0.01 m on average, and the 2nd-order trend misses by 166 m on average. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
+<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows (ArcGIS Pro, 150 samples, tools/week08_interpolation_figures.py): Thiessen and IDW give the sample values back exactly, the regularized spline is off by 0.01 m on average, and the 2nd-order trend misses by 166 m on average. The same test on today's Timpanogos samples agrees: Thiessen, IDW and the thin-plate spline return every sample, and the trend surface misses by 163 m on average (tools/week09_elevation_numbers.json). Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
 
 ---
 
 # Thursday: Kriging
 
-![bg right:45% w:96%](images/ip-surface-3d-kriged.png)
+![bg right:45% w:96%](images/ip-tp-kriged-3d.png)
 
 - Thiessen and IDW weight the points by a **rule you choose**
 - **Kriging** measures how fast similarity fades with distance, then sets the weights **from the data**
 - Then: **how wrong** is each surface, in meters?
 - And **Lab 8**: rebuild Y Mountain three ways and measure the error
 
-<!-- The surface is the kriged version of the same example points, also the title image. Set it beside the Thiessen and IDW surfaces: stepped, kinked, smooth. -->
+<!-- The surface is the kriged version of the same 150 Timpanogos points, also the title image (ordinary kriging, spherical model fitted to the samples: range 4.6 km, no nugget; 86 m RMSE against the DEM). Set it beside the Thiessen and IDW surfaces: stepped, kinked, smooth. Thursday's own kriging figures are still the textbook example. -->
 
 ---
 
