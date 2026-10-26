@@ -252,3 +252,50 @@ def temp_axes(show_surface):
 
 fig = temp_axes(False); fig.savefig(IMG / "ip-temp-stations.png"); plt.close(fig)
 fig = temp_axes(True); fig.savefig(IMG / "ip-temp-surface.png"); plt.close(fig)
+
+# --- 5. Exact or not, in one dimension: a made-up stock "XYZ" priced on the first of ten months --------
+# Five layers on fixed axes for the "Does the surface give the points back?" slide: the ten prices, then
+# Thiessen (nearest month: a staircase), IDW (power 2, all points: flat little bumps at every price),
+# a natural cubic spline, and a 2nd-order trend line with its misses drawn in red.
+from scipy.interpolate import CubicSpline
+mo = np.arange(1, 11)
+price = np.array([42, 46, 44, 50, 55, 52, 57, 63, 58, 61], float)
+xf = np.linspace(1, 10, 1801)
+d_ = np.abs(xf[:, None] - mo[None, :])
+w_ = 1 / np.maximum(d_, 1e-9) ** 2
+lines = {"thiessen": price[np.argmin(d_, 1)], "idw": (w_ * price).sum(1) / w_.sum(1),
+         "spline": CubicSpline(mo, price, bc_type="natural")(xf), "trend": np.polyval(np.polyfit(mo, price, 2), xf)}
+STYLE = {"thiessen": ("#0062b8", "Thiessen (nearest month)"), "idw": ("#e07a1f", "IDW (power 2)"),
+         "spline": ("#2e8b57", "Spline"), "trend": ("#7b3fa0", "Trend (2nd order)")}
+
+
+def stock_axes():
+    fig = plt.figure(figsize=(7.0, 4.6), dpi=150)
+    ax = fig.add_axes([0.11, 0.13, 0.86, 0.83])
+    ax.set_xlim(0.5, 10.5); ax.set_ylim(38, 68)
+    return fig, ax
+
+
+def stock_points(ax):
+    ax.plot(mo, price, "o", ms=9, color=NAVY, mec="white", mew=1.6, zorder=10)
+
+
+fig, ax = stock_axes()
+ax.set_xticks(mo); ax.set_xticklabels(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"])
+ax.set_ylabel("XYZ share price ($)", color=NAVY); ax.set_xlabel("First trading day of the month, 2026", color=NAVY)
+ax.grid(color="#e3e8ef", lw=0.8); ax.spines[["top", "right"]].set_visible(False)
+stock_points(ax)
+fig.savefig(IMG / "ip-stock-points.png"); plt.close(fig)
+
+for k, key in enumerate(["thiessen", "idw", "spline", "trend"]):
+    col, lab = STYLE[key]
+    fig, ax = stock_axes(); ax.axis("off")
+    ax.plot(xf, lines[key], color=col, lw=2.6, zorder=4)
+    if key == "trend":
+        fit = np.polyval(np.polyfit(mo, price, 2), mo)
+        for m_, p_, f_ in zip(mo, price, fit):
+            ax.plot([m_, m_], [p_, f_], color="#b3261e", lw=2, zorder=5)
+    stock_points(ax)
+    ax.text(0.8, 66 - 2.6 * k, "— " + lab, color=col, fontsize=13, weight="bold", va="top")
+    fig.savefig(IMG / f"ip-stock-{key}.png", transparent=True); plt.close(fig)
+print("trend misses ($):", np.round(price - np.polyval(np.polyfit(mo, price, 2), mo), 2))

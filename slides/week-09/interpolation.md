@@ -150,6 +150,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 .gr li { margin: 0; }
 .gr-cartoon { position: absolute; left: 70px; top: 118px; width: 300px; height: 300px; border-radius: 10px; }
 .gr-layer { position: absolute; left: 440px; top: 112px; width: 790px; height: 489px; }
+.gr-eq { position: absolute; left: 62px; top: 112px; width: 316px; height: 312px; object-fit: contain; box-sizing: border-box; padding: 4px; background: #fff; border: 2px solid #e8792b; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
 .gr-say { position: absolute; left: 70px; width: 350px; font-size: 0.6em; line-height: 1.3; }
 .gr-say strong { color: #002e5d; }
 .s0 { top: 432px; } .s1 { top: 490px; } .s2 { top: 548px; } .s3 { top: 628px; }
@@ -166,12 +167,12 @@ li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s eas
 <div class="gr">
 
 * <img class="gr-layer gr-pop" src="images/ip-growth-question.png" alt=""><span class="gr-say s1 gr-pop"><strong>How tall was she at 12½?</strong> Nobody marked the wall that day.</span>
-* <img class="gr-layer gr-pop" src="images/ip-growth-answer.png" alt=""><span class="gr-say s2 gr-pop"><strong>Interpolate</strong> between her 12th and 13th birthdays: 63 + (65½ − 63) × (12½ − 12) ⁄ (13 − 12) ≈ 64¼ in</span>
+* <img class="gr-layer gr-pop" src="images/ip-growth-answer.png" alt=""><img class="gr-eq gr-pop" src="images/ip-linear-interpolation-equation.png" alt="Linear interpolation between two known points: y = y0 + (y1 - y0)(x - x0)/(x1 - x0)"><span class="gr-say s2 gr-pop"><strong>Interpolate</strong> between her 12th and 13th birthdays: 63 + (65½ − 63) × (12½ − 12) ⁄ (13 − 12) ≈ 64¼ in</span>
 * <img class="gr-layer gr-pop" src="images/ip-growth-line.png" alt=""><span class="gr-say s3 gr-pop"><strong>Every month?</strong> Interpolate each one and connect them: the whole growth line.</span>
 
 </div>
 
-<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation from Today's Goals, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. -->
+<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation, drawn over the cartoon (the same sketch as Today's Goals), with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. -->
 
 ---
 
@@ -430,17 +431,17 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 # Thiessen Polygons: The Result
 
-<div class="columns" style="grid-template-columns: 1fr 1fr 1.25fr; align-items:start; font-size: 0.8em;">
+<div class="columns" style="grid-template-columns: 1fr 1fr 1.25fr; align-items:start; font-size: 0.72em;">
 <div>
 
-![h:390 center](images/ip-tp-samples.png)
+![h:270 center](images/ip-tp-samples.png)
 
 **Sampled locations and values**
 
 </div>
 <div>
 
-![h:390 center](images/ip-tp-thiessen-polygons.png)
+![h:270 center](images/ip-tp-thiessen-polygons.png)
 
 **Thiessen polygons**
 
@@ -454,18 +455,16 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 </div>
 </div>
 
-<!-- Same 150 points, now partitioned, then shown in 3D. Where random samples happen to crowd together the polygons become slivers, and where they are sparse a single polygon covers a large area with one measured value. Against the DEM this surface is off by 124 m RMSE (tools/week09_elevation_numbers.json). The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. Merged October 25, 2026 from four slides (concept, construction, points to polygons, 3D surface). -->
-
----
-
-# Thiessen: Trade-offs
-
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
+<div class="columns" style="font-size: 0.72em; margin-top: 0.4em;">
+<div>
 
 **Advantages**
 
 - Ease of application
 - Appropriate for **discrete** (categorical) variables
+
+</div>
+<div>
 
 **Disadvantages**
 
@@ -473,7 +472,10 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 - Boundaries are often odd-shaped at transitions
 - **Continuous** variables are often not well represented
 
-<!-- Tie the disadvantages back to the 3D view they just saw. The odd-shaped boundaries and the step discontinuities are the same fact seen twice. -->
+</div>
+</div>
+
+<!-- Same 150 points, now partitioned, then shown in 3D. Where random samples happen to crowd together the polygons become slivers, and where they are sparse a single polygon covers a large area with one measured value. Against the DEM this surface is off by 124 m RMSE (tools/week09_elevation_numbers.json). The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. Tie the disadvantages back to the 3D view: the odd-shaped boundaries and the step discontinuities are the same fact seen twice. Merged October 25, 2026 from five slides (concept, construction, points to polygons, 3D surface, trade-offs). -->
 
 ---
 
@@ -502,7 +504,7 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 # Inverse Distance Weighted (IDW): The Method
 
-<div class="columns" style="grid-template-columns: 1.2fr 1fr; align-items:start">
+<div class="columns" style="grid-template-columns: 1.15fr 0.55fr 0.75fr; align-items:start; font-size: 0.8em;">
 <div>
 
 - Estimates an unknown point from the **values of** and **distances to** nearby known points
@@ -514,20 +516,17 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 </div>
 <div>
 
-![w:440 center](images/ip-idw-equation.png)
+![w:230 center](images/ip-idw-equation.png)
+
+</div>
+<div>
+
+![h:450 center](images/ip-idw-worked-example.png)
 
 </div>
 </div>
 
-<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Merged October 25, 2026 from the concept and equation slides. -->
-
----
-
-# IDW: A Worked Example
-
-![h:500 center](images/ip-idw-worked-example.png)
-
-<!-- Walk the arithmetic on the figure: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 34. This is a linear IDW, exponent one. Have the class redo it with the exponent squared and watch the answer move toward the nearest point. -->
+<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Then walk the arithmetic on the right: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 34. This is a linear IDW, exponent one. Have the class redo it with the exponent squared and watch the answer move toward the nearest point. Merged October 25, 2026 from the concept, equation and worked-example slides. -->
 
 ---
 
@@ -601,18 +600,38 @@ The smoothest-looking result, but it can **overshoot** between distant points
 
 # Does the Surface Give the Points Back?
 
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
+<style scoped>
+.ex-chart { position: absolute; left: 545px; top: 120px; width: 700px; height: 460px; }
+.ex ul { margin: 0.3em 0 0.6em; }
+.ex li { margin: 0.25em 0; }
+.ex-text { width: 450px; font-size: 0.82em; }
+li[data-bespoke-marp-fragment="active"] .ex-chart { animation: tryit-pop 0.45s ease-out both; }
+</style>
 
-Interpolate, then read the surface **at the sample points**:
+<div class="ex-text">
 
-- **Thiessen**: yes — the nearest point *is* the sample
-- **IDW**: yes — at distance 0 the sample takes all the weight
-- **Spline**: yes, or very nearly — it is built to pass through the points
-- **Trend surface**: **no** — one polynomial cannot pass through every point
+Interpolate, then read the result **at the measured points**. Ten monthly prices of a made-up stock, **XYZ**:
+
+</div>
+
+<img class="ex-chart" src="images/ip-stock-points.png" alt="XYZ share price on the first trading day of ten months">
+
+<div class="ex ex-text">
+
+* <img class="ex-chart" src="images/ip-stock-thiessen.png" alt=""> **Thiessen**: yes — a staircase, and each step *is* a price
+* <img class="ex-chart" src="images/ip-stock-idw.png" alt=""> **IDW**: yes — a little bump at every price; at distance 0 the price takes all the weight
+* <img class="ex-chart" src="images/ip-stock-spline.png" alt=""> **Spline**: yes — bent to pass through every price
+* <img class="ex-chart" src="images/ip-stock-trend.png" alt=""> **Trend**: **no** — one curve for all ten months misses most of them (red)
+
+</div>
+
+<div class="ex-text">
 
 A method that returns the samples is **exact**. Thursday: is **kriging**?
 
-<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows, on today's 150 Timpanogos samples: Thiessen, IDW and the thin-plate spline return every sample exactly, and the 2nd-order trend misses by 163 m on average (tools/week09_elevation_numbers.json). An earlier ArcGIS Pro run on another DEM found its regularized spline within 0.01 m. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
+</div>
+
+<!-- Four clicks, one method each, all on the same ten prices. In one dimension the shapes are easy to see, and they are the same shapes students saw in 3D: Thiessen's staircase is the stepped Thiessen surface, IDW's flat little bumps at each price are the bull's-eyes, the spline swings smoothly through every price (and overshoots between some), and the trend line is the tilted dome. The prices are made up (tools/week09_tuesday_figures.py); the 2nd-order trend misses them by up to $4.40. The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows, on today's 150 Timpanogos samples: Thiessen, IDW and the thin-plate spline return every sample exactly, and the 2nd-order trend misses by 163 m on average (tools/week09_elevation_numbers.json). An earlier ArcGIS Pro run on another DEM found its regularized spline within 0.01 m. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
 
 ---
 
