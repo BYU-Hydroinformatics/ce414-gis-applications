@@ -16,9 +16,18 @@
     "range_km": 4.559,
     "nugget": 0.0
   },
+  "kriging_auto_spherical": {
+    "sill_partial": 72237.714,
+    "range_km": 0.0,
+    "nugget": 33338.936
+  },
+  "n_holdout": 60,
+  "pairs": 11175,
+  "mean_only_rmse_holdout_m": 372.4,
   "methods": {
     "thiessen": {
       "rmse_m": 123.7,
+      "rmse_holdout_m": 113.0,
       "mean_abs_at_samples_m": 0.0,
       "range_m": [
         1990,
@@ -27,6 +36,7 @@
     },
     "idw6": {
       "rmse_m": 103.4,
+      "rmse_holdout_m": 93.1,
       "mean_abs_at_samples_m": 0.0,
       "range_m": [
         1990,
@@ -35,6 +45,7 @@
     },
     "idw12": {
       "rmse_m": 110.3,
+      "rmse_holdout_m": 99.9,
       "mean_abs_at_samples_m": 0.0,
       "range_m": [
         1990,
@@ -43,6 +54,7 @@
     },
     "trend": {
       "rmse_m": 219.8,
+      "rmse_holdout_m": 240.9,
       "mean_abs_at_samples_m": 163.36,
       "range_m": [
         1037,
@@ -51,6 +63,7 @@
     },
     "spline": {
       "rmse_m": 75.7,
+      "rmse_holdout_m": 69.4,
       "mean_abs_at_samples_m": 0.0,
       "range_m": [
         1944,
@@ -59,11 +72,26 @@
     },
     "kriging": {
       "rmse_m": 85.5,
+      "rmse_holdout_m": 73.2,
       "mean_abs_at_samples_m": 0.0,
       "range_m": [
         1990,
         3535
       ]
+    },
+    "kriging_auto": {
+      "rmse_m": 362.2,
+      "rmse_holdout_m": 372.4,
+      "mean_abs_at_samples_m": 95.75,
+      "range_m": [
+        2237,
+        3294
+      ]
     }
+  },
+  "decomposition_std_m": {
+    "trend": 296.7,
+    "autocorrelated": 201.4,
+    "random": 10.9
   }
 }

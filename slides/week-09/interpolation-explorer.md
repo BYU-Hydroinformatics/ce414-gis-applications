@@ -68,11 +68,11 @@ A statistically based estimator of spatial variables. It separates the data into
 
 Kriging creates a mathematical model, which is then used to estimate values across the surface.
 
-![w:1100 center](images/ip-trend-autocorrelated-random.png)
+![h:160 center](images/ip-tp-decomposition.png)
 
 <!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
 
-<!-- The figure splits a real surface (Little Cottonwood Canyon, 30 m, from the Lab 12 DEM) the way the bullets describe: a least-squares 2nd-order trend (std 97 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 210 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 16 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week08_interpolation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
+<!-- The figure splits a real surface, Tuesday's Mount Timpanogos DEM (USGS 3DEP, 30 m), the way the bullets describe: a least-squares 2nd-order trend fitted to every cell (std 297 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 201 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 11 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week09_elevation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
 
 ---
 
@@ -171,14 +171,14 @@ Semi-variance is usually small at small lag distances and increases to a constan
 
 # Nugget, Sill, and Range
 
-![bg right:48% w:95%](images/ip-semivariogram-model.png)
+![bg right:48% w:95%](images/ip-tp-semivariogram-model.png)
 
 - **Range** — the distance where the model levels out; points closer than the range are autocorrelated, points farther apart are not
 - **Sill** — the semivariance the model reaches at the range
 - **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
 - **Partial sill** — sill minus nugget: the part that distance explains
 
-<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: 150 random elevation samples from Little Cottonwood Canyon, 11,175 pairs binned every 300 m, a spherical model fitted - range about 3,360 m, sill about 63,000 m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Ask: what would put a nugget here? (GPS elevations with a few meters of error, or samples much farther apart than the gullies.) The figure's y-axis label reads (m); semivariance is in squared units, m2 here. -->
+<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: Tuesday's 150 Mount Timpanogos elevation samples, 11,175 pairs binned every 300 m out to 4.5 km, a spherical model fitted - range about 4,559 m, sill about 184 thousand m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Past about 4 km the bins fall off because few pairs in a 7.2 km square are that far apart, so the fit stops at 4.5 km. Ask: what would put a nugget here? (GPS elevations with a few meters of error, or samples much farther apart than the gullies.) -->
 
 ---
 
@@ -208,23 +208,23 @@ Lab 8 runs all three on Y Mountain
 
 <!-- Combined two consecutive text-only slides from the source. The comparison in the second half is the sentence worth remembering: IDW's weights come from a rule you picked, kriging's weights come from the data's own spatial structure. -->
 
-![w:820 center](images/ip-semivariogram-real.png)
+![w:820 center](images/ip-tp-semivariogram.png)
 
-<!-- Left: the semivariogram cloud, every pair of the 150 samples. Right: the pairs binned every 300 m and a spherical model fitted to the bins. The model, not the cloud, sets kriging's weights. -->
+<!-- Left: the semivariogram cloud, every pair of Tuesday's 150 Timpanogos samples (11,175 pairs). Right: the pairs binned every 300 m and a spherical model fitted to the bins. The model, not the cloud, sets kriging's weights. -->
 
 ---
 
 # Kriged Result
 
-![h:480 center](images/ip-kriging-result.png)
+![h:480 center](images/ip-tp-kriging-result.png)
 
-<!-- Original surface on the left, kriged interpolation on the right. Compare it against the IDW panels from earlier: the bull's-eyes are gone, because the weights now reflect how quickly the variable actually decorrelates with distance instead of a fixed 1/d^n rule. -->
+<!-- The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. -->
 
 ---
 
 # Kriging Surface
 
-![h:430 center](images/ip-surface-3d-kriged.png)
+![h:430 center](images/ip-tp-kriged-3d.png)
 
 <!-- The 3D view of the same result. Set this beside the Thiessen and IDW surfaces from earlier in the deck: stepped, kinked, and smooth. Same points, three surfaces. -->
 
@@ -242,7 +242,7 @@ Lab 8 runs all three on Y Mountain
 - **Major range**, **partial sill**, **nugget**: leave **empty** and the tool **fits** them to your points
 - A default is not always right: see the six-methods test
 
-<!-- The capture is the Kriging tool inside the Lab 8 model, ArcGIS Pro 3.7.1, with Lag size 30 filled in from the 30 m cell size. Ordinary kriging assumes an unknown but constant mean; Universal adds a trend, Tuesday's trend surface inside kriging. In Lab 8 the default lag works: 2,500 points over 60 km2 give many close pairs. In the six-methods test on Little Cottonwood Canyon (150 points over a canyon) the same kind of default fitted a model that was almost all nugget and lost to every method but the trend; a 300 m lag won. After a run the dialog can show the fitted range and sill, which is why the lab says to empty them before the next run. -->
+<!-- The capture is the Kriging tool inside the Lab 8 model, ArcGIS Pro 3.7.1, with Lag size 30 filled in from the 30 m cell size. Ordinary kriging assumes an unknown but constant mean; Universal adds a trend, Tuesday's trend surface inside kriging. In Lab 8 the default lag works: 2,500 points over 60 km2 give many close pairs. In an earlier ArcGIS Pro test on Little Cottonwood Canyon (150 points over a canyon) the same kind of default fitted a model that was almost all nugget and lost to every method but the trend; a 300 m lag won. Today's six-methods slide shows the same failure on the Timpanogos samples with an automatic fit. After a run the dialog can show the fitted range and sill, which is why the lab says to empty them before the next run. -->
 
 ---
 
@@ -338,22 +338,22 @@ $$
 
 # Same Points, Six Methods
 
-![w:1180 center](images/ip-six-methods.png)
+![h:560 center](images/ip-tp-six-methods.png)
 
-<!-- It answers "how would you judge which one to trust" with a test students can run. 150 random points of a real 30 m DEM (Little Cottonwood Canyon, 2,180-3,490 m) interpolated by six ArcGIS Pro tools, and each surface checked at 60 hold-out points the methods never saw. Root-mean-square error at the hold-out points: kriging with a 300 m lag 87 m, natural neighbor 98, IDW 101, spline 108, Thiessen 114, kriging with the default lag 142, 2nd-order trend 228 - and just using the mean of the samples 218. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting (kriging's default lag here) can do worse than a much simpler one. tools/week08_interpolation_figures.py; numbers in tools/week08_interpolation_numbers.json. Now that RMSE is defined, the numbers can be read off directly. -->
+<!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped; it is still in the ArcGIS Pro table below. Now that RMSE is defined, the numbers can be read off directly. -->
 
 ---
 
 # Hold Points Back
 
-![bg right:45% w:96%](images/ie-holdout-error.png)
+![bg right:45% w:96%](images/ip-tp-holdout-error.png)
 
 - In real work there is **no true DEM** — only the points you measured
 - So set some aside: **checkpoints**, never used to interpolate
 - Read each surface at the checkpoints, and compute the RMSE there
 - Measure the error **where you know the answer**; do not eyeball
 
-<!-- The bars are the six-methods test on the previous slide: 60 points held back on Little Cottonwood Canyon. The orange bar is the lowest error; the dotted line is the error of ignoring location and guessing the mean of the 150 samples (218 m). Lab 8 does not compute checkpoints (its all-cell RMSE already uses the truth), so these two slides carry the lesson. In practice, Extract Multi Values to Points reads every surface at each checkpoint in one tool. -->
+<!-- The bars are the six-methods test on the previous slide: 60 points held back from Tuesday's Timpanogos DEM. The orange bar is the lowest error; the dotted line is the error of ignoring location and guessing the mean of the 150 samples (372 m), which the automatically fitted kriging matches. Lab 8 does not compute checkpoints (its all-cell RMSE already uses the truth), so these two slides carry the lesson. In practice, Extract Multi Values to Points reads every surface at each checkpoint in one tool. -->
 
 ---
 
@@ -373,11 +373,11 @@ $$
 
 Read each surface back at its own sample points:
 
-![w:780 center](images/ip-exactness-test.png)
+![w:780 center](images/ip-tp-exactness.png)
 
-**Exact:** Thiessen, natural neighbor, IDW, kriging with no nugget, spline (to 0.01 m) · **Not exact:** trend, kriging with a large nugget
+**Exact:** Thiessen, IDW, spline, kriging with no nugget · **Not exact:** trend, kriging with a large nugget
 
-<!-- The test, run in ArcGIS Pro on 150 samples snapped to 30 m cell centers (tools/week08_interpolation_figures.py): Thiessen, Natural Neighbor, IDW and kriging with a 300 m lag give the sample value back exactly; the regularized spline is off by 0.01 m on average (it is built to pass through the points, the regularization relaxes that slightly); the 2nd-order trend misses by 166 m on average; and Kriging with the tool's default lag fitted a model that is almost all nugget (nugget 39,666 m2 of a 42,459 m2 sill, range 30 m) and misses by 95 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. -->
+<!-- The test, on Tuesday's 150 Timpanogos samples (cell centers of the 30 m DEM): Thiessen, IDW, the thin-plate spline and kriging with the fitted spherical model (nugget 0) give every sample value back exactly; the 2nd-order trend misses by 163 m on average; and kriging with the automatic fit (nugget 33,339 m2 of a 105,577 m2 sill, range a few meters) misses by 96 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. ArcGIS Pro's regularized spline (an earlier version of this test) came back within 0.01 m, so 'spline' is exact or very nearly, depending on the variant. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). -->
 
 ---
 
@@ -385,13 +385,13 @@ Read each surface back at its own sample points:
 
 # Class Vote: Which Interpolation Method Works Best Here?
 
-![bg right:52% w:80%](images/ip-compare-methods.png)
+![bg right:52% h:96%](images/ip-tp-compare-methods.png)
 
 **Original surface:**
 
-![h:390 center](images/ip-original-surface.png)
+![h:390 center](images/ip-tp-dem-2d.png)
 
-<!-- Optional: skip if time is short. Same points, six methods, one truth to compare against. Push the class past "which is prettiest" to "which one reproduces the drainage pattern on the left." Then note that in a real project you cannot run this comparison, because you never have the left panel — which is why withholding sample points matters, as the last few slides showed. -->
+<!-- Optional: skip if time is short. Same points, six methods, one truth to compare against: Tuesday's Mount Timpanogos samples, names only so the vote is not decided by the scores. Push the class past "which is prettiest" to "which one reproduces the ridges and canyons on the left." The flat panel is kriging with an automatic variogram fit: worth asking what went wrong before revealing it. Then note that in a real project you cannot run this comparison, because you never have the left panel — which is why withholding sample points matters, as the last few slides showed. -->
 
 ---
 
@@ -408,7 +408,7 @@ Read each surface back at its own sample points:
 
 All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
 
-<!-- Every tool in this table produced a surface in tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the parameters named are the ones the six-methods slide varies. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
+<!-- Every tool in this table produced a surface in an ArcGIS Pro run, tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the six-methods slide now uses numpy/scipy/pykrige equivalents on the Timpanogos samples. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
 
 ---
 

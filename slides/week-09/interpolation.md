@@ -612,7 +612,7 @@ Interpolate, then read the surface **at the sample points**:
 
 A method that returns the samples is **exact**. Thursday: is **kriging**?
 
-<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows (ArcGIS Pro, 150 samples, tools/week08_interpolation_figures.py): Thiessen and IDW give the sample values back exactly, the regularized spline is off by 0.01 m on average, and the 2nd-order trend misses by 166 m on average. The same test on today's Timpanogos samples agrees: Thiessen, IDW and the thin-plate spline return every sample, and the trend surface misses by 163 m on average (tools/week09_elevation_numbers.json). Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
+<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows, on today's 150 Timpanogos samples: Thiessen, IDW and the thin-plate spline return every sample exactly, and the 2nd-order trend misses by 163 m on average (tools/week09_elevation_numbers.json). An earlier ArcGIS Pro run on another DEM found its regularized spline within 0.01 m. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
 
 ---
 
@@ -625,7 +625,7 @@ A method that returns the samples is **exact**. Thursday: is **kriging**?
 - Then: **how wrong** is each surface, in meters?
 - And **Lab 8**: rebuild Y Mountain three ways and measure the error
 
-<!-- The surface is the kriged version of the same 150 Timpanogos points, also the title image (ordinary kriging, spherical model fitted to the samples: range 4.6 km, no nugget; 86 m RMSE against the DEM). Set it beside the Thiessen and IDW surfaces: stepped, kinked, smooth. Thursday's own kriging figures are still the textbook example. -->
+<!-- The surface is the kriged version of the same 150 Timpanogos points, also the title image (ordinary kriging, spherical model fitted to the samples: range 4.6 km, no nugget; 86 m RMSE against the DEM). Set it beside the Thiessen and IDW surfaces: stepped, kinked, smooth. Thursday's kriging figures use the same samples. -->
 
 ---
 

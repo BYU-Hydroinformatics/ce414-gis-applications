@@ -39,7 +39,7 @@ CE414Quiz.start({
         "Turn into the Thiessen surface"
       ],
       answer: "Treat nearby points as barely related, and smooth toward the mean",
-      explanation: "The nugget is the semivariance at almost zero distance. If it is nearly the whole sill, the model says even close neighbors are almost unrelated, so kriging gives no point much extra weight and the surface flattens toward the average. It also stops returning the measured values: kriging is exact only when the nugget is zero. The six-methods test in today's deck showed this happening with the tool's default lag on 150 points."
+      explanation: "The nugget is the semivariance at almost zero distance. If it is nearly the whole sill, the model says even close neighbors are almost unrelated, so kriging gives no point much extra weight and the surface flattens toward the average. It also stops returning the measured values: kriging is exact only when the nugget is zero. The six-methods test in today's deck showed this happening when the variogram was fitted automatically: almost all nugget, and a flat surface at the mean."
     },
     {
       prompt: "Your error raster is the true DEM minus the surface. A cell reads +40. What happened there?",
