@@ -375,9 +375,9 @@ Read each surface back at its own sample points:
 
 ![w:780 center](images/ip-exactness-test.png)
 
-**Exact:** Thiessen, natural neighbor, IDW, kriging with no nugget, spline (to 0.01 m) · **Not exact:** fixed-radius averaging, trend, kriging with a large nugget
+**Exact:** Thiessen, natural neighbor, IDW, kriging with no nugget, spline (to 0.01 m) · **Not exact:** trend, kriging with a large nugget
 
-<!-- The test, run in ArcGIS Pro on 150 samples snapped to 30 m cell centers (tools/week08_interpolation_figures.py): Thiessen, Natural Neighbor, IDW and kriging with a 300 m lag give the sample value back exactly; the regularized spline is off by 0.01 m on average (it is built to pass through the points, the regularization relaxes that slightly); the 2nd-order trend misses by 166 m on average; and Kriging with the tool's default lag fitted a model that is almost all nugget (nugget 39,666 m2 of a 42,459 m2 sill, range 30 m) and misses by 95 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. Fixed-radius averaging (Tuesday) is also not exact: it averages several samples near each point. -->
+<!-- The test, run in ArcGIS Pro on 150 samples snapped to 30 m cell centers (tools/week08_interpolation_figures.py): Thiessen, Natural Neighbor, IDW and kriging with a 300 m lag give the sample value back exactly; the regularized spline is off by 0.01 m on average (it is built to pass through the points, the regularization relaxes that slightly); the 2nd-order trend misses by 166 m on average; and Kriging with the tool's default lag fitted a model that is almost all nugget (nugget 39,666 m2 of a 42,459 m2 sill, range 30 m) and misses by 95 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. -->
 
 ---
 

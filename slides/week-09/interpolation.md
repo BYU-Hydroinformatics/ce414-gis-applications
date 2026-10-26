@@ -49,25 +49,49 @@ Thursday: **kriging**, how wrong a surface is, and **Lab 8**
 
 <!-- _class: activity -->
 
-# Activity: Air Temperature Interpolation
+<style scoped>
+.ip-kicker { display: block; font-size: 0.7em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #e8792b; margin-bottom: -0.3em; }
+.ip-text { padding-right: 530px; font-size: 0.9em; }
+.ip-stack { position: absolute; right: 50px; top: 40px; width: 551px; height: 640px; }
+.ip-stack img { position: absolute; left: 0; top: 0; width: 551px; height: 640px; }
+.ip-stack ul { list-style: none; margin: 0; padding: 0; }
+.ip-stack li { margin: 0; }
+li[data-bespoke-marp-fragment="active"] .ip-hint { animation: tryit-pop 0.45s ease-out both; }
+</style>
 
-![bg right:38% h:92%](images/ip-utah-activity-map.png)
+<div class="ip-text">
 
-- Three Utah cities: **Moab**, **American Fork**, and **Cedar City**
+<span class="ip-kicker">Work with a neighbor</span>
+
+# In Class Activity: What Is the Temperature in Provo?
+
+- Let's assume you only know the air temperature in three Utah cities: **Moab**, **American Fork**, and **Cedar City**
 - Look up the current air temperature in each on weather.com or an equivalent site
 - From those three, **estimate the current temperature in Provo**
-- Write down your number *and* the rule you used to get it
-- **Graded, 5 points:** upload a screen capture or photo of your work to Learning Suite by **9:30 am**, fifteen minutes after class
+- Write down your answer and the method you used to get it
+- Upload your answer and your method to Learning Suite
+
+</div>
+
+<div class="ip-stack">
+
+![](images/ip-utah-activity-map.png)
+
+* <img class="ip-hint" src="images/ip-utah-activity-map-distances.png" alt="Straight-line distances from Provo: 19 km to American Fork, 259 km to Moab, 311 km to Cedar City">
+
+</div>
+
+<!-- The click is a hint for anyone stuck: straight-line (great-circle) distances from Provo, as the crow flies rather than by road, between the UGRC municipal-boundary centroids: American Fork 19 km, Moab 259 km, Cedar City 311 km (tools/week09_tuesday_figures.py). -->
 
 <!-- Give them three or four minutes. Collect several answers and, more importantly, several rules: nearest city, plain average, distance-weighted average, adjust for elevation. Those four answers are Thiessen, a global mean, IDW, and a trend surface. Name them now, then spend the rest of the session making each one precise. -->
 
-<!-- Map: Utah from UGRC's state boundary, cities at the centroids of their UGRC municipal boundaries (tools/week08_interpolation_figures.py). Point out before anyone answers: American Fork is 20 km from Provo, Moab and Cedar City are over 250 km away and 1,000 m lower and higher than each other - the map is why nearest-city and distance-weighted answers win. -->
+<!-- Map: Utah from UGRC's state boundary, cities at the centroids of their UGRC municipal boundaries (tools/week08_interpolation_figures.py). Point out before anyone answers: American Fork is about 20 km from Provo, while Moab and Cedar City are each more than 250 km away. The map is why nearest-city and distance-weighted answers win. -->
 
 ---
 
 # Interpolation
 
-![bg right:32% w:88%](images/ip-soil-cross-section-cartoon.jpg)
+<img class="ip-geo" src="images/ip-soil-cross-section-cartoon.jpg" alt="Cartoon geologist standing on a cross-section of soil layers">
 
 **Interpolation** is a procedure to predict values of an attribute at unsampled points within the region that was sampled.
 
@@ -94,6 +118,25 @@ Thursday: **kriging**, how wrong a surface is, and **Lab 8**
 </div>
 
 Also used when **changing cell size**, when data are **missing or unsuitable**, or for a **past date** (for example, temperature).
+
+<style scoped>
+section { padding-right: 440px; }
+.ip-geo { position: absolute; right: 50px; top: 70px; width: 370px; }
+.ip-joke ul { list-style: none; margin: 0; padding: 0; }
+.ip-joke li { position: absolute; left: 860px; width: 370px; margin: 0; font-size: 0.72em; line-height: 1.3; text-align: center; }
+.ip-joke li:nth-child(1) { top: 470px; font-weight: 700; color: #002e5d; }
+.ip-joke li:nth-child(2) { top: 512px; color: #e8792b; font-weight: 700; }
+li[data-bespoke-marp-fragment="active"] .ip-pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="ip-joke">
+
+* <span class="ip-pop">Why is the geologist sad?</span>
+* <span class="ip-pop">To measure every spot, he'd have to dig up the whole site, and then there'd be nothing left to measure.</span>
+
+</div>
+
+<!-- Two clicks: the question, then the punch line. It is the definition's "why" in one line: measuring everywhere is not just slow and expensive, it can destroy the thing being measured (a soil core, a gold deposit). -->
 
 <!-- Note the phrase "within the region sampled." Predicting outside that region is extrapolation, and every method here degrades badly when you ask it to extrapolate. Fixed the source's "Can not" to "cannot." -->
 
@@ -122,6 +165,25 @@ Also used when **changing cell size**, when data are **missing or unsuitable**, 
 </div>
 </div>
 
+<style scoped>
+.ip-ask ul { list-style: none; margin: 0; padding: 0; }
+.ip-ask li { position: absolute; margin: 0; }
+.ip-ask li:nth-child(1) { left: 70px; top: 540px; width: 520px; }
+.ip-ask li:nth-child(2) { left: 640px; top: 120px; width: 580px; }
+.ip-card { display: block; background: #fff; border: 3px solid #1f4e8c; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); padding: 0.5em 0.9em; font-size: 0.72em; line-height: 1.35; }
+.ip-card strong { color: #1f4e8c; }
+li[data-bespoke-marp-fragment="active"] .infobox, li[data-bespoke-marp-fragment="active"] .ip-card { animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="ip-ask">
+
+* <span class="infobox">What other classes have you had where you had to <strong>interpolate</strong> a value?</span>
+* <span class="ip-card"><strong>Thermodynamics:</strong> a property between two rows of the steam tables<br><strong>Fluids:</strong> a friction factor read between curves on the Moody diagram<br><strong>Hydrology:</strong> a rainfall depth between durations on an IDF curve<br><strong>Geomatics:</strong> an elevation between two contour lines<br><strong>Geotechnical:</strong> the soil layers between two borings<br><strong>Structures:</strong> a design value between rows of a code table</span>
+
+</div>
+
+<!-- Click once for the question and let them answer before the second click. Most examples on the card are one-dimensional, between two rows or two curves; two are already spatial: an elevation between contours and the ground between borings. This week does the same thing in two dimensions, from scattered points rather than a tidy table. -->
+
 <!-- The two halves are inseparable. A brilliant interpolator cannot rescue a bad sample, and a beautiful sample is useless until you interpolate it. Spend the first part of class on the left half, the rest on the right half. -->
 
 ---
@@ -140,12 +202,12 @@ Also used when **changing cell size**, when data are **missing or unsuitable**, 
 
 # The Scenario
 
-The landscape on the left is the real, fully known surface. In practice you never see it — you only get the handful of points you choose to sample.
+The map on the left is the real, fully known gold grade. In practice you never see it — you only get the handful of points you choose to sample.
 
 <div class="columns">
 <div>
 
-![w:290 center](images/ip-contour-map-base.png)
+![h:420 center](images/ip-gold-grade.png)
 
 </div>
 <div>
@@ -157,13 +219,13 @@ The landscape on the left is the real, fully known surface. In practice you neve
 </div>
 </div>
 
-<!-- Left: the true surface, drawn as contours. Right: the cartoon reason we care. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
+<!-- Left: the true gold grade in grams per tonne, made up for this scenario (tools/week09_tuesday_figures.py): a northeast-trending vein, a dozen ore pods of different sizes, and background variation. Right: the cartoon reason we care. The next four slides sample this same map. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
 
 ---
 
 # Systematic Sampling Pattern
 
-![bg right:38% w:80%](images/ip-sampling-systematic.png)
+![bg right:38% w:80%](images/ip-gold-systematic.png)
 
 - Samples spaced uniformly at fixed X, Y intervals
 - Parallel lines
@@ -184,7 +246,7 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 # Random Sampling
 
-![bg right:38% w:80%](images/ip-sampling-random.png)
+![bg right:38% w:80%](images/ip-gold-random.png)
 
 - Select random points
 
@@ -203,7 +265,7 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 # Cluster Sampling
 
-![bg right:38% w:80%](images/ip-sampling-cluster.png)
+![bg right:38% w:80%](images/ip-gold-cluster.png)
 
 - Cluster centers are established, either randomly or systematically
 - Samples are arranged around each center
@@ -225,7 +287,7 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 # Adaptive Sampling
 
-![bg right:38% w:80%](images/ip-sampling-adaptive.png)
+![bg right:38% w:80%](images/ip-gold-adaptive.png)
 
 - Higher sampling density where the feature of interest is more variable
 - Requires some method of estimating feature variation
@@ -250,13 +312,13 @@ The landscape on the left is the real, fully known surface. In practice you neve
 
 # Class Vote: Which Sampling Design Works Best Here?
 
-![bg right:52% w:80%](images/ip-compare-sampling-designs.png)
+![bg right:52% h:95%](images/ip-gold-compare.png)
 
-**Original surface:**
+**The true gold grade:**
 
-![h:390 center](images/ip-original-surface.png)
+![h:360 center](images/ip-gold-grade.png)
 
-<!-- Vote now, while the four designs are fresh, and before discussing any of them. The interesting argument is between adaptive and random: adaptive puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
+<!-- Vote now, while the four designs are fresh, and before discussing any of them. Each design has the same 96 points on the same map. The interesting argument is between adaptive and random: adaptive (a coarse first pass, then infill where the grade changes fastest) puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
 
 ---
 
@@ -334,59 +396,60 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 
 ---
 
-# Thiessen Polygons
+# Thiessen Polygons: The Method
 
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
-
-- Assigns an interpolated value equal to the value found at the **nearest sample location**
-- The conceptually simplest method
-- Only **one point** is used — the nearest one
-- Often called **nearest sample** or **nearest neighbor**
-
-<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. -->
-
----
-
-# Building a Thiessen Polygon
-
-![bg right:52% w:95%](images/ip-thiessen-construction.png)
-
-1. Draw lines connecting the points to their nearest neighbors
-2. Find the **perpendicular bisector** of each line
-3. Connect the bisectors and assign the resulting polygon the value of the center point
-
-<!-- Walk the four panels in order. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
-
----
-
-# Sample Points Become Polygons
-
-<div class="columns" style="align-items:start">
+<div class="columns" style="grid-template-columns: 1fr 1.15fr; align-items:start">
 <div>
 
-![h:400 center](images/ip-sample-points-values.png)
+- Each cell takes the value at the **nearest sample location**
+- Only **one point** is used; also called **nearest sample** or **nearest neighbor**
+- The conceptually simplest method
+
+**Building one by hand**
+
+1. Connect each point to its nearest neighbors
+2. Draw the **perpendicular bisector** of each line
+3. Join the bisectors; the polygon takes the value of its center point
+
+</div>
+<div>
+
+![w:600 center](images/ip-thiessen-construction.png)
+
+</div>
+</div>
+
+<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. Walk the four panels in order. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
+
+---
+
+# Thiessen Polygons: The Result
+
+<div class="columns" style="grid-template-columns: 1fr 1fr 1.25fr; align-items:start; font-size: 0.8em;">
+<div>
+
+![h:390 center](images/ip-sample-points-values.png)
 
 **Sampled locations and values**
 
 </div>
 <div>
 
-![h:400 center](images/ip-thiessen-polygons-map.png)
+![h:390 center](images/ip-thiessen-polygons-map.png)
 
 **Thiessen polygons**
 
 </div>
+<div>
+
+![w:100%](images/ip-surface-3d-thiessen.png)
+
+**The surface:** flat inside each polygon, a jump at every edge
+
+</div>
 </div>
 
-<!-- Same points, now partitioned. Note the dense cluster on the right of the map: where samples crowd together the polygons become tiny slivers, and where samples are sparse a single polygon can cover a large area with one measured value. -->
-
----
-
-# Thiessen Surface
-
-![h:430 center](images/ip-surface-3d-thiessen.png)
-
-<!-- The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. The source slide title misspelled this as "Theissen" — corrected to "Thiessen." -->
+<!-- Same points, now partitioned, then shown in 3D. Note the dense cluster on the right of the map: where samples crowd together the polygons become tiny slivers, and where samples are sparse a single polygon can cover a large area with one measured value. The 3D view makes the defining property obvious: the surface is flat inside each polygon and jumps discontinuously at every boundary. That is fine for a categorical variable such as soil type, and wrong for elevation or temperature. Merged October 25, 2026 from four slides (concept, construction, points to polygons, 3D surface). -->
 
 ---
 
@@ -432,85 +495,26 @@ Usually used for **point-to-raster** data. Some methods instead produce **contou
 
 ---
 
-# Fixed-Radius Local Averaging
+# Inverse Distance Weighted (IDW): The Method
 
-<div class="columns">
+<div class="columns" style="grid-template-columns: 1.2fr 1fr; align-items:start">
 <div>
 
-- More complex than nearest sample
-- Cell values are estimated from the **average of nearby samples**
-- Which samples are used depends on the **search radius** — any sample inside the circle is used in the average, anything outside is ignored
-- Specify the output raster grid; a circle is centered over each raster cell
-- The radius is typically several cell widths, so neighboring cells come out similar, and some circles contain no points
-
-</div>
-<div>
-
-![w:560 center](images/ip-fixed-radius-input-output.png)
-
-**Search radius matters** — too large and the data are smoothed away.
-
-</div>
-</div>
-
-<!-- Combined the source's text slide with the figure that followed it. The failure mode to demonstrate: shrink the radius until empty circles appear as holes in the output, grow it until the surface flattens into the global mean. Fixed the source's "many contain no points" to "may contain no points." -->
-
----
-
-# Fixed Radius: How It Works
-
-![h:470 center](images/ip-fixed-radius-diagram.png)
-
-<!-- Read the diagram top to bottom. The input sample layer floats above the output raster; each output cell takes the average of whatever samples fall inside its circle. Point at the cell that got three samples and the cell that got one, and ask which value they trust more. Nothing in the method distinguishes them — the output carries no record of how many points went into each cell. -->
-
-<!-- Optional: skip if time is short. -->
-
----
-
-# Fixed Radius: The Result
-
-![h:480 center](images/ip-fixed-radius-result.png)
-
-<!-- Original surface on the left, fixed-radius result on the right. The interpolated surface is visibly blockier and the fine drainage detail on the left is gone. It also does not pass through the measured values — this is a non-exact method, which comes back at the end of the session. -->
-
-<!-- Optional: skip if time is short. -->
-
----
-
-# Inverse Distance Weighted (IDW)
-
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
-
-- Estimates the value at an unknown point using the **distances to** and **values of** nearby known points
-- IDW reduces the contribution of a known point as that point gets farther away
-- The weight of each sample point is in **inverse proportion to the distance**
-- The farther away a point is, the less weight it carries in defining the unsampled location
-
-<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Corrected the source's "nearby know points" to "known points." -->
-
----
-
-# IDW: The Equation
-
-<div class="columns">
-<div>
-
-- $Z_i$ is the value of a known point
-- $d_{ij}$ is the distance to that known point
-- $Z_j$ is the unknown point
-- $n$ is a user-selected exponent, often 1, 2, or 3
-
-Any number of points may be used, up to all points in the sample; typically 3 or more.
+- Estimates an unknown point from the **values of** and **distances to** nearby known points
+- Each known point's weight is **inverse to its distance**: the farther away, the less it counts
+- $Z_i$ is a known value, $d_{ij}$ the distance to it, $Z_j$ the unknown point
+- $n$ is a user-selected **exponent**, often 1, 2, or 3
+- Any number of points may be used, up to all of them; typically 3 or more
 
 </div>
 <div>
 
-![w:400 center](images/ip-idw-equation.png)
+![w:440 center](images/ip-idw-equation.png)
 
 </div>
 </div>
 
-<!-- Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. -->
+<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Merged October 25, 2026 from the concept and equation slides. -->
 
 ---
 
@@ -522,42 +526,28 @@ Any number of points may be used, up to all points in the sample; typically 3 or
 
 ---
 
-# What Changes the IDW Surface
+# IDW: The Results
 
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
+<div class="columns" style="grid-template-columns: 1.35fr 1fr; align-items:start; font-size: 0.78em;">
+<div>
 
-Two factors dominate the interpolated surface:
+![w:100%](images/ip-idw-squared-6-vs-12.png)
 
-- The size of the exponent **n** affects the shape of the surface — a larger *n* means the closer points are more influential
-- A **larger number of sample points** results in a smoother surface
+Exponent 2: **6** nearest points (left) vs **12** (right)
 
-<!-- These are two of the choices Lab 8 varies: the power (2, then 1, 3 and each student's own) and the number of sample points (250, 2,500, 10,000). The lab holds the neighbor count at 12; the next two slides show what that setting does. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. -->
+</div>
+<div>
 
----
+![w:80% center](images/ip-surface-3d-idw.png)
 
-# IDW: Linear, 6 Nearest Points
+- A larger exponent **n** gives the **closer points** more influence
+- **More sample points** give a **smoother** surface
+- Continuous, but with **bull's-eyes** around isolated points
 
-![h:470 center](images/ip-idw-linear-6nn.png)
+</div>
+</div>
 
-<!-- Original surface on the left, IDW with exponent one and the six nearest points on the right. Point out the small closed contour rings around isolated sample points — the "bull's-eyes" that are the signature artifact of IDW. -->
-
-<!-- Optional: skip if time is short. One of these two IDW comparisons is enough. -->
-
----
-
-# IDW: Squared, 6 vs 12 Nearest Points
-
-![h:470 center](images/ip-idw-squared-6-vs-12.png)
-
-<!-- Both panels use exponent two; the left uses six neighbors, the right uses twelve. More neighbors smooths the surface without removing the bull's-eyes, because the exponent, not the neighbor count, is what concentrates weight on the nearest point. -->
-
----
-
-# IDW Surface
-
-![h:430 center](images/ip-surface-3d-idw.png)
-
-<!-- Compare this against the Thiessen surface from earlier, and keep both in mind for Thursday's kriged surface. IDW is continuous — no cliffs at polygon edges — but it is not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. -->
+<!-- These are two of the choices Lab 8 varies: the power (2, then 1, 3 and each student's own) and the number of sample points (250, 2,500, 10,000). The lab holds the neighbor count at 12. Left figure: both panels use exponent two; more neighbors smooths the surface without removing the bull's-eyes, because the exponent, not the neighbor count, is what concentrates weight on the nearest point. As n grows without bound, IDW converges on the Thiessen result: the nearest point takes all the weight. Right: compare against the Thiessen surface and keep both in mind for Thursday's kriged surface. IDW is continuous (no cliffs at polygon edges) but not smooth: the surface has a kink at every sample point, and each sample sits at a local peak or pit. Merged October 25, 2026 from "What Changes the IDW Surface", the two IDW comparison figures (the linear 6-point one was dropped) and the 3D surface. -->
 
 ---
 
@@ -575,70 +565,49 @@ Two factors dominate the interpolated surface:
 
 ---
 
+# Trend Surfaces and Splines
+
+<div class="columns" style="grid-template-columns: 1fr 1fr; align-items:start; font-size: 0.8em;">
+<div>
+
+**Trend surface:** one polynomial fit through **all** the points by regression
+
+![w:380](images/ip-trend-surface-equation.png)
+
+![h:300 center](images/ip-trend-surface-result.png)
+
+The regional slope, with the local detail gone
+
+</div>
+<div>
+
+**Spline:** joined polynomial pieces, bent to pass **through** the points, like a drafter's flexible ruler
+
+![h:300 center](images/ip-spline-result.png)
+
+The smoothest-looking result, but it can **overshoot** between distant points
+
+</div>
+</div>
+
+<!-- Both fit polynomials; the difference is reach. In the trend equation the a terms are regression coefficients and the equation is second order. Trend surface is regression, not local interpolation: every sample point influences every part of the surface, which is why its result looks nothing like the original (the figure is a third-order surface). A spline is built from local polynomial pieces joined smoothly, and is forced through the measured points; it gives the smoothest-looking result in this deck, which is not the same as the most accurate: the surface can overshoot well past the range of the measured values between widely spaced points. Trend surfaces are not in Lab 8; Lab 9 next week uses a spline in one run. Merged October 25, 2026 from two slides. -->
+
+---
+
 # Does the Surface Give the Points Back?
 
-![bg right:40% w:94%](images/ip-fixed-radius-diagram.png)
+![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
 
 Interpolate, then read the surface **at the sample points**:
 
 - **Thiessen**: yes — the nearest point *is* the sample
 - **IDW**: yes — at distance 0 the sample takes all the weight
-- **Fixed-radius averaging**: **no** — it blends the sample with its neighbors
+- **Spline**: yes, or very nearly — it is built to pass through the points
+- **Trend surface**: **no** — one polynomial cannot pass through every point
 
 A method that returns the samples is **exact**. Thursday: is **kriging**?
 
-<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. ArcGIS Pro's IDW gave the sample values back exactly in the six-methods test that Thursday shows (tools/week08_interpolation_figures.py). -->
-
----
-
-# Trend Surface Interpolation
-
-<div class="columns">
-<div>
-
-Fits a statistical model — a **trend surface** — through the measured points, typically a polynomial.
-
-![w:480](images/ip-trend-surface-equation.png)
-
-- Where **Z** is the value at any point (*x*, *y*)
-- The equation is **second order**; the figure shows a **third-order** surface
-- Where the **a** terms are coefficients estimated in a regression model
-
-</div>
-<div>
-
-![w:500 center](images/ip-trend-surface-result.png)
-
-</div>
-</div>
-
-<!-- Trend surface is regression, not local interpolation: every sample point influences every part of the surface. That is why the result on the right looks nothing like the original — it captures the regional slope and discards local detail on purpose. -->
-
-<!-- Optional: skip if time is short. Trend surfaces and splines are not in Lab 8. -->
-
----
-
-# Splines
-
-<div class="columns">
-<div>
-
-- The name comes from a drafting tool — a flexible ruler used to draw smooth curves through several points
-- **Spline functions** are used to interpolate along a smooth curve, much like that flexible ruler
-- They force a smooth line to pass through a desired set of points
-- Constructed from a set of joined polynomial functions
-
-</div>
-<div>
-
-![w:560 center](images/ip-spline-result.png)
-
-</div>
-</div>
-
-<!-- Combined the source's text slide with the figure that followed it. Splines give the smoothest-looking result of anything in this deck, which is not the same as the most accurate: the surface can overshoot well past the range of the measured values between widely spaced points. Corrected "are use to interpolate" to "are used to interpolate." -->
-
-<!-- Optional: skip if time is short. Lab 9 next week uses a spline in one run. -->
+<!-- The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows (ArcGIS Pro, 150 samples, tools/week08_interpolation_figures.py): Thiessen and IDW give the sample values back exactly, the regularized spline is off by 0.01 m on average, and the 2nd-order trend misses by 166 m on average. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
 
 ---
 
@@ -662,7 +631,7 @@ Fits a statistical model — a **trend surface** — through the measured points
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.74em;">
 <div>
 
-**Quiz: Points Into Surfaces.** Five items on the question we spent the session on: **what is this method actually doing with the points?** **Scan the code**, or open the link under it.
+**Quiz: Points Into Surfaces.** Seven items, one or more on each of today's goals: why we sample, the four designs, Thiessen, the IDW exponent, and which methods give the points back. **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
 - The **exponent** and the **number of points** are two of the choices you test in Lab 8
@@ -684,6 +653,6 @@ Fits a statistical model — a **trend surface** — through the measured points
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; fixed-radius averaging is the one that blends it away. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+<!-- The seven items follow Today's Goals in order (the first two, on why we sample and on adaptive sampling, were added October 25, 2026 so every goal is tested). Five minutes, in pairs, then a show of hands on the one that splits the room: the item asking which method cannot return the measured values unchanged. Most of the room expects IDW to be the non-exact one because its surfaces look averaged, but at a sample location the nearest point is that sample itself, so IDW gives the measurement back; the trend surface is the one that misses, because one polynomial cannot pass through every point. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
 
 <!-- Conversion notes: source "CE 414 Week 8 - Interpolation.pptx" (48 slides), converted September 3, 2026; the spelling fixes are in git history. Split October 20, 2026: kriging, the six-methods comparison, the exactness test, the method vote and the ArcGIS Pro tool table moved to Thursday (interpolation-explorer.md); sampling, Thiessen and IDW stay here, with new ArcGIS Pro slides from the Lab 8 captures. Figures: tools/week08_interpolation_figures.py. -->

@@ -22,9 +22,31 @@ CE414Quiz.start({
   deckUrl: "../../slides/week-09/interpolation.html",
   questions: [
     {
+      prompt: "Why do we interpolate from samples instead of measuring everywhere?",
+      options: [
+        "Measuring everywhere costs too much time or money, or is impossible",
+        "Interpolated values are more accurate than measured ones",
+        "GIS software cannot store a value in every cell"
+      ],
+      answer: "Measuring everywhere costs too much time or money, or is impossible",
+      explanation: "A measurement beats an estimate wherever you have one. We interpolate because we cannot measure every location: it takes too long, costs too much, or is physically or legally impossible, like digging up a whole gold field to assay it. Interpolation fills the gaps inside the sampled region; outside it, it is extrapolation and every method gets worse."
+    },
+    {
+      prompt: "You have a coarse first look at a gold field and want to spend your samples where the grade changes fastest. Which design is that?",
+      detail: "The four designs from class: systematic, random, cluster, adaptive.",
+      options: [
+        "Systematic: a regular grid of points",
+        "Random: points placed by chance",
+        "Cluster: groups of points around a few centers",
+        "Adaptive: more points where the variable varies most"
+      ],
+      answer: "Adaptive: more points where the variable varies most",
+      explanation: "Adaptive sampling puts more points where the variable changes fastest, which is where interpolation errors are largest, and few in large uniform areas. Its catch is that it needs some prior idea of where that is, so in practice it is a coarse pass followed by infill. Systematic is easy but can line up with a pattern in the landscape, random avoids that bias but ignores variation, and cluster saves travel at the cost of less representative samples."
+    },
+    {
       prompt: "A Thiessen surface is flat inside each polygon and jumps at every boundary. Why?",
       options: [
-        "Each cell averages every sample inside a search radius",
+        "Each cell takes the mean of all of the samples",
         "Each cell blends nearby samples by inverse distance",
         "One polynomial is fit through all of the samples at once",
         "Each cell takes the value of the nearest sample point"
@@ -59,10 +81,10 @@ CE414Quiz.start({
       options: [
         "Thiessen nearest-point polygons",
         "Inverse distance weighting (IDW)",
-        "Fixed-radius local averaging"
+        "A second-order trend surface"
       ],
-      answer: "Fixed-radius local averaging",
-      explanation: "That test is what makes a method exact: interpolate, sample the output at your input locations, and see whether the values come back unchanged. Thiessen and IDW pass it, because at a sample location the nearest point is that sample itself. Fixed-radius averaging blends several points near the sample location, so what comes back is an average rather than the measurement — and a trend surface misses the measured points for its own reason, being one model fit through all of them at once."
+      answer: "A second-order trend surface",
+      explanation: "That test is what makes a method exact: interpolate, sample the output at your input locations, and see whether the values come back unchanged. Thiessen and IDW pass it, because at a sample location the nearest point is that sample itself. A trend surface is one polynomial fit through all of the points by regression, so it passes near them rather than through them: in the six-methods test Thursday shows, a second-order trend missed the samples by 166 m on average."
     },
     {
       prompt: "You have no true surface to compare against. How do you judge the interpolation?",
