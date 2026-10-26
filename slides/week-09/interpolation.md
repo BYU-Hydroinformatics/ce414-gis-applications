@@ -142,49 +142,77 @@ li[data-bespoke-marp-fragment="active"] .ip-pop { display: inline-block; animati
 
 ---
 
-# Two Halves of the Same Problem
-
-<div class="columns" style="align-items:start">
-<div>
-
-**Spatial sampling**
-
-- Gather observations that represent the spatial distribution of a variable of interest
-
-**Interpolation**
-
-- Use those sample points to predict values of that variable at all other unsampled locations
-
-</div>
-<div>
-
-![w:420 center](images/ip-population-to-sample.png)
-
-![w:400 center](images/ip-linear-interpolation-equation.png)
-
-</div>
-</div>
+# Sampling and Interpolation: Growing Up
 
 <style scoped>
-.ip-ask ul { list-style: none; margin: 0; padding: 0; }
-.ip-ask li { position: absolute; margin: 0; }
-.ip-ask li:nth-child(1) { left: 70px; top: 540px; width: 520px; }
-.ip-ask li:nth-child(2) { left: 640px; top: 120px; width: 580px; }
-.ip-card { display: block; background: #fff; border: 3px solid #1f4e8c; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); padding: 0.5em 0.9em; font-size: 0.72em; line-height: 1.35; }
-.ip-card strong { color: #1f4e8c; }
-li[data-bespoke-marp-fragment="active"] .infobox, li[data-bespoke-marp-fragment="active"] .ip-card { animation: tryit-pop 0.45s ease-out both; }
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.gr ul { list-style: none; margin: 0; padding: 0; }
+.gr li { margin: 0; }
+.gr-cartoon { position: absolute; left: 70px; top: 118px; width: 300px; height: 300px; border-radius: 10px; }
+.gr-ph { display: flex; align-items: center; justify-content: center; text-align: center; background: #f4f6f9; border: 2px dashed #9aa6b6; color: #7d8ba0; font-size: 0.55em; padding: 1em; box-sizing: border-box; }
+.gr-layer { position: absolute; left: 440px; top: 112px; width: 790px; height: 489px; }
+.gr-say { position: absolute; left: 70px; width: 350px; font-size: 0.6em; line-height: 1.3; }
+.gr-say strong { color: #002e5d; }
+.s0 { top: 432px; } .s1 { top: 490px; } .s2 { top: 548px; } .s3 { top: 628px; }
+.s1 strong, .s2 strong { color: #e8792b; }
+li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s ease-out both; }
 </style>
 
-<div class="ip-ask">
+<div class="gr-cartoon gr-ph">TODO(graphic): cartoon of a mom marking her daughter's height on the wall</div>
 
-* <span class="infobox">What other classes have you had where you had to <strong>interpolate</strong> a value?</span>
-* <span class="ip-card"><strong>Thermodynamics:</strong> a property between two rows of the steam tables<br><strong>Fluids:</strong> a friction factor read between curves on the Moody diagram<br><strong>Hydrology:</strong> a rainfall depth between durations on an IDF curve<br><strong>Geomatics:</strong> an elevation between two contour lines<br><strong>Geotechnical:</strong> the soil layers between two borings<br><strong>Structures:</strong> a design value between rows of a code table</span>
+<img class="gr-layer" src="images/ip-growth-points.png" alt="Her height on each birthday from 1 to 18">
+
+<span class="gr-say s0"><strong>Sampling:</strong> Mom marks her height on the wall every birthday, ages 1 to 18.</span>
+
+<div class="gr">
+
+* <img class="gr-layer gr-pop" src="images/ip-growth-question.png" alt=""><span class="gr-say s1 gr-pop"><strong>How tall was she at 12½?</strong> Nobody marked the wall that day.</span>
+* <img class="gr-layer gr-pop" src="images/ip-growth-answer.png" alt=""><span class="gr-say s2 gr-pop"><strong>Interpolate</strong> between her 12th and 13th birthdays: 63 + (65½ − 63) × (12½ − 12) ⁄ (13 − 12) ≈ 64¼ in</span>
+* <img class="gr-layer gr-pop" src="images/ip-growth-line.png" alt=""><span class="gr-say s3 gr-pop"><strong>Every month?</strong> Interpolate each one and connect them: the whole growth line.</span>
 
 </div>
 
-<!-- Click once for the question and let them answer before the second click. Most examples on the card are one-dimensional, between two rows or two curves; two are already spatial: an elevation between contours and the ground between borings. This week does the same thing in two dimensions, from scattered points rather than a tidy table. -->
+<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation from Today's Goals, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). -->
 
-<!-- The two halves are inseparable. A brilliant interpolator cannot rescue a bad sample, and a beautiful sample is useless until you interpolate it. Spend the first part of class on the left half, the rest on the right half. -->
+---
+
+# From a Line to a Surface
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.ls ul { list-style: none; margin: 0; padding: 0; }
+.ls li { margin: 0; }
+.ls-small { position: absolute; left: 60px; top: 130px; width: 440px; height: 305px; }
+.ls-map { position: absolute; left: 530px; top: 112px; width: 700px; height: 414px; }
+.ls-cap { position: absolute; font-size: 0.6em; line-height: 1.3; }
+.ls-cap strong { color: #002e5d; }
+.c1 { left: 70px; top: 445px; width: 420px; }
+.c2 { left: 545px; top: 532px; width: 680px; }
+.c2b { left: 545px; top: 561px; width: 680px; color: #e8792b; font-weight: 700; }
+.d1 { left: 70px; top: 600px; width: 1140px; } .d2 { left: 70px; top: 636px; width: 1140px; }
+.ls-ask { position: absolute; left: 70px; top: 505px; width: 430px; font-size: 0.66em; }
+.ls-card { position: absolute; left: 560px; top: 130px; width: 640px; display: block; background: #fff; border: 3px solid #1f4e8c; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); padding: 0.5em 0.9em; font-size: 0.66em; line-height: 1.4; }
+.ls-card strong { color: #1f4e8c; }
+li[data-bespoke-marp-fragment="active"] .ls-pop { animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<img class="ls-small" src="images/ip-growth-small.png" alt="Her heights on each birthday joined into a growth line">
+<img class="ls-map" src="images/ip-temp-stations.png" alt="Sixteen temperature stations on an empty grid">
+
+<span class="ls-cap c1"><strong>1-D:</strong> her height on every birthday → the whole growth line</span>
+<span class="ls-cap c2"><strong>2-D:</strong> the temperature at a few stations →</span>
+
+<div class="ls">
+
+* <img class="ls-map ls-pop" src="images/ip-temp-surface.png" alt="The same stations on a fully interpolated temperature grid"><span class="ls-cap c2b ls-pop">the whole grid, every cell interpolated</span>
+* <span class="ls-cap d1 ls-pop"><strong>Spatial sampling:</strong> gather observations that represent the spatial distribution of a variable of interest</span>
+* <span class="ls-cap d2 ls-pop"><strong>Interpolation:</strong> use those samples to predict that variable at every unsampled location</span>
+* <span class="infobox ls-ask ls-pop">What other classes have you had where you had to <strong>interpolate</strong> a value?</span>
+* <span class="ls-card ls-pop"><strong>Thermodynamics:</strong> a property between two rows of the steam tables<br><strong>Fluids:</strong> a friction factor read between curves on the Moody diagram<br><strong>Hydrology:</strong> a rainfall depth between durations on an IDF curve<br><strong>Geomatics:</strong> an elevation between two contour lines<br><strong>Geotechnical:</strong> the soil layers between two borings<br><strong>Structures:</strong> a design value between rows of a code table</span>
+
+</div>
+
+<!-- The map starts empty except for the stations: a thermometer reading at each is the birthday mark on the wall. Click 1 fills every cell, which is the growth line in two dimensions. Clicks 2 and 3 are the two definitions the rest of the session hangs on. The two halves are inseparable: a brilliant interpolator cannot rescue a bad sample, and a beautiful sample is useless until you interpolate it. Click 4 asks the class, and click 5 shows answers once they have had a go. Most examples on the card are one-dimensional, like the growth chart; two are already spatial: an elevation between contours and the ground between borings. The temperatures are made up (16 stations, filled by IDW with power 2, tools/week09_tuesday_figures.py); IDW itself comes later today. -->
 
 ---
 

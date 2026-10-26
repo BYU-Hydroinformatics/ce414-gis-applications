@@ -150,3 +150,105 @@ for ax, (name, pts) in zip(axs.ravel(), designs.items()):
     gold_axes(ax, name.capitalize()); dots(ax, pts)
 fig.tight_layout(h_pad=1.2, w_pad=1.5); fig.savefig(IMG / "ip-gold-compare.png"); plt.close(fig)
 print({k: len(v) for k, v in designs.items()})
+
+# --- 3. Growth chart: sampling and interpolation in one dimension ----------------------------------
+# A made-up girl whose curve follows the shape of the CDC (2000) stature-for-age median for girls,
+# scaled so she finishes at 5 ft 8 in, measured on each birthday from 1 to 18 and rounded to the
+# half inch a pencil mark on a wall supports. Four layers on fixed axes so the deck can stack them:
+# the birthday points, the 12-and-a-half question, the linear interpolation, and the monthly line.
+shape = [29.5, 34, 37.5, 40, 42.5, 45, 47.5, 50, 52.5, 54.5, 57, 59.5, 62, 63, 63.5, 64, 64, 64.2]
+age = np.arange(1, 19)
+ht = np.round(np.array(shape) * 68 / shape[-1] * 2) / 2
+y0, y1 = ht[11], ht[12]
+h125 = y0 + (y1 - y0) * (12.5 - 12) / (13 - 12)
+
+
+def ftin(v):
+    return f"{int(v // 12)}′ {v % 12:g}″"
+
+
+def growth_axes(size=(7.6, 4.7), dpi=150):
+    fig = plt.figure(figsize=size, dpi=dpi)
+    ax = fig.add_axes([0.11, 0.14, 0.86, 0.82] if size[0] > 6 else [0.15, 0.16, 0.82, 0.80])
+    ax.set_xlim(0, 18.8); ax.set_ylim(24, 72)
+    return fig, ax
+
+
+fig, ax = growth_axes()
+ax.set_xticks(range(0, 19, 2)); ax.set_yticks(range(24, 73, 6))
+ax.set_yticklabels([ftin(v) for v in range(24, 73, 6)])
+ax.set_xlabel("Age (years)", color=NAVY); ax.set_ylabel("Height", color=NAVY)
+ax.grid(color="#e3e8ef", lw=0.8); ax.spines[["top", "right"]].set_visible(False)
+ax.plot(age, ht, "o", ms=8, color=BLUE, mec="white", mew=1.5, zorder=5)
+fig.savefig(IMG / "ip-growth-points.png"); plt.close(fig)
+
+fig, ax = growth_axes(); ax.axis("off")
+ax.axvline(12.5, color=ORANGE, lw=2, ls=(0, (5, 3)))
+ax.text(12.5, 27, "  12½?", color=ORANGE, fontsize=15, weight="bold", va="bottom")
+fig.savefig(IMG / "ip-growth-question.png", transparent=True); plt.close(fig)
+
+fig, ax = growth_axes(); ax.axis("off")
+ax.plot([12, 13], [y0, y1], color=ORANGE, lw=3)
+ax.plot([12.5], [h125], "o", ms=12, color=ORANGE, mec="white", mew=2, zorder=6)
+ax.plot([0, 12.5], [h125, h125], color=ORANGE, lw=1.5, ls=(0, (2, 2)))
+ax.text(9.2, h125 + 1.2, "≈ " + ftin(round(h125 * 4) / 4).replace(".25", "¼").replace(".5", "½").replace(".75", "¾"), color=ORANGE, fontsize=15, weight="bold", ha="right")
+fig.savefig(IMG / "ip-growth-answer.png", transparent=True); plt.close(fig)
+
+months = np.arange(12, 18 * 12 + 1) / 12
+fig, ax = growth_axes(); ax.axis("off")
+ax.plot(months, np.interp(months, age, ht), color=NAVY, lw=2, zorder=3)
+ax.plot(months, np.interp(months, age, ht), ".", ms=2.5, color=NAVY, zorder=3)
+fig.savefig(IMG / "ip-growth-line.png", transparent=True); plt.close(fig)
+
+fig, ax = growth_axes(size=(5.2, 3.6))
+ax.set_xticks(range(0, 19, 3)); ax.set_yticks(range(24, 73, 12))
+ax.set_yticklabels([ftin(v) for v in range(24, 73, 12)])
+ax.set_xlabel("Age (years)", color=NAVY); ax.set_ylabel("Height", color=NAVY)
+ax.grid(color="#e3e8ef", lw=0.8); ax.spines[["top", "right"]].set_visible(False)
+ax.plot(months, np.interp(months, age, ht), color=NAVY, lw=2)
+ax.plot(age, ht, "o", ms=7, color=BLUE, mec="white", mew=1.3, zorder=5)
+fig.savefig(IMG / "ip-growth-small.png"); plt.close(fig)
+print("heights (in):", dict(zip(age.tolist(), ht.tolist())), "at 12.5:", h125)
+
+# --- 4. The same idea in two dimensions: temperature stations and an interpolated grid -------------
+# A made-up afternoon temperature field (deg F) over a 60 x 40 cell grid: warm in the southwest, cool
+# toward a high spot in the northeast. 16 stations sample it; IDW (power 2, all stations) fills every
+# cell. Two images of the same size: stations alone, then the stations on the interpolated grid.
+GX, GY = 60, 40
+yy2, xx2 = np.mgrid[0:GY, 0:GX] + 0.5
+temp = 74 - 0.22 * xx2 - 0.25 * (GY - yy2) - 16 * np.exp(-((xx2 - 44) ** 2 + (yy2 - 12) ** 2) / 120)
+st_rng = np.random.default_rng(1414)
+pts = []
+while len(pts) < 16:                                 # keep stations at least 7 cells apart so labels do not collide
+    q = st_rng.uniform([3, 3], [GX - 6, GY - 3])
+    if all(np.hypot(*(q - r)) >= 7 for r in pts): pts.append(q)
+sx, sy = np.array(pts).T
+sv = np.round(temp[sy.astype(int), sx.astype(int)])
+d = np.hypot(xx2[..., None] - sx, yy2[..., None] - sy)
+w = 1 / np.maximum(d, 1e-6) ** 2
+surf = (w * sv).sum(-1) / w.sum(-1)
+TCMAP = plt.get_cmap("RdYlBu_r")
+
+
+def temp_axes(show_surface):
+    fig = plt.figure(figsize=(6.0, 3.55), dpi=150)
+    ax = fig.add_axes([0.02, 0.03, 0.80, 0.94])
+    cax = fig.add_axes([0.85, 0.10, 0.03, 0.80])
+    if show_surface:
+        im = ax.imshow(surf, cmap=TCMAP, vmin=40, vmax=72, extent=(0, GX, GY, 0))
+    else:
+        im = ax.imshow(np.full((GY, GX), np.nan), cmap=TCMAP, vmin=40, vmax=72, extent=(0, GX, GY, 0))
+        ax.set_facecolor("#f4f6f9")
+    for k in range(0, GX + 1, 4): ax.axvline(k, color="white" if show_surface else "#d5dbe3", lw=0.5)
+    for k in range(0, GY + 1, 4): ax.axhline(k, color="white" if show_surface else "#d5dbe3", lw=0.5)
+    ax.plot(sx, sy, "o", ms=8, color="black", mec="white", mew=1.4)
+    for x_, y_, v_ in zip(sx, sy, sv):
+        ax.text(x_ + 1.1, y_ - 0.9, f"{v_:.0f}°", fontsize=10, weight="bold", color=NAVY,
+                bbox=dict(boxstyle="round,pad=0.12", fc="white", ec="none", alpha=0.85))
+    ax.set_xlim(0, GX); ax.set_ylim(GY, 0); ax.set_xticks([]); ax.set_yticks([])
+    cb = fig.colorbar(im, cax=cax); cb.set_label("Temperature (°F)", color=NAVY)
+    return fig
+
+
+fig = temp_axes(False); fig.savefig(IMG / "ip-temp-stations.png"); plt.close(fig)
+fig = temp_axes(True); fig.savefig(IMG / "ip-temp-surface.png"); plt.close(fig)
