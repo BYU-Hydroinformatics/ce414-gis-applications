@@ -377,7 +377,7 @@ li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animati
 
 <!-- _class: lead -->
 
-![bg right:55%](images/ip-divider-surface.jpg)
+![bg right:55%](images/ip-divider-valley.jpg)
 
 # From Samples to a Surface
 
