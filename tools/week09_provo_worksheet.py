@@ -111,6 +111,8 @@ h2 {{ color: {NAVY}; font-size: 10.5pt; margin: 9pt 0 2pt; }}
 .map {{ width: 3.2in; display: block; margin: 0 auto 2pt; }}
 h2.first {{ margin-top: 0; }}
 .work {{ flex: 1; min-height: 0.15in; }}
+section.grow {{ flex: 1; display: flex; flex-direction: column; }}
+.lined {{ background: repeating-linear-gradient(to bottom, transparent 0, transparent 16pt, #b5bcc7 16pt, #b5bcc7 17pt); }}
 .foot {{ text-align: center; color: {GRAY}; font-size: 8.5pt; margin-top: 6pt; }}
 table {{ border-collapse: collapse; width: 100%; margin-top: 4pt; }}
 th, td {{ border: 1px solid #8a94a3; padding: 3pt 5pt; text-align: left; }}
@@ -138,26 +140,21 @@ Look up the <strong>current air temperature</strong> in each city (weather.com o
 <strong>straight-line distance to Provo</strong> with the scale bar or an online map's measure tool.
 <table><tr><th>City</th><th>Temp (°F)</th><th>Distance to Provo (km)</th></tr>{cities_rows(2)}</table>
 <div class="hint">Temperature source: {blank}{blank}</div>
-</section><div class="work"></div>
+</section>
 
-<section><h2>2. Your own method</h2>
+<section class="grow"><h2>2. Your own method</h2>
 Estimate Provo any way you like from the three temperatures.
 <div class="ans"><b>Provo:</b> {short} °F &nbsp; How?</div>
 {lines(2)}
-</section><div class="work"></div>
-
-<section><h2>6. Check</h2>
-<div class="ans"><b>Provo's actual temperature now:</b> {short} °F</div>
-Which method came closest, and why?
-{lines(3)}
+<div class="work lined"></div>
 </section>
 </div>
 
 <div>
 <section><h2 class="first">3. Thiessen polygons (nearest neighbor)</h2>
 On the map, join each pair of known cities, draw the <strong>perpendicular bisector</strong> of each line, and
-join the bisectors into three polygons. Provo takes the value of the polygon it falls in.
-<div class="ans"><b>Polygon:</b> {blank} &nbsp; <b>Provo:</b> {short} °F</div>
+join the bisectors into three polygons. Provo takes the temperature of the city whose polygon it falls in.
+<div class="ans"><b>City:</b> {blank} &nbsp; <b>Provo:</b> {short} °F</div>
 </section><div class="work"></div>
 
 <section><h2>4. Nearest neighbors, n = 2</h2>
@@ -174,6 +171,12 @@ Weight each city by <strong>1 / d²</strong> and take the weighted average of al
 <div class="hint">The weights are tiny: keep three significant figures, or use 1 / (d ÷ 10)² instead.
 Scaling every weight by the same amount does not change the answer.</div>
 </section><div class="work"></div>
+
+<section><h2>6. Check</h2>
+<div class="ans"><b>Provo's actual temperature now:</b> {short} °F</div>
+Which method came closest, and why?
+{lines(3)}
+</section>
 </div>
 </div>
 
