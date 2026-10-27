@@ -58,7 +58,7 @@ A lab that was wrong in Word should not be wrong in Markdown.
    has none, generate one with the OpenAI image skill and save it in the deck's `images/` folder.
    Do not add decoration for its own sake.
 
-Rules 7 to 9 are shared with the sibling repo and are recorded in
+Rules 7 to 9 are shared with the sibling repo; they and the bold key-word rule (one or two **bold** key words on every text slide) are recorded in
 `tools/slide-conversion-guide.md`, which is the authority when writing or converting a deck.
 For labs, `tools/lab-conversion-guide.md` is the authority: it records the structure, spine and
 rubric that Labs 1 and 2 set, and the revise-pilot-promote workflow every later lab follows.

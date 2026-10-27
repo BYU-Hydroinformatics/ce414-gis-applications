@@ -61,15 +61,15 @@ li[data-bespoke-marp-fragment="active"] .ip-hint { animation: tryit-pop 0.45s ea
 
 <div class="ip-text">
 
-<span class="ip-kicker">Work with a neighbor</span>
+<span class="ip-kicker">On your own · paper worksheet</span>
 
 # In Class Activity: What Is the Temperature in Provo?
 
-- Let's assume you only know the air temperature in three Utah cities: **Moab**, **American Fork**, and **Cedar City**
-- Look up the current air temperature in each on weather.com or an equivalent site
-- From those three, **estimate the current temperature in Provo**
-- Write down your answer and the method you used to get it
-- Upload your answer and your method to Learning Suite
+- Assume you only know the air temperature in three Utah cities: **Moab**, **American Fork**, and **Cedar City**
+- Look up each one's current temperature and its straight-line **distance to Provo**
+- From those three, **estimate the current temperature in Provo**, and write down how
+- Keep the sheet: you will estimate Provo **three more ways** today
+- At the end, **upload a photo** of your worksheet to Learning Suite by 9:30 am
 
 </div>
 
@@ -81,9 +81,9 @@ li[data-bespoke-marp-fragment="active"] .ip-hint { animation: tryit-pop 0.45s ea
 
 </div>
 
-<!-- The click is a hint for anyone stuck: straight-line (great-circle) distances from Provo, as the crow flies rather than by road, between the UGRC municipal-boundary centroids: American Fork 19 km, Moab 259 km, Cedar City 311 km (tools/week09_tuesday_figures.py). -->
+<!-- Hand out the worksheet (docs/handouts/provo-temperature-worksheet.pdf, built by tools/week09_provo_worksheet.py), one per student; each person works alone. Today they do Steps 1 and 2 (temperatures, distances, their own estimate). Later slides return to the same sheet: Step 3 (Thiessen polygons by hand) after Thiessen Polygons: The Method, Steps 4 and 5 (two nearest neighbors, IDW power 2) after IDW: The Method, and Step 6 (look up Provo and compare) at the end. The click shows the answer distances: use it as a check once they have measured, not before: straight-line (great-circle) distances from Provo, as the crow flies rather than by road, between the UGRC municipal-boundary centroids: American Fork 19 km, Moab 259 km, Cedar City 311 km (tools/week09_tuesday_figures.py). -->
 
-<!-- Give them three or four minutes. Collect several answers and, more importantly, several rules: nearest city, plain average, distance-weighted average, adjust for elevation. Those four answers are Thiessen, a global mean, IDW, and a trend surface. Name them now, then spend the rest of the session making each one precise. -->
+<!-- Give them five or six minutes (measuring the distances takes a little longer). Collect several answers and, more importantly, several rules: nearest city, plain average, distance-weighted average, adjust for elevation. Those four answers are Thiessen, a global mean, IDW, and a trend surface. Name them now, then spend the rest of the session making each one precise. -->
 
 <!-- Map: Utah from UGRC's state boundary, cities at the centroids of their UGRC municipal boundaries (tools/week08_interpolation_figures.py). Point out before anyone answers: American Fork is about 20 km from Provo, while Moab and Cedar City are each more than 250 km away. The map is why nearest-city and distance-weighted answers win. -->
 
@@ -93,7 +93,7 @@ li[data-bespoke-marp-fragment="active"] .ip-hint { animation: tryit-pop 0.45s ea
 
 <img class="ip-geo" src="images/ip-soil-cross-section-cartoon.jpg" alt="Cartoon geologist standing on a cross-section of soil layers">
 
-**Interpolation** is a procedure to predict values of an attribute at unsampled points within the region that was sampled.
+**Interpolation** is a procedure to predict values of an attribute at **unsampled points** within the region that was sampled.
 
 <div class="columns">
 <div>
@@ -172,7 +172,7 @@ li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s eas
 
 </div>
 
-<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation, drawn over the cartoon (the same sketch as Today's Goals), with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. -->
+<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation pops up over the cartoon (the same figure as Today's Goals), its line rising left to right like her growth chart, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. The equation figure was redrawn October 26, 2026 with a rising line and in the same y0 + (y1 - y0) form as the worked example (tools/week09_linear_interpolation_figure.py). -->
 
 ---
 
@@ -230,7 +230,7 @@ li[data-bespoke-marp-fragment="active"] .ls-pop { animation: tryit-pop 0.45s eas
 
 # The Gold Prospecting Scenario
 
-The map on the left is the real, fully known gold grade, in **grams of gold per tonne of rock** (g/t). In practice you never see it — you only get the handful of points you choose to sample.
+The map on the left is the real, fully known gold grade, in **grams of gold per tonne of rock** (g/t). In practice you **never see it** — you only get the handful of points you choose to sample.
 
 <div class="columns">
 <div>
@@ -251,16 +251,16 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ---
 
-# Systematic Sampling Pattern
+# Method 1: Systematic Sampling Pattern
 
 ![bg right:38% w:80%](images/ip-gold-systematic.png)
 
-- Samples spaced uniformly at fixed X, Y intervals
+- Samples spaced **uniformly** at fixed X, Y intervals
 - Parallel lines
 
 **Advantages**
 
-- Easy to understand and to plan
+- **Easy** to understand and to plan
 
 **Disadvantages**
 
@@ -272,15 +272,15 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ---
 
-# Random Sampling
+# Method 2: Random Sampling
 
 ![bg right:38% w:80%](images/ip-gold-random.png)
 
-- Select random points
+- Select **random** points
 
 **Advantages**
 
-- Less biased — unlikely to match a pattern in the landscape
+- **Less biased** — unlikely to match a pattern in the landscape
 
 **Disadvantages**
 
@@ -291,17 +291,17 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ---
 
-# Cluster Sampling
+# Method 3: Cluster Sampling
 
 ![bg right:38% w:80%](images/ip-gold-cluster.png)
 
-- Cluster centers are established, either randomly or systematically
+- **Cluster centers** are established, either randomly or systematically
 - Samples are arranged around each center
 
 **Advantages**
 
-- Reduced travel time
-- Less costly
+- Reduced **travel time**
+- Less **costly**
 
 **Disadvantages**
 
@@ -313,16 +313,16 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ---
 
-# Adaptive Sampling
+# Method 4: Adaptive Sampling
 
 ![bg right:38% w:80%](images/ip-gold-adaptive.png)
 
-- Higher sampling density where the feature of interest is more variable
+- **Higher sampling density** where the feature of interest is more variable
 - Requires some method of estimating feature variation
 
 **Advantages**
 
-- Often efficient: large homogeneous areas need few samples, reserving effort for areas of higher spatial variation
+- Often **efficient**: large homogeneous areas need few samples, reserving effort for areas of higher spatial variation
 
 **Disadvantages**
 
@@ -338,15 +338,40 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 <!-- _class: quiz -->
 
-# Class Vote: Which Sampling Design Works Best Here?
+<style scoped>
+section > h1 { position: absolute; top: 40px; left: 70px; width: 590px; margin: 0; line-height: 1.2; }
+.sd-sub { position: absolute; top: 148px; left: 70px; font-size: 0.85em; font-weight: 700; color: #e8792b; }
+.sd-truth { position: absolute; left: 70px; top: 205px; height: 250px; }
+.sd-truth-cap { position: absolute; left: 290px; top: 215px; width: 300px; font-size: 0.6em; line-height: 1.35; }
+.sd-compare { position: absolute; right: 70px; top: 24px; height: 628px; }
+.sd-note { position: absolute; right: 70px; top: 658px; width: 452px; text-align: center; font-size: 0.5em; color: #4a5568; }
+.sd-ans ul { list-style: none; margin: 0; padding: 0; }
+.sd-ans li { position: absolute; left: 70px; width: 600px; margin: 0; font-size: 0.62em; line-height: 1.3; }
+.sd-ans li:nth-child(1) { top: 478px; } .sd-ans li:nth-child(2) { top: 522px; }
+.sd-ans li:nth-child(3) { top: 560px; } .sd-ans li:nth-child(4) { top: 598px; }
+li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
 
-![bg right:52% h:95%](images/ip-gold-compare.png)
+# Which Sampling Design Is Best and Why?
 
-**The true gold grade:**
+<span class="sd-sub">Discuss with your neighbor</span>
 
-![h:360 center](images/ip-gold-grade.png)
+<img class="sd-truth" src="images/ip-gold-grade.png" alt="The true gold grade, in grams of gold per tonne of rock">
+<span class="sd-truth-cap"><strong>The true gold grade</strong>, which no real survey gets to see</span>
 
-<!-- Vote now, while the four designs are fresh, and before discussing any of them. Each design has the same 96 points on the same map. The interesting argument is between adaptive and random: adaptive (24 points at random, then 72 more at random but weighted toward the richest ground, so they crowd on and around the hot spots) puts points where the surface changes fastest, which is where interpolation errors are largest, but it needs prior knowledge that a real project usually does not have. There is no answer key here on purpose. -->
+<img class="sd-compare" src="images/ip-gold-compare.png" alt="The four sampling designs on the same gold-grade map: systematic, random, cluster and adaptive">
+<span class="sd-note">Each design uses the same <strong>96</strong> sample points</span>
+
+<div class="sd-ans">
+
+* <span class="sd-pop"><strong>It depends</strong> on purpose, budget, time, and access:</span>
+* <span class="sd-pop">Capture the overall <strong>variability</strong>? → systematic or random</span>
+* <span class="sd-pop">Find the <strong>gold</strong>? → adaptive</span>
+* <span class="sd-pop">Short on <strong>time, money, or access</strong>? → cluster</span>
+
+</div>
+
+<!-- Give pairs two or three minutes, then take answers and, more importantly, the reasons. Click the four answers in only after the discussion. The honest answer is that it depends: on the purpose of the survey, the money, the time, and how hard the ground is to reach. To describe the field as a whole (its average, its variability, a map you can trust everywhere), systematic or random spreads the effort evenly; random also guards against a landscape pattern that lines up with a grid. To find the gold, adaptive wins: it puts points where the grade is high and changing fast, which is also where interpolation errors are largest, but it needs prior knowledge or a second visit, which a real project may not have. When travel, budget, or access dominate, cluster sampling buys the most observations per day in the field, at the cost of points that repeat each other within a cluster. Point at the note under the panels: each design has the same 96 points on the same map (8 x 12 grid; 96 at random; 12 clusters of 8; 24 at random plus 72 weighted toward high grade), so every difference between panels comes from where the points went, not how many there are. -->
 
 ---
 
@@ -358,28 +383,43 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 ## Gather observations that represent the spatial distribution of a variable — then predict that variable everywhere else
 
-<!-- This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
+<!-- The cartoon: pins of different heights are the samples, and the stretchy sheet that rests on every pin top is the interpolated surface (regenerated October 26, 2026; prompt in tools/divider-images/week09.json). This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
 
 ---
 
 # Interpolation: Many Methods
 
-![bg right:28% w:90%](images/ip-linear-interpolation-equation.png)
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.mm-text { position: absolute; left: 70px; top: 140px; width: 560px; font-size: 0.9em; }
+.mm-grid { position: absolute; right: 70px; top: 120px; width: 520px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
+.mm-grid figure { margin: 0; text-align: center; font-size: 0.55em; color: #002e5d; font-weight: 700; }
+.mm-grid img { width: 100%; display: block; margin-bottom: 4px; }
+</style>
 
-- There are **many different methods**
-- All of them use the **location** and the **value** at sampling locations to estimate the variable of interest at unmeasured locations
-- Methods differ in **weighting** and in the **number of observations** used
-- Each method produces **different results**, even with the same data
-- There is **no best method** for every application
-- Accuracy is often judged by **withheld sample points** — the difference between the measured and the interpolated values
+<div class="mm-text">
 
-<!-- The last bullet is the honest one and it is where the rest of a career in this material lives: hold points back, interpolate without them, and compare. Everything else on this slide is bookkeeping. -->
+- Every method estimates unmeasured places from the **location** and **value** of the samples
+- They differ in how they **weight** the samples and how many they use
+- Same data, **different results**; no method is best everywhere
+- To check one, **hold back** a few samples and compare
+
+</div>
+
+<div class="mm-grid">
+<figure><img src="images/ip-thumb-thiessen.png" alt="Thiessen polygons surface">Thiessen</figure>
+<figure><img src="images/ip-thumb-idw.png" alt="IDW surface">IDW</figure>
+<figure><img src="images/ip-thumb-trend.png" alt="Trend surface">Trend</figure>
+<figure><img src="images/ip-thumb-spline.png" alt="Spline surface">Spline</figure>
+</div>
+
+<!-- The thumbnails preview the rest of today: the same 150 Timpanogos samples turned into a surface four ways (tools/week09_method_thumbnails.py crops them from the figures on the slides ahead). Same points, four visibly different maps: that is the third bullet. The last bullet is the honest one and it is where the rest of a career in this material lives: hold points back, interpolate without them, and compare. Shortened and the equation figure swapped for the thumbnails October 26, 2026. -->
 
 <!-- Thursday makes the last bullet concrete: a six-methods test with 60 points held back, RMSE, and checkpoints. -->
 
 ---
 
-# The Elevation Interpolation Scenario
+# The Terrain Scenario
 
 <div class="columns" style="align-items:start">
 <div>
@@ -397,6 +437,8 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 
 </div>
 </div>
+
+<p style="font-size: 0.68em; margin-top: 0.3em;">We <strong>pretend the true surface is unknown</strong>: all we have are the 150 points, and each method tries to rebuild the mountain from them. But we conveniently <strong>do have the truth</strong>, so we can test which method comes closest.</p>
 
 <!-- This pair is the reference for the rest of the session. Left is the truth: USGS 3DEP elevation, 30 m, a 7.2 km square around the summit of Mount Timpanogos, 1,831 to 3,569 m. In a real project you never have it. Right is everything the interpolator gets to see: 150 cells drawn at random, colored by their elevation. Every method that follows is judged by how close it comes to the left panel using only the right panel. Figures: tools/week09_elevation_figures.py (numpy, scipy and pykrige, not ArcGIS Pro; they are figures, not screenshots). Replaced the Bolstad contour figures October 25, 2026. -->
 
@@ -425,7 +467,7 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 </div>
 </div>
 
-<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. Walk the four panels in order. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
+<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. Walk the four panels in order. Redrawn on white October 26, 2026 (tools/week09_thiessen_construction.py). Worksheet Step 3: have them do this now on their Utah map with the three cities. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
 
 ---
 
@@ -526,7 +568,7 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 </div>
 </div>
 
-<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Then walk the arithmetic on the right: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 34. This is a linear IDW, exponent one. Have the class redo it with the exponent squared and watch the answer move toward the nearest point. Merged October 25, 2026 from the concept, equation and worked-example slides. -->
+<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Then walk the arithmetic on the right: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 34. This is a linear IDW, exponent one. Have the class redo it with the exponent squared and watch the answer move toward the nearest point. Then worksheet Steps 4 and 5: the two-nearest average and IDW with power 2 for Provo. With American Fork about 19 km away and the others past 250 km, IDW lands within a fraction of a degree of American Fork, which is the point. Merged October 25, 2026 from the concept, equation and worked-example slides. -->
 
 ---
 

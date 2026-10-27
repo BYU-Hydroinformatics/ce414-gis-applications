@@ -10,12 +10,13 @@
   },
   {
     "id": "ip-divider-surface",
-    "file": "ip-divider-surface.png",
-    "prompt": "A cheerful field scientist has pushed a handful of colorful survey stakes into a flat field at different heights and is draping a giant bedsheet over them, which forms a smooth rolling hilly surface; a curious dog peeks under the edge of the sheet \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "file": "ip-divider-surface.jpeg",
+    "prompt": "Side view of a big wooden board with seven thin metal pins sticking straight up out of it at very different heights: two very tall pins near the middle, medium pins beside them, and short pins near the edges, each pin topped with a small bright red ball. A delighted engineer in a hard hat is lowering a large stretchy blue rubber sheet down onto the pins; on the side already covered, the sheet rests exactly on every red ball and curves smoothly between them, forming a rolling hill that is tallest where the pins are tallest; on the other side, the bare pins are still waiting. The red balls poke up through the sheet as bright dots so it is obvious the surface passes through every point \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
     "size": "1024x1024",
     "quality": "medium",
-    "model": "gpt-image-1",
-    "sha256": "833d2145f598"
+    "model": "gpt-image-2.5-flare",
+    "sha256": "40d2e35babf1",
+    "note": "Regenerated 2026-10-26: the first version (stakes under a bedsheet, with a dog) did not show the sheet passing through the sample points."
   },
   {
     "id": "ip-divider-kriging",

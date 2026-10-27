@@ -44,7 +44,7 @@ for the CE 414 rhythm: Dr. Ames teaches all sessions, and most weeks pair a conc
 the lab that applies it. Keep the source deck's content, order, and voice; tighten wording where
 the original was rough.
 
-Three standing rules (set 2026-09-03) apply to every deck:
+Four standing rules (the first three set 2026-09-03) apply to every deck:
 
 1. **Never name a professor when pointing to the other class day.** Instructors change between
    semesters. Write "Thursday, we will do exactly this with the points you collect" or "on Tuesday
@@ -55,6 +55,13 @@ Three standing rules (set 2026-09-03) apply to every deck:
    a slide has none, generate one with the OpenAI image skill (gpt-image-1, a shared style suffix
    across the deck, no text in the image) and save it in the deck's `images/` folder. Quiz and
    table slides get a supporting illustration; do not add decoration for its own sake.
+4. **Every text slide has one or two bold key words** (instructor's request, 2026-10-26). A
+   bullet list or paragraph where every word is in the same font gives students nothing to anchor
+   on. Write `**…**`; the theme draws `strong` in bold BYU navy, which is the "bold blue" these
+   decks use. Pick the term the slide teaches or the word a student should remember (a method's
+   name, the deciding trade-off), not the first noun. One or two per text block, not every
+   bullet: emphasis on everything is emphasis on nothing. Section-divider (`lead`) slides are
+   exempt.
 
 Specifically:
 

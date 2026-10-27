@@ -9,7 +9,7 @@ sampling maps.
 2. A made-up gold-grade field (g/t) for the "gold nuggets under a landscape" scenario: a few ore
    bodies along a northeast-trending vein, smaller pods, and smooth background noise. It replaces
    the Bolstad contour figures on the sampling-design slides. Each design gets 96 points on the same
-   field so the comparison is fair, and a 2 x 2 panel for the class vote.
+   field so the comparison is fair, and a 2 x 2 panel for the "which design is best" discussion.
 
     python tools/week09_tuesday_figures.py      (any Python with matplotlib, numpy and scipy)
 

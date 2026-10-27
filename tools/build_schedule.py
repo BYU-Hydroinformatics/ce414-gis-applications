@@ -130,7 +130,7 @@ DUE = {
     8:  dict(reading=None, quiz=None, lab=7,
              other=[("**Midterm 1** — closed book, concept based, in the Testing Center, on Weeks 1–7 ([study guide](../study-guides/midterm-1.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
     9:  dict(reading="Chapter 12", quiz=(7, "Sampling and Interpolation"), lab=8,
-             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday; upload a screen capture or photo by 9:30 am, fifteen minutes after class")]),
+             other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday, each student on their own copy of the [printable worksheet](../handouts/provo-temperature-worksheet.pdf) (PDF, 2 pages); upload a photo of the completed worksheet by 9:30 am, fifteen minutes after class")]),
     # Fall 2026 only: the instructor is away Week 10, so there is no class. Remove after November 5.
     10: dict(reading=None, quiz=(8, "Cut, Fill, and Raster Volumes"), lab=9,   # no reading; Quiz 8 is built from the two decks
              other=[("**No class on Tuesday, November 3, or Thursday, November 5**",
