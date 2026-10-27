@@ -15,7 +15,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 ## :material-account-group: In-Class Practice
 
-- **Air Temperature Interpolation** (graded, 5 points) — done in class Tuesday, each student on their own copy of the [printable worksheet](../handouts/provo-temperature-worksheet.pdf) (PDF, 2 pages); upload a photo of the completed worksheet by 9:30 am, fifteen minutes after class.
+- **Air Temperature Interpolation** (graded, 5 points) — done in class Tuesday, each student on their own copy of the [printable worksheet](../handouts/provo-temperature-worksheet.pdf) (PDF, 1 page); upload a photo of the completed worksheet by 9:30 am, fifteen minutes after class.
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
