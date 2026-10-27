@@ -50,3 +50,15 @@ moved into the Lab 8 part (now Part 4). The six-methods slide gained a one-line 
 points. The RMSE quiz's two checkpoint items were replaced (where the error lives; what a Gaussian
 model assumes), and the Lab 8 page's note, the Week 9 schedule blurbs and the Midterm 2 study guide
 were updated to match.
+
+## Part 1 rebuilt for tool users (October 26, 2026)
+
+Students will run Kriging, not compute it, so Part 1 now walks from Tuesday's Provo worksheet to the
+tool's settings: "Remember Provo?" (you trusted American Fork; IDW made that a fixed rule; kriging
+asks the data how much), "The Neighbor Test" (one close pair, one far pair, then all 1,770 pairs of 60
+made-up stations), "Average the Pairs: the Semivariogram" (nugget, range and sill in plain words,
+with a click-in question), the three model shapes, and "Same Points, Different Settings" (one
+dimension, kriged with the fitted model, a big nugget, a short range and a long range). Kriged
+Result and the annotated Kriging dialog follow. Cut: the trend/autocorrelation/random
+decomposition, Lag Distance, Spatial Autocorrelation, Semivariance (the equation) and the old
+Nugget, Sill, and Range slide. Figures: tools/week09_kriging_story_figures.py, all made-up values.

@@ -37,7 +37,7 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
-- Read a **semivariogram** and say how **kriging** sets its weights
+- Say why **closer** points count more, and what the **nugget**, **range** and **sill** do to a kriged surface
 - Compute an **error raster** and say what its **sign** means
 - Reduce the error to one number, the **RMSE**, and say what it hides
 - Say which surface to **trust**, and why the answer **depends**
@@ -52,127 +52,102 @@ By the end of class you should be able to:
 
 # Part 1 — Kriging
 
-## Interpolation that estimates its own weights
+## Closer in space, closer in value
 
-<!-- Tuesday's methods weight points by a rule you choose: nearest only, or 1/d^n. Kriging first measures how similarity fades with distance, from the samples themselves, and takes its weights from that. -->
-
----
-
-# Kriging
-
-A statistically based estimator of spatial variables. It separates the data into three components:
-
-- **Spatial trend** — an increase or decrease in a variable that depends on direction; for example, temperature may decrease toward the northwest
-- **Autocorrelation** — the tendency for points near each other to have similar values
-- **Random** — statistically defined by a probability function
-
-Kriging creates a mathematical model, which is then used to estimate values across the surface.
-
-![h:160 center](images/ip-tp-decomposition.png)
-
-<!-- Corrected the source's run-together "dependson" to "depends on." The three-component split is what makes kriging different in kind from IDW: it models the structure of the data before it interpolates. -->
-
-<!-- The figure splits a real surface, Tuesday's Mount Timpanogos DEM (USGS 3DEP, 30 m), the way the bullets describe: a least-squares 2nd-order trend fitted to every cell (std 297 m), what is left smoothed over 210 m - the autocorrelated part, ridges and canyons (std 201 m) - and the rest, the random part, which here is mostly channels and crests narrower than 210 m (std 11 m). The split is illustrative: a different smoothing width moves the line between 'autocorrelated' and 'random', which is exactly the judgment a variogram formalizes. tools/week09_elevation_figures.py. If the slide is crowded, drop the bullets' examples and talk to the figure. -->
+<!-- Tuesday's methods weight points by a rule you choose: nearest only, or 1/d^n. Kriging first measures how similarity fades with distance, from the samples themselves, and takes its weights from that. Part 1 was rebuilt October 26, 2026 for students who will run the tool rather than compute kriging by hand: Tuesday's Provo worksheet, a neighbor test, the curve in plain words, then what each setting does. The lag-distance, autocorrelation, semivariance-equation and decomposition slides were cut. -->
 
 ---
 
-# Kriging: Lag Distance
-
-<div class="columns">
-<div>
-
-- $Z_i$ is a variable at a sample point
-- $h_i$ is the **distance** between sample points
-- Every possible pair $Z_i, Z_j$ defines a distance $h_{ij}$ and differs by the amount $Z_i - Z_j$
-
-The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j*. There is a subset of points in any sample set that are a given lag distance apart.
-
-</div>
-<div>
-
-![w:460 center](images/ie-lag-pairs.png)
-
-</div>
-</div>
-
-<!-- Corrected the source's "is know as" to "is known as." The red numbers on the figure are the lag distances for each pair, measured from the drawing (redrawn October 26, 2026 from the textbook's Figure 9-12; tools/week09_thursday_figures.py). With four points there are six pairs; with a hundred points there are 4,950, which is why the next step is to bin them. -->
-
----
-
-# Kriging: Spatial Autocorrelation
-
-<div class="columns">
-<div>
-
-- Higher autocorrelation means points **near each other are alike**
-- That provides substantial information about nearby locations
-
-*h* here is the width of one cell.
-
-</div>
-<div>
-
-![w:560 center](images/ie-autocorr-pairs.png)
-
-</div>
-</div>
-
-<!-- Top row: a spatially autocorrelated layer, and its scatter of each cell against the cell next to it falls on a line. (Made-up 12 x 12 layers, redrawn October 26, 2026 from the textbook's Figure 9-13; tools/week09_thursday_figures.py.) Bottom row: an uncorrelated layer, and the same scatter is a cloud. That contrast is the entire justification for interpolating at all — if the bottom panel were your data, no method in this deck would beat the global mean. Fixed the source's "Higher autocorrelations indicates" to "Higher autocorrelation means." -->
-
----
-
-# Kriging: Semivariance
-
-<div class="columns">
-<div>
-
-- $Z_i$ is the measured variable at one point
-- $Z_j$ is another at distance *h* away
-- *n* is the number of **pairs** that are approximately *h* distance apart
-
-The **1/(2n)** out front averages over the *n* pairs and halves the result: that half is the "semi". Semivariance may be calculated for any *h*.
-
-When nearby points are similar, $Z_i - Z_j$ is small, so the semivariance is **small**. High spatial autocorrelation means points near each other have similar Z values.
-
-</div>
-<div>
-
-![w:480 center](images/ie-semivariance-formula.png)
-
-</div>
-</div>
-
-<!-- Semivariance is a dissimilarity measure: it goes up as points get less alike. The "semi" is the factor of one half in front of the sum. The textbook's typeset "1/2n" was easy to misread as n/2, so the equation is redrawn with 1/(2n) as a fraction (October 26, 2026). -->
-
----
-
-# Nugget, Sill, and Range
-
-![bg right:48% w:95%](images/ip-tp-semivariogram-model.png)
+# Remember Provo?
 
 <style scoped>
-section > ul { font-size: 0.76em; }
-.qa ul { list-style: none; margin: 0; padding: 0; }
-.qa li { position: absolute; left: 70px; width: 560px; margin: 0; font-size: 0.62em; line-height: 1.3; }
-.qa li:nth-child(1) { top: 590px; } .qa li:nth-child(2) { top: 624px; }
-.qa strong { color: #e8792b; }
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.rp-text { position: absolute; left: 70px; top: 130px; width: 620px; font-size: 0.86em; }
+.rp-map { position: absolute; right: 70px; top: 40px; width: 520px; }
+.rp-big { position: absolute; left: 70px; top: 520px; width: 600px; }
+.rp ul { list-style: none; margin: 0; padding: 0; }
 li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
 
-- **Range** — the distance where the model levels out; points closer than the range are autocorrelated, points farther apart are not
-- **Sill** — the semivariance the model reaches at the range
-- **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
-- **Partial sill** — sill minus nugget: the part that distance explains
-- Pairs are grouped into distance bins; ArcGIS Pro's **Lag size** is the bin width
+<div class="rp-text">
 
-<div class="qa">
-
-* <span class="pop"><strong>What would put a nugget here?</strong></span>
-* <span class="pop">Measurement error (GPS elevations a few meters off), or samples spaced farther apart than the gullies</span>
+- On Tuesday you trusted **American Fork** most: it is 19 km from Provo, and Moab and Cedar City are over 250 km away
+- **IDW** turned that instinct into a fixed rule: weight = 1/d²
+- **Kriging** asks the data instead: *how much* more alike are closer places?
 
 </div>
 
-<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: Tuesday's 150 Mount Timpanogos elevation samples, 11,175 pairs binned every 300 m out to 4.5 km, a spherical model fitted - range about 4,559 m, sill about 184 thousand m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Past about 4 km the bins fall off because few pairs in a 7.2 km square are that far apart, so the fit stops at 4.5 km. Two clicks: the question, then the answer (GPS elevations with a few meters of error, or samples much farther apart than the gullies). -->
+<img class="rp-map" src="images/ip-utah-activity-map.png" alt="Utah with Provo and the three known cities">
+<img class="rp-map" src="images/ip-utah-activity-map-distances.png" alt="Straight-line distances from Provo: 19 km to American Fork, 259 km to Moab, 311 km to Cedar City">
+
+<div class="rp">
+
+* <span class="infobox rp-big pop">Closer in space, closer in value: kriging measures how much</span>
+
+</div>
+
+<!-- Start from what every student did on Tuesday's worksheet. Ask who weighted American Fork most and why. That instinct, nearby places are more alike, is the whole idea of kriging; the only new question is how much more alike, and kriging answers it from the data rather than from a rule like 1/d^2. One click brings up the one-line summary. The map and distances are Tuesday's (tools/week09_tuesday_figures.py). -->
+
+---
+
+# The Neighbor Test
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.nt-lead { position: absolute; left: 70px; top: 118px; width: 1140px; font-size: 0.8em; }
+.nt-img { position: absolute; left: 70px; top: 175px; width: 1140px; }
+.nt ul { list-style: none; margin: 0; padding: 0; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="nt-lead">Every <strong>pair</strong> of stations we already know is a test: how <strong>far apart</strong> are they, and how <strong>different</strong>?</div>
+
+<img class="nt-img" src="images/ie-neighbor-base.png" alt="Sixty weather stations on a made-up temperature map, beside empty axes of distance against temperature difference">
+
+<div class="nt">
+
+* <img class="nt-img pop" src="images/ie-neighbor-pairs.png" alt="A close pair, 15 km apart and 1 degree different, and a far pair, 240 km apart and 14 degrees different">
+* <img class="nt-img pop" src="images/ie-neighbor-cloud.png" alt="All 1,770 pairs: close pairs sit low, far pairs scatter high">
+
+</div>
+
+<!-- Two clicks. First one close pair and one far pair, on the map and as two dots: 15 km apart and about 1 degree different; 240 km apart and about 14 degrees. Second click: every pair of the 60 stations, 1,770 of them. Close pairs sit near the bottom (alike); far pairs scatter high (anything goes). That pattern is what kriging measures. The temperatures are made up: a smooth afternoon field plus a little instrument noise (tools/week09_kriging_story_figures.py). -->
+
+---
+
+# Average the Pairs: the Semivariogram
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.sv-img { position: absolute; right: 50px; top: 120px; width: 640px; }
+.sv-lead { position: absolute; left: 70px; top: 125px; width: 500px; font-size: 0.72em; }
+.sv ul { list-style: none; margin: 0; padding: 0; }
+.sv li { position: absolute; left: 70px; width: 500px; margin: 0; font-size: 0.68em; line-height: 1.3; }
+.sv li:nth-child(1) { top: 255px; } .sv li:nth-child(2) { top: 330px; } .sv li:nth-child(3) { top: 405px; }
+.sv li:nth-child(4) { top: 500px; } .sv li:nth-child(5) { top: 540px; }
+.sv .q { color: #e8792b; font-weight: 700; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="sv-lead">
+
+Group the pairs by distance and average each group. The tool squares and halves each difference first (that is the "semi-variance"); ArcGIS Pro's **Lag size** is the width of each group.
+
+</div>
+
+<img class="sv-img" src="images/ie-semivariogram-plain.png" alt="Semivariance against distance: averaged pairs and a fitted spherical curve, with nugget, range and sill marked">
+
+<div class="sv">
+
+* <span class="pop"><strong>Nugget:</strong> two thermometers a step apart still disagree a little</span>
+* <span class="pop"><strong>Range:</strong> how far away a station still tells you something</span>
+* <span class="pop"><strong>Sill:</strong> how different far-apart places typically get</span>
+* <span class="pop q">Past the range, what does Moab tell you about Provo?</span>
+* <span class="pop">No more than the state's average does</span>
+
+</div>
+
+<!-- Five clicks: nugget, range, sill, then a question and its answer. The tool never asks students to compute this; it fits the curve and reports these three numbers, and they are exactly the Major range, Partial sill (sill minus nugget) and Nugget boxes in the Kriging dialog, which Lab 8 leaves empty so the tool fits them. Nugget: instrument error or variation closer than any two stations. Range: past it, a station is no more use for Provo than the regional average. Sill: the typical difference between far-apart places. Here the made-up stations give a nugget of 9 degrees F squared (the noise put into the readings), a sill of about 83 and a range of about 170 km. -->
 
 ---
 
@@ -189,6 +164,19 @@ Same nugget, sill and range; different shape **near zero**:
 Lab 8 runs all three on Y Mountain
 
 <!-- Drawn from the formulas ArcGIS Pro's Kriging documents (tools/week09_semivariogram_models.py); the exponential and Gaussian only approach the sill, so their range is the distance where they reach 95 % of it. The shape near zero matters most, because the nearest samples carry most of the weight. Do not give the class Lab 8's results; the Gaussian run's error map is one of the lab's questions. -->
+
+---
+
+# Same Points, Different Settings
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.ks-img { position: absolute; left: 50%; transform: translateX(-50%); top: 115px; height: 560px; }
+</style>
+
+<img class="ks-img" src="images/ie-kriging-settings-1d.png" alt="The same eight points kriged four ways: fitted model, big nugget, short range, long range">
+
+<!-- One dimension, so each setting shows at a glance; it is the growth chart and stock chart from Tuesday again. Fitted model: each point's influence reaches out to the range and fades. Big nugget: the model says even neighbors barely agree, so the surface smooths toward the average and misses the points (Thursday's flat kriging panel later is the extreme case). Short range: the points are farther apart than the range, so between them the estimate falls back to the average. Long range: every point reaches far, so the curve runs straight between points and never returns to the average. Ask before revealing each caption which panel is which. Made-up values; ordinary kriging of the smooth signal (tools/week09_kriging_story_figures.py). -->
 
 ---
 
