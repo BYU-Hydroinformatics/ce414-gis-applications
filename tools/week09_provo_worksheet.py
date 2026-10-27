@@ -6,9 +6,10 @@ estimate Provo four ways: their own method, Thiessen polygons drawn by hand on t
 of the two nearest cities, and IDW with power 2. Last, they look up Provo and say which came closest.
 
 The map is zoomed to the four cities, using the same UGRC state boundary and municipal-boundary
-centroids as the slide map (tools/week09_tuesday_figures.py), with a 0-200 km scale bar and an inset
-of American Fork and Provo, which are too close together to measure at this scale. The answer
-distances (19, 259, 311 km) are in the slide's speaker notes, not on the worksheet.
+centroids as the slide map (tools/week09_tuesday_figures.py), with a 0-200 km scale bar. American Fork
+is close enough to Provo that a rough reading off the scale bar is enough. The answer distances
+(19, 259, 311 km) are in the slide's speaker notes, not on the worksheet. The sections are spread down
+the page so the gaps between them are room for working, and the footer says how to hand it in.
 
     python tools/week09_provo_worksheet.py      (matplotlib, numpy; Google Chrome for the PDF)
 
@@ -86,21 +87,6 @@ scalebar(ax, -112.1, 37.15, 39.0, 200, 50, 100)
 ax.annotate("", xy=(-113.25, 39.35), xytext=(-113.25, 39.0), arrowprops=dict(arrowstyle="-|>", color=NAVY, lw=1.3))
 ax.text(-113.25, 39.42, "N", ha="center", fontsize=10, weight="bold", color=NAVY)
 
-# Inset of American Fork and Provo in the empty northeast corner.
-box = (-111.95, -111.5, 40.17, 40.45)
-ax.add_patch(plt.Rectangle((box[0], box[2]), box[1] - box[0], box[3] - box[2], fill=False, ec=NAVY, lw=0.9, zorder=7))
-ins = fig.add_axes([0.56, 0.56, 0.41, 0.36])
-ins.set_xlim(box[0], box[1]); ins.set_ylim(box[2], box[3])
-ins.set_aspect(1 / math.cos(math.radians(40.3)), adjustable="box")
-ins.set_xticks([]); ins.set_yticks([]); ins.set_facecolor("white")
-for sp in ins.spines.values():
-    sp.set_color(NAVY)
-city(ins, "American Fork", 0.0, -0.028, "center")
-city(ins, "Provo", -0.02, 0.0, "right")
-scalebar(ins, box[0] + 0.03, box[2] + 0.035, 40.3, 20, 5, 10)
-ins.set_title("Zoomed in", fontsize=8, color=NAVY, loc="left", pad=2)
-ax.annotate("", xy=(box[1], box[3]), xytext=(-110.82, 40.0), arrowprops=dict(arrowstyle="-", color=NAVY, lw=0.7))
-
 buf = io.BytesIO(); fig.savefig(buf, format="png", facecolor="white"); plt.close(fig)
 MAP = base64.b64encode(buf.getvalue()).decode()
 
@@ -112,7 +98,8 @@ lines = lambda n: '<div class="line"></div>' * n
 
 html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @page {{ size: letter; margin: 0.45in 0.5in; }}
-body {{ font-family: "Avenir Next", "Segoe UI", Arial, sans-serif; color: #22262e; font-size: 9.5pt; line-height: 1.3; margin: 0; }}
+html, body {{ height: 100%; }}
+body {{ display: flex; flex-direction: column; font-family: "Avenir Next", "Segoe UI", Arial, sans-serif; color: #22262e; font-size: 9.5pt; line-height: 1.3; margin: 0; }}
 h1 {{ color: {NAVY}; font-size: 15pt; margin: 0; }}
 h2 {{ color: {NAVY}; font-size: 10.5pt; margin: 9pt 0 2pt; }}
 h2:first-child {{ margin-top: 0; }}
@@ -122,7 +109,10 @@ h2:first-child {{ margin-top: 0; }}
 .who span {{ flex: 1; border-bottom: 1px solid #555; }}
 .top {{ display: grid; grid-template-columns: 3.85in 1fr; gap: 14pt; align-items: start; }}
 .map {{ width: 3.85in; display: block; }}
-.bottom {{ display: grid; grid-template-columns: 1fr 1fr; gap: 18pt; margin-top: 4pt; }}
+.bottom {{ flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 18pt; margin-top: 4pt; }}
+.bottom > div {{ display: flex; flex-direction: column; }}
+.work {{ flex: 1; min-height: 0.5in; }}
+.foot {{ text-align: center; color: {GRAY}; font-size: 8.5pt; margin-top: 6pt; }}
 table {{ border-collapse: collapse; width: 100%; margin-top: 4pt; }}
 th, td {{ border: 1px solid #8a94a3; padding: 3pt 5pt; text-align: left; }}
 th {{ background: #eef3f9; color: {NAVY}; font-size: 8.5pt; }}
@@ -146,8 +136,8 @@ strong {{ color: {NAVY}; }}
 <div>
 <h2>1. Gather the samples</h2>
 Look up the <strong>current air temperature</strong> in each city (weather.com or similar). Find each city's
-<strong>straight-line distance to Provo</strong> with the scale bar (the zoomed-in box for American Fork) or an
-online map's measure tool.
+<strong>straight-line distance to Provo</strong> with the scale bar or an online map's
+measure tool.
 <table><tr><th>City</th><th>Temp (°F)</th><th>Distance to Provo (km)</th></tr>{cities_rows(2)}</table>
 <div class="hint">Temperature source: {blank}{blank}</div>
 
@@ -160,23 +150,26 @@ Estimate Provo any way you like from the three temperatures.
 
 <div class="bottom">
 <div>
-<h2>3. Thiessen polygons (nearest neighbor)</h2>
+<section><h2>3. Thiessen polygons (nearest neighbor)</h2>
 On the map, join each pair of known cities, draw the <strong>perpendicular bisector</strong> of each line, and
 join the bisectors into three polygons. Provo takes the value of the polygon it falls in.
 <div class="ans"><b>Polygon:</b> {blank} &nbsp; <b>Provo:</b> {short} °F</div>
+</section><div class="work"></div>
 
-<h2>4. Nearest neighbors, n = 2</h2>
+<section><h2>4. Nearest neighbors, n = 2</h2>
 Average the temperatures of the <strong>two cities closest</strong> to Provo.
 <div class="ans">( {short} + {short} ) ÷ 2 = <b>Provo:</b> {short} °F</div>
+</section><div class="work"></div>
 
-<h2>6. Check</h2>
+<section><h2>6. Check</h2>
 <div class="ans"><b>Provo's actual temperature now:</b> {short} °F</div>
 Which method came closest, and why?
 {lines(4)}
+</section>
 </div>
 
 <div>
-<h2>5. Inverse distance weighted (IDW), power 2</h2>
+<section><h2>5. Inverse distance weighted (IDW), power 2</h2>
 Weight each city by <strong>1 / d²</strong> and take the weighted average of all three.
 <div class="eq">Provo = Σ ( w · T ) ⁄ Σ w, &nbsp; w = 1 ⁄ d²</div>
 <table><tr><th>City</th><th>w = 1 / d²</th><th>w · T</th></tr>{cities_rows(2)}
@@ -184,8 +177,11 @@ Weight each city by <strong>1 / d²</strong> and take the weighted average of al
 <div class="ans"><b>Provo</b> = Σ(w · T) ÷ Σw = {short} °F</div>
 <div class="hint">The weights are tiny: keep three significant figures, or use 1 / (d ÷ 10)² instead.
 Scaling every weight by the same amount does not change the answer.</div>
+</section><div class="work"></div>
 </div>
 </div>
+
+<div class="foot">Take a picture of this sheet and submit it on Learning Suite for today's in-class activity.</div>
 
 </body></html>"""
 
