@@ -102,16 +102,15 @@ html, body {{ height: 100%; }}
 body {{ display: flex; flex-direction: column; font-family: "Avenir Next", "Segoe UI", Arial, sans-serif; color: #22262e; font-size: 9.5pt; line-height: 1.3; margin: 0; }}
 h1 {{ color: {NAVY}; font-size: 15pt; margin: 0; }}
 h2 {{ color: {NAVY}; font-size: 10.5pt; margin: 9pt 0 2pt; }}
-h2:first-child {{ margin-top: 0; }}
 .head {{ display: flex; justify-content: space-between; align-items: baseline; }}
 .sub {{ color: {GRAY}; font-size: 8.5pt; }}
 .who {{ display: flex; gap: 20pt; margin: 4pt 0 8pt; }}
 .who span {{ flex: 1; border-bottom: 1px solid #555; }}
-.top {{ display: grid; grid-template-columns: 3.85in 1fr; gap: 14pt; align-items: start; }}
-.map {{ width: 3.85in; display: block; }}
-.bottom {{ flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 18pt; margin-top: 4pt; }}
-.bottom > div {{ display: flex; flex-direction: column; }}
-.work {{ flex: 1; min-height: 0.5in; }}
+.cols {{ flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20pt; }}
+.cols > div {{ display: flex; flex-direction: column; }}
+.map {{ width: 3.2in; display: block; margin: 0 auto 2pt; }}
+h2.first {{ margin-top: 0; }}
+.work {{ flex: 1; min-height: 0.15in; }}
 .foot {{ text-align: center; color: {GRAY}; font-size: 8.5pt; margin-top: 6pt; }}
 table {{ border-collapse: collapse; width: 100%; margin-top: 4pt; }}
 th, td {{ border: 1px solid #8a94a3; padding: 3pt 5pt; text-align: left; }}
@@ -131,26 +130,31 @@ strong {{ color: {NAVY}; }}
 <span class="sub">CE 414 · Week 9 · in-class worksheet, done on your own</span></div>
 <div class="who"><span>Name:</span><span>Date and time:</span></div>
 
-<div class="top">
-<img class="map" src="data:image/png;base64,{MAP}">
+<div class="cols">
 <div>
-<h2>1. Gather the samples</h2>
+<img class="map" src="data:image/png;base64,{MAP}">
+<section><h2>1. Gather the samples</h2>
 Look up the <strong>current air temperature</strong> in each city (weather.com or similar). Find each city's
-<strong>straight-line distance to Provo</strong> with the scale bar or an online map's
-measure tool.
+<strong>straight-line distance to Provo</strong> with the scale bar or an online map's measure tool.
 <table><tr><th>City</th><th>Temp (°F)</th><th>Distance to Provo (km)</th></tr>{cities_rows(2)}</table>
 <div class="hint">Temperature source: {blank}{blank}</div>
+</section><div class="work"></div>
 
-<h2>2. Your own method</h2>
+<section><h2>2. Your own method</h2>
 Estimate Provo any way you like from the three temperatures.
 <div class="ans"><b>Provo:</b> {short} °F &nbsp; How?</div>
+{lines(2)}
+</section><div class="work"></div>
+
+<section><h2>6. Check</h2>
+<div class="ans"><b>Provo's actual temperature now:</b> {short} °F</div>
+Which method came closest, and why?
 {lines(3)}
-</div>
+</section>
 </div>
 
-<div class="bottom">
 <div>
-<section><h2>3. Thiessen polygons (nearest neighbor)</h2>
+<section><h2 class="first">3. Thiessen polygons (nearest neighbor)</h2>
 On the map, join each pair of known cities, draw the <strong>perpendicular bisector</strong> of each line, and
 join the bisectors into three polygons. Provo takes the value of the polygon it falls in.
 <div class="ans"><b>Polygon:</b> {blank} &nbsp; <b>Provo:</b> {short} °F</div>
@@ -161,14 +165,6 @@ Average the temperatures of the <strong>two cities closest</strong> to Provo.
 <div class="ans">( {short} + {short} ) ÷ 2 = <b>Provo:</b> {short} °F</div>
 </section><div class="work"></div>
 
-<section><h2>6. Check</h2>
-<div class="ans"><b>Provo's actual temperature now:</b> {short} °F</div>
-Which method came closest, and why?
-{lines(4)}
-</section>
-</div>
-
-<div>
 <section><h2>5. Inverse distance weighted (IDW), power 2</h2>
 Weight each city by <strong>1 / d²</strong> and take the weighted average of all three.
 <div class="eq">Provo = Σ ( w · T ) ⁄ Σ w, &nbsp; w = 1 ⁄ d²</div>
