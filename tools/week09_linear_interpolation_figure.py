@@ -8,7 +8,7 @@ birthday points and the 12-and-a-half estimate on the growth chart.
 
     python tools/week09_linear_interpolation_figure.py      (any Python with matplotlib)
 
-Writes slides/week-09/images/ip-linear-interpolation-equation.png, which the deck also uses on the
+Writes slides/week-09/images/ip-linear-interp-rising.png, which the deck also uses on the
 Today's Goals and "Interpolation: Many Methods" slides.
 """
 
@@ -53,5 +53,5 @@ for t in ax.get_xticklabels() + ax.get_yticklabels():
 ax.get_xticklabels()[1].set_color(ORANGE); ax.get_yticklabels()[1].set_color(ORANGE)
 ax.get_xticklabels()[1].set_fontweight("bold"); ax.get_yticklabels()[1].set_fontweight("bold")
 
-fig.savefig(IMG / "ip-linear-interpolation-equation.png", facecolor="white")
+fig.savefig(IMG / "ip-linear-interp-rising.png", facecolor="white")
 plt.close(fig)

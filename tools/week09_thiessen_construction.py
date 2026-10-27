@@ -7,7 +7,7 @@ titles match the numbered steps on the "Thiessen Polygons: The Method" slide.
 
     python tools/week09_thiessen_construction.py      (any Python with matplotlib, numpy and scipy)
 
-Writes slides/week-09/images/ip-thiessen-construction.png.
+Writes slides/week-09/images/ip-thiessen-steps.png.
 """
 
 import pathlib
@@ -81,5 +81,5 @@ for v in corners:
 points(a3)
 
 fig.tight_layout(h_pad=1.6, w_pad=1.6)
-fig.savefig(IMG / "ip-thiessen-construction.png", facecolor="white")
+fig.savefig(IMG / "ip-thiessen-steps.png", facecolor="white")
 plt.close(fig)

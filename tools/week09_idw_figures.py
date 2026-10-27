@@ -10,7 +10,7 @@
 
     python tools/week09_idw_figures.py      (any Python with matplotlib)
 
-Writes slides/week-09/images/ip-idw-equation.png, ip-idw-equation-n.png and ip-idw-worked-example.png.
+Writes slides/week-09/images/ip-idw-formula.png, ip-idw-formula-n.png and ip-idw-example.png.
 """
 
 import pathlib
@@ -51,14 +51,14 @@ def eq_axes():
 
 fig, ax = eq_axes()
 ax.add_patch(PathPatch(path, fc=NAVY, ec="none"))
-fig.savefig(IMG / "ip-idw-equation.png", facecolor="white"); plt.close(fig)
+fig.savefig(IMG / "ip-idw-formula.png", facecolor="white"); plt.close(fig)
 
 fig, ax = eq_axes()
 for x, y, s in ns:
     gw = 0.62 * SIZE * s                                                  # width of an oblique "n"
     ax.add_patch(Ellipse((x + 0.5 * gw, y + 0.27 * SIZE * s), 1.9 * gw, 1.25 * SIZE * s,
                          fill=False, ec=ORANGE, lw=2.2))
-fig.savefig(IMG / "ip-idw-equation-n.png", transparent=True); plt.close(fig)
+fig.savefig(IMG / "ip-idw-formula-n.png", transparent=True); plt.close(fig)
 
 # --- 2. The worked example ---------------------------------------------------------------------------
 P = {"a": ((0.6, 7.6), 50, 4), "b": ((8.6, 7.9), 30, 2), "c": ((0.9, 1.2), 52, 6)}
@@ -78,4 +78,4 @@ ax.text(X[0] + 0.25, X[1] - 0.55, "?", fontsize=18, color=ORANGE, weight="bold",
 ax.text(7.3, 2.5, r"$Z = \dfrac{\dfrac{50}{4} + \dfrac{30}{2} + \dfrac{52}{6}}{\dfrac{1}{4} + \dfrac{1}{2} + \dfrac{1}{6}}$",
         ha="center", va="center", fontsize=15, color=NAVY)
 ax.text(7.3, 0.35, r"$\approx 39.5$", ha="center", va="center", fontsize=16, color=ORANGE, weight="bold")
-fig.savefig(IMG / "ip-idw-worked-example.png", facecolor="white"); plt.close(fig)
+fig.savefig(IMG / "ip-idw-example.png", facecolor="white"); plt.close(fig)

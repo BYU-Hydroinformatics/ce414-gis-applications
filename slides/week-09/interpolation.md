@@ -31,7 +31,7 @@ Dr. Dan Ames
 
 # Today's Goals
 
-![bg right:30% w:90%](images/ip-linear-interpolation-equation.png)
+![bg right:30% w:90%](images/ip-linear-interp-rising.png)
 
 By the end of class you should be able to:
 
@@ -167,7 +167,7 @@ li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s eas
 <div class="gr">
 
 * <img class="gr-layer gr-pop" src="images/ip-growth-question.png" alt=""><span class="gr-say s1 gr-pop"><strong>How tall was she at 12½?</strong> Nobody marked the wall that day.</span>
-* <img class="gr-layer gr-pop" src="images/ip-growth-answer.png" alt=""><img class="gr-eq gr-pop" src="images/ip-linear-interpolation-equation.png" alt="Linear interpolation between two known points: y = y0 + (y1 - y0)(x - x0)/(x1 - x0)"><span class="gr-say s2 gr-pop"><strong>Interpolate</strong> between her 12th and 13th birthdays: 63 + (65½ − 63) × (12½ − 12) ⁄ (13 − 12) ≈ 64¼ in</span>
+* <img class="gr-layer gr-pop" src="images/ip-growth-answer.png" alt=""><img class="gr-eq gr-pop" src="images/ip-linear-interp-rising.png" alt="Linear interpolation between two known points: y = y0 + (y1 - y0)(x - x0)/(x1 - x0)"><span class="gr-say s2 gr-pop"><strong>Interpolate</strong> between her 12th and 13th birthdays: 63 + (65½ − 63) × (12½ − 12) ⁄ (13 − 12) ≈ 64¼ in</span>
 * <img class="gr-layer gr-pop" src="images/ip-growth-line.png" alt=""><span class="gr-say s3 gr-pop"><strong>Every month?</strong> Interpolate each one and connect them: the whole growth line.</span>
 
 </div>
@@ -473,7 +473,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 </div>
 <div>
 
-![w:600 center](images/ip-thiessen-construction.png)
+![w:600 center](images/ip-thiessen-steps.png)
 
 </div>
 </div>
@@ -574,12 +574,12 @@ li[data-bespoke-marp-fragment="active"] .idw-pop { animation: tryit-pop 0.45s ea
 
 </div>
 
-<img class="idw-eq" src="images/ip-idw-equation.png" alt="IDW: Z_j equals the sum of Z_i over d_ij to the n, divided by the sum of 1 over d_ij to the n">
-<img class="idw-ex" src="images/ip-idw-worked-example.png" alt="Three known points, 50, 30 and 52, at distances 4, 2 and 6; with exponent one the estimate is about 39.5">
+<img class="idw-eq" src="images/ip-idw-formula.png" alt="IDW: Z_j equals the sum of Z_i over d_ij to the n, divided by the sum of 1 over d_ij to the n">
+<img class="idw-ex" src="images/ip-idw-example.png" alt="Three known points, 50, 30 and 52, at distances 4, 2 and 6; with exponent one the estimate is about 39.5">
 
 <div class="idw">
 
-* <img class="idw-eq idw-pop" src="images/ip-idw-equation-n.png" alt=""><span class="idw-box idw-pop"></span><span class="idw-q q1 idw-pop"><strong>What happens when n gets big?</strong></span>
+* <img class="idw-eq idw-pop" src="images/ip-idw-formula-n.png" alt=""><span class="idw-box idw-pop"></span><span class="idw-q q1 idw-pop"><strong>What happens when n gets big?</strong></span>
 * <span class="idw-q a1 idw-pop">You get something like nearest neighbor: <strong>Thiessen polygons</strong></span>
 * <span class="idw-q q2 idw-pop"><strong>What happens when n goes to 0?</strong></span>
 * <span class="idw-q a2 idw-pop">Every weight is the same: <strong>simple averaging</strong></span>
