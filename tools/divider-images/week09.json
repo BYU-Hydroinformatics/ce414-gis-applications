@@ -11,12 +11,12 @@
   {
     "id": "ip-divider-surface",
     "file": "ip-divider-surface.jpeg",
-    "prompt": "Side view of a big wooden board with seven thin metal pins sticking straight up out of it at very different heights: two very tall pins near the middle, medium pins beside them, and short pins near the edges, each pin topped with a small bright red ball. A delighted engineer in a hard hat is lowering a large stretchy blue rubber sheet down onto the pins; on the side already covered, the sheet rests exactly on every red ball and curves smoothly between them, forming a rolling hill that is tallest where the pins are tallest; on the other side, the bare pins are still waiting. The red balls poke up through the sheet as bright dots so it is obvious the surface passes through every point \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
+    "prompt": "A hiker in a wide-brimmed hat and backpack stands on a rocky mountainside ledge looking out over a wide green valley with rolling hills, ridges and a winding river below. He holds a notebook in one hand and shades his eyes with the other, squinting hard, puzzled but curious, clearly trying to figure out the shape of the land below. A few small bright orange survey flags are planted here and there on hilltops and valley floors across the landscape below, far apart from each other. Wide scenic view, the valley fills most of the picture \u2014 Bold, colorful cartoon illustration in the style of a funny internet meme comic, thick clean outlines, exaggerated expressions, bright saturated colors, simple background. Absolutely no text, words, letters or numbers anywhere in the image.",
     "size": "1024x1024",
     "quality": "medium",
     "model": "gpt-image-2.5-flare",
-    "sha256": "40d2e35babf1",
-    "note": "Regenerated 2026-10-26: the first version (stakes under a bedsheet, with a dog) did not show the sheet passing through the sample points."
+    "sha256": "b8a2df898312",
+    "note": "Regenerated 2026-10-26 twice: the bedsheet-and-dog image, then pins under a rubber sheet, both read as puzzles. Now a hiker trying to make out the shape of a valley from a few flagged spots."
   },
   {
     "id": "ip-divider-kriging",

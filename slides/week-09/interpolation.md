@@ -383,7 +383,7 @@ li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animati
 
 ## Gather observations that represent the spatial distribution of a variable — then predict that variable everywhere else
 
-<!-- The cartoon: pins of different heights are the samples, and the stretchy sheet that rests on every pin top is the interpolated surface (regenerated October 26, 2026; prompt in tools/divider-images/week09.json). This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
+<!-- The cartoon: a hiker trying to make out the shape of a whole valley from a few flagged spots, which is the job of everything that follows (regenerated October 26, 2026; prompt in tools/divider-images/week09.json). This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
 
 ---
 
@@ -446,6 +446,17 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 
 # Thiessen Polygons: The Method
 
+<style scoped>
+.tw ul { list-style: none; margin: 0; padding: 0; }
+.tw li { position: absolute; right: 70px; top: 48px; width: 420px; margin: 0; }
+</style>
+
+<div class="tw">
+
+* <span class="tryit">Try it on your worksheet: Step 3</span>
+
+</div>
+
 <div class="columns" style="grid-template-columns: 1fr 1.15fr; align-items:start">
 <div>
 
@@ -467,7 +478,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 </div>
 </div>
 
-<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. Walk the four panels in order. Redrawn on white October 26, 2026 (tools/week09_thiessen_construction.py). Worksheet Step 3: have them do this now on their Utah map with the three cities. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
+<!-- Thiessen is the zero-weighting case: the nearest point gets a weight of one and everything else gets zero. Worth saying out loud, because it makes the later methods feel like refinements rather than unrelated tricks. Walk the four panels in order. Redrawn on white October 26, 2026 (tools/week09_thiessen_construction.py). One click brings up the worksheet callout: Step 3, have them do this now on their Utah map with the three cities. The key geometric fact: every location inside a polygon is closer to that polygon's sample point than to any other. In ArcGIS Pro this is a single tool (two slides on); students should still be able to draw it by hand on an exam. -->
 
 ---
 
@@ -523,31 +534,37 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 
 # Thiessen Polygons in ArcGIS Pro
 
-<div class="columns" style="align-items:start">
-<div>
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.tp-a { position: absolute; left: 20px; top: 160px; width: 590px; }
+.tp-b { position: absolute; right: 20px; top: 120px; width: 590px; }
+</style>
 
-![w:470 center](images/ip-pro-thiessen.png)
+<img class="tp-a" src="images/ip-pro-thiessen-callouts.png" alt="Create Thiessen Polygons with callouts on Input Features and Output Fields">
+<img class="tp-b" src="images/ip-pro-polygon-to-raster-callouts.png" alt="Polygon to Raster with callouts on Value field and Cellsize">
 
-**Create Thiessen Polygons**: Output Fields **All fields**
-
-</div>
-<div>
-
-![h:390 center](images/ip-pro-polygon-to-raster.png)
-
-**Polygon to Raster**: Value field = the **sampled value**
-
-</div>
-</div>
-
-<!-- Both captures are from the Lab 8 model in ArcGIS Pro 3.7.1, where RASTERVALU is the field holding each sample's elevation. Two defaults give a surface with no elevations in it and no error: Create Thiessen Polygons opens at Output Fields "Only feature ID", which drops the sampled value, and Polygon to Raster fills Value field with OBJECTID, which makes a surface of polygon numbers. Create Thiessen Polygons needs an Advanced license; the lab machines have it. -->
+<!-- Both captures are from the Lab 8 model in ArcGIS Pro 3.7.1, where RASTERVALU is the field holding each sample's elevation. Two defaults give a surface with no elevations in it and no error: Create Thiessen Polygons opens at Output Fields "Only feature ID", which drops the sampled value, and Polygon to Raster fills Value field with OBJECTID, which makes a surface of polygon numbers. Create Thiessen Polygons needs an Advanced license; the lab machines have it. The red callouts are drawn beside the untouched captures by tools/week09_dialog_callouts.py (October 26, 2026). -->
 
 ---
 
 # Inverse Distance Weighted (IDW): The Method
 
-<div class="columns" style="grid-template-columns: 1.15fr 0.55fr 0.75fr; align-items:start; font-size: 0.8em;">
-<div>
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.idw-text { position: absolute; left: 70px; top: 120px; width: 500px; font-size: 0.78em; }
+.idw-eq { position: absolute; left: 600px; top: 125px; height: 270px; }
+.idw-ex { position: absolute; right: 60px; top: 110px; width: 380px; }
+.idw ul { list-style: none; margin: 0; padding: 0; }
+.idw li { margin: 0; }
+.idw-box { position: absolute; left: 600px; top: 478px; width: 610px; height: 178px; background: #fff; border: 3px solid #e8792b; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+.idw-q { position: absolute; left: 622px; width: 570px; font-size: 0.64em; line-height: 1.3; }
+.idw-q strong { color: #e8792b; }
+.q1 { top: 490px; } .a1 { top: 526px; } .q2 { top: 572px; } .a2 { top: 608px; }
+.idw-try { position: absolute; left: 70px; top: 600px; width: 470px; }
+li[data-bespoke-marp-fragment="active"] .idw-pop { animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="idw-text">
 
 - Estimates an unknown point from the **values of** and **distances to** nearby known points
 - Each known point's weight is **inverse to its distance**: the farther away, the less it counts
@@ -556,19 +573,21 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 - Any number of points may be used, up to all of them; typically 3 or more
 
 </div>
-<div>
 
-![w:230 center](images/ip-idw-equation.png)
+<img class="idw-eq" src="images/ip-idw-equation.png" alt="IDW: Z_j equals the sum of Z_i over d_ij to the n, divided by the sum of 1 over d_ij to the n">
+<img class="idw-ex" src="images/ip-idw-worked-example.png" alt="Three known points, 50, 30 and 52, at distances 4, 2 and 6; with exponent one the estimate is about 39.5">
+
+<div class="idw">
+
+* <img class="idw-eq idw-pop" src="images/ip-idw-equation-n.png" alt=""><span class="idw-box idw-pop"></span><span class="idw-q q1 idw-pop"><strong>What happens when n gets big?</strong></span>
+* <span class="idw-q a1 idw-pop">You get something like nearest neighbor: <strong>Thiessen polygons</strong></span>
+* <span class="idw-q q2 idw-pop"><strong>What happens when n goes to 0?</strong></span>
+* <span class="idw-q a2 idw-pop">Every weight is the same: <strong>simple averaging</strong></span>
+* <span class="tryit idw-try idw-pop">Try it on your worksheet: Steps 4 and 5</span>
 
 </div>
-<div>
 
-![h:450 center](images/ip-idw-worked-example.png)
-
-</div>
-</div>
-
-<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Then walk the arithmetic on the right: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 34. This is a linear IDW, exponent one. Have the class redo it with the exponent squared and watch the answer move toward the nearest point. Then worksheet Steps 4 and 5: the two-nearest average and IDW with power 2 for Provo. With American Fork about 19 km away and the others past 250 km, IDW lands within a fraction of a degree of American Fork, which is the point. Merged October 25, 2026 from the concept, equation and worked-example slides. -->
+<!-- IDW is the first method that uses more than one point and treats them unequally. The weights follow a rule you choose; on Thursday kriging takes them from the data. Read the equation as a weighted average whose weights are 1/d^n, normalized by their own sum so they add to one. That normalization is the denominator. If n = 0 every weight is equal and IDW collapses to a plain local mean. Then walk the arithmetic on the right: three known points at distances 4, 2 and 6 with values 50, 30 and 52, weights of 1/4, 1/2 and 1/6, and an estimate of 39.5 (36.17 / 0.917). The textbook figure this replaces printed 34, which its own arithmetic does not give. This is a linear IDW, exponent one. Have the class redo it with the exponent squared: 35.5, closer to the nearest point's 30. Clicks: 1 circles the n and asks what happens when it gets big, 2 answers (the nearest point takes all the weight: Thiessen), 3 asks about n going to 0, 4 answers (every weight is 1, a plain average: 44 here), 5 is the worksheet callout. Then worksheet Steps 4 and 5: the two-nearest average and IDW with power 2 for Provo. With American Fork about 19 km away and the others past 250 km, IDW lands within a fraction of a degree of American Fork, which is the point. Merged October 25, 2026 from the concept, equation and worked-example slides. Equation and worked example redrawn October 26, 2026 (tools/week09_idw_figures.py). -->
 
 ---
 
@@ -599,13 +618,20 @@ Exponent 2: **6** nearest points (left) vs **12** (right)
 
 # IDW in ArcGIS Pro
 
-![bg right:42% h:84%](images/ie-idw.png)
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.pro-text { position: absolute; left: 70px; top: 112px; width: 1140px; font-size: 0.75em; }
+.pro-img { position: absolute; left: 50%; transform: translateX(-50%); top: 205px; height: 470px; }
+</style>
+
+<div class="pro-text">
 
 - **Spatial Analyst ▸ IDW** (3D Analyst and Geostatistical Analyst have their own)
-- **Z value field**: the sampled value
-- **Power**: the exponent *n*; 2 by default
-- **Search radius**: **Variable**, the **12** nearest points by default
-- **Output cell size**: set it, or IDW picks one from the points
+- **Four inputs** decide the surface; the rest can stay at their defaults
+
+</div>
+
+<img class="pro-img" src="images/ie-idw-callouts.png" alt="The IDW tool dialog with red callouts on Z value field, Output cell size, Power and Number of points">
 
 <!-- The capture is the IDW tool inside the Lab 8 model, with Power exposed as a model parameter (the IDW Power oval). Lab 8 also sets Cell Size, Snap Raster and Extent as environments so every surface lands on the same 30 m cells as the true DEM; without them nothing reports an error, but Thursday's subtraction compares cells that do not line up. -->
 
@@ -669,7 +695,7 @@ Interpolate, then read the result **at the measured points**. Ten monthly prices
 
 <div class="ex-text">
 
-A method that returns the samples is **exact**. Thursday: is **kriging**?
+A method that returns the samples is **exact**.
 
 </div>
 
