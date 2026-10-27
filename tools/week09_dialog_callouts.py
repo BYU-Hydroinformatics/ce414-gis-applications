@@ -8,8 +8,9 @@ fields in those captures.
 
     python tools/week09_dialog_callouts.py      (any Python with matplotlib)
 
-Writes slides/week-09/images/ip-pro-thiessen-callouts.png, ip-pro-polygon-to-raster-callouts.png and
-ie-idw-callouts.png.
+Writes slides/week-09/images/ip-pro-thiessen-callouts.png, ip-pro-polygon-to-raster-callouts.png,
+ie-idw-callouts.png, and for Thursday ie-kriging-callouts.png, ie-rc-error-callouts.png,
+ie-rc-square-callouts.png and ie-zonal-callouts.png.
 """
 
 import pathlib
@@ -24,6 +25,8 @@ IMG = ROOT / "slides" / "week-09" / "images"
 plt.rcParams.update({"font.family": ["Segoe UI", "Arial", "DejaVu Sans"]})
 RED = "#c8102e"
 NOTE_W = 440            # width of the notes column, in screenshot pixels
+# Wide dialogs shrink more on the slide, so their notes are set larger.
+FONT = {"ie-rc-error.png": 26, "ie-rc-square.png": 24, "ie-zonal-table.png": 23}
 
 # capture, output, side the notes go on, [(row of the field, x the arrow points at, note, optional nudge
 # of the note up or down so neighboring notes do not collide)]
@@ -42,6 +45,25 @@ DIALOGS = [
         (467, 35, "Exponent n: bigger = nearer\npoints count more", 20),
         (568, 150, "How many neighbors\neach estimate uses (12)"),
     ]),
+    # Thursday
+    ("ie-kriging.png", "ie-kriging-callouts.png", "left", [
+        (460, 108, "The model's shape:\nspherical, Gaussian, ...", -30),
+        (502, 248, "Distance-bin width"),
+        (586, 205, "Range, sill, nugget:\nleave empty to fit them", 18),
+        (711, 40, "30 m: same cells as the DEM"),
+    ]),
+    ("ie-rc-error.png", "ie-rc-error-callouts.png", "left", [
+        (423, 40, "Truth minus\nsurface: this order\nsets the sign"),
+        (621, 40, "One error raster\nper method"),
+    ]),
+    ("ie-rc-square.png", "ie-rc-square-callouts.png", "left", [
+        (423, 40, "Square each error\nso highs and lows\nboth count"),
+    ]),
+    ("ie-zonal-table.png", "ie-zonal-callouts.png", "left", [
+        (168, 40, "One zone: the\nwhole study area"),
+        (332, 40, "The squared\nerror raster"),
+        (540, 40, "Mean, not the\ndefault All"),
+    ]),
 ]
 
 for src, out, side, notes in DIALOGS:
@@ -56,7 +78,7 @@ for src, out, side, notes in DIALOGS:
     for y, x, text, *nudge in notes:
         tx = NOTE_W - 25 if side == "left" else w + 25
         ax.annotate(text, xy=(x0 + x, y), xytext=(tx, y + (nudge[0] if nudge else 0)), ha="right" if side == "left" else "left", va="center",
-                    fontsize=19, color=RED, weight="bold", linespacing=1.1,
+                    fontsize=FONT.get(src, 19), color=RED, weight="bold", linespacing=1.1,
                     arrowprops=dict(arrowstyle="-|>,head_width=0.35,head_length=0.6", color=RED, lw=2.4,
                                     shrinkA=4, shrinkB=0))
     fig.savefig(IMG / out, facecolor="white"); plt.close(fig)

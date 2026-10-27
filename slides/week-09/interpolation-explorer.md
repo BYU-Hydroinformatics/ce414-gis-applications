@@ -82,7 +82,7 @@ Kriging creates a mathematical model, which is then used to estimate values acro
 <div>
 
 - $Z_i$ is a variable at a sample point
-- $h_i$ is the distance between sample points
+- $h_i$ is the **distance** between sample points
 - Every possible pair $Z_i, Z_j$ defines a distance $h_{ij}$ and differs by the amount $Z_i - Z_j$
 
 The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j*. There is a subset of points in any sample set that are a given lag distance apart.
@@ -90,12 +90,12 @@ The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j
 </div>
 <div>
 
-![w:490 center](images/ip-lag-distance.png)
+![w:460 center](images/ie-lag-pairs.png)
 
 </div>
 </div>
 
-<!-- Corrected the source's "is know as" to "is known as." The red numbers on the figure are the lag distances for each pair. With four points there are six pairs; with a hundred points there are 4,950, which is why the next step is to bin them. -->
+<!-- Corrected the source's "is know as" to "is known as." The red numbers on the figure are the lag distances for each pair, measured from the drawing (redrawn October 26, 2026 from the textbook's Figure 9-12; tools/week09_thursday_figures.py). With four points there are six pairs; with a hundred points there are 4,950, which is why the next step is to bin them. -->
 
 ---
 
@@ -104,7 +104,7 @@ The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j
 <div class="columns">
 <div>
 
-- Higher autocorrelation means points near each other are alike
+- Higher autocorrelation means points **near each other are alike**
 - That provides substantial information about nearby locations
 
 *h* here is the width of one cell.
@@ -112,37 +112,37 @@ The distance $h_{ij}$ is known as the **lag distance** between points *i* and *j
 </div>
 <div>
 
-![w:540 center](images/ip-spatial-autocorrelation.png)
+![w:560 center](images/ie-autocorr-pairs.png)
 
 </div>
 </div>
 
-<!-- Top row: a spatially autocorrelated layer, and its scatter of nearby pairs falls on a line. Bottom row: an uncorrelated layer, and the same scatter is a cloud. That contrast is the entire justification for interpolating at all — if the bottom panel were your data, no method in this deck would beat the global mean. Fixed the source's "Higher autocorrelations indicates" to "Higher autocorrelation means." -->
+<!-- Top row: a spatially autocorrelated layer, and its scatter of each cell against the cell next to it falls on a line. (Made-up 12 x 12 layers, redrawn October 26, 2026 from the textbook's Figure 9-13; tools/week09_thursday_figures.py.) Bottom row: an uncorrelated layer, and the same scatter is a cloud. That contrast is the entire justification for interpolating at all — if the bottom panel were your data, no method in this deck would beat the global mean. Fixed the source's "Higher autocorrelations indicates" to "Higher autocorrelation means." -->
 
 ---
 
-# Kriging: Semi-variance
+# Kriging: Semivariance
 
 <div class="columns">
 <div>
 
 - $Z_i$ is the measured variable at one point
 - $Z_j$ is another at distance *h* away
-- *n* is the number of pairs that are approximately *h* distance apart
+- *n* is the number of **pairs** that are approximately *h* distance apart
 
-The ½ divides the whole sum: **1/(2n)**. Semi-variance may be calculated for any *h*.
+The **1/(2n)** out front averages over the *n* pairs and halves the result: that half is the "semi". Semivariance may be calculated for any *h*.
 
-When nearby points are similar, $Z_i - Z_j$ is small, so the semi-variance is small. High spatial autocorrelation means points near each other have similar Z values.
+When nearby points are similar, $Z_i - Z_j$ is small, so the semivariance is **small**. High spatial autocorrelation means points near each other have similar Z values.
 
 </div>
 <div>
 
-![w:460 center](images/ip-semivariance-equation.png)
+![w:480 center](images/ie-semivariance-formula.png)
 
 </div>
 </div>
 
-<!-- Semi-variance is a dissimilarity measure: it goes up as points get less alike. The "semi" is the factor of one half in front of the sum; the image's "1/2n" means 1/(2n), which the slide spells out. -->
+<!-- Semivariance is a dissimilarity measure: it goes up as points get less alike. The "semi" is the factor of one half in front of the sum. The textbook's typeset "1/2n" was easy to misread as n/2, so the equation is redrawn with 1/(2n) as a fraction (October 26, 2026). -->
 
 ---
 
@@ -151,21 +151,21 @@ When nearby points are similar, $Z_i - Z_j$ is small, so the semi-variance is sm
 <div class="columns">
 <div>
 
-When calculating the semi-variance for a particular *h*, a **tolerance** is used, since few *h* values will be exactly identical.
+When calculating the semivariance for a particular *h*, a **tolerance** is used, since few *h* values will be exactly identical.
 
-Plot the semi-variance across a range of lag distances and you get a **variogram**. In ArcGIS Pro, **Lag size** is the width of those distance bins.
+Plot the semivariance across a range of lag distances and you get a **variogram**. In ArcGIS Pro, **Lag size** is the width of those distance bins.
 
-Semi-variance is usually small at small lag distances and increases to a constant value as the lag distance *h* increases.
+Semivariance is usually **small** at small lag distances and increases to a constant value as the lag distance *h* increases.
 
 </div>
 <div>
 
-![w:520 center](images/ip-variogram-fitted.png)
+![w:520 center](images/ie-variogram-bins.png)
 
 </div>
 </div>
 
-<!-- Merged the source's tolerance slide with the variogram slide that immediately followed it. The jagged line is the semi-variance actually calculated from the data; the smooth line is the model fitted to it. Only the smooth line is used to interpolate. -->
+<!-- Merged the source's tolerance slide with the variogram slide that immediately followed it. The jagged line is the semivariance actually calculated from the data; the smooth line is the model fitted to it. Only the smooth line is used to interpolate. The figure replaces the textbook's Figure 9-15: 400 points on a made-up smooth surface, 200 m lag bins, a spherical model fitted (tools/week09_thursday_figures.py). The next slide does the same on Tuesday's real Timpanogos samples. -->
 
 ---
 
@@ -173,12 +173,28 @@ Semi-variance is usually small at small lag distances and increases to a constan
 
 ![bg right:48% w:95%](images/ip-tp-semivariogram-model.png)
 
+<style scoped>
+section > ul { font-size: 0.82em; }
+.qa ul { list-style: none; margin: 0; padding: 0; }
+.qa li { position: absolute; left: 70px; width: 560px; margin: 0; font-size: 0.62em; line-height: 1.3; }
+.qa li:nth-child(1) { top: 590px; } .qa li:nth-child(2) { top: 624px; }
+.qa strong { color: #e8792b; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
 - **Range** — the distance where the model levels out; points closer than the range are autocorrelated, points farther apart are not
 - **Sill** — the semivariance the model reaches at the range
 - **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
 - **Partial sill** — sill minus nugget: the part that distance explains
 
-<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: Tuesday's 150 Mount Timpanogos elevation samples, 11,175 pairs binned every 300 m out to 4.5 km, a spherical model fitted - range about 4,559 m, sill about 184 thousand m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Past about 4 km the bins fall off because few pairs in a 7.2 km square are that far apart, so the fit stops at 4.5 km. Ask: what would put a nugget here? (GPS elevations with a few meters of error, or samples much farther apart than the gullies.) -->
+<div class="qa">
+
+* <span class="pop"><strong>What would put a nugget here?</strong></span>
+* <span class="pop">Measurement error (GPS elevations a few meters off), or samples spaced farther apart than the gullies</span>
+
+</div>
+
+<!-- Definitions follow Esri's "Understanding a semivariogram: the range, sill, and nugget" (ArcGIS Pro help, checked October 2, 2026); the partial sill is the sill minus the nugget. The figure is a real one: Tuesday's 150 Mount Timpanogos elevation samples, 11,175 pairs binned every 300 m out to 4.5 km, a spherical model fitted - range about 4,559 m, sill about 184 thousand m2, nugget 0 (elevation is measured precisely, and the samples resolve the terrain). Past about 4 km the bins fall off because few pairs in a 7.2 km square are that far apart, so the fit stops at 4.5 km. Two clicks: the question, then the answer (GPS elevations with a few meters of error, or samples much farther apart than the gullies). -->
 
 ---
 
@@ -201,7 +217,7 @@ Lab 8 runs all three on Y Mountain
 # From Variogram to Surface
 
 - A set of sample points is used to estimate the shape of the variogram
-- A **variogram model** is made — a line is fit through the set of semi-variance points
+- A **variogram model** is made — a line is fit through the set of semivariance points
 - The variogram model is then used to interpolate the entire surface
 
 **Kriging is similar to IDW**, but kriging uses the **minimum variance method** to calculate the weights, rather than applying an arbitrary or less precise weighting scheme.
@@ -234,13 +250,21 @@ Lab 8 runs all three on Y Mountain
 
 # Kriging in ArcGIS Pro
 
-![bg right:40% h:84%](images/ie-kriging.png)
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.pro-text { position: absolute; left: 70px; top: 130px; width: 470px; font-size: 0.8em; }
+.pro-img { position: absolute; right: 50px; top: 40px; height: 640px; }
+</style>
+
+<div class="pro-text">
 
 - **Spatial Analyst ▸ Kriging**, method **Ordinary**
-- **Semi-variogram model**: spherical, exponential, Gaussian, …
-- **Lag size**: fills in from the cell size
-- **Major range**, **partial sill**, **nugget**: leave **empty** and the tool **fits** them to your points
-- A default is not always right: see the six-methods test
+- Leave the model's numbers empty and the tool **fits** them to your points
+- A default is not always right: Part 3 shows one that fails
+
+</div>
+
+<img class="pro-img" src="images/ie-kriging-callouts.png" alt="The Kriging tool dialog with red callouts on Semi-variogram model, Lag size, the range, sill and nugget boxes, and Output cell size">
 
 <!-- The capture is the Kriging tool inside the Lab 8 model, ArcGIS Pro 3.7.1, with Lag size 30 filled in from the 30 m cell size. Ordinary kriging assumes an unknown but constant mean; Universal adds a trend, Tuesday's trend surface inside kriging. In Lab 8 the default lag works: 2,500 points over 60 km2 give many close pairs. In an earlier ArcGIS Pro test on Little Cottonwood Canyon (150 points over a canyon) the same kind of default fitted a model that was almost all nugget and lost to every method but the trend; a 300 m lag won. Today's six-methods slide shows the same failure on the Timpanogos samples with an automatic fit. After a run the dialog can show the fitted range and sill, which is why the lab says to empty them before the next run. -->
 
@@ -258,15 +282,31 @@ Lab 8 runs all three on Y Mountain
 
 # Error = Truth − Surface
 
-![bg right:45% w:96%](images/ie-rc-error.png)
+![bg right:55% w:97%](images/ie-rc-error-callouts.png)
+
+<style scoped>
+section > ul { font-size: 0.8em; }
+.qa ul { list-style: none; margin: 0; padding: 0; }
+.qa li { position: absolute; left: 70px; width: 480px; margin: 0; font-size: 0.62em; line-height: 1.3; }
+.qa li:nth-child(1) { top: 515px; } .qa li:nth-child(2) { top: 549px; } .qa li:nth-child(3) { top: 600px; width: 470px; font-size: 0.75em; }
+.qa strong { color: #e8792b; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
 
 - Subtract, cell by cell, in **Raster Calculator**
-- **Positive:** the surface came out too **low** there
-- **Negative:** the surface came out too **high**
-- Same units as the DEM — **meters**
-- Map it on a **diverging** scale centered on zero, one scale for every method
+- **Positive:** the surface is too **low**
+- **Negative:** the surface is too **high**
+- In **meters**; map it on a **diverging** scale centered on zero
 
-<!-- The capture is the Lab 8 Step 6 Raster Calculator, inside ModelBuilder: "%True_DEM%" - "%Thiessen_Surface%". The order matters only for the sign, but say it out loud and keep it fixed: if one student subtracts the other way, every color on their map flips and their "too high" ridges become "too low". Lab 8 uses truth minus surface throughout. -->
+<div class="qa">
+
+* <span class="pop"><strong>A cell reads +40 m. Too high or too low?</strong></span>
+* <span class="pop">Too <strong>low</strong>: the truth is 40 m above the surface there</span>
+* <span class="tryit">Try it on your worksheet: Provo's actual minus each estimate</span>
+
+</div>
+
+<!-- The capture is the Lab 8 Step 6 Raster Calculator, inside ModelBuilder: "%True_DEM%" - "%Thiessen_Surface%". The order matters only for the sign, but say it out loud and keep it fixed: if one student subtracts the other way, every color on their map flips and their "too high" ridges become "too low". Lab 8 uses truth minus surface throughout. Clicks: the +40 question, its answer, then the worksheet callout: on Tuesday's Provo worksheet, each student subtracts each of their four estimates from Provo's actual temperature and reads the sign (positive means that method guessed too cold). -->
 
 ---
 
@@ -274,16 +314,17 @@ Lab 8 runs all three on Y Mountain
 
 ![w:1180 center](images/ie-error-row.png)
 
-- The valley floor is **within 5 m** for every method; the error is on the **mountain front**
-- Thiessen's error is **finest-grained**: every polygon edge is a step
+* **Why is the valley floor nearly white?**
+* It is flat: any nearby sample is close when the ground does not change. The error is on the **mountain front**
+* Thiessen's error is **finest-grained**: every polygon edge is a step
 
-<!-- The three error maps from the Lab 8 example baseline (2,500 points, default parameters). Red is where the surface is too high, blue too low. Ask the room before saying it: why is the valley floor nearly white? Because it is flat: any method that returns a nearby sample's value is close when the ground does not change. The error is a map of where the ground changes faster than the samples are spaced. Lab 8 asks each student to find their best method's single worst cell and explain the ground there. -->
+<!-- The three error maps from the Lab 8 example baseline (2,500 points, default parameters). Red is where the surface is too high, blue too low. Three clicks: the question (ask the room before the next click), the answer, then the Thiessen point. The valley floor is within 5 m for every method because it is flat: any method that returns a nearby sample's value is close when the ground does not change. The error is a map of where the ground changes faster than the samples are spaced. Lab 8 asks each student to find their best method's single worst cell and explain the ground there. -->
 
 ---
 
 # One Number: RMSE
 
-![bg right:38% w:92%](images/ie-rc-square.png)
+![bg right:44% w:96%](images/ie-rc-square-callouts.png)
 
 $$
 \text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(z_i - \hat{z}_i\right)^2}
@@ -299,7 +340,7 @@ $$
 
 # RMSE in ArcGIS Pro
 
-![bg right:45% h:84%](images/ie-zonal-table.png)
+![bg right:50% w:96%](images/ie-zonal-callouts.png)
 
 1. **Square** the error raster
 2. **Zonal Statistics as Table** over the study area — statistic **Mean**
@@ -322,7 +363,7 @@ $$
 
 <!-- So report the RMSE, but never alone. The mean error (no squaring) shows bias: near zero means highs and lows balance. The minimum and maximum of the error raster show the worst misses. And the true DEM has its own error, from the lidar and from the 30 m resampling, which never shows up in the RMSE because it is the thing we compare against. The Lab 8 metadata step is there for that reason. -->
 
-<!-- Optional: skip if time is short. Lab 8 asks for the worst cell and the metadata anyway. -->
+<!-- Keep this slide even when time is short: the closing quiz asks what two surfaces with the same RMSE could still differ in. -->
 
 ---
 
@@ -336,11 +377,65 @@ $$
 
 ---
 
+<!-- _class: quiz -->
+
+<style scoped>
+section > h1 { position: absolute; top: 40px; left: 70px; width: 600px; margin: 0; line-height: 1.2; }
+.sd-sub { position: absolute; top: 148px; left: 70px; font-size: 0.85em; font-weight: 700; color: #e8792b; }
+.sd-truth { position: absolute; left: 70px; top: 205px; height: 250px; }
+.sd-truth-cap { position: absolute; left: 340px; top: 215px; width: 300px; font-size: 0.6em; line-height: 1.35; }
+.sd-compare { position: absolute; right: 70px; top: 24px; height: 628px; }
+.sd-note { position: absolute; right: 70px; top: 658px; width: 431px; text-align: center; font-size: 0.5em; color: #4a5568; }
+.sd-ans ul { list-style: none; margin: 0; padding: 0; }
+.sd-ans li { position: absolute; left: 70px; width: 640px; margin: 0; font-size: 0.6em; line-height: 1.3; }
+.sd-ans li:nth-child(1) { top: 478px; } .sd-ans li:nth-child(2) { top: 520px; }
+.sd-ans li:nth-child(3) { top: 558px; } .sd-ans li:nth-child(4) { top: 596px; }
+li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+# Which Method Is Best and Why?
+
+<span class="sd-sub">Discuss with your neighbor</span>
+
+<img class="sd-truth" src="images/ip-tp-dem-2d.png" alt="The true surface: Mount Timpanogos DEM">
+<span class="sd-truth-cap"><strong>The truth</strong>, which a real project never gets to see</span>
+
+<img class="sd-compare" src="images/ip-tp-compare-methods.png" alt="Six surfaces from the same samples: Thiessen, IDW, spline, kriging fitted, kriging automatic, trend">
+<span class="sd-note">Every method uses the same <strong>150</strong> sample points</span>
+
+<div class="sd-ans">
+
+* <span class="sd-pop"><strong>It depends</strong> on the ground, the purpose, and the settings:</span>
+* <span class="sd-pop">Closest to this mountain? → <strong>spline</strong> or <strong>kriging</strong> with a fitted model</span>
+* <span class="sd-pop">The flat panel? → kriging with a <strong>careless setting</strong></span>
+* <span class="sd-pop">A regional trend, or a category like soil? → <strong>trend</strong> or <strong>Thiessen</strong></span>
+
+</div>
+
+<!-- Give pairs two or three minutes, then take answers and the reasons for them. Click the four answers in only after the discussion; the next slides then put numbers on it. Push the class past "which is prettiest" to "which one reproduces the ridges and canyons of the truth." Honest answer: it depends. On this mountain the spline and the fitted kriging come closest (69 and 73 m at the hold-out points, next slide); IDW and Thiessen follow; the trend surface only has the regional tilt. The flat panel is the same kriging with an automatic variogram fit that came out almost all nugget, so every cell gets the mean: worth asking what went wrong before the third click. Trend is right when only the regional pattern matters, and Thiessen when the variable is a category such as soil type. Every panel uses the same 150 Timpanogos samples, so the differences are the methods, not the data. And in a real project you cannot run this comparison, because you never have the truth panel, which is why the next slides hold points back. Moved October 26, 2026 from after the exactness slide, where the scores had already given the answer away; formerly a class vote. -->
+
+---
+
 # Same Points, Six Methods
 
 ![h:560 center](images/ip-tp-six-methods.png)
 
-<!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped; it is still in the ArcGIS Pro table below. Now that RMSE is defined, the numbers can be read off directly. -->
+<style scoped>
+.qa ul { list-style: none; margin: 0; padding: 0; }
+.qa li { position: absolute; left: 640px; width: 590px; margin: 0; font-size: 0.56em; line-height: 1.3; }
+.qa li:nth-child(1) { top: 46px; } .qa li:nth-child(2) { top: 74px; }
+.qa strong { color: #e8792b; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="qa">
+
+* <span class="pop"><strong>Why is one kriging panel flat?</strong></span>
+* <span class="pop">Its automatic fit came out almost all nugget, so every cell gets the mean</span>
+
+</div>
+
+<!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped. Now that RMSE is defined, the numbers can be read off directly. -->
 
 ---
 
@@ -365,7 +460,7 @@ $$
 
 <!-- The Lab 8 baseline surfaces (2,500 points, defaults), read at 2,000 different random sets of 200 cells. 90 % of the draws fall within: Thiessen 24.0 to 32.6 m, IDW 17.6 to 24.0, kriging 11.5 to 17.6, around the all-cell values 28.29, 20.71 and 14.46. Yet in all 2,000 draws kriging beat IDW and IDW beat Thiessen, because the same checkpoints judge all three surfaces: a set of points that happens to land on hard ground makes every method look worse together. Lesson: 200 checkpoints are good for choosing a method and loose for quoting its accuracy to a client. This is the class's only look at checkpoints; Lab 8 does not ask for them. Numbers: tools/week09_interpolation_numbers.json, from tools/week09_interpolation_figures.py. -->
 
-<!-- Optional: skip if time is short. The ranking point can be made in one sentence. -->
+<!-- Keep this slide even when time is short: the closing quiz asks what the 2,000 checkpoint draws showed. -->
 
 ---
 
@@ -381,26 +476,12 @@ Read each surface back at its own sample points:
 
 ---
 
-<!-- _class: quiz -->
-
-# Class Vote: Which Interpolation Method Works Best Here?
-
-![bg right:52% h:96%](images/ip-tp-compare-methods.png)
-
-**Original surface:**
-
-![h:390 center](images/ip-tp-dem-2d.png)
-
-<!-- Optional: skip if time is short. Same points, six methods, one truth to compare against: Tuesday's Mount Timpanogos samples, names only so the vote is not decided by the scores. Push the class past "which is prettiest" to "which one reproduces the ridges and canyons on the left." The flat panel is kriging with an automatic variogram fit: worth asking what went wrong before revealing it. Then note that in a real project you cannot run this comparison, because you never have the left panel — which is why withholding sample points matters, as the last few slides showed. -->
-
----
 
 # The Methods in ArcGIS Pro
 
 | Method | ArcGIS Pro tool — what you set |
 | --- | --- |
 | Thiessen polygons | **Create Thiessen Polygons**, then Polygon to Raster |
-| Natural neighbor | **Natural Neighbor** |
 | IDW | **IDW** — power, how many neighbors |
 | Spline | **Spline** — regularized or tension |
 | Kriging | **Kriging** — model, lag size |
@@ -408,7 +489,7 @@ Read each surface back at its own sample points:
 
 All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
 
-<!-- Every tool in this table produced a surface in an ArcGIS Pro run, tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the six-methods slide now uses numpy/scipy/pykrige equivalents on the Timpanogos samples. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
+<!-- Natural Neighbor was dropped from the table October 26, 2026: the class never meets it, so it would be a new term on the way out. Every tool in this table produced a surface in an ArcGIS Pro run, tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the six-methods slide now uses numpy/scipy/pykrige equivalents on the Timpanogos samples. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
 
 ---
 
