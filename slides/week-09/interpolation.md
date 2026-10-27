@@ -415,7 +415,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 
 <!-- The thumbnails preview the rest of today: the same 150 Timpanogos samples turned into a surface four ways (tools/week09_method_thumbnails.py crops them from the figures on the slides ahead). Same points, four visibly different maps: that is the third bullet. The last bullet is the honest one and it is where the rest of a career in this material lives: hold points back, interpolate without them, and compare. Shortened and the equation figure swapped for the thumbnails October 26, 2026. -->
 
-<!-- Thursday makes the last bullet concrete: a six-methods test with 60 points held back, RMSE, and checkpoints. -->
+<!-- Thursday makes the last bullet concrete: a six-methods test scored at 60 points held back, with RMSE. -->
 
 ---
 

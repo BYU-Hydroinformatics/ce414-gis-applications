@@ -5,7 +5,7 @@
 ## :material-presentation-play: Presentation Slides
 
 - **Tuesday** — [Sampling, Nearest Neighbor, and IDW](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation.html) — Estimating a surface from points: sampling designs, Thiessen (nearest neighbor) polygons, fixed-radius averaging and IDW, by hand and in ArcGIS Pro, and which methods give the measured values back.
-- **Thursday** — [Kriging and Interpolation Error](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation-explorer.html) — Kriging and the semivariogram (nugget, sill, range, and three models), then how wrong each surface is: error rasters, RMSE, checkpoints, a six-method test, and Lab 8.
+- **Thursday** — [Kriging and Interpolation Error](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-09/interpolation-explorer.html) — Kriging and the semivariogram (nugget, sill, range, and three models), then how wrong each surface is: error rasters, RMSE, a six-method test, and Lab 8.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -20,7 +20,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Points Into Surfaces](../quizzes/interpolation/index.html) — Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust.
-- [How Wrong Is the Surface?](../quizzes/rmse/index.html) — Seven questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, what it hides, and judging a surface from checkpoints.
+- [How Wrong Is the Surface?](../quizzes/rmse/index.html) — Seven questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, what it hides, where the error lives, and the Gaussian model.
 
 </div>
 

@@ -37,8 +37,9 @@ behind):* the Step 8 checkpoint test (Extract Multi Values to Points on 200 host
 squared-difference fields, Summary Statistics, checkpoint RMSEs), its table row and the "could you
 have known without the truth?" question are gone; its 2 rubric points went one each to the other two
 questions (now 4 / 3 / 3). `Checkpoints` was removed from the zip (rebuilt by make_extract.py and
-re-verified by verify_package.py). Judging a surface from checkpoints is still taught in the Week 9
-Thursday deck (Part 3) and its quiz.
+re-verified by verify_package.py). The Week 9 Thursday deck and its quiz dropped
+their checkpoint slides and items to match (October 26, 2026); the six-methods slide still says
+each method is scored at points held back.
 
 *Figures:* Figures A and B are generated from the data (`tools/lab08/make_svgs.py`); the example
 maps are real ArcGIS Pro layouts (`build_figures.py`); Figure C and every step figure come from a

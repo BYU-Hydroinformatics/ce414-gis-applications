@@ -6,7 +6,7 @@
   <title>CE 414 — How Wrong Is the Surface?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: error rasters, RMSE, checkpoints, and whether a ranking of interpolation methods survives a change.">
+  <meta name="description" content="CE 414 in-class quiz: kriging, error rasters, RMSE, and where the error lives.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -74,31 +74,30 @@ CE414Quiz.start({
       explanation: "An RMSE is one number for a whole map. One surface could be biased high everywhere and the other balanced, or one could have a single huge miss on a cliff band. The error map shows what the number hides."
     },
     {
-      prompt: "In real work you have no true DEM. How do you judge an interpolated surface?",
+      prompt: "On a baseline error map, where does most of the error live?",
+      detail: "Think about the Y Mountain error maps: a flat valley floor and a steep mountain front.",
       options: [
-        "Compare it with a basemap hillshade",
-        "Check it at measured points held back",
-        "Read it back at its own sample points",
-        "Pick the smoothest-looking surface"
+        "On the flat valley floor, far from the mountain",
+        "Where the ground changes faster than the samples are spaced",
+        "Spread evenly over the whole map"
       ],
-      answer: "Check it at measured points held back",
-      explanation: "Checkpoints the method never saw are the only honest test. Reading an exact method back at its own sample points returns the measurements unchanged, so it says nothing about the ground in between."
+      answer: "Where the ground changes faster than the samples are spaced",
+      explanation: "On flat ground any nearby sample is close to the truth, so every method is within a few meters there. The error piles up on the mountain front, where the elevation changes a lot between samples. That is also where Lab 8 asks you to find your best method's worst cell."
     },
     {
-      prompt: "The same surfaces were checked at 2,000 random sets of 200 checkpoints. What did that show?",
+      prompt: "Lab 8 also runs kriging with a Gaussian semivariogram model. What does a Gaussian model assume?",
       options: [
-        "200 points are too few to tell the methods apart",
-        "Every set gave exactly the all-cell RMSE",
-        "The winner changed from one set to the next",
-        "Each RMSE wandered, but the ranking never changed"
+        "That neighbors lose their likeness fastest, right at the start",
+        "That there is no spatial structure at all",
+        "A very smooth surface: flat near zero, so close neighbors are nearly identical"
       ],
-      answer: "Each RMSE wandered, but the ranking never changed",
-      explanation: "Each method's checkpoint RMSE moved by a few meters from one set to the next, but the same points judge all three surfaces, so a set that lands on hard ground makes every method look worse together. 200 checkpoints were enough to choose a method, and loose for quoting its accuracy."
+      answer: "A very smooth surface: flat near zero, so close neighbors are nearly identical",
+      explanation: "The three models share a nugget, sill and range but differ near zero distance, where the nearest samples carry most of the weight. Spherical rises steadily, exponential is steepest at first, and Gaussian starts flat, which assumes a very smooth surface. On rugged ground that assumption can go wrong; Lab 8 asks you to look at where."
     }
   ],
   perfectNote:  "All of them. You are ready for Lab 8's kriging runs, its error maps and its sensitivity questions.",
   goodNote:     "Good. Reread the explanations you missed before you start Lab 8 Step 6.",
-  tryAgainNote: "Kriging lets the semivariogram set the weights, error is truth minus surface, RMSE squares it so every miss counts, and checkpoints are how you judge a surface when there is no truth. Look at those slides again."
+  tryAgainNote: "Kriging lets the semivariogram set the weights, error is truth minus surface, RMSE squares it so every miss counts, and the error lives where the ground changes faster than the samples. Look at those slides again."
 });
 </script>
 </body>

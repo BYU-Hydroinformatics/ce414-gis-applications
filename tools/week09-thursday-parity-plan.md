@@ -38,3 +38,15 @@ slide quotes ArcGIS Pro's own "Semi-variogram model" label.
   rule 4).
 - **The worksheet tie-in on slide 15** assumes students kept Tuesday's paper worksheet after
   photographing it.
+
+## Later the same day: cuts to match the simplified Lab 8
+
+Slide numbers above are from before this round. Once Lab 8 dropped its checkpoint test (October
+23), the deck went from 36 numbered slides to 26: cut the Variogram, From Variogram to Surface (its
+"like IDW, but the data set the weights" line moved to Kriged Result), Kriging Surface (3D), Hold
+Points Back, Is 200 Checkpoints Enough?, Exact and Non-exact Methods, The Methods in ArcGIS Pro, the
+Part 4 divider and Step 1 (the service). Three Knobs merged into "Lab 8 Step 8: Predict It", which
+moved into the Lab 8 part (now Part 4). The six-methods slide gained a one-line caption on held-back
+points. The RMSE quiz's two checkpoint items were replaced (where the error lives; what a Gaussian
+model assumes), and the Lab 8 page's note, the Week 9 schedule blurbs and the Midterm 2 study guide
+were updated to match.

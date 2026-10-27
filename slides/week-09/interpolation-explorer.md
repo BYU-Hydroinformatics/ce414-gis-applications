@@ -23,7 +23,7 @@ Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 9. Tuesday built surfaces with weights from a rule you choose: Thiessen and IDW. Today starts with kriging, which takes its weights from the data, then asks how you would know which surface to trust: first with the truth in hand, then without it. Then Lab 8, which does exactly this on Y Mountain with all three methods. The title image is the Lab 8 example baseline sheet: the true DEM and three rebuilds from the same 2,500 points, with their error maps underneath. -->
+<!-- Thursday of Week 9. Tuesday built surfaces with weights from a rule you choose: Thiessen and IDW. Today starts with kriging, which takes its weights from the data, then asks how wrong each surface is and which one to trust. Then Lab 8, which does exactly this on Y Mountain with all three methods. The title image is the Lab 8 example baseline sheet: the true DEM and three rebuilds from the same 2,500 points, with their error maps underneath. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 9 — Kriging and Interpolation Error<span class="updated">Last Updated: 2026-10-25</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -40,10 +40,10 @@ By the end of class you should be able to:
 - Read a **semivariogram** and say how **kriging** sets its weights
 - Compute an **error raster** and say what its **sign** means
 - Reduce the error to one number, the **RMSE**, and say what it hides
-- Judge a surface **without** the truth, from **checkpoints**
+- Say which surface to **trust**, and why the answer **depends**
 - Say what **Lab 8** asks for, and how you will know you are right
 
-<!-- The profile on the right is one row of cells across the Lab 8 study area: the truth and the three rebuilds from 250 points. Thiessen steps, IDW sags, kriging smooths the peak off. The second half of today is a way of putting a number on the gaps between those lines. Testing whether a ranking survives a change is in the lab; Part 4 previews it. -->
+<!-- The profile on the right is one row of cells across the Lab 8 study area: the truth and the three rebuilds from 250 points. Thiessen steps, IDW sags, kriging smooths the peak off. The second half of today is a way of putting a number on the gaps between those lines. Testing whether a ranking survives a change is Lab 8 Step 8; Part 4 previews it. -->
 
 ---
 <!-- _class: lead -->
@@ -146,35 +146,12 @@ When nearby points are similar, $Z_i - Z_j$ is small, so the semivariance is **s
 
 ---
 
-# The Variogram
-
-<div class="columns">
-<div>
-
-When calculating the semivariance for a particular *h*, a **tolerance** is used, since few *h* values will be exactly identical.
-
-Plot the semivariance across a range of lag distances and you get a **variogram**. In ArcGIS Pro, **Lag size** is the width of those distance bins.
-
-Semivariance is usually **small** at small lag distances and increases to a constant value as the lag distance *h* increases.
-
-</div>
-<div>
-
-![w:520 center](images/ie-variogram-bins.png)
-
-</div>
-</div>
-
-<!-- Merged the source's tolerance slide with the variogram slide that immediately followed it. The jagged line is the semivariance actually calculated from the data; the smooth line is the model fitted to it. Only the smooth line is used to interpolate. The figure replaces the textbook's Figure 9-15: 400 points on a made-up smooth surface, 200 m lag bins, a spherical model fitted (tools/week09_thursday_figures.py). The next slide does the same on Tuesday's real Timpanogos samples. -->
-
----
-
 # Nugget, Sill, and Range
 
 ![bg right:48% w:95%](images/ip-tp-semivariogram-model.png)
 
 <style scoped>
-section > ul { font-size: 0.82em; }
+section > ul { font-size: 0.76em; }
 .qa ul { list-style: none; margin: 0; padding: 0; }
 .qa li { position: absolute; left: 70px; width: 560px; margin: 0; font-size: 0.62em; line-height: 1.3; }
 .qa li:nth-child(1) { top: 590px; } .qa li:nth-child(2) { top: 624px; }
@@ -186,6 +163,7 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 - **Sill** — the semivariance the model reaches at the range
 - **Nugget** — the value at a distance of almost zero; above 0 when there is measurement error or variation closer than the samples
 - **Partial sill** — sill minus nugget: the part that distance explains
+- Pairs are grouped into distance bins; ArcGIS Pro's **Lag size** is the bin width
 
 <div class="qa">
 
@@ -214,37 +192,13 @@ Lab 8 runs all three on Y Mountain
 
 ---
 
-# From Variogram to Surface
-
-- A set of sample points is used to estimate the shape of the variogram
-- A **variogram model** is made — a line is fit through the set of semivariance points
-- The variogram model is then used to interpolate the entire surface
-
-**Kriging is similar to IDW**, but kriging uses the **minimum variance method** to calculate the weights, rather than applying an arbitrary or less precise weighting scheme.
-
-<!-- Combined two consecutive text-only slides from the source. The comparison in the second half is the sentence worth remembering: IDW's weights come from a rule you picked, kriging's weights come from the data's own spatial structure. -->
-
-![w:820 center](images/ip-tp-semivariogram.png)
-
-<!-- Left: the semivariogram cloud, every pair of Tuesday's 150 Timpanogos samples (11,175 pairs). Right: the pairs binned every 300 m and a spherical model fitted to the bins. The model, not the cloud, sets kriging's weights. -->
-
----
-
 # Kriged Result
 
-![h:480 center](images/ip-tp-kriging-result.png)
+Like IDW, a **weighted average** of nearby points, but the **variogram** sets the weights, not a fixed 1/d<sup>n</sup>
 
-<!-- The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. -->
+![h:440 center](images/ip-tp-kriging-result.png)
 
----
-
-# Kriging Surface
-
-![h:430 center](images/ip-tp-kriged-3d.png)
-
-<!-- The 3D view of the same result. Set this beside the Thiessen and IDW surfaces from earlier in the deck: stepped, kinked, and smooth. Same points, three surfaces. -->
-
-<!-- Optional: skip if time is short. The 2-D kriged result on the previous slide carries the point. -->
+<!-- The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
 
 ---
 
@@ -373,7 +327,7 @@ $$
 
 # Part 3 — Which One to Trust?
 
-## When you do not have the truth
+## Same points, different surfaces
 
 ---
 
@@ -412,18 +366,21 @@ li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animati
 
 </div>
 
-<!-- Give pairs two or three minutes, then take answers and the reasons for them. Click the four answers in only after the discussion; the next slides then put numbers on it. Push the class past "which is prettiest" to "which one reproduces the ridges and canyons of the truth." Honest answer: it depends. On this mountain the spline and the fitted kriging come closest (69 and 73 m at the hold-out points, next slide); IDW and Thiessen follow; the trend surface only has the regional tilt. The flat panel is the same kriging with an automatic variogram fit that came out almost all nugget, so every cell gets the mean: worth asking what went wrong before the third click. Trend is right when only the regional pattern matters, and Thiessen when the variable is a category such as soil type. Every panel uses the same 150 Timpanogos samples, so the differences are the methods, not the data. And in a real project you cannot run this comparison, because you never have the truth panel, which is why the next slides hold points back. Moved October 26, 2026 from after the exactness slide, where the scores had already given the answer away; formerly a class vote. -->
+<!-- Give pairs two or three minutes, then take answers and the reasons for them. Click the four answers in only after the discussion; the next slides then put numbers on it. Push the class past "which is prettiest" to "which one reproduces the ridges and canyons of the truth." Honest answer: it depends. On this mountain the spline and the fitted kriging come closest (69 and 73 m at the hold-out points, next slide); IDW and Thiessen follow; the trend surface only has the regional tilt. The flat panel is the same kriging with an automatic variogram fit that came out almost all nugget, so every cell gets the mean: worth asking what went wrong before the third click. Trend is right when only the regional pattern matters, and Thiessen when the variable is a category such as soil type. Every panel uses the same 150 Timpanogos samples, so the differences are the methods, not the data. And in a real project you cannot run this comparison, because you never have the truth panel, which is why the next slide scores each method at points held back from it. Moved October 26, 2026 from after the exactness slide, where the scores had already given the answer away; formerly a class vote. -->
 
 ---
 
 # Same Points, Six Methods
 
-![h:560 center](images/ip-tp-six-methods.png)
+![h:520 center](images/ip-tp-six-methods.png)
+
+<p class="six-cap">Each method is scored at <strong>60 points held back</strong> from it: the honest test when there is no true surface</p>
 
 <style scoped>
 .qa ul { list-style: none; margin: 0; padding: 0; }
 .qa li { position: absolute; left: 640px; width: 590px; margin: 0; font-size: 0.56em; line-height: 1.3; }
 .qa li:nth-child(1) { top: 46px; } .qa li:nth-child(2) { top: 74px; }
+.six-cap { position: absolute; left: 70px; right: 70px; top: 650px; margin: 0; font-size: 0.58em; text-align: center; }
 .qa strong { color: #e8792b; }
 li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
@@ -435,100 +392,7 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 
 </div>
 
-<!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped. Now that RMSE is defined, the numbers can be read off directly. -->
-
----
-
-# Hold Points Back
-
-![bg right:45% w:96%](images/ip-tp-holdout-error.png)
-
-- In real work there is **no true DEM** — only the points you measured
-- So set some aside: **checkpoints**, never used to interpolate
-- Read each surface at the checkpoints, and compute the RMSE there
-- Measure the error **where you know the answer**; do not eyeball
-
-<!-- The bars are the six-methods test on the previous slide: 60 points held back from Tuesday's Timpanogos DEM. The orange bar is the lowest error; the dotted line is the error of ignoring location and guessing the mean of the 150 samples (372 m), which the automatically fitted kriging matches. Lab 8 does not compute checkpoints (its all-cell RMSE already uses the truth), so these two slides carry the lesson. In practice, Extract Multi Values to Points reads every surface at each checkpoint in one tool. -->
-
----
-
-# Is 200 Checkpoints Enough?
-
-![h:420 center](images/ie-checkpoint-spread.png)
-
-- Each number **wanders by about ±3 m** — but the **ranking** came out the same in **every** draw
-
-<!-- The Lab 8 baseline surfaces (2,500 points, defaults), read at 2,000 different random sets of 200 cells. 90 % of the draws fall within: Thiessen 24.0 to 32.6 m, IDW 17.6 to 24.0, kriging 11.5 to 17.6, around the all-cell values 28.29, 20.71 and 14.46. Yet in all 2,000 draws kriging beat IDW and IDW beat Thiessen, because the same checkpoints judge all three surfaces: a set of points that happens to land on hard ground makes every method look worse together. Lesson: 200 checkpoints are good for choosing a method and loose for quoting its accuracy to a client. This is the class's only look at checkpoints; Lab 8 does not ask for them. Numbers: tools/week09_interpolation_numbers.json, from tools/week09_interpolation_figures.py. -->
-
-<!-- Keep this slide even when time is short: the closing quiz asks what the 2,000 checkpoint draws showed. -->
-
----
-
-# Exact and Non-exact Methods
-
-Read each surface back at its own sample points:
-
-![w:780 center](images/ip-tp-exactness.png)
-
-**Exact:** Thiessen, IDW, spline, kriging with no nugget · **Not exact:** trend, kriging with a large nugget
-
-<!-- The test, on Tuesday's 150 Timpanogos samples (cell centers of the 30 m DEM): Thiessen, IDW, the thin-plate spline and kriging with the fitted spherical model (nugget 0) give every sample value back exactly; the 2nd-order trend misses by 163 m on average; and kriging with the automatic fit (nugget 33,339 m2 of a 105,577 m2 sill, range a few meters) misses by 96 m. So "is kriging exact?" has the honest answer "it depends on the nugget" - which is why this slide replaced the source deck's list that called spline and kriging non-exact. ArcGIS Pro's regularized spline (an earlier version of this test) came back within 0.01 m, so 'spline' is exact or very nearly, depending on the variant. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). -->
-
----
-
-
-# The Methods in ArcGIS Pro
-
-| Method | ArcGIS Pro tool — what you set |
-| --- | --- |
-| Thiessen polygons | **Create Thiessen Polygons**, then Polygon to Raster |
-| IDW | **IDW** — power, how many neighbors |
-| Spline | **Spline** — regularized or tension |
-| Kriging | **Kriging** — model, lag size |
-| Trend surface | **Trend** — polynomial order |
-
-All but the first are in **Spatial Analyst ▸ Interpolation**; Create Thiessen Polygons is in Analysis.
-
-<!-- Natural Neighbor was dropped from the table October 26, 2026: the class never meets it, so it would be a new term on the way out. Every tool in this table produced a surface in an ArcGIS Pro run, tools/week08_interpolation_figures.py (ArcGIS Pro 3.7.1, arcpy, October 2, 2026); the six-methods slide now uses numpy/scipy/pykrige equivalents on the Timpanogos samples. Geostatistical Analyst offers the same methods with more control (and cross-validation built in); not needed for Lab 8. Toolbox paths are written from the arcpy modules used (arcpy.analysis.CreateThiessenPolygons, arcpy.sa.*) - VERIFY the Geoprocessing pane grouping (Spatial Analyst Tools > Interpolation) in the GUI before class. -->
-
----
-
-<!-- _class: lead -->
-
-![bg right:55%](images/ip-divider-survive.jpg)
-
-# Part 4 — Does the Answer Survive?
-
----
-
-# Three Knobs
-
-![bg right:42% h:84%](images/ie-idw.png)
-
-- **How many points:** 250, 2,500, 10,000
-- **IDW's power:** 1 smooths, 3 sharpens toward the nearest point
-- **Kriging's semivariogram model:** spherical, exponential, Gaussian
-- Change **one** thing, rerun, and ask: **does the winner change?**
-
-<!-- The capture is the IDW tool inside the Lab 8 model, with Power exposed as a model parameter. Do not give the class the sensitivity numbers: Lab 8 Step 8 is where they find them. Ask for predictions instead, and write them on the board: if 2,500 points gives these RMSEs, what will 10,000 give? Ten times fewer? Half? Does every method gain the same amount? Come back to the board when the labs are in. -->
-
----
-
-<!-- _class: quiz -->
-
-# Predict It
-
-![bg right:45% w:96%](images/ie-error-row.png)
-
-At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
-
-- Go to **10,000** points. Which method **gains the most**, and which the least?
-- Raise IDW's power from 2 to **3**. Better, worse, or about the same?
-- Where on the error map will the error that remains be?
-
-<!-- Votes only; no answers today. These are the Lab 8 Step 8 questions in advance, so each student goes in with a prediction to test, which is the habit the lab is built around. The three baseline RMSEs are on the lab page as check values, so it is fine to show them. -->
-
-<!-- Optional: skip if time is short. The same questions are in Lab 8 Step 8. -->
+<!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped. Now that RMSE is defined, the numbers can be read off directly. Exactness, if anyone asks: Thiessen, IDW, the spline and the fitted kriging (nugget 0) return every sample value; the trend misses by 163 m on average and the automatic kriging, with its huge nugget, by 96 m, so kriging is exact only when the nugget is zero. The hold-out, checkpoint-spread, exactness and methods-table slides were cut October 26, 2026 once Lab 8 dropped checkpoints. -->
 
 ---
 
@@ -536,7 +400,7 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 
 ![bg right:55%](images/ip-divider-explorer.jpg)
 
-# Part 5 — Lab 8, Interpolation Explorer
+# Part 4 — Lab 8, Interpolation Explorer
 
 ---
 
@@ -555,22 +419,6 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 
 ---
 
-# Step 1 — What Does the Service Send?
-
-![bg right:45% w:96%](images/ie-service-raster-info.png)
-
-- Add the USGS 3DEP **elevation image service** with **Add Data From Path**
-- Read its cell size, pixel type and coordinate system
-- Click Y Mountain's summit. The answer is **not** an elevation
-
-**Ask:** why would a server send a picture instead of the numbers?
-
-<!-- Lab 8 Step 1, captured in ArcGIS Pro 3.7.1. The service arrives as a hillshade: 1 m cells, 8-bit unsigned pixels, Web Mercator, and the pop-up at the summit reads 154, where the DEM reads about 2,897 m. That is the service's default raster function at work: the server renders the elevations into a hillshade (its first listed function, Hillshade Gray) before sending them; the service itself stores Float32 meters. Let the class guess why first. The lab's NOTE makes the engineering point: an analysis others must check needs a fixed, dated copy, which is why the course hosts one. -->
-
-<!-- Optional: skip if time is short. Students meet it in the lab, where its NOTE makes the point. -->
-
----
-
 # Your Own IDW Power
 
 ![bg right:36% h:80%](images/ie-tool-dialog.png)
@@ -582,6 +430,28 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 - Run 5 uses it; the grader checks your RMSE against your digits
 
 <!-- The capture is the model as a tool, set up for run 5 with the example ID ending in 89. Everyone's other runs use the same hosted points and will match a classmate's to the centimeter; run 5 will not. The lab page gives the example's answer (IDW RMSE 20.29 m at power 3.225) so students can check their setup before they use their own digits. Every power falls between 1 and 3.475. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Lab 8 Step 8: Predict It
+
+<style scoped>
+section { font-size: 23px; }
+</style>
+
+![bg right:45% w:96%](images/ie-error-row.png)
+
+Three knobs: **points** (250, 2,500, 10,000), **IDW power** (1, 2, 3, yours), **semivariogram model** (spherical, exponential, Gaussian). Change **one**, rerun, and ask: **does the winner change?**
+
+At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
+
+- Go to **10,000** points. Which method **gains the most**, and which the least?
+- Raise IDW's power from 2 to **3**. Better, worse, or about the same?
+- Where on the error map will the error that remains be?
+
+<!-- Votes only; no answers today. These are the Lab 8 Step 8 questions in advance, so each student goes in with a prediction to test, which is the habit the lab is built around. Write the predictions on the board: if 2,500 points gives these RMSEs, what will 10,000 give? Ten times fewer? Half? Does every method gain the same amount? Come back to the board when the labs are in. The three baseline RMSEs are on the lab page as check values, so it is fine to show them. Merged October 26, 2026 with the "Three Knobs" slide, and the Part 4 divider folded into Part 5. -->
 
 ---
 
@@ -618,7 +488,7 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: How Wrong Is the Surface?** Seven questions on kriging, error rasters, RMSE and checkpoints. **Scan the code**, or open the link under it.
+**Quiz: How Wrong Is the Surface?** Seven questions on kriging, error rasters, RMSE and where the error lives. **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that today's material made sense
 - Note the sign question: a wrong sign flips the whole map in Lab 8
@@ -640,6 +510,6 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 </div>
 </div>
 
-<!-- Five minutes, in pairs, then a show of hands on the checkpoint item: most of the room expects 200 points to be too few to rank the methods. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
+<!-- Five minutes, in pairs, then a show of hands on the Gaussian item: it is the run Lab 8 Step 8 asks them to explain. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026; the kriging part, the six-methods test, the exactness slide and the tool table moved here from the Tuesday deck on October 20, 2026. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026; the kriging part, the six-methods test, the exactness slide and the tool table moved here from the Tuesday deck on October 20, 2026; the checkpoint, exactness, tool-table, variogram, 3D-kriging and service slides were cut October 26, 2026 to match the simplified Lab 8. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
