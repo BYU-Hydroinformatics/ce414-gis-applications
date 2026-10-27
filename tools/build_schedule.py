@@ -138,9 +138,10 @@ DUE = {
     11: dict(reading=None, quiz=(9, "Least Cost Paths"), lab=10, other=[]),
     12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
-    # Quizzes 8-11 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
-    # network analysis, Week 13 data standards. Week 14 (Midterm 2, Lab 12) has no quiz.
-    13: dict(reading="Chapter 14", quiz=(11, "Data Standards and Data Quality"), lab=None,
+    # Quizzes 8-10 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
+    # network analysis. Quiz 11 (Data Standards, Chapter 14) was dropped Oct 26 because no lecture
+    # covers it, so Weeks 13 and 14 have no quiz and no reading.
+    13: dict(reading=None, quiz=None, lab=None,
              other=[("**Midterm 2 is next week**, on Weeks 8–13: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
     14: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–13 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),

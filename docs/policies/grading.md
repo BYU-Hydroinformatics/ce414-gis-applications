@@ -24,13 +24,13 @@ Below 60 % is an E.
 ## What is graded
 
 Point values are from the Learning Suite assignments view (September 8, 2026) plus Lab 11 (Network Analysis), added
-October 10, 2026: 1,320 points in all. The grade is points-based, so the percentages below are simply each component's share of the
+October 10, 2026, less Quiz 11, dropped October 26, 2026: 1,300 points in all. The grade is points-based, so the percentages below are simply each component's share of the
 total and will shift a little if points are added or dropped during the semester.
 
 | Component | Points | Notes |
 | --- | --- | --- |
-| Labs 1 to 12 | 50 each, 600 total (about 45 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
-| Reading quizzes (11) | 20 each, 220 total (about 17 %) | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
+| Labs 1 to 12 | 50 each, 600 total (about 46 %) | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
+| Reading quizzes (10) | 20 each, 200 total (about 15 %) | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
 | Midterms 1 and 2 | 100 each | Closed book, concept based, in the Testing Center. Open Tuesday 8:00 am to Thursday 9:00 pm of Weeks 8 and 14. |
 | Final exam | 100 | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
 | Final project | 100 total | Proposal meeting 10, presentation 40, lab-style write-up 50. See the [Final Project](../assignments/final-project.md) page. |

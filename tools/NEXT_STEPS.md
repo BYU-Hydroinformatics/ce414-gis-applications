@@ -45,8 +45,9 @@ kept for Fall 2027:
   sensitivity files moved with them. The six GUI captures that still show the old geodatabase and
   toolbox names carry `TODO(recapture)` (see Housekeeping).
 - **Reading quizzes:** Quiz 9 is Least Cost Paths, Quiz 10 Network Analysis (both built from the
-  decks; banks in `ce414-private/quizzes/learning-suite/quiz09_*` and `quiz10_*`), Quiz 11 Data
-  Standards.
+  decks; banks in `ce414-private/quizzes/learning-suite/quiz09_*` and `quiz10_*`). Quiz 10 is the
+  last: both Quiz 11s (Data Standards, and the old GPS and GNSS) were deleted from Learning Suite
+  October 26, 2026, because no lecture covers either topic.
 - **Midterm 2** rebuilt as 100 multiple-choice items on Weeks 8 to 13
   (`ce414-private/exams/midterm-2-2026-mc/`); public study guide `docs/study-guides/midterm-2.md`.
 - **Learning Suite updated** (lab titles and descriptions, quiz titles and dates, the Week 11 to 14
@@ -86,9 +87,9 @@ private in the public repository, do not push without being asked.
   Projections questions under the new titles. Delete them in the quiz editor and import
   `quiz09-qti.zip` and `quiz10-qti.zip` from `ce414-private/quizzes/learning-suite/` (the browser
   pane cannot upload files). Quiz 9 opens November 10.
-- **Old Quiz 11 (GPS and GNSS).** It is in the "ignore" category but still counts 20 points
-  toward the 1,335 total; "Do not include in final grade" is grayed out while "Score cannot be
-  dropped" is checked. Uncheck that and exclude it, or delete it.
+- **Quiz 11s deleted (October 26).** Check the Learning Suite gradebook total now reads 1,300 with
+  no Quiz 11 column. The Deleted Exams page showed "Error getting category data" right after, so
+  whether they can be restored was not confirmed.
 - **Midterm 2 barcode.** Page 1 of `2026 Midterm 2 MC.docx` has a placeholder for the Testing
   Center barcode. Then export both PDFs and upload them to *Exams and Keys (private)*.
 - **Midterm 1 v4 source.** The 100-item `items.py`/`build.py` the given exam was built from is
