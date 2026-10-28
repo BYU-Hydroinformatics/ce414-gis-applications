@@ -65,6 +65,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/na-divider-network.jpg)
+
 # Part 1 — What a Network Dataset Is Made Of
 
 ---
@@ -163,6 +165,8 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/na-divider-source.jpg)
 
 # Part 2 — Where Lab 11's Network Came From
 

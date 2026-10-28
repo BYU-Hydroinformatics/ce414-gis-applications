@@ -61,6 +61,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/lcpb-divider-tools.jpg)
+
 # Part 1 — The Tools in ArcGIS Pro Today
 
 ---
@@ -134,6 +136,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/lcpb-divider-route.jpg)
+
 # Part 2 — Lab 10's Route, Computed
 
 ---
@@ -173,6 +177,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/lcpb-divider-decisions.jpg)
 
 # Part 3 — Which Decisions Moved the Line?
 

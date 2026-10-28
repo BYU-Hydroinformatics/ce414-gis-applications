@@ -1,0 +1,86 @@
+[
+ {
+  "id": "cf-divider-earthwork",
+  "deck": "week-10/cut-and-fill.md",
+  "divider": "Part 1 — Earthwork Is a Volume",
+  "prompt": "A young woman civil engineer in a hard hat and safety vest stands on a hillside construction site gripping a tablet, eyes narrowed with determination, while behind her a bulldozer carves into the slope and a dump truck tips soil into a low hollow"
+ },
+ {
+  "id": "cf-divider-leaves-out",
+  "deck": "week-10/cut-and-fill.md",
+  "divider": "Part 2 — What the Volume Leaves Out",
+  "prompt": "A civil engineer recoils in exaggerated shock as a neat block of freshly dug soil in a dump truck bed puffs up into a much larger loose heap, chunks of rock and dark topsoil spilling over the sides"
+ },
+ {
+  "id": "rv-divider-sum",
+  "deck": "week-10/raster-volumes.md",
+  "divider": "Part 1 — A Volume Is a Sum",
+  "prompt": "Dramatic low-angle view of a mountain built entirely from thousands of tall square stone columns of different heights, like a giant stepped city of pillars; a student stands at its foot looking up in awe, holding a glowing calculator"
+ },
+ {
+  "id": "rv-divider-base",
+  "deck": "week-10/raster-volumes.md",
+  "divider": "Part 2 — The Base Is the Answer",
+  "prompt": "A lone broad volcanic dome rising from a vast flat lava plain; a woman geologist kneels at its foot pressing a palm to the ground, and a cutaway below the surface reveals the dome's hidden roots wrapped in buried layers of old lava, tense and mysterious mood"
+ },
+ {
+  "id": "rv-divider-butte",
+  "deck": "week-10/raster-volumes.md",
+  "divider": "Part 3 — Lab 9, Big Southern Butte",
+  "prompt": "Two university students sit on the rocky summit of a broad dome mountain at sunset, a laptop open on a boulder, looking out across an endless flat volcanic plain toward distant mountain ranges, quiet heroic mood"
+ },
+ {
+  "id": "lcp-divider-cost",
+  "deck": "week-11/least-cost-path.md",
+  "divider": "Step 1: building the cost surface",
+  "prompt": "A transmission-line engineer stands on a ridge surveying a landscape where steep cliffs, a lake, a small town and open farmland each glow with a different intensity of ominous aura, as if every piece of ground has its own price to cross; the engineer strokes their chin, calculating"
+ },
+ {
+  "id": "lcp-divider-path",
+  "deck": "week-11/least-cost-path.md",
+  "divider": "Step 2: accumulated cost, back direction, and the path",
+  "prompt": "From a high mountain pass, a woman explorer watches glowing ripples spread outward across the valleys from a single starting point like waves on a pond, and one bright winding path emerges through the terrain toward a distant city"
+ },
+ {
+  "id": "lcpb-divider-tools",
+  "deck": "week-11/least-cost-path-b.md",
+  "divider": "Part 1 — The Tools in ArcGIS Pro Today",
+  "prompt": "An engineer solemnly places a battered, old-fashioned surveying tool into a glass display case like a retired relic, while turning toward a sleek glowing modern instrument floating in their other hand, sparkles and dramatic lighting"
+ },
+ {
+  "id": "lcpb-divider-route",
+  "deck": "week-11/least-cost-path-b.md",
+  "divider": "Part 2 — Lab 10's Route, Computed",
+  "prompt": "A power-line crew in hard hats stands on a hilltop watching a long line of steel transmission towers march across valleys and ridges toward the horizon at sunset, wind blowing, epic wide shot"
+ },
+ {
+  "id": "lcpb-divider-decisions",
+  "deck": "week-11/least-cost-path-b.md",
+  "divider": "Part 3 — Which Decisions Moved the Line?",
+  "prompt": "An intense woman engineer grips the levers of a control console while, on a large glowing terrain table in front of her, a bright route line swings between several alternative paths across hills and rivers, motion blur on the line"
+ },
+ {
+  "id": "na-divider-network",
+  "deck": "week-12/network-analysis-a.md",
+  "divider": "Part 1 — What a Network Dataset Is Made Of",
+  "prompt": "Bird's-eye view of a city at night whose street grid transforms into a glowing web of nodes and connecting lines; in the foreground a focused woman dispatcher in a headset studies it, reflections of the network in their eyes"
+ },
+ {
+  "id": "na-divider-source",
+  "deck": "week-12/network-analysis-a.md",
+  "divider": "Part 2 — Where Lab 11's Network Came From",
+  "prompt": "A team of mapmakers in a cluttered government office works through the night, carefully stitching tangled loose strands of road lines into one clean connected web spread across a giant table, coffee cups and lamps, focused teamwork"
+ },
+ {
+  "id": "nab-divider-solvers",
+  "deck": "week-12/network-analysis-b.md",
+  "divider": "Part 1 — Three Solvers",
+  "prompt": "Battle-manga standoff of three rival strategists on a city rooftop: one radiates expanding rings of light along the streets, one points a glowing arrow to the nearest building, one places game pieces onto a city map; wind, dramatic poses"
+ },
+ {
+  "id": "nab-divider-fire",
+  "deck": "week-12/network-analysis-b.md",
+  "divider": "Part 2 — Lab 11, Fire Response Coverage",
+  "prompt": "A fire engine races through city streets at night, emergency lights blazing, firefighters leaning out with fierce determination, strong speed lines and motion"
+ }
+]

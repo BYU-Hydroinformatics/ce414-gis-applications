@@ -60,6 +60,8 @@ By the end of class you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/nab-divider-solvers.jpg)
+
 # Part 1 — Three Solvers
 
 ---
@@ -184,6 +186,8 @@ A city council asks four questions. Which one is a **Service Area** question?
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/nab-divider-fire.jpg)
 
 # Part 2 — Lab 11, Fire Response Coverage
 

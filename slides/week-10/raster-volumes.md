@@ -47,6 +47,8 @@ By the end of this deck (study it after Tuesday's) you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/rv-divider-sum.jpg)
+
 # Part 1 — A Volume Is a Sum
 
 ---
@@ -92,6 +94,8 @@ Surface Volume only takes a **flat** plane. That is why Lab 9 uses the Raster Ca
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/rv-divider-base.jpg)
 
 # Part 2 — The Base Is the Answer
 
@@ -157,6 +161,8 @@ Review: [Week 9 Tuesday deck](https://byu-hydroinformatics.github.io/ce414-gis-a
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/rv-divider-butte.jpg)
 
 # Part 3 — Lab 9, Big Southern Butte
 

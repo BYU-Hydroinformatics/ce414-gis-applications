@@ -131,6 +131,8 @@ Dr. Dan Ames
 
 <!-- _class: lead -->
 
+![bg right:55%](images/lcp-divider-cost.jpg)
+
 # Step 1: building the cost surface
 
 ---
@@ -239,6 +241,8 @@ The cheapest path costs **12**, through the 3s and the middle row; the straight 
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/lcp-divider-path.jpg)
 
 # Step 2: accumulated cost, back direction, and the path
 

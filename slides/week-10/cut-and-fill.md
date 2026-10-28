@@ -62,6 +62,8 @@ By the end of this deck you should be able to:
 
 <!-- _class: lead -->
 
+![bg right:55%](images/cf-divider-earthwork.jpg)
+
 # Part 1 — Earthwork Is a Volume
 
 ---
@@ -182,6 +184,8 @@ Ground − 102 m, cell by cell:
 ---
 
 <!-- _class: lead -->
+
+![bg right:55%](images/cf-divider-leaves-out.jpg)
 
 # Part 2 — What the Volume Leaves Out
 
