@@ -496,7 +496,7 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 > column is only here to help you check your results; **you do not need to compute it** or put it in
 > your report. If you want to, add a Long field to `Floods` and calculate it as `!Shape_Area! / 25`;
 > if your areas match, your cell counts do too. If you have only
-> one row, Merge ran outside the loop; if you have many rows per value, **Create multipart
+> one row, Merge ran inside the loop instead of after Collect Values; if you have many rows per value, **Create multipart
 > features** was unchecked. Match each `H_CM` to its return period and flow in the stage table
 > above; the flood with `H_CM` 153 is the 100-year flood.
 

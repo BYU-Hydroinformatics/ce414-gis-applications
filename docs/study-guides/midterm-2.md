@@ -67,7 +67,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Recognize the profile each method draws through the same points, and say which methods can go above the highest sample
 - Say which methods give the **measured values back** (exact) and which do not
 - Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, and what a large nugget does
-- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand; say what the RMSE hides
+- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand; say what the RMSE hides, and where on the map the error **lives**
 - Say which surface to **trust**, and why holding points back is the honest test without the truth
 - For Lab 8: the two Thiessen defaults that ruin the surface, why the IDW surface stays inside the samples' range, what the empty kriging boxes mean, why Zonal Statistics as Table uses **Mean**, what a short **COUNT** means, and what the elevation service sent in Step 1
 - From the reading: tell **spatial interpolation** from **spatial prediction**; name a sampling design from a description; say why a sum of errors is a poor accuracy measure
@@ -121,4 +121,4 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - List the requirements every project must meet, including **raster and vector** data
 - Say what to bring to the **proposal meeting**, including the **data-feasibility table**
 - Say how you would show a result is right: a **validation** or **sensitivity** check
-- From the reading: tell **precision** from **accuracy**; name the kinds of data error (**positional** and **attribute accuracy**, **completeness**, **logical consistency**); say what the OGC web services (**WMS**, **WFS**, **WPS**) each deliver
+- From the reading: tell **precision** from **accuracy**; name the kinds of data error (**positional** and **attribute accuracy**, **completeness**, **logical consistency**); name the kinds of data **standards** (media, format, accuracy, documentation) and say which one defines **metadata**

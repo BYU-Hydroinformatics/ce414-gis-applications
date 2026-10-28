@@ -479,7 +479,7 @@ Then measure three things about the route:
 > **Reading the two rasters.** `Accumulated_Cost` is cost × meters: a step across one 30 m cell of cost
 > 4 adds 120. At the destination, 744,018 over 56,090 m is an average cost of about 13 per meter
 > along the route. `Back_Direction` says which way to step to get home, in **degrees**: **0** marks the
-> source, **90** means go east, 180 south, 270 west and 360 north. The Week 11 Thursday deck reads one cell by cell on an earlier, coarser version of this setup ([Least Cost Path Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path-b.html){ target="_blank" }); its numbers are not this lab's.
+> source, **90** means go east, 180 south, 270 west and 360 north. The Week 11 Thursday deck reads one cell by cell on this lab's reference run ([Least Cost Path Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path-b.html){ target="_blank" }).
 
 ### Step 8 — Run the Tool
 
