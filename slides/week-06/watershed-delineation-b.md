@@ -48,6 +48,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/wsb-divider-manual.jpg)
+
 
 # Part 1 — Manual Watershed Delineation
 
@@ -156,6 +158,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/wsb-divider-finish.jpg)
+
 
 # Part 2 — Finish the Model in ArcGIS Pro
 

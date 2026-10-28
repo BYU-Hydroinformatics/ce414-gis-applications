@@ -57,6 +57,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rab-divider-neighbors.jpg)
+
 
 # Beyond one cell
 ## Local, focal, zonal, global
@@ -190,6 +192,8 @@ Find any of them by name in the **Geoprocessing pane** search box, or browse **T
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rab-divider-threshold.jpg)
+
 
 # The threshold as a parameter
 
@@ -240,6 +244,8 @@ Same model, same data, five runs of the tool dialog:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rab-divider-exercise.jpg)
+
 
 # The exercise
 ## One expression, three thresholds

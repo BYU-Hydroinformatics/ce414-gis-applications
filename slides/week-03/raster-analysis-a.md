@@ -67,6 +67,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ra-divider-grid.jpg)
+
 
 # Part 1
 ## A raster is a grid of numbers
@@ -157,6 +159,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ra-divider-algebra.jpg)
+
 
 # Part 2
 ## Map algebra: arithmetic on the grid
@@ -304,6 +308,8 @@ When a tool has to resample, the choice is yours: **nearest neighbor** for label
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ra-divider-ndvi.jpg)
+
 
 # Part 3
 ## NDVI: your first raster model

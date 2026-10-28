@@ -64,6 +64,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/wsa-divider-watershed.jpg)
+
 
 # Part 1 — What Is a Watershed, and Why Care?
 
@@ -209,6 +211,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/wsa-divider-flow-direction.jpg)
+
 
 # Part 2 — From a DEM to Flow Direction
 

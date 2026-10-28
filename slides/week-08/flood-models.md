@@ -114,6 +114,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/flm-divider-two-ways.jpg)
+
 
 # Part 1 — Two Ways to Draw the Flood
 
@@ -168,6 +170,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/flm-divider-hand.jpg)
+
 
 # Part 2 — HAND, Height Above Nearest Drainage
 
@@ -298,6 +302,8 @@ By the end of class you should be able to:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/flm-divider-model.jpg)
+
 
 # Part 3 — The Lab 7 Model
 

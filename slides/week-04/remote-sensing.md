@@ -58,6 +58,8 @@ but it is what makes the band math in Lab 2 mean something. -->
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rs-divider-spectrum.jpg)
+
 
 # 1 — The Electromagnetic Spectrum
 
@@ -311,6 +313,8 @@ step in one channel, and most of those steps are invisible. -->
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rs-divider-multiband.jpg)
+
 
 # 3 — Multi-band Images
 
@@ -508,6 +512,8 @@ saturated to white. Compare the labeled reflectance numbers across slides, not t
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rs-divider-hyperspectral.jpg)
+
 
 # 4 — Hyperspectral Images
 
@@ -581,6 +587,8 @@ tools/week04_remote_sensing_figures.py from the USGS band designations. -->
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rs-divider-pulling-apart.jpg)
+
 
 # 5 — Pulling Real Images Apart
 
@@ -739,6 +747,8 @@ it, before using it as a discussion prompt. -->
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/rs-divider-satellites.jpg)
+
 
 # 6 — Satellites
 

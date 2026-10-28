@@ -55,6 +55,8 @@ The figure is the whole hour in one picture: there is a real elevation surface o
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ed-divider-surface.jpg)
+
 
 # Part 1
 ## What an elevation surface is
@@ -100,6 +102,8 @@ The values are real 150 m cells from the Timpanogos summit ridge (USGS 3DEP, NAD
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ed-divider-measured.jpg)
+
 
 # Part 2
 ## How elevation gets measured
@@ -109,6 +113,8 @@ The values are real 150 m cells from the Timpanogos summit ridge (USGS 3DEP, NAD
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ed-divider-lidar.jpg)
+
 
 # LiDAR
 
@@ -241,6 +247,8 @@ archaeology. -->
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/ed-divider-download.jpg)
+
 
 # Part 3
 ## Where to download digital elevation model data

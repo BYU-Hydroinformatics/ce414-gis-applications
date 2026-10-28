@@ -301,6 +301,8 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mba-divider-building.jpg)
+
 
 # Building a model in ArcGIS Pro
 
@@ -436,6 +438,8 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mba-divider-cities-rivers.jpg)
+
 
 # Example: Cities Near Rivers
 

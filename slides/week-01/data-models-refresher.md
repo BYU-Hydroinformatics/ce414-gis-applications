@@ -239,6 +239,8 @@ What are the **geometry characteristics** of each of these feature types?
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/dm-divider-encoding.jpg)
+
 
 # Part 2
 

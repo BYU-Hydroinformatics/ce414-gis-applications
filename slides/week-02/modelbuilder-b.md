@@ -215,6 +215,8 @@ Which one would you put in a model you have to hand to someone else? Why are the
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mbb-divider-save-hour.jpg)
+
 
 # First, three things that will save you an hour
 
@@ -294,6 +296,8 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mbb-divider-parameters.jpg)
+
 
 # Working with parameters
 
@@ -436,6 +440,8 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mbb-divider-documenting.jpg)
+
 
 # Documenting your model
 
@@ -504,6 +510,8 @@ How do you do it?
 ---
 
 <!-- _class: lead -->
+![bg right:55%](images/mbb-divider-clinic.jpg)
+
 
 # Lab 1 clinic
 
