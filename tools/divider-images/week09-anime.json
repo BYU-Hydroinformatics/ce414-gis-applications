@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ip-divider-gold",
+    "file": "ip-divider-gold.jpg",
+    "prompt": "A weathered woman prospector with a pickaxe over her shoulder stands at the edge of a vast empty desert valley, jaw set, scanning the ground; a cutaway below the surface reveals veins and nuggets of gold scattered unevenly through the rock where she cannot see them, a pack mule waits beside her, tense mood \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "9d87eed23c0c",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  },
+  {
+    "id": "ip-divider-valley",
+    "file": "ip-divider-valley.jpg",
+    "prompt": "A hiker with a wide-brimmed hat and backpack stands on a rocky ledge high above a wide valley of rolling hills, ridges and a winding river, holding a field notebook and shading his eyes, studying the land intently; a few small survey flags are planted far apart on hilltops and the valley floor below, sweeping wide view where the valley fills most of the frame \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "f6df37d1a28a",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  },
+  {
+    "id": "ip-divider-kriging",
+    "file": "ip-divider-kriging.jpg",
+    "prompt": "A sharp-eyed woman detective in a trench coat stands in a dim office before a large corkboard covered in pinned points joined by taut strings of many different lengths, one hand raised as if a pattern has just clicked, scattered papers and a cold cup of coffee, a single desk lamp casting hard shadows \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "bc220c1f249d",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  },
+  {
+    "id": "ip-divider-how-wrong",
+    "file": "ip-divider-how-wrong.jpg",
+    "prompt": "A nervous university student stands beside a carved terrain model on a lab table while a stern professor leans over it with a red pen, circling hilltops and valleys against a reference model, sweat drop on the student's temple, tense close-up drama \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "efacd8f28c14",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  },
+  {
+    "id": "ip-divider-which-trust",
+    "file": "ip-divider-which-trust.jpg",
+    "prompt": "An interrogation-room lineup: three slightly different miniature terrain models sit on pedestals under harsh overhead lights against a wall with horizontal height bands, while on the other side of a one-way glass window an engineer leans in close with narrowed eyes, trying to decide which one is telling the truth, noir lighting \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "06e3994140b5",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  },
+  {
+    "id": "ip-divider-explorer",
+    "file": "ip-divider-explorer.jpg",
+    "prompt": "A determined woman explorer with binoculars around her neck climbs the final ridge of a mountain whose surface is made of glowing points and grid squares, about to plant a plain flag at the summit, wind whipping her jacket; far below, a small base-camp tent with a laptop on a folding table, heroic upward angle \u2014 Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with luminous skies and atmospheric light, expressive adult characters with realistic proportions, cinematic composition, vivid but natural palette. Absolutely no text, speech bubbles, sound effects, signs, words, letters or numbers anywhere in the image.",
+    "size": "1024x1024",
+    "quality": "medium",
+    "model": "gpt-image-2.5-flare",
+    "sha256": "6dc09436df9f",
+    "note": "2026-10-27: anime replaces the meme cartoon (same scene); saved to slides/week-09/images as JPEG q85."
+  }
+]

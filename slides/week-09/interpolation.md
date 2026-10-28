@@ -383,7 +383,7 @@ li[data-bespoke-marp-fragment="active"] .sd-pop { display: inline-block; animati
 
 ## Gather observations that represent the spatial distribution of a variable — then predict that variable everywhere else
 
-<!-- The cartoon: a hiker trying to make out the shape of a whole valley from a few flagged spots, which is the job of everything that follows (regenerated October 26, 2026; prompt in tools/divider-images/week09.json). This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
+<!-- The divider art: a hiker trying to make out the shape of a whole valley from a few flagged spots, which is the job of everything that follows (anime style since October 27, 2026; prompt in tools/divider-images/week09-anime.json). This repeats the framing from earlier in the session, which is exactly what the source deck did: it restated the sampling/interpolation definition slide as the transition out of sampling designs and into interpolation methods. Everything from here on is the second half. -->
 
 ---
 
