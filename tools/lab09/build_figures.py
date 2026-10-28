@@ -2,7 +2,7 @@
 run_model.py leaves in C:\\Ames\\Lab08\\Check.gdb. Reuses the Lab 5 layout helpers.
 
     python build_figures.py
-Writes docs/assignments/lab-09/images/lab09-example-map-baseline.png and -scenario.png.
+Writes docs/assignments/lab-09/images/lab09-example-map-baseline.png.
 """
 import importlib.util
 import json
@@ -150,18 +150,14 @@ if __name__ == "__main__":
     st = prep()
     p = project()
     bf.p_global = p
-    b, s = st["Height_Base"], st["Height_Spline"]
+    b = st["Height_Base"]
     common = ["Example map, CE 414, October 2026. Projection: NAD 1983 UTM zone 12N, 10 m cells.",
               "Data: USGS 3DEP 1/3 arc-second DEM, tiles n44w114 and n44w113 (April 2026); reference outline derived from the DEM for CE 414; Idaho boundary from Esri.",
               "Plain rebuilt from 560 random points (seed 1) in a 1,500 m ring around the outline."]
-    vb = CV["baseline"]["volume_km3"]; vs = CV["methods"]["Spline"]["volume_km3"]
+    vb = CV["baseline"]["volume_km3"]
     layout(p, "Height_Base", f"Big Southern Butte: About {vb:.1f} Cubic Kilometers Above the Plain",
            "Height of the butte above a plain rebuilt by IDW (power 2, 12 points) beneath the reference outline",
            [f"Result: {vb:.3f} cubic km inside the 28.03 sq km outline; tallest cell {b['max']:.0f} m above the plain; mean height 183.5 m."] + common,
            "lab09-example-map-baseline.png")
-    layout(p, "Height_Spline", f"Big Southern Butte by Spline: About {vs:.1f} Cubic Kilometers",
-           "Changed: the plain rebuilt by a regularized spline (weight 0.1, 12 points) instead of IDW; same points, same outline",
-           [f"Result: the volume falls from {vb:.3f} to {vs:.3f} cubic km, and {s['neg']:,} cells (blue) sit below the plain the spline drew. "
-            "Chosen because the spline bulges up under the butte, where it has no points to hold it down."] + common,
-           "lab09-example-map-scenario.png")
+    # The spline scenario layout (Figure 10) was retired Oct 27, 2026: it published a Step 9 answer.
     p.save()

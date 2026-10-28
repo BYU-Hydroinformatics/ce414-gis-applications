@@ -66,6 +66,11 @@
     "volume_km3": 4.507
    }
   },
-  "summit_col": 1215
+  "summit_col": 1215,
+  "edge_fit_m_per_km": -5.39,
+  "edge_range_m": [
+   1554.8,
+   1588.9
+  ]
  }
 }

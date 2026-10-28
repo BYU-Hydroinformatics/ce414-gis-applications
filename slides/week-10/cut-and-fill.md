@@ -27,7 +27,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 10, written to be studied on your own: there is no class meeting this week, so everything you need is on the slides themselves. Thursday's deck is volumes with rasters and Lab 9 (Big Southern Butte); today is the same idea in the form every civil engineer meets first: how much soil a design moves. The title image is a hypothetical 150 m x 100 m level pad placed on the real Lab 5 DEM of Provo's east bench, colored by how far the ground must come down (red, cut) or go up (blue, fill). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-10-20</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -100,11 +100,11 @@ The same sum as Week 7's lake volumes and Lab 9's butte: **two surfaces, subtrac
 
 # Your Turn — Balance a Tiny Pad
 
-![bg right:35% w:94%](images/vo-pad-sweep.png)
+![bg right:35% w:90%](images/vo-tiny-grid.png)
 
 Nine 10 m cells of existing ground (m):
 
-| | | |
+| West | Middle | East |
 | --- | --- | --- |
 | 102 | 103 | 105 |
 | 101 | 102 | 104 |
@@ -115,17 +115,17 @@ Nine 10 m cells of existing ground (m):
 
 Work it on paper **before** you go on: the next slide has the answers.
 
-<!-- A made-up grid for hand practice. -->
+<!-- A made-up grid for hand practice; north is up. Figure: tools/week10_sketch_figures.py. -->
 
 ---
 
 # Check Your Work
 
-![bg right:35% w:94%](images/vo-pad-sweep.png)
+![bg right:35% w:90%](images/vo-tiny-grid-diff.png)
 
 Ground − 102 m, cell by cell:
 
-| | | |
+| West | Middle | East |
 | --- | --- | --- |
 | 0 | +1 | +3 |
 | −1 | 0 | +2 |
@@ -224,7 +224,7 @@ The grid gives **bank** volume (soil in place), not **loose** or **compacted**.
 **Self-check: Cut or Fill?** Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link under it.
 
 - Not graded, nothing recorded: a quick check that this deck made sense
-- Note the sign question; it is a common mistake in the report
+- Note the sign question; it is the easiest one to get backwards
 
 **Next**
 

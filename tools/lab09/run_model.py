@@ -1,5 +1,7 @@
 """Lab 9 reference run: the butte-volume model the students build, run with arcpy, plus the
-sensitivity runs. Writes tools/lab09/check_values.json.
+sensitivity runs. Writes tools/lab09/check_values.json (baseline checks, public) and the sensitivity
+runs to ../ce414-private/sensitivity/lab09_sensitivity.json (not public; a git-ignored
+sensitivity.json beside this script when that checkout is absent).
 
 Model: Create Random Points (in Points_Boundary, fixed seed) -> Extract Values to Points ->
 Erase (Butte_Boundary) -> interpolate the plain -> Extract by Mask (DEM and plain) ->
@@ -107,5 +109,9 @@ for d in (-200, -100, 100, 200):
     res["outline"][d] = r
     print("outline", d, r, flush=True)
 
+SENS_KEYS = ("methods", "counts", "seeds", "outline")
+priv = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "ce414-private", "sensitivity"))
+sens_out = os.path.join(priv, "lab09_sensitivity.json") if os.path.isdir(priv) else os.path.join(os.path.dirname(__file__), "sensitivity.json")
+json.dump({k: res.pop(k) for k in SENS_KEYS}, open(sens_out, "w"), indent=1)
 json.dump(res, open(OUT, "w"), indent=1)
 print(json.dumps({k: res[k] for k in ("seed_reproducible", "first_point", "baseline_points_kept", "baseline", "outline_km2", "butte_dem_max_m")}, indent=1))

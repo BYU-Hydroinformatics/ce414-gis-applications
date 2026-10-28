@@ -31,6 +31,8 @@ W = r"C:\Ames\Week10"
 if not arcpy.Exists(os.path.join(W, "w10.gdb")):
     arcpy.management.CreateFileGDB(W, "w10.gdb")
 G = os.path.join(W, "w10.gdb")
+arcpy.env.workspace = G
+arcpy.env.scratchWorkspace = G
 UTM = arcpy.SpatialReference(26912)
 NUM = {}
 plt.rcParams.update({"font.size": 13, "axes.spines.top": False, "axes.spines.right": False})
@@ -117,8 +119,8 @@ fig, ax = plt.subplots(figsize=(10, 5.2))
 ax.plot(zs, cut / 1000, color="#c05621", lw=3, label="cut (soil removed)")
 ax.plot(zs, fil / 1000, color="#2b6cb0", lw=3, label="fill (soil placed)")
 ax.axvline(zbal, color="#2d3748", ls="--")
-ax.text(zbal - 0.3, max(cut.max(), fil.max()) / 1000 * 0.62,
-        f"balance: {zbal:.1f} m\n= mean ground height\ncut = fill = {cut_b/1000:,.1f} thousand m³", ha="right")
+ax.text(zbal + 0.25, max(cut.max(), fil.max()) / 1000 * 0.97,
+        f"balance: {zbal:.1f} m\n= mean ground height\ncut = fill = {cut_b/1000:,.1f} thousand m³", ha="left", va="top")
 ax.set_xlabel("pad grade (m above sea level)"); ax.set_ylabel("volume (thousand m³)")
 ax.set_title("A 150 m × 100 m level pad on Provo's east bench (hypothetical)")
 ax.legend(frameon=False, loc="upper right")
@@ -196,6 +198,26 @@ ax.set_xlabel("distance (km)"); ax.set_ylabel("elevation (m)")
 ax.legend(frameon=False, loc="upper left")
 save(fig, "vo-butte-profile.png")
 NUM["butte"]["summit_col"] = int(c_)
+
+# plain tilt: elevation of the outline's edge cells against northing (the ground the base must follow)
+rows_e, cols_e = np.where(edge)
+north_km = (bdem.extent.YMax - (rows_e + 0.5) * 10) / 1000
+fit = np.polyfit(north_km, e, 1)
+NUM["butte"]["edge_fit_m_per_km"] = round(float(fit[0]), 2)
+NUM["butte"]["edge_range_m"] = [round(float(e.min()), 1), round(float(e.max()), 1)]
+fig, ax = plt.subplots(figsize=(10, 5))
+x0n = north_km.min()
+ax.scatter(north_km - x0n, e, s=4, color="#4a5568", alpha=0.5, label="edge cells of the outline")
+xx = np.linspace(north_km.min(), north_km.max(), 10)
+ax.plot(xx - x0n, np.polyval(fit, xx), color="#2b6cb0", lw=2.5,
+        label=f"straight-line trend: {fit[0]:+.1f} m per km northward")
+ax.axhline(planes["mean of the edge"], color="#2f855a", ls="--", lw=1.6,
+           label=f"one flat base ({planes['mean of the edge']:.0f} m)")
+ax.set_xlabel("distance north from the outline's southern tip (km)")
+ax.set_ylabel("elevation (m)")
+ax.set_title("The ground at the edge of the outline, south to north")
+ax.legend(frameon=False, loc="upper right")
+save(fig, "vo-butte-plain-tilt.png")
 
 json.dump(NUM, open(os.path.join(REPO, "tools", "week10_volume_numbers.json"), "w"), indent=1)
 print(json.dumps(NUM, indent=1))

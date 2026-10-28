@@ -12,8 +12,8 @@ from a GUI build in ArcGIS Pro 3.7.1 at 175 % on October 5, 2026 (C:\Ames\Lab09G
 Lab08GUI; Figures C, 0 and 3a were re-shot on October 10, 2026 from the renumbered copy, model
 ButteVolume, set up by tools/lab09/gui_project.py). ModelBuilder run 32 s; every check value
 reproduced (first point 337,632.58 E 4,806,349.71 N, 560 kept, 280,311 cells, 729.1 / 183.5 m, 53
-below, 5.145018 km3). A tool-dialog run at 250 points (1 min 10 s) gave 146 kept, 735.7 m, 0 below,
-5.2288 km3, matching check_values.json, and deleted every non-parameter output except Random_Points.
+below, 5.145018 km3). A tool-dialog run took about a minute, matched check_values.json, and deleted
+every non-parameter output except Random_Points.
 GUI facts: the environment is "Random Number Generator" (Seed, Generator = ACM collected algorithm 599)
 and the model-level seed reaches Create Random Points; the Cell Size list offers only map layers;
 choosing the outline map layer in Erase added a duplicate variable (model variable reads
@@ -37,7 +37,7 @@ Big Southern Butte rises about 760 m (2,500 ft) out of the flat lava plain of th
 River Plain in Idaho, west of Idaho Falls. It is a **rhyolite dome**: two lobes of thick,
 silica-rich lava that pushed up through the plain's basalt and merged about 300,000 years ago, and
 it is among the largest rhyolite domes in the world
-([USGS Yellowstone Volcano Observatory, 2023](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }).
+([Lifton, 2023](https://www.usgs.gov/observatories/yvo/news/big-buttes-eastern-snake-river-plain){ target="_blank" }).
 How much lava a dome holds is one of the numbers a volcanologist uses to compare eruptions, and
 nobody can weigh a mountain. They measure it from an elevation model.
 
@@ -394,7 +394,8 @@ erase, the outline's area, the volume, the tallest cell, and the number of cells
 Where to read each:
 
 - **Points kept:** the record count of that run's `Plain_Points` (open its attribute table).
-- **Outline area:** the outline's `Shape_Area` field, in square meters.
+- **Outline area:** the outline's `Shape_Area` field, in square meters; divide by 1,000,000 for the
+  table's square kilometers.
 - **Tallest cell:** that run's `Height_Above_Plain`, **Properties** ▸ **Source** ▸ **Statistics**,
   maximum.
 - **Cells below the plain:** Raster Calculator, `Con("Height_Above_Plain_n250" < 0, 1)` (use the
@@ -469,7 +470,7 @@ published April 7, 2026.
 
 ## Example Maps
 
-These are examples, not templates. Your maps carry your name, and your second map shows the run you
+This is an example, not a template. Your maps carry your name, and your second map shows the run you
 chose.
 
 ![Example baseline layout titled "Big Southern Butte: About 5.1 Cubic Kilometers Above the Plain": the height of the butte above the rebuilt plain inside the black reference outline, over a gray hillshade, in classes from pale yellow (0 to 50 m) at the edges through orange to dark red (600 to 750 m) at the two summit lobes. Below, an Idaho locator with an orange dot, a legend, north arrow, a scale bar in kilometers, and a text box: 5.145 cubic km inside the 28.03 sq km outline, tallest cell 729 m above the plain, mean height 183.5 m.](images/lab09-example-map-baseline.png)
@@ -477,10 +478,12 @@ chose.
 **Figure 9.** The baseline map. Two things to do better than this example: label the summit and
 one place on the plain, and show where the random points fell.
 
-![Example scenario layout titled "Big Southern Butte by Spline: About 4.5 Cubic Kilometers": the same design and color classes, with blue patches along the western, northern and northeastern edges of the outline where the ground is below the plain the spline drew, and less dark red at the summit. The text box says the volume falls from 5.145 to 4.481 cubic km and 11,963 cells sit below the plain, because the spline bulges up under the butte where it has no points to hold it down.](images/lab09-example-map-scenario.png)
+Your second map uses the same design and the same color classes as the first, so a reader can put the
+two side by side. Choose the Step 9 run that most changes what a reader would conclude, and say in the
+title and the text box what changed and by how much.
 
-**Figure 10.** The kind of second map Step 9 asks for. Your own second map should be the run that
-most changes what a reader would conclude, which may not be this one.
+<!-- Figure 10, an example spline scenario map, was removed on October 27, 2026: its title and text box
+gave away a Step 9 result. -->
 
 ## Rubric for Big Southern Butte
 
@@ -508,5 +511,5 @@ SOURCE: the September 3 migration of "Lab 10 - Big Southern Butte.docx" (docs/as
 CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
 DATA: docs/data/lab09-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab09.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab09/fetch_dem.py, make_outline.py, make_extract.py.
 SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 9).
-PILOT (no-GUI, 2026-10-05, C:\Ames\Pilot08\PILOT-REPORT.md): every check value reproduced from the student zip (volume 5.14502), and the Step 9 runs (250: 146 kept, 5.2288; 4,000: 2,302 kept, 5.0617; Spline 4.4811, 11,963 below) match. Fixed from its findings: Height_Above_Plain is now a model output (Step 7 split in two) and Plain_Points/Height_Above_Plain are output parameters so dialog runs keep what Step 9 and Map 2 need; Step 9 says where to read each table value (Con < 0 count verified: 53 baseline, 11,963 spline); four runs, not 'at least three'; own outline must be one polygon, reference layer turned off; seed promise removed; photo is Figure B; tools-you-know lab numbers corrected; columns x rows, edge NoData, ESE; Map 1 deliverable lists the rubric's elements. Still open: template link (build after review), the draft box citing PARITY_PLAN.md (removed at promotion).
+PILOT (no-GUI, 2026-10-05, C:\Ames\Pilot08\PILOT-REPORT.md): every check value reproduced from the student zip (volume 5.14502), and the Step 9 runs match the private oracle (ce414-private, plans/lab-sensitivity-2026.md). Fixed from its findings: Height_Above_Plain is now a model output (Step 7 split in two) and Plain_Points/Height_Above_Plain are output parameters so dialog runs keep what Step 9 and Map 2 need; Step 9 says where to read each table value (Con < 0 count verified); four runs, not 'at least three'; own outline must be one polygon, reference layer turned off; seed promise removed; photo is Figure B; tools-you-know lab numbers corrected; columns x rows, edge NoData, ESE; Map 1 deliverable lists the rubric's elements. Still open: template link (build after review), the draft box citing PARITY_PLAN.md (removed at promotion).
 GUI facts owed: the Random Numbers environment label and reach; exposing Number of Points; IDW's default cell size; dialog-run deletion of intermediates. -->
