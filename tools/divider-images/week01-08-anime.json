@@ -1,70 +1,306 @@
 [
- {"id": "dm-divider-encoding", "deck": "week-01/data-models-refresher.md", "slide": 14, "divider": "Part 2 — Encoding the world with numbers",
-  "prompt": "A woman cartographer stands on a hilltop at dusk as the landscape before her splits into three overlapping views: roads and rivers traced as glowing lines and points, farm fields resolved into a grid of colored squares, and the mountains rebuilt as a faceted mesh of triangles; she holds a stylus, awed"},
- {"id": "mba-divider-building", "deck": "week-02/modelbuilder-a.md", "slide": 14, "divider": "Building a model in ArcGIS Pro",
-  "prompt": "A young man at a computer-lab workstation late in the evening assembles a chain of glowing translucent boxes joined by arrows that float out of the monitor into the air, snapping them together like parts of a machine, focused half-smile, rows of monitors behind him"},
- {"id": "mba-divider-cities-rivers", "deck": "week-02/modelbuilder-a.md", "slide": 21, "divider": "Example: Cities Near Rivers",
-  "prompt": "Aerial view at golden hour of a broad river winding across a plain with several towns along its banks, a translucent glowing band hugging the river on both sides with the towns inside it lit up; a woman planner on a bluff in the foreground looks down at it holding a tablet"},
- {"id": "mbb-divider-save-hour", "deck": "week-02/modelbuilder-b.md", "slide": 9, "divider": "First, three things that will save you an hour",
-  "prompt": "A young man in a computer lab lunges to catch a falling hourglass an instant before it hits the floor, sand frozen in mid-air, dramatic motion, classmates turning from their monitors to look"},
- {"id": "mbb-divider-parameters", "deck": "week-02/modelbuilder-b.md", "slide": 14, "divider": "Working with parameters",
-  "prompt": "A woman engineer at a workbench watches a sprawling flowchart blueprint fold itself up in a swirl of light into a compact gleaming handheld instrument with dials, which she catches in one hand, workshop setting with tools on the wall"},
- {"id": "mbb-divider-documenting", "deck": "week-02/modelbuilder-b.md", "slide": 20, "divider": "Documenting your model",
-  "prompt": "A meticulous young man writes careful notes in a leather field notebook beside a monitor showing a diagram of connected boxes, colored tabs sticking out of every page, warm desk lamp, quiet late afternoon in an office"},
- {"id": "mbb-divider-clinic", "deck": "week-02/modelbuilder-b.md", "slide": 24, "divider": "Lab 1 clinic",
-  "prompt": "Two university students in a computer lab, a woman and a man, lean in side by side comparing their two monitors, one pointing at the other's screen, both focused, afternoon light through tall windows"},
- {"id": "ra-divider-grid", "deck": "week-03/raster-analysis-a.md", "slide": 4, "divider": "Part 1 — A raster is a grid of numbers",
-  "prompt": "A woman analyst in a dark room reaches toward a vast floating landscape made of thousands of glowing square tiles, each tile a slightly different brightness, a valley and mountains clearly visible in the mosaic"},
- {"id": "ra-divider-algebra", "deck": "week-03/raster-analysis-a.md", "slide": 9, "divider": "Part 2 — Map algebra",
-  "prompt": "Two enormous translucent grids of glowing square tiles hover over a desert landscape and slide together, merging into a third grid in a flash of light, while a young man below watches with one hand raised against the wind"},
- {"id": "ra-divider-ndvi", "deck": "week-03/raster-analysis-a.md", "slide": 18, "divider": "Part 3 — NDVI",
-  "prompt": "From the window of an orbiting spacecraft, an astronaut looks down at farm country where circular center-pivot fields glow vivid green against brown desert, sunlight across the curve of the Earth"},
- {"id": "rab-divider-neighbors", "deck": "week-03/raster-analysis-b.md", "slide": 3, "divider": "Beyond one cell",
-  "prompt": "A woman hiker stands on a single square paving stone in a vast plain paved with square stones; the stones around her glow in a small ring, larger patchwork regions beyond glow in different colors, and the whole field stretches to the horizon, sweeping wide shot from above"},
- {"id": "rab-divider-threshold", "deck": "week-03/raster-analysis-b.md", "slide": 10, "divider": "The threshold as a parameter",
-  "prompt": "A young man turns a large brass dial on a control panel while, through the big window behind him, a patchwork of farm fields brightens to green or fades to brown as the dial moves, tense focus, hand gripping the dial"},
- {"id": "rab-divider-exercise", "deck": "week-03/raster-analysis-b.md", "slide": 13, "divider": "The exercise",
-  "prompt": "A student stands before three tall arched windows in a gallery, each looking out on the same farm valley but with a different amount of green in the fields, hands on hips, comparing them thoughtfully"},
- {"id": "rs-divider-spectrum", "deck": "week-04/remote-sensing.md", "slide": 3, "divider": "1 — The Electromagnetic Spectrum",
-  "prompt": "A woman physicist holds a crystal prism up to a beam of sunlight in a dark observatory; the beam fans into a brilliant rainbow that continues past the visible colors into faint glowing bands on either side, her face lit with awe"},
- {"id": "rs-divider-multiband", "deck": "week-04/remote-sensing.md", "slide": 12, "divider": "3 — Multi-band Images",
-  "prompt": "A young man in a computer lab adjusts three sliders on a console while red, green and blue beams from three projectors converge on a large screen showing a landscape in false color, its vegetation glowing deep red"},
- {"id": "rs-divider-hyperspectral", "deck": "week-04/remote-sensing.md", "slide": 18, "divider": "4 — Hyperspectral Images",
-  "prompt": "A woman geologist kneels at a desert rock outcrop holding a handheld spectrometer, and the rock face behind her glows in hundreds of thin colored stripes of light like a fanned deck of cards"},
- {"id": "rs-divider-pulling-apart", "deck": "week-04/remote-sensing.md", "slide": 21, "divider": "5 — Pulling Real Images Apart",
-  "prompt": "An analyst at a light table lifts a single aerial photograph of a river delta, and it separates in his hands like layered tracing paper into several glowing tinted sheets that fan out in the air above the table"},
- {"id": "rs-divider-satellites", "deck": "week-04/remote-sensing.md", "slide": 28, "divider": "6 — Satellites",
-  "prompt": "An Earth-observing satellite glides over the curve of the Earth at dawn, solar panels catching the light, a faint scanning swath sweeping across clouds and coastline below, a second smaller satellite farther along its orbit"},
- {"id": "ed-divider-surface", "deck": "week-05/elevation-data-lidar.md", "slide": 3, "divider": "Part 1 — What an elevation surface is",
-  "prompt": "A woman climber stands on a summit at dawn as fog fills the valleys below in a perfectly smooth sea, the peaks poking through it like islands, as she studies the heights around her"},
- {"id": "ed-divider-measured", "deck": "week-05/elevation-data-lidar.md", "slide": 6, "divider": "Part 2 — How elevation gets measured",
-  "prompt": "A surveyor in a high-visibility vest bends to the eyepiece of a tripod-mounted instrument on a rocky ridge while a partner on the next hill holds a tall survey rod upright, wind and racing clouds"},
- {"id": "ed-divider-lidar", "deck": "week-05/elevation-data-lidar.md", "slide": 7, "divider": "LiDAR",
-  "prompt": "A small airplane flies low over a forested mountain at night, sweeping a fan of thin green laser pulses down through the tree canopy, where the pulses reveal the bare ground beneath as a glowing surface of points"},
- {"id": "ed-divider-download", "deck": "week-05/elevation-data-lidar.md", "slide": 16, "divider": "Part 3 — Where to download elevation data",
-  "prompt": "A woman engineer at a computer in a quiet library at night watches a glowing three-dimensional mountain range rise out of her monitor like a hologram, wooden map drawers behind her"},
- {"id": "wsa-divider-watershed", "deck": "week-06/watershed-delineation-a.md", "slide": 4, "divider": "Part 1 — What Is a Watershed, and Why Care?",
-  "prompt": "Rain falls on a mountain range from a dramatic storm cloud; glowing streams of water run down every slope and gather into one river flowing out of a canyon mouth, while a woman hydrologist in a rain jacket watches from a ridge"},
- {"id": "wsa-divider-flow-direction", "deck": "week-06/watershed-delineation-a.md", "slide": 13, "divider": "Part 2 — From a DEM to Flow Direction",
-  "prompt": "A young man kneels on a hillside and lets a single drop of water fall from his fingertip; it rolls downhill across ground faintly drawn as a grid of square cells, each cell glowing toward its lowest neighbor, close dramatic angle"},
- {"id": "wsb-divider-manual", "deck": "week-06/watershed-delineation-b.md", "slide": 3, "divider": "Part 1 — Manual Watershed Delineation",
-  "prompt": "A woman hydrologist leans over a large paper topographic map on a drafting table, tracing a ridgeline around a valley with a red pencil, unlabeled contour lines covering the map, warm lamp light"},
- {"id": "wsb-divider-finish", "deck": "week-06/watershed-delineation-b.md", "slide": 12, "divider": "Part 2 — Finish the Model in ArcGIS Pro",
-  "prompt": "A young man at a computer-lab desk presses the final key as, on the large screen, a river network branches across the terrain and a watershed outline lights up, fist clenched in triumph, classmates in the background"},
- {"id": "flm-divider-two-ways", "deck": "week-08/flood-models.md", "slide": 5, "divider": "Part 1 — Two Ways to Draw the Flood",
-  "prompt": "Split composition of the same flooded river town: on one side engineers in a field tent pore over river cross-section drawings and gauges, on the other a woman analyst points at a glowing elevation map where blue water fills the low ground"},
- {"id": "flm-divider-hand", "deck": "week-08/flood-models.md", "slide": 8, "divider": "Part 2 — HAND, Height Above Nearest Drainage",
-  "prompt": "A woman hydrologist on a riverbank holds a tall measuring rod upright from the water's edge, and a vertical beam of light rises from the river to a house on a terrace above, showing its height above the water, river valley at sunset"},
- {"id": "flm-divider-model", "deck": "week-08/flood-models.md", "slide": 16, "divider": "Part 3 — The Lab 7 Model",
-  "prompt": "A student in a computer lab watches a chain of glowing boxes and arrows on the monitor light up one by one, each feeding the next, ending in a blue flood extent spreading across a map of a river valley, intense focus"},
- {"id": "fl-divider-measuring-flow", "deck": "week-08/hand.md", "slide": 3, "divider": "Part 1 — Measuring Flow in Rivers",
-  "prompt": "A hydrologist in chest waders stands waist-deep in a rushing mountain river holding a current meter on a wading rod, braced against the current, spray in the air, a trout leaping nearby, total determination"},
- {"id": "fl-divider-how-big", "deck": "week-08/hand.md", "slide": 9, "divider": "Part 2 — How Big Is the Flood?",
-  "prompt": "A dark storm cloud towers over a small river town at dusk, lightning in the distance, the river swelling under a stone bridge as residents stack sandbags and look up at the sky"},
- {"id": "fl-divider-how-good", "deck": "week-08/hand.md", "slide": 14, "divider": "Part 3 — How Good Is HAND?",
-  "prompt": "A showdown in a data center: a towering bank of humming supercomputers glows on one side, while on the other a lone woman analyst with a laptop calmly turns her screen around to show a flood map nearly identical to the one on the big display, confident smirk"},
- {"id": "fl-divider-modelbuilder-tips", "deck": "week-08/hand.md", "slide": 19, "divider": "Part 4 — Final Tips for Lab 7 in ModelBuilder",
-  "prompt": "A college student in a computer lab sits surrounded by a tangle of glowing flowchart boxes and arrows spilling out of the monitor, calmly pulling one correct arrow free with a triumphant grin, coffee cups on the desk"},
- {"id": "fl-divider-lab-due", "deck": "week-08/hand.md", "slide": 24, "divider": "Part 5 — Lab 7, Due Saturday",
-  "prompt": "A college student types steadily at a computer-lab desk while floodwater rises around the chair legs and a rubber duck floats past, completely unshaken, late-night lighting"}
+ {
+  "id": "dm-divider-encoding",
+  "deck": "week-01/data-models-refresher.md",
+  "slide": 15,
+  "divider": "Part 2 — Encoding the world with numbers",
+  "prompt": "A woman cartographer stands on a hilltop at dusk as the landscape before her splits into three overlapping views: roads and rivers traced as glowing lines and points, farm fields resolved into a grid of colored squares, and the mountains rebuilt as a faceted mesh of triangles; she holds a stylus, awed"
+ },
+ {
+  "id": "dm-divider-what-model",
+  "deck": "week-01/data-models-refresher.md",
+  "divider": "Part 1 — What Is a Data Model?",
+  "prompt": "A young man stands on a stone bridge over a mountain river holding up a small carved wooden scale model of the same river valley, comparing the miniature with the real river flowing below, thoughtful expression, morning light"
+ },
+ {
+  "id": "mba-divider-building",
+  "deck": "week-02/modelbuilder-a.md",
+  "slide": 14,
+  "divider": "Building a model in ArcGIS Pro",
+  "prompt": "A young man at a computer-lab workstation late in the evening assembles a chain of glowing translucent boxes joined by arrows that float out of the monitor into the air, snapping them together like parts of a machine, focused half-smile, rows of monitors behind him"
+ },
+ {
+  "id": "mba-divider-cities-rivers",
+  "deck": "week-02/modelbuilder-a.md",
+  "slide": 21,
+  "divider": "Example: Cities Near Rivers",
+  "prompt": "Aerial view at golden hour of a broad river winding across a plain with several towns along its banks, a translucent glowing band hugging the river on both sides with the towns inside it lit up; a woman planner on a bluff in the foreground looks down at it holding a tablet"
+ },
+ {
+  "id": "mbb-divider-save-hour",
+  "deck": "week-02/modelbuilder-b.md",
+  "slide": 9,
+  "divider": "First, three things that will save you an hour",
+  "prompt": "A young man in a computer lab lunges to catch a falling hourglass an instant before it hits the floor, sand frozen in mid-air, dramatic motion, classmates turning from their monitors to look"
+ },
+ {
+  "id": "mbb-divider-parameters",
+  "deck": "week-02/modelbuilder-b.md",
+  "slide": 14,
+  "divider": "Working with parameters",
+  "prompt": "A woman engineer at a workbench watches a sprawling flowchart blueprint fold itself up in a swirl of light into a compact gleaming handheld instrument with dials, which she catches in one hand, workshop setting with tools on the wall"
+ },
+ {
+  "id": "mbb-divider-documenting",
+  "deck": "week-02/modelbuilder-b.md",
+  "slide": 20,
+  "divider": "Documenting your model",
+  "prompt": "A meticulous young man writes careful notes in a leather field notebook beside a monitor showing a diagram of connected boxes, colored tabs sticking out of every page, warm desk lamp, quiet late afternoon in an office"
+ },
+ {
+  "id": "mbb-divider-clinic",
+  "deck": "week-02/modelbuilder-b.md",
+  "slide": 24,
+  "divider": "Lab 1 clinic",
+  "prompt": "Two university students in a computer lab, a woman and a man, lean in side by side comparing their two monitors, one pointing at the other's screen, both focused, afternoon light through tall windows"
+ },
+ {
+  "id": "ra-divider-grid",
+  "deck": "week-03/raster-analysis-a.md",
+  "slide": 4,
+  "divider": "Part 1 — A raster is a grid of numbers",
+  "prompt": "A woman analyst in a dark room reaches toward a vast floating landscape made of thousands of glowing square tiles, each tile a slightly different brightness, a valley and mountains clearly visible in the mosaic"
+ },
+ {
+  "id": "ra-divider-algebra",
+  "deck": "week-03/raster-analysis-a.md",
+  "slide": 9,
+  "divider": "Part 2 — Map algebra",
+  "prompt": "Two enormous translucent grids of glowing square tiles hover over a desert landscape and slide together, merging into a third grid in a flash of light, while a young man below watches with one hand raised against the wind"
+ },
+ {
+  "id": "ra-divider-ndvi",
+  "deck": "week-03/raster-analysis-a.md",
+  "slide": 18,
+  "divider": "Part 3 — NDVI",
+  "prompt": "From the window of an orbiting spacecraft, an astronaut looks down at farm country where circular center-pivot fields glow vivid green against brown desert, sunlight across the curve of the Earth"
+ },
+ {
+  "id": "rab-divider-neighbors",
+  "deck": "week-03/raster-analysis-b.md",
+  "slide": 3,
+  "divider": "Beyond one cell",
+  "prompt": "A woman hiker stands on a single square paving stone in a vast plain paved with square stones; the stones around her glow in a small ring, larger patchwork regions beyond glow in different colors, and the whole field stretches to the horizon, sweeping wide shot from above"
+ },
+ {
+  "id": "rab-divider-threshold",
+  "deck": "week-03/raster-analysis-b.md",
+  "slide": 10,
+  "divider": "The threshold as a parameter",
+  "prompt": "A young man turns a large brass dial on a control panel while, through the big window behind him, a patchwork of farm fields brightens to green or fades to brown as the dial moves, tense focus, hand gripping the dial"
+ },
+ {
+  "id": "rab-divider-exercise",
+  "deck": "week-03/raster-analysis-b.md",
+  "slide": 13,
+  "divider": "The exercise",
+  "prompt": "A student stands before three tall arched windows in a gallery, each looking out on the same farm valley but with a different amount of green in the fields, hands on hips, comparing them thoughtfully"
+ },
+ {
+  "id": "rs-divider-spectrum",
+  "deck": "week-04/remote-sensing.md",
+  "slide": 3,
+  "divider": "1 — The Electromagnetic Spectrum",
+  "prompt": "A woman physicist holds a crystal prism up to a beam of sunlight in a dark observatory; the beam fans into a brilliant rainbow that continues past the visible colors into faint glowing bands on either side, her face lit with awe"
+ },
+ {
+  "id": "rs-divider-multiband",
+  "deck": "week-04/remote-sensing.md",
+  "slide": 12,
+  "divider": "3 — Multi-band Images",
+  "prompt": "A young man in a computer lab adjusts three sliders on a console while red, green and blue beams from three projectors converge on a large screen showing a landscape in false color, its vegetation glowing deep red"
+ },
+ {
+  "id": "rs-divider-hyperspectral",
+  "deck": "week-04/remote-sensing.md",
+  "slide": 18,
+  "divider": "4 — Hyperspectral Images",
+  "prompt": "A woman geologist kneels at a desert rock outcrop holding a handheld spectrometer, and the rock face behind her glows in hundreds of thin colored stripes of light like a fanned deck of cards"
+ },
+ {
+  "id": "rs-divider-pulling-apart",
+  "deck": "week-04/remote-sensing.md",
+  "slide": 21,
+  "divider": "5 — Pulling Real Images Apart",
+  "prompt": "An analyst at a light table lifts a single aerial photograph of a river delta, and it separates in his hands like layered tracing paper into several glowing tinted sheets that fan out in the air above the table"
+ },
+ {
+  "id": "rs-divider-satellites",
+  "deck": "week-04/remote-sensing.md",
+  "slide": 28,
+  "divider": "6 — Satellites",
+  "prompt": "An Earth-observing satellite glides over the curve of the Earth at dawn, solar panels catching the light, a faint scanning swath sweeping across clouds and coastline below, a second smaller satellite farther along its orbit"
+ },
+ {
+  "id": "geo-divider-problem",
+  "deck": "week-04/georectifying-images.md",
+  "divider": "Part 1 — A Map With No Coordinates",
+  "prompt": "A woman geotechnical engineer in a field office holds an old printed paper map of a coastal city beside her laptop, which shows a satellite view of a coastline, her brow furrowed as she tries to work out where the paper map fits on the Earth"
+ },
+ {
+  "id": "geo-divider-meaning",
+  "deck": "week-04/georectifying-images.md",
+  "divider": "Part 2 — What It Means to Georectify",
+  "prompt": "A young man pins the corners of a large translucent old aerial photograph onto a glowing map grid floating in the air; the photograph stretches and bends until its rivers and roads line up exactly with the glowing lines beneath it"
+ },
+ {
+  "id": "geo-divider-in-pro",
+  "deck": "week-04/georectifying-images.md",
+  "divider": "Part 3 — Georeferencing in ArcGIS Pro",
+  "prompt": "Two students in a computer lab, a woman and a man, work side by side: on one monitor glowing pins mark spots on a scanned paper map, and matching pins light up on a satellite image on the second monitor, both concentrating"
+ },
+ {
+  "id": "ed-divider-surface",
+  "deck": "week-05/elevation-data-lidar.md",
+  "slide": 3,
+  "divider": "Part 1 — What an elevation surface is",
+  "prompt": "A woman climber stands on a summit at dawn as fog fills the valleys below in a perfectly smooth sea, the peaks poking through it like islands, as she studies the heights around her"
+ },
+ {
+  "id": "ed-divider-measured",
+  "deck": "week-05/elevation-data-lidar.md",
+  "slide": 6,
+  "divider": "Part 2 — How elevation gets measured",
+  "prompt": "A surveyor in a high-visibility vest bends to the eyepiece of a tripod-mounted instrument on a rocky ridge while a partner on the next hill holds a tall survey rod upright, wind and racing clouds"
+ },
+ {
+  "id": "ed-divider-lidar",
+  "deck": "week-05/elevation-data-lidar.md",
+  "slide": 7,
+  "divider": "LiDAR",
+  "prompt": "A small airplane flies low over a forested mountain at night, sweeping a fan of thin green laser pulses down through the tree canopy, where the pulses reveal the bare ground beneath as a glowing surface of points"
+ },
+ {
+  "id": "ed-divider-download",
+  "deck": "week-05/elevation-data-lidar.md",
+  "slide": 16,
+  "divider": "Part 3 — Where to download elevation data",
+  "prompt": "A woman engineer at a computer in a quiet library at night watches a glowing three-dimensional mountain range rise out of her monitor like a hologram, wooden map drawers behind her"
+ },
+ {
+  "id": "ta-divider-seeing",
+  "deck": "week-05/terrain-analysis.md",
+  "divider": "Part 1 — Seeing the Terrain",
+  "prompt": "A woman hiker stands on a high ridge at sunrise as low raking sunlight casts long shadows across the mountains below, picking out every ridge, gully and fold of the land in light and shade"
+ },
+ {
+  "id": "ta-divider-slope",
+  "deck": "week-05/terrain-analysis.md",
+  "divider": "Part 2 — Slope, Aspect and Curvature",
+  "prompt": "A young man trail runner pauses on a steep mountainside, one foot braced uphill, looking straight down the fall line of the slope, while across the valley the sunny south-facing hillsides glow and the north-facing ones sit in cool shade"
+ },
+ {
+  "id": "ta-divider-viewshed",
+  "deck": "week-05/terrain-analysis.md",
+  "divider": "Part 3 — Viewsheds",
+  "prompt": "A fire lookout tower on a mountain summit at dusk, a woman ranger inside sweeping a powerful searchlight beam across the valleys; the ridges block the light, leaving some valleys hidden in deep shadow"
+ },
+ {
+  "id": "wsa-divider-watershed",
+  "deck": "week-06/watershed-delineation-a.md",
+  "slide": 4,
+  "divider": "Part 1 — What Is a Watershed, and Why Care?",
+  "prompt": "Rain falls on a mountain range from a dramatic storm cloud; glowing streams of water run down every slope and gather into one river flowing out of a canyon mouth, while a woman hydrologist in a rain jacket watches from a ridge"
+ },
+ {
+  "id": "wsa-divider-flow-direction",
+  "deck": "week-06/watershed-delineation-a.md",
+  "slide": 13,
+  "divider": "Part 2 — From a DEM to Flow Direction",
+  "prompt": "A young man kneels on a hillside and lets a single drop of water fall from his fingertip; it rolls downhill across ground faintly drawn as a grid of square cells, each cell glowing toward its lowest neighbor, close dramatic angle"
+ },
+ {
+  "id": "wsb-divider-manual",
+  "deck": "week-06/watershed-delineation-b.md",
+  "slide": 3,
+  "divider": "Part 1 — Manual Watershed Delineation",
+  "prompt": "A woman hydrologist leans over a large paper topographic map on a drafting table, tracing a ridgeline around a valley with a red pencil, unlabeled contour lines covering the map, warm lamp light"
+ },
+ {
+  "id": "wsb-divider-finish",
+  "deck": "week-06/watershed-delineation-b.md",
+  "slide": 12,
+  "divider": "Part 2 — Finish the Model in ArcGIS Pro",
+  "prompt": "A young man at a computer-lab desk presses the final key as, on the large screen, a river network branches across the terrain and a watershed outline lights up, fist clenched in triumph, classmates in the background"
+ },
+ {
+  "id": "lb-divider-lake-bottom",
+  "deck": "week-07/lake-bathymetry.md",
+  "divider": "Part 1 — The Lake and Its Bottom",
+  "prompt": "A small survey boat crosses a vast shallow salt lake at dawn, a woman scientist aboard watching a fan of sonar beams sweep down to reveal the smooth lake bed beneath, white salt flats and distant mountains along the shore"
+ },
+ {
+  "id": "lb-divider-iterators",
+  "deck": "week-07/lake-bathymetry.md",
+  "divider": "Part 2 — Running a Model Many Times",
+  "prompt": "A young man in a computer lab watches a glowing diagram of connected boxes on his monitor repeat itself in a spiral of copies, each copy drawing a slightly larger shoreline ring around a lake on the screen"
+ },
+ {
+  "id": "lde-divider-reading",
+  "deck": "week-07/lake-depth-explorer.md",
+  "divider": "Part 1 — Reading the Model",
+  "prompt": "A woman student leans close to her monitor, tracing a glowing chain of connected boxes with one finger; a single connection between two boxes is missing and flickers, and a desert reservoir is visible through the window behind her"
+ },
+ {
+  "id": "lde-divider-powell",
+  "deck": "week-07/lake-depth-explorer.md",
+  "divider": "Part 2 — Lab 6 at Lake Powell",
+  "prompt": "A houseboat on a deep-blue desert reservoir surrounded by towering red sandstone canyon walls, a pale band on the cliffs showing where the water once stood; a young man on deck shades his eyes and looks up at the band"
+ },
+ {
+  "id": "flm-divider-two-ways",
+  "deck": "week-08/flood-models.md",
+  "slide": 5,
+  "divider": "Part 1 — Two Ways to Draw the Flood",
+  "prompt": "Split composition of the same flooded river town: on one side engineers in a field tent pore over river cross-section drawings and gauges, on the other a woman analyst points at a glowing elevation map where blue water fills the low ground"
+ },
+ {
+  "id": "flm-divider-hand",
+  "deck": "week-08/flood-models.md",
+  "slide": 8,
+  "divider": "Part 2 — HAND, Height Above Nearest Drainage",
+  "prompt": "A woman hydrologist on a riverbank holds a tall measuring rod upright from the water's edge, and a vertical beam of light rises from the river to a house on a terrace above, showing its height above the water, river valley at sunset"
+ },
+ {
+  "id": "flm-divider-model",
+  "deck": "week-08/flood-models.md",
+  "slide": 16,
+  "divider": "Part 3 — The Lab 7 Model",
+  "prompt": "A student in a computer lab watches a chain of glowing boxes and arrows on the monitor light up one by one, each feeding the next, ending in a blue flood extent spreading across a map of a river valley, intense focus"
+ },
+ {
+  "id": "fl-divider-measuring-flow",
+  "deck": "week-08/hand.md",
+  "slide": 3,
+  "divider": "Part 1 — Measuring Flow in Rivers",
+  "prompt": "A hydrologist in chest waders stands waist-deep in a rushing mountain river holding a current meter on a wading rod, braced against the current, spray in the air, a trout leaping nearby, total determination"
+ },
+ {
+  "id": "fl-divider-how-big",
+  "deck": "week-08/hand.md",
+  "slide": 9,
+  "divider": "Part 2 — How Big Is the Flood?",
+  "prompt": "A dark storm cloud towers over a small river town at dusk, lightning in the distance, the river swelling under a stone bridge as residents stack sandbags and look up at the sky"
+ },
+ {
+  "id": "fl-divider-how-good",
+  "deck": "week-08/hand.md",
+  "slide": 14,
+  "divider": "Part 3 — How Good Is HAND?",
+  "prompt": "A showdown in a data center: a towering bank of humming supercomputers glows on one side, while on the other a lone woman analyst with a laptop calmly turns her screen around to show a flood map nearly identical to the one on the big display, confident smirk"
+ },
+ {
+  "id": "fl-divider-modelbuilder-tips",
+  "deck": "week-08/hand.md",
+  "slide": 19,
+  "divider": "Part 4 — Final Tips for Lab 7 in ModelBuilder",
+  "prompt": "A college student in a computer lab sits surrounded by a tangle of glowing flowchart boxes and arrows spilling out of the monitor, calmly pulling one correct arrow free with a triumphant grin, coffee cups on the desk"
+ },
+ {
+  "id": "fl-divider-lab-due",
+  "deck": "week-08/hand.md",
+  "slide": 24,
+  "divider": "Part 5 — Lab 7, Due Saturday",
+  "prompt": "A college student types steadily at a computer-lab desk while floodwater rises around the chair legs and a rubber duck floats past, completely unshaken, late-night lighting"
+ }
 ]

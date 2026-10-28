@@ -9,8 +9,9 @@ comment:
 ```
 
 Each JSON file here lists the scene prompt for every divider image in a set of decks:
-`week01-08-anime.json`, `week09-anime.json` and `week10-12-anime.json`. The scene prompts omit the
-style; every image gets the same style suffix:
+`week01-08-anime.json`, `week09-anime.json`, `week10-12-anime.json` and `week13-anime.json`.
+`figures-anime.json` holds the few content figures (not dividers) redrawn in the same style. The
+scene prompts omit the style; every image gets the same style suffix:
 
 > — Modern Japanese anime film still, full color: clean cel shading, soft painterly backgrounds with
 > luminous skies and atmospheric light, expressive adult characters with realistic proportions,

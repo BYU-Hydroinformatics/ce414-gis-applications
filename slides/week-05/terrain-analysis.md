@@ -51,6 +51,16 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/ta-divider-seeing.jpg)
+
+# Part 1 — Seeing the Terrain
+
+<!-- Part 1: describing terrain, scale, shaded relief and contours. -->
+
+---
+
 # Describe the terrain
 
 <style scoped>
@@ -211,6 +221,16 @@ td img { height: 50px; display: block; }
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/ta-divider-slope.jpg)
+
+# Part 2 — Slope, Aspect and Curvature
+
+<!-- Part 2: slope (the 3D idea, then on a grid), aspect, and curvature. -->
+
+---
+
 # Slope
 
 ![bg right:34% w:88%](images/ta-slope-rise-run.png)
@@ -352,6 +372,16 @@ $$
 <!-- Curvature is the second derivative of the surface, fitted from the same 3 x 3 window. Profile curvature controls whether flow accelerates or decelerates downslope; plan curvature controls whether it converges into a hollow or spreads over a nose. Together they predict where water and sediment collect. -->
 
 <!-- TODO(instructor): curvature is the most scale-sensitive of these surfaces — the second derivative amplifies DEM noise, so a 1 m lidar DEM and a 30 m DEM give qualitatively different curvature maps. Decide how to make that point, and whether to require smoothing before curvature in the lab. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/ta-divider-viewshed.jpg)
+
+# Part 3 — Viewsheds
+
+<!-- Part 3: viewsheds, the rotating searchlight, and what they are used for. -->
 
 ---
 

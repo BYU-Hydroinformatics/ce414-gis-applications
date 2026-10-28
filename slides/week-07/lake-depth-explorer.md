@@ -52,6 +52,16 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/lde-divider-reading.jpg)
+
+# Part 1 — Reading the Model
+
+<!-- Part 1: reading the iterator model, its labels, values, loose ends, and what one run gives you. -->
+
+---
+
 # Reading the Model: Labels, Values and the Missing Line
 
 ![bg right:46% w:96%](images/lb-full-model.svg)
@@ -86,6 +96,16 @@ By the end of class you should be able to:
 
 <!-- The attribute table of powell_shorelines_3500_3700_10 from the GUI-built model (October 2, 2026): 75.65 sq mi at 3,500 ft, 103.93 at 3,550, the same as the arcpy run on the slide after next. A full run took about 4.5 minutes in ModelBuilder on the build machine. -->
 
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/lde-divider-powell.jpg)
+
+# Part 2 — Lab 6 at Lake Powell
+
+<!-- Part 2: Lab 6 at a glance, the two runs, what the grader checks, and the live run. -->
 
 ---
 

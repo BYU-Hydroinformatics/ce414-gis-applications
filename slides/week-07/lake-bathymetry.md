@@ -47,6 +47,16 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/lb-divider-lake-bottom.jpg)
+
+# Part 1 — The Lake and Its Bottom
+
+<!-- Part 1: the Great Salt Lake as a terminal lake, how its bottom was mapped, datums, and the elevation-area-volume curves. -->
+
+---
+
 # Where Rock Canyon's Water Ends Up
 
 ![h:420 center](images/lb-gsl-subregion.jpg)
@@ -168,6 +178,16 @@ By the end of class you should be able to:
 
 <!-- The table is in the USGS data release (doi:10.5066/P9DGG75W), file for the whole lake; it has both NAVD88 and NGVD29 columns. Answers from the table: 1,602.4 − 894.2 = 708.2 sq mi exposed between 4,200 and 4,188.5 ft; from 4,189.7 ft (929.7 sq mi) a further 100 sq mi is exposed by about 4,186.4 ft (829.5 sq mi), a drop of about 3.3 ft — have students find it themselves (checked against the CSV, October 1, 2026). -->
 <!-- The CSV is the release's Great_Salt_Lake_2023_ElevAreaVolume_total.csv, hosted unchanged as docs/data/week07-gsl-elevation-area-volume.csv (public domain, 481 KB, 4,501 rows at 0.01 ft from 4,170 to 4,215 ft NAVD88; NGVD29 = NAVD88 - 3.48 ft). Answers re-checked against it October 2, 2026: 1,602.35 sq mi at 4,200 ft and 894.20 at 4,188.5 ft NGVD29. TODO(instructor): create the matching Learning Suite activity (replaces the old Week 7 "Practicing Hydrology Tools" item). -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/lb-divider-iterators.jpg)
+
+# Part 2 — Running a Model Many Times
+
+<!-- Part 2: the tool students build, why one run is not enough, and the For iterator. -->
 
 ---
 

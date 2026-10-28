@@ -42,6 +42,16 @@ write the recipe. The cookie model from Week 2 is a deliberate callback. -->
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/fp-divider-project.jpg)
+
+# Part 1 — What the Project Is
+
+<!-- Part 1: why a final project, past projects, the requirements, and what lab-sized means. -->
+
+---
+
 # Why a final project?
 
 Every lab this semester gave you a **question**, the **data**, and a **recipe**.
@@ -164,6 +174,16 @@ that is still doable with buffers and raster density. -->
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/fp-divider-choosing.jpg)
+
+# Part 2 — Choosing a Problem
+
+<!-- Part 2: the three questions for choosing a problem and the data-feasibility check. -->
+
+---
+
 # Choosing a problem — three questions
 
 **1. Can I say the question in one sentence?**
@@ -192,6 +212,16 @@ If any row is blank, you are not ready to pitch.
 
 <!-- This table is the single most useful thing a team can bring to the meeting. Most failed
 projects failed on a data row, not on the analysis. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/fp-divider-deliverables.jpg)
+
+# Part 3 — Deliverables and Scoring
+
+<!-- Part 3: the proposal meeting, milestones, the presentation, the tool interface, peer scoring, and what makes a project great. -->
 
 ---
 

@@ -53,6 +53,16 @@ Brigham Young University
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/dm-divider-what-model.jpg)
+
+# Part 1 — What Is a Data Model?
+
+<!-- Part 1: what a model is, what a data model is, and the river examples. Part 2 starts at the vector/raster/TIN divider. -->
+
+---
+
 # Dr. Ames' Definition
 
 <div style="background:#f0b323;color:#22262e;border-radius:14px;padding:1.4em 1.6em;margin:0.8em auto;max-width:880px;text-align:center;">

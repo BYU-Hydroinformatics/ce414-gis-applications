@@ -64,6 +64,16 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: lead -->
+
+![bg right:55%](images/geo-divider-problem.jpg)
+
+# Part 1 — A Map With No Coordinates
+
+<!-- Part 1: the research problem, a published map figure that has to become GIS data, and the demo that any image can be placed. -->
+
+---
+
 # Problem…
 
 <div class="columns">
@@ -142,6 +152,16 @@ By the end of class you should be able to:
 <!-- The joke slide, and a real demo. Georeference the piece of chicken over a map of Great Britain in front of the class: pick control points at Land's End, the tip of Scotland, and East Anglia, and let students watch the image warp into place. The lesson underneath the joke is that the software will happily georeference anything you give it, so the judgment about what makes a valid control point is yours. -->
 
 <!-- TODO(instructor): the source image is a Daily Mail photo. Confirm the rights before this deck is published to a public site, or swap in a substitute. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/geo-divider-meaning.jpg)
+
+# Part 2 — What It Means to Georectify
+
+<!-- Part 2: what georectifying does, which images can be georeferenced, and why you would do it. -->
 
 ---
 
@@ -305,6 +325,16 @@ You are handed an aerial photo of a cemetery taken from an airplane. You want to
 <!-- Same three steps, a completely different source image. The point of pairing these two slides is that the workflow does not care whether the source is a drawn map or a photograph. The orange polylines draw themselves one after another when the slide comes up: that is the digitizing step, traced off a photo that has already been georectified. -->
 
 <!-- TODO(instructor): the source slide read "You want to analyze the fault lines in GIS" — copied from the previous fault-map slide but shown over the cemetery orthophoto. Corrected here to "map the features on it." Name the cemetery features you actually want (roads, plots, tree canopy?) if you want the example to stay concrete. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/geo-divider-in-pro.jpg)
+
+# Part 3 — Georeferencing in ArcGIS Pro
+
+<!-- Part 3: the follow-along in ArcGIS Pro: control points, the transformation, and the residual error. -->
 
 ---
 

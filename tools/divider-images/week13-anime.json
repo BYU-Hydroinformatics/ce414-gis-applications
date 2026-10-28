@@ -1,0 +1,20 @@
+[
+ {
+  "id": "fp-divider-project",
+  "deck": "week-13/final-project-introduction.md",
+  "divider": "Part 1 — What the Project Is",
+  "prompt": "A team of four university students gathers around a large table covered with printed maps and laptops in a bright study room, debating with energy, one leaning over a map pointing at a river valley"
+ },
+ {
+  "id": "fp-divider-choosing",
+  "deck": "week-13/final-project-introduction.md",
+  "divider": "Part 2 — Choosing a Problem",
+  "prompt": "A woman student stands where a mountain trail splits three ways at sunset, each path leading toward a different landscape below: a city, a river valley and a broad farm plain, as she weighs which one to take"
+ },
+ {
+  "id": "fp-divider-deliverables",
+  "deck": "week-13/final-project-introduction.md",
+  "divider": "Part 3 — Deliverables and Scoring",
+  "prompt": "A team of three students presents at the front of a lecture hall, a large colorful map projected on the screen behind them, one gesturing to it confidently while classmates in the seats lean forward with interest"
+ }
+]
