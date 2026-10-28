@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 11. Tuesday built the idea from the original least cost path lecture: a cost surface, the accumulated cost and back link rasters, a path walked home from the destination. Today: the tools ArcGIS Pro wants you to use now, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-10-21</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
