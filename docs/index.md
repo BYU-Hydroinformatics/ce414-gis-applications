@@ -108,3 +108,8 @@ The lab handouts are linked from the week each lab is due. The
 > still carrying instructor review notes from the conversion. See the
 > [roadmap](https://github.com/BYU-Hydroinformatics/ce414-gis-applications/blob/main/ROADMAP.md)
 > for what has moved and what has not.
+
+> [!NOTE]
+> **Curious about the images in these slides?** The illustrations on the section dividers and in a
+> few activities were made with Claude and ChatGPT from Dr. Ames's ideas and feedback, in the style
+> of a modern Japanese anime film. The ArcGIS Pro screenshots are real captures, not generated.

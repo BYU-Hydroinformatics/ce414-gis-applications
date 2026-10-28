@@ -43,3 +43,12 @@ Slide decks build separately:
 npx -y @marp-team/marp-cli@latest --no-stdin --theme slides/theme/ce414.css --html \
   slides/week-01/<slug>.md -o /tmp/check.html
 ```
+
+## License
+
+The course materials in this repository (lab handouts, lecture decks, study guides and figures) are
+© 2026 Dan Ames and licensed under
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+([full text](LICENSE)). You may share and adapt them for noncommercial teaching with credit, under the
+same license. Third-party material keeps its own terms: ArcGIS Pro screenshots, the BYU name and
+medallion, and the datasets linked from the labs, which carry their publishers' licenses.
