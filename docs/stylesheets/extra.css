@@ -80,6 +80,16 @@
     white-space: normal;
   }
 }
+/* Three menu buttons and the search icon have to fit across a phone. */
+@media screen and (max-width: 30em) {
+  .ce-menu {
+    margin-left: 0.2rem;
+  }
+  .ce-menu__button {
+    padding: 0.3rem 0.35rem;
+    font-size: 0.6rem;
+  }
+}
 
 /* Lab figures: keep screenshots from towering over the text. */
 .md-typeset img {

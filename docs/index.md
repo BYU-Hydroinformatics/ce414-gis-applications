@@ -90,7 +90,7 @@ the same underlying things:
   and enough context to locate the study area.
 - **Honest limitations.** What the analysis does *not* prove.
 
-The [ArcGIS Tips and Reminders](arcgis-tips.md) page collects the settings and habits that save the
+The [ArcGIS Tips and Reminders](arcgis-tips/index.md) page collects the settings and habits that save the
 most time across all of them.
 
 ## Where everything lives

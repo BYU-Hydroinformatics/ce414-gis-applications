@@ -1,14 +1,6 @@
-# Solutions to Common Problems in ArcGIS Pro
+# Basemap credits cover a small map frame
 
-Fixes for problems that come up in more than one lab. Each section names the problem, gives the
-fix, and says when the fix is appropriate. For the settings and habits that keep you out of
-trouble in the first place, see [ArcGIS Tips and Reminders](arcgis-tips.md).
-
-If you hit a problem that is not here and find a fix, tell your instructor or TA so it can be added.
-
-## Basemap credits cover a small map frame {#basemap-credits}
-
-### The problem
+## The problem
 
 When a layout has several small map frames — the panels of a comparison sheet, an inset or a
 locator map — the **service layer credits** in the corner of each frame can cover a large part of
@@ -17,7 +9,11 @@ basemaps, imagery, and image services such as the elevation service in Lab 8. Th
 length whatever the size of the frame, so on a small frame it sits on top of the data, and on a
 sheet of six frames the same line appears six times.
 
-### The fix: move the credits out of the map frames
+*Figure placeholder: a layout with three or more small map frames (a Lab 8 comparison sheet works),
+each with the automatic service layer credits drawn across the bottom of the frame and covering the
+data.*
+
+## The fix: move the credits out of the map frames
 
 You cannot click the automatic credits and edit them, but you can replace them with one text
 element that you control:
@@ -27,24 +23,33 @@ element that you control:
 3. Scroll down to the **Layout** section and choose **Service Layer Credits**.
 4. Click on the layout to place it.
 
-Once that element exists, the credits stop drawing inside the map frames. The element lists the
-credits for every map frame on the page, so one copy covers the whole sheet. Drag it to the margin
-or next to your text box, and make the font small (6 to 7 points is fine) in the **Element** pane.
+*Figure placeholder: the Insert tab's New Dynamic Text menu, scrolled to the Layout section, with
+Service Layer Credits highlighted.*
+
+Once that element exists, the credits stop drawing inside the map frames. **[To do: confirm in
+ArcGIS Pro 3.7 that placing the element removes the automatic credits from every map frame on the
+page, not only from the frame it is nearest.]** The element lists the credits for every map frame on
+the page, so one copy covers the whole sheet. Drag it to the margin or next to your text box, and
+make the font small (6 to 7 points is fine) in the **Element** pane.
+
+*Figure placeholder: the same layout as the first figure after the fix, with the map frames clear
+and one small Service Layer Credits element in the margin beside the text box.*
 
 Leave the element on the layout. If you delete it, the automatic credits come back inside every
-map frame.
+map frame. **[To do: confirm that deleting the element restores the automatic credits in the map
+frames. Esri's support article 000042063 confirms steps 1 to 4 and moving the element; this
+behavior comes from an emailed write-up, not from Esri documentation.]**
 
-<!-- TODO: verify in ArcGIS Pro 3.7 that inserting the element removes the credits from the map
-frames, that deleting the Service Layer Credits element restores the
-automatic credits in the map frames, and that unchecking it in the Contents pane hides it without
-restoring them. Esri's support article 000042063 confirms steps 1-4 and moving the element; the
-delete and hide behavior comes from an emailed write-up, not from Esri documentation. -->
-
-### Hiding the credits, and when you may
+## Hiding the credits, and when you may
 
 If you would rather write the sources yourself, you can hide the element: find **Service Layer
 Credits** in the layout's **Contents** pane and uncheck it. Do this **only if the same sources
-appear somewhere else on the layout**, typed into your text box.
+appear somewhere else on the layout**, typed into your text box. **[To do: confirm that
+unchecking the element in the Contents pane hides it without the automatic credits coming back in
+the map frames, and that it stays hidden in an exported PDF.]**
+
+*Figure placeholder: the layout's Contents pane with the Service Layer Credits element listed and
+its check box cleared.*
 
 Esri's guidance is that the credits must appear **on or near the map** in anything printed, including
 class work and research papers, not only in commercial products

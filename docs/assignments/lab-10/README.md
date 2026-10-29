@@ -161,7 +161,7 @@ Every one of these is a decision somebody made, and every one of them can change
 > it, `D:\Smith\Lab10\`. The **C: drive is locked**, and a **network drive** is slow enough to make
 > ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 - **Download:** [`lab10-power-line.zip`](../../data/lab10-power-line.zip) (18.0 MB). Unzip it into
   your Lab10 folder — the files are in a `lab10-power-line` folder inside it — and read
@@ -659,7 +659,7 @@ Boundaries* and *TransmissionLines*. [gis.utah.gov](https://gis.utah.gov/product
 U.S. Geological Survey. *3D Elevation Program.*
 [usgs.gov](https://www.usgs.gov/3d-elevation-program){ target="_blank" }.
 
-<!-- LINK CHECK (curl -L, 2026-10-09): 200 rff.org Quantifying Siting Difficulty page (and its PDF at media.rff.org); 200 gis.utah.gov road-centerlines, nhd-lakes, nhd-streams, municipal; 200 services1.arcgis.com TransmissionLines, UtahRoads and UtahMunicipalBoundaries FeatureServer/0; 200 pro.arcgis.com distance-accumulation, optimal-path-as-line, polyline-to-raster; 200 byu-hydroinformatics.github.io week-12 least-cost-path-b.html; usgs.gov/3d-elevation-program returns 403 to curl (usgs.gov blocks scripts) and must be opened in a browser; reported 200 earlier on 2026-10-09. ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab10-power-line.zip checked by mkdocs build --strict. -->
+<!-- LINK CHECK (curl -L, 2026-10-09): 200 rff.org Quantifying Siting Difficulty page (and its PDF at media.rff.org); 200 gis.utah.gov road-centerlines, nhd-lakes, nhd-streams, municipal; 200 services1.arcgis.com TransmissionLines, UtahRoads and UtahMunicipalBoundaries FeatureServer/0; 200 pro.arcgis.com distance-accumulation, optimal-path-as-line, polyline-to-raster; 200 byu-hydroinformatics.github.io week-12 least-cost-path-b.html; usgs.gov/3d-elevation-program returns 403 to curl (usgs.gov blocks scripts) and must be opened in a browser; reported 200 earlier on 2026-10-09. ../../arcgis-tips/index.md, ../../policies/ai-policy.md and ../../data/lab10-power-line.zip checked by mkdocs build --strict. -->
 
 ## Example Maps
 

@@ -120,6 +120,11 @@ its figure, a table that lost a column.
 - **Check every link** on a page whenever you touch it (curl the status, and open in a browser any
   page that blocks scripts, such as usgs.gov). Remove or replace dead links; do not leave them.
 - **Every step heading carries a two- or three-word title**: `### Step 9 — Erase Served Areas`.
+- **Open items for an ArcGIS Pro session are marked in the visible text**, so they can be found with
+  `grep -rn "Figure placeholder:\|To do: confirm" docs`. *Figure placeholder: …* describes a
+  capture still to be taken; replace it with the image and its caption. **[To do: confirm …]**
+  names a behavior to check in ArcGIS Pro; delete the note once it is confirmed, or rewrite the
+  sentence if it is wrong.
 - **Never refer to earlier versions of a handout** in student-facing text. Students have no access
   to the old Word files, so a "do not copy the old expression" warning only confuses them; put
   that history in an HTML comment instead.

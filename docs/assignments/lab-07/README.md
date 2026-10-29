@@ -137,7 +137,7 @@ Every one of these is a decision somebody made, and every one of them can change
 > it, `D:\Smith\Lab07\`. The **C: drive is locked**, and a **network drive** is slow enough to make
 > ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 - **Download:** [`lab07-provo-river-hand.zip`](../../data/lab07-provo-river-hand.zip) (12.4 MB).
   Unzip it into your Lab07 folder — the files are in a `lab07-provo-river-hand` folder inside it —
@@ -472,7 +472,7 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 
     ![The Merge dialog: Input Datasets floodpoly_String, grayed because it comes from Collect Values; Output Dataset Floods; Field Matching Mode Automatically generate fields consolidated from all inputs; Add source information to output unchecked.](images/lab07-merge.png)
 
-    **Figure 5e.** Merge, fed by Collect Values (top), so it runs once, after the last pass.
+    **Figure 5e.** Merge, fed by Collect Values (top), so it runs once, after the last pass. **[To do: confirm in the GUI messages how many times Merge runs. In Lab 6's model, Merge ran on every pass and the last pass left the full result.]**
 
 7. **Save, then run the model from its tool dialog**: in the **Catalog** pane, open
    `Lab07.atbx` and double-click **Flood Loop**. The dialog shows `HAND` and `Floods` as its
@@ -496,7 +496,7 @@ A second model, so that the loop does not rerun Steps 2–4 five times.
 > column is only here to help you check your results; **you do not need to compute it** or put it in
 > your report. If you want to, add a Long field to `Floods` and calculate it as `!Shape_Area! / 25`;
 > if your areas match, your cell counts do too. If you have only
-> one row, Merge ran inside the loop instead of after Collect Values; if you have many rows per value, **Create multipart
+> one row, Merge ran inside the loop instead of after Collect Values **[To do: confirm this diagnosis against the Merge behavior in Figure 5e]**; if you have many rows per value, **Create multipart
 > features** was unchecked. Match each `H_CM` to its return period and flow in the stage table
 > above; the flood with `H_CM` 153 is the 100-year flood.
 
@@ -688,7 +688,7 @@ Utah Geospatial Resource Center. *NHD Streams* and *Building Footprints*.
 Esri. *Flow Distance*, *Iterate Field Values* and *Spatial Join*, ArcGIS Pro tool reference (linked
 in the tools table above).
 
-<!-- LINK CHECK (curl -L, 2026-10-09; re-checked 2026-10-19 for the links kept): 200 doi:10.1016/j.jhydrol.2011.03.051; 200 waterdata.usgs.gov/monitoring-location/10163000/; 200 msc.fema.gov FIS 49049CV001B download; 200 hazards.fema.gov NFHL MapServer; 200 usgs.gov how-streamflow-measured; 200 elevation.nationalmap.gov 3DEP ImageServer; 200 gis.utah.gov nhd-streams and building-footprints; 200 pro.arcgis.com flow-distance, iterate-field-value, spatial-join; 200 github.com NOAA-OWP/inundation-mapping; ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab07-provo-river-hand.zip checked by mkdocs build --strict. Removed with the October 19 cut: doi:10.3133/tm4B5 (Bulletin 17C), join-field, pairwise-clip, pairwise-intersect. -->
+<!-- LINK CHECK (curl -L, 2026-10-09; re-checked 2026-10-19 for the links kept): 200 doi:10.1016/j.jhydrol.2011.03.051; 200 waterdata.usgs.gov/monitoring-location/10163000/; 200 msc.fema.gov FIS 49049CV001B download; 200 hazards.fema.gov NFHL MapServer; 200 usgs.gov how-streamflow-measured; 200 elevation.nationalmap.gov 3DEP ImageServer; 200 gis.utah.gov nhd-streams and building-footprints; 200 pro.arcgis.com flow-distance, iterate-field-value, spatial-join; 200 github.com NOAA-OWP/inundation-mapping; ../../arcgis-tips/index.md, ../../policies/ai-policy.md and ../../data/lab07-provo-river-hand.zip checked by mkdocs build --strict. Removed with the October 19 cut: doi:10.3133/tm4B5 (Bulletin 17C), join-field, pairwise-clip, pairwise-intersect. -->
 
 ## Example Maps
 

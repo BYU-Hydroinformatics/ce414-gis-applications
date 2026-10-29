@@ -113,7 +113,7 @@ Every one of these is a decision somebody made, and every one of them can change
 > it, `D:\Smith\Lab09\`. The **C: drive is locked**, and a **network drive** is slow enough to make
 > ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 | Layer | Where it comes from | How you get it |
 | --- | --- | --- |

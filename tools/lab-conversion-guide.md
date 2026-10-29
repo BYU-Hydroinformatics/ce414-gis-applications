@@ -96,7 +96,7 @@ a row in the sensitivity table.
 
 Open with the workspace box (`> [!IMPORTANT]`, **Set up your folder before you download anything**):
 D: drive, one folder per student and per lab, no spaces in names, why C: and network drives are out,
-USB 3.0 as the alternative, and a link to `docs/arcgis-tips.md`. Copy it from Lab 1 and shorten
+USB 3.0 as the alternative, and a link to `docs/arcgis-tips/`. Copy it from Lab 1 and shorten
 it as Lab 2 did; do not rewrite it.
 
 Then, in this order:
@@ -340,7 +340,7 @@ then promote.
    deleted image or the draft; update `ROADMAP.md`. Lab pages do **not** go in `mkdocs.yml` — the
    Schedule menu is a list of weeks, and a lab reaches students through the `LAB_PAGE`/`DUE` tables in
    `tools/build_schedule.py`, which link it from the week page it is due in. Only a page that
-   belongs to the whole course, like `docs/arcgis-tips.md`, goes in the nav.
+   belongs to the whole course, like `docs/arcgis-tips/`, goes in the nav.
    Then confirm: rubric rows sum to ten and the total to fifty; no bare "Pro"; no "old version"
    language; every link live; `mkdocs build --strict` passes; the lab is linked from its week page;
    and the rendered page read in a browser (`preview_start` with the `mkdocs-pro` launch

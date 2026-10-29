@@ -140,7 +140,7 @@ Every one of these is a decision somebody made, and every one of them can change
 > it, `D:\Smith\Lab11\`. The **C: drive is locked**, and a **network drive** is slow enough to make
 > ArcGIS Pro hang. **Never use a space** in a folder or file name you create. **Back up your lab
 > folder at the end of every session.** The full set of conventions is on the
-> [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 - **Download:** [`lab11-fire-response.zip`](../../data/lab11-fire-response.zip) (20.6 MB). Unzip it
   into your Lab11 folder — the files are in a `lab11-fire-response` folder inside it — and read
@@ -350,7 +350,7 @@ Leave the field mappings and the rest at their defaults.
 
 1. Add **Solve** with the `Service Area` layer as its **Input Network Analysis Layer**. Its output is
    the same layer, now with polygons in it.
-2. Add **Select Data** (search for it; it is in the ModelBuilder toolbox) with the solved layer as
+2. Add **Select Data** (search for it; it is in the ModelBuilder toolbox) **[To do: confirm where Select Data is. This lab's GUI notes say it is under Utilities in the ModelBuilder ribbon's Insert group, not in the Geoprocessing search.]** with the solved layer as
    its **Input Data Element** and **Polygons** as the **Child Data Element**.
 3. Add **Copy Features** with that Polygons element as its input and `Served_Area` as the output
    feature class. The analysis layer lives only in the map; the copy is the feature class your maps
@@ -662,7 +662,7 @@ response vehicles").
 U.S. Census Bureau. *2020 Census.*
 [census.gov](https://www.census.gov/programs-surveys/decennial-census/decade/2020/2020-census-main.html){ target="_blank" }.
 
-<!-- LINK CHECK (curl -L, 2026-10-10): 200 opendata.gis.utah.gov utah-county-boundaries/explore; 200 gis.utah.gov fire-stations, street-network-analysis, road-centerlines; 200 services1.arcgis.com FireStations/0, CensusBlocks2020/0, Fire_Station_Travel_Times; 200 pro.arcgis.com service-area-analysis-layer, make-service-area-analysis-layer, add-locations, solve, select-layer-by-location, summary-statistics, select-data; 200 nfpa.org 1710; 200 census.gov 2020-census-main. No UGRC product page exists for CensusBlocks2020 (gis.utah.gov/products/sgid/demographic/census-blocks-2020/ is 404), so the service layer is linked. ../../arcgis-tips.md, ../../policies/ai-policy.md and ../../data/lab11-fire-response.zip checked by mkdocs build --strict. -->
+<!-- LINK CHECK (curl -L, 2026-10-10): 200 opendata.gis.utah.gov utah-county-boundaries/explore; 200 gis.utah.gov fire-stations, street-network-analysis, road-centerlines; 200 services1.arcgis.com FireStations/0, CensusBlocks2020/0, Fire_Station_Travel_Times; 200 pro.arcgis.com service-area-analysis-layer, make-service-area-analysis-layer, add-locations, solve, select-layer-by-location, summary-statistics, select-data; 200 nfpa.org 1710; 200 census.gov 2020-census-main. No UGRC product page exists for CensusBlocks2020 (gis.utah.gov/products/sgid/demographic/census-blocks-2020/ is 404), so the service layer is linked. ../../arcgis-tips/index.md, ../../policies/ai-policy.md and ../../data/lab11-fire-response.zip checked by mkdocs build --strict. -->
 
 ## Example Maps
 

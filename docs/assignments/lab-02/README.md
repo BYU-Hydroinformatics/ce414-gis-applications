@@ -171,7 +171,7 @@ For the purposes of this exercise, the choices that shape the answer are these. 
 > on the large rasters this lab uses, and a USB 3.0 external drive is a legitimate alternative.
 > **Never use a space in a folder or file name**: the raster tools in particular fail on paths with
 > spaces and do not say that the space is why. The full set of workspace conventions is on the
-> [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page, which now has a
+> [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page, which now has a
 > section on rasters.
 
 This lab uses the last of the data sources you met in Lab 1's Figure B: **remote sensing**. Nobody digitized these data. A satellite recorded them, a government agency processed and archived them, and you will download them. The six metadata questions from Lab 1 still apply — and for imagery the *when* and the *how* matter more than for any dataset you have used so far. The answers are in a plain-text file that ships with every Landsat scene, the **MTL file**. Open it in Notepad: Figure B shows where each answer lives. One trap: the file lists `REFLECTANCE_MULT_BAND_n` and `REFLECTANCE_ADD_BAND_n` **twice**. The values you want are the first ones, in the `LEVEL2_SURFACE_REFLECTANCE_PARAMETERS` group; the Level-1 values further down are for a different product and are wrong for these files.

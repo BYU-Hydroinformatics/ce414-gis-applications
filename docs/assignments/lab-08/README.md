@@ -130,7 +130,7 @@ Every one of these is a decision somebody made, and every one of them can change
 > it, `D:\Smith\Lab08\`. The **C: drive is locked**, and a **network drive** is slow enough to make
 > ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
 > them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 | Layer | What it is | How you get it |
 | --- | --- | --- |
@@ -623,7 +623,7 @@ n41w112 (May 2026). Study area: drawn for CE 414.
 > **Credits covering your panels?** The service credits ArcGIS Pro draws in the corner of each map
 > frame can hide much of a small panel. To move them off the frames, or replace them with the
 > credit line above, see
-> [Basemap credits cover a small map frame](../../arcgis-problems.md#basemap-credits){ target="_blank" }.
+> [Basemap credits cover a small map frame](../../arcgis-tips/map-frame-credits.md){ target="_blank" }.
 
 ## References
 

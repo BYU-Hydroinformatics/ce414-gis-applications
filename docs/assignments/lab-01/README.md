@@ -46,7 +46,7 @@ The unchanged parts of the old handout were carried over in full.
 - **Steps 0, 3, 6, 7, 8, 9** — expected values to check results against.
 
 Several boxes reference the **ArcGIS Tips and Reminders** page at
-[ArcGIS Tips, Tricks, and Important Reminders](../../arcgis-tips.md){ target="_blank" }.
+[ArcGIS Tips, Tricks, and Important Reminders](../../arcgis-tips/index.md){ target="_blank" }.
 
 **Figures.** All the tool-dialog figures have been re-captured in ArcGIS Pro 3.7 against the
 data students actually download, and the model overview has been re-exported from ModelBuilder
@@ -120,7 +120,7 @@ For the purposes of this exercise, the spatial considerations will be limited to
 > tools especially, fail on paths containing spaces and do not tell you that the space is why.
 >
 > The full set of workspace conventions, and the settings that most often produce a wrong answer
-> without an error message, are on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> without an error message, are on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 > Read it before you start.
 
 You need four layers for this project, and — deliberately — you will obtain them in four different ways: one is an extract we prepared for you, two are official downloads from the state agency that maintains them, one you will create yourself, and one is a live web service you never download at all. That is not an accident of how the lab was written. Getting data is most of the work in real GIS, it almost never comes from one place, and every source has to be judged before it is used.
@@ -166,7 +166,7 @@ Unzip each download into the lab folder you created above.
     - We filtered nothing by road class. Interstates through driveways are all present; choosing which ones count is your job in Step 5.
 - **2020 Census Tracts Shapefile:** <https://opendata.gis.utah.gov/datasets/utah-census-tracts-2020/explore>
     - This shapefile represents the 2020 Census tract data for Utah. Click the **Download** button, then download the zipped Shapefile. Read its metadata too, and note which Census fields it carries — you will need two of them in Step 3.
-- **Current Walmart locations:** You will build this layer yourself. There is no download for it. Walmart's public open-data site has been taken down; the copies of it still floating around ArcGIS Online are unmaintained 2020 snapshots owned by strangers, and you should not build an analysis on them. Instead, create a point feature class in your project geodatabase and place one point on each Walmart store in your county — see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }. Locate the stores using Walmart's own store locator, a search in the map, or by recognising them in imagery. Expect to find somewhere around **a dozen** stores inside Utah County — the exact number is not fixed, and finding out what it is now is part of the job. Budget about fifteen minutes.
+- **Current Walmart locations:** You will build this layer yourself. There is no download for it. Walmart's public open-data site has been taken down; the copies of it still floating around ArcGIS Online are unmaintained 2020 snapshots owned by strangers, and you should not build an analysis on them. Instead, create a point feature class in your project geodatabase and place one point on each Walmart store in your county — see [Creating a point feature class](../../arcgis-tips/point-feature-class.md){ target="_blank" }. Locate the stores using Walmart's own store locator, a search in the map, or by recognising them in imagery. Expect to find somewhere around **a dozen** stores inside Utah County — the exact number is not fixed, and finding out what it is now is part of the job. Budget about fifteen minutes.
 
     - **Decide and state your inclusion rule.** Walmart operates more than one store format. Supercenters are the big-box stores this lab's square-footage figures describe; Neighborhood Markets are much smaller grocery-format stores. Whether a Neighborhood Market should count as "an existing Walmart" for a siting analysis is a judgement call, and it changes your answer. Make the call, apply it consistently, and defend it in your report.
     - **State in your report how you created this layer and why you trust it:** where each location came from (Walmart's store finder, a map search, imagery), how many stores you found, and which formats you included. Nobody expects you to drive to every store; "these are the locations Walmart's own store finder lists, and each one sits on a big-box footprint in the imagery" is a perfectly good reason to trust the layer, as long as you say it. Two students with different but well-documented rules can both be right. A student who does not say which rule they used cannot be.
@@ -455,7 +455,7 @@ Use the Intersect tool to intersect the I-15/major roads buffer layer with the h
 
 Use the Buffer tool to create a 2-mile buffer around the existing Walmarts. Later in this lab you will want to keep the areas outside of this buffer.
 
-This step needs the point layer you built yourself in the **Data** section — there is no Walmart download. If you have not made it yet, do that now: see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }. Use the same point layer and inclusion rule you documented in the Data section.
+This step needs the point layer you built yourself in the **Data** section — there is no Walmart download. If you have not made it yet, do that now: see [Creating a point feature class](../../arcgis-tips/point-feature-class.md){ target="_blank" }. Use the same point layer and inclusion rule you documented in the Data section.
 
 As in Step 6, set the distance unit to **Statute Miles** rather than accepting Meters, and set **Dissolve Type** to *Dissolve all output features into a single feature*.
 
@@ -528,7 +528,7 @@ Repeat for the second Buffer. When you now run the model from the Catalog pane, 
 
 ### Step 11 — Choose the Sites
 
-Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point feature class to mark these points on your final map — the same technique you used for the Walmart locations in the Data section; see [Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" } if you need the steps again.
+Decide where you think the best locations for a new Walmart would be. After running the ModelBuilder, the resulting polygons represent the ideal population that is not served by an existing Walmart. Ideal locations might be an empty field inside a candidate polygon. Non-ideal locations would be parks, school playgrounds, and cemeteries. Find and select several locations, show them on your map, and justify in your report why these locations are the best. Create a new point feature class to mark these points on your final map — the same technique you used for the Walmart locations in the Data section; see [Creating a point feature class](../../arcgis-tips/point-feature-class.md){ target="_blank" } if you need the steps again.
 
 ### Step 12 — Test the Assumptions
 

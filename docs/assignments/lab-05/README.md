@@ -103,7 +103,7 @@ And the choices ArcGIS Pro would otherwise make for you:
 > **high-speed USB 3.0 external drive** is fine. **Back up your lab folder at the end of every
 > session**: anyone can edit or delete what is on D:. And **never use a space** in a folder or file
 > name you create — raster tools in particular fail on them without saying why. The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 You need five things, and you will get them five different ways: an extract we prepared, a live feature service, a point you create, a live web application, and a live basemap.
 
@@ -235,7 +235,7 @@ On the **Analysis** tab click **Tools**, search for **Project Raster** (Data Man
 
 The outlet is the point whose watershed you want: the **Rock Canyon trailhead**, where the creek leaves the canyon and enters Provo, at about **40.26525° N, 111.63° W**.
 
-1. **Create a point feature class** named `Outlet` in `Lab05.gdb`, with the coordinate system **NAD 1983 UTM zone 12N** ([Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }).
+1. **Create a point feature class** named `Outlet` in `Lab05.gdb`, with the coordinate system **NAD 1983 UTM zone 12N** ([Creating a point feature class](../../arcgis-tips/point-feature-class.md){ target="_blank" }).
 2. **Turn on imagery** (**Map** tab ▸ **Basemap** ▸ **Imagery Hybrid**) and go to the trailhead: **Map** tab ▸ **Go To XY**, set the units to decimal degrees, and type `111.63W` and `40.26525N`. (A leading minus sign, `-111.63`, also means west.) Zoom in until you can see the Rock Canyon Trailhead Park parking lot.
 3. On the **Edit** tab click **Create**, choose `Outlet`, and click **once on the creek** — the band of trees just northeast of the parking lot, about 60 m north of East 2300 North, running east–west (Figure 2). Click **Save** on the Edit tab.
 

@@ -105,7 +105,7 @@ And the choices ArcGIS Pro would otherwise make for you:
 > **high-speed USB 3.0 external drive** is fine. **Back up your lab folder at the end of every
 > session**: anyone can edit or delete what is on D:. And **never use a space** in a folder or file
 > name you create — raster tools in particular fail on them without saying why. The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 You need five layers, and you will get them four different ways: an extract we prepared, two official state downloads, a set of federal elevation tiles, and a live basemap.
 
@@ -192,7 +192,7 @@ For an advanced GIS student, the information up to this point is all you need to
 
 **Add your data to the map**: `Counties.shp`, `UDOT_Routes.shp` (the file name may differ slightly), `UtahCellTowers.shp`, and the four `USGS_1_…tif` tiles. When ArcGIS Pro offers to calculate statistics or build pyramids for the tiles, say **Yes** — it takes a few seconds per tile and makes them draw properly.
 
-**Create the model.** On the **Analysis** tab click **ModelBuilder**. In the **Catalog** pane, under **Toolboxes**, right-click the new model in `Lab04.atbx`, choose **Rename**, and call it `CellTowers`.
+**Create the model.** On the **Analysis** tab click **ModelBuilder**. In the **Catalog** pane, under **Toolboxes**, right-click the new model in `Lab04.atbx`, choose **Rename**, and call it `CellTowers`. **[To do: confirm that the model's right-click menu in the Catalog pane has a Rename item. Lab 5's GUI run found none and names the model in ModelBuilder ▸ Properties ▸ Name; Lab 2 uses F2 in the Catalog pane, which changes only the Label.]**
 
 **Set the coordinate system for the whole model.** On the **ModelBuilder** tab click **Environments** and set **Output Coordinate System** to **NAD 1983 UTM zone 12N** (search for it; ArcGIS Pro spells *zone* with a lowercase z) (Figure 0). Every tool in the model now writes its output in UTM meters, so you do not need a single Project tool for the vector layers. You do need the environment: your five layers arrive in at least three coordinate systems — the counties in Web Mercator, the towers in latitude/longitude on WGS 1984, the DEM tiles in latitude/longitude on NAD 1983, and the UDOT routes in whatever UGRC's export uses that week. Leave **Cell Size** empty; each raster tool gets its cell size in its own step.
 
@@ -569,7 +569,7 @@ Before you recommend anything, look at what the model found. A screening model d
 3. **Find the zone in Springville.** The second-largest candidate area, about **34 km²**, is in and around Springville along SR 77 — a populated valley that obviously has cell service. The tower layer simply has no license site recorded nearby (Figure A). This is the data, not the terrain.
 4. **Count the duplicates.** Run **Find Identical** (Data Management Tools) on `Towers_Near_County` with `Shape` as the field, and open its output table: records that share a location share a `FEAT_SEQ` value. How many of the 71 records share a location with another, at how many places? A site with three records counts three times in the density.
 
-Then **choose one site** you would recommend, and mark it with a point in a new point feature class, as you did for the Walmarts in Lab 1 ([Creating a point feature class](../../arcgis-tips.md#creating-a-point-feature-class){ target="_blank" }). Justify it in your report: why this patch, and why you trust it more than the lake or Springville.
+Then **choose one site** you would recommend, and mark it with a point in a new point feature class, as you did for the Walmarts in Lab 1 ([Creating a point feature class](../../arcgis-tips/point-feature-class.md){ target="_blank" }). Justify it in your report: why this patch, and why you trust it more than the lake or Springville.
 
 ![Imagery of the west shore of Utah Lake with SR 68 running north to south and the model's suitable cells in translucent orange: a band of orange fills the strip between the highway and the lake and runs to the water's edge, with small scattered patches on the slopes west of the road.](images/lab04-check-utah-lake.jpg)
 

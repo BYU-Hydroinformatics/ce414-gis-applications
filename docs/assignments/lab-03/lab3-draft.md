@@ -155,7 +155,7 @@ the right, eight points spread to the corners and edges hold the whole sheet in 
 > Put the project, the scan and everything you make there. The C: drive is locked, network drives
 > make ArcGIS Pro slow on large scans, and a USB 3.0 external drive is a legitimate alternative.
 > **Never use a space in a folder or file name.** The full set of workspace conventions is on the
-> [ArcGIS Tips and Reminders](../../arcgis-tips.md){ target="_blank" } page.
+> [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
 
 Unlike Labs 1 and 2, nothing here is prepared for you. **You find the data, and you defend it.**
 That is the point: the judgment you exercised in Lab 1 choosing which Walmart stores counted, you

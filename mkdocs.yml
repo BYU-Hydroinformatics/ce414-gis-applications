@@ -71,8 +71,6 @@ validation:
 nav:
   - Course Info:
       - Overview: index.md
-      - ArcGIS Tips and Reminders: arcgis-tips.md
-      - Solutions to Common Problems in ArcGIS Pro: arcgis-problems.md
       - Grading: policies/grading.md
       - Midterm 1 Study Guide: study-guides/midterm-1.md
       - Midterm 2 Study Guide: study-guides/midterm-2.md
@@ -95,3 +93,18 @@ nav:
       - "Week 13 — Final Project Intro": schedule/week-13.md
       - "Week 14 — Midterm 2 and Avalanche Hazard": schedule/week-14.md
       - "Week 15 — Final Project Due": schedule/week-15.md
+  - ArcGIS Tips:
+      - ArcGIS Tips and Reminders: arcgis-tips/index.md
+      - Set up your workspace and project: arcgis-tips/workspace.md
+      - Set the coordinate system before you measure: arcgis-tips/coordinate-system.md
+      - Housekeeping: arcgis-tips/housekeeping.md
+      - Defaults that give a confidently wrong answer: arcgis-tips/wrong-answer-defaults.md
+      - Check what a tool actually produced: arcgis-tips/check-your-output.md
+      - Writing attribute expressions: arcgis-tips/attribute-expressions.md
+      - Tool dialogs that change what you typed: arcgis-tips/dialog-surprises.md
+      - Running a model from its tool dialog: arcgis-tips/running-models.md
+      - Creating a point feature class: arcgis-tips/point-feature-class.md
+      - Working with rasters: arcgis-tips/rasters.md
+      - Projecting a DEM: arcgis-tips/projecting-dems.md
+      - Basemap credits cover a small map frame: arcgis-tips/map-frame-credits.md
+      - Exporting maps and models for your report: arcgis-tips/exporting-deliverables.md
