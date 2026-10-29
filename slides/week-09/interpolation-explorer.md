@@ -39,7 +39,7 @@ By the end of class you should be able to:
 
 - Say why **closer** points count more, and what the **nugget**, **range** and **sill** do to a kriged surface
 - Compute an **error raster** and say what its **sign** means
-- Reduce the error to one number, the **RMSE**, and say what it hides
+- Reduce the error to one number, the **RMSE**, and compute it in ArcGIS Pro
 - Say which surface to **trust**, and why the answer **depends**
 - Say what **Lab 8** asks for, and how you will know you are right
 
@@ -54,7 +54,7 @@ By the end of class you should be able to:
 
 ## Closer in space, closer in value
 
-<!-- Tuesday's methods weight points by a rule you choose: nearest only, or 1/d^n. Kriging first measures how similarity fades with distance, from the samples themselves, and takes its weights from that. Part 1 was rebuilt October 26, 2026 for students who will run the tool rather than compute kriging by hand: Tuesday's Provo worksheet, a neighbor test, the curve in plain words, then what each setting does. The lag-distance, autocorrelation, semivariance-equation and decomposition slides were cut. -->
+<!-- Tuesday's methods weight points by a rule you choose: nearest only, or 1/d^n. Kriging first measures how similarity fades with distance, from the samples themselves, and takes its weights from that. Part 1 was rebuilt October 26, 2026 for students who will run the tool rather than compute kriging by hand: Tuesday's Provo worksheet, a neighbor test, the curve in plain words, then what each setting does. The lag-distance, autocorrelation, semivariance-equation and decomposition slides were cut. October 28, 2026: two more neighbor tests (no pattern, a regional trend), a slide that builds the semivariogram one bin at a time with its equation, and the fit split onto its own slide. -->
 
 ---
 
@@ -115,27 +115,123 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 
 ---
 
-# Average the Pairs: the Semivariogram
+# The Neighbor Test: No Pattern
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.nt-lead { position: absolute; left: 70px; top: 118px; width: 1140px; font-size: 0.8em; }
+.nt-img { position: absolute; left: 110px; top: 160px; width: 1040px; }
+.nt ul { list-style: none; margin: 0; padding: 0; }
+.nt-take { position: absolute; left: 70px; right: 70px; top: 598px; font-size: 0.68em; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="nt-lead">The same 60 stations, but now every reading is <strong>independent</strong> of its neighbors: no pattern at all</div>
+
+<img class="nt-img" src="images/ie-neighbor-random-base.png" alt="The same sixty stations on a speckled map with no pattern, beside empty axes of distance against temperature difference">
+
+<div class="nt">
+
+* <img class="nt-img pop" src="images/ie-neighbor-random-cloud.png" alt="All 1,770 pairs: close pairs scatter just as high as far pairs">
+* <span class="infobox nt-take pop">Close pairs differ as much as far pairs: a neighbor tells you <strong>nothing</strong>, and kriging can do no better than the <strong>average</strong></span>
+
+</div>
+
+<!-- Two clicks: the cloud, then the takeaway. Same station locations as the last slide, but each reading is drawn independently (white noise plus the same small instrument error), so a station 15 km away is no more like Provo than one 250 km away. Ask before the first click what the cloud will look like. The cloud is flat: no bottom-left corner of alike close pairs. A semivariogram of this would be all nugget, and kriging with it puts the average everywhere; Part 3 shows a real mountain that the automatic fit mistook for exactly this. Note the y axis here runs to 40, not 30, so all the points fit. Made up; tools/week09_kriging_story_figures.py. -->
+
+---
+
+# The Neighbor Test: A Regional Trend
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.nt-lead { position: absolute; left: 70px; top: 118px; width: 1140px; font-size: 0.8em; }
+.nt-img { position: absolute; left: 110px; top: 160px; width: 1040px; }
+.nt ul { list-style: none; margin: 0; padding: 0; }
+.nt-take { position: absolute; left: 70px; right: 70px; top: 598px; font-size: 0.68em; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="nt-lead">The same stations again, now on a <strong>regional trend</strong>: warm in the west, cooler to the east</div>
+
+<img class="nt-img" src="images/ie-neighbor-trend-base.png" alt="The same sixty stations on a map that grades from warm in the west to cool in the east, beside empty axes">
+
+<div class="nt">
+
+* <img class="nt-img pop" src="images/ie-neighbor-trend-cloud.png" alt="All 1,770 pairs: the difference keeps growing with distance and never levels off">
+* <span class="infobox nt-take pop">The difference keeps <strong>growing</strong> with distance and never levels off: no sill. Fit the <strong>trend</strong> first (Tuesday's trend surface), or use kriging that includes one</span>
+
+</div>
+
+<!-- Two clicks again. A steady west-to-east drop of about 0.09 degrees F per km plus a little smooth wiggle. Close pairs are alike, as in the first test, but far pairs never stop getting more different, so the cloud is a wedge rather than a curve that levels off. Pairs lined up north-south stay alike even when far apart, which is why the bottom of the wedge stays near zero. Kriging assumes the differences level off at a sill; a trend like this breaks that, so either take the trend out first with Tuesday's trend surface and krige what is left, or use Universal kriging, which fits the trend inside kriging. Three clouds, three stories: smooth field (levels off), no pattern (flat), trend (keeps rising). Made up; tools/week09_kriging_story_figures.py. -->
+
+---
+
+# Build the Semivariogram, One Bin at a Time
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.bd-eq { position: absolute; left: 70px; top: 112px; width: 560px; font-size: 0.78em; }
+.bd-eq p { margin: 0; }
+.bd-words { position: absolute; left: 650px; top: 128px; width: 560px; font-size: 0.66em; line-height: 1.35; }
+.bd-img { position: absolute; left: 90px; top: 200px; width: 1100px; }
+.bd ul { list-style: none; margin: 0; padding: 0; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="bd-eq">
+
+$$
+\gamma(h) = \frac{1}{2\,N(h)} \sum_{N(h)\ \text{pairs}} \left(z_i - z_j\right)^2
+$$
+
+</div>
+
+<div class="bd-words">Take every <strong>pair</strong> about <em>h</em> apart, square each pair's difference, average them, and halve it: one dot on the graph per <strong>20 km bin</strong></div>
+
+<img class="bd-img" src="images/ie-semivariogram-build-0.png" alt="The station map beside empty semivariogram axes">
+
+<div class="bd">
+
+* <img class="bd-img pop" src="images/ie-semivariogram-build-1.png" alt="The pairs 0 to 20 km apart drawn on the map, and their average as the first dot">
+* <img class="bd-img pop" src="images/ie-semivariogram-build-2.png" alt="The pairs 20 to 40 km apart drawn on the map, and their average as the second dot">
+* <img class="bd-img pop" src="images/ie-semivariogram-build-3.png" alt="The pairs 40 to 60 km apart drawn on the map, and their average as the third dot">
+* <img class="bd-img pop" src="images/ie-semivariogram-build-4.png" alt="Every 20 km bin averaged: fourteen dots that rise and then level off">
+
+</div>
+
+<!-- Four clicks, one bin at a time, then the rest. Click 1: every pair of stations less than 20 km apart is drawn on the map (only a few dozen; they are the close neighbors), and their average half-squared difference becomes the first dot. Click 2: the pairs 20 to 40 km apart, a longer web of lines, and a dot a little higher. Click 3: 40 to 60 km. Click 4: the same thing done for every 20 km bin out to 280 km: the dots rise and level off. N(h) is the number of pairs in the bin, z_i and z_j the two stations' readings. The one-half is why it is called the semi-variance; it makes the far-apart level (the sill) equal the variance of the readings. The bin width is ArcGIS Pro's Lag size. 20 km bins rather than 10 km because 60 stations give too few pairs closer than 10 km for a steady average. Students never compute this by hand; the tool does it. Same made-up stations as the neighbor test (tools/week09_kriging_story_figures.py). -->
+
+---
+
+# Fit a Model to the Dots
 
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
 .sv-img { position: absolute; right: 50px; top: 120px; width: 640px; }
 .sv-lead { position: absolute; left: 70px; top: 125px; width: 500px; font-size: 0.72em; }
-.sv ul { list-style: none; margin: 0; padding: 0; }
+.svfit ul, .sv ul { list-style: none; margin: 0; padding: 0; }
+.sv-fit { position: absolute; left: 70px; top: 262px; width: 500px; font-size: 0.68em; line-height: 1.3; }
 .sv li { position: absolute; left: 70px; width: 500px; margin: 0; font-size: 0.68em; line-height: 1.3; }
-.sv li:nth-child(1) { top: 255px; } .sv li:nth-child(2) { top: 330px; } .sv li:nth-child(3) { top: 405px; }
-.sv li:nth-child(4) { top: 500px; } .sv li:nth-child(5) { top: 540px; }
+.sv li:nth-child(1) { top: 345px; } .sv li:nth-child(2) { top: 400px; } .sv li:nth-child(3) { top: 455px; }
+.sv li:nth-child(4) { top: 530px; } .sv li:nth-child(5) { top: 570px; }
 .sv .q { color: #e8792b; font-weight: 700; }
 li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
 
 <div class="sv-lead">
 
-Group the pairs by distance and average each group. The tool squares and halves each difference first (that is the "semi-variance"); ArcGIS Pro's **Lag size** is the width of each group.
+Now we have the dots. Many **kriging models** have been developed; pick one and **fit** it to the dots, and the tool reads three numbers off the curve.
 
 </div>
 
-<img class="sv-img" src="images/ie-semivariogram-plain.png" alt="Semivariance against distance: averaged pairs and a fitted spherical curve, with nugget, range and sill marked">
+<img class="sv-img" src="images/ie-semivariogram-dots.png" alt="Semivariance against distance: the pairs averaged every 20 km, as dots">
+
+<div class="svfit">
+
+* <img class="sv-img pop" src="images/ie-semivariogram-plain.png" alt="The same dots with a fitted spherical curve in orange, and the nugget, range and sill marked"><span class="pop sv-fit">The fitted model, in <strong style="color:#e07a1f">orange</strong>: here a spherical one</span>
+
+</div>
 
 <div class="sv">
 
@@ -147,7 +243,7 @@ Group the pairs by distance and average each group. The tool squares and halves 
 
 </div>
 
-<!-- Five clicks: nugget, range, sill, then a question and its answer. The tool never asks students to compute this; it fits the curve and reports these three numbers, and they are exactly the Major range, Partial sill (sill minus nugget) and Nugget boxes in the Kriging dialog, which Lab 8 leaves empty so the tool fits them. Nugget: instrument error or variation closer than any two stations. Range: past it, a station is no more use for Provo than the regional average. Sill: the typical difference between far-apart places. Here the made-up stations give a nugget of 9 degrees F squared (the noise put into the readings), a sill of about 83 and a range of about 170 km. -->
+<!-- Six clicks: the fitted model, then nugget, range, sill, then a question and its answer. No need to go into how the fit is done: there are many model shapes (the next slide shows the three Lab 8 offers), the tool fits one to the dots, and it appears in orange. The tool never asks students to compute this; it fits the curve and reports these three numbers, and they are exactly the Major range, Partial sill (sill minus nugget) and Nugget boxes in the Kriging dialog, which Lab 8 leaves empty so the tool fits them. Nugget: instrument error or variation closer than any two stations. Range: past it, a station is no more use for Provo than the regional average. Sill: the typical difference between far-apart places. Here the made-up stations give a nugget of 9 degrees F squared (the noise put into the readings), a sill of about 83 and a range of about 170 km. -->
 
 ---
 
@@ -161,7 +257,14 @@ Same nugget, sill and range; different shape **near zero**:
 - **Exponential**: steepest at first; neighbors lose their likeness fastest
 - **Gaussian**: flat at first; assumes a **very smooth** surface
 
-Lab 8 runs all three on Y Mountain
+<div class="lab8-big">Lab 8 runs <strong>all three</strong> on Y Mountain</div>
+
+<style scoped>
+section > p, section > ul { font-size: 0.86em; }
+section > ul li { margin: 0.1em 0; }
+.lab8-big { margin-top: 0.7em; background: #e8792b; color: #fff; border-radius: 12px; padding: 0.4em 0.8em; font-size: 1.1em; font-weight: 800; line-height: 1.25; text-align: center; }
+.lab8-big strong { color: #ffd21f; }
+</style>
 
 <!-- Drawn from the formulas ArcGIS Pro's Kriging documents (tools/week09_semivariogram_models.py); the exponential and Gaussian only approach the sill, so their range is the distance where they reach 95 % of it. The shape near zero matters most, because the nearest samples carry most of the weight. Do not give the class Lab 8's results; the Gaussian run's error map is one of the lab's questions. -->
 
@@ -171,22 +274,46 @@ Lab 8 runs all three on Y Mountain
 
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
-.ks-img { position: absolute; left: 50%; transform: translateX(-50%); top: 115px; height: 560px; }
+.ks-img { position: absolute; left: 50%; transform: translateX(-50%); top: 165px; height: 512px; }
+.ks-inset { position: absolute; right: 60px; top: 22px; width: 270px; border: 1px solid #c3ccd6; }
+.ks-cap { position: absolute; right: 345px; top: 40px; width: 270px; font-size: 0.52em; line-height: 1.3; color: #4a5568; text-align: right; }
 </style>
+
+<img class="ks-inset" src="images/ie-kriging-settings-inset.png" alt="A temperature map with a straight 100 km line across it and eight measured points on the line">
+<span class="ks-cap">Each panel is a <strong>cross section</strong>: 8 temperatures measured along one <strong>100 km line</strong> across a heat map</span>
 
 <img class="ks-img" src="images/ie-kriging-settings-1d.png" alt="The same eight points kriged four ways: fitted model, big nugget, short range, long range">
 
-<!-- One dimension, so each setting shows at a glance; it is the growth chart and stock chart from Tuesday again. Fitted model: each point's influence reaches out to the range and fades. Big nugget: the model says even neighbors barely agree, so the surface smooths toward the average and misses the points (Thursday's flat kriging panel later is the extreme case). Short range: the points are farther apart than the range, so between them the estimate falls back to the average. Long range: every point reaches far, so the curve runs straight between points and never returns to the average. Ask before revealing each caption which panel is which. Made-up values; ordinary kriging of the smooth signal (tools/week09_kriging_story_figures.py). -->
+<!-- The inset at upper right says what the panels are: a temperature map, and one straight 100 km line across it with 8 thermometers on it; each panel is the estimate along that line only, a cross section, so the curve is what the kriged heat map would read along the line. One dimension, so each setting shows at a glance; it is the growth chart and stock chart from Tuesday again. Fitted model: each point's influence reaches out to the range and fades. Big nugget: the model says even neighbors barely agree, so the surface smooths toward the average and misses the points (Thursday's flat kriging panel later is the extreme case). Short range: the points are farther apart than the range, so between them the estimate falls back to the average. Long range: every point reaches far, so the curve runs straight between points and never returns to the average. Ask before revealing each caption which panel is which. Made-up values; ordinary kriging of the smooth signal (tools/week09_kriging_story_figures.py). -->
 
 ---
 
 # Kriged Result
 
-Like IDW, a **weighted average** of nearby points, but the **variogram** sets the weights, not a fixed 1/d<sup>n</sup>
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.kr-lead { position: absolute; left: 70px; top: 122px; width: 1140px; font-size: 0.8em; }
+.kr-img { position: absolute; left: 50px; top: 215px; height: 420px; }
+.kr ul { list-style: none; margin: 0; padding: 0; }
+.kr li { position: absolute; left: 870px; width: 360px; margin: 0; font-size: 0.58em; line-height: 1.3; }
+.kr li:nth-child(1) { top: 210px; } .kr li:nth-child(2) { top: 345px; } .kr li:nth-child(3) { top: 462px; }
+.kr .tryit, .kr .infobox { font-size: 1em; }
+li[data-bespoke-marp-fragment="active"] .pop { display: block; animation: tryit-pop 0.45s ease-out both; }
+</style>
 
-![h:440 center](images/ip-tp-kriging-result.png)
+<div class="kr-lead">Like IDW, a <strong>weighted average</strong> of nearby points, but the <strong>variogram</strong> sets the weights, not a fixed 1/d<sup>n</sup></div>
 
-<!-- The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
+<img class="kr-img" src="images/ip-tp-kriging-result.png" alt="The true DEM beside the kriged surface from 150 samples">
+
+<div class="kr">
+
+* <span class="tryit pop">This looks better than Tuesday's methods. Why doesn't it give back the <strong>full terrain</strong> of the mountain?</span>
+* <span class="infobox pop">Because you can't <strong>fabricate data</strong>. Between the samples, kriging only has a weighted average of the points it was given.</span>
+* <span class="infobox pop">A <strong>generative AI</strong> model could invent ridges and canyons that look more real, but it still could not give back <em>this</em> mountain without many more points.</span>
+
+</div>
+
+<!-- Three clicks: the question (let the room answer before the next click), the answer, then the generative-AI point. Every method today only rearranges the 150 measured elevations; none of them can know about a canyon that no sample fell in, so the ridges and gullies between samples are gone. A generative model trained on many DEMs could fill in plausible-looking terrain texture, but it would be invented texture, not Mount Timpanogos's actual ridges; only more measurements bring those back. The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
 
 ---
 
@@ -224,31 +351,38 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 
 # Error = Truth − Surface
 
-![bg right:55% w:97%](images/ie-rc-error-callouts.png)
+![bg right:50% w:97%](images/ie-rc-error-callouts.png)
 
 <style scoped>
-section > ul { font-size: 0.8em; }
+section > h1 { position: absolute; top: 52px; left: 70px; width: 560px; margin: 0; }
+.et-list { position: absolute; left: 70px; top: 122px; width: 560px; font-size: 0.66em; line-height: 1.3; }
+.et-list ul { margin: 0; }
+.et-img { position: absolute; left: 80px; top: 252px; height: 335px; }
 .qa ul { list-style: none; margin: 0; padding: 0; }
-.qa li { position: absolute; left: 70px; width: 480px; margin: 0; font-size: 0.62em; line-height: 1.3; }
-.qa li:nth-child(1) { top: 515px; } .qa li:nth-child(2) { top: 549px; } .qa li:nth-child(3) { top: 600px; width: 470px; font-size: 0.75em; }
+.qa li { position: absolute; left: 70px; width: 540px; margin: 0; font-size: 0.6em; line-height: 1.3; }
+.qa li:nth-child(1) { top: 598px; } .qa li:nth-child(2) { top: 630px; }
 .qa strong { color: #e8792b; }
 li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
 
-- Subtract, cell by cell, in **Raster Calculator**
-- **Positive:** the surface is too **low**
-- **Negative:** the surface is too **high**
+<div class="et-list">
+
+- Subtract, cell by cell, in **Raster Calculator**: the **map algebra** of Week 3
+- **Positive:** the surface is too **low**; **negative:** too **high**
 - In **meters**; map it on a **diverging** scale centered on zero
+
+</div>
+
+<img class="et-img" src="images/ie-map-algebra-error.png" alt="Three tilted rasters stacked: True_DEM minus Surface equals Error; one cell reads 2,450 minus 2,410 equals +40 m">
 
 <div class="qa">
 
 * <span class="pop"><strong>A cell reads +40 m. Too high or too low?</strong></span>
 * <span class="pop">Too <strong>low</strong>: the truth is 40 m above the surface there</span>
-* <span class="tryit">Try it on your worksheet: Provo's actual minus each estimate</span>
 
 </div>
 
-<!-- The capture is the Lab 8 Step 6 Raster Calculator, inside ModelBuilder: "%True_DEM%" - "%Thiessen_Surface%". The order matters only for the sign, but say it out loud and keep it fixed: if one student subtracts the other way, every color on their map flips and their "too high" ridges become "too low". Lab 8 uses truth minus surface throughout. Clicks: the +40 question, its answer, then the worksheet callout: on Tuesday's Provo worksheet, each student subtracts each of their four estimates from Provo's actual temperature and reads the sign (positive means that method guessed too cold). -->
+<!-- The diagram is the whole idea: two rasters on the same grid, one above the other, and subtraction one cell at a time, exactly the local map algebra from the Week 3 raster-analysis decks (NDVI was the same kind of cell-by-cell arithmetic). The picked cell reads 2,450 m in the truth and 2,410 m in the surface, so its error is +40 m: blue, too low (made-up values, tools/week09_map_algebra_figure.py). The capture is the Lab 8 Step 6 Raster Calculator, inside ModelBuilder: "%True_DEM%" - "%Thiessen_Surface%". The order matters only for the sign, but say it out loud and keep it fixed: if one student subtracts the other way, every color on their map flips and their "too high" ridges become "too low". Lab 8 uses truth minus surface throughout. Two clicks: the +40 question and its answer. The worksheet callout was dropped October 28, 2026: there is no worksheet on Thursday. -->
 
 ---
 
@@ -259,53 +393,89 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 * **Why is the valley floor nearly white?**
 * It is flat: any nearby sample is close when the ground does not change. The error is on the **mountain front**
 * Thiessen's error is **finest-grained**: every polygon edge is a step
+* <span class="tryit">Which of these maps has the <strong>least error</strong>, and how can we <strong>calculate</strong> it?</span>
 
-<!-- The three error maps from the Lab 8 example baseline (2,500 points, default parameters). Red is where the surface is too high, blue too low. Three clicks: the question (ask the room before the next click), the answer, then the Thiessen point. The valley floor is within 5 m for every method because it is flat: any method that returns a nearby sample's value is close when the ground does not change. The error is a map of where the ground changes faster than the samples are spaced. Lab 8 asks each student to find their best method's single worst cell and explain the ground there. -->
+<style scoped>
+section > ul { font-size: 0.8em; }
+</style>
+
+<!-- The three error maps from the Lab 8 example baseline (2,500 points, default parameters). Red is where the surface is too high, blue too low. Four clicks: the question (ask the room before the next click), the answer, the Thiessen point, then the lead-in to RMSE: let them guess which map is best by eye, then say that eyeballing three maps of 67,337 cells is not a measurement, and the next slide turns each map into one number. The valley floor is within 5 m for every method because it is flat: any method that returns a nearby sample's value is close when the ground does not change. The error is a map of where the ground changes faster than the samples are spaced. Lab 8 asks each student to find their best method's single worst cell and explain the ground there. -->
 
 ---
 
-# One Number: RMSE
+# One Number: Root Mean Squared Error (RMSE)
 
-![bg right:44% w:96%](images/ie-rc-square-callouts.png)
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.rm-eq { position: absolute; left: 70px; top: 150px; width: 470px; font-size: 0.8em; }
+.rm-list { position: absolute; left: 70px; top: 285px; width: 470px; font-size: 0.74em; }
+.rm-list ul { margin: 0; }
+.rm-img { position: absolute; right: 40px; top: 150px; width: 700px; }
+.rm-cap { position: absolute; right: 40px; top: 470px; width: 700px; font-size: 0.56em; color: #4a5568; text-align: center; }
+</style>
+
+<div class="rm-eq">
 
 $$
 \text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(z_i - \hat{z}_i\right)^2}
 $$
 
+</div>
+
+<div class="rm-list">
+
 - **Square** each error, so highs and lows both count
 - Take the **mean** over every cell
 - Take the **square root**, so the answer is back in **meters**
 
-<!-- z is the truth, z-hat the surface, n the number of cells. Squaring does two things: it stops positive and negative errors canceling, and it weights big errors heavily, so a surface with a few 100 m misses scores worse than one with many 5 m misses. The capture is Lab 8's second Raster Calculator, Square. Common slip: the root of the mean, not the mean of the roots, and not the root of the sum. -->
+</div>
+
+<img class="rm-img" src="images/ie-profile.svg" alt="One row of cells across the Lab 8 study area: the true DEM and the Thiessen, IDW and kriging rebuilds from 250 points">
+
+<span class="rm-cap">Every <strong>gap</strong> between the black truth and a colored rebuild is one cell's error; RMSE is the typical size of those gaps, in meters</span>
+
+<!-- z is the truth, z-hat the surface, n the number of cells. Squaring does two things: it stops positive and negative errors canceling, and it weights big errors heavily, so a surface with a few 100 m misses scores worse than one with many 5 m misses. The profile is one row of cells across the Lab 8 study area (the same one as on Today's Goals): every vertical gap between the black truth and one of the colored rebuilds is one cell's error, and RMSE rolls all 67,337 of those gaps into one number per method. Common slip: the root of the mean, not the mean of the roots, and not the root of the sum. The "What RMSE Hides" slide that followed was cut October 28, 2026 to keep RMSE something students want to use; its profile figure moved here. -->
 
 ---
 
-# RMSE in ArcGIS Pro
+# RMSE in ArcGIS Pro: Four Steps
 
-![bg right:50% w:96%](images/ie-zonal-callouts.png)
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.fl-lead { position: absolute; left: 70px; top: 122px; width: 1140px; font-size: 0.74em; }
+.flow { position: absolute; left: 70px; right: 70px; top: 185px; display: flex; align-items: stretch; gap: 0; }
+.flow .box { flex: 1; background: #eef4fb; border: 2px solid #0062b8; border-radius: 12px; padding: 0.45em 0.55em; font-size: 0.56em; line-height: 1.3; text-align: center; }
+.flow .box b { display: block; font-size: 1.25em; color: #002e5d; margin-bottom: 0.25em; }
+.flow .box .tool { display: block; color: #0062b8; font-weight: 700; }
+.flow .box code { font-size: 0.92em; }
+.flow .arrow { flex: 0 0 46px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; color: #e8792b; font-weight: 800; }
+.fl-list { position: absolute; left: 70px; top: 380px; width: 640px; font-size: 0.66em; }
+.fl-img { position: absolute; right: 70px; top: 325px; height: 345px; }
+</style>
 
-1. **Square** the error raster
-2. **Zonal Statistics as Table** over the study area — statistic **Mean**
-3. **Calculate Field** — `math.sqrt(!MEAN!)`
+<div class="fl-lead">ArcGIS Pro has <strong>no single RMSE tool</strong>. Chain four steps, each one a tool you already know:</div>
 
-- **COUNT** is the number of cells averaged: check it
+<div class="flow">
+<div class="box"><b>1 · Error</b><span class="tool">Raster Calculator</span><code>True_DEM − Surface</code></div>
+<div class="arrow">➜</div>
+<div class="box"><b>2 · Square</b><span class="tool">Raster Calculator</span><code>Square(Error)</code></div>
+<div class="arrow">➜</div>
+<div class="box"><b>3 · Mean</b><span class="tool">Zonal Statistics as Table</span>over the study area, statistic <strong>Mean</strong></div>
+<div class="arrow">➜</div>
+<div class="box"><b>4 · Square root</b><span class="tool">Calculate Field</span><code>math.sqrt(!MEAN!)</code></div>
+</div>
 
-<!-- The table is Lab 8 Step 7's output for one method: COUNT 67,337 cells and AREA 60,603,300 square meters, both on the lab page as check values. If COUNT comes out smaller, the surfaces did not cover the whole study area (the Extent environment is the usual cause), and the RMSE is quietly computed on fewer cells. Zonal Statistics as Table opens with the statistic set to All; Mean is the one the RMSE needs. -->
+<div class="fl-list">
 
----
+- The same order as the formula, read **inside out**
+- Lab 8's model chains all four for **each method**
+- **COUNT** in the table is the number of cells averaged: **67,337**
 
-# What RMSE Hides
+</div>
 
-![bg right:42% w:96%](images/ie-profile.svg)
+<img class="fl-img" src="images/ie-zonal-callouts.png" alt="The Zonal Statistics as Table dialog with callouts: the study area as the one zone, the squared error raster, and statistic Mean">
 
-- **Where** the error is — a map shows it, a number cannot
-- **Which way** — a surface can be biased high everywhere and still score well
-- **The worst cell** — one 150 m miss barely moves an average over 67,337 cells
-- **The truth's own error** — the "true" DEM is a measurement too
-
-<!-- So report the RMSE, but never alone. The mean error (no squaring) shows bias: near zero means highs and lows balance. The minimum and maximum of the error raster show the worst misses. And the true DEM has its own error, from the lidar and from the 30 m resampling, which never shows up in the RMSE because it is the thing we compare against. The Lab 8 metadata step is there for that reason. -->
-
-<!-- Keep this slide even when time is short: the closing quiz asks what two surfaces with the same RMSE could still differ in. -->
+<!-- There is no RMSE tool in ArcGIS Pro, so the four boxes are the whole recipe, and each one is a tool students have already run: Raster Calculator twice (Week 3's map algebra), Zonal Statistics as Table, and Calculate Field. Read the formula on the last slide from the inside out and it is the same four steps: the difference, the square, the mean, the root. The capture is step 3 in Lab 8 Step 7. The table is Lab 8 Step 7's output for one method: COUNT 67,337 cells and AREA 60,603,300 square meters, both on the lab page as check values. If COUNT comes out smaller, the surfaces did not cover the whole study area (the Extent environment is the usual cause), and the RMSE is quietly computed on fewer cells. Zonal Statistics as Table opens with the statistic set to All; Mean is the one the RMSE needs. The step-2 capture (ie-rc-square-callouts.png) was on the RMSE slide until October 28, 2026. -->
 
 ---
 
@@ -376,11 +546,36 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 <div class="qa">
 
 * <span class="pop"><strong>Why is one kriging panel flat?</strong></span>
-* <span class="pop">Its automatic fit came out almost all nugget, so every cell gets the mean</span>
+* <span class="pop">Its automatic fit decided no sample tells you anything about its neighbors, so every cell gets the <strong>mean</strong>. Next slide: why</span>
 
 </div>
 
 <!-- It answers "how would you judge which one to trust" with a test students can run. the same 150 Mount Timpanogos samples as Tuesday (USGS 3DEP, 30 m, 7.2 km square; tools/week09_elevation_figures.py, numbers in tools/week09_elevation_numbers.json; computed with numpy, scipy and pykrige rather than ArcGIS Pro, so the figures are figures, not tool captures). Each surface is checked at 60 hold-out points the methods never saw (red circles, first panel). Root-mean-square error at the hold-out points: spline 69 m, kriging with a fitted spherical model 73, IDW 100, Thiessen 113, 2nd-order trend 241, and kriging with pykrige's automatic variogram fit 372 - exactly what you get by ignoring location and guessing the mean of the samples (372 m), because that fit came out almost all nugget with a range of a few meters, so every cell gets the mean. Two lessons: hold out some points and measure, don't eyeball; and the same method with a careless setting can do far worse than a much simpler one. Natural neighbor, in the earlier version of this test, has no scipy equivalent and was dropped. Now that RMSE is defined, the numbers can be read off directly. Exactness, if anyone asks: Thiessen, IDW, the spline and the fitted kriging (nugget 0) return every sample value; the trend misses by 163 m on average and the automatic kriging, with its huge nugget, by 96 m, so kriging is exact only when the nugget is zero. The hold-out, checkpoint-spread, exactness and methods-table slides were cut October 26, 2026 once Lab 8 dropped checkpoints. -->
+
+---
+
+# Why the Automatic Fit Came Out Flat
+
+<style scoped>
+section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
+.af-img { position: absolute; left: 50%; transform: translateX(-50%); top: 118px; width: 1080px; }
+.af ul { list-style: none; margin: 0; padding: 0; }
+.af li { position: absolute; left: 70px; width: 1140px; margin: 0; font-size: 0.6em; line-height: 1.3; }
+.af li:nth-child(1) { top: 555px; } .af li:nth-child(2) { top: 590px; } .af li:nth-child(3) { top: 625px; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<img class="af-img" src="images/ie-autofit-flat.png" alt="Two semivariograms of the same 150 samples: binned every 300 m the dots rise to a 4.6 km range; in six wide bins out to 8 km they rise and then fall, and the fitted line is flat">
+
+<div class="af">
+
+* <span class="pop">The automatic fit used **6 wide bins** out to 8 km. The far bins are pairs on opposite **low flanks**: alike again, so the dots rise, then **fall**</span>
+* <span class="pop">A spherical curve can only rise and level off, so the best fit was a **flat line** with a range of 0.3 m: no sample helps its neighbors</span>
+* <span class="pop">To that model the mountain looks like the **no-pattern** test from Part 1, so every cell gets the mean. Lab 8's 2,500 points and 30 m **lag** fit fine</span>
+
+</div>
+
+<!-- Three clicks. Same 150 Timpanogos samples, binned two ways (tools/week09_autofit_figure.py, which repeats the elevation script's DEM request and sample draw). Left: the careful fit behind the good kriging panel, pairs grouped every 300 m and only out to 4.5 km; the dots rise steadily and the spherical model reaches its sill at about 4.6 km. Right: pykrige's defaults, the automatic fit: 6 bins spread across every distance in the 7.2 km square, out to about 8 km. Past about 4 km the pairs are increasingly corner to corner, one low flank against the other, and those are similar heights again, so the dots come back down. No spherical curve rises and falls, so the least-squares fit settles on the average level everywhere: nugget 33,339 and partial sill 72,238 m^2 with a range of 0.29 m. A range shorter than the closest pair of samples means no sample carries any weight for its neighbor, so ordinary kriging returns the sample mean everywhere, the flat panel, and with that big nugget it does not even return the samples. The lessons for Lab 8: the lag (bin width) and how far out you look matter, and a fitted model is worth a glance before you trust it. In Lab 8 (2,500 points over 60 km2, Lag size 30 from the 30 m cell size) the fit works, as the Kriging in ArcGIS Pro notes say. Added October 28, 2026, replacing the one-line "almost all nugget" answer. -->
 
 ---
 
@@ -389,6 +584,8 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 ![bg right:55%](images/ip-divider-explorer.jpg)
 
 # Part 4 — Lab 8, Interpolation Explorer
+
+<!-- NOTE FOR FALL 2027 (Dan, October 28, 2026): present this Lab 8 introduction, or at least part of it (Lab 8 at a Glance and Your Own IDW Power), in Tuesday's deck instead of here. Doing some theory and some hands-on lab demonstration on Tuesday, then more theory and more lab demonstration on Thursday, has worked well this year; this week put all of the lab on Thursday. Also recorded in tools/NEXT_STEPS.md, section 7. -->
 
 ---
 
@@ -476,9 +673,9 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: How Wrong Is the Surface?** Seven questions on kriging, error rasters, RMSE and where the error lives. **Scan the code**, or open the link under it.
+**Quiz: How Wrong Is the Surface?** Eight questions on kriging, error rasters, RMSE and where the error lives. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the sign question: a wrong sign flips the whole map in Lab 8
 
 **Before next class**
@@ -500,4 +697,4 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 
 <!-- Five minutes, in pairs, then a show of hands on the Gaussian item: it is the run Lab 8 Step 8 asks them to explain. If the room has no signal, put the URL on the board; the items read aloud just as well. -->
 
-<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026; the kriging part, the six-methods test, the exactness slide and the tool table moved here from the Tuesday deck on October 20, 2026; the checkpoint, exactness, tool-table, variogram, 3D-kriging and service slides were cut October 26, 2026 to match the simplified Lab 8. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->
+<!-- Week 9 due items from the DUE table in tools/build_schedule.py: Lab 8, Quiz 7 and Chapter 12 this Saturday. Deck written October 8, 2026; the kriging part, the six-methods test, the exactness slide and the tool table moved here from the Tuesday deck on October 20, 2026; the checkpoint, exactness, tool-table, variogram, 3D-kriging and service slides were cut October 26, 2026 to match the simplified Lab 8. October 28, 2026: neighbor-test variants and the bin-by-bin semivariogram added, pop-up questions on the kriged result and the error maps, the map-algebra diagram on the error slide, the four-step RMSE flow, What RMSE Hides cut, and the automatic-fit explanation added. Figures: tools/week09_interpolation_figures.py (error-row crop and the checkpoint test); the ArcGIS Pro captures are from the Lab 8 GUI build (docs/assignments/lab-08/images), copied into this folder. -->

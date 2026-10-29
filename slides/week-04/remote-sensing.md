@@ -911,7 +911,7 @@ Next week the sensor points at the ground and measures **distance** instead of b
 
 **Quiz: Light and Bands.** Five questions on bands, near-infrared, false color, and satellites. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Good warm-up for Quiz 4 on Learning Suite, and for the *GIS Fundamentals* reading
 
 **Before next class**

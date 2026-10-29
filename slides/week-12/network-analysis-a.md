@@ -237,7 +237,7 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 **Quiz: Along the Roads.** Five questions on junctions and connectivity, one-way streets as a cost, two impedances, UGRC's 1.5 factor, and which distance belongs to a fire engine. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Thursday builds on the two-impedance question
 
 **Before next class**

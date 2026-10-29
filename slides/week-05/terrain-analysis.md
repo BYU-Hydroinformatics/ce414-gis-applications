@@ -432,7 +432,7 @@ Siting **cell towers**, **search and rescue**, **scenic protection**, **security
 
 **Quiz: Slope, Aspect, Viewshed.** Six questions on **what you get out of a DEM** — contours, hillshade, aspect, slope, and what a viewshed can and cannot tell you. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
 
 **Before next class**

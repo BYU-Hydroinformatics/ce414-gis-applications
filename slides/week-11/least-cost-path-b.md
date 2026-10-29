@@ -264,7 +264,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 **Quiz: What Moved the Line?** Five questions on the current tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The line-weight question comes back in Lab 10 Step 9
 
 **Before next class**

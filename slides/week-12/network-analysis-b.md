@@ -285,7 +285,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 **Quiz: Four Minutes Away.** Five questions on Solve, which solver answers which question, why a buffer and a service area disagree, and what Lab 11's cutoff decides. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The buffer question comes back in Lab 11's Map 2
 
 **Before next class**

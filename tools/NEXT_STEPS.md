@@ -289,6 +289,14 @@ model). Check one ordering question with Dan first: the Butte lab builds a Splin
 moving it ahead of the Interpolation Explorer means students meet Spline before the lab that
 compares the interpolators.
 
+**Lecture pacing for Fall 2027 (Dan, October 28, 2026).** Each week works best as some theory
+and some hands-on lab demonstration on Tuesday, then more theory and more lab demonstration on
+Thursday. Week 9 broke that: all of the Lab 8 introduction (the Part 4 slides of
+`slides/week-09/interpolation-explorer.md`: Lab 8 at a Glance, Your Own IDW Power, Predict It, How
+You Will Know, Make It Yours) came at the end of Thursday. When the Week 9 decks are regenerated,
+move at least Lab 8 at a Glance and Your Own IDW Power into the Tuesday deck
+(`interpolation.md`), and check the other weeks for the same imbalance.
+
 **Prompt**
 
 > Close out Fall 2026 for the CE 414 site. (1) `ROADMAP.md`: every row that says a thing is owed

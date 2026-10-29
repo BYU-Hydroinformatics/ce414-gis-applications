@@ -430,7 +430,7 @@ $$
 
 **Quiz: Which Way Does Water Go?** Five questions, one for each of today's goals: what a watershed is, how they nest, the water balance, why **Fill** comes first, and **aspect** against **D8**. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the D8 question: every step on Thursday reads the flow direction grid
 
 **Before next class**

@@ -227,7 +227,7 @@ The grid gives **bank** volume (soil in place), not **loose** or **compacted**.
 
 **Self-check: Cut or Fill?** Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that this deck made sense
+- A quick check that this deck made sense
 - Note the sign question; it is the easiest one to get backwards
 
 **Next**

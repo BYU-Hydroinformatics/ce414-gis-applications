@@ -348,7 +348,7 @@ Same model, same data, five runs of the tool dialog:
 
 **Quiz: Which Family?** Five questions: **which family a tool belongs to**, what a window does to an edge, and why the threshold is a parameter. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last three questions cover the ideas behind Lab 2 Step 6
 
 **Before next class**

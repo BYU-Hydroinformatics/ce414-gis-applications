@@ -406,7 +406,7 @@ By the end of class you should be able to:
 
 **Quiz: Height Above What?** Six questions on HAND, flooding a grid by HAND, stream definitions and why Lab 7 is two models. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 
 **Before next class**
 

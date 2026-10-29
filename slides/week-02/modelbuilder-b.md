@@ -677,7 +677,7 @@ The example map is not a template: yours will differ, because your stores and yo
 
 **Quiz: Canvas to Tool.** Five questions on **turning a canvas into a tool** someone else can run. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
 
 **Before next class**

@@ -671,7 +671,7 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 
 **Quiz: Models and ModelBuilder.** Five questions on **reading a canvas** — and the projection and dissolve calls inside Cities Near Rivers. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Two questions cover Buffer and projection decisions in Lab 1
 
 **Before next class**

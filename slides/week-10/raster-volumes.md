@@ -216,7 +216,7 @@ Area × mean height **must** equal the sum. If it does not, the units are wrong 
 
 **Self-check: The Base Is the Answer.** Five questions on raster volumes, units, Surface Volume and choosing a base. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that this deck made sense
+- A quick check that this deck made sense
 - Note the units question; units are a common mistake in Lab 9
 
 **Before Saturday**

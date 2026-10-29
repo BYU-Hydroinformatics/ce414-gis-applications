@@ -455,7 +455,7 @@ Utah County, July 2025, cells at or above the threshold:
 
 **Quiz: Label or Measurement?** Five real datasets, one question each: **is that cell value a label, or a measurement?** **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - It is the same call Lab 2 Step 6 makes when the threshold table turns NDVI into a map
 
 **Before next class**

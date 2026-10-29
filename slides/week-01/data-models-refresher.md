@@ -547,7 +547,7 @@ Each pixel (raster cell) is stored as a hexadecimal number that tells the screen
 
 **Quiz: Storing the World.** Five questions on **what the computer actually stores** for a point, a line, a polygon and a grid. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - It is the warm-up for the graded quiz on Learning Suite and for Lab 1
 
 **Before next class**

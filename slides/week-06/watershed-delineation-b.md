@@ -457,7 +457,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 **Quiz: Follow the Water.** Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the **pour point** and **snapping** questions; getting them right saves time in Lab 5
 
 **Before next class**

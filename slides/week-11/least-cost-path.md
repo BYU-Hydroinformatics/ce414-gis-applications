@@ -313,7 +313,7 @@ section { font-size: 24px; }
 
 **Quiz: Cheapest or Shortest?** Five questions on what a **cost surface** stores, and why the cheapest line is not the shortest. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Watch the reclassification sign in Lab 10: **high means undesirable**
 
 **Before next class**

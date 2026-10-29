@@ -39,7 +39,7 @@ CE414Quiz.start({
         "Turn into the Thiessen surface"
       ],
       answer: "Treat nearby points as barely related, and smooth toward the mean",
-      explanation: "The nugget is the semivariance at almost zero distance. If it is nearly the whole sill, the model says even close neighbors are almost unrelated, so kriging gives no point much extra weight and the surface flattens toward the average. It also stops returning the measured values: kriging is exact only when the nugget is zero. The six-methods test in today's deck showed this happening when the variogram was fitted automatically: almost all nugget, and a flat surface at the mean."
+      explanation: "The nugget is the semivariance at almost zero distance. If it is nearly the whole sill, the model says even close neighbors are almost unrelated, so kriging gives no point much extra weight and the surface flattens toward the average. It also stops returning the measured values: kriging is exact only when the nugget is zero. The six-methods test in today's deck showed this happening when the variogram was fitted automatically: the dots rose and then fell, the fit settled on a flat line with a range of almost zero, and every cell got the mean."
     },
     {
       prompt: "Your error raster is the true DEM minus the surface. A cell reads +40. What happened there?",
@@ -64,14 +64,24 @@ CE414Quiz.start({
       explanation: "Averaged as they are, a surface too high in one place and too low in another can score near zero. Squaring makes every miss positive and weights a 100 m miss far more than a 5 m one; the square root at the end puts the answer back in meters."
     },
     {
-      prompt: "Two surfaces have the same RMSE. What could still differ between them?",
+      prompt: "ArcGIS Pro has no single RMSE tool. In what order do you chain the steps?",
       options: [
-        "Nothing; same RMSE, same surface",
-        "Where the errors are, and which way",
-        "Only the cell size of the two surfaces"
+        "Subtract, take the mean, square it, then take the square root",
+        "Subtract, square each cell, take the mean, then take the square root",
+        "Subtract, take the square root of each cell, then take the mean"
       ],
-      answer: "Where the errors are, and which way",
-      explanation: "An RMSE is one number for a whole map. One surface could be biased high everywhere and the other balanced, or one could have a single huge miss on a cliff band. The error map shows what the number hides."
+      answer: "Subtract, square each cell, take the mean, then take the square root",
+      explanation: "Read the formula from the inside out: the error (Raster Calculator, truth minus surface), its square (Raster Calculator again), the mean over the study area (Zonal Statistics as Table, statistic Mean), and the square root (Calculate Field, math.sqrt(!MEAN!)). Taking the mean before squaring lets highs and lows cancel; the root of each cell just gives back the size of each error."
+    },
+    {
+      prompt: "Your RMSE table for one method shows COUNT 51,200, but True_DEM has 67,337 cells. What does that tell you?",
+      options: [
+        "Nothing; COUNT is the number of sample points used",
+        "The surface did not cover the whole study area, so the RMSE was computed on fewer cells",
+        "That method was more accurate, because fewer cells had errors"
+      ],
+      answer: "The surface did not cover the whole study area, so the RMSE was computed on fewer cells",
+      explanation: "COUNT is the number of cells that went into the mean. If it is short, part of the study area had no surface value (in Lab 8 the usual cause is an Extent environment not set to True_DEM), and the RMSE quietly leaves those cells out, so it cannot be compared fairly with the other methods. Check COUNT on every RMSE table."
     },
     {
       prompt: "On a baseline error map, where does most of the error live?",

@@ -488,7 +488,7 @@ Links checked 2026-09-28, all 200. The files are big (Mars MOLA 2 GB, Moon LOLA 
 
 **Quiz: Surfaces and Returns.** Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last two come back in Lab 4, due Saturday
 
 **Before next class**

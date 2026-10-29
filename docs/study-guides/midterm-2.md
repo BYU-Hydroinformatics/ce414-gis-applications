@@ -67,8 +67,8 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Build a **Thiessen** surface and say what its shape looks like; compute an **IDW** estimate by hand and say what the **exponent** does
 - Recognize the profile each method draws through the same points, and say which methods can go above the highest sample
 - Say which methods give the **measured values back** (exact) and which do not
-- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, and what a large nugget does
-- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand; say what the RMSE hides
+- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, what a large nugget does, and why a fit with a range near zero gives a flat surface
+- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand and in ArcGIS Pro (error, square, mean, square root)
 - Say which surface to **trust**, and why holding points back is the honest test without the truth
 - For Lab 8: the two Thiessen defaults that ruin the surface, why the IDW surface stays inside the samples' range, what the empty kriging boxes mean, why Zonal Statistics as Table uses **Mean**, what a short **COUNT** means, and what the elevation service sent in Step 1
 - From the reading: tell **spatial interpolation** from **spatial prediction**; name a sampling design from a description; say why a sum of errors is a poor accuracy measure

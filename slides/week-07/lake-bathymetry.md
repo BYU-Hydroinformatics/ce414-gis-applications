@@ -306,7 +306,7 @@ By the end of class you should be able to:
 
 **Quiz: Lake Bathymetry.** Five questions on a terminal lake, measuring the bottom, datums, and what a level does to area. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the datum question: missing it costs time in Lab 6
 
 **Before next class**

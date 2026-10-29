@@ -725,7 +725,7 @@ A method that returns the samples is **exact**.
 
 **Quiz: Points Into Surfaces.** Seven items, one or more on each of today's goals: why we sample, the four designs, Thiessen, the IDW exponent, and which methods give the points back. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The **exponent** and the **number of points** are two of the choices you test in Lab 8
 
 **Before next class**

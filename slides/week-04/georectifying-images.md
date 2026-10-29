@@ -597,7 +597,7 @@ A spline drives the total RMS to zero by construction, and can distort the map b
 
 **Quiz: Line It Up.** Five questions on **putting a scanned map in its place** — control points, and what RMS error is not. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last three come back in Lab 3 Step 8
 
 **Before next class**

@@ -351,7 +351,7 @@ That is the difference between a result and a recommendation.
 
 **Quiz: Ready to Pitch?** Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result? **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that the assignment makes sense
+- A quick check that the assignment makes sense
 - Item 4 is the proposal meeting in miniature — bring the feasibility table
 
 **Before next class**
