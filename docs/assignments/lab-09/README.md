@@ -401,6 +401,7 @@ Step 0 fixed the points; here you change the other two, one at a time, in **two 
     sampling ring outward with it. Write your two digits and your distance in your report: the
     grader checks your row against a run at your distance. If you would rather not use your ID
     digits, email the instructor for a number of your own.
+
 2. **A spline base:** save a copy of the model (**ModelBuilder** tab ▸ **Save As**, name it
    `ButteVolumeSpline`), and in the copy delete **IDW** and put **Spline** (Spatial Analyst) in its
    place: **Input point features** `Plain_Points`, **Z value field** `RASTERVALU`, **Output cell
