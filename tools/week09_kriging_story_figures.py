@@ -8,10 +8,11 @@ All values are made up: 60 weather stations on a smooth afternoon-temperature fi
    every pair of stations (1,770) as a cloud of distance against temperature difference.
 2. The semivariogram: the pairs averaged in 20 km distance bins (half the squared difference, as the
    tool computes it), a spherical model fitted, and the nugget, range and sill marked.
-3. One dimension, four settings: the same 8 points along a 100 km line, kriged with the fitted model,
-   a big nugget, a short range and a long range, so each setting's effect is visible at a glance.
-   The estimates are ordinary kriging of the smooth signal (the nugget is treated as measurement
-   noise), which is why the big-nugget curve does not pass through the points.
+3. Four settings, as cross sections and maps: 8 points along a 100 km line plus 22 scattered off it,
+   all read from one made-up temperature map, kriged with the fitted model, a big nugget, a short
+   range and a long range. Each panel is the surface read along the line, beside the whole kriged map,
+   so each setting's effect shows both ways. The estimates are ordinary kriging of the smooth signal
+   (the nugget is treated as measurement noise), which is why the big-nugget curve misses the points.
 
     python tools/week09_kriging_story_figures.py      (any Python with matplotlib, numpy and scipy)
 
@@ -20,11 +21,11 @@ All values are made up: 60 weather stations on a smooth afternoon-temperature fi
    the east), so the cloud's shape can be compared with the smooth field's.
 5. Building the semivariogram one 20 km bin at a time: the pairs in each bin drawn on the map and their
    average placed on the graph, as full frames the deck stacks on clicks.
-6. A small map for the one-dimensional slide: a temperature field with the 100 km line the 8 points lie on.
+6. The truth map for that slide: the temperature field, the 100 km line and all 30 thermometers.
 
 Writes slides/week-09/images/ie-neighbor-base.png, ie-neighbor-pairs.png, ie-neighbor-cloud.png,
-ie-semivariogram-plain.png, ie-semivariogram-dots.png, ie-kriging-settings-1d.png,
-ie-kriging-settings-inset.png, ie-neighbor-{random,trend}-{base,cloud}.png and
+ie-semivariogram-plain.png, ie-semivariogram-dots.png, ie-kriging-settings-2d.png,
+ie-kriging-settings-truth.png, ie-neighbor-{random,trend}-{base,cloud}.png and
 ie-semivariogram-build-0.png to -4.png.
 """
 
@@ -174,45 +175,98 @@ def krige(nugget, rng_):
     return np.array(out)
 
 
-PANELS = [("Fitted model", "neighbors help out to the range (20 km)", 0.0, 20),
-          ("Big nugget", "smooths toward the average and misses the points", 0.8 * SILL1, 20),
-          ("Short range", "neighbors too far apart to help: falls back to the average", 0.0, 5),
-          ("Long range", "reaches far: straight lines, never back to the average", 0.0, 400)]
-fig, axs = plt.subplots(2, 2, figsize=(11.0, 5.6), dpi=170, sharex=True, sharey=True)
-for ax, (title, note, nugget, rng_) in zip(axs.ravel(), PANELS):
-    ax.axhline(z.mean(), color=GRAY, lw=1, ls=(0, (4, 3)))
-    ax.plot(xs, krige(nugget, rng_), color=ORANGE, lw=2.8, zorder=3)
-    ax.plot(x, z, "o", ms=9, color=BLUE, mec="white", mew=1.4, zorder=4)
-    ax.set_title(title, loc="left", fontsize=14, color=NAVY, weight="bold")
-    ax.text(0.99, 0.04, note, transform=ax.transAxes, ha="right", va="bottom", fontsize=11, color=GRAY)
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.set_xlim(0, 100); ax.set_ylim(50, 71)
-axs[0, 0].text(1, z.mean() + 0.4, "average", ha="left", va="bottom", fontsize=10, color=GRAY)
-for ax in axs[1]:
-    ax.set_xlabel("Distance along the line (km)", color=NAVY)
-for ax in axs[:, 0]:
-    ax.set_ylabel("°F", color=NAVY)
-fig.tight_layout(h_pad=1.4, w_pad=1.6)
-fig.savefig(IMG / "ie-kriging-settings-1d.png", facecolor="white"); plt.close(fig)
-
-# The small map beside it: a temperature field whose middle row is the fitted-model curve, so the 8
-# points read as measurements along one 100 km line across a map.
+# The "truth" for the slide's maps: a temperature field whose middle row (y = 23 km) is the fitted-model
+# curve through the 8 points, so the 8 points read as measurements along one 100 km line across a map.
 prof = krige(0.0, 20)
 gy = np.arange(0, 46)
 wobble = gaussian_filter(np.random.default_rng(31).normal(size=(46 + 40, 501 + 40)), (8, 40))[20:-20, 20:-20]
 wobble = 6 * wobble / wobble.std()
 wt = np.exp(-((gy[:, None] - 23) / 9.0) ** 2)
 heat = wt * prof[None, :] + (1 - wt) * (z.mean() + wobble + 0.4 * (prof[None, :] - z.mean()))
+
+# 22 more thermometers scattered off the line (none within 4 km of it), read from the same field.
+rngx = np.random.default_rng(57)
+extra = []
+while len(extra) < 22:
+    q = rngx.uniform([3, 3], [97, 43])
+    if abs(q[1] - 23) >= 4 and all(np.hypot(*(q - e)) >= 8 for e in extra):
+        extra.append(q)
+extra = np.array(extra)
+PX = np.r_[np.c_[x, np.full_like(x, 23.0)], extra]
+PZ = np.r_[z, heat[extra[:, 1].astype(int), np.round(extra[:, 0] / 0.2).astype(int)]]
+SILL2 = PZ.var() * 1.1
+
+
+def krige2(targets, nugget_frac, rng_):
+    """Ordinary kriging of the smooth signal at many targets at once (the same recipe as krige())."""
+    nugget = nugget_frac * SILL2
+    psill_ = SILL2 - nugget
+
+    def cov(h):
+        s_ = np.clip(h / rng_, 0, 1)
+        return psill_ * (1 - (1.5 * s_ - 0.5 * s_ ** 3))
+    n = len(PZ)
+    A = np.ones((n + 1, n + 1)); A[n, n] = 0
+    A[:n, :n] = cov(np.hypot(*(PX[:, None] - PX[None]).transpose(2, 0, 1))) + nugget * np.eye(n)
+    B = np.vstack([cov(np.hypot(*(PX[:, None] - targets[None]).transpose(2, 0, 1))), np.ones(len(targets))])
+    W = np.linalg.solve(A, B)[:n]
+    return W.T @ PZ
+
+
+GX, GY = np.meshgrid(np.arange(0.5, 100, 1.0), np.arange(0.5, 46, 1.0))
+grid = np.c_[GX.ravel(), GY.ravel()]
+line = np.c_[xs, np.full_like(xs, 23.0)]
+PANELS = [("Fitted model", "neighbors help out to the range (20 km)", 0.0, 20),
+          ("Big nugget", "smooths toward the average, misses the points", 0.8, 20),
+          ("Short range", "too far apart to help: back to the average", 0.0, 5),
+          ("Long range", "reaches far: no return to the average", 0.0, 400)]
+fig = plt.figure(figsize=(11.6, 5.9), dpi=170)
+gs = fig.add_gridspec(2, 4, width_ratios=[1.55, 1, 1.55, 1], wspace=0.08, hspace=0.42,
+                      left=0.055, right=0.99, top=0.93, bottom=0.11)
+for k, (title, note, nfrac, rng_) in enumerate(PANELS):
+    r, c = divmod(k, 2)
+    ax = fig.add_subplot(gs[r, 2 * c])
+    mp = fig.add_subplot(gs[r, 2 * c + 1])
+    ax.axhline(PZ.mean(), color=GRAY, lw=1, ls=(0, (4, 3)))
+    ax.plot(xs, krige2(line, nfrac, rng_), color=ORANGE, lw=2.6, zorder=3)
+    ax.plot(x, z, "o", ms=8, color=BLUE, mec="white", mew=1.3, zorder=4)
+    ax.set_title(title, loc="left", fontsize=14, color=NAVY, weight="bold")
+    ax.text(0.99, 0.04, note, transform=ax.transAxes, ha="right", va="bottom", fontsize=9.5, color=GRAY)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.set_xlim(0, 100); ax.set_ylim(50, 71)
+    if r == 1:
+        ax.set_xlabel("Distance along the line (km)", color=NAVY)
+    else:
+        ax.set_xticklabels([])
+    if c == 0:
+        ax.set_ylabel("°F", color=NAVY)
+    else:
+        ax.set_yticklabels([])
+    if k == 0:
+        ax.text(1, PZ.mean() + 0.4, "average", ha="left", va="bottom", fontsize=9, color=GRAY)
+    surf = krige2(grid, nfrac, rng_).reshape(GX.shape)
+    mp.imshow(surf, cmap="RdYlBu_r", vmin=50, vmax=71, extent=(0, 100, 46, 0), aspect="equal")
+    mp.plot([0, 100], [23, 23], color="black", lw=1.2)
+    mp.plot(x, np.full_like(x, 23), "o", ms=4.5, color=BLUE, mec="white", mew=0.8)
+    mp.plot(extra[:, 0], extra[:, 1], "o", ms=3, color="black", mec="white", mew=0.5)
+    mp.set_xlim(0, 100); mp.set_ylim(46, 0); mp.set_xticks([]); mp.set_yticks([])
+    mp.set_title("the kriged map", fontsize=10, color=GRAY, loc="left")
+    for sp in mp.spines.values():
+        sp.set_color(GRAY)
+fig.savefig(IMG / "ie-kriging-settings-2d.png", facecolor="white"); plt.close(fig)
+
+# The small "truth" map for the top of the slide, with all 30 thermometers.
 fig, ax = plt.subplots(figsize=(3.6, 1.9), dpi=200)
 ax.imshow(heat, cmap="RdYlBu_r", vmin=50, vmax=71, extent=(0, 100, 46, 0), aspect="auto", alpha=0.8)
 ax.plot([0, 100], [23, 23], color="black", lw=1.6)
+ax.plot(extra[:, 0], extra[:, 1], "o", ms=4, color="black", mec="white", mew=0.8)
 ax.plot(x, np.full_like(x, 23), "o", ms=6.5, color=BLUE, mec="white", mew=1.2)
 ax.text(50, 19, "100 km line", ha="center", va="bottom", fontsize=10, color="black", weight="bold")
 ax.set_xlim(0, 100); ax.set_ylim(46, 0); ax.set_xticks([]); ax.set_yticks([])
 for sp in ax.spines.values():
     sp.set_color(GRAY)
 fig.subplots_adjust(0.02, 0.03, 0.98, 0.97)
-fig.savefig(IMG / "ie-kriging-settings-inset.png", facecolor="white"); plt.close(fig)
+fig.savefig(IMG / "ie-kriging-settings-truth.png", facecolor="white"); plt.close(fig)
 
 # --- The neighbor test on two other variables at the same stations -----------------------------------------
 rng2 = np.random.default_rng(91)

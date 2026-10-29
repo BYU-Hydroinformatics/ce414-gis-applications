@@ -216,12 +216,16 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 .sv li:nth-child(1) { top: 345px; } .sv li:nth-child(2) { top: 400px; } .sv li:nth-child(3) { top: 455px; }
 .sv li:nth-child(4) { top: 530px; } .sv li:nth-child(5) { top: 570px; }
 .sv .q { color: #e8792b; font-weight: 700; }
+.svmod ul { list-style: none; margin: 0; padding: 0; }
+.sv-mod { background: #fff; }
+.lab8-big { position: absolute; right: 50px; top: 592px; width: 640px; box-sizing: border-box; background: #e8792b; color: #fff; border-radius: 12px; padding: 0.35em 0.8em; font-size: 0.82em; font-weight: 800; line-height: 1.25; text-align: center; }
+.lab8-big strong { color: #ffd21f; }
 li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
 
 <div class="sv-lead">
 
-Now we have the dots. Many **kriging models** have been developed; pick one and **fit** it to the dots, and the tool reads three numbers off the curve.
+Now we have the dots. Many **kriging models** have been developed; pick one and **fit** it to the dots, and the tool reads three numbers off the curve. The last click shows three of the shapes.
 
 </div>
 
@@ -243,48 +247,86 @@ Now we have the dots. Many **kriging models** have been developed; pick one and 
 
 </div>
 
-<!-- Six clicks: the fitted model, then nugget, range, sill, then a question and its answer. No need to go into how the fit is done: there are many model shapes (the next slide shows the three Lab 8 offers), the tool fits one to the dots, and it appears in orange. The tool never asks students to compute this; it fits the curve and reports these three numbers, and they are exactly the Major range, Partial sill (sill minus nugget) and Nugget boxes in the Kriging dialog, which Lab 8 leaves empty so the tool fits them. Nugget: instrument error or variation closer than any two stations. Range: past it, a station is no more use for Provo than the regional average. Sill: the typical difference between far-apart places. Here the made-up stations give a nugget of 9 degrees F squared (the noise put into the readings), a sill of about 83 and a range of about 170 km. -->
+<div class="svmod">
+
+* <img class="sv-img sv-mod pop" src="images/ie-semivariogram-models.png" alt="Three semivariogram models with the same nugget, sill and range: spherical rises steadily, exponential is steepest at first, Gaussian is flat at first"><span class="pop lab8-big">Lab 8 runs <strong>all three</strong> models on Y Mountain</span>
+
+</div>
+
+<!-- Seven clicks: the fitted model, then nugget, range, sill, a question and its answer, and last the three model shapes Lab 8 offers with the Lab 8 banner. No need to go into how the fit is done: there are many model shapes, the tool fits one to the dots, and it appears in orange. The tool never asks students to compute this; it fits the curve and reports these three numbers, and they are exactly the Major range, Partial sill (sill minus nugget) and Nugget boxes in the Kriging dialog, which Lab 8 leaves empty so the tool fits them. Nugget: instrument error or variation closer than any two stations. Range: past it, a station is no more use for Provo than the regional average. Sill: the typical difference between far-apart places. Here the made-up stations give a nugget of 9 degrees F squared (the noise put into the readings), a sill of about 83 and a range of about 170 km. Last click, the three models (merged here October 28, 2026 from their own slide): same nugget, sill and range, different shape near zero. Spherical rises steadily and is flat past the range; exponential is steepest at first, so neighbors lose their likeness fastest; Gaussian is flat at first and assumes a very smooth surface. Drawn from the formulas ArcGIS Pro's Kriging documents (tools/week09_semivariogram_models.py); the exponential and Gaussian only approach the sill, so their range is the distance where they reach 95 % of it. The shape near zero matters most, because the nearest samples carry most of the weight. Do not give the class Lab 8's results; the Gaussian run's error map is one of the lab's questions. -->
 
 ---
 
-# Three Semivariogram Models
-
-![bg right:52% w:98%](images/ie-semivariogram-models.png)
-
-Same nugget, sill and range; different shape **near zero**:
-
-- **Spherical**: rises steadily, flat past the range
-- **Exponential**: steepest at first; neighbors lose their likeness fastest
-- **Gaussian**: flat at first; assumes a **very smooth** surface
-
-<div class="lab8-big">Lab 8 runs <strong>all three</strong> on Y Mountain</div>
+# Under the Hood: How Kriging Gets Its Weights
 
 <style scoped>
-section > p, section > ul { font-size: 0.86em; }
-section > ul li { margin: 0.1em 0; }
-.lab8-big { margin-top: 0.7em; background: #e8792b; color: #fff; border-radius: 12px; padding: 0.4em 0.8em; font-size: 1.1em; font-weight: 800; line-height: 1.25; text-align: center; }
-.lab8-big strong { color: #ffd21f; }
+section > h1 { position: absolute; top: 46px; left: 70px; right: 70px; margin: 0; font-size: 1.6em; }
+.kw-map { position: absolute; left: 50px; top: 112px; width: 500px; }
+.kw-var { position: absolute; left: 50px; top: 410px; width: 500px; }
+.kw-list { position: absolute; left: 600px; top: 112px; width: 620px; font-size: 0.6em; line-height: 1.32; }
+.kw-list ul { margin: 0; padding-left: 1.1em; }
+.kw-list li { margin: 0 0 0.35em 0; }
+.kw-list .b { color: #0062b8; font-weight: 700; } .kw-list .g { color: #6b7684; font-weight: 700; } .kw-list .o { color: #c9620f; font-weight: 700; }
+.kw-mx { position: absolute; left: 610px; top: 395px; border-collapse: separate; border-spacing: 3px; font-family: "JetBrains Mono", Menlo, Consolas, monospace; font-size: 0.5em; }
+.kw-mx td { padding: 3px 7px; text-align: center; border-radius: 4px; border: none; background: none; }
+.kw-mx td.gij { background: #eef0f3; } .kw-mx td.d0 { background: #eef0f3; color: #8a94a0; }
+.kw-mx td.one { background: #f2f5e6; } .kw-mx td.v { background: #e3eefa; color: #0062b8; font-weight: 700; }
+.kw-mx td.lam { background: #fbeedd; color: #c9620f; font-weight: 700; } .kw-mx td.br { color: #8a94a0; font-size: 1.9em; padding: 0; }
+.kw-mx td.op { color: #4a5568; }
+.kw-z { position: absolute; left: 618px; top: 590px; width: 600px; font-size: 0.6em; line-height: 1.35; }
+.kw-z p { margin: 0 0 0.2em 0; }
+.kw-z .o { color: #c9620f; font-weight: 700; }
 </style>
 
-<!-- Drawn from the formulas ArcGIS Pro's Kriging documents (tools/week09_semivariogram_models.py); the exponential and Gaussian only approach the sill, so their range is the distance where they reach 95 % of it. The shape near zero matters most, because the nearest samples carry most of the weight. Do not give the class Lab 8's results; the Gaussian run's error map is one of the lab's questions. -->
+<img class="kw-map" src="images/ie-kw-map.png" alt="An unknown point Z0 with four measured temperatures around it: blue dashed lines D1 to D4 from Z0 to each, and gray lines between every pair of measurements">
+<img class="kw-var" src="images/ie-kw-vario.png" alt="The semivariogram with the four target readings V1 to V4 in blue and the six pair readings in gray">
 
+<div class="kw-list">
+
+- The weights are **not read straight off the curve**. Read it at two kinds of distance:
+  - <span class="b">Z₀ to each sample</span>: how far off each sample is likely to be (V₁…V₄)
+  - <span class="g">sample to sample</span>: how much the samples **repeat** each other (V₁₂…V₃₄)
+- Put them in one small **system of equations** and solve for the <span class="o">weights λ</span>, which add up to 1
+- Then Z₀ is a **weighted average**, just like IDW. Clustered samples share their weight; IDW never sees that
+- ArcGIS Pro does this for **every cell**, with its 12 nearest points
+- **Read more:** [How Kriging Gets Its Weights](https://byu-hydroinformatics.github.io/ce414-gis-applications/explainers/kriging-weights/), the full example worked by hand
+
+</div>
+
+<table class="kw-mx" aria-label="The kriging system">
+<tr><td class="br" rowspan="5">[</td><td class="d0">0</td><td class="gij">V₁₂</td><td class="gij">V₁₃</td><td class="gij">V₁₄</td><td class="one">1</td><td class="br" rowspan="5">]</td><td class="br" rowspan="5">[</td><td class="lam">λ₁</td><td class="br" rowspan="5">]</td><td class="op" rowspan="5">=</td><td class="br" rowspan="5">[</td><td class="v">V₁</td><td class="br" rowspan="5">]</td></tr>
+<tr><td class="gij">V₁₂</td><td class="d0">0</td><td class="gij">V₂₃</td><td class="gij">V₂₄</td><td class="one">1</td><td class="lam">λ₂</td><td class="v">V₂</td></tr>
+<tr><td class="gij">V₁₃</td><td class="gij">V₂₃</td><td class="d0">0</td><td class="gij">V₃₄</td><td class="one">1</td><td class="lam">λ₃</td><td class="v">V₃</td></tr>
+<tr><td class="gij">V₁₄</td><td class="gij">V₂₄</td><td class="gij">V₃₄</td><td class="d0">0</td><td class="one">1</td><td class="lam">λ₄</td><td class="v">V₄</td></tr>
+<tr><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">0</td><td class="lam">m</td><td class="v">1</td></tr>
+</table>
+
+<div class="kw-z">
+
+<span class="o">Z₀ = λ₁Z₁ + λ₂Z₂ + λ₃Z₃ + λ₄Z₄</span>
+
+Here: λ = 0.63, 0.16, 0.10, 0.12, so Z₀ = **61.5 °F**
+
+</div>
+
+<!-- A one-slide primer on what the Kriging tool does with the fitted curve, added October 28, 2026 in place of the separate three-models slide (those models are now the last click of Fit a Model to the Dots). Students often assume the weights are read straight off the semivariogram. They are not: the curve is read at two kinds of distance, from the unknown point to each sample (blue, V1 to V4: how far off each sample is likely to be) and between every pair of samples (gray, the six Vij: how much the samples repeat each other). Those ten numbers fill a 5 x 5 system: the gray block is sample-to-sample, the blue column is target-to-sample, and the last row forces the weights to add to 1; m is a Lagrange multiplier that makes that rule fit. Solve it and you have the weights; Z0 is then the same weighted average as IDW. The example is made up (spherical model, nugget 2, sill 20, range 50 km): weights 0.625, 0.157, 0.095 and 0.122, Z0 = 61.49 F, and an expected error of about 3.3 F. Z3 and Z4 are the same distance from Z0 but get different weights because Z3 is closer to Z2 and repeats some of what Z2 says; IDW gives them the same weight. Students do not need to solve this by hand; the link goes to the full worked page (docs/explainers/kriging-weights/index.html), and the figures are from tools/week09_kriging_weights_figures.py. -->
 ---
 
 # Same Points, Different Settings
 
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
-.ks-img { position: absolute; left: 50%; transform: translateX(-50%); top: 165px; height: 512px; }
+.ks-img { position: absolute; left: 50%; transform: translateX(-50%); top: 152px; height: 522px; }
 .ks-inset { position: absolute; right: 60px; top: 22px; width: 270px; border: 1px solid #c3ccd6; }
 .ks-cap { position: absolute; right: 345px; top: 40px; width: 270px; font-size: 0.52em; line-height: 1.3; color: #4a5568; text-align: right; }
 </style>
 
-<img class="ks-inset" src="images/ie-kriging-settings-inset.png" alt="A temperature map with a straight 100 km line across it and eight measured points on the line">
-<span class="ks-cap">Each panel is a <strong>cross section</strong>: 8 temperatures measured along one <strong>100 km line</strong> across a heat map</span>
+<img class="ks-inset" src="images/ie-kriging-settings-truth.png" alt="The true temperature map with a straight 100 km line across it, eight measured points on the line and 22 more scattered around it">
+<span class="ks-cap">The truth (right) and <strong>30 thermometers</strong>. Each line graph is a <strong>cross section</strong> of the kriged map beside it, along the <strong>100 km line</strong></span>
 
-<img class="ks-img" src="images/ie-kriging-settings-1d.png" alt="The same eight points kriged four ways: fitted model, big nugget, short range, long range">
+<img class="ks-img" src="images/ie-kriging-settings-2d.png" alt="The same 30 points kriged four ways, each shown as a cross section along the line and as a small kriged map: fitted model, big nugget, short range, long range">
 
-<!-- The inset at upper right says what the panels are: a temperature map, and one straight 100 km line across it with 8 thermometers on it; each panel is the estimate along that line only, a cross section, so the curve is what the kriged heat map would read along the line. One dimension, so each setting shows at a glance; it is the growth chart and stock chart from Tuesday again. Fitted model: each point's influence reaches out to the range and fades. Big nugget: the model says even neighbors barely agree, so the surface smooths toward the average and misses the points (Thursday's flat kriging panel later is the extreme case). Short range: the points are farther apart than the range, so between them the estimate falls back to the average. Long range: every point reaches far, so the curve runs straight between points and never returns to the average. Ask before revealing each caption which panel is which. Made-up values; ordinary kriging of the smooth signal (tools/week09_kriging_story_figures.py). -->
+<!-- The inset at upper right is the made-up truth: a temperature map, a straight 100 km line across it with 8 thermometers on it (blue), and 22 more scattered off the line (black). Every panel krigs all 30 points in two dimensions; the line graph is that kriged map read along the line (a cross section) and the small map beside it is the whole surface, so each setting shows both ways. Point at the maps after each line graph: fitted model, a believable heat map; big nugget, nearly one flat color; short range, a yellow sheet with a small bull's-eye on each thermometer; long range, broad smooth blobs. Redrawn October 28, 2026 with the maps; before that the panels were one-dimensional kriging of the 8 points alone. Fitted model: each point's influence reaches out to the range and fades. Big nugget: the model says even neighbors barely agree, so the surface smooths toward the average and misses the points (Thursday's flat kriging panel later is the extreme case). Short range: the points are farther apart than the range, so between them the estimate falls back to the average. Long range: every point reaches far, so the curve runs straight between points and never returns to the average. Ask before revealing each caption which panel is which. Made-up values; ordinary kriging of the smooth signal (tools/week09_kriging_story_figures.py). -->
 
 ---
 
@@ -293,7 +335,6 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
 .kr-lead { position: absolute; left: 70px; top: 122px; width: 1140px; font-size: 0.8em; }
-.kr-more { position: absolute; left: 70px; top: 172px; font-size: 0.58em; color: #4a5568; }
 .kr-img { position: absolute; left: 50px; top: 215px; height: 420px; }
 .kr ul { list-style: none; margin: 0; padding: 0; }
 .kr li { position: absolute; left: 870px; width: 360px; margin: 0; font-size: 0.58em; line-height: 1.3; }
@@ -303,8 +344,6 @@ li[data-bespoke-marp-fragment="active"] .pop { display: block; animation: tryit-
 </style>
 
 <div class="kr-lead">Like IDW, a <strong>weighted average</strong> of nearby points, but the <strong>variogram</strong> sets the weights, not a fixed 1/d<sup>n</sup></div>
-
-<div class="kr-more">For more details on how kriging gets its weights, <a href="https://byu-hydroinformatics.github.io/ce414-gis-applications/explainers/kriging-weights/">click here</a> (optional)</div>
 
 <img class="kr-img" src="images/ip-tp-kriging-result.png" alt="The true DEM beside the kriged surface from 150 samples">
 
@@ -316,7 +355,7 @@ li[data-bespoke-marp-fragment="active"] .pop { display: block; animation: tryit-
 
 </div>
 
-<!-- Three clicks: the question (let the room answer before the next click), the answer, then the generative-AI point. The small link under the lead goes to the optional worked example of how the semivariogram becomes weights (docs/explainers/kriging-weights/index.html): four measurements, ten semivariances read off the curve, a 5 x 5 system, the weights and the error estimate. Point the curious there instead of deriving it in class. Every method today only rearranges the 150 measured elevations; none of them can know about a canyon that no sample fell in, so the ridges and gullies between samples are gone. A generative model trained on many DEMs could fill in plausible-looking terrain texture, but it would be invented texture, not Mount Timpanogos's actual ridges; only more measurements bring those back. The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
+<!-- Three clicks: the question (let the room answer before the next click), the answer, then the generative-AI point. Every method today only rearranges the 150 measured elevations; none of them can know about a canyon that no sample fell in, so the ridges and gullies between samples are gone. A generative model trained on many DEMs could fill in plausible-looking terrain texture, but it would be invented texture, not Mount Timpanogos's actual ridges; only more measurements bring those back. The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
 
 ---
 
