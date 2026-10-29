@@ -57,11 +57,11 @@ CE414Quiz.start({
       options: [
         "To turn meters into square meters",
         "So cells with no data drop out",
-        "So every miss counts, big ones most",
+        "So positive and negative errors cannot cancel out",
         "Zonal Statistics cannot average negatives"
       ],
-      answer: "So every miss counts, big ones most",
-      explanation: "Averaged as they are, a surface too high in one place and too low in another can score near zero. Squaring makes every miss positive and weights a 100 m miss far more than a 5 m one; the square root at the end puts the answer back in meters."
+      answer: "So positive and negative errors cannot cancel out",
+      explanation: "A surface 40 m too low in one cell and 40 m too high in the next averages to zero error, which says it is perfect. Squaring gets rid of the minus signs, so every miss adds to the total; the square root at the end puts the answer back in meters."
     },
     {
       prompt: "ArcGIS Pro has no single RMSE tool. In what order do you chain the steps?",
@@ -74,14 +74,14 @@ CE414Quiz.start({
       explanation: "Read the formula from the inside out: the error (Raster Calculator, truth minus surface), its square (Raster Calculator again), the mean over the study area (Zonal Statistics as Table, statistic Mean), and the square root (Calculate Field, math.sqrt(!MEAN!)). Taking the mean before squaring lets highs and lows cancel; the root of each cell just gives back the size of each error."
     },
     {
-      prompt: "Your RMSE table for one method shows COUNT 51,200, but True_DEM has 67,337 cells. What does that tell you?",
+      prompt: "Kriging rebuilt Mount Timpanogos better than Tuesday's methods, yet its surface still lacks the mountain's real ridges and gullies. Why?",
       options: [
-        "Nothing; COUNT is the number of sample points used",
-        "The surface did not cover the whole study area, so the RMSE was computed on fewer cells",
-        "That method was more accurate, because fewer cells had errors"
+        "Its spherical semivariogram was the wrong shape for a mountain",
+        "The 150 sample elevations were measured with too much error",
+        "Between samples it can only average the points it was given"
       ],
-      answer: "The surface did not cover the whole study area, so the RMSE was computed on fewer cells",
-      explanation: "COUNT is the number of cells that went into the mean. If it is short, part of the study area had no surface value (in Lab 8 the usual cause is an Extent environment not set to True_DEM), and the RMSE quietly leaves those cells out, so it cannot be compared fairly with the other methods. Check COUNT on every RMSE table."
+      answer: "Between samples it can only average the points it was given",
+      explanation: "No interpolator can fabricate data. Every kriged cell is a weighted average of nearby samples, so a ridge or gully that no sample fell on cannot show up in the surface. A better model will not bring that detail back; more measurements will."
     },
     {
       prompt: "On a baseline error map, where does most of the error live?",
@@ -95,19 +95,19 @@ CE414Quiz.start({
       explanation: "On flat ground any nearby sample is close to the truth, so every method is within a few meters there. The error piles up on the mountain front, where the elevation changes a lot between samples. That is also where Lab 8 asks you to find your best method's worst cell."
     },
     {
-      prompt: "Lab 8 also runs kriging with a Gaussian semivariogram model. What does a Gaussian model assume?",
+      prompt: "An image model filled in the same 150 samples with a believable mountain range. At the 60 hold-out points its RMSE was 367 m; fitted kriging's was 73 m. What does that show?",
       options: [
-        "That neighbors lose their likeness fastest, right at the start",
-        "That there is no spatial structure at all",
-        "A very smooth surface: flat near zero, so close neighbors are nearly identical"
+        "Realistic is not accurate: only measurements place the real ridges",
+        "The 60 hold-out points must have been measured in error",
+        "A hold-out test is unfair to a surface an AI generates"
       ],
-      answer: "A very smooth surface: flat near zero, so close neighbors are nearly identical",
-      explanation: "The three models share a nugget, sill and range but differ near zero distance, where the nearest samples carry most of the weight. Spherical rises steadily, exponential is steepest at first, and Gaussian starts flat, which assumes a very smooth surface. On rugged ground that assumption can go wrong; Lab 8 asks you to look at where."
+      answer: "Realistic is not accurate: only measurements place the real ridges",
+      explanation: "The model drew ridges and canyons that look like real terrain, but not this mountain's, and it scored no better than putting the samples' average in every cell (372 m). Hold-out points are how you tell a believable surface from an accurate one, and they will judge the next interpolator too, whether it is fitted or trained."
     }
   ],
   perfectNote:  "All of them. You are ready for Lab 8's kriging runs, its error maps and its sensitivity questions.",
   goodNote:     "Good. Reread the explanations you missed before you start Lab 8 Step 6.",
-  tryAgainNote: "Kriging lets the semivariogram set the weights, error is truth minus surface, RMSE squares it so every miss counts, and the error lives where the ground changes faster than the samples. Look at those slides again."
+  tryAgainNote: "Kriging lets the semivariogram set the weights, error is truth minus surface, RMSE squares it so highs and lows cannot cancel, and the error lives where the ground changes faster than the samples. Look at those slides again."
 });
 </script>
 </body>
