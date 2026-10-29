@@ -1,6 +1,10 @@
 site_name: CE 414 — Engineering Applications of GIS
 site_description: Course materials for Civil Engineering 414 (Engineering Applications of GIS) at BYU
 site_url: https://byu-hydroinformatics.github.io/ce414-gis-applications/
+copyright: >-
+  &copy; 2026 Dan Ames. Course materials are licensed under
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+  unless otherwise noted.
 repo_url: https://github.com/BYU-Hydroinformatics/ce414-gis-applications
 repo_name: BYU-Hydroinformatics/ce414-gis-applications
 

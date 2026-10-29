@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 8. Tuesday taught HAND and Lab 7's two models. Today is the rest of the hydrology (how a gage measures a river, what a 100-year flood is, what a FEMA map claims), how good HAND is against FEMA's map, and the ModelBuilder details students run into between now and Saturday. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-22</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -394,7 +394,7 @@ Four ways to draw a flood, cheapest first:
 
 **Quiz: How Big, How High?** Six questions: the rating curve, the 100-year flood, how good HAND is, and the Lab 7 tools.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last two questions come back in Lab 7, Step 5
 
 **Before next class**

@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 6. Tuesday (Part A, watershed-delineation-a.md) covered what a watershed is and why water is managed by them, then the first three of the eight steps, ending on the flow direction grid. Today runs in three movements: how watersheds used to be delineated by hand, the same job done by USGS StreamStats, and then the rest of the eight steps (flow accumulation, the stream threshold, stream links, pour points and watersheds) finished in the Lab 5 ArcGIS Pro model. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -457,7 +457,7 @@ Lab 5 runs this week's eight steps on a real DEM in **ArcGIS Pro**, start to fin
 
 **Quiz: Follow the Water.** Five questions, one for each of today's goals: what StreamStats buys you, the order of the steps, the threshold, the watershed of a point, and snapping. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the **pour point** and **snapping** questions; getting them right saves time in Lab 5
 
 **Before next class**

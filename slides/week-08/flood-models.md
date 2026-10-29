@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 8, the third of the water weeks: Lab 5 found where the water goes, Lab 6 measured how much a lake holds, and this week asks how high a river rises and what it covers. Today is the hydrology and the simplest flood model; Thursday is HAND and the rest of Lab 7. Lab 7 opens today and is due Saturday: its Step 1, each student's own flow turned into a gage height and h from the rating, needs only today's material, so point them at it before Thursday. Midterm 1 is open in the Testing Center all week. The title image is three of FEMA's own cross-sections of the Provo River in Provo, with the 1% water surface over the lidar ground. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-20</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -406,7 +406,7 @@ By the end of class you should be able to:
 
 **Quiz: Height Above What?** Six questions on HAND, flooding a grid by HAND, stream definitions and why Lab 7 is two models. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 
 **Before next class**
 

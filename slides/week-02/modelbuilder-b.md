@@ -22,7 +22,7 @@ Dr. Dan Ames
 <!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. The window on the right is where we end up: the Cities Near Rivers model with four P markers, and the tool dialog those four parameters produce, side by side in ArcGIS Pro 3.7. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -677,7 +677,7 @@ The example map is not a template: yours will differ, because your stores and yo
 
 **Quiz: Canvas to Tool.** Five questions on **turning a canvas into a tool** someone else can run. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The *from class* half of **Quiz 2** covers this material, and Lab 1 Step 10 is question five
 
 **Before next class**

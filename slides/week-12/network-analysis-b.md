@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 12. Tuesday built the network: edges, junctions, connectivity, impedance. Today the three solvers that use one, in ArcGIS Pro's Network Analyst, and then Lab 11's model from its own data. Every map and number is from Lab 11's package and reference run (tools/lab11/, tools/week12_network_figures.py, tools/week12_network_numbers.json). The tool dialog captures are the lab's own Figures 2 to 4, owed to the Lab 11 GUI build; until then the icons stand in. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-10-21</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -285,7 +285,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 **Quiz: Four Minutes Away.** Five questions on Solve, which solver answers which question, why a buffer and a service area disagree, and what Lab 11's cutoff decides. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The buffer question comes back in Lab 11's Map 2
 
 **Before next class**

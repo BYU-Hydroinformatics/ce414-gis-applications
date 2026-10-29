@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Week 6 is two decks that share the eight-step delineation workflow between them. This one is Tuesday: Lab 5 introduced, then what a watershed is and why we manage water by them, then the first three steps (the DEM, Fill, Flow Direction) cell by cell, starting from last week's slope and aspect. Thursday's deck (Part B, watershed-delineation-b.md) picks up at flow accumulation, finishes the eight steps and the Lab 5 model, then delineates a watershed by hand and with StreamStats. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part A<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -430,7 +430,7 @@ $$
 
 **Quiz: Which Way Does Water Go?** Five questions, one for each of today's goals: what a watershed is, how they nest, the water balance, why **Fill** comes first, and **aspect** against **D8**. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Note the D8 question: every step on Thursday reads the flow direction grid
 
 **Before next class**

@@ -17,14 +17,15 @@ Circle answers and do scratch work in the booklet as you go, but leave time at t
 letter onto the sheet.
 
 **What is not on this exam.** **Coordinate systems, projections, datums and GPS** are not on
-Midterm 2; those lectures were retired from this semester's schedule. **Lab 12 (Avalanche Hazard)**
-is due the same week as the exam, so it is not on Midterm 2 either.
+Midterm 2; those lectures were retired from this semester's schedule. Neither are **data standards
+and data quality** (Chapter 14), which no lecture covers. **Lab 12 (Avalanche Hazard)** is due the
+same week as the exam, so it is not on Midterm 2 either.
 
 ## How to study for this exam
 
-- **Take your Learning Suite reading quizzes again**, especially Quiz 7 (Chapter 12) and Quiz 11
-  (Chapter 14). A few questions come from the reading. Quiz 8 was built from the Week 10
-  slides, and Quizzes 9 and 10 cover the Week 11 and 12 topics, so they are good practice too.
+- **Take your Learning Suite reading quizzes again**, especially Quiz 7 (Chapter 12). A few
+  questions come from that reading. Quiz 8 was built from the Week 10 slides, and Quizzes 9 and 10
+  cover the Week 11 and 12 topics, so they are good practice too.
 - **Retake the self-check quizzes** linked under each week below. Many exam questions test the same
   ideas, in different words.
 - **Reread each lab's warnings and "Check the result" boxes.** Several questions are about the
@@ -66,8 +67,8 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Build a **Thiessen** surface and say what its shape looks like; compute an **IDW** estimate by hand and say what the **exponent** does
 - Recognize the profile each method draws through the same points, and say which methods can go above the highest sample
 - Say which methods give the **measured values back** (exact) and which do not
-- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, and what a large nugget does
-- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand; say what the RMSE hides
+- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, what a large nugget does, and why a fit with a range near zero gives a flat surface
+- Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand and in ArcGIS Pro (error, square, mean, square root)
 - Say which surface to **trust**, and why holding points back is the honest test without the truth
 - For Lab 8: the two Thiessen defaults that ruin the surface, why the IDW surface stays inside the samples' range, what the empty kriging boxes mean, why Zonal Statistics as Table uses **Mean**, what a short **COUNT** means, and what the elevation service sent in Step 1
 - From the reading: tell **spatial interpolation** from **spatial prediction**; name a sampling design from a description; say why a sum of errors is a poor accuracy measure
@@ -115,10 +116,9 @@ a question and answer it out loud without notes. If you cannot, open that week's
 
 ## Week 13 — The Final Project
 
-*Reading:* Bolstad, Chapter 14. *Slides:* [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html). *Self-check:* [Ready to Pitch?](../quizzes/final-project/index.html). *Project:* [Final Project](../assignments/final-project.md).
+*Slides:* [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html). *Self-check:* [Ready to Pitch?](../quizzes/final-project/index.html). *Project:* [Final Project](../assignments/final-project.md).
 
 - Judge whether an idea is the right **scope** for the project, and say why displaying data is not analysis
 - List the requirements every project must meet, including **raster and vector** data
 - Say what to bring to the **proposal meeting**, including the **data-feasibility table**
 - Say how you would show a result is right: a **validation** or **sensitivity** check
-- From the reading: tell **precision** from **accuracy**; name the kinds of data error (**positional** and **attribute accuracy**, **completeness**, **logical consistency**); say what the OGC web services (**WMS**, **WFS**, **WPS**) each deliver

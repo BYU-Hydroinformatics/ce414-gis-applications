@@ -45,8 +45,9 @@ kept for Fall 2027:
   sensitivity files moved with them. The six GUI captures that still show the old geodatabase and
   toolbox names carry `TODO(recapture)` (see Housekeeping).
 - **Reading quizzes:** Quiz 9 is Least Cost Paths, Quiz 10 Network Analysis (both built from the
-  decks; banks in `ce414-private/quizzes/learning-suite/quiz09_*` and `quiz10_*`), Quiz 11 Data
-  Standards.
+  decks; banks in `ce414-private/quizzes/learning-suite/quiz09_*` and `quiz10_*`). Quiz 10 is the
+  last: both Quiz 11s (Data Standards, and the old GPS and GNSS) were deleted from Learning Suite
+  October 26, 2026, because no lecture covers either topic.
 - **Midterm 2** rebuilt as 100 multiple-choice items on Weeks 8 to 13
   (`ce414-private/exams/midterm-2-2026-mc/`); public study guide `docs/study-guides/midterm-2.md`.
 - **Learning Suite updated** (lab titles and descriptions, quiz titles and dates, the Week 11 to 14
@@ -86,9 +87,9 @@ private in the public repository, do not push without being asked.
   Projections questions under the new titles. Delete them in the quiz editor and import
   `quiz09-qti.zip` and `quiz10-qti.zip` from `ce414-private/quizzes/learning-suite/` (the browser
   pane cannot upload files). Quiz 9 opens November 10.
-- **Old Quiz 11 (GPS and GNSS).** It is in the "ignore" category but still counts 20 points
-  toward the 1,335 total; "Do not include in final grade" is grayed out while "Score cannot be
-  dropped" is checked. Uncheck that and exclude it, or delete it.
+- **Quiz 11s deleted (October 26).** Check the Learning Suite gradebook total now reads 1,300 with
+  no Quiz 11 column. The Deleted Exams page showed "Error getting category data" right after, so
+  whether they can be restored was not confirmed.
 - **Midterm 2 barcode.** Page 1 of `2026 Midterm 2 MC.docx` has a placeholder for the Testing
   Center barcode. Then export both PDFs and upload them to *Exams and Keys (private)*.
 - **Midterm 1 v4 source.** The 100-item `items.py`/`build.py` the given exam was built from is
@@ -287,6 +288,14 @@ cross-reference between labs (a lab that says "as in Lab 5" or reuses an earlier
 model). Check one ordering question with Dan first: the Butte lab builds a Spline surface, so
 moving it ahead of the Interpolation Explorer means students meet Spline before the lab that
 compares the interpolators.
+
+**Lecture pacing for Fall 2027 (Dan, October 28, 2026).** Each week works best as some theory
+and some hands-on lab demonstration on Tuesday, then more theory and more lab demonstration on
+Thursday. Week 9 broke that: all of the Lab 8 introduction (the Part 4 slides of
+`slides/week-09/interpolation-explorer.md`: Lab 8 at a Glance, Your Own IDW Power, Predict It, How
+You Will Know, Make It Yours) came at the end of Thursday. When the Week 9 decks are regenerated,
+move at least Lab 8 at a Glance and Your Own IDW Power into the Tuesday deck
+(`interpolation.md`), and check the other weeks for the same imbalance.
 
 **Prompt**
 

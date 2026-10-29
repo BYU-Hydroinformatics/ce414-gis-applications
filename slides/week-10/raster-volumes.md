@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 10, written to be studied on your own: there is no class meeting this week. Tuesday's cut and fill was a difference of two surfaces that both exist: the ground and a design. Here the bottom surface is one nobody can see: the plain under Big Southern Butte, which Lab 9 rebuilds by interpolation (Week 9's methods) before it measures the dome. The title image is a profile through the summit from the Lab 9 DEM. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -216,7 +216,7 @@ Area × mean height **must** equal the sum. If it does not, the units are wrong 
 
 **Self-check: The Base Is the Answer.** Five questions on raster volumes, units, Surface Volume and choosing a base. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that this deck made sense
+- A quick check that this deck made sense
 - Note the units question; units are a common mistake in Lab 9
 
 **Before Saturday**

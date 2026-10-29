@@ -154,7 +154,7 @@ were two slides; the separate *Before Next Class* slide is gone.) Append it as t
 
 **Quiz: <short title>.** <one line saying what the quiz asks, in the deck's own words> **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - <one plain line tying it to the graded quiz or the lab that week>
 
 **Before next class**

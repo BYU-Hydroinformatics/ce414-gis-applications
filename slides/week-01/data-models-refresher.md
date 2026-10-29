@@ -22,7 +22,7 @@ Brigham Young University
 <!-- Week 1 review lecture. Most students have had an introductory GIS course, so this hour is a refresher on data models rather than a first exposure. The hands-on look at ArcGIS Pro comes at the end of the hour, and the full version is Lab 1. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -547,7 +547,7 @@ Each pixel (raster cell) is stored as a hexadecimal number that tells the screen
 
 **Quiz: Storing the World.** Five questions on **what the computer actually stores** for a point, a line, a polygon and a grid. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - It is the warm-up for the graded quiz on Learning Suite and for Lab 1
 
 **Before next class**

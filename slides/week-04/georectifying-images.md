@@ -24,7 +24,7 @@ Brigham Young University
 <!-- TODO(instructor): the source title slide carried a speaker note that is a ModelBuilder workshop abstract left over from another deck. It was not carried across. Confirm nothing was lost. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -597,7 +597,7 @@ A spline drives the total RMS to zero by construction, and can distort the map b
 
 **Quiz: Line It Up.** Five questions on **putting a scanned map in its place** — control points, and what RMS error is not. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last three come back in Lab 3 Step 8
 
 **Before next class**

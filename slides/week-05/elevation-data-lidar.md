@@ -25,7 +25,7 @@ Dr. Dan Ames
 <!-- Week 5, Tuesday. This hour is entirely about where elevation data comes from: what a DEM is, how LiDAR measures one, and which portal to open to download one. Thursday is what you compute from it. Lab 4 needs a DEM, so the download half of this hour is the one they will use on Saturday. The image is a hillshade of a bare-earth LiDAR surface, which is both halves of the hour in one picture. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Elevation Data and LiDAR<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Elevation Data and LiDAR<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -488,7 +488,7 @@ Links checked 2026-09-28, all 200. The files are big (Mars MOLA 2 GB, Moon LOLA 
 
 **Quiz: Surfaces and Returns.** Five questions on the hour: where a surface comes from, how LiDAR measures one, and which surface you need. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last two come back in Lab 4, due Saturday
 
 **Before next class**

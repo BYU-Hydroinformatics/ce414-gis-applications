@@ -138,9 +138,10 @@ DUE = {
     11: dict(reading=None, quiz=(9, "Least Cost Paths"), lab=10, other=[]),
     12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
-    # Quizzes 8-11 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
-    # network analysis, Week 13 data standards. Week 14 (Midterm 2, Lab 12) has no quiz.
-    13: dict(reading="Chapter 14", quiz=(11, "Data Standards and Data Quality"), lab=None,
+    # Quizzes 8-10 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
+    # network analysis. Quiz 11 (Data Standards, Chapter 14) was dropped Oct 26 because no lecture
+    # covers it, so Weeks 13 and 14 have no quiz and no reading.
+    13: dict(reading=None, quiz=None, lab=None,
              other=[("**Midterm 2 is next week**, on Weeks 8–13: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
     14: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–13 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
@@ -200,7 +201,7 @@ PRACTICE = {
     9: [("interpolation", "Points Into Surfaces",
          "Five questions on estimating a surface from points: Thiessen polygons, IDW and kriging, which methods give the measured values back, and how you would judge which one to trust."),
         ("rmse", "How Wrong Is the Surface?",
-         "Seven questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, what it hides, where the error lives, and the Gaussian model.")],
+         "Eight questions on how kriging differs from IDW, what an error raster's sign means, why RMSE squares the errors, the steps that compute it in ArcGIS Pro, checking its cell count, where the error lives, and the Gaussian model.")],
     10: [("earthwork", "Cut or Fill?",
           "Five questions on cut versus fill, raising a pad's grade, the balance grade, the sign of Cut Fill's VOLUME, and what a grid volume leaves out."),
          ("volumes", "The Base Is the Answer",
@@ -223,6 +224,10 @@ SLIDE_EXTRAS = {
         "U.S. cities, major rivers and a country outline for the conterminous United States, from Natural Earth "
         "(1:10m, public domain), in WGS 1984. Project, buffer the rivers 10 miles, intersect, and count; the "
         "answer the slides quote is 256 of 678 cities."],
+    9: ["**Going deeper (optional):** for more details on how kriging gets its weights, "
+        "[click here](../explainers/kriging-weights/index.html). A worked example with four measurements: the "
+        "semivariances read off the curve, the small set of equations they feed, the weights that come out, and "
+        "the error estimate. Not needed for Lab 8 or the exam."],
 }
 
 # The four cards every week page carries, in order: (key, heading, icon, text when the week has none).

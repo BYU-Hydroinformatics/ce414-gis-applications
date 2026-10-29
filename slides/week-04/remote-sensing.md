@@ -36,7 +36,7 @@ workshop abstract from another deck (ArcGIS 9 era) and had nothing to do with re
 It was removed during conversion. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Remote Sensing<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -911,7 +911,7 @@ Next week the sensor points at the ground and measures **distance** instead of b
 
 **Quiz: Light and Bands.** Five questions on bands, near-infrared, false color, and satellites. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - Good warm-up for Quiz 4 on Learning Suite, and for the *GIS Fundamentals* reading
 
 **Before next class**

@@ -27,7 +27,7 @@ Dr. Dan Ames
 <!-- Week 5 concepts lecture. Everything in this deck is a raster surface operation: the input is a DEM and the output is another raster that answers an engineering question. The lab this week applies it. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -432,7 +432,7 @@ Siting **cell towers**, **search and rescue**, **scenic protection**, **security
 
 **Quiz: Slope, Aspect, Viewshed.** Six questions on **what you get out of a DEM** — contours, hillshade, aspect, slope, and what a viewshed can and cannot tell you. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that today's material made sense
+- A quick check that today's material made sense
 - The last two are about viewsheds: what one cell value means, and how to count what a whole hike can see
 
 **Before next class**

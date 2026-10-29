@@ -27,7 +27,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 10, written to be studied on your own: there is no class meeting this week, so everything you need is on the slides themselves. Thursday's deck is volumes with rasters and Lab 9 (Big Southern Butte); today is the same idea in the form every civil engineer meets first: how much soil a design moves. The title image is a hypothetical 150 m x 100 m level pad placed on the real Lab 5 DEM of Provo's east bench, colored by how far the ground must come down (red, cut) or go up (blue, fill). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -227,7 +227,7 @@ The grid gives **bank** volume (soil in place), not **loose** or **compacted**.
 
 **Self-check: Cut or Fill?** Five questions on cut, fill, balance, and the Cut Fill tool. **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that this deck made sense
+- A quick check that this deck made sense
 - Note the sign question; it is the easiest one to get backwards
 
 **Next**

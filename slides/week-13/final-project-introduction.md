@@ -21,7 +21,7 @@ the "what a lab-sized project looks like" slide, the pitfalls, and the proposal 
 additions meant to make the expectations concrete. Adjust anything marked TODO before presenting. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 13 — Final Project Introduction<span class="updated">Last Updated: 2026-10-15</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Final Project Introduction<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -297,7 +297,7 @@ interface"). -->
 
 # How you are scored — by your classmates
 
-Everyone in the room scores every other team, 1 to 5 in each category:
+Classmates who watch your video score it, 1 to 5 in each category:
 
 | Category | Points |
 | --- | ---: |
@@ -351,7 +351,7 @@ That is the difference between a result and a recommendation.
 
 **Quiz: Ready to Pitch?** Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result? **Scan the code**, or open the link under it.
 
-- Not graded, nothing recorded: a quick check that the assignment makes sense
+- A quick check that the assignment makes sense
 - Item 4 is the proposal meeting in miniature — bring the feasibility table
 
 **Before next class**

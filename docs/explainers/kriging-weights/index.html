@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CE 414 — How Kriging Gets Its Weights</title>
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<meta name="description" content="CE 414 Week 9, optional: a worked example of how ordinary kriging turns a semivariogram into the weights of a weighted average.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column of a worked derivation, figures breaking slightly wider; blue = target-to-sample, gray = sample-to-sample, orange = the answer. */
+:root {
+  --bg: #f7f8fa; --paper: #ffffff; --ink: #1c2633; --muted: #5a6675; --rule: #dde2e9;
+  --blue: #0062b8; --blue-tint: #e3eefa; --gray: #7c8794; --gray-tint: #eef0f3;
+  --orange: #c9620f; --orange-tint: #fbeedd; --one-tint: #f2f5e6; --grid: #e8ecf1;
+  --display: "Literata", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12171e; --paper: #1a212b; --ink: #e6ebf1; --muted: #9aa6b4; --rule: #2d3743;
+  --blue: #6cb2ff; --blue-tint: #1c3047; --gray: #8f9aa7; --gray-tint: #242c36;
+  --orange: #f0a25a; --orange-tint: #3a2a19; --one-tint: #263020; --grid: #26303b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12171e; --paper: #1a212b; --ink: #e6ebf1; --muted: #9aa6b4; --rule: #2d3743;
+  --blue: #6cb2ff; --blue-tint: #1c3047; --gray: #8f9aa7; --gray-tint: #242c36;
+  --orange: #f0a25a; --orange-tint: #3a2a19; --one-tint: #263020; --grid: #26303b; color-scheme: dark }
+
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); }
+a { color: var(--blue); }
+.crumbs { font-size: 0.9rem; color: var(--muted); }
+.optional { display: inline-block; background: var(--blue-tint); color: var(--blue); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 999px; padding: 2px 10px; }
+main { max-width: 760px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 28px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: 2.1rem; font-weight: 700; }
+h2 { font-size: 1.35rem; font-weight: 700; margin-top: 18px; }
+p { margin: 0; max-width: 65ch; }
+.lede { color: var(--muted); font-size: 1.08rem; }
+section { display: grid; gap: 14px; }
+var { font-family: var(--display); font-style: italic; }
+.b { color: var(--blue); font-weight: 600; } .g { color: var(--gray); font-weight: 600; } .o { color: var(--orange); font-weight: 700; }
+figure { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 16px; display: grid; gap: 10px; }
+figcaption { font-size: 0.9rem; color: var(--muted); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pair > div { min-width: 0; display: grid; gap: 6px; }
+.pair h3 { font: 600 0.8rem var(--body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+@media (max-width: 620px) { .pair { grid-template-columns: 1fr; } }
+svg { width: 100%; height: auto; display: block; }
+svg text { font-family: var(--body); }
+.callout { background: var(--orange-tint); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; }
+.callout p { max-width: none; }
+.scroll { overflow-x: auto; }
+table.mx { border-collapse: separate; border-spacing: 4px; font-family: var(--mono); font-size: 0.9rem; margin: 0 auto; font-variant-numeric: tabular-nums; }
+table.mx td { padding: 6px 9px; text-align: center; border-radius: 5px; white-space: nowrap; }
+table.mx td.gij { background: var(--gray-tint); }
+table.mx td.diag { background: var(--gray-tint); color: var(--muted); }
+table.mx td.one { background: var(--one-tint); }
+table.mx td.v { background: var(--blue-tint); color: var(--blue); font-weight: 600; }
+table.mx td.lam { background: var(--orange-tint); color: var(--orange); font-weight: 600; }
+table.mx td.op { color: var(--muted); padding: 0 2px; }
+table.mx td.br { color: var(--muted); font-size: 1.6rem; padding: 0; }
+.eqs { font-family: var(--mono); font-size: 0.92rem; line-height: 2; background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; overflow-x: auto; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.eqs .note { font-family: var(--body); color: var(--muted); font-size: 0.85rem; margin-left: 10px; }
+table.data { border-collapse: collapse; width: 100%; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { padding: 7px 10px; border-bottom: 1px solid var(--rule); text-align: right; }
+table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+ol, ul { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; max-width: 65ch; }
+details { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; }
+summary { cursor: pointer; font-weight: 600; }
+summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+details .eqs { margin-top: 10px; }
+.big { font-family: var(--display); font-size: 1.6rem; color: var(--orange); font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <header style="display:grid; gap:10px">
+    <p class="crumbs"><a href="../../schedule/week-09/">Week 9</a> · <a href="../../slides/week-09/interpolation-explorer.html">Kriging and Interpolation Error slides</a> · <a href="../../assignments/lab-08/">Lab 8</a></p>
+    <span class="optional" style="justify-self:start">Optional · going deeper</span>
+    <h1>How Kriging Gets Its Weights</h1>
+    <p class="lede">The weights are not read straight off the semivariogram. The curve feeds a small set of equations, and the weights are their solution. Here is every step for four measured temperatures and one unknown point, worked with real numbers.</p>
+    <p>You do not need any of this for Lab 8 or the exam: ArcGIS Pro's Kriging tool does all of it for every cell. It is here for anyone who wants to know what the tool is doing.</p>
+  </header>
+
+  <section>
+    <h2>Two kinds of distance, not one</h2>
+    <p>Say you want <var>Z</var><sub>0</sub>, the value at an unmeasured point, from four measurements <var>Z</var><sub>1</sub>…<var>Z</var><sub>4</sub>, and the semivariogram model is already fitted. The first step is the one you would guess: measure the distances <span class="b">D<sub>1</sub>…D<sub>4</sub></span> from the unknown point to each measurement, and read the semivariances <span class="b">V<sub>1</sub>…V<sub>4</sub></span> off the curve at those distances. They say how far off each measurement is likely to be from the value you want.</p>
+    <p>Kriging also reads the curve at the distance between <em>every pair of measurements</em>: <span class="g">D<sub>12</sub>, D<sub>13</sub>, D<sub>14</sub>, D<sub>23</sub>, D<sub>24</sub>, D<sub>34</sub></span>, giving six more semivariances <span class="g">V<sub>ij</sub></span>. Those say how much the measurements repeat each other. IDW never looks at them, and they are what make kriging different.</p>
+    <figure>
+      <div class="pair">
+        <div><h3>Target to each sample: D<sub>i</sub> → V<sub>i</sub></h3><svg id="map1" viewBox="0 0 400 300" role="img" aria-label="Map of Z0 with dashed lines to Z1 through Z4, labeled D1 through D4"></svg></div>
+        <div><h3>Sample to sample: D<sub>ij</sub> → V<sub>ij</sub></h3><svg id="map2" viewBox="0 0 400 300" role="img" aria-label="The same map with lines between every pair of samples"></svg></div>
+      </div>
+      <figcaption>The example used on this page: <var>Z</var><sub>1</sub> is 10 km east of the unknown point, <var>Z</var><sub>2</sub> is 25 km north, and <var>Z</var><sub>3</sub> and <var>Z</var><sub>4</sub> sit 8 km apart, both 30.3 km to the west. Temperatures are made up.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Read all ten semivariances off the curve</h2>
+    <p>The model here is spherical, with a nugget of 2, a sill of 20 (°F²) and a range of 50 km. Every number you need comes from this one curve.</p>
+    <figure>
+      <svg id="vario" viewBox="0 0 640 340" role="img" aria-label="Spherical semivariogram with the four target distances and six pair distances read off it"></svg>
+      <figcaption><span class="b">Blue</span>: the four target-to-sample readings V<sub>1</sub>…V<sub>4</sub> (V<sub>3</sub> and V<sub>4</sub> are the same point). <span class="g">Gray</span>: the six sample-to-sample readings. The distance from a sample to itself is zero, and γ(0) = 0.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>The equations</h2>
+    <p>There are five unknowns: the four weights <span class="o">λ<sub>1</sub>…λ<sub>4</sub></span>, plus one helper number <var>m</var>. You get one equation per measurement and one that forces the weights to add up to 1:</p>
+    <div class="eqs">
+λ<sub>1</sub>·<span class="g">0</span>&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>2</sub>·<span class="g">V<sub>12</sub></span> + λ<sub>3</sub>·<span class="g">V<sub>13</sub></span> + λ<sub>4</sub>·<span class="g">V<sub>14</sub></span> + m = <span class="b">V<sub>1</sub></span><br>
+λ<sub>1</sub>·<span class="g">V<sub>12</sub></span> + λ<sub>2</sub>·<span class="g">0</span>&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>3</sub>·<span class="g">V<sub>23</sub></span> + λ<sub>4</sub>·<span class="g">V<sub>24</sub></span> + m = <span class="b">V<sub>2</sub></span><br>
+λ<sub>1</sub>·<span class="g">V<sub>13</sub></span> + λ<sub>2</sub>·<span class="g">V<sub>23</sub></span> + λ<sub>3</sub>·<span class="g">0</span>&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>4</sub>·<span class="g">V<sub>34</sub></span> + m = <span class="b">V<sub>3</sub></span><br>
+λ<sub>1</sub>·<span class="g">V<sub>14</sub></span> + λ<sub>2</sub>·<span class="g">V<sub>24</sub></span> + λ<sub>3</sub>·<span class="g">V<sub>34</sub></span> + λ<sub>4</sub>·<span class="g">0</span>&nbsp;&nbsp;&nbsp;&nbsp;+ m = <span class="b">V<sub>4</sub></span><br>
+λ<sub>1</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>2</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>3</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ λ<sub>4</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1<span class="note">the weights add to 1, so the estimate is not biased high or low</span>
+    </div>
+    <p>Then the estimate itself is just the weighted average, exactly as in IDW:</p>
+    <div class="eqs" style="text-align:center"><span class="o">Z<sub>0</sub> = λ<sub>1</sub>Z<sub>1</sub> + λ<sub>2</sub>Z<sub>2</sub> + λ<sub>3</sub>Z<sub>3</sub> + λ<sub>4</sub>Z<sub>4</sub></span></div>
+    <p>Each row reads in plain words like this: "blend the measurements so that, judged by the curve, the blend is as far from Z<sub>i</sub> as the unknown point is." The helper <var>m</var> (a Lagrange multiplier) is what lets the "add up to 1" rule fit into the same system. It never multiplies a temperature, but it comes back at the end as part of the error estimate.</p>
+    <p>In matrix form it is one 5 × 5 system. This is how the computer sees it:</p>
+    <figure>
+      <div class="scroll">
+      <table class="mx" aria-label="Kriging system in matrix form">
+        <tr><td class="br" rowspan="5">[</td><td class="diag">0</td><td class="gij">V₁₂</td><td class="gij">V₁₃</td><td class="gij">V₁₄</td><td class="one">1</td><td class="br" rowspan="5">]</td><td class="br" rowspan="5">[</td><td class="lam">λ₁</td><td class="br" rowspan="5">]</td><td class="op" rowspan="5">=</td><td class="br" rowspan="5">[</td><td class="v">V₁</td><td class="br" rowspan="5">]</td></tr>
+        <tr><td class="gij">V₁₂</td><td class="diag">0</td><td class="gij">V₂₃</td><td class="gij">V₂₄</td><td class="one">1</td><td class="lam">λ₂</td><td class="v">V₂</td></tr>
+        <tr><td class="gij">V₁₃</td><td class="gij">V₂₃</td><td class="diag">0</td><td class="gij">V₃₄</td><td class="one">1</td><td class="lam">λ₃</td><td class="v">V₃</td></tr>
+        <tr><td class="gij">V₁₄</td><td class="gij">V₂₄</td><td class="gij">V₃₄</td><td class="diag">0</td><td class="one">1</td><td class="lam">λ₄</td><td class="v">V₄</td></tr>
+        <tr><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">0</td><td class="lam">m</td><td class="v">1</td></tr>
+      </table>
+      </div>
+      <figcaption><span class="g">Gray block</span>: how alike the measurements are to each other (it is symmetric, V<sub>ij</sub> = V<sub>ji</sub>). <span class="b">Blue column</span>: how far each measurement is from the target. <span class="o">Orange</span>: what you solve for. The gray block depends only on where the samples are; only the blue column changes from one cell to the next.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>The same system with numbers</h2>
+    <table class="data">
+      <tr><th>Measurement</th><th>Z (°F)</th><th>D to Z₀ (km)</th><th>V read off</th></tr>
+      <tr><td>Z₁, east</td><td>61</td><td>10.0</td><td class="b">7.33</td></tr>
+      <tr><td>Z₂, north</td><td>58</td><td>25.0</td><td class="b">14.38</td></tr>
+      <tr><td>Z₃, west, upper</td><td>66</td><td>30.3</td><td class="b">16.35</td></tr>
+      <tr><td>Z₄, west, lower</td><td>65</td><td>30.3</td><td class="b">16.35</td></tr>
+    </table>
+    <table class="data">
+      <tr><th>Pair</th><th>D<sub>ij</sub> (km)</th><th>V<sub>ij</sub> read off</th></tr>
+      <tr><td>1–2</td><td>26.9</td><td class="g">15.13</td></tr>
+      <tr><td>1–3, 1–4</td><td>40.2</td><td class="g">19.03</td></tr>
+      <tr><td>2–3</td><td>36.6</td><td class="g">18.24</td></tr>
+      <tr><td>2–4</td><td>41.7</td><td class="g">19.30</td></tr>
+      <tr><td>3–4</td><td>8.0</td><td class="g">6.28</td></tr>
+    </table>
+    <figure>
+      <div class="scroll">
+      <table class="mx" aria-label="The kriging system with numbers">
+        <tr><td class="br" rowspan="5">[</td><td class="diag">0</td><td class="gij">15.13</td><td class="gij">19.03</td><td class="gij">19.03</td><td class="one">1</td><td class="br" rowspan="5">]</td><td class="br" rowspan="5">[</td><td class="lam">λ₁</td><td class="br" rowspan="5">]</td><td class="op" rowspan="5">=</td><td class="br" rowspan="5">[</td><td class="v">7.33</td><td class="br" rowspan="5">]</td></tr>
+        <tr><td class="gij">15.13</td><td class="diag">0</td><td class="gij">18.24</td><td class="gij">19.30</td><td class="one">1</td><td class="lam">λ₂</td><td class="v">14.38</td></tr>
+        <tr><td class="gij">19.03</td><td class="gij">18.24</td><td class="diag">0</td><td class="gij">6.28</td><td class="one">1</td><td class="lam">λ₃</td><td class="v">16.35</td></tr>
+        <tr><td class="gij">19.03</td><td class="gij">19.30</td><td class="gij">6.28</td><td class="diag">0</td><td class="one">1</td><td class="lam">λ₄</td><td class="v">16.35</td></tr>
+        <tr><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">1</td><td class="one">0</td><td class="lam">m</td><td class="v">1</td></tr>
+      </table>
+      </div>
+      <figcaption>Five equations, five unknowns. Any linear solver does it (in Excel, MINVERSE then MMULT). The solution:</figcaption>
+    </figure>
+    <figure>
+      <svg id="bars" viewBox="0 0 640 230" role="img" aria-label="Weights for Z1 to Z4, kriging against IDW power 2"></svg>
+      <figcaption>Kriging weights λ (orange) against IDW with power 2 (gray), for the same four points.</figcaption>
+    </figure>
+    <div class="callout">
+      <p>λ₁ = 0.626, λ₂ = 0.157, λ₃ = 0.095, λ₄ = 0.122, and m = 0.813. The weights add to 1.000.</p>
+      <p><span class="big">Z₀ = 0.626·61 + 0.157·58 + 0.095·66 + 0.122·65 = 61.49 °F</span></p>
+      <p>Check row 1: 0.157·15.13 + (0.095 + 0.122)·19.03 + 0.813 = 7.33 = V₁. ✓</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the gray block did</h2>
+    <ul>
+      <li><strong>Z₃ and Z₄ are the same distance from Z₀ but get different weights</strong> (0.095 against 0.122). Z₃ sits closer to Z₂ (36.6 km against 41.7), so part of what it would tell you, Z₂ already told you. IDW gives them identical weights because it only sees D<sub>3</sub> = D<sub>4</sub>.</li>
+      <li><strong>Clustered samples share their weight.</strong> Z₃ and Z₄ are only 8 km apart, so the system treats them as partly one measurement. Add a fifth station right on top of Z₃ and the pair's weight would mostly split, not double.</li>
+      <li><strong>Weight follows the curve, not 1/d².</strong> Between 25 and 30 km the curve is already near its sill, so Z₂ and the western pair count almost equally. IDW's 1/d² piles 73% onto the nearest point.</li>
+      <li><strong>A weight can go negative.</strong> When one sample sits directly behind another as seen from Z₀, the far one can get a small negative weight. The near one "screens" it.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>A bonus you get for free: the error</h2>
+    <p>The same solution gives the expected squared error of this estimate:</p>
+    <div class="eqs" style="text-align:center">σ² = λ₁V₁ + λ₂V₂ + λ₃V₃ + λ₄V₄ + m = 11.21 °F² &nbsp;→&nbsp; σ ≈ 3.3 °F</div>
+    <p>So Z₀ ≈ 61.5 ± 3.3 °F. Do this for every cell and you get ArcGIS Pro's <em>Output variance of prediction raster</em>: small near samples, large in the gaps. IDW has no equivalent.</p>
+  </section>
+
+  <section>
+    <h2>Connections to the lecture and Lab 8</h2>
+    <ul>
+      <li><strong>The flat kriging panel</strong> in the lecture's six-methods test. When the range is near zero, every V and V<sub>ij</sub> equals the sill. Every row of the system then looks the same, the weights come out equal (¼ each here), and Z₀ is the plain average. That happens in every cell, which gives the flat surface.</li>
+      <li><strong>A big nugget.</strong> The nugget lifts every off-diagonal V<sub>ij</sub> while the diagonal stays 0, so the samples look less alike to each other and the weights spread out toward equal. The surface smooths toward the average.</li>
+      <li><strong>In ArcGIS Pro</strong> the Kriging tool builds and solves this system once for every output cell, using that cell's nearest samples (by default, a variable search radius with 12 points). With 12 neighbors the system is 13 × 13.</li>
+      <li><strong>Ordinary kriging</strong> is the version on this page: the mean is unknown, so the weights must add to 1. Simple kriging assumes the mean is known and drops the last row and <var>m</var>.</li>
+    </ul>
+  </section>
+
+  <details>
+    <summary>Where the equations come from</summary>
+    <p style="margin-top:10px">Write the estimate as Σλᵢ Zᵢ with Σλᵢ = 1. Using the semivariogram, the expected squared error of that estimate is</p>
+    <div class="eqs">E[(Ẑ₀ − Z₀)²] = 2 Σᵢ λᵢ Vᵢ − Σᵢ Σⱼ λᵢ λⱼ Vᵢⱼ</div>
+    <p style="margin-top:10px">Minimize it subject to Σλᵢ = 1, with a Lagrange multiplier. Setting the derivative with respect to each λᵢ to zero gives Σⱼ λⱼ Vᵢⱼ + m = Vᵢ, which are rows 1–4, and the constraint is row 5. Substituting the solution back in gives σ² = Σ λᵢVᵢ + m. Kriging is "best" in exactly this sense: of all weightings that add to 1, it has the smallest expected squared error, if the semivariogram is right.</p>
+  </details>
+</main>
+
+<script>
+(function () {
+  const css = getComputedStyle(document.documentElement);
+  const col = n => css.getPropertyValue(n).trim();
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (svg, tag, attrs, text) => { const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; svg.appendChild(e); return e; };
+
+  // --- maps -------------------------------------------------------------
+  const pts = { 0: [0, 0], 1: [10, 0], 2: [0, 25], 3: [-30, 4], 4: [-30, -4] };
+  const S = 6.2, OX = 255, OY = 205;
+  const xy = k => [OX + pts[k][0] * S, OY - pts[k][1] * S];
+  function drawMap(id, mode) {
+    const svg = document.getElementById(id);
+    for (let gx = -40; gx <= 20; gx += 10) el(svg, "line", { x1: OX + gx * S, y1: 10, x2: OX + gx * S, y2: 290, stroke: "var(--grid)", "stroke-width": 1 });
+    for (let gy = -10; gy <= 30; gy += 10) el(svg, "line", { x1: 10, y1: OY - gy * S, x2: 390, y2: OY - gy * S, stroke: "var(--grid)", "stroke-width": 1 });
+    if (mode === "target") {
+      const lab = { 1: "D₁ = 10", 2: "D₂ = 25", 3: "D₃ = 30.3", 4: "D₄ = 30.3" };
+      const off = { 1: [0, -8], 2: [10, 0], 3: [0, -10], 4: [0, 18] };
+      for (const k of [1, 2, 3, 4]) {
+        const [a, b] = xy(0), [c, d] = xy(k);
+        el(svg, "line", { x1: a, y1: b, x2: c, y2: d, stroke: "var(--blue)", "stroke-width": 2, "stroke-dasharray": "6 4" });
+        el(svg, "text", { x: (a + c) / 2 + off[k][0], y: (b + d) / 2 + off[k][1], fill: "var(--blue)", "font-size": 13, "font-weight": 600, "text-anchor": k === 2 ? "start" : "middle" }, lab[k]);
+      }
+    } else {
+      const pairs = [[1, 2, "26.9"], [1, 3, "40.2"], [1, 4, "40.2"], [2, 3, "36.6"], [2, 4, "41.7"], [3, 4, "8.0"]];
+      for (const [i, j, t] of pairs) {
+        const [a, b] = xy(i), [c, d] = xy(j);
+        el(svg, "line", { x1: a, y1: b, x2: c, y2: d, stroke: "var(--gray)", "stroke-width": 1.6 });
+      }
+      const L = [[1, 2, "26.9", 12, -6], [2, 3, "36.6", -14, -6], [3, 4, "8.0", -24, 4], [1, 3, "40.2", 0, -6], [2, 4, "41.7", 22, 10], [1, 4, "40.2", 0, 16]];
+      for (const [i, j, t, dx, dy] of L) {
+        const [a, b] = xy(i), [c, d] = xy(j);
+        el(svg, "text", { x: (a + c) / 2 + dx, y: (b + d) / 2 + dy, fill: "var(--muted)", "font-size": 12, "text-anchor": "middle" }, t);
+      }
+    }
+    const names = { 1: "Z₁ 61°", 2: "Z₂ 58°", 3: "Z₃ 66°", 4: "Z₄ 65°" };
+    const loff = { 1: [10, 4, "start"], 2: [10, 4, "start"], 3: [-10, -4, "end"], 4: [-10, 12, "end"] };
+    for (const k of [1, 2, 3, 4]) {
+      const [x, y] = xy(k);
+      el(svg, "circle", { cx: x, cy: y, r: 7, fill: "var(--ink)", stroke: "var(--paper)", "stroke-width": 2 });
+      el(svg, "text", { x: x + loff[k][0], y: y + loff[k][1], fill: "var(--ink)", "font-size": 13, "font-weight": 600, "text-anchor": loff[k][2] }, names[k]);
+    }
+    const [x0, y0] = xy(0);
+    el(svg, "circle", { cx: x0, cy: y0, r: 8, fill: "var(--paper)", stroke: "var(--orange)", "stroke-width": 3 });
+    el(svg, "text", { x: x0 + 10, y: y0 + 20, fill: "var(--orange)", "font-size": 13, "font-weight": 700 }, "Z₀ ?");
+    el(svg, "line", { x1: 20, y1: 282, x2: 20 + 10 * S, y2: 282, stroke: "var(--ink)", "stroke-width": 3 });
+    el(svg, "text", { x: 20 + 5 * S, y: 276, fill: "var(--muted)", "font-size": 11, "text-anchor": "middle" }, "10 km");
+  }
+  drawMap("map1", "target"); drawMap("map2", "pairs");
+
+  // --- semivariogram ------------------------------------------------------
+  const c0 = 2, c = 18, a = 50;
+  const g = h => h <= 0 ? 0 : c0 + c * (h >= a ? 1 : 1.5 * h / a - 0.5 * (h / a) ** 3);
+  const v = document.getElementById("vario");
+  const L = 60, R = 620, T = 20, B = 290, XM = 60, YM = 22;
+  const X = h => L + (R - L) * h / XM, Y = s => B - (B - T) * s / YM;
+  for (let h = 0; h <= 60; h += 10) { el(v, "line", { x1: X(h), y1: T, x2: X(h), y2: B, stroke: "var(--grid)" });
+    el(v, "text", { x: X(h), y: B + 18, fill: "var(--muted)", "font-size": 12, "text-anchor": "middle" }, h); }
+  for (let s = 0; s <= 20; s += 5) { el(v, "line", { x1: L, y1: Y(s), x2: R, y2: Y(s), stroke: "var(--grid)" });
+    el(v, "text", { x: L - 8, y: Y(s) + 4, fill: "var(--muted)", "font-size": 12, "text-anchor": "end" }, s); }
+  el(v, "line", { x1: L, y1: B, x2: R, y2: B, stroke: "var(--muted)" });
+  el(v, "line", { x1: L, y1: T, x2: L, y2: B, stroke: "var(--muted)" });
+  el(v, "text", { x: (L + R) / 2, y: B + 40, fill: "var(--ink)", "font-size": 13, "text-anchor": "middle" }, "distance (km)");
+  el(v, "text", { x: 16, y: (T + B) / 2, fill: "var(--ink)", "font-size": 13, "text-anchor": "middle", transform: `rotate(-90 16 ${(T + B) / 2})` }, "semivariance (°F²)");
+  let d = `M ${X(0)} ${Y(0)} L ${X(0.0001)} ${Y(c0)}`;
+  for (let h = 0.5; h <= 60; h += 0.5) d += ` L ${X(h).toFixed(1)} ${Y(g(h)).toFixed(1)}`;
+  el(v, "path", { d, fill: "none", stroke: "var(--ink)", "stroke-width": 2.5 });
+  const pairD = [26.93, 40.2, 36.62, 41.73, 8.0];
+  for (const h of pairD) { el(v, "line", { x1: X(h), y1: B, x2: X(h), y2: Y(g(h)), stroke: "var(--gray)", "stroke-dasharray": "3 3" });
+    el(v, "circle", { cx: X(h), cy: Y(g(h)), r: 5, fill: "var(--gray)" }); }
+  el(v, "text", { x: X(8) + 8, y: Y(g(8)) + 16, fill: "var(--muted)", "font-size": 12 }, "V₃₄");
+  el(v, "text", { x: X(26.93) + 7, y: Y(g(26.93)) + 18, fill: "var(--muted)", "font-size": 12 }, "V₁₂");
+  el(v, "text", { x: X(39) , y: Y(g(41)) - 10, fill: "var(--muted)", "font-size": 12, "text-anchor": "middle" }, "V₂₃ V₁₃ V₂₄");
+  const tg = [[10, "V₁"], [25, "V₂"], [30.27, "V₃ = V₄"]];
+  for (const [h, t] of tg) {
+    el(v, "line", { x1: X(h), y1: B, x2: X(h), y2: Y(g(h)), stroke: "var(--blue)", "stroke-dasharray": "5 3", "stroke-width": 1.6 });
+    el(v, "line", { x1: L, y1: Y(g(h)), x2: X(h), y2: Y(g(h)), stroke: "var(--blue)", "stroke-dasharray": "5 3", "stroke-width": 1.6 });
+    el(v, "circle", { cx: X(h), cy: Y(g(h)), r: 6.5, fill: "var(--blue)", stroke: "var(--paper)", "stroke-width": 2 });
+    el(v, "text", { x: X(h) - 8, y: Y(g(h)) - 10, fill: "var(--blue)", "font-size": 13, "font-weight": 700, "text-anchor": "end" }, `${t} = ${g(h).toFixed(2)}`);
+  }
+  el(v, "text", { x: X(52), y: Y(20) - 8, fill: "var(--muted)", "font-size": 12 }, "sill 20");
+  el(v, "line", { x1: X(50), y1: T, x2: X(50), y2: B, stroke: "var(--muted)", "stroke-dasharray": "2 4" });
+  el(v, "text", { x: X(50) + 5, y: B - 8, fill: "var(--muted)", "font-size": 12 }, "range 50 km");
+  el(v, "text", { x: X(0) + 8, y: Y(c0) + 4, fill: "var(--muted)", "font-size": 12 }, "nugget 2");
+
+  // --- weight bars ---------------------------------------------------------
+  const bars = document.getElementById("bars");
+  const kw = [0.626, 0.157, 0.095, 0.122], iw = [0.726, 0.116, 0.079, 0.079];
+  const BL = 50, BB = 190, BT = 14, BW = 590, BX = s => BB - (BB - BT) * s / 0.8;
+  for (let s = 0; s <= 0.8; s += 0.2) { el(bars, "line", { x1: BL, y1: BX(s), x2: BL + BW, y2: BX(s), stroke: "var(--grid)" });
+    el(bars, "text", { x: BL - 8, y: BX(s) + 4, fill: "var(--muted)", "font-size": 12, "text-anchor": "end" }, s.toFixed(1)); }
+  const gw = BW / 4;
+  ["Z₁ (10 km)", "Z₂ (25 km)", "Z₃ (30.3 km)", "Z₄ (30.3 km)"].forEach((name, k) => {
+    const x = BL + gw * k + gw / 2;
+    el(bars, "rect", { x: x - 34, y: BX(kw[k]), width: 30, height: BB - BX(kw[k]), fill: "var(--orange)", rx: 3 });
+    el(bars, "rect", { x: x + 4, y: BX(iw[k]), width: 30, height: BB - BX(iw[k]), fill: "var(--gray)", rx: 3, opacity: 0.6 });
+    el(bars, "text", { x: x - 19, y: BX(kw[k]) - 5, fill: "var(--orange)", "font-size": 12, "font-weight": 700, "text-anchor": "middle" }, kw[k].toFixed(3));
+    el(bars, "text", { x: x + 19, y: BX(iw[k]) - 5, fill: "var(--muted)", "font-size": 12, "text-anchor": "middle" }, iw[k].toFixed(3));
+    el(bars, "text", { x, y: BB + 20, fill: "var(--ink)", "font-size": 13, "text-anchor": "middle" }, name);
+  });
+  el(bars, "line", { x1: BL, y1: BB, x2: BL + BW, y2: BB, stroke: "var(--muted)" });
+  el(bars, "rect", { x: BL + BW - 190, y: 12, width: 12, height: 12, fill: "var(--orange)", rx: 2 });
+  el(bars, "text", { x: BL + BW - 172, y: 22, fill: "var(--ink)", "font-size": 12 }, "kriging λ");
+  el(bars, "rect", { x: BL + BW - 100, y: 12, width: 12, height: 12, fill: "var(--gray)", opacity: 0.6, rx: 2 });
+  el(bars, "text", { x: BL + BW - 82, y: 22, fill: "var(--ink)", "font-size": 12 }, "IDW, 1/d²");
+  void col;
+})();
+</script>
+</body>
+</html>
