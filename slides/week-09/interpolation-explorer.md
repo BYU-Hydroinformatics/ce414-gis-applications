@@ -646,6 +646,41 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 
 <!-- Three clicks. Same 150 Timpanogos samples, binned two ways (tools/week09_autofit_figure.py, which repeats the elevation script's DEM request and sample draw). Left: the careful fit behind the good kriging panel, pairs grouped every 300 m and only out to 4.5 km; the dots rise steadily and the spherical model reaches its sill at about 4.6 km. Right: pykrige's defaults, the automatic fit: 6 bins spread across every distance in the 7.2 km square, out to about 8 km. Past about 4 km the pairs are increasingly corner to corner, one low flank against the other, and those are similar heights again, so the dots come back down. No spherical curve rises and falls, so the least-squares fit settles on the average level everywhere: nugget 33,339 and partial sill 72,238 m^2 with a range of 0.29 m. A range shorter than the closest pair of samples means no sample carries any weight for its neighbor, so ordinary kriging returns the sample mean everywhere, the flat panel, and with that big nugget it does not even return the samples. The lessons for Lab 8: the lag (bin width) and how far out you look matter, and a fitted model is worth a glance before you trust it. In Lab 8 (2,500 points over 60 km2, Lag size 30 from the 30 m cell size) the fit works, as the Kriging in ArcGIS Pro notes say. Added October 28, 2026, replacing the one-line "almost all nugget" answer. -->
 
+
+---
+
+# The Future? Generative AI as an Interpolator
+
+<style scoped>
+section > h1 { position: absolute; top: 46px; left: 70px; right: 70px; margin: 0; font-size: 1.6em; }
+.ai-lead { position: absolute; left: 70px; top: 108px; width: 1140px; font-size: 0.6em; }
+.ai-img { position: absolute; left: 50%; transform: translateX(-50%); top: 148px; width: 1180px; }
+.ai ul { list-style: none; margin: 0; padding: 0; }
+.ai li { position: absolute; left: 70px; width: 1140px; margin: 0; font-size: 0.6em; line-height: 1.3; }
+.ai li:nth-child(1) { top: 438px; } .ai li:nth-child(2) { top: 478px; }
+.ai li:nth-child(3) { top: 522px; font-size: 0.66em; }
+.ai li:nth-child(4) { top: 598px; font-size: 0.66em; font-style: italic; color: #002e5d; }
+.ai .infobox { font-size: 1em; }
+.ai-note { position: absolute; left: 70px; right: 70px; top: 648px; font-size: 0.44em; color: #4a5568; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
+</style>
+
+<div class="ai-lead">The same <strong>150 samples</strong>, given to an image model: "fill in the most likely, realistic terrain." Scored at the same 60 hold-out points.</div>
+
+<img class="ai-img" src="images/ie-genai-compare.png" alt="Five panels: the 150 samples on red as given to the AI, the true DEM, fitted kriging with 73 m error, the AI from the points alone with 367 m error, and the AI adding detail to the kriged surface with 127 m error">
+
+<div class="ai">
+
+* <span class="pop"><strong>From the points alone:</strong> a believable mountain range that ignored the measurements. <strong>367 m</strong>, no better than guessing the average everywhere (372 m)</span>
+* <span class="pop"><strong>Adding detail to kriging:</strong> sharper ridges and gullies, but invented ones. <strong>127 m</strong>, worse than kriging (73 m) and even IDW (100 m)</span>
+* <span class="infobox pop"><strong>Realistic is not accurate.</strong> AI can invent believable terrain; only measurements tell you where the real ridges are, and hold-out points are how you tell the two apart</span>
+* <span class="pop">The next interpolator may be <strong>trained, not fitted</strong>, but it will still be judged at the <strong>hold-out points</strong></span>
+
+</div>
+
+<div class="ai-note">A general image model (gpt-image-2.5-flare), not a terrain model, working in 256 gray levels (about 7 m each); outputs rescaled to the 150 samples before scoring. Models trained on real DEMs should do better.</div>
+
+<!-- An experiment run October 28, 2026 for this class (tools/week09_genai_interpolation.py; the inputs, prompts and the two images the model returned are kept in tools/week09_genai/, and the numbers in tools/week09_genai/numbers.json). Same 150 Timpanogos samples, same 60 hold-out points as the six-methods slide. Test 1: the samples drawn as gray squares (brightness = elevation, 1,800 m black to 3,600 m white) on a red "missing data" background, with a prompt asking for the most likely, realistic terrain that passes through every square. It returned a gorgeous, entirely generic eroded mountain landscape and ignored the squares: rescaled to the samples, 367 m at the hold-outs, against 372 m for putting the sample mean everywhere. Test 2, closer to how generative models are really used on DEMs (void filling, sharpening): the fitted kriged surface as the input, asked to add realistic fine detail while keeping the large-scale shape. It kept the shape roughly, added crisp ridges and gullies, and drifted in brightness: 127 m, worse than the kriging it started from (73 m) and than IDW (100 m), because the detail is invented and does not sit where Timpanogos's real ridges are. Two clicks of results, the takeaway, then the closing line. The closing line points at where this is likely to go: models built for this job (neural processes, prior-data fitted networks, and conditioned diffusion models in the research literature) take scattered points in and give estimates and uncertainty out in one pass, learned from many real DEMs or weather fields instead of a fitted semivariogram. They are trained with exactly the hold-out test: hide some points, predict them, score the error, millions of times. None is yet an everyday GIS tool. Fairness points to say out loud: this is a general image model, not one trained on DEMs; it works in 8-bit gray (about 7 m per level), which alone would cost only a few meters; both outputs were given the best straight-line rescale to the 150 samples, which uses nothing a real project would not have. Purpose-built generative models for DEMs exist in research and should do better than this, so treat the result as a lower bound. The lasting point is the one from the Kriged Result slide: you cannot fabricate data, and the hold-out test is how you catch a surface that only looks right. Where GIS and AI may meet: filling small gaps and sharpening coarse DEMs, always checked against measurements the model never saw. -->
 ---
 
 <!-- _class: lead -->

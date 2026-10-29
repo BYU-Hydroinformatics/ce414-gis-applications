@@ -1,0 +1,29 @@
+{
+  "model": "gpt-image-2.5-flare",
+  "prompt_points": "This image is a top-down grayscale heightmap (digital elevation model) of a 7.2 km square of rugged mountain terrain: brighter pixels are higher ground, black is about 1,800 m and white about 3,600 m. Only the small gray squares are measured elevations. Every red pixel is missing data. Replace all of the red with the most likely, realistic, physically believable grayscale terrain: ridges, peaks, valleys and drainage that pass smoothly through every measured square and keep each square's gray value exactly. Output only the completed grayscale heightmap, same framing and scale, top-down, with no red, no shading, no labels, no border and no 3D perspective.",
+  "prompt_detail": "This image is a top-down grayscale heightmap (digital elevation model) of a 7.2 km square of rugged mountain terrain: brighter pixels are higher ground, black is about 1,800 m and white about 3,600 m. It was interpolated from scattered measurements, so it is too smooth: the real ground has sharp ridges, peaks, gullies and branching drainage that the interpolation blurred away. Add the most likely, realistic, physically believable fine terrain detail, but keep the large-scale shape and the overall brightness of every area the same: do not move, add or remove major peaks or valleys. Output only the grayscale heightmap, same framing and scale, top-down, with no shading, no labels, no border and no 3D perspective.",
+  "kriging_fitted": {
+    "rmse_holdout_m": 73.2,
+    "rmse_m": 85.5,
+    "rmse_at_samples_m": 0.0
+  },
+  "mean_only_rmse_holdout_m": 372.4,
+  "genai_points": {
+    "output": "points-1.png",
+    "rescale_slope": 0.2898,
+    "rescale_intercept_m": 2075.4,
+    "rmse_holdout_m": 367.1,
+    "rmse_m": 355.6,
+    "rmse_at_samples_m": 341.6,
+    "rmse_holdout_raw_m": 549.8
+  },
+  "genai_detail": {
+    "output": "detail-1.png",
+    "rescale_slope": 0.7276,
+    "rescale_intercept_m": 930.1,
+    "rmse_holdout_m": 127.0,
+    "rmse_m": 142.6,
+    "rmse_at_samples_m": 135.1,
+    "rmse_holdout_raw_m": 295.4
+  }
+}
