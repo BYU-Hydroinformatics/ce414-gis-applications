@@ -29,9 +29,9 @@ at Mean with OBJECTID filled in.
 > from this page alone: nine steps with a check value at each one, then two more runs of the same
 > model. If a number does not match, reread the warning nearest that step first; the two usual
 > causes are the random seed (Step 0) and a run from the tool dialog before the baseline was
-> recorded (Step 8). Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu) and expect one
-> reply a day. A classmate who has finished Step 8 can answer most questions faster than email can,
-> and the peer review step is the place to lean on one.
+> recorded (Step 8). Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu); I will check
+> email every evening and do my best to respond in a timely manner. A classmate who has finished
+> Step 8 can often answer faster, and the peer review step is the place to lean on one.
 
 > [!TIP]
 > **Start from the report template.** [`lab09-report-template.docx`](lab09-report-template.docx)
