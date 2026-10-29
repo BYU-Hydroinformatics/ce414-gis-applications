@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Week 7 is two decks. This one is Tuesday: a terminal lake, how the bottom of a lake is measured and mapped, the two vertical datums, and how a lake's area and volume follow from its level. Thursday's deck (lake-depth-explorer) is ModelBuilder looping and Lab 6. Every chart in this deck is published data: the USGS gage record, the USGS elevation-area-volume table (Root, 2023), and shorelines baked from the USGS lake-bottom DEM. The title map is five of those shorelines, 4,190 to 4,210 ft. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 7 — Lake Bathymetry<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 7 — Lake Bathymetry<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
