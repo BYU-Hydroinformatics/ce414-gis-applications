@@ -396,6 +396,11 @@ the same controls as here: in Step 8 you pick another model from its **Semi-vari
 > **Check the result:** `Kriging_Surface` runs from **1,368.7 to 2,884.3** m. Kriging *can* go beyond
 > its samples; here it does not, and it pulls the peak down a little further than IDW.
 
+> [!NOTE]
+> **Going deeper (optional):** for more details on how kriging gets its weights,
+> [click here](../../explainers/kriging-weights/index.html). It works one estimate by hand with four
+> points. Nothing in this lab depends on it: the Kriging tool does all of it for every cell.
+
 ### Step 6 — Map the Errors
 
 Add **Raster Calculator** (Spatial Analyst) three times, one per surface, each the truth minus the

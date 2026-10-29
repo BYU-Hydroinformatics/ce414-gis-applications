@@ -224,6 +224,10 @@ SLIDE_EXTRAS = {
         "U.S. cities, major rivers and a country outline for the conterminous United States, from Natural Earth "
         "(1:10m, public domain), in WGS 1984. Project, buffer the rivers 10 miles, intersect, and count; the "
         "answer the slides quote is 256 of 678 cities."],
+    9: ["**Going deeper (optional):** for more details on how kriging gets its weights, "
+        "[click here](../explainers/kriging-weights/index.html). A worked example with four measurements: the "
+        "semivariances read off the curve, the small set of equations they feed, the weights that come out, and "
+        "the error estimate. Not needed for Lab 8 or the exam."],
 }
 
 # The four cards every week page carries, in order: (key, heading, icon, text when the week has none).

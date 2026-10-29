@@ -9,6 +9,8 @@
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
+**Going deeper (optional):** for more details on how kriging gets its weights, [click here](../explainers/kriging-weights/index.html). A worked example with four measurements: the semivariances read off the curve, the small set of equations they feed, the weights that come out, and the error estimate. Not needed for Lab 8 or the exam.
+
 </div>
 
 <div class="week-card week-card--practice" markdown>

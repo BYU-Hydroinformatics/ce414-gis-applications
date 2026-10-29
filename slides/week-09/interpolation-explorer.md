@@ -293,6 +293,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
 .kr-lead { position: absolute; left: 70px; top: 122px; width: 1140px; font-size: 0.8em; }
+.kr-more { position: absolute; left: 70px; top: 172px; font-size: 0.58em; color: #4a5568; }
 .kr-img { position: absolute; left: 50px; top: 215px; height: 420px; }
 .kr ul { list-style: none; margin: 0; padding: 0; }
 .kr li { position: absolute; left: 870px; width: 360px; margin: 0; font-size: 0.58em; line-height: 1.3; }
@@ -302,6 +303,8 @@ li[data-bespoke-marp-fragment="active"] .pop { display: block; animation: tryit-
 </style>
 
 <div class="kr-lead">Like IDW, a <strong>weighted average</strong> of nearby points, but the <strong>variogram</strong> sets the weights, not a fixed 1/d<sup>n</sup></div>
+
+<div class="kr-more">For more details on how kriging gets its weights, <a href="https://byu-hydroinformatics.github.io/ce414-gis-applications/explainers/kriging-weights/">click here</a> (optional)</div>
 
 <img class="kr-img" src="images/ip-tp-kriging-result.png" alt="The true DEM beside the kriged surface from 150 samples">
 
@@ -313,7 +316,7 @@ li[data-bespoke-marp-fragment="active"] .pop { display: block; animation: tryit-
 
 </div>
 
-<!-- Three clicks: the question (let the room answer before the next click), the answer, then the generative-AI point. Every method today only rearranges the 150 measured elevations; none of them can know about a canyon that no sample fell in, so the ridges and gullies between samples are gone. A generative model trained on many DEMs could fill in plausible-looking terrain texture, but it would be invented texture, not Mount Timpanogos's actual ridges; only more measurements bring those back. The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
+<!-- Three clicks: the question (let the room answer before the next click), the answer, then the generative-AI point. The small link under the lead goes to the optional worked example of how the semivariogram becomes weights (docs/explainers/kriging-weights/index.html): four measurements, ten semivariances read off the curve, a 5 x 5 system, the weights and the error estimate. Point the curious there instead of deriving it in class. Every method today only rearranges the 150 measured elevations; none of them can know about a canyon that no sample fell in, so the ridges and gullies between samples are gone. A generative model trained on many DEMs could fill in plausible-looking terrain texture, but it would be invented texture, not Mount Timpanogos's actual ridges; only more measurements bring those back. The true DEM on the left, the kriged surface from Tuesday's 150 samples on the right (ordinary kriging, the spherical model on the previous slides). Compare it against Tuesday's IDW panels: the bull's-eyes are gone, because the weights now reflect how quickly elevation actually decorrelates with distance instead of a fixed 1/d^n rule. Against the whole DEM it scores 86 m RMSE, IDW 110 m. The line above the figure is the sentence the quiz asks about; it came from the "From Variogram to Surface" slide, merged here October 26, 2026 along with the variogram and 3D kriging slides. -->
 
 ---
 
