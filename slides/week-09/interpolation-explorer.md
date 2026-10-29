@@ -449,11 +449,18 @@ section > ul { font-size: 0.8em; }
 
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
-.rm-eq { position: absolute; left: 70px; top: 150px; width: 470px; font-size: 0.8em; }
-.rm-list { position: absolute; left: 70px; top: 285px; width: 470px; font-size: 0.74em; }
+.rm-eq { position: absolute; left: 70px; top: 125px; width: 500px; font-size: 1.05em; }
+.rm-list { position: absolute; left: 70px; top: 290px; width: 500px; font-size: 0.82em; line-height: 1.35; }
 .rm-list ul { margin: 0; }
-.rm-img { position: absolute; right: 40px; top: 150px; width: 700px; }
-.rm-cap { position: absolute; right: 40px; top: 470px; width: 700px; font-size: 0.56em; color: #4a5568; text-align: center; }
+.rm-img { position: absolute; right: 40px; top: 122px; width: 660px; }
+.rm-cap { position: absolute; right: 40px; top: 428px; width: 660px; font-size: 0.56em; color: #4a5568; text-align: center; }
+.rm-ans ul { list-style: none; margin: 0; padding: 0; }
+.rm-ans li { position: absolute; left: 70px; right: 70px; top: 530px; margin: 0; display: flex; align-items: stretch; gap: 16px; }
+.rm-ans .lead { flex: 0 0 300px; display: flex; align-items: center; font-size: 0.66em; line-height: 1.25; color: #002e5d; font-weight: 700; }
+.rm-ans .r { flex: 1; border-radius: 12px; padding: 0.3em 0.5em; text-align: center; color: #fff; font-size: 0.66em; line-height: 1.2; }
+.rm-ans .r b { display: block; font-size: 1.6em; }
+.rm-ans .t { background: #e8792b; } .rm-ans .i { background: #0062b8; } .rm-ans .k { background: #2e8b57; }
+li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation: tryit-pop 0.45s ease-out both; }
 </style>
 
 <div class="rm-eq">
@@ -476,7 +483,13 @@ $$
 
 <span class="rm-cap">Every <strong>gap</strong> between the black truth and a colored rebuild is one cell's error; RMSE is the typical size of those gaps, in meters</span>
 
-<!-- z is the truth, z-hat the surface, n the number of cells. Squaring does two things: it stops positive and negative errors canceling, and it weights big errors heavily, so a surface with a few 100 m misses scores worse than one with many 5 m misses. The profile is one row of cells across the Lab 8 study area (the same one as on Today's Goals): every vertical gap between the black truth and one of the colored rebuilds is one cell's error, and RMSE rolls all 67,337 of those gaps into one number per method. Common slip: the root of the mean, not the mean of the roots, and not the root of the sum. The "What RMSE Hides" slide that followed was cut October 28, 2026 to keep RMSE something students want to use; its profile figure moved here. -->
+<div class="rm-ans">
+
+* <span class="lead">The three error maps from the last slide, each as one number:</span><span class="r t pop">Thiessen<b>28.29 m</b></span><span class="r i pop">IDW, power 2<b>20.71 m</b></span><span class="r k pop">Kriging<b>14.46 m</b></span>
+
+</div>
+
+<!-- One click: the answer to the last slide's question, the three error maps as one number each (the Lab 8 example baseline, 2,500 points, default parameters; the lab's check values). Kriging wins here, and the next slide shows how the number is computed in ArcGIS Pro. z is the truth, z-hat the surface, n the number of cells. Squaring does two things: it stops positive and negative errors canceling, and it weights big errors heavily, so a surface with a few 100 m misses scores worse than one with many 5 m misses. The profile is one row of cells across the Lab 8 study area (the same one as on Today's Goals): every vertical gap between the black truth and one of the colored rebuilds is one cell's error, and RMSE rolls all 67,337 of those gaps into one number per method. Common slip: the root of the mean, not the mean of the roots, and not the root of the sum. The "What RMSE Hides" slide that followed was cut October 28, 2026 to keep RMSE something students want to use; its profile figure moved here. -->
 
 ---
 
@@ -484,40 +497,54 @@ $$
 
 <style scoped>
 section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0; }
-.fl-lead { position: absolute; left: 70px; top: 122px; width: 1140px; font-size: 0.74em; }
-.flow { position: absolute; left: 70px; right: 70px; top: 185px; display: flex; align-items: stretch; gap: 0; }
-.flow .box { flex: 1; background: #eef4fb; border: 2px solid #0062b8; border-radius: 12px; padding: 0.45em 0.55em; font-size: 0.56em; line-height: 1.3; text-align: center; }
-.flow .box b { display: block; font-size: 1.25em; color: #002e5d; margin-bottom: 0.25em; }
-.flow .box .tool { display: block; color: #0062b8; font-weight: 700; }
+.fl-lead { position: absolute; left: 70px; top: 118px; width: 1140px; font-size: 0.7em; }
+.flow { position: absolute; left: 70px; top: 170px; width: 350px; display: flex; flex-direction: column; gap: 8px; }
+.flow .box { background: #eef4fb; border: 2px solid #0062b8; border-radius: 12px; padding: 0.3em 0.55em; font-size: 0.56em; line-height: 1.3; }
+.flow .box b { display: block; font-size: 1.25em; color: #002e5d; }
+.flow .box .tool { color: #0062b8; font-weight: 700; }
 .flow .box code { font-size: 0.92em; }
-.flow .arrow { flex: 0 0 46px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; color: #e8792b; font-weight: 800; }
-.fl-list { position: absolute; left: 70px; top: 380px; width: 640px; font-size: 0.66em; }
-.fl-img { position: absolute; right: 70px; top: 325px; height: 345px; }
+.fl-list { position: absolute; left: 70px; top: 505px; width: 350px; font-size: 0.56em; line-height: 1.3; }
+.fl-list ul { margin: 0; padding-left: 1.1em; }
+.caps-base { position: absolute; left: 450px; top: 170px; width: 760px; height: 490px; object-fit: contain; object-position: left top; }
+.caps ul { list-style: none; margin: 0; padding: 0; }
+.caps li { position: absolute; left: 450px; top: 170px; width: 760px; height: 490px; margin: 0; background: #fff; }
+.caps li img { width: 100%; height: 100%; object-fit: contain; object-position: left top; }
+.caps li[data-bespoke-marp-fragment="inactive"] { display: none; }
+.flow .box.on { background: #fff3e8; border-color: #e8792b; }
+section:not(:has(.caps li[data-bespoke-marp-fragment="active"])) .flow .box:nth-child(1) { background: #fff3e8; border-color: #e8792b; }
+section:has(.caps li:nth-child(1)[data-bespoke-marp-fragment="active"]):not(:has(.caps li:nth-child(2)[data-bespoke-marp-fragment="active"])) .flow .box:nth-child(2) { background: #fff3e8; border-color: #e8792b; }
+section:has(.caps li:nth-child(2)[data-bespoke-marp-fragment="active"]):not(:has(.caps li:nth-child(3)[data-bespoke-marp-fragment="active"])) .flow .box:nth-child(3) { background: #fff3e8; border-color: #e8792b; }
+section:has(.caps li:nth-child(3)[data-bespoke-marp-fragment="active"]) .flow .box:nth-child(4) { background: #fff3e8; border-color: #e8792b; }
 </style>
 
-<div class="fl-lead">ArcGIS Pro has <strong>no single RMSE tool</strong>. Chain four steps, each one a tool you already know:</div>
+<div class="fl-lead">ArcGIS Pro has <strong>no single RMSE tool</strong>. Chain four steps, each one a tool you already know (click through the dialogs):</div>
 
 <div class="flow">
-<div class="box"><b>1 · Error</b><span class="tool">Raster Calculator</span><code>True_DEM − Surface</code></div>
-<div class="arrow">➜</div>
-<div class="box"><b>2 · Square</b><span class="tool">Raster Calculator</span><code>Square(Error)</code></div>
-<div class="arrow">➜</div>
-<div class="box"><b>3 · Mean</b><span class="tool">Zonal Statistics as Table</span>over the study area, statistic <strong>Mean</strong></div>
-<div class="arrow">➜</div>
-<div class="box"><b>4 · Square root</b><span class="tool">Calculate Field</span><code>math.sqrt(!MEAN!)</code></div>
+<div class="box"><b>1 · Error</b><span class="tool">Raster Calculator</span> · <code>True_DEM − Surface</code></div>
+<div class="box"><b>2 · Square</b><span class="tool">Raster Calculator</span> · <code>Square(Error)</code></div>
+<div class="box"><b>3 · Mean</b><span class="tool">Zonal Statistics as Table</span> · one zone, statistic <strong>Mean</strong></div>
+<div class="box"><b>4 · Square root</b><span class="tool">Calculate Field</span> · <code>math.sqrt(!MEAN!)</code></div>
 </div>
 
 <div class="fl-list">
 
-- The same order as the formula, read **inside out**
+- The formula read **inside out**
 - Lab 8's model chains all four for **each method**
-- **COUNT** in the table is the number of cells averaged: **67,337**
+- **COUNT** in the table is the cells averaged: **67,337**
 
 </div>
 
-<img class="fl-img" src="images/ie-zonal-callouts.png" alt="The Zonal Statistics as Table dialog with callouts: the study area as the one zone, the squared error raster, and statistic Mean">
+<img class="caps-base" src="images/ie-rc-error-callouts.png" alt="Step 1: the Raster Calculator dialog with callouts, truth minus surface, one error raster per method">
 
-<!-- There is no RMSE tool in ArcGIS Pro, so the four boxes are the whole recipe, and each one is a tool students have already run: Raster Calculator twice (Week 3's map algebra), Zonal Statistics as Table, and Calculate Field. Read the formula on the last slide from the inside out and it is the same four steps: the difference, the square, the mean, the root. The capture is step 3 in Lab 8 Step 7. The table is Lab 8 Step 7's output for one method: COUNT 67,337 cells and AREA 60,603,300 square meters, both on the lab page as check values. If COUNT comes out smaller, the surfaces did not cover the whole study area (the Extent environment is the usual cause), and the RMSE is quietly computed on fewer cells. Zonal Statistics as Table opens with the statistic set to All; Mean is the one the RMSE needs. The step-2 capture (ie-rc-square-callouts.png) was on the RMSE slide until October 28, 2026. -->
+<div class="caps">
+
+* <img src="images/ie-rc-square-callouts.png" alt="Step 2: the Raster Calculator dialog squaring the error raster">
+* <img src="images/ie-zonal-callouts.png" alt="Step 3: the Zonal Statistics as Table dialog with callouts: the study area as the one zone, the squared error raster, and statistic Mean">
+* <img src="images/ie-calc-field-callouts.png" alt="Step 4: the Calculate Field dialog writing RMSE as the square root of MEAN">
+
+</div>
+
+<!-- Three clicks: the dialog for step 1 is up when the slide opens, and each click replaces it with the next step's dialog and moves the highlight down the flow (all four are Lab 8 Step 6 and 7 captures). There is no RMSE tool in ArcGIS Pro, so the four boxes are the whole recipe, and each one is a tool students have already run: Raster Calculator twice (Week 3's map algebra), Zonal Statistics as Table, and Calculate Field. Read the formula on the last slide from the inside out and it is the same four steps: the difference, the square, the mean, the root. The table is Lab 8 Step 7's output for one method: COUNT 67,337 cells and AREA 60,603,300 square meters, both on the lab page as check values. If COUNT comes out smaller, the surfaces did not cover the whole study area (the Extent environment is the usual cause), and the RMSE is quietly computed on fewer cells. Zonal Statistics as Table opens with the statistic set to All; Mean is the one the RMSE needs. The step-2 capture (ie-rc-square-callouts.png) was on the RMSE slide until October 28, 2026. -->
 
 ---
 

@@ -24,7 +24,16 @@ GDB = r"C:\Ames\Lab09\ZipCheck\lab08-y-mountain\Lab08.gdb"
 
 # 1. Crop the error row (panels + legend) out of the example map.
 im = Image.open(os.path.join(REPO, "docs", "assignments", "lab-08", "images", "lab08-example-map-baseline.png"))
-im.crop((250, 545, 1607, 883)).save(os.path.join(OUT, "ie-error-row.png"))
+row = im.crop((250, 545, 1607, 883))
+# The example map's panel titles carry the RMSE values; the deck defines RMSE on the next slide, so
+# the slide's copy gets plain titles (October 28, 2026). Rows 0-34 over the panels are the title band.
+from PIL import ImageDraw, ImageFont
+d = ImageDraw.Draw(row)
+d.rectangle((200, 0, 1357, 34), fill="white")
+font = ImageFont.truetype(os.path.join(matplotlib.get_data_path(), "fonts", "ttf", "DejaVuSans.ttf"), 25)
+for x, label in ((207, "Thiessen error"), (595, "IDW error"), (983, "Kriging error")):
+    d.text((x, 7), label, fill="#222222", font=font)
+row.save(os.path.join(OUT, "ie-error-row.png"))
 
 # 2. Checkpoint spread.
 TRUE = arcpy.Raster(os.path.join(GDB, "True_DEM"))

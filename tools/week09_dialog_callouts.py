@@ -26,7 +26,7 @@ plt.rcParams.update({"font.family": ["Segoe UI", "Arial", "DejaVu Sans"]})
 RED = "#c8102e"
 NOTE_W = 440            # width of the notes column, in screenshot pixels
 # Wide dialogs shrink more on the slide, so their notes are set larger.
-FONT = {"ie-rc-error.png": 26, "ie-rc-square.png": 24, "ie-zonal-table.png": 23}
+FONT = {"ie-rc-error.png": 26, "ie-rc-square.png": 24, "ie-zonal-table.png": 23, "ie-calc-field.png": 22}
 
 # capture, output, side the notes go on, [(row of the field, x the arrow points at, note, optional nudge
 # of the note up or down so neighboring notes do not collide)]
@@ -63,6 +63,12 @@ DIALOGS = [
         (168, 40, "One zone: the\nwhole study area"),
         (332, 40, "The squared\nerror raster"),
         (540, 40, "Mean, not the\ndefault All"),
+    ]),
+    # Step 4 of the RMSE recipe; the capture is Lab 8 Step 7's Calculate Field (lab08-calculate-field.png)
+    ("ie-calc-field.png", "ie-calc-field-callouts.png", "left", [
+        (168, 40, "The table Zonal\nStatistics wrote"),
+        (250, 40, "A new field, RMSE"),
+        (917, 40, "Square root of the\nmean: back in meters"),
     ]),
 ]
 
