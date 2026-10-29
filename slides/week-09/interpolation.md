@@ -91,7 +91,7 @@ li[data-bespoke-marp-fragment="active"] .ip-hint { animation: tryit-pop 0.45s ea
 
 # Interpolation
 
-<img class="ip-geo" src="images/ip-soil-cross-section-cartoon.jpg" alt="Cartoon geologist standing on a cross-section of soil layers">
+<img class="ip-geo" src="images/ip-soil-cross-section-cartoon.jpg" alt="A geologist standing on a cross-section of soil layers she cannot see">
 
 **Interpolation** is a procedure to predict values of an attribute at **unsampled points** within the region that was sampled.
 
@@ -132,7 +132,7 @@ li[data-bespoke-marp-fragment="active"] .ip-pop { display: inline-block; animati
 <div class="ip-joke">
 
 * <span class="ip-pop">Why is the geologist sad?</span>
-* <span class="ip-pop">To measure every spot, he'd have to dig up the whole site, and then there'd be nothing left to measure.</span>
+* <span class="ip-pop">To measure every spot, she'd have to dig up the whole site, and then there'd be nothing left to measure.</span>
 
 </div>
 
@@ -158,7 +158,7 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s ease-out both; }
 </style>
 
-<img class="gr-cartoon" src="images/ip-growth-wall-cartoon.jpg" alt="Cartoon of a mom marking her daughter's height on a door frame">
+<img class="gr-cartoon" src="images/ip-growth-wall-cartoon.jpg" alt="A mother marking her daughter's height on a door frame">
 
 <img class="gr-layer" src="images/ip-growth-points.png" alt="Her height on each birthday from 1 to 18">
 
@@ -172,7 +172,7 @@ li[data-bespoke-marp-fragment="active"] .gr-pop { animation: tryit-pop 0.45s eas
 
 </div>
 
-<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation pops up over the cartoon (the same figure as Today's Goals), its line rising left to right like her growth chart, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The cartoon was generated with OpenAI gpt-image-2, October 25, 2026. The equation figure was redrawn October 26, 2026 with a rising line and in the same y0 + (y1 - y0) form as the worked example (tools/week09_linear_interpolation_figure.py). -->
+<!-- Three clicks. A girl measured on every birthday is a sample; the wall marks are her data. Click 1: nobody measured her at 12 and a half, so we need an estimate. Click 2: the two-point equation pops up over the picture (the same figure as Today's Goals), its line rising left to right like her growth chart, with her 12th (5 ft 3 in) and 13th (5 ft 5.5 in) birthday heights: 63 + 2.5 x 0.5 = 64.25 in, about 5 ft 4 in. Click 3: do that for every month and join the dots and you have the whole curve. That is the entire week in one dimension: the birthdays are the sampling design, the line is the interpolated surface. Ask whether a straight line between birthdays is right during her growth spurt (11 to 13), which is the question every method today answers differently. The girl is made up: her heights follow the shape of the CDC (2000) stature-for-age median for girls, scaled to finish at 5 ft 8 in and rounded to the half inch (tools/week09_tuesday_figures.py). The picture was redrawn in the deck-wide anime style with OpenAI gpt-image-2.5-flare, October 28, 2026 (prompt in tools/divider-images/figures-anime.json). The equation figure was redrawn October 26, 2026 with a rising line and in the same y0 + (y1 - y0) form as the worked example (tools/week09_linear_interpolation_figure.py). -->
 
 ---
 
@@ -247,7 +247,7 @@ The map on the left is the real, fully known gold grade, in **grams of gold per 
 </div>
 </div>
 
-<!-- Left: the true gold grade in grams of gold per tonne of rock (g/t, the unit assays report), made up for this scenario (tools/week09_tuesday_figures.py): a northeast-trending vein, a dozen ore pods of different sizes, and background variation. Right: the cartoon reason we care. The next four slides sample this same map. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
+<!-- Left: the true gold grade in grams of gold per tonne of rock (g/t, the unit assays report), made up for this scenario (tools/week09_tuesday_figures.py): a northeast-trending vein, a dozen ore pods of different sizes, and background variation. Right: the reason we care, a geologist standing over gold she cannot see. The next four slides sample this same map. The whole point of the next four slides is that you must commit to a sampling design before you know what the surface looks like. -->
 
 ---
 

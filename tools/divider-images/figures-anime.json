@@ -4,5 +4,23 @@
   "prompt": "A woman student in a hoodie and headphones works at a computer-lab desk on a spreadsheet grid of colored cells, small arrows drawn between neighboring cells pointing downhill; in the window beside her, a forested stream valley glows in the afternoon light as if it were the landscape she is modeling, focused and pleased",
   "deck": "week-06/watershed-delineation-a.md",
   "slide_note": "In Class Activity, Aspect and D8 Flow Direction (bg right:40%); not a divider"
+ },
+ {
+  "id": "ip-soil-cross-section-cartoon",
+  "prompt": "A woman field geologist in a tan field vest, white hard hat and safety glasses stands on a grassy hilltop under a bright sky, looking down at the ground beneath her boots with a puzzled, thoughtful expression; the land below her is cut away as a clean cross-section block showing layers she cannot see: dark topsoil, red clay, gravel, a band of blue groundwater and gray bedrock. The block floats on a plain white background.",
+  "deck": "week-09/interpolation.md",
+  "slide_note": "Interpolation title slide, small at right; not a divider"
+ },
+ {
+  "id": "ip-gold-deposit-cartoon",
+  "prompt": "A woman field geologist in a tan field vest, white hard hat and safety glasses stands on a grassy hilltop under a bright sky, looking down at the ground beneath her boots with a puzzled, thoughtful expression; the land below her is cut away as a clean cross-section block showing layers she cannot see: dark topsoil, red clay, gravel, a band of blue groundwater and gray bedrock, with glinting gold nuggets and a thin gold vein scattered unevenly through the layers. The block floats on a plain white background.",
+  "deck": "week-09/interpolation.md",
+  "slide_note": "The Gold Prospecting Scenario, beside the true-grade map; not a divider"
+ },
+ {
+  "id": "ip-growth-wall-cartoon",
+  "prompt": "In a warm sunlit living room, a mother holds a pencil to the top of her teenage daughter's head and marks her height on a white wooden door frame lined with small pencil tick marks from earlier birthdays; the daughter stands straight against the frame, smiling up at her mother, a sofa and houseplants in the soft background",
+  "deck": "week-09/interpolation.md",
+  "slide_note": "Sampling and Interpolation: Growing Up, 300 px square; the equation figure pops up over it; not a divider"
  }
 ]
