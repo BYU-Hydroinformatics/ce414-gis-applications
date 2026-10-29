@@ -66,13 +66,13 @@ CE414Quiz.start({
     {
       prompt: "A cell has HAND = 1.2 m. The flood depth h at the gage is 1.5 m. Is the cell flooded in the model?",
       options: [
-        "No, because 1.2 is less than 1.5",
+        "No: a cell floods only when its HAND is above the flood depth",
         "Only if its elevation is below the gage",
         "It depends on its distance to the gage",
-        "Yes, because 1.2 m is at most 1.5 m"
+        "Yes: its HAND, 1.2 m, is below the 1.5 m flood depth"
       ],
-      answer: "Yes, because 1.2 m is at most 1.5 m",
-      explanation: "The model floods every cell with HAND less than or equal to h, one threshold for the whole river. Elevation and distance to the gage play no part; that is both HAND's strength and its limit."
+      answer: "Yes: its HAND, 1.2 m, is below the 1.5 m flood depth",
+      explanation: "The water rises 1.5 m above the stream, and this cell sits only 1.2 m above it, so it is under water. The model floods every cell with HAND less than or equal to h, one threshold for the whole river. Elevation and distance to the gage play no part; that is both HAND's strength and its limit."
     },
     {
       prompt: "Why is Lab 7 two models, HAND Builder and Flood Loop, instead of one?",
