@@ -156,7 +156,7 @@ Review: [Week 9 Tuesday deck](https://byu-hydroinformatics.github.io/ce414-gis-a
 - Lava flows of the plain may **lap against** the dome: that part is **buried**
 - A volume **above an interpolated surface** is what the DEM can see, not the whole dome
 
-<!-- The example map is the Lab 9 page's baseline sheet (height above the rebuilt plain). The reference outline rule is in READ-ME-FIRST.txt in the Lab 9 package. Lab 9 Step 9 has each student digitize their own outline; the answers are theirs to find. -->
+<!-- The example map is the Lab 9 page's baseline sheet (height above the rebuilt plain). The reference outline rule is in READ-ME-FIRST.txt in the Lab 9 package. Lab 9 Step 9 has each student widen the supplied outline by a distance set by their BYU ID and then swap IDW for a spline; the answers are theirs to find. -->
 
 ---
 
