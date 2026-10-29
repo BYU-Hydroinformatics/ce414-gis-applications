@@ -1,7 +1,7 @@
 # Week 10: Cut, Fill, and Raster Volumes
 
 > [!IMPORTANT] Also this week
-> - **No class on Tuesday, November 3, or Thursday, November 5** — study the two slide decks below on your own and work on Lab 9; Quiz 8 is built from those two decks, not from the textbook.
+> - **No class on Tuesday, November 3, or Thursday, November 5**, and the instructor is away — study the two slide decks below on your own and work on Lab 9, which was cut down to be done from its page alone; Quiz 8 is built from those two decks, not from the textbook. Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu) and expect one reply a day; a classmate who has finished Step 8 can answer most questions faster than email can.
 
 <div class="week-card week-card--slides" markdown>
 

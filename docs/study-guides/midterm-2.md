@@ -84,7 +84,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Write any raster volume as **height × cell area, summed**, and say why the DEM must be **projected** first
 - Say when **Surface Volume** is enough, and why Lab 9 uses Raster Calculator and **Zonal Statistics** instead
 - Explain why the **base surface** is the biggest choice in a mountain's volume, and what part of the butte the volume cannot see
-- For Lab 9: the units of each Raster Calculator output, what Zonal Statistics with **Sum** writes, why the points on the butte are erased, and what a spline base can do that an IDW base cannot
+- For Lab 9: the units of each Raster Calculator output, what Zonal Statistics with **Sum** writes, why the points on the butte are erased, and why a wider outline changes the volume; from the Thursday deck, what a spline base can do that an IDW base cannot
 
 ## Week 11 — Least Cost Paths
 

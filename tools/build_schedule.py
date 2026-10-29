@@ -133,8 +133,8 @@ DUE = {
              other=[("In-class activity: Air Temperature Interpolation", "done in class Tuesday, each student on their own copy of the [printable worksheet](../handouts/provo-temperature-worksheet.pdf) (PDF, 1 page); upload a photo of the completed worksheet by 9:30 am, fifteen minutes after class")]),
     # Fall 2026 only: the instructor is away Week 10, so there is no class. Remove after November 5.
     10: dict(reading=None, quiz=(8, "Cut, Fill, and Raster Volumes"), lab=9,   # no reading; Quiz 8 is built from the two decks
-             other=[("**No class on Tuesday, November 3, or Thursday, November 5**",
-                     "study the two slide decks below on your own and work on Lab 9; Quiz 8 is built from those two decks, not from the textbook")]),
+             other=[("**No class on Tuesday, November 3, or Thursday, November 5**, and the instructor is away",
+                     "study the two slide decks below on your own and work on Lab 9, which was cut down to be done from its page alone; Quiz 8 is built from those two decks, not from the textbook. Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu) and expect one reply a day; a classmate who has finished Step 8 can answer most questions faster than email can")]),
     11: dict(reading=None, quiz=(9, "Least Cost Paths"), lab=10, other=[]),
     12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11, other=[]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.

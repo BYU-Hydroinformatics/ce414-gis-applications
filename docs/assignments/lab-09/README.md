@@ -24,6 +24,15 @@ at Mean with OBJECTID filled in.
 **Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 5, 2026
 (`tools/lab09/run_model.py`, `step_checks.py`) against the hosted data. -->
 
+> [!IMPORTANT]
+> **No class this week, and the instructor is away.** This lab was cut down so that you can do it
+> from this page alone: nine steps with a check value at each one, then two more runs of the same
+> model. If a number does not match, reread the warning nearest that step first; the two usual
+> causes are the random seed (Step 0) and a run from the tool dialog before the baseline was
+> recorded (Step 8). Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu) and expect one
+> reply a day. A classmate who has finished Step 8 can answer most questions faster than email can,
+> and the peer review step is the place to lean on one.
+
 > [!TIP]
 > **Start from the report template.** [`lab09-report-template.docx`](lab09-report-template.docx)
 > has the title block, a section for every deliverable, the tables already set up with the columns the
@@ -52,14 +61,14 @@ That is the same idea as Lab 6, where the water surface was the lid and the lake
 here the DEM is the lid and an interpolated plain is the bottom.
 
 Every part of that recipe is a choice: where the butte ends, how many points sample the plain, and
-how you interpolate between them (the Week 9 methods). In Step 9 you vary each choice and see which
-moves the answer most.
+how you interpolate between them (the Week 9 methods). In Step 9 you change the first two, one at
+a time, and see which moves the answer more.
 
 > [!IMPORTANT]
 > **Your job — see the deliverables below.** Build one ModelBuilder model that takes a DEM and an
 > outline and returns the volume of the land inside the outline above an interpolated base surface;
-> run it on Big Southern Butte; test how much the outline, the number of points, and the
-> interpolation method change the volume; and make two maps.
+> run it on Big Southern Butte; run it twice more to see how much the number of points and the
+> outline change the volume; and make two maps.
 
 ## Problem Statement
 
@@ -78,14 +87,15 @@ Every one of these is a decision somebody made, and every one of them can change
 - **Where the butte ends.** The base of a dome blends into its apron of debris and into the lava
   flows around it. The reference outline was drawn by a rule from the DEM — every cell standing more
   than 10 m above a plane fitted to the plain — and `READ-ME-FIRST.txt` explains it. It is a
-  reasonable base, not the only one. In Step 9 you draw your own.
+  reasonable base, not the only one. In Step 9 you widen it by 200 m and see what that does.
 - **The points on the plain.** Points inside the outline sample the butte, not the plain, so the
   model erases them. The rest sample a ring of plain 1,500 m wide. More points follow the plain's
   bumps more closely; fewer points smooth them out. The points are random, so two runs differ — unless
   you fix the random seed, which Step 0 does so that your numbers match this page.
 - **The interpolation method.** IDW never goes above its highest point or below its lowest, so the
   rebuilt plain stays inside the range of the plain around it. A spline is smooth and can overshoot.
-  Week 9 compared them; here you see what the difference does to a volume.
+  Week 9 compared them; this lab keeps IDW throughout, so the method is the one choice you do not
+  vary.
 - **What the volume is.** The volume *above an interpolated surface*. If lava flows of the plain lap
   against the butte's lower slopes, part of the dome is buried below that surface, and no elevation
   model can see it.
@@ -121,12 +131,12 @@ Every one of these is a decision somebody made, and every one of them can change
 
 ![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Big Southern Butte DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.5 m east-west; a box around the butte stored in latitude and longitude, to be projected in Step 1; tiles n44w114 and n44w113 published April 7, 2026 from sources collected 1957 to 2024; the 3D Elevation Program's general-purpose seamless layer, not made to measure volcanoes; sources resampled to one grid, two tiles joined edge to edge; USGS, public domain. A footer says the cell size and vertical unit matter most for a volume.](images/lab09-dem-metadata.svg)
 
-**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
-in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tiles'
-metadata files
+**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself,
+in `READ-ME-FIRST.txt` and in the raster's properties in ArcGIS Pro, and say in your report what
+each one does to your result. The tiles' own metadata files
 ([n44w114](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w114/USGS_13_n44w114.xml){ target="_blank" },
 [n44w113](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n44w113/USGS_13_n44w113.xml){ target="_blank" })
-— and say in your report what each one does to your result.
+are there if you want the source, not required.
 
 ## ModelBuilder Tools
 
@@ -140,8 +150,7 @@ New in this lab:
 | ![Zonal Statistics icon: the cells inside a zone summed into one value](images/icon-zonal-statistics.svg){ .tool-icon }<br>**Zonal Statistics** (Spatial Analyst) | A statistic of a raster's cells inside each zone — here, the sum of the cell volumes inside the outline. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/zonal-statistics.htm){ target="_blank" } |
 
 Tools you already know: **IDW** (Lab 8), **Project Raster** (Labs 4 and 5), **Buffer** (Labs 1 and 4), **Extract by
-Mask** (Lab 4), **Raster Calculator** (Labs 2, 4–6 and 8), **Hillshade**, and model parameters. Step 9 also
-uses **Spline** (Spatial Analyst), the smooth interpolator from the Week 9 lectures.
+Mask** (Lab 4), **Raster Calculator** (Labs 2, 4–6 and 8), **Hillshade**, and model parameters.
 
 ## Example Model
 
@@ -261,7 +270,7 @@ Add **Erase**: **Input Features** `Points_Values`, **Erase Features** `Butte_Bou
 > the map layer at the top, and the model's own variable under **Model Variables**, where it reads
 > `Butte_Boundary:1`. Choose the second. In our build, choosing the map layer added a second
 > `Butte_Boundary` oval to the model; the tool dialog would then ask for the outline twice and a
-> Step 9 run with your own outline would use both. The same goes for the masks in Steps 6 and 8.
+> Step 9 run with the wide outline would use both. The same goes for the masks in Steps 6 and 8.
 > If an extra oval appears, delete it and reconnect.
 
 ![The Erase dialog from ModelBuilder, with a banner suggesting Pairwise Erase: Input Features Points_Values, Erase Features Butte_Boundary:1, Output Feature Class Plain_Points.](images/lab09-erase.png)
@@ -372,47 +381,40 @@ give every output a new name for each Step 9 run.
 > three outputs and `Random_Points`. The model makes `DEM_UTM` again at the start of every run, so
 > the Snap Raster setting still works.
 
-### Step 9 — Test the Assumptions
+### Step 9 — Two More Runs
 
 The volume rests on three choices: the outline, the number of points, and the interpolation method.
-Run the model from its tool dialog **four more times**, giving each output a name that says what
-changed (`Butte_Volume_n250`, `Height_Above_Plain_n250`):
+This lab keeps IDW and changes the other two, one at a time. Run the model from its tool dialog
+**twice more**, giving every output a name that says what changed (`Plain_Points_n250`,
+`Height_Above_Plain_n250`, `Butte_Volume_n250`):
 
-1. **Fewer and more points:** 250 and 4,000 (two runs).
-2. **Your own outline:** in your project geodatabase, create a polygon feature class
-   `My_Butte_Boundary` in NAD 1983 UTM Zone 12N. Turn off the reference outline layer, make a
-   hillshade of `DEM_UTM` with the **Hillshade** tool, and digitize the base of the butte against it
-   and the imagery as **one polygon** — Zonal Statistics sums each feature separately, so a second
-   feature gives a second volume. Run the tool with it at 1,000 points.
-3. **Another method:** save a copy of the model (**Save As**), replace IDW with **Spline**
-   (Regularized, weight 0.1, 12 points, cell size 10), and run it once at 1,000 points with the
-   reference outline. Leave the Processing Extent environment at its default: the spline's result
-   depends on it.
+1. **Fewer points:** the reference outline at **250** points.
+2. **A wider outline:** run **Buffer** once, outside the model, on `Butte_Boundary` with
+   **Distance** `200` Meters and **Dissolve Type** Dissolve all output features into a single
+   feature, output `Butte_Boundary_Wide`. Then run the model with `Butte_Boundary_Wide` as the
+   outline at **1,000** points. The wider outline counts 200 m more of the butte's apron as butte,
+   and it moves the sampling ring 200 m outward with it.
 
-For **the baseline and every run, in one table**, record what changed, the points kept after the
-erase, the outline's area, the volume, the tallest cell, and the number of cells below the plain.
-Where to read each:
+For **the baseline and both runs, in one table**, record what changed, the points kept after the
+erase, the outline's area, the volume, and the tallest cell. Where to read each:
 
 - **Points kept:** the record count of that run's `Plain_Points` (open its attribute table).
 - **Outline area:** the outline's `Shape_Area` field, in square meters; divide by 1,000,000 for the
   table's square kilometers.
 - **Tallest cell:** that run's `Height_Above_Plain`, **Properties** ▸ **Source** ▸ **Statistics**,
   maximum.
-- **Cells below the plain:** Raster Calculator, `Con("Height_Above_Plain_n250" < 0, 1)` (use the
-  run's own raster), then the **Count** of value 1 in the output's attribute table. No output, or
-  an empty table, means zero.
 
 Then answer, in your report:
 
-1. **Which choice moves the volume most,** and which least? Rank them with your numbers.
-2. **What did the spline do that IDW cannot?** Map its cells below the plain and explain them with
-   what you learned about the methods in Week 9 and Lab 8.
-3. **What does your number measure?** Is it the volume of the lava dome? Say what part of the dome
+1. **Which choice moved the volume more,** the points or the outline? Give each run's difference
+   from the baseline in cubic kilometers and as a percentage, and say what the wider outline changed:
+   the area it counts, the plain it rebuilt, or both. Your table's columns are the evidence.
+2. **What does your number measure?** Is it the volume of the lava dome? Say what part of the dome
    the model cannot see, and what data would let you measure it.
 
 > [!TIP]
-> The random part of the model is not the part that matters most. Check how far apart your 250- and
-> 4,000-point runs are before you guess.
+> Give every output of a dialog run a new name. A run that reuses a name overwrites the baseline
+> you mapped.
 
 ## Deliverables
 
@@ -422,11 +424,11 @@ Make **two** professional map layouts:
    with a legend in meters, over a hillshade or imagery, with the reference outline, the volume in
    the title or a text box, a neat line, north arrow and scale bar, a text box with your name, the
    date, the map projection and the DEM's source and date, and an inset locating the butte in Idaho.
-2. **One scenario from Step 9** — your own outline or the spline, whichever changes the picture
-   more, with the same color scale as Map 1 so the two can be compared. Say on the map what changed
-   and by how much.
+2. **The wide-outline run from Step 9** — that run's `Height_Above_Plain` with
+   `Butte_Boundary_Wide`, in the same color scale as Map 1 so the two can be compared. Say on the
+   map what changed and by how much.
 
-Write a brief report (2–3 pages of text, plus your figures and maps) covering:
+Write a brief report (2 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your
   peer reviewer
@@ -439,7 +441,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **the three metadata values** for the DEM — its publication date and source dates, its vertical
   datum and units, and its cell size — and what each one means for your result
 - your **check values from Steps 4 to 8**: the points kept, the tallest cell, and the volume
-- your **sensitivity table** from Step 9 and your answers to its three questions
+- your **Step 9 table** and your answers to its two questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
@@ -470,8 +472,8 @@ published April 7, 2026.
 
 ## Example Maps
 
-This is an example, not a template. Your maps carry your name, and your second map shows the run you
-chose.
+This is an example, not a template. Your maps carry your name, and your second map shows the
+wide-outline run.
 
 ![Example baseline layout titled "Big Southern Butte: About 5.1 Cubic Kilometers Above the Plain": the height of the butte above the rebuilt plain inside the black reference outline, over a gray hillshade, in classes from pale yellow (0 to 50 m) at the edges through orange to dark red (600 to 750 m) at the two summit lobes. Below, an Idaho locator with an orange dot, a legend, north arrow, a scale bar in kilometers, and a text box: 5.145 cubic km inside the 28.03 sq km outline, tallest cell 729 m above the plain, mean height 183.5 m.](images/lab09-example-map-baseline.png)
 
@@ -479,8 +481,7 @@ chose.
 one place on the plain, and show where the random points fell.
 
 Your second map uses the same design and the same color classes as the first, so a reader can put the
-two side by side. Choose the Step 9 run that most changes what a reader would conclude, and say in the
-title and the text box what changed and by how much.
+two side by side. Say in the title and the text box what changed from Map 1 and by how much.
 
 <!-- Figure 10, an example spline scenario map, was removed on October 27, 2026: its title and text box
 gave away a Step 9 result. -->
@@ -492,11 +493,11 @@ what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• Your check values from Steps 4 to 8 (2)<br>• What the volume measures and what the model cannot see (Step 9, question 3) (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **Write-up** (2 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• Your check values from Steps 4 to 8 (2)<br>• What the volume measures and what the model cannot see (Step 9, question 2) (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its baseline volume matches the check value (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the outline and the number of points exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in a clear color scale with a legend in meters (2)<br>• The outline over a hillshade or imagery (1)<br>• An inset locating the butte in Idaho (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend (2)<br>• The outline used, over a hillshade or imagery (1)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and the four Step 9 runs (250 and 4,000 points, your own outline, the spline), with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4)<br>• Which choice moves the volume most and least, ranked with your numbers (3)<br>• What the spline did that IDW cannot, mapped and explained (3) | /10 |
+| **Map 2 — the wide outline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend (2)<br>• The outline used, over a hillshade or imagery (1)<br>• Title and text box say what changed from Map 1 and by how much (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
+| **Step 9 — two more runs**<br>• One table with the baseline and the two Step 9 runs (250 points; the wide outline), with the points kept, the outline area, the volume and the tallest cell, and the numbers match a run with your seed (5)<br>• Which choice moved the volume more, with each run's difference from the baseline in cubic kilometers and as a percentage (3)<br>• What the wider outline changed, the area counted or the plain rebuilt or both, argued from your table (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -506,7 +507,16 @@ what to submit.
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
-<!-- Draft notes (2026-10-05).
+<!-- Week 10 cut (2026-10-28). The instructor is away Week 10 and there is no class, so the lab was cut to
+be done from the page alone: Step 9 went from four dialog runs (250 and 4,000 points, a digitized
+outline, a Spline copy of the model) to two (250 points; the reference outline buffered 200 m,
+Butte_Boundary_Wide); the cells-below-the-plain column and Con recipe, the spline question and the
+digitizing went with them; the report is 2 pages; the tile XML metadata files are optional; Map 2 is
+the wide-outline run. Oracle for the two runs (seed 1, as the student's model builds the ring from the
+new outline): ce414-private/sensitivity/lab09_step9_oracle.json, from tools/lab09/wide_outline_oracle.py.
+Restore the four-run Step 9 from git history (a12788c) for a semester with class meetings.
+
+Draft notes (2026-10-05).
 SOURCE: the September 3 migration of "Lab 10 - Big Southern Butte.docx" (docs/assignments/lab-09/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab09/PARITY_PLAN.md.
 CORRECTIONS carried: second-DEM Part 2 dropped (decision 1); 30 m -> 10 m and 30 * 30 -> 10 * 10; "Mosaic To New Raster or Project Raster" -> Project Raster only (the hosted extract is already one raster); SQL-threshold rubric item replaced; "3.0 to 6.0 km3 depending on your polygon" replaced by a check value on a hosted outline; uncited "one of the largest volcanic domes on Earth" and dead BLM flyer replaced by the USGS YVO article; Godchaux et al. 1992 (western plain) dropped; dead water.usgs.gov and nationalmap.gov links dropped; model-variable names in the Raster Calculator expression now match the step outputs.
 DATA: docs/data/lab09-big-southern-butte.zip, 10,371,981 bytes: BigSouthernButte_DEM.tif (window -113.17 -112.89 43.32 43.49 of USGS_13_n44w114 + n44w113, both published 2026-04-07; 3,024 x 1,836 float32, 1,499.84-2,307.13 m, no NoData) and Lab09.gdb\Butte_Boundary (make_outline.py, threshold 10 m). Built by tools/lab09/fetch_dem.py, make_outline.py, make_extract.py.
