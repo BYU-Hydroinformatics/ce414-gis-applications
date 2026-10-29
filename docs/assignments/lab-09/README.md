@@ -87,7 +87,8 @@ Every one of these is a decision somebody made, and every one of them can change
 - **Where the butte ends.** The base of a dome blends into its apron of debris and into the lava
   flows around it. The reference outline was drawn by a rule from the DEM — every cell standing more
   than 10 m above a plane fitted to the plain — and `READ-ME-FIRST.txt` explains it. It is a
-  reasonable base, not the only one. In Step 9 you widen it by 200 m and see what that does.
+  reasonable base, not the only one. In Step 9 you widen it by a distance of your own and see what
+  that does.
 - **The points on the plain.** Points inside the outline sample the butte, not the plain, so the
   model erases them. The rest sample a ring of plain 1,500 m wide. More points follow the plain's
   bumps more closely; fewer points smooth them out. The points are random, so two runs differ — unless
@@ -384,11 +385,22 @@ Step 0 fixed the points; here you change the other two, one at a time, in **two 
 1,000 points, giving every output a name that says what changed (`Plain_Points_wide`,
 `Height_Above_Plain_wide`, `Butte_Volume_wide`):
 
-1. **A wider outline:** run **Buffer** once, outside the model, on `Butte_Boundary` with
-   **Distance** `200` Meters and **Dissolve Type** Dissolve all output features into a single
-   feature, output `Butte_Boundary_Wide`. Then run the model from its tool dialog with
-   `Butte_Boundary_Wide` as the outline. The wider outline counts 200 m more of the butte's apron as
-   butte, and it moves the sampling ring 200 m outward with it.
+1. **Your own wider outline.** The supplied outline is one reasonable base; yours pushes it out by
+   a distance that is yours alone:
+
+    > **Widen the outline by 3 × (the last two digits of your BYU ID) meters.**
+    >
+    > BYU ID `123456789`: digits **89**, widen by **267 m**. Digits **05**: **15 m**. Digits
+    > **00**: 0 m, so your outline is the supplied one and this run repeats the baseline; do it
+    > anyway and say so.
+
+    Run **Buffer** once, outside the model, on `Butte_Boundary` with **Distance** your number of
+    Meters and **Dissolve Type** Dissolve all output features into a single feature, output
+    `Butte_Boundary_Wide`. Then run the model from its tool dialog with `Butte_Boundary_Wide` as
+    the outline. The wider outline counts more of the butte's apron as butte, and it moves the
+    sampling ring outward with it. Write your two digits and your distance in your report: the
+    grader checks your row against a run at your distance. If you would rather not use your ID
+    digits, email the instructor for a number of your own.
 2. **A spline base:** save a copy of the model (**ModelBuilder** tab ▸ **Save As**, name it
    `ButteVolumeSpline`), and in the copy delete **IDW** and put **Spline** (Spatial Analyst) in its
    place: **Input point features** `Plain_Points`, **Z value field** `RASTERVALU`, **Output cell
@@ -445,7 +457,8 @@ Write a brief report (2 pages of text, plus your figures and maps) covering:
   Graphic**), and **one** screen capture of its tool dialog with the outline and the number of
   points exposed
 - your **check values from Steps 4 to 8**: the points kept, the tallest cell, and the volume
-- your **Step 9 table** and your answers to its three questions
+- your **Step 9 table**, with your BYU ID's last two digits and your widening distance above it,
+  and your answers to its three questions
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
   honestly arrived at. The grader will compare it with theirs.
 
@@ -502,7 +515,7 @@ what to submit.
 | **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its baseline volume matches the check value (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the outline and the number of points exposed as parameters (2)<br>• A description of the model a reader could repeat from (2) | /10 |
 | **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title, with the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in a clear color scale with a legend in meters (2)<br>• The outline over a hillshade or imagery (1)<br>• An inset locating the butte in Idaho (2)<br>• Scale and legibility appropriate to the butte (2) | /10 |
 | **Map 2 — the spline base** (full page, 8.5 × 11)<br>• Title, with the method and the volume in it or in a text box (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• Height above the plain in the same color scale as Map 1, with a legend, plus one class for cells below zero (3)<br>• The outline over a hillshade or imagery (1)<br>• Text box says how far the volume is from Map 1's (1)<br>• Scale and legibility appropriate to the butte (2) | /10 |
-| **Step 9 — two more runs**<br>• One table with the baseline and the two Step 9 runs (the wide outline; the spline base), with the points kept, the outline area, the volume, the tallest cell and the lowest cell, and the numbers match a run with your seed (5)<br>• Which choice moved the volume more, with each run's difference from the baseline in cubic kilometers and as a percentage (2)<br>• What the spline did that IDW cannot, explained from the lowest-cell column and Map 2 (3) | /10 |
+| **Step 9 — two more runs**<br>• One table with the baseline and the two Step 9 runs (your wide outline; the spline base), with the points kept, the outline area, the volume, the tallest cell and the lowest cell; your digits and distance stated, and the numbers match a run at your distance (5)<br>• Which choice moved the volume more, with each run's difference from the baseline in cubic kilometers and as a percentage (2)<br>• What the spline did that IDW cannot, explained from the lowest-cell column and Map 2 (3) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -511,13 +524,20 @@ what to submit.
 > for. Do not take a field name, an expression, a coordinate system, or a number from it —
 > those come from your own data, and the rubric asks you to defend every one. See the
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
+>
+> **What the grader verifies.** The model figure must be a ModelBuilder export; the baseline
+> matches the check values; your wide-outline row matches a run at your distance; the spline row
+> matches a run with the parameters in Step 9. A number that could not have come from a run
+> scores zero for that part of the rubric.
 
 <!-- Week 10 cut (2026-10-28). The instructor is away Week 10 and there is no class, so the lab was cut to
 be done from the page alone: Step 9 went from four dialog runs (250 and 4,000 points, a digitized
 outline, a Spline copy of the model) to two: the reference outline buffered 200 m
 (Butte_Boundary_Wide, IDW) and the Spline copy on the reference outline, so the two maps show two
 bases. The point-count runs, the digitizing, the Con cells-below-the-plain recipe (the lowest-cell
-statistic replaces it) and the metadata deliverable went; the report is 2 pages. Oracle for the runs
+statistic replaces it) and the metadata deliverable went; the report is 2 pages. Third pass the same
+day: the widening is personal, 3 x the last two BYU ID digits (0-297 m); oracle for all 100 values in
+ce414-private/grading-oracles/lab09_personal_lookup.csv from tools/lab09/personal_oracle.py. Oracle for the runs
 (seed 1, as the student's model builds the ring from the new outline):
 ce414-private/sensitivity/lab09_step9_oracle.json, from tools/lab09/step9_oracle.py.
 Restore the four-run Step 9 from git history (a12788c) for a semester with class meetings.

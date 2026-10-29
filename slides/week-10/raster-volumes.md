@@ -174,7 +174,7 @@ Review: [Week 9 Tuesday deck](https://byu-hydroinformatics.github.io/ce414-gis-a
 
 - **The data**: a 10 m DEM of the butte and a reference outline, prepared for you
 - **The model**: random points on the plain → **IDW** → height above the plain → **Zonal Statistics Sum**
-- **Then**: two more runs, a **wider outline** and a **spline base**, and a map of each base
+- **Then**: two more runs, a **wider outline** set by your BYU ID and a **spline base**, and a map of each base
 
 [Lab 9 — Big Southern Butte](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-09/)
 
