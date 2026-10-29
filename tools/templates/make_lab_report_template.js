@@ -536,16 +536,9 @@ const LABS = {
     { h: 'Requirements and Approach',
       hint: 'Rubric: the requirements of the project and your approach to solving it, in your own words (2 points). Two or three paragraphs. Say what you set out to measure and how you went about it — not a retelling of the step-by-step. If you built the model without the step-by-step instructions, say so here.' },
 
-    { h: 'The DEM and Its Metadata',
-      hint: 'Rubric: the three metadata values for the DEM and what each means for your result (2 points). Confirm them yourself from READ-ME-FIRST.txt, the raster’s properties and the two tiles’ metadata files — do not copy them from Figure A.',
-      table: { caption: 'Table 1. Metadata for the DEM.',
-               head: ['Metadata value', 'What you found', 'What it means for your result'],
-               rows: [['Publication date and source dates', '', ''], ['Vertical datum and units', '', ''], ['Cell size', '', '']],
-               widths: [2600, 2400, 4360] } },
-
     { h: 'The Model',
       hint: 'Rubric: a description a reader could repeat from — each tool, its settings, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
-      table: { caption: 'Table 2. Model description — one row per tool.',
+      table: { caption: 'Table 1. Model description — one row per tool.',
                head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
                rows: [['Project Raster', '', '', '', ''], ['Buffer', '', '', '', ''], ['Create Random Points', '', '', '', ''],
                       ['Extract Values to Points', '', '', '', ''], ['Erase', '', '', '', ''], ['IDW', '', '', '', ''],
@@ -562,21 +555,21 @@ const LABS = {
 
     { h: 'Check Values',
       hint: 'Rubric: your check values from Steps 4 to 8 (2 points), and the model’s baseline volume matching the check value (part of the 4 points for a working model). Use the random seed of Step 0.',
-      table: { caption: 'Table 3. Baseline check values (IDW, 1,000 points, seed 1, reference outline).',
+      table: { caption: 'Table 2. Baseline check values (IDW, 1,000 points, seed 1, reference outline).',
                head: ['Points kept after Erase', 'Tallest cell (m)', 'Mean height (m)', 'Volume (km³)'],
                rows: [['', '', '', '']],
                widths: [2340, 2340, 2340, 2340] } },
 
-    { h: 'Testing the Assumptions', pageBreakBefore: true,
-      hint: 'Rubric: one table with the baseline and the four Step 9 runs, with the points kept, the outline area, the volume, the tallest cell and the cells below the plain (4 points). Step 9 says where to read each value.',
-      table: { caption: 'Table 4. Sensitivity — the baseline and the four Step 9 runs.',
-               head: ['Run', 'What changed', 'Points kept', 'Outline area (km²)', 'Volume (km³)', 'Tallest cell (m)', 'Cells below the plain'],
-               rows: [['Baseline', 'Nothing', '', '', '', '', ''], ['250 points', '', '', '', '', '', ''], ['4,000 points', '', '', '', '', '', ''],
-                      ['Your own outline', '', '', '', '', '', ''], ['Spline', '', '', '', '', '', '']],
+    { h: 'Two More Runs', pageBreakBefore: true,
+      hint: 'Rubric: one table with the baseline and the two Step 9 runs (your wide outline; the spline base), with the points kept, the outline area, the volume, the tallest cell and the lowest cell; your digits and distance stated, and the numbers match a run at your distance (5 points). Step 9 says where to read each value. Fill in your digits and distance in the caption under the table.',
+      table: { caption: 'Table 3. The baseline and the two Step 9 runs. My BYU ID ends in __ , so my outline is widened by 3 × __ = ____ m.',
+               head: ['Run', 'What changed', 'Points kept', 'Outline area (km²)', 'Volume (km³)', 'Tallest cell (m)', 'Lowest cell (m)'],
+               rows: [['Baseline', 'Nothing', '', '', '', '', ''], ['Wide outline (+____ m, mine)', '', '', '', '', '', ''],
+                      ['Spline base', '', '', '', '', '', '']],
                widths: [1250, 1600, 1100, 1350, 1250, 1300, 1510] },
       questions: [
-        'Which choice moves the volume most, and which least? Rank them with your numbers. (3 points)',
-        'What did the spline do that IDW cannot? Map its cells below the plain and explain them with what you learned about the methods in Week 8. (3 points)',
+        'Which choice moved the volume more, the outline or the method? Give each run’s difference from the baseline in cubic kilometers and as a percentage. (2 points)',
+        'What did the spline do that IDW cannot? Your lowest-cell column and Map 2 show it; explain it with what you learned about the two methods in Week 9 and Lab 8, and say which base you would trust for the volume, and why. (3 points here, 2 in the write-up)',
       ] },
 
     { h: 'What the Volume Measures',
@@ -587,8 +580,8 @@ const LABS = {
       figures: [
         { caption: 'Map 1. Baseline — height above the plain, IDW, reference outline.', pageBreakAfter: true,
           hint: 'Must carry: title with the volume in it or in a text box; neat line, north arrow and scale bar; a text box with author, date, map projection, and the DEM’s source and date; height above the plain in a clear color scale with a legend in meters; the outline over a hillshade or imagery; an inset locating the butte in Idaho; scale and legibility appropriate to the butte.' },
-        { caption: 'Map 2. Scenario — your own outline or the spline, from Step 9.',
-          hint: 'Everything Map 1 needs except the inset, with the same color scale, plus: the title and text box say what changed from Map 1 and by how much.' },
+        { caption: 'Map 2. The spline base from Step 9, same color scale as Map 1.',
+          hint: 'Everything Map 1 needs except the inset, in the same color scale as Map 1 plus one class of its own for cells below zero, where the spline plain rose above the ground. The title and text box say which method made the base, the volume, and how far it is from Map 1’s.' },
       ] },
 
     { h: 'References', pageBreakBefore: true,
@@ -711,13 +704,13 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab08.atbx, in your project folder) with the report as well: the grader opens it and runs it at your IDW power.' },
         { caption: 'Figure 2. The model’s tool dialog, with the sample points, the IDW power and the semivariogram exposed.', size: 'medium',
           hint: 'Rubric: a screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2 points).' },
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 3 to 7 (2 points), and the three RMSEs matching the check values (part of the 4 points for a working model). These come from the course’s Sample_Points_2500, not your own points.',
+      hint: 'Rubric: your check values from Steps 3 to 7 (2 points), and the three RMSEs matching the check values (part of the 4 points for a working model). These come from your Step 7 run on the course’s Sample_Points_2500.',
       table: { caption: 'Table 3. Check values on Sample_Points_2500, default parameters.',
                head: ['Value', 'Thiessen', 'IDW', 'Kriging'],
                rows: [['Surface minimum and maximum (m)', '', '', ''],
@@ -741,17 +734,17 @@ const LABS = {
                       ['5 (my power)', 'Sample_Points_2500, ____, Spherical', '', '', '']],
                widths: [1700, 3060, 1540, 1500, 1560] },
       questions: [
-        'Which method wins, and does the ranking survive? Rank the methods at 250, 2,500 and 10,000 points, with your numbers. (3 points)',
-        'Which parameter mattered, and which barely did? Compare the IDW powers (1, 2, 3 and yours) and the semivariogram model with the number of points. (3 points)',
+        'Which method wins, and does the ranking survive? Rank the methods at 250, 2,500 and 10,000 points, with your numbers. Does the winner change? How much does going from 250 to 10,000 points buy each method? (3 points)',
+        'Which parameter mattered, and which barely did? Compare what the IDW power (powers 1, 2, 3 and yours) and the semivariogram model did with what the number of points did. Before you explain the Gaussian run, look at its Error_Kriging map: where are its largest positive errors, the places the surface came out too low? (3 points)',
       ] },
 
     { h: 'Maps', pageBreakBefore: true,
       hint: 'Both maps are full sheets; landscape is easiest. Use the same elevation scale and the same error scale and breaks on both, so a reader can compare them.',
       figures: [
-        { caption: 'Map 1. Baseline comparison sheet at my seed — the true DEM, three surfaces and three error maps.', size: 'landscape', pageBreakAfter: true,
-          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, the DEM’s source and date, and your seed; the true DEM with your sample points and the three surfaces on one elevation scale with a legend; the three error maps on one diverging scale with the same breaks, with a legend; every panel labeled with method, parameters and RMSE.' },
+        { caption: 'Map 1. Baseline comparison sheet — the true DEM, three surfaces and three error maps.', size: 'landscape', pageBreakAfter: true,
+          hint: 'Must carry: title, neat line, north arrow and scale bar; a text box with author, date, map projection, and the DEM’s source and date; the true DEM with the sample points and the three surfaces on one elevation scale with a legend; the three error maps on one diverging scale with the same breaks, with a legend; every panel labeled with method, parameters and RMSE; a layout a reader can compare at a glance.' },
         { caption: 'Map 2. One Step 8 scenario — its three error maps on Map 1’s error scale.', size: 'landscape',
-          hint: 'Must carry: the scenario’s three error maps on Map 1’s error scale with a legend (the true DEM and surfaces are optional); every panel labeled with method, parameters and RMSE; title and text box saying what changed from Map 1 and by how much; plus the title, neat line, north arrow, scale bar and text box items of Map 1.' },
+          hint: 'Must carry: the scenario’s three error maps on Map 1’s error scale with a legend (the true DEM and surfaces are optional); every panel labeled with method, parameters and RMSE; title and text box saying what changed from Map 1 and by how much; plus the title, neat line, north arrow, scale bar and text box items of Map 1, and a legible layout.' },
       ] },
 
     { h: 'References', pageBreakBefore: true,
