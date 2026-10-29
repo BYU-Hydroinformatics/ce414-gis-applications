@@ -1,6 +1,8 @@
 # ArcGIS Tips, Tricks, and Important Reminders
 
 Read this before Lab 1, and come back to it whenever a tool "works" but the answer looks wrong.
+Fixes for specific problems, such as basemap credits covering a small map, are on
+[Solutions to Common Problems in ArcGIS Pro](arcgis-problems.md).
 
 Everything on this page was checked in **ArcGIS Pro 3.7** during a full run of Lab 1. Where a
 setting has moved or been renamed since older versions of these handouts, the current wording is

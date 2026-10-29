@@ -619,6 +619,12 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 **Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
 n41w112 (May 2026). Study area: drawn for CE 414.
 
+> [!TIP]
+> **Credits covering your panels?** The service credits ArcGIS Pro draws in the corner of each map
+> frame can hide much of a small panel. To move them off the frames, or replace them with the
+> credit line above, see
+> [Basemap credits cover a small map frame](../../arcgis-problems.md#basemap-credits){ target="_blank" }.
+
 ## References
 
 Bolstad, P. *GIS Fundamentals: A First Text on Geographic Information Systems*. Eider Press.

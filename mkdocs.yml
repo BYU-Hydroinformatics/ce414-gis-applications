@@ -72,6 +72,7 @@ nav:
   - Course Info:
       - Overview: index.md
       - ArcGIS Tips and Reminders: arcgis-tips.md
+      - Solutions to Common Problems in ArcGIS Pro: arcgis-problems.md
       - Grading: policies/grading.md
       - Midterm 1 Study Guide: study-guides/midterm-1.md
       - Midterm 2 Study Guide: study-guides/midterm-2.md
