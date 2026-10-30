@@ -27,6 +27,11 @@ Always set the unit box yourself. There is no plain "Miles" option in ArcGIS Pro
 **Figure 2.** Open the unit list and choose **Statute Miles**. It sits below the metric units and
 International Nautical Miles.
 
+![Two map panels over imagery. Left, titled 2 Statute Miles, the zone you meant: a yellow circle about four miles across centered on a Walmart in Orem, covering Orem Park, Lakeview and Lakeridge. Right, titled 2 Meters, the red circle, 30 m view: zoomed in to 30 m across the same store's roof, a small pink circle 4 m across around the store point.](images/wrong-defaults-buffer-2m-vs-2mi.jpg)
+
+**Figure 2a.** The same store buffered by 2 Statute Miles (left) and 2 Meters (right). The 2 m
+buffer covers 12.6 m²; the 2-mile one covers 12.57 square miles.
+
 ## 2. Add Field defaults to Long (32-bit integer)
 
 If you are creating a field that will hold a calculated value with a decimal part — a density, a
@@ -80,6 +85,11 @@ set **Dissolve Type** to *Dissolve all output features into a single feature*.
 **Figure 8.** Buffer with both defaults fixed: **Statute Miles** and **Dissolve all output features
 into a single feature**.
 
+![Two map panels over imagery of Provo. Left, titled No Dissolve, 146 overlapping polygons: yellow road buffers drawn as chains of overlapping round-ended segments. Right, titled Dissolve all, one feature: the same buffers merged into one smooth yellow zone.](images/wrong-defaults-buffer-dissolve.jpg)
+
+**Figure 8a.** 250 m buffers on the 146 major-road segments in central Provo: No Dissolve (left)
+gives 146 overlapping polygons, Dissolve all (right) gives one.
+
 ## 5. Mosaic To New Raster defaults to 8 bit unsigned {#mosaic-pixel-type}
 
 **Pixel Type** opens at *8 bit unsigned*, which holds only whole numbers from 0 to 255. Every
@@ -114,6 +124,11 @@ channel gave "basins" of 1 to 10 cells at a snap distance of 0, and the whole 25
 ![The same Snap Pour Point tool with Snap distance 50 outlined in red.](images/wrong-defaults-snap-50.png)
 
 **Figure 12.** A snap distance of 50 m, in the units of the accumulation raster.
+
+![Two map panels over imagery at the mouth of Rock Canyon. Left, titled Snap distance 0, a basin of one cell: a single red 10 m square beside the blue outlet point, among trees. Right, titled Snap distance 50 m, the whole canyon: a large yellow-outlined basin running east from the same point up Rock Canyon to the ridgeline.](images/wrong-defaults-snap-tiny-basin.jpg)
+
+**Figure 12a.** One outlet point 30 m north of the Rock Canyon channel. At a snap distance of 0 its
+"watershed" is one 10 m cell; at 50 m it snaps to the channel and the basin is 25.2 km².
 
 ## 7. Raster to Polygon leaves "Create multipart features" off
 

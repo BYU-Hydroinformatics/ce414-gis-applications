@@ -290,3 +290,32 @@ Checks settled:
 
 Moved to Session B: 1.x workspace, 2.5–2.8, 3.x, 4.1c/4.4b/4.6b map shots, 5.x, 6.3–6.5 and 6.7,
 8.1/8.2 Contents before/after, 8.9, 9.x, 10.2/10.3/10.5, 11.7, 12.x credits, 13.1–13.3, 13.6.
+
+## Session B results (October 30, 2026, afternoon)
+
+34 more figures (85 in `docs/arcgis-tips/images/`). Dialog and pane grabs are cut by
+`tips_figures.py`; the three map figures come from `tips_maps.py` (arcpy layout exports of real
+data, on a copy `TipsMaps.aprx`); the credits layouts from `tips_export_layout.py`. Pages updated:
+workspace (6), point-feature-class (8, one per step), map-frame-credits (4), exporting-deliverables
+(6, Lab 7's History capture reused), check-your-output (3), wrong-answer-defaults (+3 maps:
+2a, 8a, 12a), attribute-expressions (+1), housekeeping (1). Every "Figure placeholder:" and
+"[To do: confirm ...]" on the tips pages is gone.
+
+Checks settled:
+
+- **Map-frame credits, all three to-dos:** a Service Layer Credits element clears the credits from
+  all six frames; deleting it brings them back in all six; unchecking it in Contents hides it and
+  the frames stay clear in PNG and PDF (pdftotext finds no credit text). Notes in an HTML comment.
+- **Spaces in paths:** Slope and Buffer wrote to `D:\John Smith\Lab 01\...` without error in
+  ArcGIS Pro 3.7.0. The rule stays; the "raster tools fail" claim was softened.
+- **New Project:** the Location box offers recent folders and ignores typing (page was right).
+- **Create Feature Class:** type opens at Polygon, Z Values checked, new field Data Type Long.
+- **Select with `NAME = 'Utah'`:** validation says "valid, but no records were returned"; the run
+  "completed with warnings" (WARNING 000117, empty output).
+- **Export Layout** is an unlabeled icon on the Share tab at 175 %; "Output as image" is the
+  setting that rasterizes a PDF.
+- **Snap Pour Point:** an outlet 30 m north of the channel gives a 1-cell basin at 0 m, 25.2 km² at 50 m.
+
+Not done: a capture of a PDF reader with text selected (13.3) — no reader app under desktop
+control; the page states the check in words instead. 8.1/8.2 (Contents before/after a dialog run)
+were dropped: the gdb listing is in `caps\gdb-after-mb-run-raw.png` if wanted.

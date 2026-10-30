@@ -151,6 +151,88 @@ FIGS = {
         boxes=[(580, 270, 1062, 314)]),
     "export-graphic-svg.png": dict(
         src="mb-export-svg-raw.png", crop=(0, 465, 893, 613), boxes=[(521, 478, 870, 520)]),
+
+    # Session B (2026-10-30, afternoon). workspace.md
+    "workspace-folders.png": dict(
+        src="explorer-smith-full.png", crop=(300, 115, 1600, 760), boxes=[(690, 205, 1200, 255)]),
+    "workspace-new-backstage.png": dict(
+        src="new-project-backstage-full.png", crop=(0, 0, 1900, 920),
+        boxes=[(395, 300, 525, 480)]),
+    "workspace-new-project-default.png": dict(
+        src="new-project-default-raw.png", crop=(0, 0, 910, 478),
+        boxes=[(40, 200, 830, 282), (40, 300, 425, 332)]),
+    "workspace-browse-name.png": dict(
+        src="new-project-browse-full.png", crop=(200, 115, 1090, 710),
+        boxes=[(530, 595, 715, 690)]),
+    "workspace-new-project-checked.png": dict(
+        src="new-project-checked-raw.png", crop=(0, 0, 910, 478),
+        boxes=[(40, 200, 830, 282), (40, 300, 425, 332)]),
+    "workspace-new-project-fixed.png": dict(
+        src="new-project-fixed-raw.png", crop=(0, 0, 910, 478), boxes=[(40, 300, 425, 332)]),
+    # housekeeping.md
+    "housekeeping-shapefile-parts.png": dict(
+        src="explorer-shapefile-full.png", crop=(590, 295, 1590, 960), boxes=[]),
+    # point-feature-class.md
+    "points-new-fc-menu.png": dict(
+        src="points-new-fc-menu-full.png", crop=(930, 0, 1840, 980),
+        boxes=[(950, 10, 1470, 50), (1478, 64, 1832, 100)]),
+    "points-define.png": dict(
+        src="points-page1-raw.png", crop=(0, 0, 812, 800), boxes=[(54, 400, 757, 440)]),
+    "points-fields-long.png": dict(
+        src="points-fields-long-raw.png", crop=(0, 0, 812, 560), boxes=[(416, 293, 806, 326)]),
+    "points-fields-type-list.png": dict(
+        src="points-fields-type-list-full.png", crop=(1100, 0, 1912, 720),
+        boxes=[(1525, 490, 1855, 522)]),
+    "points-fields-text.png": dict(
+        src="points-fields-text-raw.png", crop=(0, 0, 812, 560), boxes=[(416, 293, 806, 326)]),
+    "points-crs.png": dict(
+        src="points-crs-raw.png", crop=(0, 0, 812, 640), boxes=[(30, 215, 700, 255)]),
+    "points-edit-ribbon.png": dict(
+        src="points-edit-ribbon-full.png", crop=(0, 85, 1000, 300),
+        boxes=[(845, 135, 960, 180), (200, 140, 275, 240)]),
+    "points-placed.png": dict(
+        src="points-placed-full.png", crop=(0, 0, 1944, 980),
+        boxes=[(1382, 640, 1641, 680), (200, 145, 275, 240)]),
+    # check-your-output.md
+    "check-output-select-warning.png": dict(
+        src="select-zero-completed-full.png", crop=(1100, 0, 1912, 1000),
+        boxes=[(1135, 700, 1880, 735), (1105, 895, 1905, 960)]),
+    "check-output-warning-details.png": dict(
+        src="select-zero-details-full.png", crop=(575, 239, 1343, 757),
+        boxes=[(597, 433, 1194, 458)]),
+    "check-output-empty-table.png": dict(
+        src="select-zero-table-full.png", crop=(590, 660, 1925, 1000),
+        boxes=[(799, 948, 950, 976)]),
+    # attribute-expressions.md
+    "expressions-field-type-text.png": dict(
+        src="fields-cartocode-full.png", crop=(590, 320, 1925, 990),
+        boxes=[(905, 668, 1300, 700)]),
+    # map-frame-credits.md
+    "credits-dynamic-text-menu.png": dict(
+        src="credits-dynamic-text-menu-full.png", crop=(975, 100, 1900, 600),
+        boxes=[(1275, 362, 1569, 454)]),
+    "credits-contents-unchecked.png": dict(
+        src="credits-contents-unchecked-full.png", crop=(15, 320, 585, 700),
+        boxes=[(76, 607, 551, 637)]),
+    # exporting-deliverables.md
+    "export-layout-button.png": dict(
+        src="share-export-layout-tip-full.png", crop=(0, 100, 1330, 385),
+        boxes=[(921, 170, 994, 213)]),
+    "export-layout-pane.png": dict(
+        src="export-layout-pane-raw.png", crop=(0, 0, 812, 940),
+        boxes=[(545, 252, 755, 306), (28, 608, 225, 640)]),
+    "export-history-button.png": dict(
+        src="analysis-history-tip-full.png", crop=(0, 0, 800, 620), boxes=[(18, 100, 122, 235)]),
+}
+
+# Layout exports and arcpy map renders (tips_maps.py, tips_export_layout.py): copied with a
+# downsample only, no callouts. Source paths are relative to RAW.
+COPIES = {
+    "credits-before.jpg": ("credits-before-export.png", 1200),
+    "credits-after.jpg": ("credits-after-export.png", 1200),
+    "wrong-defaults-buffer-2m-vs-2mi.jpg": ("maps/buffer-2m-vs-2mi.jpg", 1500),
+    "wrong-defaults-buffer-dissolve.jpg": ("maps/buffer-dissolve.jpg", 1500),
+    "wrong-defaults-snap-tiny-basin.jpg": ("maps/snap-tiny-basin.jpg", 1500),
 }
 
 # Side by side: the same Select dialog before and after the SQL Editor is switched on.
@@ -240,6 +322,13 @@ def main():
     for name, parts in PAIRS.items():
         if not only or name in only:
             print(name, build_pair(name, parts))
+    for name, (src, width) in COPIES.items():
+        if not only or name in only:
+            im = Image.open(os.path.join(RAW, src)).convert("RGB")
+            if im.width > width:
+                im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+            im.save(os.path.join(OUT, name), quality=85, optimize=True)
+            print(name, im.size)
 
 
 if __name__ == "__main__":
