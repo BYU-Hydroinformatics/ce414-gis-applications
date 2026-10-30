@@ -16,7 +16,8 @@ for p in paths[:np.value]:
     g=GET(); g.hdr.type=-3; g.hdr.size=ctypes.sizeof(GET); g.hdr.adapterId=p.src.adapterId; g.hdr.id=p.src.id
     print("get rc",u.DisplayConfigGetDeviceInfo(ctypes.byref(g)),"min/cur/max rel",g.minRel,g.curRel,g.maxRel)
     rec=-g.minRel  # index of recommended scale
-    print("recommended",SCALES[rec],"current",SCALES[rec+g.curRel],"max",SCALES[rec+g.maxRel])
+    cur=rec+g.curRel  # curRel can come back as garbage (seen 2026-10-30); do not index with it
+    print("recommended",SCALES[rec],"current",SCALES[cur] if 0<=cur<len(SCALES) else "unknown","max",SCALES[rec+g.maxRel])
     if len(sys.argv)>1:
         target=int(sys.argv[1]); rel=SCALES.index(target)-rec
         s=SET(); s.hdr.type=-4; s.hdr.size=ctypes.sizeof(SET); s.hdr.adapterId=p.src.adapterId; s.hdr.id=p.src.id; s.scaleRel=rel

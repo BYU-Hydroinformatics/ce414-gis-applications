@@ -25,7 +25,13 @@ of the canvas first, so that nothing is selected and the export has no selection
 Use the **Export** menu, not the button's main face: clicking the main part of the button sends the
 model to the Python window instead.
 
-*Figure placeholder: ModelBuilder's Export menu open with Export To Graphic highlighted.*
+![The ModelBuilder tab's Export menu open: Export To Python File (Shift+F), Send To Python Window (Shift+W), and Export To Graphic (Shift+G), the last highlighted and outlined in red.](images/export-modelbuilder-menu.png)
+
+**Figure 1.** Click the small arrow on **Export**, then **Export To Graphic**.
+
+![The bottom of the Export Image dialog: Name NDVI.svg, and the file type box, outlined in red, reading Scalable Vector Graphic (SVG), with Save and Cancel buttons.](images/export-graphic-svg.png)
+
+**Figure 2.** The save dialog opens with SVG chosen. Keep it.
 
 ## Evidence that the model ran: Geoprocessing History
 
