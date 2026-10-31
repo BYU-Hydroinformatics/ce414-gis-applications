@@ -319,3 +319,27 @@ Checks settled:
 Not done: a capture of a PDF reader with text selected (13.3) — no reader app under desktop
 control; the page states the check in words instead. 8.1/8.2 (Contents before/after a dialog run)
 were dropped: the gdb listing is in `caps\gdb-after-mb-run-raw.png` if wanted.
+
+## Raster symbology page (October 30, 2026, evening)
+
+New page `docs/arcgis-tips/raster-symbology.md` ("Make your raster symbology look good"), added to
+the ArcGIS Tips menu and index, linked from Lab 8 Step 6 and Lab 5's flow-accumulation check.
+22 figures: 8 example maps rendered by ArcGIS Pro from course data with
+`tips_raster_maps.py` (Rock Canyon DEM, accumulation, flow direction; Lab 8 seed-1 surfaces and
+errors from C:\Ames\Lab09\Check.gdb), and 14 pane captures cut by `tips_figures.py`.
+
+Checked in ArcGIS Pro 3.7.0 while capturing:
+
+- Stretch types: Minimum Maximum, Percent Clip (default, 0.5/0.5), Standard Deviation, Histogram
+  Equalize, Custom. Statistics list: **DRA** and **Dataset** only (no "Custom" statistics; fixed
+  ends come from **Edit min/max values**, which appears with Minimum Maximum). The Label boxes do
+  not follow edited values.
+- Raster Layer tab ▸ Effects: Transparency and Layer Blend (Multiply under Darkening modes).
+  Rendering group: Resampling Type (Nearest Neighbor, Bilinear, Cubic, Majority).
+- Classify color patch: click to select the row, click again for the palette; **No color** at top.
+- Symbology pane menu: Import from layer file, **Import from layer**, Export as raster function
+  template, Manage Symbology. Layer context menu: Copy, **Paste Properties** (Ctrl+Shift+V).
+- Mask tab: Stretch has **Display background value** + value + color + Nodata; Classify has Nodata
+  only.
+- Legend items have their own check boxes in the layout's Contents pane.
+- Hillshade (Spatial Analyst) defaults: Azimuth 315, Altitude 45, Model shadows off, Z factor 1.

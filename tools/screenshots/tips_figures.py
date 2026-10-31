@@ -223,11 +223,62 @@ FIGS = {
         boxes=[(545, 252, 755, 306), (28, 608, 225, 640)]),
     "export-history-button.png": dict(
         src="analysis-history-tip-full.png", crop=(0, 0, 800, 620), boxes=[(18, 100, 122, 235)]),
+
+    # raster-symbology.md (2026-10-30, evening; TipsRaster.aprx from tips_raster_maps.py)
+    "symbology-stretch-pane.png": dict(
+        src="sym-dem-stretch-raw.png", crop=(0, 0, 812, 990),
+        boxes=[(14, 285, 797, 322), (14, 470, 797, 508)]),
+    "symbology-stretch-types.png": dict(
+        src="sym-stretch-type-list-full.png", crop=(1100, 430, 1912, 1010),
+        boxes=[(1282, 615, 1830, 690)]),
+    "symbology-statistics-list.png": dict(
+        src="sym-statistics-list-full.png", crop=(1100, 400, 1912, 745),
+        boxes=[(1285, 518, 1860, 625)]),
+    "symbology-edit-min-max.png": dict(
+        src="sym-idw-custom-raw.png", crop=(0, 0, 812, 660),
+        boxes=[(22, 365, 250, 400), (170, 410, 797, 495)]),
+    "symbology-layer-blend.png": dict(
+        src="sym-blend-list-full.png", crop=(500, 100, 1250, 1010),
+        boxes=[(715, 170, 880, 210), (719, 343, 992, 377)]),
+    "symbology-effects-group.png": dict(
+        src="sym-effects-ribbon-full.png", crop=(0, 40, 1250, 300),
+        boxes=[(550, 138, 900, 222)]),
+    "symbology-classify-pane.png": dict(
+        src="sym-classify-errors-raw.png", crop=(0, 0, 812, 990),
+        boxes=[(155, 335, 455, 375), (170, 650, 752, 975)]),
+    "symbology-no-color.png": dict(
+        src="sym-no-color-full.png", crop=(1100, 0, 1912, 980),
+        boxes=[(1125, 25, 1600, 58)]),
+    "symbology-unique-values.png": dict(
+        src="sym-unique-fdir-raw.png", crop=(0, 0, 812, 990), boxes=[(97, 640, 484, 925)]),
+    "symbology-resampling-type.png": dict(
+        src="sym-resampling-type-full.png", crop=(200, 95, 850, 440),
+        boxes=[(225, 203, 835, 280)]),
+    "symbology-import-from-layer.png": dict(
+        src="sym-import-from-layer-full.png", crop=(1100, 40, 1912, 290),
+        boxes=[(1495, 162, 1900, 210)]),
+    "symbology-mask-tab.png": dict(
+        src="sym-mask-tab-raw.png", crop=(0, 690, 812, 990),
+        boxes=[(20, 780, 295, 810), (125, 815, 515, 862)]),
+    "symbology-legend-items.png": dict(
+        src="sym-legend-items-full.png", crop=(10, 520, 560, 760),
+        boxes=[(108, 650, 270, 680)]),
+    "symbology-hillshade-tool.png": dict(
+        src="sym-hillshade-tool-full.png", crop=(1360, 320, 1932, 990),
+        boxes=[(1380, 670, 1925, 770)]),
 }
 
 # Layout exports and arcpy map renders (tips_maps.py, tips_export_layout.py): copied with a
 # downsample only, no callouts. Source paths are relative to RAW.
 COPIES = {
+    "raster-terrain.jpg": ("raster/raster-terrain.jpg", 1500),
+    "raster-hillshade-ways.jpg": ("raster/raster-hillshade-ways.jpg", 1500),
+    "raster-stretch-types.jpg": ("raster/raster-stretch-types.jpg", 1500),
+    "raster-stats-view.jpg": ("raster/raster-stats-view.jpg", 1500),
+    "raster-lab8-errors.jpg": ("raster/raster-lab8-errors.jpg", 1500),
+    "raster-lab8-surfaces.jpg": ("raster/raster-lab8-surfaces.jpg", 1500),
+    "raster-flow-accumulation.jpg": ("raster/raster-flow-accumulation.jpg", 1500),
+    "raster-flow-direction.jpg": ("raster/raster-flow-direction.jpg", 1500),
     "credits-before.jpg": ("credits-before-export.png", 1200),
     "credits-after.jpg": ("credits-after-export.png", 1200),
     "wrong-defaults-buffer-2m-vs-2mi.jpg": ("maps/buffer-2m-vs-2mi.jpg", 1500),

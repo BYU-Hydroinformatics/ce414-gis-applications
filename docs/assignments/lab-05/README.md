@@ -304,7 +304,9 @@ Add **Flow Accumulation** with `Flow_Direction` as the **Input flow direction ra
 > [!TIP]
 > **Check the result:** `Flow_Accumulation` runs from **0** (ridge tops and every other cell nothing
 > drains into) to **430,024**, at the DEM's west edge on the Provo bench, where several canyons'
-> water has joined. Symbolize it with a strong stretch and the streams appear (Figure 5b). A maximum
+> water has joined. Symbolize it with a strong stretch, or in classes by powers of 10 (see
+> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#flow-accumulation){ target="_blank" }),
+> and the streams appear (Figure 5b). A maximum
 > near **246,600** means Flow Direction was run on the unfilled DEM: the pits stop the water before
 > it reaches the edge.
 

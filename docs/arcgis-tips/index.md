@@ -39,6 +39,9 @@ moved or been renamed since older versions of these handouts, the current wordin
   and `%name%` variables.
 - [Projecting a DEM](projecting-dems.md) — why geographic cells are not square, the three Project
   Raster settings to check, and Slope's units.
+- [Make your raster symbology look good](raster-symbology.md) — hillshades, stretched ramps,
+  one scale for maps that must be compared, diverging error maps, flow accumulation and flow
+  direction.
 
 ## Layouts and reports
 

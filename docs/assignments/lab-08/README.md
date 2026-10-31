@@ -417,7 +417,9 @@ The quickest way to the second and third: select the first Raster Calculator, **
 empty canvas, **Ctrl+V**, drag the copy clear, and edit its expression and output. A positive error
 means the surface came out too **low** there; a negative error, too **high**. Give all three the same
 diverging color scheme with the same class breaks (the example maps use −100, −50, −20, −5, 5, 20,
-50, 100 m), so that the same color means the same error on every map.
+50, 100 m), so that the same color means the same error on every map. How to set the breaks, the
+shared elevation scale and a hillshade, step by step:
+[Make your raster symbology look good](../../arcgis-tips/raster-symbology.md){ target="_blank" }.
 
 ![One error branch in the model: True_DEM and Thiessen_Surface into Raster Calculator, which makes Error_Thiessen.](images/lab08-model-step6.png){ style="width: 390px" }
 
