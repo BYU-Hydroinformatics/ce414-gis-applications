@@ -22,8 +22,10 @@ Things to know:
   valid, but no records were returned* (see
   [Check what a tool actually produced](check-your-output.md)).
 - **A coded field may be text even though its values look like numbers.** UGRC's road
-  classification field stores `'1'`, `'2'`, `'3'` as *strings*. `CARTOCODE = 1` fails;
-  `CARTOCODE IN ('1','2','3')` works. Check the field type before you write the expression:
+  classification field `CARTOCODE` stores its codes as *strings*. `CARTOCODE = 1` fails;
+  Lab 1's `CARTOCODE IN ('1','2','3','4','5')` works. (Code `'2'`, separated US highways, has no
+  roads in Utah County; keeping it in makes the expression right for any county.) Check the field
+  type before you write the expression:
   right-click the layer ▸ **Data Design** ▸ **Fields** and read the **Data Type** column.
 
     ![The Fields view of MajorRoads_UtahCounty: rows for OBJECTID_1, Shape, OBJECTID, STATUS, CARTOCODE, FULLNAME, FROMADDR_L, TOADDR_L, FROMADDR_R and TOADDR_R; the CARTOCODE row, outlined in red, shows Data Type Text.](images/expressions-field-type-text.png)
