@@ -555,13 +555,13 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Rubric: your project’s toolbox (.atbx) uploaded with the report as its own file, so the grader can open and run your model (2 points).' },
         { caption: 'Figure 2. The model’s tool dialog, with the outline and the number of points exposed.', size: 'medium',
-          hint: 'Rubric: a screen capture of the tool dialog with the outline and the number of points exposed as parameters (2 points).' },
+          hint: 'Rubric: a screen capture of the tool dialog with the outline and the number of points exposed as parameters (1 point).' },
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 4 to 8 (2 points), and the model’s baseline volume matching the check value (part of the 4 points for a working model). Use the random seed of Step 0.',
+      hint: 'Rubric: your check values from Steps 4 to 8 (2 points), and the model’s baseline volume matching the check value (part of the 3 points for a working model). Use the random seed of Step 0.',
       table: { caption: 'Table 3. Baseline check values (IDW, 1,000 points, seed 1, reference outline).',
                head: ['Points kept after Erase', 'Tallest cell (m)', 'Mean height (m)', 'Volume (km³)'],
                rows: [['', '', '', '']],
@@ -711,13 +711,13 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Rubric: Lab08.atbx uploaded with the report as its own file, so the grader can open and run your model (2 points).' },
         { caption: 'Figure 2. The model’s tool dialog, with the sample points, the IDW power and the semivariogram exposed.', size: 'medium',
-          hint: 'Rubric: a screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (2 points).' },
+          hint: 'Rubric: a screen capture of the tool dialog with the sample points, the IDW power and the semivariogram exposed as parameters (1 point).' },
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 3 to 7 (2 points), and the three RMSEs matching the check values (part of the 4 points for a working model). These come from the course’s Sample_Points_2500, not your own points.',
+      hint: 'Rubric: your check values from Steps 3 to 7 (2 points), and the three RMSEs matching the check values (part of the 3 points for a working model). These come from the course’s Sample_Points_2500, not your own points.',
       table: { caption: 'Table 3. Check values on Sample_Points_2500, default parameters.',
                head: ['Value', 'Thiessen', 'IDW', 'Kriging'],
                rows: [['Surface minimum and maximum (m)', '', '', ''],
