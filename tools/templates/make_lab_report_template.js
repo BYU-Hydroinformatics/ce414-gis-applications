@@ -322,13 +322,13 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab10.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Rubric: Lab10.atbx uploaded with the report as its own file, so the grader can open and run your model (2 points).' },
         { caption: 'Figure 2. The model’s tool dialog, with the two weights and the route exposed.', size: 'medium',
-          hint: 'Rubric: a screen capture of the tool dialog with the two weights and the route exposed as parameters (2 points).' },
+          hint: 'Rubric: a screen capture of the tool dialog with the two weights and the route exposed as parameters (1 point).' },
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 1 to 7 (1 point); they also show the model works (part of its 4 points). These come from the default weights, 1 and 1.',
+      hint: 'Rubric: your check values from Steps 1 to 7 (1 point); they also show the model works (part of its 3 points). These come from the default weights, 1 and 1.',
       table: { caption: 'Table 3. Check values at the default weights.',
                head: ['Check', 'Your value'],
                rows: [['Major_Roads, Major_Lakes, Major_Streams, Existing_Lines (features)', ''], ['Cost_Surface minimum and maximum', ''],
@@ -402,13 +402,13 @@ const LABS = {
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
         { caption: 'Figure 1. The complete model, exported from ModelBuilder with Export ▸ Export To Graphic.', size: 'landscape',
-          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Upload your project’s toolbox (Lab11.atbx) with the report as well.' },
+          hint: 'Rubric: a full-page model figure exported from ModelBuilder, all tools and datasets readable (2 points). Export it; do not screen-capture it. Rubric: Lab11.atbx uploaded with the report as its own file, so the grader can open and run your model (2 points).' },
         { caption: 'Figure 2. The model’s tool dialog, with the cutoff and the buffer distance exposed.', size: 'medium',
-          hint: 'Rubric: a screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters (2 points).' },
+          hint: 'Rubric: a screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters (1 point).' },
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 0 to 6 (1 point); they also show the model works (part of its 4 points). These come from the defaults, 4 minutes and 3.75 km.',
+      hint: 'Rubric: your check values from Steps 0 to 6 (1 point); they also show the model works (part of its 3 points). These come from the defaults, 4 minutes and 3.75 km.',
       table: { caption: 'Table 3. Check values at the defaults.',
                head: ['Check', 'Your value'],
                rows: [['Roads, junctions, stations, blocks (features)', ''], ['One-way segments', ''], ['Served area at 4 minutes (km²)', ''],

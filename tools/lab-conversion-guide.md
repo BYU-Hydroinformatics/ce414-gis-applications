@@ -227,7 +227,16 @@ bullet in parentheses so that the bullets sum to ten:
 | Sensitivity | the table (4); each of the three questions (2) |
 
 Then `| **Total** | **/50** |`, and after it the optional `| **Extra credit — ...** | up to +5 |`
-row, itemized the same way. Open the section with the sentence "Fifty points in five parts of ten
+row, itemized the same way.
+
+**Every file besides the report gets its own two-point bullet.** If the Deliverables ask for an
+upload other than the report (the toolbox `LabNN.atbx`, separate map PDFs), give it a rubric
+bullet of its own worth **2**, in the part it supports, e.g. ModelBuilder: runs and matches the
+check values (3); model figure (2); dialog capture (1); description (2); `LabNN.atbx` uploaded (2).
+A missing upload makes the item it proves hard to grade, so the student should see what it costs.
+Never fold an upload into another bullet.
+
+Open the section with the sentence "Fifty points in five parts of ten
 ... The bullets say what each part is worth, so you know exactly what to submit." A script
 should confirm the sums before the page is promoted (see section 7).
 
