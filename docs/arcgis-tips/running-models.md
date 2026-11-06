@@ -15,6 +15,10 @@ Ways to keep what you need:
 
 - **Make it a parameter.** Right-click the oval ▸ **Parameter**. Parameters are never deleted. This
   is the dependable route, and it is why the labs make their key outputs parameters.
+- **Clear its Intermediate Data flag.** Right-click the oval: **Intermediate Data** is checked for
+  every dataset a tool creates. Click it to clear the check, then **save the model, close its tab,
+  and reopen the tool from the Catalog pane** before the dialog run. Tested in ArcGIS Pro 3.7: the
+  unflagged dataset survived a dialog run, and the flagged ones beside it were deleted.
 - **Finish anything that needs intermediates first.** Make your checks and your first map from the
   run inside ModelBuilder, before the first dialog run. If you need the layers again, run the model
   inside ModelBuilder once more.
@@ -22,17 +26,19 @@ Ways to keep what you need:
   definition query holding the same expression as a Select tool gives you the same features without
   depending on the model's output.
 
+![An oval's right-click menu in ModelBuilder: Open, Add To Display, Intermediate Data (checked, shortcut Ctrl+Shift+I, outlined in red), Parameter (shortcut Ctrl+P, outlined in red), Create Label, Rename, Group, Cut, Copy, Select All. The NDVI_numerator oval sits below the menu.](images/models-oval-menu.png)
+
+**Figure 1.** An oval's right-click menu. **Parameter** keeps the dataset and puts it in the tool
+dialog; clearing **Intermediate Data** keeps it without putting it in the dialog.
+
 > [!WARNING]
 > **Do not click the ✗ Intermediate button** on the ModelBuilder canvas toolbar. It is *Delete
-> Intermediate Data*, and it deletes them immediately. ArcGIS Pro also has a per-dataset
-> **Intermediate Data** flag (select the oval and press `Ctrl+I`), but we could not confirm that it
-> keeps the data through a dialog run. You may have to save the model and reopen the tool before
-> it takes effect. Make the oval a parameter instead. **[To do: confirm whether `Ctrl+I`, then
-> saving the model, closing it and reopening the tool from the Catalog pane, keeps the flagged
-> dataset through a dialog run. One test without reopening the tool did not keep it.]**
+> Intermediate Data*, and it deletes them immediately.
 
-*Figure placeholder: the ModelBuilder canvas toolbar with the ✗ Intermediate button called out and
-labeled "Delete Intermediate Data — do not click".*
+![The ModelBuilder canvas toolbar: Model (save buttons), Run (validate, run, and a red ✗ Intermediate button outlined in red), Insert (Tools, Variable), with a red label underneath reading Delete Intermediate Data — do not click.](images/models-delete-intermediate.png)
+
+**Figure 2.** The ✗ **Intermediate** button on the canvas toolbar deletes data. It does not mark
+anything as intermediate.
 
 ## Close the model's tab, then open the tool
 
@@ -43,8 +49,15 @@ model's tab still open, the tool dialog can show an empty parameter list.
 In the Catalog pane, right-click the model ▸ **Edit** to reopen it in ModelBuilder. **Open** runs it
 as a tool instead.
 
-*Figure placeholder: the Catalog pane with a lab toolbox expanded and a model's right-click menu
-open, Edit and Open both visible.*
+![The Catalog pane with the NDVI model selected (outlined in red) under Lab02.atbx, and its right-click menu open above it: Open and Edit at the top (outlined in red), then Batch, Add To Project Favorites, Add To My Favorites, Add To Analysis Gallery, Add To Model, Share As, Cut, Copy, Copy Path, Delete, View Metadata, Edit Metadata, Help, Properties.](images/models-catalog-edit-open.png)
+
+**Figure 3.** A model's right-click menu in the Catalog pane. **Open** runs it as a tool; **Edit**
+opens it in ModelBuilder. There is no Rename on this menu.
+
+![The NDVI model opened as a tool in the Geoprocessing pane: inputs UtahCounty_Red_B4_SR_x10000.tif and UtahCounty_NIR_B5_SR_x10000.tif, Threshold 0.4, and outputs NDVI_reclass and NDVI_class, each with a yellow warning triangle outlined in red.](images/models-tool-dialog.png)
+
+**Figure 4.** The model as a tool. Only its parameters appear. The yellow triangles mean those
+outputs already exist from an earlier run.
 
 ## Give every run its own output names
 
@@ -65,3 +78,7 @@ labs give check values for this. If yours do not match, a parameter was left at 
 testing.
 
 Leave **Close on completion** unchecked the first time, so you can read the run's messages.
+
+![The run window after a model run in ModelBuilder: NDVI with a green check, Started and Completed times, Elapsed Time 00:00:21, Information, Warning and Error filters, a message log ending with the Raster Calculator step, and the Close on completion check box, unchecked and outlined in red.](images/models-run-dialog.png)
+
+**Figure 5.** The run window, with **Close on completion** unchecked so its messages stay on screen.

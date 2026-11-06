@@ -7,6 +7,23 @@ In ModelBuilder, click **Environments** on the **ModelBuilder** ribbon tab (in t
 and set **Output Coordinate System**. For anywhere in Utah, use **NAD 1983 UTM zone 12N** — search
 for it in the picker; note ArcGIS Pro spells "zone" with a lowercase z. All of Utah falls in UTM zone 12.
 
+![The ModelBuilder ribbon tab: the Model group holds New, Save, Auto Save, Properties, Environments (outlined in red), Export, Report and Open Tool.](images/crs-modelbuilder-environments.png)
+
+**Figure 1.** **Environments** on the ModelBuilder tab, in the *Model* group.
+
+![The model's Environments dialog: Current Workspace and Scratch Workspace Tips.gdb, and under Output Coordinates an empty Output Coordinate System box, outlined in red.](images/crs-environments-empty.png)
+
+**Figure 2.** A new model's Output Coordinate System is empty. Click the globe button to its right.
+
+![The Output Coordinate System picker: NAD 1983 UTM zone 12N typed in the search box (outlined in red), the tree opened to Projected Coordinate System, North America, Zone Series, UTM (NAD 1983), with NAD 1983 UTM zone 12N selected (outlined in red), and Selected Coordinate Systems reading Horizontal NAD 1983 UTM zone 12N.](images/crs-picker-search.png)
+
+**Figure 3.** Type the name in the search box, then check that **Horizontal** at the top reads
+NAD 1983 UTM zone 12N before you click OK.
+
+![The Environments dialog with Output Coordinate System NAD_1983_UTM_Zone_12N, outlined in red.](images/crs-environments-set.png)
+
+**Figure 4.** The environment set. Every tool in the model now writes its output in UTM zone 12N.
+
 Sanity check: after you run a tool, Utah County should come out to about **2,141 square miles**.
 Two ways it goes wrong, and they look different:
 

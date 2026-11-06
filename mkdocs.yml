@@ -106,5 +106,6 @@ nav:
       - Creating a point feature class: arcgis-tips/point-feature-class.md
       - Working with rasters: arcgis-tips/rasters.md
       - Projecting a DEM: arcgis-tips/projecting-dems.md
+      - Make your raster symbology look good: arcgis-tips/raster-symbology.md
       - Basemap credits cover a small map frame: arcgis-tips/map-frame-credits.md
       - Exporting maps and models for your report: arcgis-tips/exporting-deliverables.md

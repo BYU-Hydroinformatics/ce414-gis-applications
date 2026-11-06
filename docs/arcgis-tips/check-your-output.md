@@ -2,6 +2,22 @@
 
 Never move to the next step on the strength of a green check mark.
 
+A tool that selects nothing still "completes". Here is a Select on Utah County with the expression
+`NAME = 'Utah'` (the field holds `UTAH`, in capitals):
+
+![The Select tool in the Geoprocessing pane: Input Features UtahCounty, Output Feature Class UtahCounty_Select, SQL expression NAME = 'Utah', and two messages outlined in red: The SQL expression is valid, but no records were returned, and at the bottom a yellow banner reading Select completed with warnings.](images/check-output-select-warning.png)
+
+**Figure 1.** The run "completed with warnings", in yellow, not red. The line under the expression
+already said no records would be returned.
+
+![The run's details: Started and Completed times, Elapsed Time 3 Seconds, and WARNING 000117: Warning empty output generated, outlined in red.](images/check-output-warning-details.png)
+
+**Figure 2.** **View Details** names the problem: *WARNING 000117: Warning empty output generated.*
+
+![The attribute table of UtahCounty_Select: column headings and no rows, with the footer reading 0 of 0 selected, outlined in red.](images/check-output-empty-table.png)
+
+**Figure 3.** The output exists, has every field, and holds no features. The record count says so.
+
 - **Open the attribute table and read the record count.** Does it make sense? If you selected one
   county and got 29, the expression did not take.
 - **Watch the count across a step.** Intersecting a layer with a county boundary can return *more*
