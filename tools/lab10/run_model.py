@@ -207,7 +207,7 @@ def main():
         r["moved"] = moved(tag)
         ck["sensitivity"][tag] = r
         print(tag, r)
-    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "11"), "w"), indent=1)
+    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "10"), "w"), indent=1)
     json.dump(ck, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
 
 

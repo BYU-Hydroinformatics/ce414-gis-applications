@@ -187,7 +187,7 @@ def main():
         r["pct_outside"] = round(100 * r["population"] / pop, 1)
         r["digits"] = digits; r["cutoff"] = c
         ck["examples"][f"{digits:02d}"] = r
-    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "12"), "w"), indent=1)
+    json.dump(ck.pop("sensitivity"), open(sensitivity_path(HERE, "11"), "w"), indent=1)
     json.dump(ck, open(os.path.join(HERE, "check_values.json"), "w"), indent=1)
     print(json.dumps(ck, indent=1))
 
