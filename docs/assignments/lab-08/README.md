@@ -581,6 +581,11 @@ Make **two** professional map layouts (letter size, landscape is easiest):
    with your name, the date, the map projection, and the DEM's source and date. Say in
    the title and the text box what changed from Map 1 and by how much.
 
+> [!TIP]
+> **One elevation scale for every surface, a hillshade, and a diverging error scale** are covered
+> step by step in
+> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#maps-that-must-be-compared-one-scale-for-all){ target="_blank" }.
+
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your

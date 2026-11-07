@@ -447,6 +447,10 @@ Make **two** professional map layouts:
    plain rose above the ground. Say in the title and text box which method made the base, the
    volume, and how far it is from Map 1's.
 
+> [!TIP]
+> **To put two maps on the same color scale** and shade them with a hillshade, see
+> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#maps-that-must-be-compared-one-scale-for-all){ target="_blank" }.
+
 Write a brief report (2 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your
