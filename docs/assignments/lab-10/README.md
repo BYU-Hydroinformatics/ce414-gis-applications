@@ -244,12 +244,15 @@ without the step-by-step instructions below, say so in your report.
 
 ### Step 0 — Set Up the Project
 
-1. Create a new project named `Lab10` in `D:\Smith\Lab10\` with the **Map** template; if you already
-   made the folder, uncheck **Create a folder for this local project**. ArcGIS Pro makes `Lab10.gdb`
-   and `Lab10.atbx` beside it. The downloaded data stay in their own geodatabase,
+1. Create a new project named `Lab10` with the **Map** template. The **Location** box is a list of
+   recent folders, not a text box: click the folder button beside it, browse to `D:\Smith\Lab10\`,
+   and uncheck **Create a folder for this local project**, since the folder exists. ArcGIS Pro makes
+   `Lab10.gdb` and `Lab10.atbx` beside it. The downloaded data stay in their own geodatabase,
    `lab10-power-line\PowerLineData.gdb`.
 2. Add `Elevation.tif` (if ArcGIS Pro offers to build pyramids or statistics, click **OK**) and, from
-   `PowerLineData.gdb`, `Roads`, `Lakes`, `Streams`, `Cities` and `Power_Lines`. Add an imagery
+   `PowerLineData.gdb`, `Roads`, `Lakes`, `Streams`, `Cities` and `Power_Lines`. If the browser keeps
+   losing the geodatabase, the **Add Data** button's drop-down has **Add Data From Path**, which takes a
+   typed path such as `D:\Smith\Lab10\lab10-power-line\PowerLineData.gdb\Roads`. Add an imagery
    basemap.
 3. Add `Endpoints` too. It holds both substations; the model separates them in Step 1.
 4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
@@ -260,7 +263,7 @@ without the step-by-step instructions below, say so in your report.
     - **Output Coordinate System**: NAD 1983 UTM Zone 12N (the same as every layer in the package)
     - **Extent**: choose `Elevation.tif` from the list of the map's layers
     - **Snap Raster**: `Elevation.tif`
-    - **Cell Size**: `Elevation.tif` (30)
+    - **Cell Size**: **Same as layer Elevation.tif** (30 m)
 
 ![The PowerLineRoute model's Environments dialog: Current Workspace and Scratch Workspace Lab10.gdb; Output Coordinate System shown as its full definition, PROJCRS["NAD_1983_UTM_Zone_12N", ...; Extent with Top 4489350, Left 410340, Right 461910 and Bottom 4425630 in NAD 1983 UTM Zone 12N; Parallel Processing collapsed; under Raster Analysis, Cell Size Elevation.tif, Cell Size Projection Method Convert units, Mask empty, Cell Alignment Default, Snap Raster Elevation.tif.](images/lab10-environments.png)
 
@@ -277,8 +280,9 @@ definition, `PROJCRS["NAD_1983_UTM_Zone_12N", ...`, as here; it is the same coor
 ### Step 1 — Select the Layers
 
 Add six **Select** tools to the model, each from the downloaded layer, with these expressions
-(turn on **SQL Editor** and type them exactly; the check mark under the box should say **The SQL
-expression is valid**):
+(turn on **SQL Editor** and type them exactly; a green check mark appears above the box, beside the
+SQL Editor switch, when the expression is valid, and hovering it reads **The SQL expression is
+valid**):
 
 | Input | Output | Expression |
 | --- | --- | --- |
@@ -290,9 +294,11 @@ expression is valid**):
 | `Endpoints` | `Destination_Point` | `Role = 'Destination'` |
 
 The power-line layer holds both lines and substations; the substations' `LAYER` values begin with
-`SUB-`, and `KV-%` keeps only the lines. The last two split the endpoints into one point each.
-To make the next Select quickly, copy and paste one on the canvas, then change its input,
-expression and output; type the output name **after** validating the expression, which can reset it.
+`SUB-`, and `KV-%` keeps only the lines. The last two split the endpoints into one point each;
+choosing `Endpoints` from the input list a second time puts a second oval, `Endpoints (2)`, on the
+canvas, which is normal. To make the next Select quickly, copy and paste one on the canvas, then
+change its input, expression and output; type the output name **after** validating the expression,
+which can reset it.
 
 ![The Select dialog: Input Features Roads; Output Feature Class Major_Roads; Expression with SQL Editor on, reading DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial'), and a check mark with The SQL expression is valid.](images/lab10-select-roads.png)
 
@@ -306,9 +312,10 @@ expression and output; type the output name **after** validating the expression,
 
 ### Step 2 — Compute Slope
 
-Add **Slope** (Spatial Analyst) with `Elevation.tif` as the input, **Output measurement** **Degree**
-(the default), and output `Slope_Degrees`. The dialog suggests the **Surface Parameters** tool
-instead; Slope is the one this lab uses.
+Add **Slope** with `Elevation.tif` as the input. The Add Tools list offers two: take the **Spatial
+Analyst** one, listed second, not the 3D Analyst one, whose dialog differs from Figure 2. Set
+**Output measurement** to **Degree** (the default) and the output to `Slope_Degrees`. The dialog
+suggests the **Surface Parameters** tool instead; Slope is the one this lab uses.
 
 ![The Slope dialog with a banner suggesting the Surface Parameters tool: Input raster Elevation.tif; Output raster Slope_Degrees; Output measurement Degree; Method Planar; Z factor 1; Target device for analysis GPU then CPU.](images/lab10-slope.png)
 
@@ -330,6 +337,10 @@ Sources** and nothing else: leave **Input Raster or Feature Barriers**, **Input 
 | `Cities` (the downloaded layer) | `City_Distance` |
 | `Existing_Lines` | `Line_Distance` |
 
+Pick the model's own `Major_Roads` and `Existing_Lines` from the input list, not the downloaded
+`Roads` and `Power_Lines`, which the list also offers (sometimes as `Roads:1`); a map layer in that
+slot skips the Select.
+
 With no cost raster, every cell costs 1 per meter, so the "accumulated cost" is simply the
 straight-line distance in meters to the nearest source. One tool does both jobs in this lab: here it
 measures distance, and in Step 7 it accumulates cost.
@@ -345,10 +356,14 @@ measures distance, and in Step 7 it accumulates cost.
 
 ### Step 4 — Score the Factors
 
-Add **Reclassify** four times, one for each table in the Analysis Considerations. For the last row
+Add **Reclassify** (again the **Spatial Analyst** entry, not 3D Analyst) four times, one for each
+table in the Analysis Considerations. For the last row
 of each distance table, end the range at **100000** — larger than any distance in the box.
 The table is empty until the model has run, so type the rows: click a **Start** cell, type, and press
-**Tab** to move to **End** and **New**; ArcGIS Pro adds its own **NODATA** row. To make the next
+**Tab** to move to **End** and **New**; after **New**, Tab leaves the table, so click the next row's
+empty **Start** cell. ArcGIS Pro adds its own **NODATA** row. The **Input raster** list is long, since
+it carries every unused output of the model, such as *Output Back Direction Raster (2)*; the distance
+rasters are far down it. To make the next
 Reclassify, copy one, change its input, and clear the rows with **Remove all remap records**.
 
 | Input raster | Rows (start – end: new value) | Output raster |
@@ -381,9 +396,10 @@ A value exactly on a break goes to the lower range: a cell exactly 1,000 m from 
 
 ### Step 5 — Mark the Rivers
 
-Add **Polyline to Raster** with `Major_Streams` as the **Input Features** and **Value field**
-`IsMajor` — every major stream has `IsMajor` = 1 — and output `River_Cells`. Leave **Cell
-assignment type** at **Maximum length**; the cell size comes from the environment.
+Add **Polyline to Raster** with `Major_Streams` as the **Input Features**. The dialog fills
+**Value field** with `OBJECTID` by itself; change it to `IsMajor` — every major stream has `IsMajor`
+= 1 — and name the output `River_Cells`. Leave **Cell assignment type** at **Maximum length**; the
+cell size comes from the environment.
 
 Any field that holds 1 on every feature works.
 
@@ -393,14 +409,18 @@ Any field that holds 1 on every feature works.
 
 > [!TIP]
 > **Check the result:** `River_Cells` has **9,713** cells, all with the value 1; every other cell is
-> NoData.
+> NoData. Values from 1 to 319 mean the value field stayed `OBJECTID`. Step 6 only asks whether a
+> cell is a river cell, so the cost comes out the same, but fix it so the check matches.
 
 ### Step 6 — Build the Cost
 
-1. On the **ModelBuilder** tab click **Variable**, choose **Double**, and click **OK**. Right-click
-   the new oval ▸ **Rename** ▸ `Slope_Weight`, double-click it and type `1`, and right-click it ▸
-   **Parameter**. Do the same for `Line_Weight`, also `1`.
-2. Add **Raster Calculator** with this expression, and output `Cost_Surface`:
+1. On the **ModelBuilder** tab click **Variable**. The data-type list opens at **String**; type
+   `Double` to jump to it, choose it, and click **OK**. Right-click the new oval ▸ **Rename** ▸
+   `Slope_Weight`, double-click it and type `1`, and right-click it ▸ **Parameter**. Do the same for
+   `Line_Weight`, also `1`; the second oval lands on top of the first, so drag it aside before
+   renaming.
+2. Add **Raster Calculator** (the **Spatial Analyst** entry; Image Analyst's is listed first) with
+   this expression, and output `Cost_Surface`:
 
 ```text
 %Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%" + Con(IsNull("%River_Cells%"), 0, 10)
@@ -447,7 +467,9 @@ corner to widen it.
     - **Output Optimal Path as Line**: `Route`
     - **Path Type**: **Each zone** (with one destination, it does not matter)
 3. Make `Accumulated_Cost` and `Route` parameters. Save the model and run it inside ModelBuilder
-   (**Run** on the ModelBuilder tab). It took about a minute and a half on a laptop.
+   (**Run** on the ModelBuilder tab). It took about a minute and a half on a laptop. A run inside
+   ModelBuilder adds nothing to the map: to measure the route, add `Route`, `Accumulated_Cost` and
+   `Major_Streams` from `Lab10.gdb` in the **Catalog** pane.
 
 
 
@@ -463,16 +485,17 @@ Then measure three things about the route:
 
 - **Its length:** the `Shape_Length` field of `Route`, in meters. If `Route` has more than one row,
   add them.
-- **The total accumulated cost:** on the **Map** tab click **Explore**, and click `Accumulated_Cost`
-  exactly at the `Destination` point (zoom in until one cell is clearly visible). The pop-up gives the
-  cell's value.
+- **The total accumulated cost:** the `PathCost` field of `Route`, in the same table. Optimal Path
+  As Line writes it from `Accumulated_Cost` at the destination, so it is the value of the
+  `Accumulated_Cost` cell under the `Destination` point.
 - **The major streams it crosses:** run **Pairwise Intersect** of `Route` and `Major_Streams` with
   **Output Type** **Point**, and count the points it makes.
 
 > [!TIP]
 > **Check the result:** `Route` is **56.09 km** long; the straight line between the substations is
-> **52.79 km**. The accumulated cost at the destination is **744,018**, and `Accumulated_Cost` reaches
-> **1,116,187** at the far corner of the box. The route crosses **4** major streams. If your route is
+> **52.79 km**. Its `PathCost`, the accumulated cost at the destination, is **744,018**, and
+> `Accumulated_Cost` reaches **1,116,187** at the far corner of the box. The route crosses **4** major
+> streams. If your route is
 > close to the straight line, bending only around the lakes, Distance Accumulation got no cost raster.
 
 > [!NOTE]
@@ -490,16 +513,28 @@ a parameter.
    `Slope_Weight`, `Line_Weight`, `Major_Streams` (so the crossings can be counted after every run),
    `Cost_Surface`, `Accumulated_Cost` and `Route`.
 2. Save, and close the model's tab. In the **Catalog** pane, open `Lab10.atbx` and double-click
-   **Power Line Route**: it opens as a tool in the Geoprocessing pane.
-3. Run it once at the defaults, with new output names — `Route_Base`, `Accumulated_Cost_Base`,
-   `Cost_Surface_Base`, `Major_Streams_Base` — and measure the route as in Step 7. A yellow warning
-   that a dataset already exists only means it will be replaced.
+   **Power Line Route**: it opens as a tool in the Geoprocessing pane. Its parameters can take a few
+   seconds to appear; wait for all six.
+3. Clear any selection on the map (**Map** tab ▸ **Selection** group ▸ **Clear**), then run it once
+   at the defaults, with new output names — `Route_Base`, `Accumulated_Cost_Base`,
+   `Cost_Surface_Base`, `Major_Streams_Base` — and measure the route as in Step 7. Check all four
+   names once more before **Run**: a name typed and left with Tab can revert to the default. A yellow
+   warning that a dataset already exists only means it will be replaced.
 
 
 
 ![The Power Line Route tool in the Geoprocessing pane: Slope_Weight 1; Line_Weight 1; Route Route_Base; Accumulated_Cost Accumulated_Cost_Base; Cost_Surface Cost_Surface_Base; Major_Streams Major_Streams_Base.](images/lab10-tool-dialog.png)
 
 **Figure 8.** The model as a tool. Give every output a new name for each run.
+
+> [!WARNING]
+> **A selected feature breaks the run.** Geoprocessing honors selections. If one feature is selected
+> in `Endpoints`, `Roads` or any other input layer (a row clicked in an attribute table is a
+> selection), that feature is all the model sees of the layer: the Select for the source finds
+> nothing, and the run fails about 40 seconds in with `ERROR 010511: Internal error in cost path
+> tracing` and `Back_Direction ... does not have valid statistics`. Neither message mentions the
+> selection. Clear it (**Map** tab ▸ **Selection** group ▸ **Clear**) and run again. Every run in
+> Step 9 is open to the same mistake, so clear selections after each visit to an attribute table.
 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw
@@ -512,8 +547,8 @@ a parameter.
 
 > [!TIP]
 > **Check the result:** at the defaults, the dialog run reproduces Step 7 exactly: `Route_Base` is
-> **56.09 km**, with **744,018** at the destination and **4** crossings. If it does not, a parameter
-> was left at a value from testing.
+> **56.09 km**, its `PathCost` **744,018**, and it crosses **4** major streams. If it does not, a
+> parameter was left at a value from testing.
 
 ### Step 9 — Test the Weights
 
@@ -555,10 +590,12 @@ For the last run, choose something deliberately and say why: set slope to 0 to r
 weight far up, or try a Line_Weight between 0 and yours to see where the route starts to move.
 
 Record **all of it in one table**: for the baseline and every run, the Slope_Weight, the Line_Weight,
-the route length in km, the total accumulated cost at the destination, the
+the route length in km, the total accumulated cost at the destination (the route's `PathCost`), the
 number of major streams crossed, and **the largest distance between the run's route and the
 baseline's**. Measure that last one with the **Measure** tool (**Map** tab ▸ **Measure**) at the place
-where the two lines are farthest apart, to the nearest 100 m.
+where the two lines are farthest apart, to the nearest 500 m. The Measure window opens over the
+middle of the map and takes the clicks meant for it, so pan the map until the two routes sit clear
+of the window before you measure.
 
 Then answer, in your report:
 
@@ -702,6 +739,7 @@ what to submit.
 <!-- Migration notes (rebuild drafted 2026-10-09).
 SOURCE: the September 3, 2026 migration of "Lab 10 - Least Cost Path Power Line Analysis.docx" (replaced by this page on promotion), rebuilt to tools/lab-conversion-guide.md from tools/lab10/PLAN.md (design accepted by the instructor October 6, 2026 in tools/labs-09-11-plan.md sections 6 and 8). Background voice, the NIMBY/BANANA paragraph and the references are carried from it; "network analysis" corrected to a raster cost analysis; the in-text "Meehan, 2003" now cites the 2007 title (confirmed: Esri Press 2007).
 ARCGIS PRO: 3.7.1, arcpy only (tools/lab10/run_model.py on the hosted zip, extracted to C:\Ames\Lab10\ref; check_values.json). Cost Distance shows its own deprecation notice naming Distance Accumulation (seen in the GUI October 9, 2026, Week 11 deck). Distance Accumulation and Optimal Path As Line dialog labels on the page are from the Week 11 Thursday deck's captures (lcpb-distance-accumulation.png, lcpb-optimal-path.png), run there on definition-query layers Source and Destination. GUI BUILD 2026-10-09 (C:\Ames\Lab10GUI): every step built by hand from the page, run inside ModelBuilder and from the tool dialog; every check value of Steps 1-8 matched (tools/lab10/check_gui.py). GUI facts: double-clicking a model raster in Raster Calculator inserts "%Name%"; Select output names reset after validating the SQL, so type them last; the Reclassify table is empty before a run (type rows, Tab between cells); a Select output (Major_Lakes) cannot be cleared as a dialog parameter; Polyline to Raster accepts IsMajor; the tool-dialog run took about 1.5 minutes and deletes every non-parameter dataset.
+DELL GUI TEST 2026-11-06 (ArcGIS Pro 3.7.3.1904, 175 %, C:\Ames\Lab10Dell; report ce414-private/plans/lab10-dell-test-2026-11.md): a model built by hand from this page reproduced every check value and the four Step 9 runs. Two page changes came from it: the Step 8 selection warning (a selected Endpoints row made the source Select empty and every dialog run fail with ERROR 010511 / 010423), and Step 7's total cost now reads Route's PathCost field, because the Explore pop-up on Accumulated_Cost returned NoData for every raster in that session (unexplained; the 'Explore' instruction can come back once the pop-up is seen working on the laptop). Smaller wording fixes in Steps 0-9 follow that session's screens (Location drop-down, Same as layer Elevation.tif, 3D Analyst entries listed first, OBJECTID default value field, String default data type, Endpoints (2), Tab leaving the remap table, parameters drawing late, ModelBuilder run not adding to the map, Measure window over the map; largest-gap precision 100 m -> 500 m).
 DATA PACKAGE: docs/data/lab10-power-line.zip, 17,984,171 bytes (18.0 MB), built by tools/lab10/make_package.py on 2026-10-09: Elevation.tif from the 3DEP ImageServer exportImage (30 m, bilinear, F32, UTM 12N; box 410,340-461,910 E, 4,425,630-4,489,350 N), 1,719 x 2,124, 1,314.97-3,568.37 m; PowerLineData.gdb from UGRC feature services (UtahRoads where DOT_FCLASS not empty 9,031 -> 8,937 after clip; UtahLakesNHD 985 -> 967; UtahStreamsNHD 4,141 -> 4,086; UtahMunicipalBoundaries 35 -> 34; TransmissionLines 294 -> 292); Endpoints = centers of UGRC TransmissionLines substations OBJECTID 2185 (Source, 450,234 E 4,436,883 N, 40.08075 N 111.58370 W; 428 m from the handout's source coordinate) and 1350 (Destination, 419,692 E 4,479,936 N, 40.46622 N 111.94729 W; 1,095 m from the handout's destination coordinate), probe_endpoints.py and endpoint_chips.py. READ-ME-FIRST.txt inside. Endpoint scenario wording: "the data center at Bluffdale" replaces the handout's "new NSA Data Center"; no capacities or dates claimed for the wind park or the data center.
 VERIFIED NUMBERS (check_values.json): selections Major_Roads 1,377, Major_Lakes 7, Major_Streams 319, Existing_Lines 241 (292 - 241 = 51 substations); Slope_Degrees 0-71.81, mean 11.2132; Road_Distance max 24,515.2 (mean 6,202.2); City_Distance max 14,923.4 (mean 3,147.5); Line_Distance max 15,571.3 (mean 3,115.9); Slope_Score 1:1,848,647 2:324,957 4:259,000 6:249,393 8:501,985 10:459,492 (sum 3,643,474 = 3,651,156 - 7,682, the outer ring); Road_Score 1:646,624 3:374,134 6:835,970 10:1,794,428; City_Score 1:1,055,936 2:198,582 4:228,810 6:254,776 8:293,203 10:1,619,849; Line_Score 1:614,688 5:1,084,196 10:1,952,272 (each sums to 3,651,156); River_Cells 9,713 (value field IsMajor in the GUI build; run_model.py uses a field One = 1, same cells; MAXIMUM_LENGTH); Cost_base 4-48, mean 23.6865; Acc_base max 1,116,187.4 (mean 566,466.8); baseline route 56.09 km, total cost 744,018.2 at the destination (GetCellValue), 4 river crossings (Pairwise Intersect points merged within one 30 m cell), 92.8 % within 1 km of a major road, 99.7 % within 500 m of an existing line, 100 % with City_Score 10; straight line 52.79 km.
 RECAPTURED 2026-10-21 after the second renumbering (C:\Ames\Lab10GUI, 175 %): Figure 0 (lab10-environments.png, two grabs stitched). Reopened, the dialog shows the Output Coordinate System as WKT (PROJCRS[...]) even after re-picking NAD 1983 UTM zone 12N; the stored value is unchanged, so the caption says so.
