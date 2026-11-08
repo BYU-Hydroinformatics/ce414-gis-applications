@@ -621,6 +621,11 @@ Make **two** professional map layouts:
 1. **Your baseline result** — `Suitable_Sites` at the criteria given (slope under 5°, within 1 km of an Interstate, US or state highway, under 20 towers per 10,000 km² at a 20 km radius), with the existing towers, the highways, and your recommended site marked, and an inset of that site on imagery.
 2. **One scenario from Step 14** — whichever of your runs most changes the picture, saying in its title and text box what changed and why you chose it.
 
+> [!TIP]
+> **`Suitable_Sites` is a 1/0 result.** Show it with Unique Values: one strong color for the
+> suitable cells and **No color** for the rest, over a hillshade or imagery. See
+> [Codes and rated classes](../../arcgis-tips/raster-symbology.md#codes-and-rated-classes-set-the-colors-yourself){ target="_blank" }.
+
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your peer reviewer

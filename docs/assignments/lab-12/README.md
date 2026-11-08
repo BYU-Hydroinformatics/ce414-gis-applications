@@ -516,6 +516,10 @@ Make **two** professional map layouts:
 2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
    the picture. Say on the map what changed and why you chose it.
 
+> [!TIP]
+> **To put `Hazard_Class` in the danger-scale colors** with the labels Low to Extreme, see
+> [Codes and rated classes](../../arcgis-tips/raster-symbology.md#codes-and-rated-classes-set-the-colors-yourself){ target="_blank" }.
+
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your

@@ -594,6 +594,11 @@ Make **two** professional map layouts (letter size):
    bar; and a text box with your name, the date, the map projection, and the sources and dates. The
    title and text box say what changed from Map 1 and why.
 
+> [!TIP]
+> **The cost surface inset** reads best as a few round classes on one light-to-dark ramp, cheap to
+> expensive, with its own legend. See
+> [One-way quantities](../../arcgis-tips/raster-symbology.md#one-way-quantities-a-sequential-classification){ target="_blank" }.
+
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your

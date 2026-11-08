@@ -3,7 +3,7 @@
 ArcGIS Pro draws a new raster in gray, stretched between its own lowest and highest values. That is
 fine for a first look and never right for a map you hand in. This page shows how to turn the gray
 into something a reader understands at a glance: a terrain map, a set of maps that can be compared,
-an error map, flow accumulation and flow direction. Every map below was made in ArcGIS Pro 3.7 from
+an error map, a quantity in classes, a coded result, flow accumulation and flow direction. Every map below was made in ArcGIS Pro 3.7 from
 the course's own data, and every setting is one you can make in the Symbology pane.
 
 ![Two maps of the Rock Canyon basin. Left, titled As it arrives: gray, Percent Clip: a smooth gray gradient from black in the west to white in the east, with the canyons barely visible. Right, titled Elevation #1 ramp, hillshade on top in Multiply: the same DEM colored from pale blue-green at the canyon mouth through green, yellow, orange and brown to gray and white on the peaks, with every ridge and gully shaded.](images/raster-terrain.jpg)
@@ -31,8 +31,8 @@ check its title — *Symbology - DEM* — before you change anything.
 | Primary symbology | Use it for | On this page |
 | --- | --- | --- |
 | **Stretch** | Continuous values you want as a smooth ramp: elevation, a surface, a hillshade | Terrain, Lab 8 surfaces |
-| **Classify** | Continuous values you want in a few labeled bands: error, depth, slope classes, accumulation | Error maps, flow accumulation |
-| **Unique Values** | Codes, where each value is a category: land cover, flow direction, a 1/0 result | Flow direction |
+| **Classify** | Continuous values you want in a few labeled bands: error, height, cost, density, accumulation | Error maps, one-way quantities, flow accumulation |
+| **Unique Values** | Codes, where each value is a category: land cover, flow direction, a 1/0 result, hazard classes | Codes and rated classes, flow direction |
 | **Discrete** | Many integer codes with no legend needed | — |
 
 ## Step 1 — Make a hillshade
@@ -203,6 +203,65 @@ color patch to select the row, click it again to open the color palette, and pic
 **Figure 14.** Lab 8's three error maps (2,500 points). Top: each on its own stretch, as ArcGIS Pro
 draws them; zero is a different color in each and the maps cannot be compared. Bottom: one set of
 classes with the 5 m band left clear, so the order Thiessen, IDW, Kriging is plain at a glance.
+
+## One-way quantities: a sequential classification
+
+Many lab results are amounts that only mean "more" as they grow: height above a base (Lab 9), a
+cost surface (Lab 10), a density (Lab 4), a flood depth. They have no meaningful middle, so they need
+a **sequential** scale, not a diverging one:
+
+- **Classify**, **Method: Manual Interval**, with round breaks in the units a reader thinks in:
+  every 50 or 100 m of height, every 5 points of cost. Five to eight classes is plenty.
+- **One light-to-dark color scheme**: pale for a little, dark for a lot. Readers read darker as
+  more without being told. Tick **Show names** in the color scheme list to find one, and avoid
+  rainbow ramps here too.
+- **Labels with units** in the **Label** column: `0 – 50 m`, not `50`.
+
+The steps are the same as for an error map: choose **Classify**, set **Method** and **Classes**, and
+type each **Upper value** and **Label** on the **Classes** tab.
+
+**Cells below zero.** A quantity that should never be negative sometimes is: in Lab 9, a spline
+plain can rise above the ground, and the height above it goes negative. Give those cells a class of
+their own, labeled `below 0 m`, in a color from outside the ramp, such as a gray or a blue against a
+yellow-to-red ramp. Lumped into the lowest class, they disappear; in their own color, they show the
+reader exactly where the base went wrong.
+
+**Two maps of the same quantity**, such as Lab 9's two bases, get the same breaks and colors on
+both, plus the extra class where one of them needs it. Set up one, then copy it with **Import from
+layer** (see [Maps that must be compared](#maps-that-must-be-compared-one-scale-for-all)).
+
+Over a hillshade, follow [Step 3](#step-3-put-the-hillshade-on-top-and-blend-it): the hillshade on
+top in **Multiply** keeps the class colors strong.
+
+*Figure placeholder: the Symbology pane for Lab 9's Height_Above_Plain with Classify, Manual Interval,
+round breaks in meters on a light-to-dark ramp, typed labels with units, and a separate below 0 m
+class in a contrasting color; beside it, the resulting map over a hillshade.*
+
+## Codes and rated classes: set the colors yourself
+
+A 1/0 result (Lab 2's `NDVI_reclass`, Lab 4's `Suitable_Sites`) or a set of rated classes (Lab 12's
+`Hazard_Class`, 1 to 5) is a set of **categories**, not an amount, even though the values are
+numbers. Use **Unique Values**:
+
+1. **Primary symbology: Unique Values**, Field `Value`.
+2. Double-click each **Label** and type what the code means: `Irrigated cropland`, `Suitable site`,
+   `Low` … `Extreme`. The legend prints these, not the numbers.
+3. Click each color patch and choose the color yourself rather than accepting the random ones.
+    - **When a standard sets the colors, use them.** Lab 12's hazard classes take the colors of the
+      avalanche danger scale (Lab 12's Figure B): green, yellow, orange, red and black, from Low to
+      Extreme. A reader who knows the scale reads your map without the legend.
+    - **For a 1/0 result**, give the answer (1) one strong color. If the map is about where the
+      answer is, give 0 **No color** (click the patch twice; it is at the top of the palette) so the
+      imagery or hillshade shows through everywhere else.
+4. Leave **Resampling Type** on **Nearest Neighbor** (see
+   [Small things](#small-things-that-make-a-big-difference)): blending codes invents values that
+   are not in the data.
+
+Over imagery, set the layer's **Transparency** to about 30 to 40 % on the **Raster Layer** tab's
+**Effects** group, so the ground shows through the colors.
+
+*Figure placeholder: the Symbology pane for Lab 12's Hazard_Class with Unique Values, the five codes
+labeled Low to Extreme in the danger-scale colors; beside it, the resulting map over imagery.*
 
 ## Flow accumulation
 

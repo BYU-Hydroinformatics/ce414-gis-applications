@@ -448,8 +448,11 @@ Make **two** professional map layouts:
    volume, and how far it is from Map 1's.
 
 > [!TIP]
-> **To put two maps on the same color scale** and shade them with a hillshade, see
-> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#maps-that-must-be-compared-one-scale-for-all){ target="_blank" }.
+> **Height above the plain is a one-way quantity:** round classes in meters on one light-to-dark
+> ramp, the same on both maps, with a class of its own for cells below zero. See
+> [One-way quantities](../../arcgis-tips/raster-symbology.md#one-way-quantities-a-sequential-classification){ target="_blank" }
+> and, for the hillshade,
+> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#step-3-put-the-hillshade-on-top-and-blend-it){ target="_blank" }.
 
 Write a brief report (2 pages of text, plus your figures and maps) covering:
 

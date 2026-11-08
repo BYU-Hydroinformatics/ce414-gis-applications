@@ -428,7 +428,7 @@ Right-click `NDVI_reclass` and choose **Add To Display**, then **Run** again. On
 > about **3,197,000 cells** — **1,111 of 2,099 square miles, 53 %** of the county. That is not a
 > typo: the threshold puts half the county in the "irrigated" class. Keep reading.
 
-**Symbolize it.** Select the `NDVI_reclass` layer, and on the **Raster Layer** ribbon tab click **Symbology**. ArcGIS Pro has already chosen *Unique Values* on `Value`. Double-click each *Label* to rename the classes — `Non-irrigated land` and `Irrigated cropland` — and click each color patch to pick something sensible, such as tan and green (Figure 7b).
+**Symbolize it.** Select the `NDVI_reclass` layer, and on the **Raster Layer** ribbon tab click **Symbology**. ArcGIS Pro has already chosen *Unique Values* on `Value`. Double-click each *Label* to rename the classes — `Non-irrigated land` and `Irrigated cropland` — and click each color patch to pick something sensible, such as tan and green (Figure 7b). More on coded results, labels and colors: [Codes and rated classes](../../arcgis-tips/raster-symbology.md#codes-and-rated-classes-set-the-colors-yourself){ target="_blank" }.
 
 ![The map with the reclassified raster symbolized: tan for non-irrigated land and green for irrigated cropland over a topographic basemap of Utah County. The Contents pane legend reads Non-irrigated land and Irrigated cropland. Green covers the irrigated valley floor around Utah Lake and also the forested Wasatch and Uinta mountain slopes east of the valley.](images/lab02-reclass-result-map.jpg)
 

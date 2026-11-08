@@ -570,6 +570,11 @@ Make **two** professional map layouts:
 1. **Your baseline result** — `Subwatersheds`, `Streams` and `Rock_Canyon_Basin` at a threshold of 5,000 cells over imagery or a hillshade, with the NHD streams in the basin shown and labeled so a reader can tell them from yours, the outlet marked, and a locator map showing where Rock Canyon is.
 2. **One threshold from Step 14** — whichever of your runs most changes the picture, with its subwatersheds and streams symbolized as on Map 1, the NHD streams and the outlet shown, and its title and text box saying what changed and why you chose it.
 
+> [!TIP]
+> **For the hillshade under your subwatersheds**, see
+> [Make your raster symbology look good](../../arcgis-tips/raster-symbology.md#step-1-make-a-hillshade){ target="_blank" }: make
+> it from `DEM_UTM`, and draw your polygons partly transparent over it.
+
 Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 
 - a title block — assignment title, your name, the date and the course — and the name of your peer reviewer
