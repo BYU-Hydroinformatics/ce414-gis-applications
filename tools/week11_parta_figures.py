@@ -36,7 +36,7 @@ def save(fig, name):
 steps = [("Input layers", "slope, roads, cities,\npower lines, rivers, lakes"),
          ("Reclassify", "each layer to a\n1–10 score (10 = avoid)"),
          ("Raster\nCalculator", "combine scores into\none cost surface"),
-         ("Distance\nAccumulation", "from the source: accumulated\ncost + back direction"),
+         ("Distance\nAccumulation", "from the source: total\ncost + back direction"),
          ("Optimal Path\nAs Line", "from the destination,\nfollow the arrows home")]
 fig, ax = plt.subplots(figsize=(15, 3.6))
 w, h, gap = 3.0, 2.1, 0.45

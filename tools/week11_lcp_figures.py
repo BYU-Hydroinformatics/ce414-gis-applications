@@ -259,14 +259,14 @@ def lab10():
         ends(ax)
     s = NUM["lab10"]
     fig, axs = plt.subplots(1, 3, figsize=(15, 6.6))
-    for ax, (fc, t, c) in zip(axs, [("Route_slope5", f"Slope_Weight 5\n{s['runs']['slope5']['length_km']:.2f} km", "#00c8ff"),
+    for ax, (fc, t, c) in zip(axs, [("Route_slope5", "Slope_Weight 5\n ", "#00c8ff"),
                                     ("Route_x_city0", f"City weight 0\n{s['explore']['city0']['length_km']:.2f} km", "#00c8ff"),
                                     ("Route_nobarrier", f"No lake barrier\n{s['runs']['nobarrier']['length_km']:.2f} km", "#00c8ff")]):
         panel(ax, fc, t, c)
     save(fig, "lcpb-nochange.png")
     fig, axs = plt.subplots(1, 3, figsize=(15, 6.6))
     for ax, (fc, t, c) in zip(axs, [("Route_base", f"Lab 10 defaults (weights 1)\n{s['base']['length_km']:.2f} km", "#ff2a2a"),
-                                    ("Route_line0", f"Line_Weight 0\n{s['runs']['line0']['length_km']:.2f} km", "#b000ff"),
+                                    ("Route_line0", "Line_Weight 0\n ", "#b000ff"),
                                     ("Route_x_road0", f"Road weight 0\n{s['explore']['road0']['length_km']:.2f} km", "#ffb000")]):
         panel(ax, fc, t, c)
     save(fig, "lcpb-scenarios.png")

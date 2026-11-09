@@ -43,7 +43,7 @@ CE414Quiz.start({
       explanation: "The back direction is a compass angle: 0 marks the source itself, 90 is east, 180 south, 270 west, 360 north. It is a direction, not a cost; the accumulated cost raster holds the cost."
     },
     {
-      prompt: "In Lab 10, raising Slope_Weight from 1 to 5 moves the route by at most about 560 m. Why so little?",
+      prompt: "In Lab 10, raising Slope_Weight from 1 to 5 barely moves the route. Why so little?",
       options: [
         "Distance Accumulation ignores weights above 1",
         "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
@@ -60,7 +60,7 @@ CE414Quiz.start({
         "Setting Line_Weight to 2"
       ],
       answer: "Setting Line_Weight to 0",
-      explanation: "The existing-line score is what holds the route where it is. Remove it and the route cuts nearer the straight line (measured: up to 3.4 km from the baseline). Weight 2 only holds it tighter, and the lakes were never in its way."
+      explanation: "The existing-line score is what holds the route where it is. Remove it and the route cuts nearer the straight line. Weight 2 only holds it tighter, and the lakes were never in its way."
     },
     {
       prompt: "On a corridor map, a cell is shaded “within 5% of the cheapest.” What does that mean?",

@@ -6,7 +6,7 @@
   <title>CE 414 — Cheapest or Shortest?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: what a cost surface stores, what the accumulated cost and back link rasters each hold, and why the cheapest route is rarely the shortest one.">
+  <meta name="description" content="CE 414 in-class quiz: what a cost surface stores, what the accumulated cost and back direction rasters each hold, and why the cheapest route is rarely the shortest one.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -35,7 +35,7 @@ CE414Quiz.start({
     },
     {
       prompt: "You reclassify each input raster before combining it. Which cells should end up with the high values?",
-      detail: "Roads, rivers and lakes, cities, existing power lines, elevation — all reclassified, then combined with map algebra in the Raster Calculator.",
+      detail: "Roads, rivers and lakes, cities, existing power lines, slope — all reclassified, then combined with map algebra in the Raster Calculator.",
       options: [
         "The cells you least want to cross",
         "The cells you most want to follow",
@@ -57,31 +57,31 @@ CE414Quiz.start({
       explanation: "Length counts cells; cost sums what those cells charge. Detouring adds cells, but at 1 each instead of 4, so the longer route wins on price. That gap between shortest and cheapest is the entire reason for the analysis — if they were the same line you would just draw it."
     },
     {
-      prompt: "What does each cell of the accumulated cost (cost distance) raster store?",
+      prompt: "What does each cell of the accumulated cost raster store?",
       options: [
         "The cheapest total cost of reaching that cell",
         "The cost of crossing that one cell alone",
-        "Which neighbor to step to next toward the source",
+        "Which way to step next toward the source",
         "The straight-line distance to the destination"
       ],
       answer: "The cheapest total cost of reaching that cell",
       explanation: "It is a running total, not a per-cell price: light cells are cheap to reach, dark cells are expensive. The values spread outward from the source in rough rings, bulging far where crossing is cheap and staying tight where it is expensive."
     },
     {
-      prompt: "What is the back link (back direction) raster for?",
+      prompt: "What is the back direction raster for?",
       options: [
         "It records what each cell cost to cross",
         "It holds the finished route as a polyline",
         "It holds the downhill direction from elevation",
-        "It records which neighbor to step to next"
+        "It records which way to step next"
       ],
-      answer: "It records which neighbor to step to next",
-      explanation: "The accumulated cost raster says how much; the back link raster says which way, as a code from 0 to 8 naming a neighbor. Starting at the destination and following those codes cell by cell until you arrive at the source is the whole path-finding step — which is why the route is traced backward, destination to source."
+      answer: "It records which way to step next",
+      explanation: "The accumulated cost raster says how much; the back direction raster says which way, as a compass angle. Starting at the destination and following those directions cell by cell until you arrive at the source is the whole path-finding step — which is why the route is traced backward, destination to source."
     }
   ],
   perfectNote: "Every one. You have the distinction the whole lab rests on: the algorithm is exact, but only about the cost surface you gave it.",
   goodNote: "Solid. Read the explanations you missed — the arguable ones are the ones Lab 10 will make you defend.",
-  tryAgainNote: "Worth another pass. The short version: a cost surface prices each cell, the accumulated cost raster totals the cheapest way to reach each cell, the back link raster says which way to step home, and the cheapest route is rarely the shortest."
+  tryAgainNote: "Worth another pass. The short version: a cost surface prices each cell, the accumulated cost raster totals the cheapest way to reach each cell, the back direction raster says which way to step home, and the cheapest route is rarely the shortest."
 });
 </script>
 </body>

@@ -23,10 +23,10 @@ Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 11. Tuesday built the idea from the original least cost path lecture: a cost surface, the accumulated cost and back link rasters, a path walked home from the destination. Today: the tools ArcGIS Pro wants you to use now, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
+<!-- Thursday of Week 11. Tuesday built the idea: a cost surface, the accumulated cost and back direction rasters, a path walked home from the destination. Today: the tools ArcGIS Pro wants you to use now, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-11-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -55,7 +55,7 @@ By the end of class you should be able to:
 - A **back direction** cell: **which way to step** to get home
 - The path is walked **backward**, from the destination to the source
 
-<!-- A 6 x 5 grid of 100 m cells, cost 1 (light) and 4 (dark), run through Distance Accumulation in ArcGIS Pro. Each number is the accumulated cost; each arrow is the back direction raster's value, drawn as a compass bearing. Read one aloud: the cell left of the source holds 400 and points east (90 degrees), straight home. Note the arrows that are not at 45-degree steps: 193, 121, 229 degrees. That is new, and it is the next section. The distinction between the first two bullets is the one Tuesday's quiz showed half the room missing. -->
+<!-- A 6 x 5 grid of 100 m cells, cost 1 (light) and 4 (dark), run through Distance Accumulation in ArcGIS Pro. Each number is the accumulated cost; each arrow is the back direction raster's value, drawn as a compass bearing. Read one aloud: the cell left of the source holds 400 and points east (90 degrees), straight home. Note the arrows that are not at 45-degree steps: 193, 121, 229 degrees. That is new, and it is the next section. The distinction between the first two bullets is the one Tuesday's quiz tested. -->
 
 ---
 
@@ -82,7 +82,7 @@ By the end of class you should be able to:
 
 # Distance Accumulation
 
-![bg right:46% contain](images/lcpb-distance-accumulation.png)
+![bg right:46% h:86%](images/lcpb-distance-accumulation.png)
 
 - **Sources**: the start point (Lab 10: the substation at Spanish Fork Canyon)
 - **Barriers**: cells the route may never enter (Lab 10: the lakes)
@@ -97,7 +97,7 @@ By the end of class you should be able to:
 
 # Optimal Path As Line
 
-![bg right:46% contain](images/lcpb-optimal-path.png)
+![bg right:46% h:86%](images/lcpb-optimal-path.png)
 
 - **Destinations**: the end point (the substation at Bluffdale)
 - The **accumulation** and **back direction** rasters from the last tool
@@ -105,7 +105,7 @@ By the end of class you should be able to:
 - So **Raster to Polyline** is no longer a step
 - Its sibling, **Optimal Path As Raster**, gives the one-cell-wide raster
 
-<!-- Lab 10's own Figure 7b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 56.09 km. The old handout ended with Raster to Polyline because Cost Path only made a raster. -->
+<!-- Lab 10's own Figure 7b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 56.09 km. Older tutorials end with Raster to Polyline because Cost Path only makes a raster. -->
 
 ---
 
@@ -199,7 +199,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 <li>Take away the lake barrier</li>
 </ol>
 
-<!-- Ninety seconds, a show of hands for each letter. Most of the room picks A, B or D: terrain, cities and barriers feel like the big constraints. The answer is C. The next two slides are the answer. -->
+<!-- Ninety seconds, a show of hands for each letter. Expect A, B or D: terrain, cities and barriers feel like the big constraints. The answer is C. The next two slides are the answer. -->
 
 ---
 
@@ -207,10 +207,10 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ![h:340 center](images/lcpb-nochange.png)
 
-- **Slope_Weight 5**: at most **561 m** from the baseline · **no city score**: **276 m** · **no lake barrier**: **406 m**
+- **No city score**: at most **276 m** from the baseline · **no lake barrier**: **406 m** · **Slope_Weight 5**: you measure it in Step 9
 - Flat valley floor, **in cities** the whole way, **away from the lakes**: the same along every candidate route, so they cannot choose between them
 
-<!-- Measured on Lab 10 (tools/lab10/check_values.json and explore_weights.json; the farthest distance is from the baseline route, sampled every 100 m): Slope_Weight 5 55.73 km, 94% within 300 m; Slope_Weight 0 within 122 m; city weight 0 (changed in the expression, not a Lab 10 parameter) 56.40 km, 100% within 300 m, every cell of the baseline route has city score 10; no barrier 56.03 km, 97% within 300 m. Lab 10's Step 9 asks students to find the slope result themselves; do not give the numbers before they run it. Each would matter in another place, or with other scores: that is the lesson, not that slope and cities never matter. -->
+<!-- Measured on Lab 10 (tools/lab10/check_values.json and explore_weights.json; the farthest distance is from the baseline route, sampled every 100 m): city weight 0 (changed in the expression, not a Lab 10 parameter) 56.40 km, 100% within 300 m, every cell of the baseline route has city score 10; no barrier 56.03 km, 97% within 300 m. Lab 10's Step 9 asks students to find the slope result themselves, so the slope numbers are not in this deck. Each would matter in another place, or with other scores: that is the lesson, not that slope and cities never matter. -->
 
 ---
 
@@ -218,10 +218,10 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ![h:360 center](images/lcpb-scenarios.png)
 
-- **Line_Weight 0**: **53.70 km**, up to **3.4 km** from the baseline · **no road score**: **54.96 km**, up to **1.6 km**
+- **No road score**: **54.96 km**, up to **1.6 km** from the baseline · **Line_Weight 0**: you measure it in Step 9
 - The **existing-line score** is what holds the route where it is
 
-<!-- The thick pale red line in each panel is the baseline, for comparison; yellow lines are the existing transmission lines. Line_Weight 0 puts only 26% of the route within 300 m of the baseline; road weight 0 (changed in the expression, not a Lab 10 parameter) 55%. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
+<!-- The thick pale red line in each panel is the baseline, for comparison; yellow lines are the existing transmission lines. Road weight 0 (changed in the expression, not a Lab 10 parameter) keeps 55% of the route within 300 m of the baseline. Line_Weight 0 is a Step 9 run, so its numbers are not in this deck. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
 
 ---
 
@@ -286,4 +286,4 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck (itself converted from "CE 414 Week 11 - Least Cost Path Analysis.pptx"); realigned the same day with the rebuilt Lab 10. Figures and numbers: tools/week11_lcp_figures.py (toy grids, and Lab 10's reference run from tools/lab10/run_model.py; numbers in tools/week11_lcp_numbers.json). The Cost Distance capture is from an ArcGIS Pro 3.7.1 session at 175 %; the other two tool captures are Lab 10's Figures 7a and 7b. -->
+<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck, and aligned with Lab 10. Figures and numbers: tools/week11_lcp_figures.py (toy grids, and Lab 10's reference run from tools/lab10/run_model.py; numbers in tools/week11_lcp_numbers.json). The Cost Distance capture is from an ArcGIS Pro 3.7.1 session at 175 %; the other two tool captures are Lab 10's Figures 7a and 7b. -->

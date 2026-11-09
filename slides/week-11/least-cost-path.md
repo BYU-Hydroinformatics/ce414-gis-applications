@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 11. This deck sets up Lab 10, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. The middle of the hour is a hand calculation on a 5 by 5 grid; it is the algorithm, done once by people, before ArcGIS Pro does it on a million cells. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-11-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -51,7 +51,7 @@ Dr. Dan Ames
 ![bg right:48% w:96%](images/lcp-google-maps-route.jpg)
 
 - What is the **"cost"** Google Maps is minimizing here? Distance? Travel time? Traffic?
-- This route runs from the **NSA Utah Data Center** in Bluffdale south toward **Spanish Fork Canyon** — the two endpoints of Lab 10
+- This route runs from the **Utah Data Center** in Bluffdale south toward **Spanish Fork Canyon**, near the two **substations** Lab 10 connects
 - More on the [Utah Data Center](https://en.wikipedia.org/wiki/Utah_Data_Center) in Bluffdale
 
 <div class="imggrid" style="grid-template-columns: repeat(2, 1fr); margin-top:0.3em;">
@@ -62,7 +62,7 @@ Dr. Dan Ames
 
 </div>
 
-<!-- Open with the question, not the answer. Google Maps is already doing least-cost path analysis; it just hides the cost function. Ask what it is minimizing, and get students to notice that the fastest route and the shortest route are different lines. Then say that in Lab 10 they write the cost function themselves. The two photos are the endpoints of that lab: the data center in Bluffdale and the wind farm at the mouth of Spanish Fork Canyon. -->
+<!-- Open with the question, not the answer. Google Maps is already doing least-cost path analysis; it just hides the cost function. Ask what it is minimizing, and get students to notice that the fastest route and the shortest route are different lines. Then say that in Lab 10 they write the cost function themselves. The two photos show what sits near that lab's endpoints: the data center in Bluffdale and the wind farm at the mouth of Spanish Fork Canyon. -->
 
 ---
 
@@ -73,7 +73,7 @@ Dr. Dan Ames
 
 - From Esri's documentation (arcgis.com): the least-cost path is **"one cell wide"**, runs **from the destination back to the source**, and is **"guaranteed to be the cheapest route"** in the cost units of the input cost raster
 - Three things to hold onto:
-  - the answer is a **raster path**, one cell wide, until you convert it
+  - the path follows cells, **one cell wide**; Optimal Path As Line draws it as a line for you
   - it is computed **backward**, destination → source
   - "cheapest" only means anything **relative to the cost raster you built**
 
@@ -85,7 +85,7 @@ Dr. Dan Ames
 </div>
 </div>
 
-<!-- The quotation is condensed from the arcgis.com wording on the original slide. Emphasize the last bullet: the algorithm is exact, but it is exact about the cost surface you gave it. Garbage weights, confident wrong answer. The map on the right is a student example layout from a previous semester; its text block is still placeholder ("Name / Date / Projection"), which is a good chance to point out that the rubric wants those filled in. -->
+<!-- The quotation is condensed from Esri's documentation. Emphasize the last bullet: the algorithm is exact, but it is exact about the cost surface you gave it. Garbage weights, confident wrong answer. The map on the right is a student example layout from a previous semester; its text block is still placeholder ("Name / Date / Projection"), which is a good chance to point out that the rubric wants those filled in. -->
 
 ---
 
@@ -98,7 +98,7 @@ Dr. Dan Ames
 3. Run **Distance Accumulation** to create the **accumulated cost raster** and the **back direction raster**
 4. Run **Optimal Path As Line** with those two rasters and the destination: the path, already a **line**
 
-<!-- These are the steps as Lab 10 runs them, with ArcGIS Pro's current tools. The source slide named Cost Distance, Cost Path and a final Raster to Polyline; Optimal Path As Line makes the polyline itself. The legacy names come back on the deprecation slide. The next slide shows the whole Lab 10 model, so students can see how much of it is step 1. -->
+<!-- These are the steps as Lab 10 runs them, with ArcGIS Pro's current tools. Optimal Path As Line makes the polyline itself, so the final Raster to Polyline step of older tutorials is gone. The legacy names come back on the deprecation slide. The next slide shows the whole Lab 10 model, so students can see how much of it is step 1. -->
 
 <!-- The figure (tools/week11_parta_figures.py) draws the same steps as Lab 10 runs them: three boxes build the cost surface, two route across it. -->
 
@@ -110,7 +110,7 @@ Dr. Dan Ames
 
 <p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last boxes at the bottom right.</p>
 
-<!-- Do not read this diagram. The point is scale: about thirty tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 10 asks them to build. The image is Lab 10's Figure C, the model exported from ModelBuilder in the October 9, 2026 build of the lab. -->
+<!-- Do not read this diagram. The point is scale: eighteen tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 10 asks them to build. The image is Lab 10's Figure C, the model exported from ModelBuilder in the October 9, 2026 build of the lab. -->
 
 ---
 
@@ -121,7 +121,7 @@ Dr. Dan Ames
 - **Cost Distance**, **Cost Back Link** and **Cost Path** still run, but are **deprecated**
 - **Distance Accumulation**: the accumulated cost *and* the back direction raster, in one run
 - **Optimal Path As Line**: replaces Cost Path, and draws the line itself
-- Lab 10 uses the **current** tools; Thursday compares the two sets on its data
+- Lab 10 uses the **current** tools; Thursday compares how the two sets **charge a step**
 
 <!-- Lab 10 is built on Distance Accumulation and Optimal Path As Line. On its cost surface the legacy chain gives 58.49 km against 56.09 km, within 788 m everywhere (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
 
@@ -166,11 +166,11 @@ Dr. Dan Ames
 ![h:300 center](images/lcp-dem-least-cost-path.jpg)
 
 - The simplest cost raster you could use is a **DEM**
-- The result then follows the **lowest and flattest** route from start to end
+- The result then favors the **lowest ground** between start and end
 
 <p style="text-align:center;font-size:0.6em;margin-top:0.1em;"><a href="https://gisgeography.com/least-cost-path-analysis/">gisgeography.com/least-cost-path-analysis/</a></p>
 
-<!-- Start with the case where the metaphor is literal: the cost surface is real terrain, and the path is what water or a road would do. This is why the cost surface gets called a virtual terrain even when the values are not elevation. -->
+<!-- Start with the case where the metaphor is literal: the cost surface is real terrain, and the path is what water or a road would do. This is why the cost surface gets called a virtual terrain even when the values are not elevation. Elevation as a cost rewards low ground, not flat ground; Lab 10 puts slope in the cost for that reason. -->
 
 ---
 
@@ -296,7 +296,7 @@ section { font-size: 24px; }
 ![bg right:38% w:92%](images/lcp-lab10-example-map.png)
 
 - Route a high-voltage line between two **existing substations**: Spanish Fork Canyon to Bluffdale
-- You build the cost surface yourself from **slope, roads, cities, existing power lines and rivers**, each scored 1 to 10, with **lakes** as barriers
+- You build the cost surface yourself from **slope, roads, cities and existing power lines**, each scored 1 to 10, plus **10** on every river cell, with **lakes** as barriers
 - Then the two-tool routing you just saw: **Distance Accumulation** and **Optimal Path As Line**
 - The whole thing lives in **one ModelBuilder model** so you can change a weight and re-run it
 
@@ -332,12 +332,12 @@ section { font-size: 24px; }
 </div>
 </div>
 
-<!-- Four to five minutes, in pairs, then a show of hands on the item that splits the room every
-     time: what a single cell of the cost surface actually stores. Half the class picks "the total
-     cost of the cheapest route to that cell", because that is the raster they just watched get
+<!-- Four to five minutes, in pairs, then a show of hands on the item most likely to split the
+     room: what a single cell of the cost surface actually stores. The tempting wrong answer is "the
+     cheapest route cost to that cell", because that is the raster they just watched get
      built - so name the difference out loud. A cell of the cost surface is a price for crossing
      that one cell; the accumulated cost raster is the running total of the cheapest way to reach
      it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
      well. -->
 
-<!-- Revision notes (2026-10-21): built from the September 3 conversion of "CE 414 Week 11 - Least Cost Path Analysis.pptx" and its October 9 realignment with Lab 10. Added a hand calculation (a 5 x 5 grid solved exactly, with a unique cheapest path of 12 against 14 for the straight line) and a slide tying it to Distance Accumulation and Optimal Path As Line; the workflow slide has a computed schematic; the ArcMap-era scanned figure is replaced by Lab 10's accumulated cost raster (file deleted); the three application papers have full citations checked against Crossref; the Utah Data Center link went to a parody site and now goes to Wikipedia; "back link" is "back direction" except where the legacy tools are meant. Figures: tools/week11_parta_figures.py. -->
+<!-- The hand grid is solved exactly, with a unique cheapest path of 12 against 14 for the straight line. The three application papers' citations were checked against Crossref. "Back link" means the legacy tools; "back direction" means Distance Accumulation. Figures: tools/week11_parta_figures.py. -->
