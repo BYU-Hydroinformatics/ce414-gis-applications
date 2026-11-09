@@ -110,7 +110,7 @@ Dr. Dan Ames
 
 <p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last boxes at the bottom right.</p>
 
-<!-- Do not read this diagram. The point is scale: eighteen tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 10 asks them to build. The image is Lab 10's Figure C, the model exported from ModelBuilder in the October 9, 2026 build of the lab. -->
+<!-- Do not read this diagram. The point is scale: sixteen tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 10 asks them to build. The image is Lab 10's Figure C, the model exported from ModelBuilder. -->
 
 ---
 
@@ -123,9 +123,9 @@ Dr. Dan Ames
 - **Optimal Path As Line**: replaces Cost Path, and draws the line itself
 - Lab 10 uses the **current** tools; Thursday compares how the two sets **charge a step**
 
-<!-- Lab 10 is built on Distance Accumulation and Optimal Path As Line. On its cost surface the legacy chain gives 58.49 km against 56.09 km, within 788 m everywhere (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
+<!-- Lab 10 is built on Distance Accumulation and Optimal Path As Line. On its cost surface the legacy chain gives 58.49 km against 55.72 km, within 877 m everywhere (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
 
-<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 10's data (56.09 km and 58.49 km). -->
+<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 10's data (55.72 km and 58.49 km). -->
 
 ---
 
@@ -296,7 +296,7 @@ section { font-size: 24px; }
 ![bg right:38% w:92%](images/lcp-lab10-example-map.png)
 
 - Route a high-voltage line between two **existing substations**: Spanish Fork Canyon to Bluffdale
-- You build the cost surface yourself from **slope, roads, cities and existing power lines**, each scored 1 to 10, plus **10** on every river cell, with **lakes** as barriers
+- You build the cost surface yourself from **slope, roads, cities and existing power lines**, each scored 1 to 10, with **lakes** as barriers
 - Then the two-tool routing you just saw: **Distance Accumulation** and **Optimal Path As Line**
 - The whole thing lives in **one ModelBuilder model** so you can change a weight and re-run it
 

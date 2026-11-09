@@ -33,7 +33,7 @@ def save(fig, name):
 
 
 # ------------------------------------------------------------------ workflow
-steps = [("Input layers", "slope, roads, cities,\npower lines, rivers, lakes"),
+steps = [("Input layers", "slope, roads, cities,\npower lines, lakes"),
          ("Reclassify", "each layer to a\n1–10 score (10 = avoid)"),
          ("Raster\nCalculator", "combine scores into\none cost surface"),
          ("Distance\nAccumulation", "from the source: total\ncost + back direction"),

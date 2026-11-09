@@ -202,21 +202,21 @@ def lab10():
     hs = arr(Raster(os.path.join(FG, "hs")))
     r = lambda n: os.path.join(REF, n)
 
-    # the five layers and the sum
+    # the four scores and the sum
     sc = {n: arr(Raster(r(n))) for n in ("Slope_Score", "Road_Score", "City_Score", "Line_Score", "Cost_base")}
-    river = ~np.isnan(arr(Raster(r("River_Cells"))))
     fig, axs = plt.subplots(2, 3, figsize=(13, 10.4))
     panels = [(sc["Slope_Score"], "Slope score\n(0-5 degrees: 1 ... over 30: 10)", "YlOrBr", 1, 10),
               (sc["Road_Score"], "Road score\n(within 1 km: 1 ... over 5 km: 10)", "YlOrBr", 1, 10),
               (sc["City_Score"], "City score\n(inside or within 1 km: 10 ... beyond 5 km: 1)", "YlOrBr", 1, 10),
               (sc["Line_Score"], "Existing-line score\n(within 500 m: 1, 0.5-2 km: 5, else 10)", "YlOrBr", 1, 10),
-              (np.where(river, 10.0, np.nan), "Major streams\n(+10 on every river cell)", ListedColormap(["#2171b5"]), 0, 10),
-              (sc["Cost_base"], f"Cost surface = the sum (weights 1)\n{np.nanmin(sc['Cost_base']):.0f} to {np.nanmax(sc['Cost_base']):.0f}", "magma_r", 4, 48)]
+              (sc["Cost_base"], f"Cost surface = the sum (weights 1)\n{np.nanmin(sc['Cost_base']):.0f} to {np.nanmax(sc['Cost_base']):.0f}", "magma_r", 4, 40)]
     for ax, (a, t, cm, lo, hi) in zip(axs.flat, panels):
         base_ax(ax, t, hs if a is not sc["Cost_base"] else None)
         im = ax.imshow(np.ma.masked_invalid(a), cmap=cm, vmin=lo, vmax=hi, extent=kext(), interpolation="nearest",
                        alpha=0.85 if a is not sc["Cost_base"] else 1.0)
         ends(ax)
+    for ax in axs.flat[len(panels):]:
+        ax.axis("off")
     save(fig, "lcpb-factors.png")
 
     # accumulation and route

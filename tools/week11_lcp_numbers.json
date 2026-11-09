@@ -275,10 +275,9 @@
  },
  "lab10": {
   "base": {
-   "length_km": 56.09,
-   "total_cost": 744018.2,
-   "river_crossings": 4,
-   "pct_within_1km_road": 92.8,
+   "length_km": 55.72,
+   "total_cost": 742670.1,
+   "pct_within_1km_road": 89.0,
    "pct_within_500m_line": 99.7,
    "pct_city_score_10": 100.0,
    "slope_weight": 1.0,
@@ -289,24 +288,22 @@
   "runs": {
    "line0": {
     "length_km": 53.7,
-    "total_cost": 650456.3,
-    "river_crossings": 4,
-    "pct_within_1km_road": 100.0,
-    "pct_within_500m_line": 50.8,
+    "total_cost": 649348.0,
+    "pct_within_1km_road": 99.9,
+    "pct_within_500m_line": 50.7,
     "pct_city_score_10": 100.0,
     "slope_weight": 1,
     "line_weight": 0,
     "barrier": true,
     "moved": {
-     "median_m": 904,
-     "max_m": 3408,
-     "pct_within_300m": 25.8
+     "median_m": 883,
+     "max_m": 2965,
+     "pct_within_300m": 25.9
     }
    },
    "line0_5": {
-    "length_km": 55.01,
-    "total_cost": 712499.9,
-    "river_crossings": 4,
+    "length_km": 55.0,
+    "total_cost": 711329.1,
     "pct_within_1km_road": 99.9,
     "pct_within_500m_line": 82.8,
     "pct_city_score_10": 100.0,
@@ -314,31 +311,29 @@
     "line_weight": 0.5,
     "barrier": true,
     "moved": {
-     "median_m": 58,
-     "max_m": 2530,
-     "pct_within_300m": 74.0
+     "median_m": 35,
+     "max_m": 2178,
+     "pct_within_300m": 74.8
     }
    },
    "line2": {
-    "length_km": 55.88,
-    "total_cost": 800664.9,
-    "river_crossings": 4,
-    "pct_within_1km_road": 89.5,
+    "length_km": 55.75,
+    "total_cost": 799152.8,
+    "pct_within_1km_road": 89.0,
     "pct_within_500m_line": 99.8,
     "pct_city_score_10": 100.0,
     "slope_weight": 1,
     "line_weight": 2,
     "barrier": true,
     "moved": {
-     "median_m": 2,
-     "max_m": 455,
-     "pct_within_300m": 97.7
+     "median_m": 1,
+     "max_m": 97,
+     "pct_within_300m": 100.0
     }
    },
    "slope0": {
     "length_km": 56.05,
-    "total_cost": 685047.6,
-    "river_crossings": 4,
+    "total_cost": 683867.4,
     "pct_within_1km_road": 92.7,
     "pct_within_500m_line": 99.7,
     "pct_city_score_10": 100.0,
@@ -346,32 +341,30 @@
     "line_weight": 1,
     "barrier": true,
     "moved": {
-     "median_m": 6,
-     "max_m": 122,
-     "pct_within_300m": 100.0
+     "median_m": 10,
+     "max_m": 734,
+     "pct_within_300m": 92.3
     }
    },
    "slope5": {
-    "length_km": 55.73,
-    "total_cost": 974822.6,
-    "river_crossings": 4,
-    "pct_within_1km_road": 88.6,
+    "length_km": 55.71,
+    "total_cost": 973140.4,
+    "pct_within_1km_road": 89.0,
     "pct_within_500m_line": 99.2,
     "pct_city_score_10": 100.0,
     "slope_weight": 5,
     "line_weight": 1,
     "barrier": true,
     "moved": {
-     "median_m": 9,
-     "max_m": 561,
-     "pct_within_300m": 93.9
+     "median_m": 6,
+     "max_m": 276,
+     "pct_within_300m": 100.0
     }
    },
    "nobarrier": {
-    "length_km": 56.03,
-    "total_cost": 743288.9,
-    "river_crossings": 4,
-    "pct_within_1km_road": 92.8,
+    "length_km": 55.66,
+    "total_cost": 741939.1,
+    "pct_within_1km_road": 89.0,
     "pct_within_500m_line": 99.7,
     "pct_city_score_10": 100.0,
     "slope_weight": 1,
@@ -379,8 +372,8 @@
     "barrier": false,
     "moved": {
      "median_m": 0,
-     "max_m": 406,
-     "pct_within_300m": 97.3
+     "max_m": 404,
+     "pct_within_300m": 97.5
     }
    }
   },
@@ -392,11 +385,11 @@
      0,
      1
     ],
-    "length_km": 54.96,
+    "length_km": 54.93,
     "moved": {
-     "median_m": 240,
-     "max_m": 1630,
-     "pct_within_300m": 54.5
+     "median_m": 131,
+     "max_m": 1627,
+     "pct_within_300m": 60.9
     }
    },
    "city0": {
@@ -406,25 +399,25 @@
      1,
      0
     ],
-    "length_km": 56.4,
+    "length_km": 56.38,
     "moved": {
-     "median_m": 20,
-     "max_m": 276,
-     "pct_within_300m": 100.0
+     "median_m": 25,
+     "max_m": 752,
+     "pct_within_300m": 90.8
     }
    }
   },
   "corridor": {
-   "min_sum": 743587.25,
-   "within_10pct_km2": 458.4,
-   "within_5pct_km2": 310.2,
-   "within_1pct_km2": 89.7
+   "min_sum": 742158.1875,
+   "within_10pct_km2": 457.3,
+   "within_5pct_km2": 309.9,
+   "within_1pct_km2": 89.9
   },
   "legacy": {
    "length_km": 58.49,
-   "median_m": 184,
-   "p95_m": 670,
-   "max_m": 788
+   "median_m": 163,
+   "p95_m": 675,
+   "max_m": 877
   }
  }
 }

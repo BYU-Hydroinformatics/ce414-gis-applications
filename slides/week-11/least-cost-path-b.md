@@ -91,7 +91,7 @@ By the end of class you should be able to:
 - **Output Back Direction Raster**: the way home, in **degrees**
 - One run replaces **Cost Distance** *and* **Cost Back Link**
 
-<!-- Lab 10's own Figure 7a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features; Cost Distance had no barrier input, so a barrier had to be NoData in the cost raster. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
+<!-- Lab 10's own Figure 6a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features; Cost Distance had no barrier input, so a barrier had to be NoData in the cost raster. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
 
 ---
 
@@ -105,7 +105,7 @@ By the end of class you should be able to:
 - So **Raster to Polyline** is no longer a step
 - Its sibling, **Optimal Path As Raster**, gives the one-cell-wide raster
 
-<!-- Lab 10's own Figure 7b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 56.09 km. Older tutorials end with Raster to Polyline because Cost Path only makes a raster. -->
+<!-- Lab 10's own Figure 6b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 55.72 km. Older tutorials end with Raster to Polyline because Cost Path only makes a raster. -->
 
 ---
 
@@ -130,7 +130,7 @@ By the end of class you should be able to:
 - Distance Accumulation can head off **between** the eight neighbors: 193°, 121°, 229°
 - So its paths are **straighter** than a staircase of 45° steps
 
-<!-- The angles are read straight off the back direction raster on the toy grid. On Lab 10's cost surface the legacy chain (Cost Distance with its back link, Cost Path, Raster to Polyline; lakes as NoData) gives 58.49 km against 56.09 km: much of the extra 2.4 km is the staircase. -->
+<!-- The angles are read straight off the back direction raster on the toy grid. On Lab 10's cost surface the legacy chain (Cost Distance with its back link, Cost Path, Raster to Polyline; lakes as NoData) gives 58.49 km against 55.72 km: much of the extra 2.8 km is the staircase. -->
 
 ---
 
@@ -146,7 +146,7 @@ By the end of class you should be able to:
 
 ![h:530 center](images/lcpb-factors.png)
 
-<!-- Lab 10's model, from the hosted package at 30 m (tools/lab10/run_model.py): four scores from 1 (cheap) to 10 (expensive), slope in degrees, straight-line distance to a major road, to a city (0 inside one) and to an existing 46-345 kV line, plus 10 on every cell a major stream crosses, added with both weights at 1. The sum runs from 4 to 48, mean 23.69. Score tables are on the lab page's Analysis Considerations. -->
+<!-- Lab 10's model, from the hosted package at 30 m (tools/lab10/run_model.py): four scores from 1 (cheap) to 10 (expensive), slope in degrees, straight-line distance to a major road, to a city (0 inside one) and to an existing 46-345 kV line, added with both weights at 1. The sum runs from 4 to 40, mean 23.66. Streams are not in the cost: the valley's are narrow enough to span. Score tables are on the lab page's Analysis Considerations. -->
 
 ---
 
@@ -155,11 +155,11 @@ By the end of class you should be able to:
 ![bg right:48% w:96%](images/lcpb-accumulation.png)
 
 - The source: the mouth of **Spanish Fork Canyon** (green); the destination: **Bluffdale** (red)
-- Straight line: **52.79 km**; cheapest route: **56.09 km**, **6%** longer
+- Straight line: **52.79 km**; cheapest route: **55.72 km**, **6%** longer
 - It follows **existing transmission lines** almost the whole way: **99.7%** of it within 500 m of one
 - The **lakes** (light blue) are barriers: the accumulation flows around them
 
-<!-- The colors are Distance Accumulation's raster, the white lines its contours; the red line is Optimal Path As Line. The accumulated cost at the destination is 744,018 (cost x meters). It crosses 4 major streams. 92.8% of it lies within 1 km of a major road. Numbers: tools/lab10/check_values.json, the same values the lab page publishes. -->
+<!-- The colors are Distance Accumulation's raster, the white lines its contours; the red line is Optimal Path As Line. The accumulated cost at the destination is 742,670 (cost x meters). 89.0% of it lies within 1 km of a major road. Numbers: tools/lab10/check_values.json, the same values the lab page publishes. -->
 
 ---
 
@@ -207,10 +207,10 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ![h:340 center](images/lcpb-nochange.png)
 
-- **No city score**: at most **276 m** from the baseline · **no lake barrier**: **406 m** · **Slope_Weight 5**: you measure it in Step 9
+- **No city score**: at most **752 m** from the baseline · **no lake barrier**: **404 m** · **Slope_Weight 5**: you measure it in Step 8
 - Flat valley floor, **in cities** the whole way, **away from the lakes**: the same along every candidate route, so they cannot choose between them
 
-<!-- Measured on Lab 10 (tools/lab10/check_values.json and explore_weights.json; the farthest distance is from the baseline route, sampled every 100 m): city weight 0 (changed in the expression, not a Lab 10 parameter) 56.40 km, 100% within 300 m, every cell of the baseline route has city score 10; no barrier 56.03 km, 97% within 300 m. Lab 10's Step 9 asks students to find the slope result themselves, so the slope numbers are not in this deck. Each would matter in another place, or with other scores: that is the lesson, not that slope and cities never matter. -->
+<!-- Measured on Lab 10 (tools/lab10/check_values.json and explore_weights.json; the farthest distance is from the baseline route, sampled every 100 m): city weight 0 (changed in the expression, not a Lab 10 parameter) 56.38 km, 91% within 300 m, every cell of the baseline route has city score 10; no barrier 55.66 km, 98% within 300 m. Lab 10's Step 8 asks students to find the slope result themselves, so the slope numbers are not in this deck. Each would matter in another place, or with other scores: that is the lesson, not that slope and cities never matter. -->
 
 ---
 
@@ -218,10 +218,10 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ![h:360 center](images/lcpb-scenarios.png)
 
-- **No road score**: **54.96 km**, up to **1.6 km** from the baseline · **Line_Weight 0**: you measure it in Step 9
+- **No road score**: **54.93 km**, up to **1.6 km** from the baseline · **Line_Weight 0**: you measure it in Step 8
 - The **existing-line score** is what holds the route where it is
 
-<!-- The thick pale red line in each panel is the baseline, for comparison; yellow lines are the existing transmission lines. Road weight 0 (changed in the expression, not a Lab 10 parameter) keeps 55% of the route within 300 m of the baseline. Line_Weight 0 is a Step 9 run, so its numbers are not in this deck. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
+<!-- The thick pale red line in each panel is the baseline, for comparison; yellow lines are the existing transmission lines. Road weight 0 (changed in the expression, not a Lab 10 parameter) keeps 61% of the route within 300 m of the baseline. Line_Weight 0 is a Step 8 run, so its numbers are not in this deck. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
 
 ---
 
@@ -231,7 +231,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 - Run Distance Accumulation **from both ends** and **add** the two rasters
 - Each cell gets the cost of the **best route forced through it**
-- Within **1%** of the cheapest: **89.7 km²**; within **5%**: **310 km²**; within **10%**: **458 km²**
+- Within **1%** of the cheapest: **89.9 km²**; within **5%**: **310 km²**; within **10%**: **457 km²**
 - Where the band is **wide**, the exact line is **arbitrary**; where it pinches, it is **not**
 
 <!-- The sum was computed with Raster Calculator on the two accumulation rasters; ArcGIS Pro also has a Corridor tool in Spatial Analyst that does the same sum (seen in the Geoprocessing search on October 9, 2026; not run for this deck). On Lab 10's cost surface the band is narrow near both endpoints and wide along the valley floor, where several nearly equally cheap routes exist; the lake barrier bounds it on the west. An engineer presents the corridor to a siting board, then picks a line inside it for reasons the cost surface never saw: land ownership, a tower foundation, a landowner's objection. -->
@@ -244,14 +244,14 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ![bg right:40% w:94%](images/lcpb-accumulation.png)
 
-- Today's **two substations**, **four scores**, **river cells** and **lake barrier**, at 30 m
+- Today's **two substations**, **four scores** and **lake barrier**, at 30 m
 - Build it as **one ModelBuilder model**, with **Slope_Weight** and **Line_Weight** as parameters
 - **Your own Line_Weight** = 0.005 × the last two digits of your BYU ID
 - Run it again with the weights changed, and explain **which moved the route and why**
 
 [Lab 10 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 
-<!-- Legacy check on Lab 10's cost surface: Cost Distance (lakes as NoData) + Cost Path (each cell) + Raster to Polyline gives 58.49 km; sampled every 100 m it is a median 184 m from the Distance Accumulation route, 95% within 670 m, all within 788 m. Lab 10 uses only the current tools. -->
+<!-- Legacy check on Lab 10's cost surface: Cost Distance (lakes as NoData) + Cost Path (each cell) + Raster to Polyline gives 58.49 km; sampled every 100 m it is a median 163 m from the Distance Accumulation route, 95% within 675 m, all within 877 m. Lab 10 uses only the current tools. -->
 
 ---
 
@@ -265,7 +265,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 **Quiz: What Moved the Line?** Five questions on the current tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
 
 - A quick check that today's material made sense
-- The line-weight question comes back in Lab 10 Step 9
+- The line-weight question comes back in Lab 10 Step 8
 
 **Before next class**
 
