@@ -234,7 +234,7 @@ without the step-by-step instructions below, say so in your report.
 
 > [!NOTE]
 > **Build it once, build it to be changed.** The steps walk through the route at the default
-> weights. Step 9 re-runs the same model six times with the weights changed, so give every dataset
+> weights. Step 9 re-runs the same model at least five times with the weights changed, so give every dataset
 > a readable name as you go.
 
 > [!NOTE]
@@ -506,7 +506,7 @@ Then measure three things about the route:
 
 ### Step 8 — Run the Tool
 
-Step 9 runs the model six times, so make each run cheap: everything you will change or keep must be
+Step 9 runs the model at least five more times, so make each run cheap: everything you will change or keep must be
 a parameter.
 
 1. Check that these are parameters (right-click ▸ **Parameter**; a `P` appears beside each):

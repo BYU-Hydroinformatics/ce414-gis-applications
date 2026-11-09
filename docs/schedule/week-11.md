@@ -17,7 +17,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
-- [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one.
+- [Cheapest or Shortest?](../quizzes/least-cost-path/index.html) — Five questions on cost surfaces, the accumulated cost and back direction rasters, and why the cheapest route is usually not the shortest one.
 - [What Moved the Line?](../quizzes/cost-paths/index.html) — Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.
 
 </div>
@@ -28,7 +28,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 [Lab 10 — Least Cost Path Power Line Analysis](../assignments/lab-10/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Saturday at 11:59 pm** on Learning Suite as a PDF report and your `Lab10.atbx` toolbox — 50 points.
 
 </div>
 

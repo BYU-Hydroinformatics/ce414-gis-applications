@@ -331,7 +331,7 @@ const LABS = {
       hint: 'Rubric: your check values from Steps 1 to 7 (1 point); they also show the model works (part of its 3 points). These come from the default weights, 1 and 1.',
       table: { caption: 'Table 3. Check values at the default weights.',
                head: ['Check', 'Your value'],
-               rows: [['Major_Roads, Major_Lakes, Major_Streams, Existing_Lines (features)', ''], ['Cost_Surface minimum and maximum', ''],
+               rows: [['Major_Roads, Major_Lakes, Major_Streams, Existing_Lines, Source_Point, Destination_Point (features)', ''], ['Cost_Surface minimum and maximum', ''],
                       ['Route length (km)', ''], ['Accumulated cost at the destination', ''], ['Major streams crossed', '']],
                widths: [5360, 4000] } },
 

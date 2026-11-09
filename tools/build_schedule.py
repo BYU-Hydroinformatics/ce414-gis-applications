@@ -159,6 +159,10 @@ LAB_FILES_DEFAULT = "as one PDF report on Learning Suite"
 LAB_FILES = {
     6: "on Learning Suite as a PDF report plus each map as its own layout PDF",
     7: "on Learning Suite as a PDF report, each map as its own layout PDF, and your `Lab07.atbx` toolbox",
+    8: "on Learning Suite as a PDF report and your `Lab08.atbx` toolbox",
+    9: "on Learning Suite as a PDF report and your project's `.atbx` toolbox",
+    10: "on Learning Suite as a PDF report and your `Lab10.atbx` toolbox",
+    11: "on Learning Suite as a PDF report and your `Lab11.atbx` toolbox",
 }
 
 # Self-check quizzes hosted on this site (docs/quizzes/<slug>/index.html). Not graded and not in the
@@ -207,7 +211,7 @@ PRACTICE = {
          ("volumes", "The Base Is the Answer",
           "Five questions on a cell's volume, why a DEM must be projected first, when Surface Volume is enough, and why the base surface decides a mountain's volume.")],
     11: [("least-cost-path", "Cheapest or Shortest?",
-          "Five questions on cost surfaces, the accumulated cost and back link rasters, and why the cheapest route is usually not the shortest one."),
+          "Five questions on cost surfaces, the accumulated cost and back direction rasters, and why the cheapest route is usually not the shortest one."),
          ("cost-paths", "What Moved the Line?",
           "Five questions on the current tools, the back direction raster as a compass angle, which cost factors actually move a route, and what a corridor shows.")],
     12: [("networks", "Along the Roads",

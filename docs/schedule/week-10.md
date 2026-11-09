@@ -31,7 +31,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 [Lab 9 — Big Southern Butte](../assignments/lab-09/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Saturday at 11:59 pm** on Learning Suite as a PDF report and your project's `.atbx` toolbox — 50 points.
 
 </div>
 

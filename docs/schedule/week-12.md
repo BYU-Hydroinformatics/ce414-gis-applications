@@ -28,7 +28,7 @@ Self-check quizzes — not graded; open them on a phone or laptop as often as yo
 
 [Lab 11 — Network Analysis](../assignments/lab-11/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Saturday at 11:59 pm** on Learning Suite as a PDF report and your `Lab11.atbx` toolbox — 50 points.
 
 </div>
 
