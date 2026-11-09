@@ -71,16 +71,16 @@ produce paths that weigh many factors at once (Meehan, 2007). That is why the
 work belongs in a model: added layers, changed weights and new requirements all change the least
 cost path, and a model can be re-run as many times as it takes to reach a route everyone involved
 can accept. This lab introduces a few of the processes and requirements used to model a least cost
-path for a power line. It does not model the public's behavior; Step 9 asks you what that leaves out.
+path for a power line. It does not model the public's behavior; Step 8 asks you what that leaves out.
 
 A least cost path works on a **cost surface**: a raster in which every cell says how expensive it is
 to build across it. You decide what makes a cell expensive — steep ground, distance from a road you
-could build from, nearness to a city, distance from an existing line whose corridor you could share,
-a river to cross — and give each a score. Then ArcGIS Pro accumulates the cost outward from the start
+could build from, nearness to a city, distance from an existing line whose corridor you could
+share — and give each a score. Then ArcGIS Pro accumulates the cost outward from the start
 and walks the cheapest way home from the end.
 
 The route you get is the cheapest route **for the costs you chose**, and nothing more. Every score
-and every weight in this lab is a decision, and several of them are close calls. In Step 9 you will
+and every weight in this lab is a decision, and several of them are close calls. In Step 8 you will
 vary the weights, see how far the route moves, and use what moves to say which decisions the answer
 really depends on, and which ones hardly matter.
 
@@ -91,7 +91,7 @@ the existing lines and roads run up the valley east of it.
 
 > [!IMPORTANT]
 > **Your job — see the deliverables below.** Build one ModelBuilder model that turns slope, roads,
-> cities, existing lines and streams into a cost surface and routes a power line across it; run it
+> cities and existing lines into a cost surface and routes a power line across it; run it
 > from the study area's two substations; test how much the route depends on the weights; and make
 > two maps.
 
@@ -100,14 +100,14 @@ the existing lines and roads run up the valley east of it.
 A new high-voltage line is needed from an existing substation at the mouth of Spanish Fork Canyon,
 in the area of the wind park there, to an existing substation at the Point of the Mountain in
 Bluffdale, near the data center at Bluffdale. Both substations are features of the Utah Geospatial
-Resource Center's transmission-line layer. Using an elevation model and the roads, lakes, streams,
-city boundaries and existing power lines between them:
+Resource Center's transmission-line layer. Using an elevation model and the roads, lakes, city
+boundaries and existing power lines between them:
 
 1. Build a cost surface that scores every 30 m cell on slope, distance to a major road, nearness to
-   a city, distance to an existing line, and whether it is a major stream.
+   a city, and distance to an existing line.
 2. Find the least cost route from the source substation to the destination substation, around the
    major lakes.
-3. Report its length, its total accumulated cost, and how many major streams it crosses.
+3. Report its length and its total accumulated cost.
 4. Re-run the model with the weights changed, and say what moved the route and why.
 
 ## Analysis Considerations
@@ -140,15 +140,15 @@ Every one of these is a decision somebody made, and every one of them can change
 - **Equal weights by default.** The cost of a cell is the sum of the four scores, with **Slope_Weight**
   and **Line_Weight** multiplying the slope and line scores. Both are **1** by default, which says
   every factor matters equally. Nobody knows that, so the two weights are **model parameters** and
-  Step 9 changes them.
+  Step 8 changes them.
 - **One hard barrier: lakes and marshes over 1 km².** A **barrier** is a cell the route may never enter; a **cost** is a
   cell it may cross if nothing cheaper exists. Only waterbodies over 1 km² — Utah Lake, Deer Creek
   Reservoir, White Lake and four unnamed marshes — are barriers. Cities stay a cost, not a barrier: both
   substations are inside cities, and most of the valley floor between them is municipal.
-- **A major stream adds 10 per cell.** Each cell a major stream passes through adds **10** to the
-  cost, so a route crosses a river where it has to, and does not run along one.
 - **Distances are straight-line.** Distance to a road, a city or a line is measured as the crow
   flies, not along the ground or a road network.
+- **Streams are not a cost.** The streams in this valley are narrow enough for a line to span
+  between towers, so the model leaves them out. The `Streams` layer is in the package for your maps.
 - **What the model ignores.** Right-of-way and who owns the land; tower placement and span lengths;
   line capacity and voltage; existing lines that are full; and public opinion. None of these is in
   the data, and your report says what each would change.
@@ -175,16 +175,16 @@ mouth of Spanish Fork Canyon to Bluffdale, and stored in NAD 1983 UTM Zone 12N:
 | `Elevation.tif` | Ground elevation, meters above NAVD 88, 30 m cells | USGS [3D Elevation Program](https://www.usgs.gov/3d-elevation-program){ target="_blank" } (3DEP), read from the 3DEP elevation image service and exported at 30 m with bilinear resampling |
 | `PowerLineData.gdb\Roads` | Road centerlines that UDOT gives a functional class (`DOT_FCLASS`) | UGRC [Road Centerlines](https://gis.utah.gov/products/sgid/transportation/road-centerlines/){ target="_blank" } (UtahRoads) |
 | `PowerLineData.gdb\Lakes` | Every NHD waterbody in the box, with `AreaSqKm` | UGRC [NHD Lakes](https://gis.utah.gov/products/sgid/water/nhd-lakes/){ target="_blank" } |
-| `PowerLineData.gdb\Streams` | Every NHD flowline in the box, with `IsMajor` | UGRC [NHD Streams](https://gis.utah.gov/products/sgid/water/nhd-streams/){ target="_blank" } |
+| `PowerLineData.gdb\Streams` | Every NHD flowline in the box, with `IsMajor`. The model does not use it; it is there for your maps | UGRC [NHD Streams](https://gis.utah.gov/products/sgid/water/nhd-streams/){ target="_blank" } |
 | `PowerLineData.gdb\Cities` | Municipal boundaries | UGRC [Municipal Boundaries](https://gis.utah.gov/products/sgid/boundaries/municipal/){ target="_blank" } |
 | `PowerLineData.gdb\Power_Lines` | Transmission lines (`LAYER` `KV-46`, `KV-138`, `KV-345`) and substations (`LAYER` `SUB-...`) | UGRC TransmissionLines, a live feature service with no product page: [the service layer](https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/TransmissionLines/FeatureServer/0){ target="_blank" } |
 | `PowerLineData.gdb\Endpoints` | The two substations, `Role` = `Source` / `Destination` | Copied from `Power_Lines` (`UGRC_OID` 2185 and 1350) |
-| `Major_Roads`, `Major_Lakes`, `Major_Streams`, `Existing_Lines` | The subsets the model uses | **You make them**, in Step 1 |
+| `Major_Roads`, `Major_Lakes`, `Existing_Lines` | The subsets the model uses | **You make them**, in Step 1 |
 
 **What we already did for you.** Read each layer from its source on October 9, 2026, clipped it to
 the box, and kept only the fields the lab uses plus `UGRC_OID`, the feature's object ID in the UGRC
 service. Field values were not changed. There is no layer here for you to create and defend; the
-weights you choose in Step 9 play that role.
+weights you choose in Step 8 play that role.
 
 > [!TIP]
 > **Check the data:** `Elevation.tif` is **1,719 columns × 2,124 rows** of 30 m cells, **1,314.97 to
@@ -209,19 +209,18 @@ New in this lab:
 | --- | --- |
 | ![Distance Accumulation icon: rings of growing cost spreading from a dark source cell, squeezed where they meet an expensive orange patch marked times 10](images/icon-distance-accumulation.svg){ .tool-icon }<br>**Distance Accumulation** (Spatial Analyst) | For every cell, the cheapest total cost of reaching it from a source, spreading slowly through expensive cells and never through a barrier; it also writes the **back direction**, the way home. With no cost raster it gives plain straight-line distance, so this lab uses it for both jobs. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/distance-accumulation.htm){ target="_blank" } |
 | ![Optimal Path As Line icon: a cost grid with a dark expensive block in the middle; a dashed straight line from the green source to the red destination crosses it, while the orange route goes around it](images/icon-optimal-path-as-line.svg){ .tool-icon }<br>**Optimal Path As Line** (Spatial Analyst) | Walks from a destination back to the source along the back direction raster, and draws the cheapest route as a line feature class. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/optimal-path-as-line.htm){ target="_blank" } |
-| ![Polyline to Raster icon: a river line drawn across a grid, and every cell it passes through filled blue](images/icon-polyline-to-raster.svg){ .tool-icon }<br>**Polyline to Raster** (Conversion) | Turns lines into cells: every cell a line passes through takes the value of a field you choose, and every other cell is NoData. Here, the major streams become river cells. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/conversion/polyline-to-raster.htm){ target="_blank" } |
 
 Tools you already know: **Select** (Lab 1), **Slope** (Lab 4), **Reclassify** (Lab 2), and
 **Raster Calculator** with model variables (Lab 5).
 
 ## Example Model
 
-![The Power Line Route model exported from ModelBuilder, laid out left to right. Roads, Lakes, Streams and Power_Lines each go through a Select to Major_Roads, Major_Lakes, Major_Streams (marked P) and Existing_Lines; Cities, Major_Roads and Existing_Lines each go to a Distance Accumulation that makes City_Distance, Road_Distance and Line_Distance, plus three unused outputs each; Elevation.tif goes through Slope to Slope_Degrees; four Reclassify tools make Slope_Score, Road_Score, City_Score and Line_Score; Polyline to Raster makes River_Cells; Raster Calculator takes the four scores, River_Cells, Slope_Weight and Line_Weight (both marked P) and makes Cost_Surface (P). Endpoints goes through two Selects to Source_Point and Destination_Point; a fourth Distance Accumulation takes Source_Point, Major_Lakes as the barrier and Cost_Surface and makes Accumulated_Cost (P) and Back_Direction; Optimal Path As Line takes Destination_Point, Accumulated_Cost and Back_Direction and makes Route (P). Every tool carries a green check from a completed run.](images/lab10-model.svg)
+![The Power Line Route model exported from ModelBuilder, laid out left to right. Roads, Lakes and Power_Lines each go through a Select to Major_Roads, Major_Lakes and Existing_Lines; Cities, Major_Roads and Existing_Lines each go to a Distance Accumulation that makes City_Distance, Road_Distance and Line_Distance, plus three unused outputs each; Elevation.tif goes through Slope to Slope_Degrees; four Reclassify tools make Slope_Score, Road_Score, City_Score and Line_Score; Raster Calculator takes the four scores, Slope_Weight and Line_Weight (both marked P) and makes Cost_Surface (P). Endpoints goes through two Selects to Source_Point and Destination_Point; a fourth Distance Accumulation takes Source_Point, Major_Lakes as the barrier and Cost_Surface and makes Accumulated_Cost (P) and Back_Direction; Optimal Path As Line takes Destination_Point, Accumulated_Cost and Back_Direction and makes Route (P). Every tool carries a green check from a completed run.](images/lab10-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Six
-selections and an elevation model in; five score rasters in the middle; one cost surface; one
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. Five
+selections and an elevation model in; four score rasters in the middle; one cost surface; one
 route out. The elements marked `P` are the model parameters — the two weights and the outputs you keep —
-and they become the tool dialog of Step 8. ModelBuilder numbers repeated tools itself:
+and they become the tool dialog of Step 7. ModelBuilder numbers repeated tools itself:
 *Select (2)*, *Distance Accumulation (3)*.
 
 ## Complete the Lab
@@ -234,12 +233,12 @@ without the step-by-step instructions below, say so in your report.
 
 > [!NOTE]
 > **Build it once, build it to be changed.** The steps walk through the route at the default
-> weights. Step 9 re-runs the same model at least five times with the weights changed, so give every dataset
+> weights. Step 8 re-runs the same model at least five times with the weights changed, so give every dataset
 > a readable name as you go.
 
 > [!NOTE]
 > **Every check value on this page** was measured on the files you download, with the settings
-> below, in ArcGIS Pro 3.7.1. Your numbers should match to the last digit shown. The screenshots
+> below, in ArcGIS Pro 3.7.3. Your numbers should match to the last digit shown. The screenshots
 > were captured in the same version and may differ slightly from yours.
 
 ### Step 0 — Set Up the Project
@@ -250,7 +249,7 @@ without the step-by-step instructions below, say so in your report.
    `Lab10.gdb` and `Lab10.atbx` beside it. The downloaded data stay in their own geodatabase,
    `lab10-power-line\PowerLineData.gdb`.
 2. Add `Elevation.tif` (if ArcGIS Pro offers to build pyramids or statistics, click **OK**) and, from
-   `PowerLineData.gdb`, `Roads`, `Lakes`, `Streams`, `Cities` and `Power_Lines`. If the browser keeps
+   `PowerLineData.gdb`, `Roads`, `Lakes`, `Cities` and `Power_Lines`. If the browser keeps
    losing the geodatabase, the **Add Data** button's drop-down has **Add Data From Path**, which takes a
    typed path such as `D:\Smith\Lab10\lab10-power-line\PowerLineData.gdb\Roads`. Add an imagery
    basemap.
@@ -279,7 +278,7 @@ definition, `PROJCRS["NAD_1983_UTM_Zone_12N", ...`, as here; it is the same coor
 
 ### Step 1 — Select the Layers
 
-Add six **Select** tools to the model, each from the downloaded layer, with these expressions
+Add five **Select** tools to the model, each from the downloaded layer, with these expressions
 (turn on **SQL Editor** and type them exactly; a green check mark appears above the box, beside the
 SQL Editor switch, when the expression is valid, and hovering it reads **The SQL expression is
 valid**):
@@ -288,7 +287,6 @@ valid**):
 | --- | --- | --- |
 | `Roads` | `Major_Roads` | `DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial')` |
 | `Lakes` | `Major_Lakes` | `AreaSqKm > 1` |
-| `Streams` | `Major_Streams` | `IsMajor = 1` |
 | `Power_Lines` | `Existing_Lines` | `LAYER LIKE 'KV-%'` |
 | `Endpoints` | `Source_Point` | `Role = 'Source'` |
 | `Endpoints` | `Destination_Point` | `Role = 'Destination'` |
@@ -306,7 +304,8 @@ which can reset it.
 
 > [!TIP]
 > **Check the result:** `Major_Roads` **1,377** features, `Major_Lakes` **7** (Utah Lake, Deer Creek
-> Reservoir, White Lake and four unnamed marshes), `Major_Streams` **319**, `Existing_Lines` **241**; `Source_Point` and `Destination_Point` **1** each. An output with the
+> Reservoir, White Lake and four unnamed marshes), `Existing_Lines` **241**; `Source_Point` and
+> `Destination_Point` **1** each. An output with the
 > same count as its input — 8,937 roads, 292 power lines — means the expression was not applied; 292
 > power lines include the **51** substations.
 
@@ -343,7 +342,7 @@ slot skips the Select.
 
 With no cost raster, every cell costs 1 per meter, so the "accumulated cost" is simply the
 straight-line distance in meters to the nearest source. One tool does both jobs in this lab: here it
-measures distance, and in Step 7 it accumulates cost.
+measures distance, and in Step 6 it accumulates cost.
 
 ![The Distance Accumulation dialog: Input Raster or Feature Sources Major_Roads; Output Distance Accumulation Raster Road_Distance; Input Raster or Feature Barriers, Input Surface Raster, Input Cost Raster and Output Back Direction Raster empty; Distance Method Planar; four optional groups collapsed.](images/lab10-distance-roads.png)
 
@@ -394,25 +393,7 @@ A value exactly on a break goes to the lower range: a cell exactly 1,000 m from 
 > where Slope has no neighbors on one side and writes NoData. If a score raster has
 > NoData anywhere else, a range has a gap.
 
-### Step 5 — Mark the Rivers
-
-Add **Polyline to Raster** with `Major_Streams` as the **Input Features**. The dialog fills
-**Value field** with `OBJECTID` by itself; change it to `IsMajor` — every major stream has `IsMajor`
-= 1 — and name the output `River_Cells`. Leave **Cell assignment type** at **Maximum length**; the
-cell size comes from the environment.
-
-Any field that holds 1 on every feature works.
-
-![The Polyline to Raster dialog: Input Features Major_Streams; Value field IsMajor; Output Raster Dataset River_Cells; Cell assignment type Maximum length; Priority field NONE; Cellsize Elevation.tif; Build raster attribute table checked.](images/lab10-polyline-to-raster.png)
-
-**Figure 5.** Every cell a major stream passes through becomes a river cell.
-
-> [!TIP]
-> **Check the result:** `River_Cells` has **9,713** cells, all with the value 1; every other cell is
-> NoData. Values from 1 to 319 mean the value field stayed `OBJECTID`. Step 6 only asks whether a
-> cell is a river cell, so the cost comes out the same, but fix it so the check matches.
-
-### Step 6 — Build the Cost
+### Step 5 — Build the Cost
 
 1. On the **ModelBuilder** tab click **Variable**. The data-type list opens at **String**; type
    `Double` to jump to it, choose it, and click **OK**. Right-click the new oval ▸ **Rename** ▸
@@ -423,26 +404,24 @@ Any field that holds 1 on every feature works.
    this expression, and output `Cost_Surface`:
 
 ```text
-%Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%" + Con(IsNull("%River_Cells%"), 0, 10)
+%Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%"
 ```
 
 Double-click a raster in the **Rasters** list and it goes in as `"%Slope_Score%"`; type the weights
-as `%Slope_Weight%` and `%Line_Weight%`, without quotation marks, since they are numbers.
-
-The last term turns river cells into 10 and every other cell into 0: `IsNull` is true where
-`River_Cells` is NoData. Without it, every cell off a river would be NoData in the sum. Type the
+as `%Slope_Weight%` and `%Line_Weight%`, without quotation marks, since they are numbers. Type the
 output name last; Raster Calculator can replace a typed name with a default when the expression
 changes. Make `Cost_Surface` a parameter, so that a run from the tool dialog keeps it.
 
-![The Raster Calculator dialog, widened so the expression fits on one line: %Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%" + Con(IsNull("%River_Cells%"), 0, 10); Output raster Cost_Surface.](images/lab10-cost-calc.png)
+![The Raster Calculator dialog, widened so the expression fits on one line: %Slope_Weight% * "%Slope_Score%" + "%Road_Score%" + "%City_Score%" + %Line_Weight% * "%Line_Score%"; Output raster Cost_Surface, with a warning that the dataset already exists.](images/lab10-cost-calc.png)
 
-**Figure 6.** The cost surface: four scores, two weights and the river crossings. Drag the dialog's
-corner to widen it.
+**Figure 5.** The cost surface: four scores and two weights. Drag the dialog's edge to widen it.
 
 > [!TIP]
-> **Check the result:** `Cost_Surface` runs from **4 to 48**, mean **23.69**. A minimum of 4 is a
-> cell scoring 1 on every factor, off a river. If your minimum is not 4, a weight is not 1 or a score
-> raster has NoData; if most of the box is NoData, the `Con(IsNull(...))` term is missing.
+> **Check the result:** `Cost_Surface` runs from **4 to 40**, mean **23.66**. A minimum of 4 is a
+> cell scoring 1 on every factor, and 40 a cell scoring 10 on every one. If your range is not 4 to 40,
+> a weight is not 1 or a score raster has NoData. If the run fails with a message that a `str` object
+> has no attribute `save`, the score rasters in the expression no longer exist: on the ModelBuilder tab
+> click **Validate**, then **Run** the whole model again.
 
 > [!NOTE]
 > **Why a sum, and why weights.** Adding scores says a steep cell next to a road is still expensive
@@ -450,7 +429,7 @@ corner to widen it.
 > as the others; 0 removes it. Reclassify's table cannot be a parameter, but a number in Raster
 > Calculator can, which is why the weights live here.
 
-### Step 7 — Route the Line
+### Step 6 — Route the Line
 
 1. Add **Distance Accumulation** again:
     - **Input Raster or Feature Sources**: `Source_Point`
@@ -468,64 +447,60 @@ corner to widen it.
     - **Path Type**: **Each zone** (with one destination, it does not matter)
 3. Make `Accumulated_Cost` and `Route` parameters. Save the model and run it inside ModelBuilder
    (**Run** on the ModelBuilder tab). It took about a minute and a half on a laptop. A run inside
-   ModelBuilder adds nothing to the map: to measure the route, add `Route`, `Accumulated_Cost` and
-   `Major_Streams` from `Lab10.gdb` in the **Catalog** pane.
+   ModelBuilder adds nothing to the map: to measure the route, add `Route` and `Accumulated_Cost`
+   from `Lab10.gdb` in the **Catalog** pane.
 
 
 
 ![The Distance Accumulation dialog for the route: Input Raster or Feature Sources Source_Point; Output Distance Accumulation Raster Accumulated_Cost; Input Raster or Feature Barriers Major_Lakes; Input Surface Raster empty; Input Cost Raster Cost_Surface; Output Back Direction Raster Back_Direction; Distance Method Planar.](images/lab10-distance-route.png)
 
-**Figure 7a.** The cost accumulated outward from the source substation, around the lakes.
+**Figure 6a.** The cost accumulated outward from the source substation, around the lakes.
 
 ![The Optimal Path As Line dialog: Input Raster or Feature Destinations Destination_Point; Destination Field UGRC_OID; Input Distance Accumulation Raster Accumulated_Cost; Input Back Direction or Flow Direction Raster Back_Direction; Output Optimal Path as Line Route; Path Type Each zone; Create Network Paths unchecked.](images/lab10-optimal-path.png)
 
-**Figure 7b.** The route walked home from the destination.
+**Figure 6b.** The route walked home from the destination.
 
-Then measure three things about the route:
+Then measure two things about the route:
 
 - **Its length:** the `Shape_Length` field of `Route`, in meters. If `Route` has more than one row,
   add them.
 - **The total accumulated cost:** the `PathCost` field of `Route`, in the same table. Optimal Path
   As Line writes it from `Accumulated_Cost` at the destination, so it is the value of the
   `Accumulated_Cost` cell under the `Destination` point.
-- **The major streams it crosses:** run **Pairwise Intersect** of `Route` and `Major_Streams` with
-  **Output Type** **Point**, and count the points it makes.
 
 > [!TIP]
-> **Check the result:** `Route` is **56.09 km** long; the straight line between the substations is
-> **52.79 km**. Its `PathCost`, the accumulated cost at the destination, is **744,018**, and
-> `Accumulated_Cost` reaches **1,116,187** at the far corner of the box. The route crosses **4** major
-> streams. If your route is
-> close to the straight line, bending only around the lakes, Distance Accumulation got no cost raster.
+> **Check the result:** `Route` is **55.72 km** long; the straight line between the substations is
+> **52.79 km**. Its `PathCost`, the accumulated cost at the destination, is **742,670**, and
+> `Accumulated_Cost` reaches **1,115,042** at the far corner of the box. If your route is close to the
+> straight line, bending only around the lakes, Distance Accumulation got no cost raster.
 
 > [!NOTE]
 > **Reading the two rasters.** `Accumulated_Cost` is cost × meters: a step across one 30 m cell of cost
-> 4 adds 120. At the destination, 744,018 over 56,090 m is an average cost of about 13 per meter
+> 4 adds 120. At the destination, 742,670 over 55,720 m is an average cost of about 13 per meter
 > along the route. `Back_Direction` says which way to step to get home, in **degrees**: **0** marks the
 > source, **90** means go east, 180 south, 270 west and 360 north. The Week 11 Thursday deck reads one cell by cell on this lab's reference run ([Least Cost Path Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-11/least-cost-path-b.html){ target="_blank" }).
 
-### Step 8 — Run the Tool
+### Step 7 — Run the Tool
 
-Step 9 runs the model at least five more times, so make each run cheap: everything you will change or keep must be
+Step 8 runs the model at least five more times, so make each run cheap: everything you will change or keep must be
 a parameter.
 
 1. Check that these are parameters (right-click ▸ **Parameter**; a `P` appears beside each):
-   `Slope_Weight`, `Line_Weight`, `Major_Streams` (so the crossings can be counted after every run),
-   `Cost_Surface`, `Accumulated_Cost` and `Route`.
+   `Slope_Weight`, `Line_Weight`, `Cost_Surface`, `Accumulated_Cost` and `Route`.
 2. Save, and close the model's tab. In the **Catalog** pane, open `Lab10.atbx` and double-click
    **Power Line Route**: it opens as a tool in the Geoprocessing pane. Its parameters can take a few
-   seconds to appear; wait for all six.
+   seconds to appear; wait for all five.
 3. Clear any selection on the map (**Map** tab ▸ **Selection** group ▸ **Clear**), then run it once
-   at the defaults, with new output names — `Route_Base`, `Accumulated_Cost_Base`,
-   `Cost_Surface_Base`, `Major_Streams_Base` — and measure the route as in Step 7. Check all four
-   names once more before **Run**: a name typed and left with Tab can revert to the default. A yellow
+   at the defaults, with new output names — `Route_Base`, `Accumulated_Cost_Base` and
+   `Cost_Surface_Base` — and measure the route as in Step 6. Check all three names once more before
+   **Run**: a name typed and left with Tab can revert to the default. A yellow
    warning that a dataset already exists only means it will be replaced.
 
 
 
-![The Power Line Route tool in the Geoprocessing pane: Slope_Weight 1; Line_Weight 1; Route Route_Base; Accumulated_Cost Accumulated_Cost_Base; Cost_Surface Cost_Surface_Base; Major_Streams Major_Streams_Base.](images/lab10-tool-dialog.png)
+![The Power Line Route tool in the Geoprocessing pane: Slope_Weight 1; Line_Weight 1; Route Route_Base; Accumulated_Cost Accumulated_Cost_Base; Cost_Surface Cost_Surface_Base; a yellow warning beside each output because a dataset of that name already exists.](images/lab10-tool-dialog.png)
 
-**Figure 8.** The model as a tool. Give every output a new name for each run.
+**Figure 7.** The model as a tool. Give every output a new name for each run.
 
 > [!WARNING]
 > **A selected feature breaks the run.** Geoprocessing honors selections. If one feature is selected
@@ -534,23 +509,23 @@ a parameter.
 > nothing, and the run fails about 40 seconds in with `ERROR 010511: Internal error in cost path
 > tracing` and `Back_Direction ... does not have valid statistics`. Neither message mentions the
 > selection. Clear it (**Map** tab ▸ **Selection** group ▸ **Clear**) and run again. Every run in
-> Step 9 is open to the same mistake, so clear selections after each visit to an attribute table.
+> Step 8 is open to the same mistake, so clear selections after each visit to an attribute table.
 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter** (Labs 5 and 7 saw
 > it): `Major_Roads`, `Existing_Lines`, `Slope_Degrees`, the three distance rasters, the four score
-> rasters, `River_Cells`, `Back_Direction`, `Major_Lakes`, `Source_Point` and `Destination_Point` all
-> go, including the copies the earlier run inside ModelBuilder made. That is why the datasets you need later are parameters. Make your Step 4 and
-> Step 5 checks from the run inside ModelBuilder, before any dialog run, and for your maps use the
+> rasters, `Back_Direction`, `Major_Lakes`, `Source_Point` and `Destination_Point` all
+> go, including the copies the earlier run inside ModelBuilder made. That is why the datasets you need later are parameters. Make your Step 1 to
+> Step 4 checks from the run inside ModelBuilder, before any dialog run, and for your maps use the
 > downloaded layers (`Roads`, `Lakes`, `Power_Lines`, `Endpoints`) with **definition queries**
 > holding the same expressions as the Selects, not the model's outputs.
 
 > [!TIP]
-> **Check the result:** at the defaults, the dialog run reproduces Step 7 exactly: `Route_Base` is
-> **56.09 km**, its `PathCost` **744,018**, and it crosses **4** major streams. If it does not, a
-> parameter was left at a value from testing.
+> **Check the result:** at the defaults, the dialog run reproduces Step 6 exactly: `Route_Base` is
+> **55.72 km** and its `PathCost` **742,670**. If it does not, a parameter was left at a value from
+> testing.
 
-### Step 9 — Test the Weights
+### Step 8 — Test the Weights
 
 The default route is *an* answer, not *the* answer. It is the cheapest route only if slope, roads,
 cities and existing lines each matter exactly as much as the others, and nobody decided that; it is
@@ -565,21 +540,21 @@ in to BYU sites.
 > **Your Line_Weight = 0.005 × (the last two digits of your BYU ID)**, from 0 to 0.495.
 >
 > - BYU ID `123456789`: last two digits **89**, Line_Weight = 0.005 × 89 = **0.445**: route
->   **54.95 km**, accumulated cost at the destination **707,263**, **4** major streams crossed.
+>   **54.94 km**, accumulated cost at the destination **706,079**.
 > - BYU ID `987654302`: last two digits **02**, Line_Weight = 0.005 × 2 = **0.010**: route
->   **53.70 km**, accumulated cost at the destination **652,118**, **4** major streams crossed.
+>   **53.70 km**, accumulated cost at the destination **651,007**.
 >
 > Write your BYU ID's last two digits and your Line_Weight in your report: the grader checks your
 > route against them.
 
-<!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab10_personal_lookup.csv (tools/lab10/run_model.py personal; private repo), 53.70 to 55.01 km. -->
+<!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab10_personal_lookup.csv (tools/lab10/run_model.py personal; private repo), 53.70 to 55.00 km. -->
 
 **Then run the model from its tool dialog at least five times**, each with new output names that say
-what changed (`Route_L0`, `Accumulated_Cost_L0`, `Cost_Surface_L0`, `Major_Streams_L0`):
+what changed (`Route_L0`, `Accumulated_Cost_L0`, `Cost_Surface_L0`):
 
 | Run | Slope_Weight | Line_Weight |
 | --- | --- | --- |
-| Baseline (Step 8) | 1 | 1 |
+| Baseline (Step 7) | 1 | 1 |
 | `L0` | 1 | **0** |
 | `L2` | 1 | **2** |
 | `S5` | **5** | 1 |
@@ -590,9 +565,8 @@ For the last run, choose something deliberately and say why: set slope to 0 to r
 weight far up, or try a Line_Weight between 0 and yours to see where the route starts to move.
 
 Record **all of it in one table**: for the baseline and every run, the Slope_Weight, the Line_Weight,
-the route length in km, the total accumulated cost at the destination (the route's `PathCost`), the
-number of major streams crossed, and **the largest distance between the run's route and the
-baseline's**. Measure that last one with the **Measure** tool (**Map** tab ▸ **Measure**) at the place
+the route length in km, the total accumulated cost at the destination (the route's `PathCost`), and
+**the largest distance between the run's route and the baseline's**. Measure that last one with the **Measure** tool (**Map** tab ▸ **Measure**) at the place
 where the two lines are farthest apart, to the nearest 500 m. The Measure window opens over the
 middle of the map and takes the clicks meant for it, so pan the map until the two routes sit clear
 of the window before you measure.
@@ -626,7 +600,7 @@ Make **two** professional map layouts (letter size):
    a title, neat line, north arrow and scale bar; and a text box with your name, the date, the map
    projection, and the sources and dates of the data.
 2. **Your route and one other run** — the baseline, your personal Line_Weight route and one other
-   run from Step 9 (whichever most changes the picture), each distinguishable in the legend, with the
+   run from Step 8 (whichever most changes the picture), each distinguishable in the legend, with the
    endpoints, the existing lines and an imagery basemap; a title, neat line, north arrow and scale
    bar; and a text box with your name, the date, the map projection, and the sources and dates. The
    title and text box say what changed from Map 1 and why.
@@ -651,11 +625,11 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - **the three metadata values** — the Roads "Last Update" date, what the municipal boundaries are
   for, and what the power-line layer's metadata does and does not say — and what each means for your
   route
-- your **check values** from Steps 1 to 7: the six selection counts, the `Cost_Surface` range, and
-  the route's length, accumulated cost and stream crossings at the defaults
+- your **check values** from Steps 1 to 6: the five selection counts, the `Cost_Surface` range, and
+  the route's length and accumulated cost at the defaults
 - **where the route is unrealistic**: two places on **your** route, each with coordinates, a cropped
   figure and the reason, and what data would fix it
-- your **sensitivity table** from Step 9, with your BYU ID's last two digits and your Line_Weight,
+- your **sensitivity table** from Step 8, with your BYU ID's last two digits and your Line_Weight,
   and your answers to its three questions
 - figures numbered and referred to in the text, and every source credited
 - one line at the end saying what you used AI for, if anything (see the note under the rubric)
@@ -675,7 +649,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 > reviewer in the report and say in a sentence what you changed because of them.
 
 **Credit line for your maps:** Elevation: USGS 3D Elevation Program (3DEP), 30 m. Roads, lakes,
-streams, cities and power lines: Utah Geospatial Resource Center (UGRC), read October 2026.
+cities and power lines: Utah Geospatial Resource Center (UGRC), read October 2026.
 
 ## References
 
@@ -705,14 +679,14 @@ U.S. Geological Survey. *3D Elevation Program.*
 
 ## Example Maps
 
-![Example baseline layout titled "A Least-Cost Route for a Power Line, Spanish Fork Canyon to Bluffdale": imagery with city limits, the lakes and marshes over 1 square kilometer, major roads, existing transmission lines in yellow, the dashed straight line, and the 56.09 km least-cost route in red running up the east side of Utah Lake beside existing lines; an inset of the cost surface with the route; a legend, scale bar, north arrow and a text box with the result and the sources.](images/lab10-example-map-baseline.png)
+![Example baseline layout titled "A Least-Cost Route for a Power Line, Spanish Fork Canyon to Bluffdale": imagery with city limits, the lakes and marshes over 1 square kilometer, major roads, existing transmission lines in yellow, the dashed straight line, and the 55.72 km least-cost route in red running up the east side of Utah Lake beside existing lines; an inset of the cost surface with the route; a legend, scale bar, north arrow and a text box with the result and the sources.](images/lab10-example-map-baseline.png)
 
-**Figure 9.** The baseline map. Do better than this example: label the places the route bends and
+**Figure 8.** The baseline map. Do better than this example: label the places the route bends and
 why, and give the cost-surface inset its own legend.
 
-![Example scenario layout titled "What Moves the Route? Three Line Weights": the same base with three routes, the baseline at Line_Weight 1 (56.09 km, red), the example personal run at Line_Weight 0.445 (54.95 km, cyan) and Line_Weight 0 (53.70 km, purple), which leaves the existing lines and runs nearer the straight line; a text box says what changed.](images/lab10-example-map-scenario.png)
+![Example scenario layout titled "What Moves the Route? Three Line Weights": the same base with three routes, the baseline at Line_Weight 1 (55.72 km, red), the example personal run at Line_Weight 0.445 (54.94 km, cyan) and Line_Weight 0 (53.70 km, purple), which leaves the existing lines and runs nearer the straight line; a text box says what changed.](images/lab10-example-map-scenario.png)
 
-**Figure 10.** The scenario map, for the example BYU ID ending 89. They are examples, not templates:
+**Figure 9.** The scenario map, for the example BYU ID ending 89. They are examples, not templates:
 your maps carry your name and show your own runs.
 
 ## Rubric for Least Cost Path Power Line Analysis
@@ -722,11 +696,11 @@ what to submit.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — the Roads "Last Update" date, what the municipal boundaries are for, what the power-line metadata does and does not say — and what each means for your route (2)<br>• Your check values from Steps 1 to 7: the selection counts, the cost range, and the route's length, accumulated cost and crossings (1)<br>• Where the route is unrealistic: two places on your route, each with coordinates, a cropped figure and the reason, and what data would fix it (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the defaults, matches the check values: a 56.09 km route, 744,018 at the destination, 4 crossings (3)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the two weights and the route exposed as parameters (1)<br>• A description of the model a reader could repeat from, with the Select expressions, the score tables and the cost expression (2)<br>• `Lab10.atbx` uploaded with the report as its own file, so the grader can open and run your model (2) | /10 |
+| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — the Roads "Last Update" date, what the municipal boundaries are for, what the power-line metadata does and does not say — and what each means for your route (2)<br>• Your check values from Steps 1 to 6: the selection counts, the cost range, and the route's length and accumulated cost (1)<br>• Where the route is unrealistic: two places on your route, each with coordinates, a cropped figure and the reason, and what data would fix it (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the defaults, matches the check values: a 55.72 km route and 742,670 at the destination (3)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the two weights and the route exposed as parameters (1)<br>• A description of the model a reader could repeat from, with the Select expressions, the score tables and the cost expression (2)<br>• `Lab10.atbx` uploaded with the report as its own file, so the grader can open and run your model (2) | /10 |
 | **Map 1 — your baseline route**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the data (1)<br>• The route and the two substations clearly symbolized, with a legend (2)<br>• Existing lines, major roads, cities and major lakes symbolized and readable (2)<br>• An inset of the cost surface, the "virtual terrain", with its legend (2)<br>• Imagery basemap, scale and legibility appropriate to the route (2) | /10 |
 | **Map 2 — your route and one other run**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• The baseline, your personal route and one other run, each distinguishable in the legend (2)<br>• The endpoints and the existing lines shown, so a reader can see what the routes follow (2)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Imagery basemap, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least five runs — including your BYU ID's last two digits and Line_Weight — giving the weights, length, accumulated cost, crossings and the largest distance from the baseline (4)<br>• Which weight moved the route and which barely did, and why (2)<br>• How much longer than the straight line your route is, and what the extra kilometers buy (2)<br>• What the cost surface leaves out, and what you would add (2) | /10 |
+| **Sensitivity** (Step 8)<br>• One table with the baseline and at least five runs — including your BYU ID's last two digits and Line_Weight — giving the weights, length, accumulated cost and the largest distance from the baseline (4)<br>• Which weight moved the route and which barely did, and why (2)<br>• How much longer than the straight line your route is, and what the extra kilometers buy (2)<br>• What the cost surface leaves out, and what you would add (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -737,11 +711,12 @@ what to submit.
 > [AI Use Policy](../../policies/ai-policy.md) for the full policy.
 
 <!-- Migration notes (rebuild drafted 2026-10-09).
+STREAMS REMOVED 2026-11-09 (the instructor's decision: the valley's streams are narrow enough to span, so they are not a cost): the Select on Streams, Polyline to Raster, River_Cells, the Con(IsNull("%River_Cells%"), 0, 10) term, the Major_Streams parameter and every crossing count are gone; Steps 6-9 became 5-8 and Figures 6-10 became 5-9. Measured with the stream term removed: route 55.72 km (was 56.09), PathCost 742,670 (was 744,018), Cost_Surface 4-40 mean 23.6599, Accumulated_Cost max 1,115,041.6; the route moves at most 724 m from the old baseline. Rebuilt in the GUI in C:\Ames\Lab10GUI at 175 % (backup of the October project in C:\Ames\Lab10GUI_before_nostream_2026-11-09): run inside ModelBuilder and from the tool dialog, both 55.72 km and 742,670.06; tools/lab10/check_gui.py matched every check value. Recaptured: Figure C (lab10-model.svg), lab10-cost-calc.png, lab10-tool-dialog.png; lab10-polyline-to-raster.png and icon-polyline-to-raster.svg deleted. GUI catch: after retyping the expression in an existing model whose intermediate rasters a dialog run had deleted, Run executed only Raster Calculator and failed with "'str' object has no attribute 'save'"; Validate, then Run, fixed it (the expression itself works; tested with arcpy). The Streams layer stays in the package, unused. Data Figure A still lists streams among the package's layers, which is true.
 SOURCE: the September 3, 2026 migration of "Lab 10 - Least Cost Path Power Line Analysis.docx" (replaced by this page on promotion), rebuilt to tools/lab-conversion-guide.md from tools/lab10/PLAN.md (design accepted by the instructor October 6, 2026 in tools/labs-09-11-plan.md sections 6 and 8). Background voice, the NIMBY/BANANA paragraph and the references are carried from it; "network analysis" corrected to a raster cost analysis; the in-text "Meehan, 2003" now cites the 2007 title (confirmed: Esri Press 2007).
 ARCGIS PRO: 3.7.1, arcpy only (tools/lab10/run_model.py on the hosted zip, extracted to C:\Ames\Lab10\ref; check_values.json). Cost Distance shows its own deprecation notice naming Distance Accumulation (seen in the GUI October 9, 2026, Week 11 deck). Distance Accumulation and Optimal Path As Line dialog labels on the page are from the Week 11 Thursday deck's captures (lcpb-distance-accumulation.png, lcpb-optimal-path.png), run there on definition-query layers Source and Destination. GUI BUILD 2026-10-09 (C:\Ames\Lab10GUI): every step built by hand from the page, run inside ModelBuilder and from the tool dialog; every check value of Steps 1-8 matched (tools/lab10/check_gui.py). GUI facts: double-clicking a model raster in Raster Calculator inserts "%Name%"; Select output names reset after validating the SQL, so type them last; the Reclassify table is empty before a run (type rows, Tab between cells); a Select output (Major_Lakes) cannot be cleared as a dialog parameter; Polyline to Raster accepts IsMajor; the tool-dialog run took about 1.5 minutes and deletes every non-parameter dataset.
 DELL GUI TEST 2026-11-06 (ArcGIS Pro 3.7.3.1904, 175 %, C:\Ames\Lab10Dell; report ce414-private/plans/lab10-dell-test-2026-11.md): a model built by hand from this page reproduced every check value and the four Step 9 runs. Two page changes came from it: the Step 8 selection warning (a selected Endpoints row made the source Select empty and every dialog run fail with ERROR 010511 / 010423), and Step 7's total cost now reads Route's PathCost field, because the Explore pop-up on Accumulated_Cost returned NoData for every raster in that session (unexplained; the 'Explore' instruction can come back once the pop-up is seen working on the laptop). Smaller wording fixes in Steps 0-9 follow that session's screens (Location drop-down, Same as layer Elevation.tif, 3D Analyst entries listed first, OBJECTID default value field, String default data type, Endpoints (2), Tab leaving the remap table, parameters drawing late, ModelBuilder run not adding to the map, Measure window over the map; largest-gap precision 100 m -> 500 m).
 DATA PACKAGE: docs/data/lab10-power-line.zip, 17,984,171 bytes (18.0 MB), built by tools/lab10/make_package.py on 2026-10-09: Elevation.tif from the 3DEP ImageServer exportImage (30 m, bilinear, F32, UTM 12N; box 410,340-461,910 E, 4,425,630-4,489,350 N), 1,719 x 2,124, 1,314.97-3,568.37 m; PowerLineData.gdb from UGRC feature services (UtahRoads where DOT_FCLASS not empty 9,031 -> 8,937 after clip; UtahLakesNHD 985 -> 967; UtahStreamsNHD 4,141 -> 4,086; UtahMunicipalBoundaries 35 -> 34; TransmissionLines 294 -> 292); Endpoints = centers of UGRC TransmissionLines substations OBJECTID 2185 (Source, 450,234 E 4,436,883 N, 40.08075 N 111.58370 W; 428 m from the handout's source coordinate) and 1350 (Destination, 419,692 E 4,479,936 N, 40.46622 N 111.94729 W; 1,095 m from the handout's destination coordinate), probe_endpoints.py and endpoint_chips.py. READ-ME-FIRST.txt inside. Endpoint scenario wording: "the data center at Bluffdale" replaces the handout's "new NSA Data Center"; no capacities or dates claimed for the wind park or the data center.
-VERIFIED NUMBERS (check_values.json): selections Major_Roads 1,377, Major_Lakes 7, Major_Streams 319, Existing_Lines 241 (292 - 241 = 51 substations); Slope_Degrees 0-71.81, mean 11.2132; Road_Distance max 24,515.2 (mean 6,202.2); City_Distance max 14,923.4 (mean 3,147.5); Line_Distance max 15,571.3 (mean 3,115.9); Slope_Score 1:1,848,647 2:324,957 4:259,000 6:249,393 8:501,985 10:459,492 (sum 3,643,474 = 3,651,156 - 7,682, the outer ring); Road_Score 1:646,624 3:374,134 6:835,970 10:1,794,428; City_Score 1:1,055,936 2:198,582 4:228,810 6:254,776 8:293,203 10:1,619,849; Line_Score 1:614,688 5:1,084,196 10:1,952,272 (each sums to 3,651,156); River_Cells 9,713 (value field IsMajor in the GUI build; run_model.py uses a field One = 1, same cells; MAXIMUM_LENGTH); Cost_base 4-48, mean 23.6865; Acc_base max 1,116,187.4 (mean 566,466.8); baseline route 56.09 km, total cost 744,018.2 at the destination (GetCellValue), 4 river crossings (Pairwise Intersect points merged within one 30 m cell), 92.8 % within 1 km of a major road, 99.7 % within 500 m of an existing line, 100 % with City_Score 10; straight line 52.79 km.
+VERIFIED NUMBERS (check_values.json): selections Major_Roads 1,377, Major_Lakes 7, Existing_Lines 241 (292 - 241 = 51 substations); Slope_Degrees 0-71.81, mean 11.2132; Road_Distance max 24,515.2 (mean 6,202.2); City_Distance max 14,923.4 (mean 3,147.5); Line_Distance max 15,571.3 (mean 3,115.9); Slope_Score 1:1,848,647 2:324,957 4:259,000 6:249,393 8:501,985 10:459,492 (sum 3,643,474 = 3,651,156 - 7,682, the outer ring); Road_Score 1:646,624 3:374,134 6:835,970 10:1,794,428; City_Score 1:1,055,936 2:198,582 4:228,810 6:254,776 8:293,203 10:1,619,849; Line_Score 1:614,688 5:1,084,196 10:1,952,272 (each sums to 3,651,156); Cost_base 4-40, mean 23.6599; Acc_base max 1,115,041.6 (mean 563,377.7); baseline route 55.72 km, total cost 742,670.1 at the destination (GetCellValue), 89.0 % within 1 km of a major road, 99.7 % within 500 m of an existing line, 100 % with City_Score 10; straight line 52.79 km.
 RECAPTURED 2026-10-21 after the second renumbering (C:\Ames\Lab10GUI, 175 %): Figure 0 (lab10-environments.png, two grabs stitched). Reopened, the dialog shows the Output Coordinate System as WKT (PROJCRS[...]) even after re-picking NAD 1983 UTM zone 12N; the stored value is unchanged, so the caption says so.
 SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 10).
 CORRECTIONS (from the Word-era page): deprecated Cost Distance / Cost Back Link / Cost Path / Raster to Polyline -> Distance Accumulation + Optimal Path As Line; elevation multiplier ("lower is more suitable") -> slope score; product of rasters -> weighted sum; road corridor as NoData barrier -> road distance score; Multiple Ring Buffer and Buffers -> straight-line distance rasters; "cell size 100" (no unit) -> 30 m, UTM 12N, extent/snap/cell size set; six downloads + county mosaic/buffer/clip -> one hosted package; typed endpoint coordinates -> two UGRC substations; dead RFF link removed; rubric with no total and an unscored row -> five rows of ten. Field names AreaSqKm, IsMajor, DOT_FCLASS (values Interstate, Other Freeway, Principal Arterial) and LAYER (KV-%, SUB-...) verified against the package. Step 8 adds Major_Streams, Cost_Surface and Accumulated_Cost as parameters beyond the plan's four, because a dialog run deletes non-parameters and Step 9 needs the cost at the destination, the crossings and Map 1's cost inset for every run.

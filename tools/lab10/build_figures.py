@@ -154,7 +154,7 @@ def main():
         print(k, v)
     p = project()
     common = ["Example map, CE 414, October 2026. Projection: NAD 1983 UTM zone 12N; 30 m cells.",
-              "Elevation: USGS 3DEP. Roads, lakes, streams, city limits, transmission lines and substations:",
+              "Elevation: USGS 3DEP. Roads, lakes, city limits, transmission lines and substations:",
               "Utah Geospatial Resource Center, read October 2026. Imagery: Esri, Earthstar Geographics."]
     m = bf.new_map(p, "Baseline", "Imagery")
     base_layers(m)
@@ -172,7 +172,7 @@ def main():
     line(inset, os.path.join(G, "Route_base"), "Route", rgb(0, 255, 255), 1.5)
     layout(p, "Baseline", m,
            "A Least-Cost Route for a Power Line, Spanish Fork Canyon to Bluffdale",
-           "Cost = slope + roads + cities + existing lines (each scored 1 to 10, weights 1) + 10 per river cell; lakes are barriers",
+           "Cost = slope + roads + cities + existing lines (each scored 1 to 10, weights 1); lakes are barriers",
            [f"Result: {n['base']:.2f} km against {n['straight']:.2f} km in a straight line; nearly all of it beside existing lines."] + common,
            "lab10-example-map-baseline.png", inset, "Inset: the cost surface (dark = cheap) and the route")
     if n["mine"] is None:

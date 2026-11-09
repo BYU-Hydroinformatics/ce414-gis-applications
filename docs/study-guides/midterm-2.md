@@ -98,7 +98,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Tell a **barrier** from a **cost**
 - Say which parts of a cost surface **move a route** and which only change its total, and why
 - Map a **corridor** of nearly-as-good routes, and say what a wide or narrow corridor means
-- For Lab 10: why the terrain enters as slope, what each score table says, what Distance Accumulation gives with no cost raster, how the river term in the cost expression works, how the weights enter, and which weight moved the route
+- For Lab 10: why the terrain enters as slope, what each score table says, what Distance Accumulation gives with no cost raster, how the weights enter in the cost expression, and which weight moved the route
 
 ## Week 12 — Network Analysis
 

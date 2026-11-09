@@ -4,7 +4,7 @@ import json
 import os
 
 import arcpy
-from arcpy.sa import Con, IsNull, Raster
+from arcpy.sa import Raster
 
 import run_model as rm
 
@@ -15,7 +15,7 @@ for tag, (sw, lw, rw, cw) in {
         "slope5": (5, 1, 1, 1), "road0": (1, 1, 0, 1), "city0": (1, 1, 1, 0),
         "line0_slope2": (2, 0, 1, 1), "line0_slope0": (0, 0, 1, 1)}.items():
     c = (sw * Raster("Slope_Score") + rw * Raster("Road_Score") + cw * Raster("City_Score")
-         + lw * Raster("Line_Score") + Con(IsNull("River_Cells"), 0, 10))
+         + lw * Raster("Line_Score"))
     name = f"Cost_x_{tag.replace('.', '_')}"
     c.save(name)
     t = f"x_{tag.replace('.', '_')}"

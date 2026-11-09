@@ -312,12 +312,12 @@ const LABS = {
                widths: [2600, 2400, 4360] } },
 
     { h: 'The Model',
-      hint: 'Rubric: a description a reader could repeat from — each tool and its settings, the six Select expressions, the four score tables, the Raster Calculator expression, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
+      hint: 'Rubric: a description a reader could repeat from — each tool and its settings, the five Select expressions, the four score tables, the Raster Calculator expression, and every input, intermediate and output dataset with its type (2 points). Fill one row per tool, in the order they run.',
       table: { caption: 'Table 2. Model description — one row per tool.',
                head: ['Tool', 'Settings', 'Input dataset(s)', 'Output dataset', 'Type'],
-               rows: [['Select (six: roads, lakes, streams, power lines, source, destination)', '', '', '', ''], ['Slope', '', '', '', ''],
+               rows: [['Select (five: roads, lakes, power lines, source, destination)', '', '', '', ''], ['Slope', '', '', '', ''],
                       ['Distance Accumulation (roads, cities, lines)', '', '', '', ''], ['Reclassify (four scores)', '', '', '', ''],
-                      ['Polyline to Raster', '', '', '', ''], ['Raster Calculator (cost)', '', '', '', ''],
+                      ['Raster Calculator (cost)', '', '', '', ''],
                       ['Distance Accumulation (route)', '', '', '', ''], ['Optimal Path As Line', '', '', '', '']],
                widths: [2300, 2100, 2000, 1700, 1260] },
       figures: [
@@ -328,11 +328,11 @@ const LABS = {
       ] },
 
     { h: 'Check Values',
-      hint: 'Rubric: your check values from Steps 1 to 7 (1 point); they also show the model works (part of its 3 points). These come from the default weights, 1 and 1.',
+      hint: 'Rubric: your check values from Steps 1 to 6 (1 point); they also show the model works (part of its 3 points). These come from the default weights, 1 and 1.',
       table: { caption: 'Table 3. Check values at the default weights.',
                head: ['Check', 'Your value'],
-               rows: [['Major_Roads, Major_Lakes, Major_Streams, Existing_Lines, Source_Point, Destination_Point (features)', ''], ['Cost_Surface minimum and maximum', ''],
-                      ['Route length (km)', ''], ['Accumulated cost at the destination', ''], ['Major streams crossed', '']],
+               rows: [['Major_Roads, Major_Lakes, Existing_Lines, Source_Point, Destination_Point (features)', ''], ['Cost_Surface minimum and maximum', ''],
+                      ['Route length (km)', ''], ['Accumulated cost at the destination', '']],
                widths: [5360, 4000] } },
 
     { h: 'Where the Route Is Unrealistic',
@@ -345,12 +345,12 @@ const LABS = {
       ] },
 
     { h: 'Testing the Weights', pageBreakBefore: true,
-      hint: 'Rubric: one table with the baseline and at least five runs, including your BYU ID’s last two digits and Line_Weight, giving the weights, length, accumulated cost, crossings and the largest distance from the baseline (4 points).',
+      hint: 'Rubric: one table with the baseline and at least five runs, including your BYU ID’s last two digits and Line_Weight, giving the weights, length, accumulated cost and the largest distance from the baseline (4 points).',
       table: { caption: 'Table 4. Sensitivity. My BYU ID ends in __, so Line_Weight = 0.005 × __ = ______.',
-               head: ['Run', 'Slope_Weight', 'Line_Weight', 'Length (km)', 'Accumulated cost', 'Crossings', 'Farthest from baseline (m)'],
-               rows: [['Baseline', '1', '1', '', '', '', '0'], ['L0', '1', '0', '', '', '', ''], ['L2', '1', '2', '', '', '', ''],
-                      ['S5', '5', '1', '', '', '', ''], ['Mine', '1', '', '', '', '', ''], ['My choice', '', '', '', '', '', '']],
-               widths: [1300, 1150, 1150, 1250, 1600, 1150, 1760] },
+               head: ['Run', 'Slope_Weight', 'Line_Weight', 'Length (km)', 'Accumulated cost', 'Farthest from baseline (m)'],
+               rows: [['Baseline', '1', '1', '', '', '0'], ['L0', '1', '0', '', '', ''], ['L2', '1', '2', '', '', ''],
+                      ['S5', '5', '1', '', '', ''], ['Mine', '1', '', '', '', ''], ['My choice', '', '', '', '', '']],
+               widths: [1400, 1250, 1250, 1450, 1800, 2210] },
       questions: [
         'Which weight moved the route, and which barely did — and why? Look at where the baseline runs. (2 points)',
         'How much longer than the 52.79 km straight line is your route, and what is it buying with the extra kilometers? (2 points)',

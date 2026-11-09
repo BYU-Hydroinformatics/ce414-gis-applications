@@ -8,9 +8,9 @@
   ],
   "length_km": 53.7,
   "moved": {
-   "median_m": 904,
-   "max_m": 3408,
-   "pct_within_300m": 25.8
+   "median_m": 883,
+   "max_m": 2965,
+   "pct_within_300m": 25.9
   }
  },
  "line0.5": {
@@ -20,11 +20,11 @@
    1,
    1
   ],
-  "length_km": 55.01,
+  "length_km": 55.0,
   "moved": {
-   "median_m": 58,
-   "max_m": 2530,
-   "pct_within_300m": 74.0
+   "median_m": 35,
+   "max_m": 2178,
+   "pct_within_300m": 74.8
   }
  },
  "line2": {
@@ -34,11 +34,11 @@
    1,
    1
   ],
-  "length_km": 55.88,
+  "length_km": 55.75,
   "moved": {
-   "median_m": 2,
-   "max_m": 455,
-   "pct_within_300m": 97.7
+   "median_m": 1,
+   "max_m": 97,
+   "pct_within_300m": 100.0
   }
  },
  "slope5": {
@@ -48,11 +48,11 @@
    1,
    1
   ],
-  "length_km": 55.73,
+  "length_km": 55.71,
   "moved": {
-   "median_m": 9,
-   "max_m": 561,
-   "pct_within_300m": 93.9
+   "median_m": 6,
+   "max_m": 276,
+   "pct_within_300m": 100.0
   }
  },
  "road0": {
@@ -62,11 +62,11 @@
    0,
    1
   ],
-  "length_km": 54.96,
+  "length_km": 54.93,
   "moved": {
-   "median_m": 240,
-   "max_m": 1630,
-   "pct_within_300m": 54.5
+   "median_m": 131,
+   "max_m": 1627,
+   "pct_within_300m": 60.9
   }
  },
  "city0": {
@@ -76,11 +76,11 @@
    1,
    0
   ],
-  "length_km": 56.4,
+  "length_km": 56.38,
   "moved": {
-   "median_m": 20,
-   "max_m": 276,
-   "pct_within_300m": 100.0
+   "median_m": 25,
+   "max_m": 752,
+   "pct_within_300m": 90.8
   }
  },
  "line0_slope2": {
@@ -90,11 +90,11 @@
    1,
    1
   ],
-  "length_km": 53.73,
+  "length_km": 53.89,
   "moved": {
-   "median_m": 909,
-   "max_m": 3390,
-   "pct_within_300m": 25.8
+   "median_m": 854,
+   "max_m": 2950,
+   "pct_within_300m": 28.8
   }
  },
  "line0_slope0": {
@@ -104,11 +104,11 @@
    1,
    1
   ],
-  "length_km": 53.66,
+  "length_km": 53.65,
   "moved": {
-   "median_m": 1047,
-   "max_m": 3573,
-   "pct_within_300m": 24.2
+   "median_m": 1011,
+   "max_m": 3096,
+   "pct_within_300m": 24.8
   }
  }
 }

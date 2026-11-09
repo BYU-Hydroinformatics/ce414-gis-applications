@@ -19,14 +19,14 @@ def n(fc):
     return int(arcpy.management.GetCount(fc)[0])
 
 
-for fc in ("Major_Roads", "Major_Lakes", "Major_Streams", "Existing_Lines"):
+for fc in ("Major_Roads", "Major_Lakes", "Existing_Lines"):
     if arcpy.Exists(fc):
         print(fc, n(fc), "expected", CK[fc])
 for r in ("Slope_Degrees", "Road_Distance", "City_Distance", "Line_Distance", "Cost_Surface", "Accumulated_Cost"):
     if arcpy.Exists(r):
         x = Raster(r)
         print(r, x.width, x.height, round(x.minimum, 2), round(x.maximum, 2), round(x.mean, 4))
-for r in ("Slope_Score", "Road_Score", "City_Score", "Line_Score", "River_Cells"):
+for r in ("Slope_Score", "Road_Score", "City_Score", "Line_Score"):
     if arcpy.Exists(r):
         print(r, {int(v): int(c) for v, c in arcpy.da.SearchCursor(r, ["VALUE", "COUNT"])})
 for fc in ("Route",) + tuple(sys.argv[2:]):

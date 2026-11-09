@@ -7,13 +7,14 @@ r"""Lab 10 reference run: the page's model in arcpy, on the hosted package only.
 The model (one ModelBuilder model on the page):
   Select   Major_Roads = Roads where DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial')
            Major_Lakes = Lakes where AreaSqKm > 1
-           Major_Streams = Streams where IsMajor = 1
            Existing_Lines = Power_Lines where LAYER LIKE 'KV-%'
   Slope (degrees) of Elevation.tif, and three straight-line distance rasters made with Distance
   Accumulation (no cost raster): to Major_Roads, Cities, Existing_Lines
-  Reclassify each to a 1-10 score (SCORES below); Polyline to Raster the major streams (crossing cells)
+  Reclassify each to a 1-10 score (SCORES below)
   Raster Calculator:  Cost = %Slope_Weight% * Slope_Score + Road_Score + City_Score
-                             + %Line_Weight% * Line_Score + Con(IsNull(River_Cells), 0, 10)
+                             + %Line_Weight% * Line_Score
+  (Until November 9, 2026 the model also added 10 on every major-stream cell, with a Select, Polyline to
+  Raster and Con(IsNull(River_Cells), 0, 10); removed because it moved the route at most 724 m.)
   Distance Accumulation from the Source, cost = Cost, barrier = Major_Lakes -> accumulation, back direction
   Optimal Path As Line to the Destination -> Route
 Environments: extent, snap raster and cell size = Elevation.tif (30 m), output NAD 1983 UTM 12N.
@@ -27,7 +28,7 @@ import sys
 import zipfile
 
 import arcpy
-from arcpy.sa import (Con, DistanceAccumulation, IsNull, OptimalPathAsLine, Raster, Reclassify,
+from arcpy.sa import (DistanceAccumulation, OptimalPathAsLine, Raster, Reclassify,
                       RemapRange, Slope)
 
 arcpy.CheckOutExtension("Spatial")
@@ -62,7 +63,6 @@ SCORES = {
     "line": [[0, 500, 1], [500, 2000, 5], [2000, BIG, 10]],                                        # m to an existing kV line
 }
 DEFAULTS = {"slope_weight": 1.0, "line_weight": 1.0}
-CROSSING = 10
 
 
 def setup():
@@ -97,7 +97,6 @@ def build_factors(ck):
     s = lambda n: os.path.join(SRC, n)
     for out, fc, where in (("Major_Roads", "Roads", "DOT_FCLASS IN ('Interstate', 'Other Freeway', 'Principal Arterial')"),
                            ("Major_Lakes", "Lakes", "AreaSqKm > 1"),
-                           ("Major_Streams", "Streams", "IsMajor = 1"),
                            ("Existing_Lines", "Power_Lines", "LAYER LIKE 'KV-%'")):
         arcpy.analysis.Select(s(fc), out, where)
         ck[out] = count(out)
@@ -113,10 +112,6 @@ def build_factors(ck):
                           ("city", "City_Distance", "City_Score"), ("line", "Line_Distance", "Line_Score")):
         Reclassify(src, "VALUE", RemapRange(SCORES[key]), "NODATA").save(out)
         ck[out] = class_counts(out)
-    arcpy.management.AddField("Major_Streams", "One", "SHORT")
-    arcpy.management.CalculateField("Major_Streams", "One", "1")
-    arcpy.conversion.PolylineToRaster("Major_Streams", "One", "River_Cells", "MAXIMUM_LENGTH", cellsize=DEM)
-    ck["River_Cells"] = sum(class_counts("River_Cells").values())
 
 
 _ARR = {}
@@ -136,8 +131,7 @@ def score_arrays():
 
 
 def cost_surface(slope_w, line_w, name):
-    c = (slope_w * Raster("Slope_Score") + Raster("Road_Score") + Raster("City_Score") + line_w * Raster("Line_Score")
-         + Con(IsNull("River_Cells"), 0, CROSSING))
+    c = slope_w * Raster("Slope_Score") + Raster("Road_Score") + Raster("City_Score") + line_w * Raster("Line_Score")
     c.save(name)
     return name
 
@@ -157,10 +151,6 @@ def route(tag, slope_w, line_w, barrier=True):
         line = line.union(x)
     dx, dy = [r[0] for r in arcpy.da.SearchCursor(dst, ["SHAPE@XY"])][0]
     total = float(arcpy.management.GetCellValue(f"Acc_{tag}", f"{dx} {dy}").getOutput(0))
-    # river crossings: points where the route meets a major stream
-    arcpy.analysis.PairwiseIntersect([f"Route_{tag}", "Major_Streams"], f"X_{tag}", "ALL", None, "POINT")
-    xs = arcpy.management.MultipartToSinglepart(f"X_{tag}", f"Xs_{tag}")
-    pts = {(round(r[0][0] / 30), round(r[0][1] / 30)) for r in arcpy.da.SearchCursor(xs, ["SHAPE@XY"])}
     # share of the route near a road / an existing line: sample every 30 m on the scores
     L = line.length
     n = int(L // 30)
@@ -172,7 +162,7 @@ def route(tag, slope_w, line_w, barrier=True):
         road1 += A["Road_Score"][i, j] == 1
         line1 += A["Line_Score"][i, j] == 1
         city10 += A["City_Score"][i, j] == 10
-    return {"length_km": round(L / 1000, 2), "total_cost": round(total, 1), "river_crossings": len(pts),
+    return {"length_km": round(L / 1000, 2), "total_cost": round(total, 1),
             "pct_within_1km_road": round(100 * road1 / (n + 1), 1),
             "pct_within_500m_line": round(100 * line1 / (n + 1), 1),
             "pct_city_score_10": round(100 * city10 / (n + 1), 1),
@@ -219,7 +209,7 @@ def personal():
     for d in range(100):
         w = round(0.005 * d, 3)
         r = route(f"p{d:02d}", DEFAULTS["slope_weight"], w)
-        rows.append({"digits": f"{d:02d}", "line_weight": w, **{k: r[k] for k in ("length_km", "total_cost", "river_crossings")}})
+        rows.append({"digits": f"{d:02d}", "line_weight": w, **{k: r[k] for k in ("length_km", "total_cost")}})
         print(rows[-1])
         for n in (f"Cost_p{d:02d}", f"Acc_p{d:02d}", f"Back_p{d:02d}"):
             arcpy.management.Delete(n)

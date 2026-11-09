@@ -3,7 +3,7 @@
     python make_svgs.py
 
 Writes into docs/assignments/lab-10/images/:
-  icon-distance-accumulation.svg, icon-optimal-path-as-line.svg, icon-polyline-to-raster.svg
+  icon-distance-accumulation.svg, icon-optimal-path-as-line.svg (the Polyline to Raster icon was dropped with the stream term, November 9, 2026)
   lab10-metadata.svg     Figure A, the six metadata questions for the lab's data
 
 Metadata statements come from READ-ME-FIRST.txt (make_package.py) and from the UGRC feature
@@ -65,7 +65,7 @@ def icons():
             body += (f"<rect x='{4 + i * 19}' y='{8 + j * 19}' width='19' height='19' "
                      f"fill='{BLUE if on else 'white'}' stroke='{LGRAY}' stroke-width='0.8'/>")
     body += f"<path d='M4,12 C30,16 34,34 52,36 S78,52 90,58 S110,80 118,84' fill='none' stroke='{NAVY}' stroke-width='2.2'/>"
-    icon("polyline-to-raster", "Polyline to Raster: every cell a river line passes through becomes a river cell", body)
+    # icon("polyline-to-raster", "Polyline to Raster: every cell a river line passes through becomes a river cell", body)  # dropped November 9, 2026: streams are no longer in the model
 
 
 def metadata_card():

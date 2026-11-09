@@ -1,7 +1,6 @@
 {
  "Major_Roads": 1377,
  "Major_Lakes": 7,
- "Major_Streams": 319,
  "Existing_Lines": 241,
  "inputs": {
   "Roads": 8937,
@@ -65,13 +64,11 @@
   "5": 1084196,
   "10": 1952272
  },
- "River_Cells": 9713,
  "straight_km": 52.79,
  "base": {
-  "length_km": 56.09,
-  "total_cost": 744018.2,
-  "river_crossings": 4,
-  "pct_within_1km_road": 92.8,
+  "length_km": 55.72,
+  "total_cost": 742670.1,
+  "pct_within_1km_road": 89.0,
   "pct_within_500m_line": 99.7,
   "pct_city_score_10": 100.0,
   "slope_weight": 1.0,
@@ -80,12 +77,12 @@
  },
  "Cost_base": {
   "min": 4.0,
-  "max": 48.0,
-  "mean": 23.6865
+  "max": 40.0,
+  "mean": 23.6599
  },
  "Acc_base": {
   "min": 0.0,
-  "max": 1116187.375,
-  "mean": 566466.7829
+  "max": 1115041.625,
+  "mean": 563377.6834
  }
 }
