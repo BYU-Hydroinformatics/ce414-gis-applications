@@ -264,7 +264,7 @@ without the step-by-step instructions below, say so in your report.
     - **Snap Raster**: `Elevation.tif`
     - **Cell Size**: **Same as layer Elevation.tif** (30 m)
 
-![The PowerLineRoute model's Environments dialog: Current Workspace and Scratch Workspace Lab10.gdb; Output Coordinate System shown as its full definition, PROJCRS["NAD_1983_UTM_Zone_12N", ...; Extent with Top 4489350, Left 410340, Right 461910 and Bottom 4425630 in NAD 1983 UTM Zone 12N; Parallel Processing collapsed; under Raster Analysis, Cell Size Elevation.tif, Cell Size Projection Method Convert units, Mask empty, Cell Alignment Default, Snap Raster Elevation.tif.](images/lab10-environments.png)
+![The PowerLineRoute model's Environments dialog: Current Workspace and Scratch Workspace Lab10.gdb; Output Coordinate System shown as its full definition beginning PROJCRS with NAD_1983_UTM_Zone_12N; Extent with Top 4489350, Left 410340, Right 461910 and Bottom 4425630 in NAD 1983 UTM Zone 12N; Parallel Processing collapsed; under Raster Analysis, Cell Size Elevation.tif, Cell Size Projection Method Convert units, Mask empty, Cell Alignment Default, Snap Raster Elevation.tif.](images/lab10-environments.png)
 
 **Figure 0.** ModelBuilder ▸ **Environments**. Choosing `Elevation.tif` for the Extent fills in its
 four edges. When the dialog is reopened, ArcGIS Pro may show the Output Coordinate System as its full
