@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 11. This deck sets up Lab 10, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. The middle of the hour is a hand calculation on a 5 by 5 grid; it is the algorithm, done once by people, before ArcGIS Pro does it on a million cells. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-11-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-11-10</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -80,12 +80,12 @@ Dr. Dan Ames
 </div>
 <div>
 
-![w:410 center](images/lcp-example-map-power-lines.jpg)
+![h:470 center](images/lcp-study-area.png)
 
 </div>
 </div>
 
-<!-- The quotation is condensed from Esri's documentation. Emphasize the last bullet: the algorithm is exact, but it is exact about the cost surface you gave it. Garbage weights, confident wrong answer. The map on the right is a student example layout from a previous semester; its text block is still placeholder ("Name / Date / Projection"), which is a good chance to point out that the rubric wants those filled in. -->
+<!-- The quotation is condensed from Esri's documentation. Emphasize the last bullet: the algorithm is exact, but it is exact about the cost surface you gave it. Garbage weights, confident wrong answer. The map on the right is the Lab 10 problem: two substations 52.79 km apart in a straight line, with Utah Lake in the way. Ask which side of the lake students expect the cheapest route to take, and come back to their answer when the Lab 10 example map closes the deck. -->
 
 ---
 
