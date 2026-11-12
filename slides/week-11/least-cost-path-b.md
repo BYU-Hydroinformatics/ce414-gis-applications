@@ -23,7 +23,7 @@ Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 11. Tuesday built the idea: a cost surface, the accumulated cost and back direction rasters, a path walked home from the destination. Today: the tools ArcGIS Pro wants you to use now, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
+<!-- Thursday of Week 11. Tuesday built the idea: a cost surface, the accumulated cost and back direction rasters, a path walked home from the destination. Today: Tuesday's grid again, then the ArcGIS Pro tools that compute it, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-11-09</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -37,7 +37,7 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
-- Run a least cost path with ArcGIS Pro's current tools: **Distance Accumulation** and **Optimal Path As Line**
+- Run a least cost path in ArcGIS Pro with **Distance Accumulation** and **Optimal Path As Line**
 - Read a **back direction** raster as a compass angle
 - Say which parts of a cost surface **move a route** and which only change its total
 - Map a **corridor** of nearly-as-good routes, not just one line
@@ -46,16 +46,28 @@ By the end of class you should be able to:
 
 ---
 
-# Tuesday in One Picture
+# Tuesday's Grid
+
+![h:360 center](images/lcp-hand-grid-answer.png)
+
+- Left: the **cost surface**, and the cheapest path from S to D, total **12**
+- Right: the **accumulated cost** of every cell, and an arrow back toward S: the **back direction**
+- Start at D and **follow the arrows**: that walk is the route
+
+<!-- Tuesday's hand exercise, solved: four neighbors, and a move costs the cell you enter. Read the walk aloud from D: 12, 11, 10, 9, 8, 7, 4, 1, 0. Everything today is this picture again: the next slide lets ArcGIS Pro step diagonally, and Part 2 runs it on Lab 10's million cells. The figure is Tuesday's (tools/week11_parta_figures.py). -->
+
+---
+
+# From Four Directions to Eight
 
 ![bg right:46% w:96%](images/lcpb-box.png)
 
-- A **cost surface** cell: the price of **crossing that one cell**
-- An **accumulated cost** cell: the cheapest **total** to get there from the source
-- A **back direction** cell: **which way to step** to get home
-- The path is walked **backward**, from the destination to the source
+- By hand on Tuesday: **four neighbors** only, to keep the arithmetic simple
+- ArcGIS Pro also steps **diagonally**: a diagonal is **1.414 times** as long, so it costs 1.414 × the cell it enters
+- The **back direction** is a **compass angle**: 90 = east, 180 south, 270 west, 360 north; **0** is the source
+- Some arrows point **between** neighbors (193°, 121°, 229°), so paths come out **straighter** than a staircase
 
-<!-- A 6 x 5 grid of 100 m cells, cost 1 (light) and 4 (dark), run through Distance Accumulation in ArcGIS Pro. Each number is the accumulated cost; each arrow is the back direction raster's value, drawn as a compass bearing. Read one aloud: the cell left of the source holds 400 and points east (90 degrees), straight home. Note the arrows that are not at 45-degree steps: 193, 121, 229 degrees. That is new, and it is the next section. The distinction between the first two bullets is the one Tuesday's quiz tested. -->
+<!-- Same idea as Tuesday's grid, computed by Distance Accumulation in ArcGIS Pro on a 6 x 5 grid of 100 m cells: light cells cost 1, dark cells cost 4. Each number is the accumulated cost; each arrow and angle is the back direction raster's value. Check two cells aloud. Straight: the dark cell left of the source is 4 x 100 = 400, and it points east (90 degrees), straight home. Diagonal: the light cell up and to the left of that dark cell above the source is 400 + 1.414 x 100 = 541. The angles that are not multiples of 45 degrees are Distance Accumulation looking past its eight immediate neighbors; students do not need the mechanics, only that the route is not forced into 45-degree steps. -->
 
 ---
 
@@ -63,20 +75,7 @@ By the end of class you should be able to:
 
 ![bg right:55%](images/lcpb-divider-tools.jpg)
 
-# Part 1 — The Tools in ArcGIS Pro Today
-
----
-
-# Cost Distance Is Deprecated
-
-![bg right:52% w:98%](images/lcpb-cost-distance-deprecated.png)
-
-- Open **Cost Distance** in ArcGIS Pro 3.7 and it tells you so
-- "Deprecated" means it **still runs**, but **will be removed**
-- The replacement: **Distance Accumulation**
-- The same goes for **Cost Back Link** and **Cost Path**
-
-<!-- A capture of the Geoprocessing pane in ArcGIS Pro 3.7.1, October 9, 2026. The notice is the tool's own; it links to Esri's deprecation page. Tuesday's deck and Lab 10 both use the current tools; the legacy names matter only because students will meet them in older tutorials and papers. -->
+# Part 1 — The Tools in ArcGIS Pro
 
 ---
 
@@ -89,9 +88,9 @@ By the end of class you should be able to:
 - **Input Cost Raster**: your cost surface
 - **Output Distance Accumulation Raster**: the running total
 - **Output Back Direction Raster**: the way home, in **degrees**
-- One run replaces **Cost Distance** *and* **Cost Back Link**
+- One run makes **both** of Tuesday's rasters
 
-<!-- Lab 10's own Figure 6a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features; Cost Distance had no barrier input, so a barrier had to be NoData in the cost raster. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
+<!-- Lab 10's own Figure 6a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
 
 ---
 
@@ -101,36 +100,11 @@ By the end of class you should be able to:
 
 - **Destinations**: the end point (the substation at Bluffdale)
 - The **accumulation** and **back direction** rasters from the last tool
-- The output is already a **line feature class**
-- So **Raster to Polyline** is no longer a step
+- It **follows the arrows** from the destination, as we did by hand on Tuesday
+- The output is a **line feature class**, ready to map and measure
 - Its sibling, **Optimal Path As Raster**, gives the one-cell-wide raster
 
-<!-- Lab 10's own Figure 6b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 55.72 km. Older tutorials end with Raster to Polyline because Cost Path only makes a raster. -->
-
----
-
-# Same Row, Two Answers
-
-![w:1080 center](images/lcpb-row.png)
-
-- **Cost Distance**: a step costs the **average of the two cells** it joins
-- **Distance Accumulation**: a cell's total includes **its whole cost**; the source cell's own cost does not count
-- Along a long route the totals **agree**; they differ by **half a cell's cost** at the ends
-
-<!-- Both tools' real output on the same six 100 m cells, cost 1, 1, 4, 1, 1, 1, from the left. Legacy: 100 + (1+4)/2 x 100 = 350 at the dark cell; Distance Accumulation: 100 + 4 x 100 = 500. By the next cell both say 600. Tuesday's hand grid used Distance Accumulation's rule (a move costs the cell you enter), so its numbers match this tool, not the legacy one. Skip this slide if time is short. -->
-
----
-
-# The Back Direction Is an Angle
-
-![bg right:46% w:96%](images/lcpb-box.png)
-
-- **0** marks the source; **90** = go east, **180** south, **270** west, **360** north
-- Legacy **Cost Back Link** stored a code, **1 to 8**, one per neighbor
-- Distance Accumulation can head off **between** the eight neighbors: 193°, 121°, 229°
-- So its paths are **straighter** than a staircase of 45° steps
-
-<!-- The angles are read straight off the back direction raster on the toy grid. On Lab 10's cost surface the legacy chain (Cost Distance with its back link, Cost Path, Raster to Polyline; lakes as NoData) gives 58.49 km against 55.72 km: much of the extra 2.8 km is the staircase. -->
+<!-- Lab 10's own Figure 6b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 55.72 km. -->
 
 ---
 
@@ -251,8 +225,6 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 [Lab 10 — Least Cost Path Power Line Analysis](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-10/)
 
-<!-- Legacy check on Lab 10's cost surface: Cost Distance (lakes as NoData) + Cost Path (each cell) + Raster to Polyline gives 58.49 km; sampled every 100 m it is a median 163 m from the Distance Accumulation route, 95% within 675 m, all within 877 m. Lab 10 uses only the current tools. -->
-
 ---
 
 <!-- _class: activity -->
@@ -262,7 +234,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: What Moved the Line?** Five questions on the current tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
+**Quiz: What Moved the Line?** Five questions on the tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
 
 - A quick check that today's material made sense
 - The line-weight question comes back in Lab 10 Step 8
@@ -286,4 +258,4 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck, and aligned with Lab 10. Figures and numbers: tools/week11_lcp_figures.py (toy grids, and Lab 10's reference run from tools/lab10/run_model.py; numbers in tools/week11_lcp_numbers.json). The Cost Distance capture is from an ArcGIS Pro 3.7.1 session at 175 %; the other two tool captures are Lab 10's Figures 7a and 7b. -->
+<!-- Deck written October 9, 2026, as the second least cost path lecture, building on Tuesday's deck, and aligned with Lab 10. Figures and numbers: tools/week11_lcp_figures.py (toy grids, and Lab 10's reference run from tools/lab10/run_model.py; numbers in tools/week11_lcp_numbers.json). The two tool captures are Lab 10's Figures 7a and 7b. -->
