@@ -297,6 +297,21 @@ You Will Know, Make It Yours) came at the end of Thursday. When the Week 9 decks
 move at least Lab 8 at a Glance and Your Own IDW Power into the Tuesday deck
 (`interpolation.md`), and check the other weeks for the same imbalance.
 
+**Lab 10 route west of Utah Lake (Dan, November 11, 2026).** For Fall 2027, Dan wants one of Lab
+10's runs (baseline or a test run) to send the line around the **west** side of Utah Lake, as
+older versions of the lab did, by weighting the city score much more heavily. Tested the same day
+(`tools/lab10/explore_nimby.py`, `explore_nimby_lowland.py`; results in the two JSON files beside
+them): **the city weight alone cannot do it with the current data.** City weight 2–5 keeps the
+route east of the lake and only straightens it (53.9 km at 5). From 6 up it leaves the valley
+eastward over the Wasatch (81–91 km), and stays there with slope weights up to 100. With ground
+above 1,700, 1,800 or 2,000 m closed, it stays in the valley east of the lake at every city weight up to 20.
+The reason: `Cities` is UGRC municipal boundaries, and city limits cover the north end and much
+of the west side of the lake too, so going round the west side crosses town as well and is longer.
+Options to test before rebuilding the lab: score cities by something that thins out west of the
+lake (population or housing density, or developed land cover) instead of municipal limits; add a
+land-ownership score or barrier (national forest, wilderness) so the mountain escape closes; or
+both. The Week 11 Part B deck's NIMBY slide shows the current behavior (city weight 1, 5, 10).
+
 **Prompt**
 
 > Close out Fall 2026 for the CE 414 site. (1) `ROADMAP.md`: every row that says a thing is owed

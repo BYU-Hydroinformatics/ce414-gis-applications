@@ -6,7 +6,7 @@
   <title>CE 414 — What Moved the Line?</title>
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <meta name="theme-color" content="#2563eb">
-  <meta name="description" content="CE 414 in-class quiz: the current ArcGIS Pro least cost path tools, the back direction raster, which of Lab 10's weights actually move the route, and what a corridor shows.">
+  <meta name="description" content="CE 414 in-class quiz: the ArcGIS Pro least cost path tools, the back direction raster, which of Lab 10's weights actually move the route and why existing lines beat roads, and what a corridor shows.">
   <link rel="stylesheet" href="../lib/quiz.css">
 </head>
 <body>
@@ -60,7 +60,17 @@ CE414Quiz.start({
         "Setting Line_Weight to 2"
       ],
       answer: "Setting Line_Weight to 0",
-      explanation: "The existing-line score is what holds the route where it is. Remove it and the route cuts nearer the straight line. Weight 2 only holds it tighter, and the lakes were never in its way."
+      explanation: "The existing-line score is what holds the route where it is. Remove it and the route leaves the lines and cuts across the valley, kilometers from the baseline: the biggest change of any. Weight 2 only holds it tighter, and the lakes were never in its way."
+    },
+    {
+      prompt: "Dropping the road score moves Lab 10's route a little; dropping the existing-line score moves it kilometers. Why do the lines matter more here?",
+      options: [
+        "A major road runs near almost every route the line could take, so the road score barely tells those routes apart",
+        "Roads are a barrier in Lab 10, so the route is never allowed near them and their score never counts",
+        "Distance Accumulation counts the line score twice, once from each substation, so it outweighs roads"
+      ],
+      answer: "A major road runs near almost every route the line could take, so the road score barely tells those routes apart",
+      explanation: "A weight moves the route only where its factor differs between candidate routes. Roads are everywhere on the valley floor, so the road score is about the same along any of them; existing lines are few, and the line score jumps from 1 to 5 just 500 m off one. Roads are not the most important factor in Lab 10: the existing lines are."
     },
     {
       prompt: "On a corridor map, a cell is shaded “within 5% of the cheapest.” What does that mean?",
@@ -73,9 +83,9 @@ CE414Quiz.start({
       explanation: "Add the accumulated cost from the source to the accumulated cost from the destination: each cell gets the cost of the best route forced through it. Cells near the minimum are where a nearly-as-good route could go; that is how an engineer finds alternatives."
     }
   ],
-  perfectNote:  "All five. On to Lab 10.",
+  perfectNote:  "All six. On to Lab 10.",
   goodNote:     "Good. Reread the explanations you missed before you build the Lab 10 cost surface.",
-  tryAgainNote: "The back direction raster is a compass angle, a score that is equal along every candidate route cannot move it, and a corridor adds two accumulations. Look at those slides again."
+  tryAgainNote: "The back direction raster is a compass angle, a score that is equal along every candidate route cannot move it (which is why the existing lines, not the roads, hold the route), and a corridor adds two accumulations. Look at those slides again."
 });
 </script>
 </body>

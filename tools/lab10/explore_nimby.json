@@ -1,0 +1,289 @@
+{
+ "base_side": "east",
+ "city2": {
+  "slope_weight": 1,
+  "city_weight": 2,
+  "length_km": 55.48,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 98.3,
+  "moved": {
+   "median_m": 19,
+   "max_m": 356,
+   "pct_within_300m": 98.9
+  }
+ },
+ "city3": {
+  "slope_weight": 1,
+  "city_weight": 3,
+  "length_km": 54.86,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 94.1,
+  "moved": {
+   "median_m": 60,
+   "max_m": 1229,
+   "pct_within_300m": 73.6
+  }
+ },
+ "city4": {
+  "slope_weight": 1,
+  "city_weight": 4,
+  "length_km": 53.97,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 74.0,
+  "moved": {
+   "median_m": 424,
+   "max_m": 2355,
+   "pct_within_300m": 40.9
+  }
+ },
+ "city5": {
+  "slope_weight": 1,
+  "city_weight": 5,
+  "length_km": 53.93,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 73.5,
+  "moved": {
+   "median_m": 440,
+   "max_m": 2355,
+   "pct_within_300m": 39.6
+  }
+ },
+ "city6": {
+  "slope_weight": 1,
+  "city_weight": 6,
+  "length_km": 80.91,
+  "side": "east",
+  "pct_city_score_10": 27.0,
+  "pct_within_500m_line": 23.1,
+  "moved": {
+   "median_m": 11677,
+   "max_m": 18759,
+   "pct_within_300m": 1.0
+  }
+ },
+ "city8": {
+  "slope_weight": 1,
+  "city_weight": 8,
+  "length_km": 90.72,
+  "side": "east",
+  "pct_city_score_10": 15.6,
+  "pct_within_500m_line": 12.1,
+  "moved": {
+   "median_m": 16641,
+   "max_m": 19798,
+   "pct_within_300m": 0.8
+  }
+ },
+ "city10": {
+  "slope_weight": 1,
+  "city_weight": 10,
+  "length_km": 89.13,
+  "side": "east",
+  "pct_city_score_10": 15.8,
+  "pct_within_500m_line": 10.3,
+  "moved": {
+   "median_m": 16503,
+   "max_m": 19795,
+   "pct_within_300m": 0.8
+  }
+ },
+ "city15": {
+  "slope_weight": 1,
+  "city_weight": 15,
+  "length_km": 87.7,
+  "side": "east",
+  "pct_city_score_10": 16.0,
+  "pct_within_500m_line": 10.2,
+  "moved": {
+   "median_m": 15845,
+   "max_m": 19793,
+   "pct_within_300m": 0.8
+  }
+ },
+ "city20": {
+  "slope_weight": 1,
+  "city_weight": 20,
+  "length_km": 87.62,
+  "side": "east",
+  "pct_city_score_10": 16.0,
+  "pct_within_500m_line": 9.1,
+  "moved": {
+   "median_m": 15833,
+   "max_m": 19790,
+   "pct_within_300m": 0.8
+  }
+ },
+ "slope3_city5": {
+  "slope_weight": 3,
+  "city_weight": 5,
+  "length_km": 53.95,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 73.3,
+  "moved": {
+   "median_m": 439,
+   "max_m": 2357,
+   "pct_within_300m": 40.7
+  }
+ },
+ "slope3_city10": {
+  "slope_weight": 3,
+  "city_weight": 10,
+  "length_km": 95.89,
+  "side": "east",
+  "pct_city_score_10": 14.8,
+  "pct_within_500m_line": 13.6,
+  "moved": {
+   "median_m": 16035,
+   "max_m": 19990,
+   "pct_within_300m": 0.7
+  }
+ },
+ "slope3_city20": {
+  "slope_weight": 3,
+  "city_weight": 20,
+  "length_km": 92.59,
+  "side": "east",
+  "pct_city_score_10": 15.2,
+  "pct_within_500m_line": 11.8,
+  "moved": {
+   "median_m": 16666,
+   "max_m": 19959,
+   "pct_within_300m": 0.8
+  }
+ },
+ "slope5_city5": {
+  "slope_weight": 5,
+  "city_weight": 5,
+  "length_km": 54.04,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 73.4,
+  "moved": {
+   "median_m": 403,
+   "max_m": 2365,
+   "pct_within_300m": 42.9
+  }
+ },
+ "slope5_city10": {
+  "slope_weight": 5,
+  "city_weight": 10,
+  "length_km": 83.15,
+  "side": "east",
+  "pct_city_score_10": 34.6,
+  "pct_within_500m_line": 20.4,
+  "moved": {
+   "median_m": 13619,
+   "max_m": 19336,
+   "pct_within_300m": 1.2
+  }
+ },
+ "slope5_city20": {
+  "slope_weight": 5,
+  "city_weight": 20,
+  "length_km": 96.51,
+  "side": "east",
+  "pct_city_score_10": 14.6,
+  "pct_within_500m_line": 13.5,
+  "moved": {
+   "median_m": 16054,
+   "max_m": 20013,
+   "pct_within_300m": 0.7
+  }
+ },
+ "slope10_city5": {
+  "slope_weight": 10,
+  "city_weight": 5,
+  "length_km": 53.97,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 70.6,
+  "moved": {
+   "median_m": 412,
+   "max_m": 2376,
+   "pct_within_300m": 41.3
+  }
+ },
+ "slope10_city10": {
+  "slope_weight": 10,
+  "city_weight": 10,
+  "length_km": 53.64,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 61.0,
+  "moved": {
+   "median_m": 539,
+   "max_m": 2421,
+   "pct_within_300m": 33.9
+  }
+ },
+ "slope10_city20": {
+  "slope_weight": 10,
+  "city_weight": 20,
+  "length_km": 98.15,
+  "side": "east",
+  "pct_city_score_10": 22.2,
+  "pct_within_500m_line": 22.5,
+  "moved": {
+   "median_m": 12056,
+   "max_m": 19338,
+   "pct_within_300m": 1.0
+  }
+ },
+ "slope30_city20": {
+  "slope_weight": 30,
+  "city_weight": 20,
+  "length_km": 53.73,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 55.8,
+  "moved": {
+   "median_m": 586,
+   "max_m": 2697,
+   "pct_within_300m": 33.8
+  }
+ },
+ "slope100_city20": {
+  "slope_weight": 100,
+  "city_weight": 20,
+  "length_km": 53.77,
+  "side": "east",
+  "pct_city_score_10": 100.0,
+  "pct_within_500m_line": 55.2,
+  "moved": {
+   "median_m": 587,
+   "max_m": 2771,
+   "pct_within_300m": 34.6
+  }
+ },
+ "slope30_city50": {
+  "slope_weight": 30,
+  "city_weight": 50,
+  "length_km": 99.66,
+  "side": "east",
+  "pct_city_score_10": 21.9,
+  "pct_within_500m_line": 20.0,
+  "moved": {
+   "median_m": 11951,
+   "max_m": 19339,
+   "pct_within_300m": 1.0
+  }
+ },
+ "slope100_city100": {
+  "slope_weight": 100,
+  "city_weight": 100,
+  "length_km": 84.78,
+  "side": "east",
+  "pct_city_score_10": 34.1,
+  "pct_within_500m_line": 17.2,
+  "moved": {
+   "median_m": 13817,
+   "max_m": 19373,
+   "pct_within_300m": 1.1
+  }
+ }
+}

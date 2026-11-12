@@ -205,6 +205,18 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ---
 
+# NIMBY: Not in My Backyard
+
+![h:300 center](images/lcpb-nimby.png)
+
+- Every town says it: **not in my backyard**. In the model, that is the **city weight** (Lab 10: **1**; pink = city limits)
+- **5**: still through town, just **straighter**. **10**: over the **mountains**, **89 km**, 60% longer
+- Push hard enough and the line lands in **somebody else's backyard**
+
+<!-- City weight is changed in the Raster Calculator expression; it is not a Lab 10 parameter. Runs: tools/lab10/explore_nimby.py (explore_nimby.json), drawn by tools/week11_nimby_figure.py. Dropping the city score barely mattered two slides ago; raising it to 10 matters more than anything else in the deck. A weight can be harmless in one direction and decisive in the other. Why not around the west side of Utah Lake? The Cities layer is municipal boundaries, and city limits cover the north end and much of the west side too, so the west way round crosses town as well and is longer. From city weight 6 up (tested to 20, and with slope weights to 100) the route goes east up the canyons instead; with ground above 1,700 m closed it stays in the valley east of the lake (explore_nimby_lowland.py). Ask the room: who lives along the purple line? A national forest, a canyon road, a reservoir. Somebody objects there too. -->
+
+---
+
 # A Corridor, Not a Line
 
 ![bg right:46% w:96%](images/lcpb-corridor.png)
@@ -240,7 +252,7 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 <div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
 <div>
 
-**Quiz: What Moved the Line?** Five questions on the tools, the back direction raster, which factors move a route, and corridors. **Scan the code**, or open the link under it.
+**Quiz: What Moved the Line?** Six questions on the tools, the back direction raster, which factors move a route and why, and corridors. **Scan the code**, or open the link under it.
 
 - A quick check that today's material made sense
 - The line-weight question comes back in Lab 10 Step 8
