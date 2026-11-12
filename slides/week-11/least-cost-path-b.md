@@ -81,30 +81,23 @@ By the end of class you should be able to:
 
 # Distance Accumulation
 
-![bg right:46% h:86%](images/lcpb-distance-accumulation.png)
+![bg right:60% w:96%](images/lcpb-distance-accumulation-callouts.png)
 
-- **Sources**: the start point (Lab 10: the substation at Spanish Fork Canyon)
-- **Barriers**: cells the route may never enter (Lab 10: the lakes)
-- **Input Cost Raster**: your cost surface
-- **Output Distance Accumulation Raster**: the running total
-- **Output Back Direction Raster**: the way home, in **degrees**
-- One run makes **both** of Tuesday's rasters
+- One run makes **both** of Tuesday's rasters: the **accumulated cost** and the **back direction**
+- The **cost raster** decides where the route goes; the other inputs say where it **starts** and what it must **avoid**
 
-<!-- Lab 10's own Figure 6a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
+<!-- The red callouts are drawn beside the untouched capture by tools/week11_dialog_callouts.py. Lab 10's own Figure 6a: the routing step of the lab's model, filled in as the page tells students to. Source_Point and Destination_Point come from two Select tools on Endpoints. The barrier input takes the lakes as features. Leave Input Surface Raster empty: that measures distance over the terrain's actual surface, a different question from cost. In Lab 10 the same tool, with only a source, also makes the three straight-line distance rasters. -->
 
 ---
 
 # Optimal Path As Line
 
-![bg right:46% h:86%](images/lcpb-optimal-path.png)
+![bg right:60% w:96%](images/lcpb-optimal-path-callouts.png)
 
-- **Destinations**: the end point (the substation at Bluffdale)
-- The **accumulation** and **back direction** rasters from the last tool
-- It **follows the arrows** from the destination, as we did by hand on Tuesday
-- The output is a **line feature class**, ready to map and measure
-- Its sibling, **Optimal Path As Raster**, gives the one-cell-wide raster
+- It **follows the arrows** home from the destination, as we did by hand on Tuesday
+- Its sibling, **Optimal Path As Raster**, gives a one-cell-wide raster instead
 
-<!-- Lab 10's own Figure 6b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 55.72 km. -->
+<!-- The red callouts are drawn beside the untouched capture by tools/week11_dialog_callouts.py. Lab 10's own Figure 6b. Destination Field fills in with UGRC_OID; with one destination it does not matter, nor does Path Type. The route it draws in the lab is 55.72 km. -->
 
 ---
 
@@ -173,7 +166,18 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 <li>Take away the lake barrier</li>
 </ol>
 
-<!-- Ninety seconds, a show of hands for each letter. Expect A, B or D: terrain, cities and barriers feel like the big constraints. The answer is C. The next two slides are the answer. -->
+<!-- Ninety seconds, a show of hands for each letter. Expect A, B or D: terrain, cities and barriers feel like the big constraints. The answer is C. The next three slides are the answer, and the why. -->
+
+---
+
+# The Answer: Existing Lines
+
+![h:330 center](images/lcpb-scenarios.png)
+
+- **Line_Weight 0** (purple): the route **leaves the existing lines** and cuts across the valley, **kilometers** from the baseline: the **biggest** change of any. You measure it in Step 8
+- **No road score** (orange): a **smaller** shift, up to **1.6 km** in one stretch, and most of the route stays put
+
+<!-- The thick pale red line in each panel is the baseline, for comparison; thin yellow lines are the existing transmission lines. Point at the middle panel first: with no line score the route straightens out across the valley floor. Then the right panel: dropping roads moves it some, but 61% of it stays within 300 m of the baseline (road weight 0 is changed in the expression, not a Lab 10 parameter; 54.93 km). Line_Weight 0 is a Step 8 run, so its numbers are not in this deck. Do not let the 1.6 km be the number students remember: it is the only number on the slide because the bigger one is theirs to measure. -->
 
 ---
 
@@ -188,14 +192,16 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ---
 
-# Two That Did
+# Why the Existing Lines Win
 
-![h:360 center](images/lcpb-scenarios.png)
+![bg right:38% w:92%](images/lcpb-factors.png)
 
-- **No road score**: **54.93 km**, up to **1.6 km** from the baseline · **Line_Weight 0**: you measure it in Step 8
-- The **existing-line score** is what holds the route where it is
+- A weight moves the route only where its factor **differs** from one candidate route to the next
+- **Existing lines**: score **1** within 500 m of a line, **5** out to 2 km, **10** beyond. Step off a line and every cell costs **more**, so the baseline stays within 500 m of one for **99.7%** of its length
+- **Roads**: a major road runs near nearly every route the line could take, so the road score **barely tells them apart**
+- The **existing lines** routed this line; **Line_Weight** is the dial on them
 
-<!-- The thick pale red line in each panel is the baseline, for comparison; yellow lines are the existing transmission lines. Road weight 0 (changed in the expression, not a Lab 10 parameter) keeps 61% of the route within 300 m of the baseline. Line_Weight 0 is a Step 8 run, so its numbers are not in this deck. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
+<!-- Score tables are on the Lab 10 page (Step 4 and Analysis Considerations). 89.0% of the baseline lies within 1 km of a major road, and the Line_Weight 0 route, which leaves the lines, is even closer to roads; the road score is 1 out to 1 km, 3 to 2 km, so along the valley floor it barely separates one route from another. The line score's jump from 1 to 5 at 500 m is the steepest step any score takes close to where the route can go. This is why Lab 10's personal number is a Line_Weight between 0 and 0.495: it is the factor that moves the route, and below about 0.5 is where it does. The rubric's question "what would you change to make the model more realistic?" starts here. -->
 
 ---
 

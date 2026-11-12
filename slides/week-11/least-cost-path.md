@@ -98,7 +98,7 @@ Dr. Dan Ames
 3. Run **Distance Accumulation** to create the **accumulated cost raster** and the **back direction raster**
 4. Run **Optimal Path As Line** with those two rasters and the destination: the path, already a **line**
 
-<!-- These are the steps as Lab 10 runs them, with ArcGIS Pro's current tools. Optimal Path As Line makes the polyline itself, so the final Raster to Polyline step of older tutorials is gone. The legacy names come back on the deprecation slide. The next slide shows the whole Lab 10 model, so students can see how much of it is step 1. -->
+<!-- These are the steps as Lab 10 runs them, with ArcGIS Pro's current tools. Optimal Path As Line makes the polyline itself. The next slide shows the whole Lab 10 model, so students can see how much of it is step 1. -->
 
 <!-- The figure (tools/week11_parta_figures.py) draws the same steps as Lab 10 runs them: three boxes build the cost surface, two route across it. -->
 
@@ -111,21 +111,6 @@ Dr. Dan Ames
 <p style="text-align:center;font-size:0.62em;margin-top:0.2em;">Every green oval is a data set, every yellow box a tool. The routing happens in the last boxes at the bottom right.</p>
 
 <!-- Do not read this diagram. The point is scale: sixteen tools, and only the last two are the least-cost path itself. Everything else prepares the cost surface. Say plainly that this is what Lab 10 asks them to build. The image is Lab 10's Figure C, the model exported from ModelBuilder. -->
-
----
-
-# Current tool names in ArcGIS Pro
-
-![bg right:44% w:96%](images/lcpb-cost-distance-deprecated.png)
-
-- **Cost Distance**, **Cost Back Link** and **Cost Path** still run, but are **deprecated**
-- **Distance Accumulation**: the accumulated cost *and* the back direction raster, in one run
-- **Optimal Path As Line**: replaces Cost Path, and draws the line itself
-- Lab 10 uses the **current** tools; Thursday compares how the two sets **charge a step**
-
-<!-- Lab 10 is built on Distance Accumulation and Optimal Path As Line. On its cost surface the legacy chain gives 58.49 km against 55.72 km, within 877 m everywhere (Thursday's deck). Say this out loud rather than leaving students to discover the deprecation warning in the tool's help. The concepts are identical: accumulated cost plus a back-direction raster, then walk the back-direction raster home. Only the tool names and a few parameter names moved. -->
-
-<!-- The capture is Cost Distance opened in ArcGIS Pro 3.7.1's Geoprocessing pane (October 9, 2026), showing the tool's own deprecation notice; the Thursday deck, least-cost-path-b, shows Distance Accumulation and Optimal Path As Line, and the two tool sets' routes on Lab 10's data (55.72 km and 58.49 km). -->
 
 ---
 
@@ -266,7 +251,7 @@ The cheapest path costs **12**, through the 3s and the middle row; the straight 
 </div>
 </div>
 
-<!-- The same two rasters as the hand grid, on Lab 10's real cost surface (the figure is Thursday's, computed from the lab's reference run). Note the shape: the accumulated cost spreads out from the source like a ripple and runs ahead where crossing is cheap. The legacy tools called the second raster "back link" and coded it 0 to 8 by neighbor; Distance Accumulation codes it as an angle. Same idea. -->
+<!-- The same two rasters as the hand grid, on Lab 10's real cost surface (the figure is Thursday's, computed from the lab's reference run). Note the shape: the accumulated cost spreads out from the source like a ripple and runs ahead where crossing is cheap. Distance Accumulation stores the back direction as a compass angle; Thursday shows it. -->
 
 ---
 
@@ -340,4 +325,4 @@ section { font-size: 24px; }
      it. Everything else in the hour hangs off that distinction. If the room has no signal, put the URL on the board; the items read aloud just as
      well. -->
 
-<!-- The hand grid is solved exactly, with a unique cheapest path of 12 against 14 for the straight line. The three application papers' citations were checked against Crossref. "Back link" means the legacy tools; "back direction" means Distance Accumulation. Figures: tools/week11_parta_figures.py. -->
+<!-- The hand grid is solved exactly, with a unique cheapest path of 12 against 14 for the straight line. The three application papers' citations were checked against Crossref. Figures: tools/week11_parta_figures.py. -->
