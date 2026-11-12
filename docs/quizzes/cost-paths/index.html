@@ -45,11 +45,11 @@ CE414Quiz.start({
     {
       prompt: "In Lab 10, raising Slope_Weight from 1 to 5 barely moves the route. Why so little?",
       options: [
-        "Distance Accumulation ignores weights above 1",
-        "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
-        "Slope is measured in degrees, so its scores are too small to matter"
+        "Distance Accumulation caps every weight at 1, so a weight of 5 is read as 1",
+        "Every route the line could take runs on flat valley floor, where slope scores 1",
+        "Slope is measured in degrees, so its scores are too small next to the others"
       ],
-      answer: "The route runs on flat valley floor, where slope scores 1 almost everywhere a route could go",
+      answer: "Every route the line could take runs on flat valley floor, where slope scores 1",
       explanation: "A weight multiplies a score; if the score is the same along every route the line could take, multiplying it changes every route's cost alike and cannot choose between them. In mountains, slope would move the line."
     },
     {
