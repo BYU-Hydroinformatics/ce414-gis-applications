@@ -1,7 +1,7 @@
 # Week 14: Midterm 2 and Avalanche Hazard
 
 > [!IMPORTANT] Also this week
-> - **Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–13 ([study guide](../study-guides/midterm-2.md)) — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
+> - **Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–12 ([study guide](../study-guides/midterm-2.md)) — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
 > - Final project **proposal meeting** with the instructor — by Friday 5:00 pm; update the class Google document with your team, idea, and data.
 > - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 

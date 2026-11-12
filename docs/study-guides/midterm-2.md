@@ -2,14 +2,14 @@
 
 **Midterm 2** is a closed-book, concept-based exam in the Testing Center, 100 points. It opens
 **Tuesday of Week 14 at 8:00 am** and closes **Thursday at 9:00 pm**; the Testing Center charges a
-late fee from 2:00 pm Thursday, so go earlier. It covers **Weeks 8–13**.
+late fee from 2:00 pm Thursday, so go earlier. It covers **Weeks 8–12**.
 
 **Conditions.** Paper and pencil, closed book and closed notes, with no computer, phone or other
 device. **Bring a calculator**: any calculator is allowed, as long as it is not a phone. You have
 **3 hours**, which is plenty: most students should finish in about half that.
 
 **What the exam looks like.** **100 multiple-choice questions, 1 point each.** Every question has
-four options and exactly one best answer. The questions are grouped by week, Week 8 through Week 13.
+four options and exactly one best answer. The questions are grouped by week, Week 8 through Week 12.
 Some are built on ArcGIS Pro screenshots from the labs and lectures; one asks you to compare four
 figures and pick the right one; and some are short hand calculations of the kind worked in class.
 You mark your answers on the **Testing Center's answer sheet**, and only the answer sheet is scored.
@@ -19,7 +19,8 @@ letter onto the sheet.
 **What is not on this exam.** **Coordinate systems, projections, datums and GPS** are not on
 Midterm 2; those lectures were retired from this semester's schedule. Neither are **data standards
 and data quality** (Chapter 14), which no lecture covers. **Lab 12 (Avalanche Hazard)** is due the
-same week as the exam, so it is not on Midterm 2 either.
+same week as the exam, so it is not on Midterm 2 either. The **final project** (Week 13) is not on the exam:
+its requirements are for the project itself, and you will work through them with your team.
 
 ## How to study for this exam
 
@@ -53,6 +54,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Say what a **100-year flood** is, as a probability, and what that means over a run of years
 - Say what a stream gage measures, what a **rating curve** does, and why a flood flow above the top of the rating is the least certain number in the model
 - Turn a flow into a gage height and a gage height into a flood **depth h**, as Lab 7 Step 1 does
+- Keep **gage height**, **gage datum** and **zero-flow level** apart, and say which one depth h is measured from
 - Say why a river is **not a bathtub**, and when a bathtub is the right model
 - Define **HAND**, compute it for a cell from the river cell it drains to, and say which cells flood at a depth h
 - Say how HAND is built from Lab 5's chain plus **Flow Distance**, and why the **stream definition** and the **filled** surface matter
@@ -68,6 +70,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Recognize the profile each method draws through the same points, and say which methods can go above the highest sample
 - Say which methods give the **measured values back** (exact) and which do not
 - Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, what a large nugget does, and why a fit with a range near zero gives a flat surface
+- Say what one **dot** on a semivariogram is, and how the **spherical**, **exponential** and **Gaussian** models differ at short distances
 - Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand and in ArcGIS Pro (error, square, mean, square root)
 - Say which surface to **trust**, and why holding points back is the honest test without the truth
 - For Lab 8: the two Thiessen defaults that ruin the surface, why the IDW surface stays inside the samples' range, what the empty kriging boxes mean, why Zonal Statistics as Table uses **Mean**, what a short **COUNT** means, and what the elevation service sent in Step 1
@@ -113,12 +116,3 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Say which solver answers which question: **Service Area**, **Closest Facility**, **Location-Allocation**, Route
 - Explain why a **buffer** and a **service area** disagree about the same minutes, and turn minutes at a speed into a buffer distance
 - For Lab 11: what the network's two costs and their evaluators show, what **Dissolve** and **Rings** do, what **Select Data** does, why each branch gets its own **Make Feature Layer**, what **Have their center in** and **invert** select, and what the cutoff runs show
-
-## Week 13 — The Final Project
-
-*Slides:* [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html). *Self-check:* [Ready to Pitch?](../quizzes/final-project/index.html). *Project:* [Final Project](../assignments/final-project.md).
-
-- Judge whether an idea is the right **scope** for the project, and say why displaying data is not analysis
-- List the requirements every project must meet, including **raster and vector** data
-- Say what to bring to the **proposal meeting**, including the **data-feasibility table**
-- Say how you would show a result is right: a **validation** or **sensitivity** check

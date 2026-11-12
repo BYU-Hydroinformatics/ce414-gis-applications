@@ -142,9 +142,9 @@ DUE = {
     # network analysis. Quiz 11 (Data Standards, Chapter 14) was dropped Oct 26 because no lecture
     # covers it, so Weeks 13 and 14 have no quiz and no reading.
     13: dict(reading=None, quiz=None, lab=None,
-             other=[("**Midterm 2 is next week**, on Weeks 8–13: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
+             other=[("**Midterm 2 is next week**, on Weeks 8–12: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
     14: dict(reading=None, quiz=None, lab=12,
-             other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–13 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
+             other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–12 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
                     ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
     15: dict(reading=None, quiz=None, lab=None,
              other=[("Final project **presentation video** (eight minutes; post the link on the class Google document)", "Wednesday 11:59 pm"),

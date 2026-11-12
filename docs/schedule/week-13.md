@@ -1,7 +1,7 @@
 # Week 13: Final Project Intro
 
 > [!IMPORTANT] Also this week
-> - **Midterm 2 is next week**, on Weeks 8–13: read the [study guide](../study-guides/midterm-2.md) now — opens Tuesday of Week 14 at 8:00 am.
+> - **Midterm 2 is next week**, on Weeks 8–12: read the [study guide](../study-guides/midterm-2.md) now — opens Tuesday of Week 14 at 8:00 am.
 > - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 
 <div class="week-card week-card--slides" markdown>
