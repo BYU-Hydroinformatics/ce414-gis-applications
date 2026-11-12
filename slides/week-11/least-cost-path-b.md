@@ -217,6 +217,30 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 
 ---
 
+# Change the Terrain Term
+
+![h:300 center](images/lcpb-elevation.png)
+
+- Another way to build it: **elevation** ("lower is cheaper") instead of slope, and the scores **multiplied** instead of added
+- At city weight 1 it nearly matches Lab 10. At **5** it climbs a canyon, crosses the **mountains**, and comes back along the **north shore**: **88.6 km**
+- Same data, same endpoints: the **form** of the model picked a new route
+
+<!-- This is the pre-2026 handout's model (raw DEM as a multiplier, rasters multiplied together); the slide does not say so because students never saw that handout. Runs: tools/lab10/explore_elevation.py (explore_elevation.json). Cost = Elevation (raw meters) x Road_Score x City_Score^w x Line_Score; in a product a weight is a power, so city weight 5 means City_Score to the fifth. Lab 10 dropped elevation because lower ground is not cheaper to build on; steep ground is. Banded elevation added to the other scores (not shown) behaves like slope: 53.9 km at city weight 5, over the mountains (87.1 km) at 10. The point for the room: nobody changed the data or the weights' intent, only adding versus multiplying and elevation versus slope, and the route moved by 30 km. Every one of those is a modeling decision somebody has to defend. -->
+
+---
+
+# A Barrier Beats Any Weight
+
+![h:300 center](images/lcpb-corridor-barrier.png)
+
+- Add one rule: stay within **2 km of a major road**; everything darker is a **barrier**
+- With the mountains off limits, city weight 10 only **straightens** the route (53.6 km). In the elevation × scores model, the city weight changes **nothing**
+- A **barrier** decides where the route **can** go; a **weight** only chooses among what is left
+
+<!-- The 2 km road corridor was the pre-2026 handout's rule. Runs: tools/lab10/explore_road_corridor.py (explore_road_corridor.json). Corridor = 1 within 2 km of Lab 10's Major_Roads, NoData beyond, multiplied into the cost; lakes stay barriers. Left: Lab 10's scores at city weight 10, no corridor (89.1 km, over the mountains). Middle: the same inside the corridor, 53.6 km. Right: the elevation-times-scores model inside the corridor gives 54.95 km at city weight 1, 5 and 10 alike: inside the corridor the route is in town wherever it goes, so a heavier city score raises every candidate's cost alike and picks nothing. None of these runs goes around the west side of Utah Lake: city limits cover the north end and much of the west side too. -->
+
+---
+
 # A Corridor, Not a Line
 
 ![bg right:46% w:96%](images/lcpb-corridor.png)

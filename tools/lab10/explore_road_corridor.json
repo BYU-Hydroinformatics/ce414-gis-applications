@@ -1,0 +1,68 @@
+{
+ "corr_old_city1": {
+  "form": "old",
+  "city_weight": 1,
+  "length_km": 54.95,
+  "side": "east",
+  "moved": {
+   "median_m": 219,
+   "max_m": 1567,
+   "pct_within_300m": 59.1
+  }
+ },
+ "corr_old_city5": {
+  "form": "old",
+  "city_weight": 5,
+  "length_km": 54.95,
+  "side": "east",
+  "moved": {
+   "median_m": 219,
+   "max_m": 1567,
+   "pct_within_300m": 59.1
+  }
+ },
+ "corr_old_city10": {
+  "form": "old",
+  "city_weight": 10,
+  "length_km": 54.95,
+  "side": "east",
+  "moved": {
+   "median_m": 219,
+   "max_m": 1567,
+   "pct_within_300m": 59.1
+  }
+ },
+ "corr_current_city1": {
+  "form": "current",
+  "city_weight": 1,
+  "length_km": 55.72,
+  "side": "east",
+  "moved": {
+   "median_m": 0,
+   "max_m": 0,
+   "pct_within_300m": 100.0
+  }
+ },
+ "corr_current_city5": {
+  "form": "current",
+  "city_weight": 5,
+  "length_km": 53.93,
+  "side": "east",
+  "moved": {
+   "median_m": 440,
+   "max_m": 2355,
+   "pct_within_300m": 39.6
+  }
+ },
+ "corr_current_city10": {
+  "form": "current",
+  "city_weight": 10,
+  "length_km": 53.61,
+  "side": "east",
+  "moved": {
+   "median_m": 557,
+   "max_m": 2397,
+   "pct_within_300m": 30.5
+  }
+ }
+}

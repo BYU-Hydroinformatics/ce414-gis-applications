@@ -311,6 +311,16 @@ Options to test before rebuilding the lab: score cities by something that thins 
 lake (population or housing density, or developed land cover) instead of municipal limits; add a
 land-ownership score or barrier (national forest, wilderness) so the mountain escape closes; or
 both. The Week 11 Part B deck's NIMBY slide shows the current behavior (city weight 1, 5, 10).
+**Elevation instead of slope does not do it either** (`tools/lab10/explore_elevation.py`, same
+evening). Banded elevation (lower = cheaper) in the sum behaves like slope: east of the lake, and
+over the mountains at city weight 10 (87 km). The pre-2026 handout's form, the raw DEM in meters
+multiplied by the other scores, does push the route somewhere new at a heavy city weight: up the
+canyon, through the mountains, and back down along the north shore of Utah Lake (89–93 km), but still
+east and north of the lake, never west. **The old handout's road corridor does not do it either**
+(`tools/lab10/explore_road_corridor.py`): with every cell more than 2 km from a major road NoData,
+Lab 10's sum stays in the valley east of the lake (53.6 km at city weight 10), and the old product
+gives the same 54.95 km route at city weight 1, 5 and 10. The deck's "Change the Terrain Term" and
+"A Barrier Beats Any Weight" slides show these runs.
 
 **Prompt**
 
