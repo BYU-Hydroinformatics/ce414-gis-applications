@@ -91,9 +91,9 @@ By the end of class you should be able to:
 - Two lines **cross on the map**: an interstate over a street
 - No **junction** where they cross, so the network **does not connect them**
 - Right for an overpass; a disaster at a real intersection that was digitized without a junction
-- UGRC's rule: local streets connect only at their **endpoints**; freeways and ramps connect at **any vertex**, in one group
+- UGRC's rule: freeways and ramps connect only at their **endpoints**; other streets connect at **any vertex** they share, in one group
 
-<!-- The red X is a place west of Provo where I-15 crosses a surface street; the nearest junction is 88 m away, at the ramp. Connectivity is set per subtype of the Roads class in UGRC's template: subtype 1 (limited access and ramps) any-vertex, subtype 2 (everything else) end-vertex, both in one connectivity group. There is no elevation field in this network, so an overpass is "connected" only because its endpoints do not touch the street's. The lesson for any network you build: the junctions are the model; a segment that stops 2 m short of the one it should meet is a wall. -->
+<!-- The red X is a place west of Provo where I-15 crosses a surface street; the nearest junction is 88 m away, at the ramp. Connectivity is set per subtype of the Roads class in UGRC's template: subtype 1 (limited access and ramps) end-vertex, subtype 2 (everything else) any-vertex, both in one connectivity group (ConnPolicy 1 and 0 in tools/lab11/ugrc_network_template.xml; Esri's enum is 0 = any vertex, 1 = end vertex). There is no elevation field in this network, so I-15 stays off the street below only because a freeway segment connects at its own ends, and it has no end there. The lesson for any network you build: the junctions are the model; a segment that stops 2 m short of the one it should meet is a wall. -->
 
 ---
 
@@ -176,11 +176,11 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 ![bg right:40% w:94%](images/na-overpass.png)
 
-1. **Sources**: the Roads feature class, one subtype for freeways and ramps, one for everything else
-2. **Connectivity**: end-vertex for streets, any-vertex for ramps, one group
-3. **Elevation**: none, so overpasses rely on endpoints not touching
+1. **Sources**: Roads, one subtype for freeways and ramps, one for the rest
+2. **Connectivity**: end-vertex for freeways and ramps, any-vertex for other streets, one group
+3. **Elevation**: none, so overpasses rely on freeway endpoints not touching
 4. **Attributes**: `TravelMinutes` (default) and `Length`, each with an **evaluator** per direction reading a field
-5. **Turns**: global delays by turn type and road class
+5. **Turns**: global delays by turn type, road class
 6. **Build**: ArcGIS Pro walks every segment and writes the junctions
 
 <!-- This is the Catalog pane's network dataset wizard, as UGRC filled it in; it is why Lab 11 ships the network already built. Lab 11's package was made by exporting UGRC's definition as a template, clipping the roads to Utah County, creating the network from the template and building it, so the costs are UGRC's, unchanged. Students see the result in Network Dataset Properties in Step 1. If a student asks "could I build one from a shapefile of roads": yes, and the deck's six steps are the six decisions they would have to make. -->
