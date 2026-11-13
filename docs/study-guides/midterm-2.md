@@ -97,7 +97,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Say what a **cost surface** is, and why it is not a map of distance; build one by reclassifying and combining rasters, with **high = undesirable**
 - Explain what the **accumulated cost** and **back direction** rasters each store, and read a back direction as a **compass angle**
 - Compute an accumulated cost by hand, and trace the cheapest path from a destination back to its source
-- Name ArcGIS Pro's current tools, **Distance Accumulation** and **Optimal Path As Line**, the legacy ones they replace, and how the two charge a step
+- Name ArcGIS Pro's tools, **Distance Accumulation** and **Optimal Path As Line**; say how a step into a cell is charged, why a **diagonal** step costs 1.414 times as much, and what back-direction angles **between** the eight neighbor directions do to a route
 - Tell a **barrier** from a **cost**
 - Say which parts of a cost surface **move a route** and which only change its total, and why
 - Map a **corridor** of nearly-as-good routes, and say what a wide or narrow corridor means
