@@ -13,7 +13,7 @@ and the final project (proposal meeting, team presentation, lab-style write-up a
 110 points). Lab 12 is now 100 points, individual: a five-minute ArcGIS Pro training video posted
 unlisted on YouTube, a project report (text plus a full-page model and a full-page map) and a project
 package, due Thursday of Week 15; a 30-90 s vertical reel is extra credit, up to 10 points. Course
-total 1,300 -> 1,240. Open: the Learning Suite upload limit for a .ppkx (the page allows a link), and
+total 1,295 -> 1,235 (Learning Suite, Nov 14). Open: the Learning Suite upload limit for a .ppkx (the page allows a link), and
 whether Snipping Tool on the lab machines records the microphone. The 18 example write-ups (Drive
 folder 1FUjsLXI28kuB1JUgkKIa7G_A3HTa6gc6) carry student names and are not linked. -->
 

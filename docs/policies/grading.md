@@ -25,17 +25,17 @@ Below 60 % is an E.
 
 Point values are from the Learning Suite assignments view (September 8, 2026) plus Lab 11 (Network Analysis), added
 October 10, 2026, less Quiz 11, dropped October 26, 2026. On November 14, 2026 the final project and the
-presentation notes became Lab 12 (Choose Your Own Adventure), worth 100 points: 1,240 points in all. The grade is points-based, so the percentages below are simply each component's share of the
+presentation notes became Lab 12 (Choose Your Own Adventure), worth 100 points: 1,235 points in all, matching the Learning Suite total. The grade is points-based, so the percentages below are simply each component's share of the
 total and will shift a little if points are added or dropped during the semester.
 
 | Component | Points | Notes |
 | --- | --- | --- |
 | Labs 1 to 11 | 50 each, 550 total | One PDF report each, on Learning Suite. Due Saturday 11:59 pm of the week assigned. |
-| Lab 12 — [Choose Your Own Adventure](../assignments/lab-12/README.md) | 100 | Your own project, done individually: a five-minute training video on YouTube, a report and an ArcGIS Pro project package. Due Thursday 11:59 pm of Week 15. Labs 1 to 12 together are 650 points, about 52 %. |
+| Lab 12 — [Choose Your Own Adventure](../assignments/lab-12/README.md) | 100 | Your own project, done individually: a five-minute training video on YouTube, a report and an ArcGIS Pro project package. Due Thursday 11:59 pm of Week 15. Labs 1 to 12 together are 650 points, about 53 %. |
 | Reading quizzes (10) | 20 each, 200 total (about 16 %) | Open book, on Learning Suite, done independently. Due Saturday 11:59 pm of the week assigned. |
 | Midterms 1 and 2 | 100 each | Closed book, concept based, in the Testing Center. Open Tuesday 8:00 am to Thursday 9:00 pm of Weeks 8 and 14. |
 | Final exam | 100 | One question done in ArcGIS Pro in the lab during finals week; open book and open computer; three-hour block. |
-| In-class activities (9) | 5 each, 45 total | Uploaded to Learning Suite the day they happen. Only presented in class. |
+| In-class activities (8) | 5 each, 40 total | Uploaded to Learning Suite the day they happen. Only presented in class. |
 | Attendance | 25 | Check in on Learning Suite during each class session; each class day is an equal share of the 25 points. |
 | Peer review | 20 | Review and stamp at least ten classmates' lab reports, two points each, and turn in a memo at the end listing whom you reviewed. |
 
@@ -45,6 +45,7 @@ review together are the **Attendance and Participation** category, about 7 %.
 ## Extra credit
 
 - Five points for completing the end-of-semester course evaluation at studentratings.byu.edu.
+- Ten points for the Week 6 in-class activity, *Where is Emigration Creek Watershed?*
 - Up to ten points for a 30 to 90 second vertical reel cut from your Lab 12 video; see
   [Lab 12](../assignments/lab-12/README.md).
 - School spirit and belonging: attend a cultural or sporting event with other BYU students, take a
