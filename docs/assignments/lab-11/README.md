@@ -350,7 +350,8 @@ Leave the field mappings and the rest at their defaults.
 
 1. Add **Solve** with the `Service Area` layer as its **Input Network Analysis Layer**. Its output is
    the same layer, now with polygons in it.
-2. Add **Select Data** (search for it; it is in the ModelBuilder toolbox) **[To do: confirm where Select Data is. This lab's GUI notes say it is under Utilities in the ModelBuilder ribbon's Insert group, not in the Geoprocessing search.]** with the solved layer as
+2. Add **Select Data**: on the **ModelBuilder** tab, in the **Insert** group, open **Utilities** and
+   choose **Select Data** (it does not come up in a Geoprocessing search). Set the solved layer as
    its **Input Data Element** and **Polygons** as the **Child Data Element**.
 3. Add **Copy Features** with that Polygons element as its input and `Served_Area` as the output
    feature class. The analysis layer lives only in the map; the copy is the feature class your maps
