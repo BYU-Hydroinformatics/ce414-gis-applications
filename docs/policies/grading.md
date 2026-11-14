@@ -71,10 +71,18 @@ within a week of the due date can raise your score to as much as 90 %.
 
 ## AI grading disclaimer
 
-I may use AI tools to check your assignment against the grading rubric or to organize feedback
-for you. I do this only to improve the quality of the feedback you receive, and I personally
-review all AI-assisted grading and feedback before it reaches you.
+Following a College of Engineering teaching luncheon that encouraged faculty to use AI tools to
+help assess student work, I use two kinds of help when grading:
+
+- **Grading code.** For labs with numeric results, I wrote Python code (with AI assistance) that
+  checks your values against an answer computed from your own inputs. It gives the same result
+  every time.
+- **AI-assisted review.** For written reports and maps, an AI tool reads your work against the
+  rubric and drafts a score and feedback.
+
+I review every score and comment myself before it is entered, and I make the final call. I do
+this to give you better feedback, not to replace my own judgment.
 
 > [!NOTE]
-> Transcribed from the Fall 2026 Learning Suite syllabus on September 7, 2026. If this page and
-> Learning Suite disagree, Learning Suite wins.
+> The rest of this page is transcribed from the Fall 2026 Learning Suite syllabus. If this page
+> and Learning Suite disagree, Learning Suite wins.
