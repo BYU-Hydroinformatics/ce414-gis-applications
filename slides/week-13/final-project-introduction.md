@@ -2,7 +2,7 @@
 marp: true
 theme: ce414
 paginate: true
-footer: "CE 414 · Week 13 — Final Project Introduction"
+footer: "CE 414 · Week 13 — Lab 12: Choose Your Own Adventure"
 ---
 
 <!-- _class: lead -->
@@ -10,18 +10,17 @@ footer: "CE 414 · Week 13 — Final Project Introduction"
 
 ![bg right:42% w:90%](images/fp-example-windfarm-map.png)
 
-# The Final Project
+# Lab 12: Choose Your Own Adventure
 
 **CE 414 Engineering Applications of GIS**
 Dr. Dan Ames
 
-<!-- This deck replaces the one-page Learning Suite "Final Project" page. Everything on the
-requirements, expectations, and deliverables slides comes from that page; the milestone calendar,
-the "what a lab-sized project looks like" slide, the pitfalls, and the proposal checklist are
-additions meant to make the expectations concrete. Adjust anything marked TODO before presenting. -->
+<!-- Rewritten 2026-11-14 when the final project became Lab 12 (individual, 100 points: a five-minute
+ArcGIS Pro training video on YouTube, a report, and a project package, due Thursday of Week 15). The
+lab page is the authority: https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/ -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 13 — Final Project Introduction<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-14</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -31,14 +30,14 @@ additions meant to make the expectations concrete. Adjust anything marked TODO b
 ![bg right:35% w:85%](images/fp-cookie-recipe-model.png)
 
 - By the end of class you should be able to:
-  - Say what the final project is for, and how it differs from a lab
-  - Judge whether an idea is the right **scope** for four weeks
-  - List the requirements every project must meet
-  - Know exactly what to bring to your proposal meeting
-  - Describe how the project is scored, including by your classmates
+  - Say what Lab 12 asks of you, and how it differs from Labs 1 to 11
+  - Judge whether an idea is the right **size** for two and a half weeks
+  - List the four requirements every project must meet
+  - Plan a five-minute **training video** of your own model
+  - Say what is graded from the video, the report and the package
 
-<!-- Frame it as the capstone: every lab so far handed students a question and a recipe. Now they
-write the recipe. The cookie model from Week 2 is a deliberate callback. -->
+<!-- Frame it as the last lab: every lab so far handed students a question and a recipe. Now they
+write the recipe, and then teach it. The cookie model from Week 2 is a deliberate callback. -->
 
 ---
 
@@ -46,47 +45,44 @@ write the recipe. The cookie model from Week 2 is a deliberate callback. -->
 
 ![bg right:55%](images/fp-divider-project.jpg)
 
-# Part 1 — What the Project Is
+# Part 1 — What Lab 12 Is
 
-<!-- Part 1: why a final project, past projects, the requirements, and what lab-sized means. -->
+<!-- Part 1: why this lab, what past students built, the requirements, and what lab-sized means. -->
 
 ---
 
-# Why a final project?
+# Why choose your own?
 
 Every lab this semester gave you a **question**, the **data**, and a **recipe**.
 
-The project takes two of those away.
+Lab 12 takes all three away.
 
 - **You** pick the question — something you actually want to know
 - **You** find and vet the data
-- The recipe is still ModelBuilder, and it still has to be reproducible
+- **You** build the recipe in ModelBuilder — and then **teach it** to someone else
 
 This is the closest thing in the course to what a client asks for: *here is a problem, show me
 where, and show me why I should believe you.*
 
-<!-- TODO(graphic): a simple three-column "question / data / recipe" figure with the first two
-crossed out -->
+<!-- TODO(graphic): a simple three-column "question / data / recipe" figure with all three crossed out -->
 
 ---
 
-# What past projects looked like
+# What past students built
 
 <div class="columns" style="grid-template-columns: 1.1fr 1fr; align-items: start;">
 
 <div>
 
-Titles from earlier years, to calibrate scope:
+Questions from earlier years:
 
-- Where should BYU-approved apartments go?
-- Best fly-fishing access on Utah rivers
-- Light-rail corridor siting
-- A visitor center for a state park
-- "Hipster hotspots" — coffee, bikes, and vintage
-- Center-pivot irrigation from NDVI
-- Volume of a Hawaiian volcano
+- Where are the safe **sledding hills**, and how thrilling is each?
+- Which trails have broad **views** that include water?
+- Where should **rain gardens** go in a county?
+- Where are the gaps between **EV fast chargers** on a road trip?
+- How many **craters** does a Martian volcano have?
 
-Each was one clear question, one study area, one model.
+Seventy more, with the decks from 2018 to 2025, are on the **Lab 12 page**.
 
 </div>
 
@@ -98,42 +94,24 @@ Each was one clear question, one study area, one model.
 
 </div>
 
-<!-- Source: the course's Final Projects archive (2012 onward) and past presentation decks.
-TODO(instructor): add two or three strong 2023-2025 projects here. -->
+<!-- The ideas table on the lab page has 70 rows drawn from 126 projects in the 2018-2025 decks; each
+row links its year's deck. Tell them to page through two or three decks tonight. -->
 
 ---
 
-# Requirements — the team
+# The requirements
 
-1. Form a team of **one or two** people
-2. Identify a problem together and **pitch it to the instructor**
-3. Once the idea is approved, split the work: data collection, analysis, writing, presentation
+Your project must have all four:
 
-> A team of two is not two half-projects. Both of you should be able to explain every step of
-> the model.
+1. **Raster and vector data, both analyzed** — not a raster only as a backdrop
+2. **A ModelBuilder model** that runs from its tool dialog and makes your result
+3. **A finished map** that answers your question
+4. **Your own work, done individually** — help finding data or fixing an error is fine, as in any lab
 
-<!-- TODO(instructor): the plan asks for explicit individual-accountability language for teams of
-two — e.g. a short "who did what" statement in the report. Decide and add here. -->
+Pick something other than Labs 1 to 11. Lab 12 is a stretch past them, not a rerun.
 
----
-
-# Requirements — the project
-
-Every project must:
-
-1. Tackle a **new** idea or problem using GIS and spatial analysis
-2. Use **both raster and vector** data
-3. Be built as a **ModelBuilder** geoprocessing model
-4. Match the **scope and scale** of the ModelBuilder lab assignments
-5. Introduce **at least two tools** we have not used in a lab this semester
-6. Expose a **tool interface** — inputs, outputs, and parameters — so someone else can run it
-
-And one house rule: the words **"utilize"** and **"in order to"** do not appear in your report.
-*Use* and *to* work fine.
-
-<!-- Item 7 on the original page ("same length and size as our previous labs") is folded into item 4
-and made concrete on the next slide. TODO(instructor): the plan questions whether "two new tools"
-encourages novelty for its own sake — keep, reword, or drop. -->
+<!-- There is no proposal meeting and no team this year. The project is individual so the grade
+measures each student's own work. -->
 
 ---
 
@@ -143,15 +121,14 @@ encourages novelty for its own sake — keep, reword, or drop. -->
 
 A project the size of a lab has:
 
-- **One** decision question, with explicit criteria and thresholds
+- **One** question, with explicit criteria and thresholds
 - **One** study area, in a projected coordinate system you chose on purpose
-- A model of roughly **6–15 tools** that reruns from raw inputs without hand repair
-- **Documented data** — source, vintage, license, fitness for the question
-- At least **one validation or sensitivity check**
-- **One** professional map and a short report
+- A model of roughly **6 to 12 tools** that reruns from its inputs without hand repair
+- **Documented data**: source, URL, date, coordinate system
+- **One** professional map
 
 <!-- Say it out loud: three study areas, a web app, or a month of data cleaning is a thesis, not a
-project. The 6-15 tool range is a guideline drawn from the lab models, not a rule. -->
+lab. The 6-12 tool range is a guideline, not a rule. -->
 
 ---
 
@@ -169,8 +146,8 @@ For each idea, decide: **too small**, **about right**, or **too big**.
 </ol>
 
 <!-- A: too small — no analysis, just a display. B: about right. C: too big — data volume and
-validation are out of reach in four weeks. D: about right, and a good example of a network question
-that is still doable with buffers and raster density. -->
+validation are out of reach in two and a half weeks. D: about right, and a good example of a
+network question that is still doable with buffers and raster density. -->
 
 ---
 
@@ -180,7 +157,7 @@ that is still doable with buffers and raster density. -->
 
 # Part 2 — Choosing a Problem
 
-<!-- Part 2: the three questions for choosing a problem and the data-feasibility check. -->
+<!-- Part 2: the three questions for choosing a problem and the data check. -->
 
 ---
 
@@ -190,8 +167,7 @@ that is still doable with buffers and raster density. -->
 "Where in Utah County should a new fire station go so that the most homes are within 5 minutes?"
 
 **2. Does the data exist, and can I get it this week?**
-Check Utah SGID, USGS, Census, and Living Atlas *before* you pitch. If a layer would need to be
-digitized by hand, that is your whole project.
+Check UGRC, the USGS National Map, and Living Atlas *before* you commit. If a layer would need to be digitized by hand, that is your whole project.
 
 **3. What would a wrong answer look like?**
 If you cannot describe a way to check the result, the model is a picture, not an analysis.
@@ -200,18 +176,17 @@ If you cannot describe a way to check the result, the model is a picture, not an
 
 ---
 
-# The data-feasibility check
+# The data check
 
-Before your proposal meeting, fill this in for **every** layer you plan to use:
+Before you build anything, fill this in for **every** layer — it becomes the data table in your report:
 
-| Layer | Source and URL | Vintage | Format | CRS | Raster or vector | License |
-| --- | --- | --- | --- | --- | --- | --- |
-| e.g. Roads | Utah SGID | 2025 | Shapefile | UTM 12N | Vector | Public |
+| Layer | Raster or vector | Source and URL | Date downloaded | Coordinate system |
+| --- | --- | --- | --- | --- |
+| e.g. Roads | Vector | UGRC Road Centerlines | Nov 24, 2026 | NAD 1983 UTM 12N |
 
-If any row is blank, you are not ready to pitch.
+If any row is blank, you are not ready to build.
 
-<!-- This table is the single most useful thing a team can bring to the meeting. Most failed
-projects failed on a data row, not on the analysis. -->
+<!-- Most failed projects failed on a data row, not on the analysis. This week is for finding out. -->
 
 ---
 
@@ -219,61 +194,47 @@ projects failed on a data row, not on the analysis. -->
 
 ![bg right:55%](images/fp-divider-deliverables.jpg)
 
-# Part 3 — Deliverables and Scoring
+# Part 3 — What You Submit
 
-<!-- Part 3: the proposal meeting, milestones, the presentation, the tool interface, peer scoring, and what makes a project great. -->
-
----
-
-# Deliverable 1 — the proposal meeting
-
-Come ready to discuss, in this order:
-
-1. **The problem**, in one sentence, and why it matters to someone
-2. **Data needs** — the feasibility table from the previous slide
-3. **Proposed analysis** — a sketch of the model on paper is ideal
-4. **Division of labor**, if you are a team of two
-5. **Proposed schedule** against the milestones on the next slide
-
-Leave the meeting with a yes, a no, or a "yes if you change X."
-
-<!-- TODO(instructor): confirm how meetings are booked — office hours link, sign-up sheet, or
-in-class. -->
+<!-- Part 3: the training video, the report and the package, the timeline, and how it is scored. -->
 
 ---
 
-# Suggested milestones
+# The training video — five minutes
 
-| Week | Milestone |
+A voiceover on **your ArcGIS Pro screen**, for someone who wants to do this kind of analysis next.
+
+| About | What you show |
 | --- | --- |
-| 13 | Project introduced; start scouting data; feasibility table |
-| 14 | **Proposal meeting** by Friday, idea approved; model runs on real data |
-| 15 | No class: validation done, report written, **presentation video** posted |
+| 30 s | The question, and who would use the answer |
+| 1 min | Each dataset: what it is, raster or vector, where it came from |
+| 2½ min | The model, tool by tool: open each tool, then show the dataset it made |
+| 1 min | The final map, the answer, and one limitation |
 
-Data problems should surface in Week 13, not Week 15. That is the point of the order.
+- **Show results; do not wait for them** — run the model before you record
+- **Record in pieces** with Snipping Tool, and retake any piece you stumble on
+- Post it on **YouTube as an unlisted video**, and submit the link
 
-<!-- TODO(instructor): verify against the Learning Suite calendar. The living plan recommends
-introducing the project by Week 8 or 9 in future offerings so the milestones can spread out. -->
+<!-- TODO(graphic): a capture of Snipping Tool's video mode over ArcGIS Pro, taken on a lab machine (and
+confirm the microphone button is there). -->
 
 ---
 
-# Deliverable 2 — the presentation
+# The report and the package
 
-- An **eight-minute video**; post its link on the class Google document by Wednesday of Week 15
-- The question, the map, the model, what you learned; then watch ten classmates' videos
-- Lead with the **map**. Show the **model**. Explain **one** decision you had to make.
+**The report** — a page or two of text, then two full pages:
 
-Past decks, for calibration:
-[2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw) ·
-[2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk) ·
-[2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E) ·
-[2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M) ·
-[2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw) ·
-[2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8) ·
-[2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g) ·
-[2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8)
+- Your question, the video link, the data table, the tools in order with their settings, the answer and its main limitation
+- The **model**, exported from ModelBuilder, on a full page
+- The **map**, on a full page
 
-<!-- October 9, 2026: presentations are video only (no class in Week 15). Deck links 2018-2025 are the ones on the Learning Suite Final Project page. -->
+**The package** — **Share** tab ▸ **Package** group ▸ **Project**, saved as a `.ppkx`:
+
+- Keep **every input as a layer in a map**: a package does not copy a model's inputs on its own
+- **Run the model once from its tool dialog** before you package
+
+<!-- From Esri's "Share a project package" help, read 2026-11-14: for toolboxes, input data is not
+copied; map layers and geoprocessing history are. -->
 
 ---
 
@@ -281,62 +242,92 @@ Past decks, for calibration:
 
 ![bg right:45% w:95%](images/fp-tool-interface-pane.png)
 
-Requirement 6: your model opens like any other geoprocessing tool.
+Your model opens like any other geoprocessing tool.
 
 - Inputs and outputs marked as **parameters** — the "P"
 - Sensible **labels**, not `rivers_Project_Buffer_2`
 - Key thresholds exposed as parameters: distance, density, class breaks
-- **Metadata** filled in — what it does, needs, and makes
 
-**The test:** a classmate can run it on a different county without opening the model.
+**The test:** the grader opens your package and runs it from the tool dialog without opening the model.
 
 <!-- Callback to ModelBuilder Part B (parameters, metadata, "Going forward: build a tool
 interface"). -->
 
 ---
 
-# How you are scored — by your classmates
+# The timeline
 
-Classmates who watch your video score it, 1 to 5 in each category:
+| Week | Where you should be |
+| --- | --- |
+| 13 | Question chosen; every layer downloaded and checked |
+| 14 | Midterm 2, and open lab Tuesday and Thursday: the model runs and the map is drafted |
+| 15 | No class: record the video, write the report, package the project; **due Thursday 11:59 pm** |
 
-| Category | Points |
-| --- | ---: |
-| Problem description — clarity and completeness | 5 |
-| Final map — quality and completeness | 5 |
-| Explanation of the model and workflow | 5 |
-| Meets the basic requirements: raster, vector, new tools, ModelBuilder | 5 |
-| Presentation — interest, cleverness, fun factor | 5 |
-| **Total** | **25** |
+Data problems should surface in Week 13, not Week 15. I am away in Week 15: email questions early.
 
-<!-- Source: the course's peer scoresheet. TODO(instructor): state how the peer score combines
-with the instructor's grade of the report and model, and the project's weight in the course. -->
+<!-- Week 15 is the last week of classes; Thursday is the last day. The instructor is traveling
+December 6-10 and answers email in the evening. -->
+
+---
+
+# How Lab 12 is scored
+
+| Part | Points | Graded from |
+| --- | ---: | --- |
+| Question and data | 20 | Report and package |
+| ModelBuilder model | 20 | Package and report |
+| Map | 20 | Report |
+| Training video | 30 | Video |
+| Report and package | 10 | Both |
+| **Total** | **100** | |
+
+About **30** points come from the video, **40** from the report and **30** from the package. The full rubric is on the Lab 12 page.
+
+<!-- 100 points, twice a regular lab. The bullets on the page say which deliverable each item is
+graded from. -->
+
+---
+
+# Extra credit — a reel
+
+![bg right:40% w:80%](images/fp-example-powerline-map.png)
+
+**Up to 10 points:** a **30 to 90 second vertical video** cut from your own footage.
+
+- Hooks a viewer in the first three seconds
+- Tells the story **without the sound on** — captions
+- The question, one striking result, the map, the answer
+
+With your permission I may post it on [@dr.danames](https://www.instagram.com/dr.danames/), so you do not have to post it yourself. Posting is never required.
+
+<!-- TODO(graphic): a phone-shaped (9:16) frame of a map from a past project. -->
 
 ---
 
 # What separates a good project from a great one
 
-![bg right:36% w:90%](images/fp-example-powerline-map.png)
-
-**Good**: the model runs, the map is clean, the criteria are stated.
+**Good**: the model runs, the map is clean, the video walks through every tool.
 
 **Great**:
 
 - Criteria are **justified** — a source, a standard, or an argument
-- A **sensitivity check**: change one threshold, show what moves
-- The report says what the analysis **cannot** tell you
+- The video shows the **intermediate results**, not just the final map
+- It says what the analysis **cannot** tell you
 - The map answers the question in **five seconds**
 
 That is the difference between a result and a recommendation.
+
+<!-- TODO(graphic): reuse a strong past project map once one is chosen. -->
 
 ---
 
 # Common ways projects go wrong
 
-- **The data was not there.** Pitched on a dataset that turned out to be a PDF, a paywall, or a 2009 snapshot
+- **The data was not there.** Chose a dataset that turned out to be a PDF, a paywall, or a 2009 snapshot
 - **Geographic coordinates.** Buffers in degrees; areas in "square degrees"
 - **The model only runs once.** Hard-coded paths, intermediate layers deleted by hand
-- **Ten criteria, no weights.** Everything matters equally, so nothing does
-- **The map is the last thing made.** Cartography at 2 a.m. looks like cartography at 2 a.m.
+- **The package is empty.** The inputs were not layers in a map, so the package left them out
+- **The video was recorded last.** Five minutes of narration at midnight sounds like it
 
 <!-- Every one of these has happened. Say so. -->
 
@@ -346,45 +337,12 @@ That is the difference between a result and a recommendation.
 
 # Final Thoughts
 
-<div class="columns" style="grid-template-columns: 1.7fr 1fr; font-size: 0.82em;">
-<div>
+**Before next class** — Thursday is Thanksgiving, so this is before Tuesday of Week 14:
 
-**Quiz: Ready to Pitch?** Five calls you have to make before you propose: is the idea the right **size**, does it meet the **requirements**, and could you defend the result? **Scan the code**, or open the link under it.
+- **Read** the [Lab 12 page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/) on the course site
+- **Page through** two or three of the past decks linked there
+- **Choose** your question and fill in the data check — one row per layer
+- **Midterm 2** opens Tuesday at 8:00 am in the Testing Center; the [study guide](https://byu-hydroinformatics.github.io/ce414-gis-applications/study-guides/midterm-2/) is on the site
 
-- A quick check that the assignment makes sense
-- Item 4 is the proposal meeting in miniature — bring the feasibility table
-
-**Before next class**
-
-- **Read** the [Final Project page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/final-project/) on the course site
-- **Start** your data-feasibility table — one row per layer
-- **Book** a proposal meeting: [office hours](https://calendly.com/dan-ames/office-hours)
-- **Quiz 11** (Chapter 14, Data Standards and Data Quality), open book, due **Saturday 11:59 pm** — Thursday is Thanksgiving, no class
-
-</div>
-<div>
-
-![w:300 center](images/quiz-final-project-qr.png)
-
-<span style="font-size: 0.45em; color: #4a5568;">byu-hydroinformatics.github.io/ce414-gis-applications/quizzes/final-project/</span>
-
-</div>
-</div>
-
-<!-- Five minutes, in pairs, then a show of hands on the first item. The trailhead map is what
-usually splits the room: half call it "about right" because it has a study area, a real dataset and
-a map at the end, and the other half see that nothing is being decided. That argument is the whole
-scope lesson, so let it run a minute before settling it. The all-vector siting plan is the runner-up
-- teams forget the raster half of the requirement until the model is half built. If the room has no
-signal, put the URL on the board and read the items aloud; each one works as a show of hands. -->
-
-<!-- Conversion notes (2026-09-03): built from the Learning Suite "Final Project" page (one page,
-exported to PDF Sept 2, 2026) and the peer scoresheet in Final Projects/scoresheet.docx. No slide
-deck existed before. Additions beyond the source, all marked TODO(instructor) where they need a
-decision: the "lab-sized" criteria slide (replaces the vague "same length and size as previous
-labs"), the size-judgment quiz, the three choosing questions, the data-feasibility table, the
-milestone calendar (week numbers, unverified), the tool-interface slide, the good-vs-great slide,
-and the pitfalls slide. Images reuse course example maps from Labs 1, 9 (student names redacted),
-and 10, and the ModelBuilder B RiversDemo captures. Open items: 2023-2025 examples and deck links,
-presentation length, how peer scores combine with the instructor grade, team accountability
-wording, whether to keep the "two new tools" rule, meeting booking method. -->
+<!-- Five minutes at the end: have each student say their question in one sentence to a neighbor.
+If the neighbor cannot repeat it back, it is not one sentence yet. -->

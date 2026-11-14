@@ -18,25 +18,18 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 | [10](week-10.md) | Cut, Fill, and Raster Volumes | Lab 9 — Big Southern Butte |
 | [11](week-11.md) | Least Cost Path | Lab 10 — Least Cost Path Power Line Analysis |
 | [12](week-12.md) | Network Analysis | Lab 11 — Network Analysis |
-| [13](week-13.md) | Final Project Intro | — |
-| [14](week-14.md) | Midterm 2 and Avalanche Hazard | Lab 12 — Avalanche Hazard |
-| [15](week-15.md) | Final Project Due | — |
+| [13](week-13.md) | Choose Your Own Adventure | — |
+| [14](week-14.md) | Midterm 2 and Lab 12 | — |
+| [15](week-15.md) | Lab 12 Due | Lab 12 — Choose Your Own Adventure |
 
 ## Exams
 
 - **Midterms 1 and 2** are closed-book, concept-based exams in the Testing Center, 100 points each. Each opens **Tuesday at 8:00 am** and closes **Thursday at 9:00 pm** (Weeks 8 and 14); the Testing Center charges its late fee from 2:00 pm Thursday, so go earlier. Study the readings and the quizzes. Any exception to the schedule must be approved at least one week in advance.
 - **The final exam** (100 points) is in class during finals week: one question, done in ArcGIS Pro at a lab computer, open book and open computer, with a three-hour block and a single PDF to upload. It should take about 45 minutes; the block is long to allow for software trouble and accommodations.
 
-## Final project milestones
+## Lab 12 and the end of the semester
 
-| Step | When |
-| --- | --- |
-| Proposal meeting with the instructor; team, idea, and data on the class Google document | Week 14, by Friday 5:00 pm |
-| Presentation: poster, slides, or video, eight minutes | Week 15, Wednesday 11:59 pm |
-| Group lab assignment written like the [Cell Phone Tower lab](../assignments/lab-04/README.md), submitted by each team member with an effort note | Week 15, Thursday 11:59 pm |
-| Notes on at least ten classmates' presentations | Week 15, Thursday 11:59 pm |
-
-See the [Final Project](../assignments/final-project.md) page for the requirements.
+[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md) replaces the final project. It is introduced Tuesday of Week 13 and due **Thursday of Week 15 at 11:59 pm**, the last day of classes: your own GIS analysis, submitted as a five-minute training video on YouTube, a short report and an ArcGIS Pro project package, 100 points, done individually.
 
 > [!NOTE]
 > Transcribed from the Fall 2026 Learning Suite syllabus. If this page and Learning Suite disagree, Learning Suite wins.

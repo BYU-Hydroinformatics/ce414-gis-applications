@@ -18,9 +18,8 @@ letter onto the sheet.
 
 **What is not on this exam.** **Coordinate systems, projections, datums and GPS** are not on
 Midterm 2; those lectures were retired from this semester's schedule. Neither are **data standards
-and data quality** (Chapter 14), which no lecture covers. **Lab 12 (Avalanche Hazard)** is due the
-same week as the exam, so it is not on Midterm 2 either. The **final project** (Week 13) is not on the exam:
-its requirements are for the project itself, and you will work through them with your team.
+and data quality** (Chapter 14), which no lecture covers. **Lab 12 (Choose Your Own Adventure)**,
+introduced in Week 13, is not on the exam either: its requirements are for the project itself.
 
 ## How to study for this exam
 

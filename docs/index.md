@@ -69,13 +69,13 @@ recommendation through a professional map and a concise report.
   afternoon of class for individual lab work.
 - A **reading quiz** and a **lab** almost every week, both due **Saturday at 11:59 pm**.
 - Two closed-book **midterms** in the Testing Center, a hands-on **final exam** in ArcGIS Pro, and
-  a team **final project** presented by video at the end of the semester.
+  **Lab 12, Choose Your Own Adventure**, a project of your own taught back as a five-minute video.
 - **Peer review.** You will review and stamp at least ten classmates' lab reports over the
   semester; make your engineering stamp in the first week.
 
 ## What every lab expects
 
-There are eleven lab assignments plus a final project. Each lab is a complete spatial analysis: you
+There are twelve lab assignments; the last, Lab 12, is a project you design yourself. Each lab is a complete spatial analysis: you
 receive an engineering question and a set of criteria, and you produce a reproducible model, a map,
 and a short written defense of your recommendation. Regardless of the topic, each one is graded on
 the same underlying things:
@@ -100,8 +100,8 @@ slides, the reading and quiz, the in-class activities, and the lab that is due. 
 [Schedule](schedule/README.md) or pick a week from the Schedule menu at the top of the page. On any deck, press <kbd>F</kbd> for
 fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
-The lab handouts are linked from the week each lab is due. The
-[Final Project](assignments/final-project.md) is linked from Weeks 13 through 15.
+The lab handouts are linked from the week each lab is due;
+[Lab 12](assignments/lab-12/README.md) is linked from Weeks 13 through 15.
 
 > [!NOTE]
 > This site was built out in September 2026. The lab handouts and lecture decks are all here, each

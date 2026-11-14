@@ -9,7 +9,7 @@ A one-arc-second cell is shorter east–west than north–south at Utah's latitu
 county mosaic's cells are about **24 m wide and 31 m tall**. Terrain tools that assume square cells
 still run on such a raster, and give wrong answers quietly.
 
-**Slope** is the example the labs measure. On the unprojected Little Cottonwood DEM in Lab 12, it
+**Slope** is the example the labs measure. On the unprojected Little Cottonwood DEM in the Avalanche Hazard lab, it
 reports a mean slope of 24.3°, about 2.6° too gentle. Two or three degrees move a lot of terrain
 across a classification break.
 
@@ -26,7 +26,7 @@ the dialog proposes:
    categories, such as land cover or a 1/0 result.
 3. **Output Cell Size**: type a round number in **both X and Y**, such as `30` or `10`. The tool
    proposes a cell size of its own, never a round one: about 27.47 m for a mosaic of Lab 4's
-   one-arc-second tiles, 24.05 × 30.96 in Lab 4's own steps, about 9.04 in Lab 12.
+   one-arc-second tiles, 24.05 × 30.96 in Lab 4's own steps, about 9.04 in the Avalanche Hazard lab.
 
 Before you project, look at what you have. A DEM in geographic coordinates reports its cell size
 in degrees:

@@ -1,9 +1,7 @@
-# Week 14: Midterm 2 and Avalanche Hazard
+# Week 14: Midterm 2 and Lab 12
 
 > [!IMPORTANT] Also this week
 > - **Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–12 ([study guide](../study-guides/midterm-2.md)) — opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm.
-> - Final project **proposal meeting** with the instructor — by Friday 5:00 pm; update the class Google document with your team, idea, and data.
-> - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 
 <div class="week-card week-card--slides" markdown>
 
@@ -17,7 +15,7 @@
 
 ## :material-account-group: In-Class Practice
 
-No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12 and the final project proposal meetings.
+No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12.
 
 </div>
 
@@ -25,9 +23,9 @@ No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday 
 
 ## :material-flask: Lab Assignment
 
-[Lab 12 — Avalanche Hazard](../assignments/lab-12/README.md)
+[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md)
 
-Due **Saturday at 11:59 pm** as one PDF report on Learning Suite — 50 points.
+Due **Thursday of next week at 11:59 pm** on Learning Suite as an unlisted YouTube link, a PDF report and an ArcGIS Pro project package — 100 points. Class time this week is open lab for it.
 
 </div>
 

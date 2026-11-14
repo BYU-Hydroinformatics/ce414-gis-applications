@@ -1,14 +1,13 @@
-# Week 13: Final Project Intro
+# Week 13: Choose Your Own Adventure
 
 > [!IMPORTANT] Also this week
 > - **Midterm 2 is next week**, on Weeks 8–12: read the [study guide](../study-guides/midterm-2.md) now — opens Tuesday of Week 14 at 8:00 am.
-> - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 
 <div class="week-card week-card--slides" markdown>
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [The Final Project](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html) — What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.
+- **Tuesday** — [Lab 12: Choose Your Own Adventure](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-13/final-project-introduction.html) — Your own question, data and model: what makes a good project, ideas from past students, the requirements, the five-minute training video, the report and the package, and how it is scored.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
@@ -20,17 +19,15 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 Thursday is Thanksgiving, no class.
 
-Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
-
-- [Ready to Pitch?](../quizzes/final-project/index.html) — Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.
-
 </div>
 
 <div class="week-card week-card--lab" markdown>
 
 ## :material-flask: Lab Assignment
 
-*No lab this week.*
+[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md)
+
+Introduced Tuesday. Due **Thursday of Week 15 at 11:59 pm** on Learning Suite as an unlisted YouTube link, a PDF report and an ArcGIS Pro project package — 100 points, done individually.
 
 </div>
 

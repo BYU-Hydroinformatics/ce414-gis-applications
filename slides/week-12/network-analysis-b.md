@@ -292,7 +292,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 - **Lab 11 — Fire Response Coverage** — due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 - Take **Quiz 10** (Network Analysis, open book) on **Learning Suite** — due **Saturday 11:59 pm**
-- Next week: the **final project** (Tuesday), and Thanksgiving
+- Next week: **Lab 12, Choose Your Own Adventure** (Tuesday), and Thanksgiving
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>

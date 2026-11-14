@@ -83,28 +83,40 @@ DECKS = [
     (11, "least-cost-path-b",              "Least Cost Path Analysis, Part B",           "ArcGIS Pro's current tools, Distance Accumulation and Optimal Path As Line; the back direction raster as a compass angle; Lab 10's route computed from its own rules; which decisions moved the line; and a corridor of nearly-as-good routes.", "Thu"),
     (12, "network-analysis-a",             "Network Analysis, Part A",                   "Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.", "Tue"),
     (12, "network-analysis-b",             "Network Analysis, Part B",                   "Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 11.", "Thu"),
-    (13, "final-project-introduction",     "The Final Project",                          "What the capstone project is for, how big it should be, the requirements, the proposal meeting, milestones, and how it is scored.", "Tue"),
+    (13, "final-project-introduction",     "Lab 12: Choose Your Own Adventure",          "Your own question, data and model: what makes a good project, ideas from past students, the requirements, the five-minute training video, the report and the package, and how it is scored.", "Tue"),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Interpolation Explorer",
         9:"Big Southern Butte",10:"Least Cost Path Power Line Analysis",11:"Network Analysis",
-        12:"Avalanche Hazard"}
+        12:"Choose Your Own Adventure"}
 LAB_PAGE = {n: f"../assignments/lab-{n:02d}/README.md" for n in range(1, 13)}
 WEEK_TITLES = {1:"Data Models Refresher",2:"ModelBuilder",3:"Raster Analysis and Map Algebra",4:"Imagery",
                5:"Terrain Analysis",6:"Watershed Delineation",7:"Lake Bathymetry",
                8:"Flood Mapping and Midterm 1",9:"Interpolation",10:"Cut, Fill, and Raster Volumes",
-               11:"Least Cost Path",12:"Network Analysis",13:"Final Project Intro",
-               14:"Midterm 2 and Avalanche Hazard",15:"Final Project Due"}
+               11:"Least Cost Path",12:"Network Analysis",13:"Choose Your Own Adventure",
+               14:"Midterm 2 and Lab 12",15:"Lab 12 Due"}
 DAY_NAME = {"Tue": "Tuesday", "Thu": "Thursday"}
 # Weeks whose page should point at the final project page. The project is introduced in Week 13 and
 # runs to the end, and the page is not in the site menu — these pointers are how students reach it.
-FINAL_PROJECT_WEEKS = (13, 14, 15)
+FINAL_PROJECT_WEEKS = ()  # Nov 14, 2026: the final project became Lab 12 (Choose Your Own Adventure)
+
+# Labs that do not follow the one-week, Saturday, 50-point pattern: the week each is due and the
+# lab card text for every week it runs. Lab 12 (Nov 14, 2026) runs Weeks 13-15, due Thursday of Week 15.
+LAB_DUE_WEEK = {12: 15}
+LAB_CARD = {
+    13: "Introduced Tuesday. Due **Thursday of Week 15 at 11:59 pm** on Learning Suite as an unlisted YouTube link, "
+        "a PDF report and an ArcGIS Pro project package — 100 points, done individually.",
+    14: "Due **Thursday of next week at 11:59 pm** on Learning Suite as an unlisted YouTube link, a PDF report and "
+        "an ArcGIS Pro project package — 100 points. Class time this week is open lab for it.",
+    15: "Due **Thursday at 11:59 pm**, the last day of classes, on Learning Suite as an unlisted YouTube link, a PDF "
+        "report and an ArcGIS Pro project package — 100 points.",
+}
 
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
     13: "Thursday is Thanksgiving, no class.",
-    14: "No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12 and the final project proposal meetings.",
-    15: "No class this week. Work on your final project and submit it by the last day of classes.",
+    14: "No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12.",
+    15: "No class this week, and the instructor is away: finish Lab 12 and submit it by Thursday, the last day of classes. Questions by email.",
 }
 
 # What is due in each week. Quizzes and labs are due Saturday 11:59 pm; everything else says when.
@@ -141,16 +153,12 @@ DUE = {
     # Quizzes 8-10 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
     # network analysis. Quiz 11 (Data Standards, Chapter 14) was dropped Oct 26 because no lecture
     # covers it, so Weeks 13 and 14 have no quiz and no reading.
-    13: dict(reading=None, quiz=None, lab=None,
+    13: dict(reading=None, quiz=None, lab=12,
              other=[("**Midterm 2 is next week**, on Weeks 8–12: read the [study guide](../study-guides/midterm-2.md) now", "opens Tuesday of Week 14 at 8:00 am")]),
     14: dict(reading=None, quiz=None, lab=12,
-             other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–12 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm"),
-                    ("Final project **proposal meeting** with the instructor", "by Friday 5:00 pm; update the class Google document with your team, idea, and data")]),
-    15: dict(reading=None, quiz=None, lab=None,
-             other=[("Final project **presentation video** (eight minutes; post the link on the class Google document)", "Wednesday 11:59 pm"),
-                    ("Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed", "Wednesday 11:59 pm"),
-                    ("Final project **lab assignment** (each team member submits)", "Thursday 11:59 pm"),
-                    ("Notes on at least ten classmates' presentation videos", "Thursday 11:59 pm"),
+             other=[("**Midterm 2** — closed book, concept based, in the Testing Center, on Weeks 8–12 ([study guide](../study-guides/midterm-2.md))", "opens Tuesday 8:00 am and closes Thursday 9:00 pm; the Testing Center late fee starts Thursday 2:00 pm")]),
+    15: dict(reading=None, quiz=None, lab=12,
+             other=[("Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed", "Wednesday 11:59 pm"),
                     ("Course evaluation (extra credit)", "Friday 11:59 pm")]),
 }
 
@@ -218,8 +226,6 @@ PRACTICE = {
           "Five questions on what a network dataset is made of: junctions and connectivity, one-way streets as a cost, two impedances that give two routes, what UGRC's 1.5 factor stands for, and which distance belongs to a fire engine."),
          ("service-areas", "Four Minutes Away",
           "Five questions on Solve, which solver answers which question, why a buffer and a service area disagree about the same four minutes, and what Lab 11's cutoff decides.")],
-    13: [("final-project", "Ready to Pitch?",
-          "Five questions on what the final project asks of you: what counts as a big enough project, raster and vector and a model someone else can run, what the proposal meeting is for, and how you would show the result is right.")],
 }
 
 # Extra lines for a week's Presentation Slides card, such as the data an in-lecture exercise uses.
@@ -284,7 +290,9 @@ def week_page(w, decks):
         for slug, title, desc in PRACTICE[w]:
             body["practice"].append(f"- [{title}](../quizzes/{slug}/index.html) — {desc}")
 
-    if d.get("lab"):
+    if d.get("lab") and w in LAB_CARD:
+        body["lab"] += [lab_link(d["lab"]), "", LAB_CARD[w]]
+    elif d.get("lab"):
         body["lab"] += [lab_link(d["lab"]), "",
                         f"Due **Saturday at 11:59 pm** {LAB_FILES.get(d['lab'], LAB_FILES_DEFAULT)} — {LAB_PTS} points."]
 
@@ -326,6 +334,8 @@ def index_page(weeks):
              "| Week | Topic | Lab due |", "| --- | --- | --- |"]
     for w in sorted(weeks):
         lab = DUE.get(w, {}).get("lab")
+        if lab and LAB_DUE_WEEK.get(lab, w) != w:
+            lab = None
         lab_cell = f"Lab {lab} — {LABS[lab]}" if lab else "—"
         lines.append(f"| [{w}](week-{w:02d}.md) | {WEEK_TITLES[w]} | {lab_cell} |")
     lines += ["", "## Exams", "",
@@ -337,15 +347,11 @@ def index_page(weeks):
               "at a lab computer, open book and open computer, with a three-hour block and a single PDF to "
               "upload. It should take about 45 minutes; the block is long to allow for software trouble and "
               "accommodations.", "",
-              "## Final project milestones", "",
-              "| Step | When |", "| --- | --- |",
-              "| Proposal meeting with the instructor; team, idea, and data on the class Google document | "
-              "Week 14, by Friday 5:00 pm |",
-              "| Presentation: poster, slides, or video, eight minutes | Week 15, Wednesday 11:59 pm |",
-              "| Group lab assignment written like the [Cell Phone Tower lab](../assignments/lab-04/README.md), "
-              "submitted by each team member with an effort note | Week 15, Thursday 11:59 pm |",
-              "| Notes on at least ten classmates' presentations | Week 15, Thursday 11:59 pm |", "",
-              "See the [Final Project](../assignments/final-project.md) page for the requirements.", "",
+              "## Lab 12 and the end of the semester", "",
+              "[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md) replaces the final project. "
+              "It is introduced Tuesday of Week 13 and due **Thursday of Week 15 at 11:59 pm**, the last day of "
+              "classes: your own GIS analysis, submitted as a five-minute training video on YouTube, a short report "
+              "and an ArcGIS Pro project package, 100 points, done individually.", "",
               "> [!NOTE]",
               "> Transcribed from the Fall 2026 Learning Suite syllabus. If this page and Learning Suite "
               "disagree, Learning Suite wins.", ""]

@@ -1,12 +1,8 @@
-# Week 15: Final Project Due
+# Week 15: Lab 12 Due
 
 > [!IMPORTANT] Also this week
-> - Final project **presentation video** (eight minutes; post the link on the class Google document) — due Wednesday 11:59 pm.
 > - Peer-review stamp log: a memo listing the ten or more classmates whose work you reviewed — due Wednesday 11:59 pm.
-> - Final project **lab assignment** (each team member submits) — due Thursday 11:59 pm.
-> - Notes on at least ten classmates' presentation videos — due Thursday 11:59 pm.
 > - Course evaluation (extra credit) — due Friday 11:59 pm.
-> - See the [Final Project](../assignments/final-project.md) page for the requirements, the proposal meeting, the milestones, and how the project is scored.
 
 <div class="week-card week-card--slides" markdown>
 
@@ -20,7 +16,7 @@
 
 ## :material-account-group: In-Class Practice
 
-No class this week. Work on your final project and submit it by the last day of classes.
+No class this week, and the instructor is away: finish Lab 12 and submit it by Thursday, the last day of classes. Questions by email.
 
 </div>
 
@@ -28,7 +24,9 @@ No class this week. Work on your final project and submit it by the last day of 
 
 ## :material-flask: Lab Assignment
 
-*No lab this week.*
+[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md)
+
+Due **Thursday at 11:59 pm**, the last day of classes, on Learning Suite as an unlisted YouTube link, a PDF report and an ArcGIS Pro project package — 100 points.
 
 </div>
 

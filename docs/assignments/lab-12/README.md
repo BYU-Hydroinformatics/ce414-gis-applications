@@ -1,615 +1,353 @@
-# Lab 12: Avalanche Hazard
+# Lab 12: Choose Your Own Adventure
 
 **Civil Engineering 414 — Engineering Applications of GIS**
 
 Fall 2026 · Dr. Dan Ames
 
-*Terrain-based avalanche hazard screening from slope, aspect, and elevation*
+*Your question, your data, your model: a GIS analysis you design yourself, taught back as a
+five-minute training video.*
 
-<!-- **Revision notes.** Drafted October 2, 2026 beside the September 3 migration of the Word handout (kept, unlinked, at docs/assignments/lab10-backup/) and promoted October 5, 2026, with the instructor accepting every recommendation in tools/lab12/PARITY_PLAN.md. It follows `tools/lab-conversion-guide.md` and the pattern of Labs 4–6.
+<!-- **Revision notes.** New lab, drafted and promoted 2026-11-14. It replaces both the Avalanche
+Hazard lab (Lab 12, 50 points; archived complete in docs/assignments/avalanche-backup/ for Fall 2027)
+and the final project (proposal meeting, team presentation, lab-style write-up and presentation notes,
+110 points). Lab 12 is now 100 points, individual: a five-minute ArcGIS Pro training video posted
+unlisted on YouTube, a project report (text plus a full-page model and a full-page map) and a project
+package, due Thursday of Week 15; a 30-90 s vertical reel is extra credit, up to 10 points. Course
+total 1,300 -> 1,240. Open: the Learning Suite upload limit for a .ppkx (the page allows a link), and
+whether Snipping Tool on the lab machines records the microphone. The 18 example write-ups (Drive
+folder 1FUjsLXI28kuB1JUgkKIa7G_A3HTa6gc6) carry student names and are not linked. -->
 
-**Changes to what the lab asks students to do:** one study area (Snowbird), not two; two maps
-(baseline and one scenario), not three; the "all three agree" Con method becomes a step with a
-check value and a report question rather than a map; the multiply method's 1–125 scale is grouped
-into five classes by a stated rule (the cube root of the product); an **Elevation shift**
-parameter and two more combination rules (worst factor, best factor) make the sensitivity step;
-class areas inside the Snowbird boundary are measured with Tabulate Area and checked; the rubric
-is five parts of ten.
-
-**Corrections:** "Project Raster to the NAD 1983 projection" (a datum) is now NAD 1983 UTM zone 12N
-at 10 m; slope's Low band starts at 0, not −1; "Project" in the tool list is Project Raster; the
-uncited "150 deaths a year (National Geographic)" and "Clark et al. 2002" are replaced by sourced
-statements; the dead Sawtooth link is replaced.
-
-**Figures:** the dialog captures (Figures 0-9) and Figure C come from a GUI build of the model in
-ArcGIS Pro 3.7.1 at 175 % display scaling on October 5, 2026 (C:\Ames\Lab12GUI\Lab12.aprx, model
-AvalancheTerrain); Figure B is the danger-scale image the Word-era page used. The Word-era captures
-and the Snowbird example map are in the archived copy.
-
-**Every number** below was measured in ArcGIS Pro 3.7.1's arcpy on October 2, 2026
-(`tools/lab12/run_model.py`, `tool_checks.py`) against the hosted extract, and reproduced by the GUI build. -->
-
-> [!WARNING]
-> **This is a classroom exercise, not an avalanche safety product.** The map you build here is a
-> terrain-based screening of slope, aspect, and elevation, produced for the purpose of learning
-> raster analysis and ModelBuilder. It does not account for snowpack, weather, wind loading,
-> recent avalanche activity, or human triggering, and it is **not suitable for operational
-> avalanche safety decisions**. For real trip planning, use the current forecast from the
-> [Utah Avalanche Center](https://utahavalanchecenter.org/){ target="_blank" } or the avalanche
-> center responsible for where you are going.
-
-> [!TIP]
-> **Start from the report template.** [`lab12-report-template.docx`](lab12-report-template.docx)
-> has the title block, a section for every deliverable, the tables already set up with the columns
-> the rubric asks for (including the Snowbird class-area table and the sensitivity table with all
-> three rules), and the rubric at the end ready to fill in. Open it in Word or upload it to Google
-> Docs, replace every gray italic prompt, and delete the prompts as you go. You are welcome to write
-> your report any way you like — the template is a floor, not a ceiling — but if you use it and fill
-> in every section, you will not have left a graded item out.
+<!-- Drafted 2026-11-14 from the instructor's decisions of November 13-14, 2026 (one chat session): drop the
+proposal meeting and the peer review of presentations; individual, not team, projects (an individual project
+measures each student's own work); call it Lab 12, Choose Your Own Adventure, worth 100 points, a
+stretch beyond Labs 1-11; ideas from past students; raster and vector analysis, ModelBuilder and map
+making required; submit a five-minute voiceover screen capture of ArcGIS Pro made as a training video, a
+short written piece and the ArcGIS Pro project package; an optional vertical reel for extra credit that
+the instructor may post. The written piece is a short project report, not full step-by-step
+instructions (the video is the training; the report carries what a video cannot: URLs, dates, settings),
+with the model figure and the map each on a full page. Later the same day: video on YouTube, unlisted,
+required for everyone (one place, less confusion); past decks linked here (moving off Learning Suite;
+all eight decks are Drive "anyone with the link", checked 2026-11-14); rubric bullets labeled with what
+they are graded from.
+Due date: Thursday of Week 15 (December 10, 2026), the date the Learning Suite syllabus already gives
+the final project write-up. The instructor is away December 6-10, 2026, so Week 15 questions go by email.
+PROJECT PACKAGE (Esri help, "Share a project package", read 2026-11-14): Share tab > Package group >
+Project opens the Package Project pane; "Share outside of organization" copies feature-service data into
+file geodatabases; for toolboxes, "Input, output, and intermediate data is not copied. Model project data
+is copied, but input data is not"; maps' layer data and geoprocessing history (with the data needed to
+rerun) are copied. Hence Step 7's two rules: every input stays a layer in a map, and run the model once
+from its tool dialog before packaging.
+LINK CHECK (curl -L, 2026-11-14): 200 gis.utah.gov/products/sgid/, apps.nationalmap.gov/downloader/,
+livingatlas.arcgis.com, pro.arcgis.com project-package help, support.microsoft.com Snipping Tool,
+instagram.com/dr.danames. opendata.utah.gov returned 400 to curl and is not linked. -->
 
 > [!NOTE]
-> **This is a one-week lab**, due Saturday of Week 14, the week Midterm 2 is open. It has no new
-> lecture of its own: slope and aspect are the Week 5 terrain analysis, Reclassify and Raster
-> Calculator are from Labs 2 to 5, and the tool table below introduces every tool it uses.
+> **This is a two-and-a-half-week lab**, introduced Tuesday of Week 13 and due **Thursday of
+> Week 15 at 11:59 pm**, the last day of classes. It is worth **100 points**, twice a regular lab,
+> and you do it **on your own**. Week 14 has Midterm 2 and no new lecture; its class time is open
+> lab for this project. There is no class in Week 15, and I am away that week: send questions by
+> email, and expect an answer in the evening.
 
 ## Background
 
-An avalanche is a mass of snow sliding fast down a slope. In the United States an average of
-**27 people died in avalanches each winter** over the last ten winters, according to the Colorado
-Avalanche Information Center, which keeps the national accident archive
-([CAIC](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }).
+Labs 1 to 11 handed you a question, the data and a recipe. Working GIS analysts get none of the
+three. Someone brings them a problem — where should the new trailhead go, which culverts flood
+first, how far is every school from a fire station — and the analyst decides what the question
+really is, finds data that can answer it, builds a model, and shows the answer on a map.
 
-Avalanche centers publish a forecast every morning of the season, and the forecast is partly a map
-of terrain: it rates the danger by **elevation band** and by **aspect** (the compass direction a
-slope faces), on the five-level North American Public Avalanche Danger Scale — Low, Moderate,
-Considerable, High, Extreme (Figure B). The snowpack and the weather decide *how* dangerous today
-is; the terrain decides *where* that danger lives. A slope steeper than about 30°, facing the
-direction the wind loaded with snow, high enough to hold the cold weak layers, is where an avalanche
-starts on a dangerous day.
+This lab is that job. You choose the problem, find the data, build the model in ModelBuilder and
+make the map. Then you do the part that turns an analysis into something other people can use:
+you **teach it**. Your main deliverable is a five-minute training video, recorded on your own
+ArcGIS Pro screen, for someone who wants to do this kind of analysis next. If you can explain
+every dataset, every tool and every intermediate result in your model to that person, you
+understand your analysis.
 
-![The North American Public Avalanche Danger Scale table, listing the five danger levels from 1 Low (green) to 5 Extreme (black) with travel advice, likelihood of avalanches, and avalanche size and distribution](images/lab12-north-american-danger-scale.jpeg)
+## Find a Project
 
-**Figure B.** The North American Public Avalanche Danger Scale. Its five colors are the colors your
-maps use.
+Start from a problem you care about — a place you know, a question from an internship or another
+class, a hobby. The best projects are specific: not "flooding in Utah", but "which of Provo's
+storm drain inlets sit in the lowest tenth of the city's terrain".
 
-This lab builds the terrain half of that picture for one ski area, Snowbird, in Little Cottonwood
-Canyon east of Salt Lake City. A ModelBuilder model computes slope and aspect from an elevation
-model, rates every 10 m cell on elevation, slope and aspect from a table taken from a real
-avalanche advisory, and combines the three ratings into one map of **terrain-based hazard**. The
-result is a screening: it says which terrain *could* be dangerous when the snowpack is, not whether
-it is dangerous today.
+**Past students' presentations.** Each year's class built one shared slide deck, every project
+in turn, from the problem statement through the data and the model to the final maps. Page
+through a few before you choose:
 
-The interesting part is the combining. Three ratings from 1 to 5 can be turned into one in several
-defensible ways, and they do not agree. In Step 9 you will vary the elevation bands and compare
-three ways of combining, see how far the map moves, and use what moves to say how much of the
-answer is the terrain and how much is your choice of rule.
+[2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } ·
+[2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } ·
+[2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } ·
+[2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } ·
+[2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } ·
+[2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } ·
+[2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } ·
+[2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" }
 
-> [!IMPORTANT]
-> **Your job — see the deliverables below.** Build one ModelBuilder model that rates Snowbird's
-> terrain on elevation, slope and aspect and combines the three into a hazard class; measure how
-> much of the ski area falls in each class; test the elevation bands and the combination rule; and
-> make two maps.
+The decks are large and can take a minute to open. Take an idea and make it yours — a different
+place, a different question, a better model — rather than repeat one. Pick something other than
+Labs 1 to 11: this lab is a stretch past them, not a rerun.
 
-## Problem Statement
+**Ideas from past CE 414 projects.** Each row is a question a student or team answered in an
+earlier year, with what they built it from; the year links to that year's deck. Most of these
+deserve a better model than the one that answered them first.
 
-You are given a 10 m elevation model of upper Little Cottonwood Canyon and the boundary of the
-Snowbird ski area. Using them:
-
-1. Rate every cell on **altitude**, **slope** and **aspect** with Table 1.
-2. Combine the three ratings into one terrain hazard class from 1 (Low) to 5 (Extreme), by a rule
-   you can state and defend.
-3. Report how much of Snowbird, in square kilometers, falls in each class.
-4. Map the result in the danger-scale colors.
-
-## Analysis Considerations
-
-Every one of these is a decision somebody made, and every one of them can change the answer.
-
-- **The three factors.** A forecast says where the danger is by elevation band and aspect; slope
-  angle decides whether a slope can avalanche at all. Most slab avalanches start on slopes between
-  30° and 50°, avalanches on slopes under 30° are rare, and slopes over about 50° shed snow in small
-  loose slides too often to build big slabs
-  ([avalanche.org: slope angle](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/slope-angle/){ target="_blank" }).
-  Aspect matters because wind builds slabs on the slopes downwind of it — a west wind loads east
-  aspects — and because the sun can destroy weak layers on south-facing slopes that survive on
-  shaded ones
-  ([avalanche.org: aspect](https://avalanche.org/avalanche-encyclopedia/terrain/slope-characteristics/aspect/){ target="_blank" }).
-- **What the model leaves out.** The snowpack's layers and their strength, today's weather, wind
-  loading, recent avalanches, and the person who triggers the slide. Also slope shape (convex rolls
-  are more dangerous than concave bowls), ground cover (smooth grass and rock slabs slide more than
-  boulder fields and forest), and terrain traps below a slope. None of these is in an elevation
-  model. Your report says what each one would change.
-- **Table 1.** The class breaks below come from the course's original handout, which took them
-  from one advisory issued by the Sawtooth Avalanche Center, in central Idaho, on one day. Another day's advisory moves the elevation bands, and another
-  center would use different ones. Step 9 moves them.
-- **How the three ratings combine.** "All three agree", the product, the worst of the three, the
-  best of the three — each is a different claim about how the factors interact. Step 6 builds two
-  and Step 7 adds two more.
-- **The elevation model.** Bare earth: the ground surface, without trees, lift towers or the
-  winter snowpack, which can be meters deep and changes the slope a skier stands on. Cells of about
-  10 m, so a gully narrower than that is not in it.
-- **The coordinate system.** Slope and Aspect need cells and elevations in the same linear unit.
-  The extract arrives in latitude and longitude; Step 1 projects it to **NAD 1983 UTM zone 12N** in
-  meters.
-
-|  | Altitude (meters) | Slope (degrees) | Aspect (degrees) |
+| Theme | Question | Built with | Year |
 | --- | --- | --- | --- |
-| Low (1) | 0 – 2,200 | 0 – 25<br>60 – 90 | 180 – 225 |
-| Moderate (2) | 2,200 – 2,400 | 25 – 30<br>55 – 60 | 135 – 180<br>225 – 270 |
-| Considerable (3) | 2,400 – 2,600 | 30 – 32<br>50 – 55 | 90 – 135<br>270 – 315 |
-| High (4) | 2,600 – 2,800 | 32 – 35<br>45 – 50 | 315 – 360<br>45 – 90 |
-| Extreme (5) | above 2,800 | 35 – 45 | −1 – 45 |
+| Water | Which homes near Utah Lake take flood damage at a given lake level, and what does it cost? | DEM, NHD lakes, parcels with market values | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Water | How much runoff does each parcel send off in a 100-year storm, by the rational method? | Imagery classified with Segment Mean Shift, NOAA Atlas 14 rainfall, parcels, Tabulate Area | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Water | What peak flow must each culvert under a new rural road carry? | DEM, NHD streams, rain-gauge records, Watershed, the rational method | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Water | Where could a new reservoir go, and how much would it hold? | DEMs, streams, land ownership, floodplains, Zonal Statistics | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Water | Where could a dam go to serve a valley's farms, and how much would it store? | DEM, land use, Fill, Flow Accumulation, Zonal Statistics | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Water | Where should rain gardens and detention basins go in a county? | DEM, soils, curvature, Flow Distance | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Water | Which beaches are most exposed to stormwater runoff? | DEM, storm drains, beach polygons, Flow Accumulation | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Water | Which parts of a watershed could pollute a lake the most? | Point pollution sources, DEM, watersheds, Near | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Water | How deep was a flood, estimated from a flood-extent map and a DEM? | Satellite or FEMA flood extent, DEM | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Water | Which buildings, and how many people, does a river flood reach? | DEM, NHD, OpenStreetMap buildings, a population raster | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Water | Which low-head dams are the most dangerous, by stream type and size? | Fatality records, NHD flowlines, Snap, joins | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Water | Where could a whitewater park go? | Flow accumulation, rivers, low-head dams, parks | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Hazards | Which trails in a national park face the worst flash-flood hazard? | DEM, soils, rainfall, trails, Flow Accumulation | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Hazards | Where can landslides start, and how far would they run? | DEM, soils, precipitation, slope, curvature, Path Distance | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Hazards | Which burned areas threaten roads and buildings with mudslides after a wildfire? | Fire perimeters, slope, flow accumulation, infrastructure | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Hazards | Which way is a wildfire most likely to spread, given terrain, fuel and wind? | DEM, vegetation, wind direction, Cost Path As Polyline | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Hazards | Which water utilities' service areas face the most wildfire risk? | Service-area boundaries, FEMA National Risk Index, Zonal Statistics | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Hazards | Which schools, hospitals and dams sit in the highest earthquake hazard along the Wasatch Fault? | Ground shaking, liquefaction, landslides, facility points | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Hazards | Does an earthquake risk score from liquefaction, slope and emergency services beat distance to the fault? | Faults, liquefaction potential, emergency services, slope | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Hazards | Where in the United States is combined natural-hazard risk lowest? | NOAA hazard points, digitized hazard zones, Cell Statistics | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Hazards | What are the best tsunami evacuation routes for a coastal town? | Inundation zones, elevation, roads, Cost Path As Polyline | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Hazards | Where would lava flow in a hypothetical eruption on a Hawaiian island? | Contours to TIN, Fill, Flow Accumulation | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Hazards | Which areas are likely dust sources, from soil, vegetation and slope? | Soils, DEM, Landsat NDVI, Weighted Sum | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Terrain and recreation | Where are the safe sledding hills, and how thrilling is each one? | Lidar DEM, tree canopy, roads, railroads, Surface Parameters | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Terrain and recreation | How hard is each trail, from slope and length? | DEM, trails, Interpolate Shape, Add Surface Information | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Terrain and recreation | Which hiking trails have broad views that include water? | DEM, trails, lakes, streams, Viewshed | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Terrain and recreation | From which spot in a national park can you see the most landmarks? | DEM, trails, points of interest, Geodesic Viewshed | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Terrain and recreation | Where should a fire lookout tower go to see the most terrain? | DEM, NDVI, trails, Viewshed | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Terrain and recreation | Where could new climbing routes go: steep, near trails, away from existing climbs? | DEM, trails, existing routes, Slope, Con | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Terrain and recreation | Where could ski runs go on a mountain? | DEM, Slope, Flow Accumulation | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Terrain and recreation | Where are safe, reachable bonfire sites in the mountains? | DEM, fire history, parks, campsites, Buffer, Erase | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Terrain and recreation | How can you generate a running route of a chosen length from your door? | Road network, Service Area, Route | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Terrain and recreation | Where are elk most likely to drop their antlers? | DEM, elk habitat, water, known finds | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Terrain and recreation | Where are the pits on a lava field, and how much does each hold? | Lidar DEM, Fill, Cut Fill, Zonal Statistics | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Terrain and recreation | How much rock was dug out to make the Kennecott mine? | DEM, Raster to TIN, Surface Volume | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Ecology | Where could Utah prairie dogs be reintroduced? | Species range, soil drainage, vegetation, roads, DEM, Slice | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Ecology | How much cool, high pika habitat was lost between 1981 and 2020? | PRISM temperature rasters, DEM, water | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Ecology | Where is the cheapest corridor for wildlife between two habitat patches, and where does it cross roads? | Land cover, roads, streams, Cost Distance | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Ecology | Where should milkweed be planted along the monarch migration? | Migration path, temperature, land cover | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Ecology | Did farmland protection zones slow the loss of farms to houses? | USDA cropland rasters, protection zones, Compute Change Raster | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Ecology | Did lawns get greener or browner after smart water meters went in? | Meter points, imagery from two years, Zonal Histogram | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Ecology | Does snow cover differ between a burned watershed and an unburned one? | Snow-cover rasters, Zonal Statistics | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Ecology | How well does NASA's snow product match snow cover computed from Landsat? | Landsat, NDSI, the NASA snow product | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Ecology | How did fine-particle air pollution change across Utah over twenty years? | EPA monitor points, Spline, Raster Calculator | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Ecology | Which communities are most vulnerable to drought? | Precipitation, soil moisture and NDVI rasters, FEMA risk index | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Ecology | Which countries got brighter or dimmer at night? | Night-light rasters from two years, Zonal Statistics | [2018](https://docs.google.com/presentation/d/186eEk6id3Yc58J9YTJWFDH6NePLCjJ8ecvAKh2EGCpw){ target="_blank" } |
+| Energy and infrastructure | Where are the best sites for a solar farm? | Solar radiation, slope, transmission lines, protected lands | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Energy and infrastructure | Where can a wind farm meet wind, road, town and spacing limits? | Wind, roads, towns, rivers, Weighted Sum | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Energy and infrastructure | Where are the longest gaps between electric-vehicle fast chargers on a road trip? | Charger points, roads, Cost Distance, Cost Path As Polyline | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Energy and infrastructure | What route should a railroad take from a coal seam to a power plant? | DEM, streams, land ownership, Distance Accumulation | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Energy and infrastructure | Where should a passenger railroad from Provo to St. George run? | DEM, water, roads, land ownership, a cost surface | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Energy and infrastructure | Where can tilt-up concrete buildings go on vacant industrial land? | Zoning, parcels, roads, suppliers, DEM, Near | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Energy and infrastructure | Where can a sign beside the highway be seen and read from the road? | Imagery, visibility analysis | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Getting around | Where should a new public park go? | DEM, transit stops, roads, parks, census blocks | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Getting around | Where should a new bus line run to serve the most people and places? | Roads, transit stops, census blocks, Distance Accumulation | [2023](https://docs.google.com/presentation/d/1IwyEidFPxk7ilbfqsJu3T8YrRrkTJ5ONstAjhoAhmS8){ target="_blank" } |
+| Getting around | Where should new bus stops go to raise ridership? | Transit stops and routes, populated blocks, Union, Dissolve | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Getting around | Do bus stops raise the risk of pedestrian crashes? | Crash points, bus stops, census blocks, Kernel Density | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Getting around | What is the safest bike route between two campuses? | Roads, bike routes, crash points, Kernel Density, an optimal path | [2024](https://docs.google.com/presentation/d/1UvupCj2YvOtAfjrG_IBvvLNr058GeybBoqi-l8yFi2g){ target="_blank" } |
+| Getting around | Where are the dark spots in a city's streetlight coverage? | Streetlight points, roads, a lighting model | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Getting around | Where should a new hospital go? | Collisions, earthquakes, hospitals, highways, Combine | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Getting around | Which state parks with the features you want are within reach of a city? | State parks, cities, a ModelBuilder iterator | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Getting around | What route visits eight national parks in winter and avoids the coldest roads? | Winter temperature raster, parks, hotels, Find Routes | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Getting around | Where in a city might a rental property pay off best? | Rent and price points, schools, stores, Kriging | [2022](https://docs.google.com/presentation/d/1lEwkMtb0CnLa9_GOO94AjqjVKL9NwHVRvEcfXHd3NLw){ target="_blank" } |
+| Further afield | How many craters, and how much crater area, does a Martian volcano have? | Mars DEM and infrared mosaic, Mars geologic map, Fill, Minus | [2021](https://docs.google.com/presentation/d/14FsmzOX8VPRn-17VNuEBk6xTO1rCqWlLJ8fdkeaL-6M){ target="_blank" } |
+| Further afield | Where in Utah should you look for new dinosaur fossils? | Geologic map, Paleobiology Database finds, Point Density | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Further afield | Where are gold, silver and copper most concentrated in a mining district's soils? | Geologic units, soil-sample geochemistry | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Further afield | What would the states look like if their borders followed watersheds? | Watershed boundaries, Dissolve, Eliminate | [2019](https://docs.google.com/presentation/d/1fzcs7eHolBGCwRPeRqWdLSj420-rjPFnD1WnDx3wYtk){ target="_blank" } |
+| Further afield | How would state borders change if everyone belonged to the nearest NFL team? | Population raster, team points, Near | [2020](https://docs.google.com/presentation/d/11EMv0J_lutW4YcdxgzhxKtnUhK2Z0Rpzg_eeNNpGz2E){ target="_blank" } |
+| Further afield | Where could a new national park go in a state that has none? | Federal lands, roads, campgrounds, forest cover | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
+| Further afield | Where could an amusement park go, near airports and families? | Counties, temperature, airports, Polygon to Raster, Raster Calculator | [2025](https://docs.google.com/presentation/d/1njvHMGkIwe3eJDbopwYC9fmZsBCHOs85BHV_x_JxJh8){ target="_blank" } |
 
-**Table 1.** Terrain ratings from a Sawtooth Avalanche Center advisory. A value exactly on a break
-goes to the lower range: 25° is Low and 35° is High, because ArcGIS Pro's Reclassify counts the end
-of each range in that range. The Aspect tool gives flat cells **−1**, which this table rates Extreme.
-With slope class 1, a flat cell comes out Considerable under the geometric mean of Step 6 and Extreme
-under the worst-factor rule of Step 7. There are none inside Snowbird, but they show on any map that
-reaches past its boundary. Say in your report whether you would rate them differently.
+<!-- Source: the eight class decks (2018: 18 projects, 2019: 17, 2020: 14, 2021: 20, 2022: 9, 2023: 13,
+2024: 12, 2025: 23; 126 in all) and the 18 "Example Final Project" write-ups in the instructor's Drive,
+read 2026-11-14 through the Drive connector; paraphrased, student names omitted. Left out: duplicates
+(solar siting appears in 2018, 2021, 2024 and 2025; one row kept), straight repeats of a current lab
+(HAND flooding in Logan, a cell-tower adaptation), and projects built on sensitive data (offender
+registries, crime and child-safety risk, a "concealment site" scenario, coca and violence). -->
 
-## Data
+**Where to find data.** Most Utah projects can be built from these:
 
-> [!IMPORTANT]
-> **Set up your folder before you download anything.** On the lab machines, work on the **D:
-> drive**: one folder for this class named after you, `D:\Smith\`, and one folder per lab inside
-> it, `D:\Smith\Lab12\`. The **C: drive is locked**, and a **network drive** is slow enough to make
-> ArcGIS Pro hang. **Never use a space** in a folder or file name you create — raster tools fail on
-> them without saying why. **Back up your lab folder at the end of every session.** The full set of
-> conventions is on the [ArcGIS Tips and Reminders](../../arcgis-tips/index.md){ target="_blank" } page.
+- [UGRC's State Geographic Information Database](https://gis.utah.gov/products/sgid/){ target="_blank" }:
+  roads, parcels, boundaries, water, utilities, land cover and imagery for Utah.
+- [The National Map Downloader](https://apps.nationalmap.gov/downloader/){ target="_blank" } (USGS):
+  elevation (3DEP), hydrography (NHD) and more for the whole country.
+- [ArcGIS Living Atlas of the World](https://livingatlas.arcgis.com/){ target="_blank" }: Esri's
+  curated layers, from land cover to census data, ready to add to a map in ArcGIS Pro.
 
-| Layer | Where it comes from | How you get it |
-| --- | --- | --- |
-| `LittleCottonwood_DEM.tif` | USGS 3D Elevation Program, 1/3 arc-second DEM | Prepared extract, hosted here |
-| Snowbird ski area boundary | Utah Geospatial Resource Center (UGRC), *Utah Ski Area Boundaries* | Live web layer, added by URL |
-| Table 1 | A Sawtooth Avalanche Center advisory | You type it into the Reclassify and Raster Calculator tools |
+Check the data before you commit to a question: download it, add it to a map, and make sure it
+covers your area and holds the fields you need. A good question with no data is not a project yet.
 
-- **Download:** [`lab12-little-cottonwood-dem.zip`](../../data/lab12-little-cottonwood-dem.zip)
-  (2.4 MB). Unzip it into your Lab12 folder — the files are in a `lab12-little-cottonwood-dem`
-  folder inside it — and read `READ-ME-FIRST.txt`.
-- **Add the ski areas** in Step 0 from this feature service URL:
-  `https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0`
-  (the same layer as UGRC's [Utah Ski Area Boundaries](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" } page).
+## Requirements
 
-> [!TIP]
-> **Check the data:** `LittleCottonwood_DEM.tif` is **1,296 columns × 864 rows** of 1/3 arc-second
-> cells, values **2,176.4 to 3,500.5** (meters above NAVD 88), GCS North American 1983, no NoData
-> cells. The ski-area layer has 14 polygons; Snowbird's is named `Snowbird Ski and Summer Resort`.
+Your project must have all four:
 
-![Infographic: the six metadata questions — What, Where, When, Why, How and Who — answered for the Little Cottonwood Canyon DEM: bare-earth elevation in meters above NAVD 88 on 1/3 arc-second cells, about 10.3 m north-south and 7.8 m east-west; a box over upper Little Cottonwood Canyon with Snowbird and Alta, stored in latitude and longitude, to be projected in Step 1; tile n41w112 published May 20, 2026 from sources collected 1946 to 2023; the 3D Elevation Program's general-purpose seamless layer, not made for avalanche terrain; lidar, contour-based and radar sources resampled to one grid, bare earth without trees, lift towers or snowpack; USGS, public domain. A footer says the model sees the ground, not the snow a skier stands on.](images/lab12-dem-metadata.svg)
-
-**Figure A.** The six metadata questions, applied to the DEM. Confirm three of the values yourself —
-in `READ-ME-FIRST.txt`, in the raster's properties in ArcGIS Pro, and in the tile's
-[metadata file](https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/current/n41w112/USGS_13_n41w112.xml){ target="_blank" }
-— and say in your report what each one does to your result.
-
-## ModelBuilder Tools
-
-New in this lab:
-
-| Tool | What it does |
-| --- | --- |
-| ![Slope icon: a hillside with its angle, 38 degrees, marked](images/icon-slope.svg){ .tool-icon }<br>**Slope** (Spatial Analyst) | The steepness of each cell, from its eight neighbors, in degrees from 0 (flat) to 90 (vertical). [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/slope.htm){ target="_blank" } |
-| ![Aspect icon: a compass with an arrow pointing northeast](images/icon-aspect.svg){ .tool-icon }<br>**Aspect** (Spatial Analyst) | The compass direction each cell's slope faces, in degrees clockwise from north (0 to 360), and −1 where the cell is flat. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/aspect.htm){ target="_blank" } |
-| ![Cell Statistics icon: three stacked grids combined into one holding their maximum](images/icon-cell-statistics.svg){ .tool-icon }<br>**Cell Statistics** (Spatial Analyst) | A statistic of several rasters, cell by cell: here the maximum and the minimum of the three ratings. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/cell-statistics.htm){ target="_blank" } |
-| ![Tabulate Area icon: a zone outlined over classed cells and the table of class areas it produces](images/icon-tabulate-area.svg){ .tool-icon }<br>**Tabulate Area** (Spatial Analyst) | The area of each raster class inside each zone of a polygon layer, in one table. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/tabulate-area.htm){ target="_blank" } |
-
-Tools you already know: **Project Raster** (Lab 5), **Reclassify** (Lab 2), **Raster Calculator**
-with an inline variable (Labs 2, 4 and 5), and model parameters.
-
-
-## Example Model
-
-![The finished ModelBuilder model, exported as a vector diagram. LittleCottonwood_DEM.tif into Project Raster, DEM_UTM. DEM_UTM feeds Slope (Slope_Deg, Reclassify, Slope_Class), Aspect (Aspect_Deg, Reclassify (2), Aspect_Class), and with Shift, marked P, a Raster Calculator that makes Altitude_Class, marked P. The three class rasters feed Raster Calculator (2), Agree_Class; Raster Calculator (3), Hazard_Class, marked P; Cell Statistics, Worst_Class, marked P; and Cell Statistics (2), Best_Class, marked P; Worst_Class and Best_Class feed Raster Calculator (4), Rule_Spread, marked P.](images/lab12-full-model.svg)
-
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**. One
-elevation model in, three rating rasters in the middle, and the combined maps out: all three agree,
-the geometric mean, the worst and best factor, and where those two differ. The six elements marked
-`P` are the model parameters — the shift, the altitude classes and the four combined maps — and they
-become the tool dialog of Step 9.
+1. **Raster and vector data, both analyzed.** At least one raster layer (elevation, land cover,
+   imagery, a surface you interpolate) and at least one vector layer (points, lines or polygons)
+   must go *into* the analysis, not only sit under it as a backdrop.
+2. **A ModelBuilder model** that runs from its tool dialog and produces your result. Aim for
+   roughly six to twelve tools; a model of two tools is a lab exercise, and a model of thirty is
+   a semester.
+3. **A finished map** that answers your question.
+4. **Your own work**, done individually. Classmates can help you find data or fix an error, as in
+   any lab; the question, the model, the map and the video are yours.
 
 ## Complete the Lab
 
-For an advanced GIS student, the information up to this point is all you need to complete the
-assignment. Feel free to try the analysis using only the information above. If you complete the lab
-without the step-by-step instructions below, say so in your report.
-
-## Step-by-Step Solution
-
-> [!NOTE]
-> **Build it once, build it to be changed.** The steps walk through Snowbird at the default
-> elevation bands. Step 9 re-runs the same model with the bands moved, so give every dataset a
-> readable name as you go.
-
-> [!NOTE]
-> **Every check value on this page** was measured on the files you download, with the steps below,
-> in ArcGIS Pro 3.7.1. Your numbers should match to the last digit shown.
-
-### Step 0 — Set Up the Project
-
-1. Create a new project in `D:\Smith\Lab12\` with the **Map** template; if you already made the
-   folder, uncheck **Create a folder for this local project**.
-2. Add `LittleCottonwood_DEM.tif`. When the **Build Pyramids and Calculate Statistics** dialog
-   opens, click **OK**.
-3. On the **Map** tab click the arrow under **Add Data** ▸ **From Path**, paste the ski-area URL
-   from the Data section, and click **Add**. Add an imagery or topographic basemap.
-4. Confirm Spatial Analyst is licensed (**Project** ▸ **Licensing**).
-5. On the **Analysis** tab click **ModelBuilder**. On the **ModelBuilder** tab click
-   **Properties**, set **Name** to `AvalancheTerrain` and **Label** to `Avalanche Terrain`, and save.
-6. On the **ModelBuilder** tab click **Environments** and check that **Current Workspace** and
-   **Scratch Workspace** are your project geodatabase.
-
-![The model's Environments dialog: Current Workspace and Scratch Workspace both Lab12.gdb; Output Coordinate System, Geographic Transformations and Processing Extent empty; Parallel Processing collapsed; under Raster Analysis, Cell Size empty, Cell Size Projection Method Convert units, Mask empty and Cell Alignment Default.](images/lab12-environments.png)
-
-**Figure 0.** ModelBuilder ▸ Environments: the two workspaces, everything else at its default.
-
-### Step 1 — Project the DEM
-
-Add **Project Raster** to the model with `LittleCottonwood_DEM.tif` as the input:
-
-- **Output Coordinate System**: NAD 1983 UTM Zone 12N
-- **Resampling Technique**: Bilinear interpolation (elevations are continuous; nearest neighbor
-  leaves stair steps that become stripes in Slope)
-- **Output Cell Size**: 10
-- **Output Raster Dataset**: `DEM_UTM`
-
-
-![The Project Raster dialog from ModelBuilder: Input Raster LittleCottonwood_DEM.tif, Output Raster Dataset DEM_UTM, Output Coordinate System NAD_1983_UTM_Zone_12N, Geographic Transformation empty, Resampling Technique Bilinear interpolation, Output Cell Size X 10 and Y 10.](images/lab12-project-raster.png)
-
-**Figure 1.** Project Raster. It opens with Nearest neighbor, switches itself to Bilinear when you
-pick this DEM, and proposes cells of about 9.04 m; type 10 in both X and Y.
-
-> [!TIP]
-> **Check the result:** `DEM_UTM` is **1,023 × 896** cells of 10 m, values **2,178.0 to 3,499.4**
-> m. If the cell size reads about 0.0001, you are looking at the unprojected DEM.
-
-### Step 2 — Compute Slope
-
-Add **Slope** with `DEM_UTM` as the input, **Output measurement** Degree, and output `Slope_Deg`.
-
-![The Slope dialog from ModelBuilder, with a banner suggesting the Surface Parameters tool: Input raster DEM_UTM, Output raster Slope_Deg, Output measurement Degree, Method Planar, Z factor 1, Target device for analysis GPU then CPU.](images/lab12-slope.png)
-
-**Figure 2.** Slope, in degrees, Planar. Ignore the banner; Surface Parameters does more than this
-lab needs.
-
-> [!TIP]
-> **Check the result:** the steepest cell is **77.8°**, and the mean slope is **26.9°** (the
-> layer's **Properties** ▸ **Source** ▸ **Statistics** list both).
-
-
-> [!WARNING]
-> **Slope runs on the unprojected DEM too, and gives the wrong answer quietly.** On
-> `LittleCottonwood_DEM.tif` itself it reports a mean of 24.3° — about 2.6° too gentle. Its cells
-> are 1/3 arc-second, which here is 10.3 m north–south but only 7.8 m east–west; projected cells are
-> square meters. Two or three degrees move a lot of terrain across the 25°, 30° and 35° breaks of Table 1.
-
-### Step 3 — Compute Aspect
-
-Add **Aspect** with `DEM_UTM` as the input and output `Aspect_Deg`.
-
-> [!TIP]
-> **Check the result:** values run from 0 to 360, plus **−1 on 480 flat cells** in the whole
-> projected DEM.
-
-![The Aspect dialog from ModelBuilder: Input raster DEM_UTM, Output raster Aspect_Deg, Method Planar, Target device for analysis GPU then CPU.](images/lab12-aspect.png)
-
-**Figure 3.** Aspect.
-
-### Step 4 — Rate Slope and Aspect
-
-Add **Reclassify** twice, with the slope and aspect rows of Table 1.
-
-1. **Reclassify** `Slope_Deg`, field **Value**, nine rows: 0–25 → 1, 25–30 → 2, 30–32 → 3,
-   32–35 → 4, 35–45 → 5, 45–50 → 4, 50–55 → 3, 55–60 → 2, 60–90 → 1. Output `Slope_Class`.
-2. **Reclassify** `Aspect_Deg`, eight rows: −1–45 → 5, 45–90 → 4, 90–135 → 3, 135–180 → 2,
-   180–225 → 1, 225–270 → 2, 270–315 → 3, 315–360 → 4. Output `Aspect_Class`.
-
-Two ranges can share a new value; that is how the table says "steep and gentle are both Low."
-
-![The Reclassify dialog for slope: Input raster Slope_Deg, Reclass field VALUE, nine rows 0 to 25 is 1, 25 to 30 is 2, 30 to 32 is 3, 32 to 35 is 4, 35 to 45 is 5, 45 to 50 is 4, 50 to 55 is 3, 55 to 60 is 2, 60 to 90 is 1, then a NODATA row; Output raster Slope_Class; Change missing values to NoData unchecked.](images/lab12-reclass-slope.png)
-
-**Figure 4a.** The slope ratings. ArcGIS Pro adds the NODATA row itself.
-
-![The Reclassify (2) dialog for aspect: Input raster Aspect_Deg, Reclass field VALUE, eight rows -1 to 45 is 5, 45 to 90 is 4, 90 to 135 is 3, 135 to 180 is 2, 180 to 225 is 1, 225 to 270 is 2, 270 to 315 is 3, 315 to 360 is 4, then a NODATA row; Output raster Aspect_Class.](images/lab12-reclass-aspect.png)
-
-**Figure 4b.** The aspect ratings.
-
-> [!WARNING]
-> **Type −1 by editing, not in the blank row.** In our build, a new row whose Start was typed as
-> `-1` vanished when the row was committed. Type `0` for the first Start, finish the table, then
-> double-click that cell and change it to `-1`. Check that the first row reads −1 before you click
-> OK; without it the 480 flat cells come out NoData.
-
-> [!TIP]
-> **Check the result** (inside Snowbird; you measure these in Step 8): slope class 1 covers **4.986 km²**
-> and slope class 5 **2.047 km²**; aspect class 4 (northwest-to-north and northeast-to-east)
-> **3.493 km²**. If any cell of `Slope_Class` is NoData, a range has a gap.
-
-### Step 5 — Rate Altitude, With a Shift
-
-Reclassify cannot take a parameter, and Step 9 needs to move the elevation bands. So rate altitude
-with **Raster Calculator**, with the bands written out and an inline variable added to each break:
-
-1. On the canvas toolbar click **Variable**, choose **Long** in the data type list, and click
-   **OK**. Right-click the new oval ▸ **Rename**, type `Shift`, double-click it and set its value to
-   `0`, then right-click it ▸ **Parameter**.
-2. Add **Raster Calculator** with this expression, and output `Altitude_Class`:
-
-```text
-Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5))))
-```
-
-A positive shift raises every band (less of the mountain counts as high); a negative shift lowers
-them.
-
-
-![The Raster Calculator dialog from ModelBuilder: the Rasters list shows DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class and Aspect_Class; the expression reads Con("%DEM_UTM%" <= 2200 + %Shift%, 1, Con("%DEM_UTM%" <= 2400 + %Shift%, 2, Con("%DEM_UTM%" <= 2600 + %Shift%, 3, Con("%DEM_UTM%" <= 2800 + %Shift%, 4, 5)))); Output raster Altitude_Class.](images/lab12-rc-altitude.png)
-
-**Figure 5.** The altitude rating, with `%Shift%` in every break. On the canvas, Shift draws a
-connector to this tool. Type the output name last: Raster Calculator replaces a typed name with a
-default such as `RasterC_1` when the expression changes.
-
-> [!TIP]
-> **Check the result** (Step 8): at shift 0, Snowbird has **7.445 km²** above 2,800 m (altitude class 5)
-> and no cells below 2,200 m. Most of the ski area is "Extreme" on altitude alone — keep that in
-> mind in Step 9.
-
-### Step 6 — Combine the Ratings
-
-Two ways, both in Raster Calculator.
-
-**First, "all three agree."** A cell gets a class only where all three ratings are that class:
-
-```text
-Con(("%Altitude_Class%" == 1) & ("%Slope_Class%" == 1) & ("%Aspect_Class%" == 1), 1, Con(("%Altitude_Class%" == 2) & ("%Slope_Class%" == 2) & ("%Aspect_Class%" == 2), 2, Con(("%Altitude_Class%" == 3) & ("%Slope_Class%" == 3) & ("%Aspect_Class%" == 3), 3, Con(("%Altitude_Class%" == 4) & ("%Slope_Class%" == 4) & ("%Aspect_Class%" == 4), 4, Con(("%Altitude_Class%" == 5) & ("%Slope_Class%" == 5) & ("%Aspect_Class%" == 5), 5, 0)))))
-```
-
-Output `Agree_Class`. Look at it before you go on.
-
-> [!TIP]
-> **Check the result** (Step 8): inside Snowbird, **10.346 of 10.781 km²** — 96 % — is 0, unclassified. A
-> 35–45° slope above 2,800 m facing between north and northeast (0–45°) rates 5, 5, 5 and is mapped
-> Extreme; the same slope facing northeast-to-east (45–90°) rates 5, 5, 4 and is mapped *nothing*. Your report says why that is the wrong answer.
-
-**Second, the geometric mean.** Multiply the three ratings (1 to 125), take the cube root, and round.
-The cube root of a product of three numbers is their geometric mean, which brings the result back to
-the 1–5 scale:
-
-```text
-Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5)
-```
-
-Output `Hazard_Class`, and make it a model parameter. Rated 5, 5, 4, a cell's product is 100, its
-geometric mean 4.6, and its class 5. In product terms the classes are 1–3 Low, 4–15 Moderate, 16–42
-Considerable, 43–91 High, 92–125 Extreme.
-
-![The Raster Calculator (2) dialog, widened: the full nested Con expression testing Altitude_Class, Slope_Class and Aspect_Class for equality at each class from 1 to 5, else 0; Output raster Agree_Class.](images/lab12-rc-agree.png)
-
-**Figure 6a.** "All three agree." Widen the dialog to read the whole expression.
-
-![The Raster Calculator (3) dialog: the expression Int(Power("%Altitude_Class%" * "%Slope_Class%" * "%Aspect_Class%", 1.0 / 3) + 0.5); Output raster Hazard_Class.](images/lab12-rc-geomean.png)
-
-**Figure 6b.** The geometric mean, rounded to the nearest class.
-
-> [!NOTE]
-> **Why `+ 0.5` and `Int`.** `Int` drops the fraction, so adding 0.5 first rounds to the nearest
-> class: a geometric mean of 3.48 (product 42) is Considerable, 3.50 (product 43) is High.
-
-### Step 7 — Add Two More Rules
-
-Add **Cell Statistics** twice, each with `Altitude_Class`, `Slope_Class` and `Aspect_Class` as the
-inputs:
-
-1. **Overlay statistic** Maximum, output `Worst_Class` — a cell is as dangerous as its worst factor.
-2. **Overlay statistic** Minimum, output `Best_Class` — a cell is only as dangerous as its least
-   dangerous factor.
-
-These two bracket the geometric mean. Then one more **Raster Calculator**, output `Rule_Spread`:
-
-```text
-"%Worst_Class%" - "%Best_Class%"
-```
-
-`Rule_Spread` is 0 where all three factors agree and 4 where one rates 1 and another 5: it maps
-where the rule you choose matters.
-
-Make `Altitude_Class`, `Hazard_Class`, `Worst_Class`, `Best_Class` and `Rule_Spread` model parameters,
-so that every run from the tool dialog keeps them and lets you name them.
-
-> [!WARNING]
-> **A run from the tool dialog deletes everything that is not a parameter.** In our build, the first
-> dialog run removed `DEM_UTM`, `Slope_Deg`, `Aspect_Deg`, `Slope_Class` and `Aspect_Class` from the
-> geodatabase — including the copies the earlier ModelBuilder run had made. Do Step 8 from a run
-> inside ModelBuilder, before any dialog run.
-
-> [!TIP]
-> **Check the result** (Step 8): inside Snowbird, `Rule_Spread` is 0 on only **0.436 km²** and 4
-> on **3.309 km²**.
-
-![The Cell Statistics dialog from ModelBuilder: Input rasters or constant values Altitude_Class, Slope_Class and Aspect_Class; Output raster Worst_Class; Overlay statistic Maximum; Ignore NoData in calculations checked; Process as multiband unchecked.](images/lab12-cellstats-max.png)
-
-**Figure 7a.** Cell Statistics, Maximum: the worst factor. The second one is the same with
-**Minimum** and `Best_Class`.
-
-![The Raster Calculator (4) dialog: the expression "%Worst_Class%" - "%Best_Class%"; Output raster Rule_Spread.](images/lab12-rc-spread.png)
-
-**Figure 7b.** Where the rules disagree.
-
-### Step 8 — Measure Snowbird
-
-Run the model. Then add **Tabulate Area** (outside the model is fine) with:
-
-- **Input raster or feature zone data**: the ski-area layer, with **only Snowbird selected** (select
-  it with **Select By Attributes**, `NAME` begins with `Snowbird`)
-- **Zone field**: `NAME`
-- **Input raster or feature class data**: `Hazard_Class`, **Class field** `Value`
-- **Output table**: `Snowbird_Hazard`
-
-The table has one column per class, in square meters. Divide by 1,000,000 for km². Run Tabulate
-Area the same way on `Altitude_Class`, `Slope_Class`, `Aspect_Class`, `Agree_Class`, `Worst_Class`,
-`Best_Class` and `Rule_Spread` — the check values in Steps 4 to 7 are these tables — and name each
-table for the raster and the run, such as `TA_Hazard_s0`.
-
-
-![The Tabulate Area tool in the Geoprocessing pane: Input raster or feature zone data SkiAreaBoundaries, with Use the selected records: 1 switched on; Zone field NAME; Input raster or feature class data Hazard_Class; Class field Value; Output table TA_Hazard_s0; Classes as rows in output table unchecked.](images/lab12-tabulate-area.png)
-
-**Figure 8a.** Tabulate Area on the selected Snowbird polygon. The switch **Use the selected records:
-1** confirms that only Snowbird is used.
-
-![The TA_Hazard_s0 table: one row, NAME Snowbird Ski and Summer Resort, VALUE_1 167400, VALUE_2 3161700, VALUE_3 3692400, VALUE_4 2673200, VALUE_5 1086600, in square meters.](images/lab12-ta-table.png)
-
-**Figure 8b.** The output: one column per class, in square meters.
-
-> [!TIP]
-> **Check the result** (km², Snowbird, shift 0):
->
-> | Rule | Low | Moderate | Considerable | High | Extreme |
-> | --- | --- | --- | --- | --- | --- |
-> | Geometric mean (`Hazard_Class`) | 0.167 | 3.162 | 3.692 | 2.673 | 1.087 |
->
-> The five add to **10.781 km²**, Snowbird's area. Your figures may differ from any check value on
-> this page by 0.001 km² — one 10 m cell on the boundary. UGRC's own `Shape__Area` field says 18.7 million
-> square meters: that is the area in the layer's Web Mercator coordinates, which stretch areas by
-> about 1.73 at this latitude. Your table measures in the raster's UTM meters.
-
-### Step 9 — Test the Assumptions
-
-The default map is *an* answer, not *the* answer: one day's elevation bands from one advisory, and
-one rule for combining. Run the model at least **three more times** from its tool dialog with a
-different **Shift** — for example −400, −200 and +200 or +400 m. Give every output a name that
-carries the shift (`Hazard_Class_p400`), or the run overwrites your baseline. Tabulate
-`Altitude_Class`, `Hazard_Class`, `Worst_Class` and `Best_Class` inside Snowbird each time.
-
-![The model as a tool in the Geoprocessing pane, titled Avalanche Terrain: Shift 0, then the outputs Hazard_Class, Worst_Class, Best_Class, Rule_Spread and Altitude_Class, the first four with warning icons because those datasets already exist.](images/lab12-tool-dialog.png)
-
-**Figure 9a.** The model as a tool. The warning icons only say the datasets exist from an earlier
-run; give every output a new name for each run.
-
-![The completed-run pop-up for Avalanche Terrain (Lab12): Started and Completed times, an Elapsed Time of 1 Minute 58 Seconds, the Tool Path in Lab12.atbx; the Parameters tab lists Shift 400 and the outputs Hazard_Class, Worst_Class, Best_Class, Rule_Spread and Altitude_Class written to Lab12.gdb with the suffix _p400.](images/lab12-run-p400.png)
-
-**Figure 9b.** A run at Shift 400, finished in under two minutes.
-
-Choose your values deliberately and say why: a storm that loads the upper mountain, a warm spell
-that moves the problem up, a different avalanche center's bands. For **the baseline and every run,
-in one table**, record the shift, the area of Snowbird in altitude class 5, and, for each of the
-three rules, the area rated High or Extreme. Then answer, in your report:
-
-1. **How much does moving the elevation bands change the map,** in each direction? Use the
-   altitude-class column to say why.
-2. **How much does the combination rule change the map?** For the same run, compare the High +
-   Extreme area under the three rules. Which rule would you publish, and to whom?
-3. **Where do the three rules agree, and where do they disagree most?** Map `Rule_Spread` at
-   shift 0 beside the imagery and say what kind of terrain sits at 0 and at 4.
-
-Pick one run, or one rule, for your second map, and say on the map what changed and why you chose it.
-
-> [!TIP]
-> At Snowbird one of these two choices moves the map far more than the other. Look at Step 5's
-> check value before you guess which.
+### Step 1 — Choose the Question
+
+Write your question in one sentence, and say who would act on the answer. "Where in Utah County
+could a 2 MW solar farm go within 1 km of a substation, on land under 5 degrees of slope and not
+in a floodplain?" is a project. "Solar energy in Utah" is a topic.
+
+### Step 2 — Gather the Data
+
+Set up your folder as for every lab: on the lab machines, `D:\Smith\Lab12\`, never a space in a
+name. Download each layer, read its metadata, and record in your project report (Step 6) where it
+came from, its URL, the date you downloaded it, and its coordinate system. Pick one projected
+coordinate system for the whole project (NAD 1983 UTM Zone 12N for most of Utah) and set it, with
+the cell size and extent, in the environments as in earlier labs.
+
+### Step 3 — Build the Model
+
+Build the analysis in ModelBuilder in your project's toolbox. Give your intermediate datasets
+names a stranger could read (`Slope_Under_5`, not `Reclass_Slop1`), expose the inputs, the key
+thresholds and the result as parameters, and run it from its tool dialog until it runs end to end
+without a hand repair.
+
+### Step 4 — Make the Map
+
+One professional map layout (letter size) that answers your question: the result clearly
+symbolized, the layers that explain it, a legend, title, neat line, north arrow and scale bar, and
+a text box with your name, the date, the map projection, and the sources and dates of the data.
+
+### Step 5 — Record the Video
+
+Your video is a **training video**: a voiceover on your ArcGIS Pro screen, made for someone who
+wants to do this kind of analysis. Record the screen and your voice with the **Snipping Tool**
+built into Windows (open it, choose the video camera, click **New**, drag a box around the ArcGIS
+Pro window, and turn the microphone on before you start). Microsoft's
+[Snipping Tool help](https://support.microsoft.com/en-us/windows/use-snipping-tool-to-capture-screenshots-00246869-1843-655f-f220-97299b865f6b){ target="_blank" }
+shows the controls. **[To do: confirm that Snipping Tool on the lab machines shows the microphone
+button, and that the machines take a headset.]**
+
+Show, in this order, in **five minutes** (no more than five and a half):
+
+| About | What you show |
+| --- | --- |
+| 30 s | The question, and who would use the answer |
+| 1 min | Each dataset: what it is, raster or vector, where it came from |
+| 2½ min | The model, tool by tool: open each tool, say what it does and why, then show the dataset it made |
+| 1 min | The final map, the answer, and one thing the analysis cannot tell you |
+
+Three things make it work:
+
+- **Show results; do not wait for them.** Run the model before you record. On camera, open each
+  tool from the model to show its settings, then switch to the layer it produced. Nobody wants to
+  watch a progress bar.
+- **Record in pieces.** Record the data, the model and the map as separate clips and retake any
+  piece you stumble on. Submit the pieces in order, or join them in any video editor you like.
+- **Make it readable.** Zoom in on dialogs and tables so a viewer can read them, and record
+  somewhere quiet, with a headset if you can.
+
+**Post it on YouTube as an unlisted video.** Everyone uses YouTube, so every video plays the same
+way. Sign in at [YouTube](https://www.youtube.com/){ target="_blank" } with any Google account,
+click **Create ▸ Upload video**, and under **Visibility** choose **Unlisted**: anyone with the link
+can watch it, and nobody can find it by searching. Title it `CE 414 Lab 12 — ` and your project's
+title. Open the link in a private browser window before you submit it, to be sure it plays.
+
+### Step 6 — Write the Project Report
+
+A short report that a future student could start from: a page or two of text, then the model and
+the map, each on its own full page. Four or five pages in all is typical.
+
+- **Title block:** your name, the date, your project's title, and the link to your video
+- **The question** in one sentence, and who would act on the answer
+- **A data table**, one row per layer: name, raster or vector, source and URL, the date you
+  downloaded it, and its coordinate system
+- **The tools in the order your model runs them**, each with its key settings, as a numbered list
+- **The answer** in two or three sentences, with the numbers that support it, and its main
+  limitation
+- one line saying what you used AI for, if anything
+- **Your model, full page:** exported from ModelBuilder (**Export ▸ Export To Graphic**), every tool and dataset readable
+- **Your map, full page:** the layout from Step 4, exported as a PDF page
+
+### Step 7 — Package the Project
+
+A project package (`.ppkx`) bundles your maps, layouts, toolbox and data into one file that anyone
+with ArcGIS Pro can open, so the grader can open your project and rerun your model. A package
+copies the data in your **map layers** and in your **geoprocessing history**, but it does **not**
+copy a model's input data on its own, so first:
+
+1. Make sure **every input dataset is a layer in a map** in your project (a map named `Data` is
+   fine).
+2. **Run your model once from its tool dialog**, so the run is in the geoprocessing history.
+
+Then, on the **Share** tab, in the **Package** group, click **Project**. In the **Package Project**
+pane, save it as a file in your Lab12 folder, check **Share outside of organization**, leave
+**Include Toolboxes** and **Include History Items** checked, and run it. Open the `.ppkx` once
+yourself (double-click it) to check that the maps draw and the model is there.
+**[To do: confirm the Package Project pane's labels and options in ArcGIS Pro 3.7.]**
+
+If the package is too large for Learning Suite, put it in Google Drive or BYU Box with link
+sharing on and submit the link. **[To do: confirm Learning Suite's upload limit.]**
+
+### Extra Credit — Make a Reel
+
+For **up to 10 extra-credit points**, cut a **30 to 90 second vertical video** (phone shape, 9:16)
+from your footage: the question, one striking intermediate result, the final map, and the answer,
+with captions, for someone scrolling a phone rather than learning the tools. Submit it as a video
+file on Learning Suite.
+
+A reel that simply shows the project earns a few points; a really good one earns all ten. What
+makes it really good: it hooks a viewer in the first three seconds, tells the story without the
+sound on, gets the answer across clearly, and looks like something people would want to share.
+
+With your permission, I may post it on my professional GIS Instagram account,
+[@dr.danames](https://www.instagram.com/dr.danames/){ target="_blank" }, so you do not have to
+post it on your own. In your submission, say whether I may post it, and whether to credit you by
+name. Posting is never required for the extra credit, and you are free to post it on your own
+account instead.
 
 ## Deliverables
 
-Make **two** professional map layouts:
+Submit on Learning Suite by **Thursday of Week 15, 11:59 pm**:
 
-1. **Your baseline result** — `Hazard_Class` at shift 0 over Snowbird, titled with the rule and the
-   bands, in the danger-scale colors (Figure B) with the labels Low to Extreme, the Snowbird boundary
-   and labeled places, and an inset locating Little Cottonwood Canyon in Salt Lake County.
-2. **One scenario from Step 9** — a different shift or a different rule, whichever most changes
-   the picture. Say on the map what changed and why you chose it.
+| What | Form |
+| --- | --- |
+| Training video, about five minutes | The **unlisted YouTube link** |
+| Project report: a page or two of text, the model on a full page, the map on a full page | PDF |
+| Project package | `.ppkx` file, or a link if it is too large |
+| Extra credit: vertical reel, 30 to 90 seconds | Video file, with your posting permission |
 
-> [!TIP]
-> **To put `Hazard_Class` in the danger-scale colors** with the labels Low to Extreme, see
-> [Codes and rated classes](../../arcgis-tips/raster-symbology.md#codes-and-rated-classes-set-the-colors-yourself){ target="_blank" }.
+> [!NOTE]
+> **Make it yours.** No two students should turn in the same project. Your question, your data,
+> your model, your map and your voice are your own work. Projects whose models, maps or videos
+> match another student's too closely are flagged for follow-up.
 
-Write a brief report (2–3 pages of text, plus your figures and maps) covering:
+## Rubric for Choose Your Own Adventure
 
-- a title block — assignment title, your name, the date and the course — and the name of your
-  peer reviewer
-- the requirements of the project and your approach to solving it
-- **a description of your model** a reader could repeat from: each tool and its settings, and every
-  input, intermediate and output dataset with its type
-- **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its toolbox interface with the shift parameter exposed
-- **the three metadata values** for the DEM — its publication date and source dates, its vertical
-  datum and units, and its cell size — and what each one means for your result
-- your **Step 8 table** of Snowbird's area in each `Hazard_Class` at shift 0, in km²
-- the **"all three agree" result**: its check value and, in your own words, why it is the wrong
-  answer
-- your **sensitivity table** from Step 9 and your answers to its three questions
-- **where the map is wrong and why** — what the terrain-only model leaves out (snowpack, weather,
-  wind loading, triggering, slope shape, ground cover, terrain traps), what the bare-earth 10 m
-  DEM cannot show, and what Table 1 assumes — and what data would fix each
-- **a copy of the rubric below with your self-assessment filled in** — a score in every row,
-  honestly arrived at. The grader will compare it with theirs.
-
-> [!IMPORTANT]
-> **Peer review before you submit.** Have another student in the class read your report against
-> the rubric and give you feedback, then act on that feedback before the deadline. Name your
-> reviewer in the report and say in a sentence what you changed because of them.
-
-**Credit line for your maps:** Elevation: USGS 3D Elevation Program, 1/3 arc-second DEM, tile
-n41w112 (May 2026). Ski areas: Utah Geospatial Resource Center. Ratings: Sawtooth Avalanche Center
-advisory, via CE 414.
-
-## References
-
-avalanche.org. *North American Public Avalanche Danger Scale.* [avalanche.org](https://avalanche.org/avalanche-encyclopedia/human/resources/north-american-public-avalanche-danger-scale/){ target="_blank" }.
-
-avalanche.org. *Avalanche Encyclopedia: Slope Angle* and *Aspect.* Accessed October 2, 2026.
-
-Colorado Avalanche Information Center. *Statistics and Reporting.*
-[avalanche.state.co.us](https://avalanche.state.co.us/accidents/statistics-and-reporting){ target="_blank" }. Accessed October 2, 2026.
-
-Sawtooth Avalanche Center. [sawtoothavalanche.com](https://www.sawtoothavalanche.com/){ target="_blank" }.
-
-Utah Avalanche Center. [utahavalanchecenter.org](https://utahavalanchecenter.org/){ target="_blank" }.
-
-U.S. Geological Survey, 3D Elevation Program. 1/3 arc-second DEM, tile n41w112, published May 20, 2026.
-
-Utah Geospatial Resource Center. *Utah Ski Area Boundaries.*
-[opendata.gis.utah.gov](https://opendata.gis.utah.gov/datasets/utah-ski-area-boundaries/explore){ target="_blank" }.
-
-## Example Maps
-
-These are examples, not templates. Your maps carry your name, and your second map shows the run you
-chose.
-
-![Example baseline layout titled "Avalanche Terrain at Snowbird: Geometric Mean, Advisory Bands": the terrain hazard classes over imagery in the danger-scale colors, green Low through yellow, orange and red to black Extreme, with the Snowbird boundary in cyan and Alta's in gray; Extreme and High follow the steep walls and gullies, Moderate and Considerable cover the broader slopes, and Low appears only on the canyon floor. Below, a Salt Lake County locator, a legend, north arrow, scale bar in kilometers, and a text box: of Snowbird's 10.8 sq km, 3.8 rate High or Extreme and 1.1 Extreme.](images/lab12-example-map-baseline.png)
-
-**Figure 10.** The baseline map. Two things to do better than this example: label the peaks and the
-lifts so a reader can find their way around, and mark one slope you checked against imagery.
-
-![Example scenario layout titled "Avalanche Terrain at Snowbird: Elevation Bands Raised 400 m": the same design with less red and black on the lower slopes, and a text box saying High or Extreme falls from 3.8 to 2.5 sq km and Extreme from 1.1 to 0.47 sq km, chosen to show what a warm spell that pushes the problem up the mountain does to the map.](images/lab12-example-map-scenario.png)
-
-**Figure 11.** The kind of second map Step 9 asks for. Your own second map should be the run that most
-changes what a reader would conclude, which may not be this one.
-
-## Rubric for Avalanche Hazard
-
-Fifty points in five parts of ten. The bullets say what each part is worth, so you know exactly
-what to submit.
+One hundred points in five parts. The bullets say what each part is worth, so you know exactly
+what to submit, and each bullet says **where it is graded from**: the **video**, the **report**, or
+the **package** (opened and run in ArcGIS Pro). In all, about 30 points come from the video, 40
+from the report and 30 from the package.
 
 | Item | Points |
 | --- | --- |
-| **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values for the DEM and what each means for your result (2)<br>• The "all three agree" result and why it is the wrong answer (2)<br>• Where the map is wrong and why, and what data would fix it (2)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs end to end from its tool dialog and its Step 8 table of Snowbird's areas at shift 0 matches the check values (4)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the toolbox interface with the shift parameter exposed (2)<br>• A description of the model a reader could repeat from (2) | /10 |
-| **Map 1 — your baseline** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• An inset locating Little Cottonwood Canyon (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
-| **Map 2 — one Step 9 scenario** (full page, 8.5 × 11)<br>• Title stating the rule and the elevation bands (1)<br>• Neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the DEM's source and date (1)<br>• The hazard classes in the danger-scale colors, labeled Low to Extreme in a legend (2)<br>• The Snowbird boundary and labeled places (1)<br>• Title and text box say what changed from Map 1 and why this run was chosen (2)<br>• Basemap, scale and legibility appropriate to the ski area (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least three more runs, giving the shift, the altitude-class-5 area, and the High + Extreme area of Snowbird under each of the three rules (4)<br>• How much moving the elevation bands changes the map in each direction, and why (2)<br>• How much the combination rule changes the map, and which rule you would publish and why (2)<br>• Where the rules agree and disagree (`Rule_Spread`), and what terrain that is (2) | /10 |
-| **Total** | **/50** |
+| **Question and data**<br>• *Video and report:* the question in one sentence, specific to a place, and who would act on the answer (4)<br>• *Package:* at least one raster and one vector layer, both used in the analysis (6)<br>• *Report:* every layer in the data table, with raster or vector, source and URL, download date and coordinate system (6)<br>• *Package:* one projected coordinate system for the project, set on purpose (4) | /20 |
+| **ModelBuilder model** — correct and working<br>• *Package:* the model opens from the package and runs from its tool dialog without a hand repair (8)<br>• *Package:* it does the analysis, with raster and vector tools both inside the model, and the result comes out of it, not from hand edits afterward (6)<br>• *Report:* the full-page model figure, every tool and dataset readable, with informative names for intermediate data and the inputs, key thresholds and result exposed as parameters (6) | /20 |
+| **Map** — graded from the full-page map in the report<br>• Title, neat line, north arrow and scale bar (4)<br>• Text box with your name, the date, the map projection, and the sources and dates of the data (4)<br>• The result clearly symbolized with a legend, so the map answers the question at a glance (6)<br>• The layers that explain the result, a suitable basemap, and scale and legibility appropriate to the area (6) | /20 |
+| **Training video** — graded from the video<br>• About five minutes, no more than five and a half, unlisted on YouTube and playing from the link (4)<br>• Each dataset shown, with what it is and where it came from (5)<br>• The model walked tool by tool: each tool's settings shown and explained, and the dataset it made shown (10)<br>• The final map, the answer, and one thing the analysis cannot tell you (5)<br>• Clear audio, readable screen, and a pace a newcomer could follow (6) | /30 |
+| **Report and package**<br>• *Report:* complete, with the title block and video link, the tools in order with their settings, the answer with its numbers and its limitation, and the AI line (6)<br>• *Package:* the `.ppkx` submitted, and it opens with its maps and data (4) | /10 |
+| **Total** | **/100** |
+| **Extra credit:** a 30 to 90 second vertical reel cut from your footage, with captions, the question, the result and the map; a really good one, which hooks a viewer in the first seconds, reads without sound and gets the answer across, earns the most | **up to +10** |
 
 > [!NOTE]
-> **Using AI on this lab.** Use AI freely to understand a tool, work out an error, or
-> tighten your write-up, and add one line at the end of your report saying what you used it
-> for. Do not take a field name, an expression, a coordinate system, or a number from it —
-> those come from your own data, and the rubric asks you to defend every one. See the
-> [AI Use Policy](../../policies/ai-policy.md) for the full policy.
-
-<!-- Migration notes (rebuild drafted 2026-10-02, promoted 2026-10-05).
-SOURCE: the September 3 migration of "Lab 6 - Avalanche Hazard.docx" (docs/assignments/lab-12/README.md, still the assigned page), rebuilt to tools/lab-conversion-guide.md. Plan and decisions: tools/lab12/PARITY_PLAN.md.
-ARCGIS PRO VERSION: 3.7.1. (1) arcpy (tools/lab12/run_model.py, tool_checks.py, student_route_checks.json), 2026-10-02. (2) GUI build 2026-10-05 at 175 % in C:\Ames\Lab12GUI (then Lab07GUI; the environments and the Shift-400 run pop-up, 1 min 48 s, were re-shot 2026-10-10 from the renumbered copy) Lab12.aprx, model AvalancheTerrain (label Avalanche Terrain), built from the page: run inside ModelBuilder 1 min 1 s; every class-area check value reproduced (Tabulate Area in the GUI: Hazard 0.167 / 3.162 / 3.692 / 2.673 / 1.087, total 10.781 - one cell off the arcpy 0.168 / 3.691 / 10.782, so the page now quotes the GUI values and a one-cell tolerance); Shift 400 run from the tool dialog 1 min 34 s, Hazard 0.870 / 4.095 / 3.353 / 1.990 / 0.475, Worst 5 4.288, Best 5 0.126, matching SENSITIVITY. GUI FACTS: Project Raster opens Nearest neighbor and switches to Bilinear once this DEM is chosen, proposing 9.04 m cells; Slope and Aspect show a Surface Parameters banner, Method Planar, Target device GPU then CPU; Reclassify drops a newly typed row whose Start is -1 (edit an existing row to -1 instead) and appends a NODATA row; the Variable button opens Variable Data Type, Long is in the list; %Shift% draws its connector; Raster Calculator overwrote a typed output name (RasterC_1) once; Cell Statistics labels Input rasters or constant values / Overlay statistic / Ignore NoData in calculations; Tabulate Area shows "Use the selected records: 1" for a selected service layer and honors it; a tool-dialog run deleted DEM_UTM, Slope_Deg, Aspect_Deg, Slope_Class, Aspect_Class and Altitude_Class (Altitude_Class is now a parameter; Step 7 warns); the tool dialog showed an empty parameter list until the model tab was closed (Lab 5 saw the same).
-DATA: docs/data/lab12-little-cottonwood-dem.zip, 2,443,922 bytes: LittleCottonwood_DEM.tif, a window of USGS_13_n41w112.tif ("current", Last-Modified 2026-05-20), bounds -111.70 -111.58 40.53 40.61, 1,296 x 864 float32 cells, 2,176.42-3,500.47 m, no NoData; READ-ME inside. Built by tools/lab12/fetch_dem.py + make_extract.py. UGRC SkiAreaBoundaries feature service (services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/SkiAreaBoundaries/FeatureServer/0), Web Mercator, 14 polygons, Snowbird = OBJECTID 13.
-VERIFIED NUMBERS (shift 0, Snowbird via the live layer): DEM_UTM 1,023 x 896 of 10 m, 2,177.98-3,499.43 m; slope max 77.82; aspect -1 on 480 cells (whole extent); Tabulate Area total 10.782 km2 (10.781 with the boundary projected first); altitude classes 2-5: 0.172 / 1.638 / 1.527 / 7.445; slope classes 1-5: 4.986 / 1.667 / 0.794 / 1.289 / 2.047; aspect 1-5: 0.571 / 2.054 / 2.768 / 3.493 / 1.896; agree 0: 10.345, 3: 0.010, 4: 0.090, 5: 0.336; geometric mean 1-5: 0.168 / 3.162 / 3.691 / 2.673 / 1.087; maximum 2-5: 0.082 / 0.758 / 1.738 / 8.203; minimum 1-5: 5.116 / 2.363 / 1.663 / 1.303 / 0.336. Reclassify puts a value equal to a range's end in that range (tested: 25 -> 1, 35 -> 4, 60 -> 2). Tabulate Area measures in the value raster's coordinate system even with the Web Mercator zone layer (same areas with or without Output Coordinate System set). Reference run 51 s. Slope on the UNPROJECTED extract runs without error: Planar max 77.9, median 24.5 (projected: 77.8, median 27.3); Geodesic method max 79.9, median 27.5 - so the Step 2 warning is about the default Planar method. Power on an integer raster returns 32-bit float (cube root of 100 = 4.642), so no Float() is needed; Int(x + 0.5) rounds: products 3/4, 15/16, 42/43, 91/92 fall on the class breaks as the page states.
-RECAPTURED 2026-10-21 after the second renumbering (C:\Ames\Lab12GUI, 175 %): Figures 0 and 9b; the Shift 400 dialog run took 1 min 58 s.
-SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 12).
-PILOT (no-GUI, 2026-10-02, C:\Ames\Pilot07\PILOT-REPORT.md): all 40 published check values reproduced from the student zip and the live UGRC layer. Fixed from its findings: Step 9's table now carries the altitude-class-5 area so Question 1 is answerable, and a Rule_Spread output (Worst - Best; Snowbird 0: 0.436, 4: 3.309 km2) makes Question 3 a map question; the Step 8 table is a deliverable and the model rubric bullet names it; Step 8 tabulates every class raster, with a naming convention, so the Step 4-7 checks are reachable; outputs are parameters and carry the shift in their names; flat cells (all 480: geometric mean 3, maximum 5, minimum 1, none in Snowbird) described correctly; slope check uses the mean (26.85 projected, 24.26 unprojected) since layer statistics show no median; Background paraphrases tightened to what avalanche.org and CAIC say; 'Step 9 adds two more' -> Step 7; agree 0 is 10,345,500 m2 -> 10.346; zip subfolder named; the TIP rewritten (a +400 m shift cuts High + Extreme by a third; negative shifts barely move it; the rule moves High + Extreme from 1.64 to 9.94 km2).
-TODO(instructor): 1. DONE 2026-10-05: decisions 1-7 in tools/lab12/PARITY_PLAN.md, all as recommended; page promoted, old page at lab10-backup. 2. DONE 2026-10-05: GUI build, 16 captures, Figure C. 3. DONE: Figure A, tool icons, example maps. 4. DONE: no-GUI pilot. 5. DONE 2026-10-05: report template (tools/templates/make_lab_report_template.js 07). 6. Promote (README.md -> lab10-backup, draft -> README.md), check the Week 8 page link, Learning Suite. -->
+> **Using AI on this lab.** Use AI freely to find data, understand a tool, work out an error, plan
+> your video or tighten your report, and add one line to the report saying what you used it
+> for. Do not take a field name, an expression, a coordinate system, or a number from it — those
+> come from your own data — and do not present generated output as a result you produced in
+> ArcGIS Pro. See the [AI Use Policy](../../policies/ai-policy.md) for the full policy.

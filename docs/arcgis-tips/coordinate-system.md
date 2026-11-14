@@ -45,7 +45,7 @@ stretch by about 1.73 here, so the 71% error above is not a fluke.
 Many web services, including UGRC's, store their data in Web Mercator, and the measurement fields
 that come with them are in the service's units:
 
-- **A service's own `Shape__Area` or `Shape__Length` is in Web Mercator.** In Lab 12, UGRC's
+- **A service's own `Shape__Area` or `Shape__Length` is in Web Mercator.** In the Avalanche Hazard lab, UGRC's
   `Shape__Area` for Snowbird says 18.7 million square meters; the area in UTM is 10.781 km².
 - **When you export service data, set the export tool's Environments ▸ Output Coordinate System**,
   so that the local copy's `Shape_Length` and `Shape_Area` are in real meters.

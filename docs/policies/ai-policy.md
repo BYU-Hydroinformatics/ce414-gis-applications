@@ -101,15 +101,15 @@ reference available to you there. It will not do the exam for you: the question 
 model you build and the reasoning you attach to it, which is the part AI does worst. Include your
 disclosure line in the PDF you upload.
 
-### Final project
+### Lab 12, Choose Your Own Adventure
 
 AI use is encouraged throughout — scoping the question, finding and evaluating data sources,
-troubleshooting the processing, structuring the analysis, and writing the report. The project is
+troubleshooting the processing, structuring the analysis, planning the video, and writing the report. The project is
 graded on your documented workflow and the decisions behind it, so make sure the analysis and the
 reasoning are genuinely yours, and disclose how AI helped along the way.
 
-The same rule applies to the presentation. Generated slides and generated images are fine if they
-illustrate your work; a generated result is not.
+The same rule applies to the video. The screen and the voice must be yours; generated images are
+fine if they illustrate your work, and a generated result is not.
 
 ### In-class activities
 
@@ -124,7 +124,6 @@ Read your classmate's report yourself and write the feedback yourself. An AI-wri
 worse than no review: your classmate needs a reader who knows this course and did this lab. Use AI
 to help you phrase a criticism kindly if you want to, but the judgment behind it must be yours.
 
-The same goes for the notes you take on classmates' final presentations.
 
 ### Attendance and course evaluation
 
@@ -137,7 +136,7 @@ tools are fine. ArcGIS Pro's own AI assistant, where the lab machines have it en
 by exactly the same rules as any other tool.
 
 Do not paste classmates' names or personal information into an AI tool. This matters most for peer
-review and for the final project, where you are working with a partner.
+review.
 
 <!-- Drafted September 2026, adapted from the CCE 114 policy at
      https://byu-hydroinformatics.github.io/cce114-geomatics/policies/ai-policy/ and rewritten for

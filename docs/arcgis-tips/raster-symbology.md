@@ -239,7 +239,7 @@ class in a contrasting color; beside it, the resulting map over a hillshade.*
 
 ## Codes and rated classes: set the colors yourself
 
-A 1/0 result (Lab 2's `NDVI_reclass`, Lab 4's `Suitable_Sites`) or a set of rated classes (Lab 12's
+A 1/0 result (Lab 2's `NDVI_reclass`, Lab 4's `Suitable_Sites`) or a set of rated classes (the Avalanche Hazard lab's
 `Hazard_Class`, 1 to 5) is a set of **categories**, not an amount, even though the values are
 numbers. Use **Unique Values**:
 
@@ -247,8 +247,8 @@ numbers. Use **Unique Values**:
 2. Double-click each **Label** and type what the code means: `Irrigated cropland`, `Suitable site`,
    `Low` … `Extreme`. The legend prints these, not the numbers.
 3. Click each color patch and choose the color yourself rather than accepting the random ones.
-    - **When a standard sets the colors, use them.** Lab 12's hazard classes take the colors of the
-      avalanche danger scale (Lab 12's Figure B): green, yellow, orange, red and black, from Low to
+    - **When a standard sets the colors, use them.** The Avalanche Hazard lab's classes take the colors of the
+      avalanche danger scale: green, yellow, orange, red and black, from Low to
       Extreme. A reader who knows the scale reads your map without the legend.
     - **For a 1/0 result**, give the answer (1) one strong color. If the map is about where the
       answer is, give 0 **No color** (click the patch twice; it is at the top of the palette) so the
@@ -260,7 +260,7 @@ numbers. Use **Unique Values**:
 Over imagery, set the layer's **Transparency** to about 30 to 40 % on the **Raster Layer** tab's
 **Effects** group, so the ground shows through the colors.
 
-*Figure placeholder: the Symbology pane for Lab 12's Hazard_Class with Unique Values, the five codes
+*Figure placeholder: the Symbology pane for the Avalanche Hazard lab's Hazard_Class with Unique Values, the five codes
 labeled Low to Extreme in the danger-scale colors; beside it, the resulting map over imagery.*
 
 ## Flow accumulation
