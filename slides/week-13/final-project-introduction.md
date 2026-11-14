@@ -43,7 +43,7 @@ write the recipe, and then teach it. The cookie model from Week 2 is a deliberat
 
 <!-- _class: lead -->
 
-![bg right:55%](images/fp-divider-project.jpg)
+![bg right:55%](images/cyoa-divider-start.jpg)
 
 # Part 1 — What Lab 12 Is
 
@@ -64,7 +64,10 @@ Lab 12 takes all three away.
 This is the closest thing in the course to what a client asks for: *here is a problem, show me
 where, and show me why I should believe you.*
 
-<!-- TODO(graphic): a simple three-column "question / data / recipe" figure with all three crossed out -->
+![bg right:44% w:94%](images/cyoa-question-data-recipe.svg)
+
+<!-- Figure: tools/week13_figures.py. -->
+
 
 ---
 
@@ -101,6 +104,8 @@ row links its year's deck. Tell them to page through two or three decks tonight.
 
 # The requirements
 
+![bg right:34%](images/cyoa-requirements.jpg)
+
 Your project must have all four:
 
 1. **Raster and vector data, both analyzed** — not a raster only as a backdrop
@@ -135,6 +140,8 @@ lab. The 6-12 tool range is a guideline, not a rule. -->
 <!-- _class: quiz -->
 
 # Is this project the right size?
+
+![bg right:30%](images/cyoa-right-size.jpg)
 
 For each idea, decide: **too small**, **about right**, or **too big**.
 
@@ -172,11 +179,16 @@ Check UGRC, the USGS National Map, and Living Atlas *before* you commit. If a la
 **3. What would a wrong answer look like?**
 If you cannot describe a way to check the result, the model is a picture, not an analysis.
 
-<!-- TODO(graphic): a decision-tree figure for these three questions -->
+![bg right:42% w:94%](images/cyoa-three-questions.svg)
+
+<!-- Figure: tools/week13_figures.py. -->
+
 
 ---
 
 # The data check
+
+![bg right:26%](images/cyoa-data-check.jpg)
 
 Before you build anything, fill this in for **every** layer — it becomes the data table in your report:
 
@@ -192,7 +204,7 @@ If any row is blank, you are not ready to build.
 
 <!-- _class: lead -->
 
-![bg right:55%](images/fp-divider-deliverables.jpg)
+![bg right:55%](images/cyoa-divider-submit.jpg)
 
 # Part 3 — What You Submit
 
@@ -202,36 +214,37 @@ If any row is blank, you are not ready to build.
 
 # The training video — five minutes
 
-A voiceover on **your ArcGIS Pro screen**, for someone who wants to do this kind of analysis next.
+![bg right:26%](images/cyoa-recording.jpg)
+
+A voiceover on **your ArcGIS Pro screen**, for the next person to do this analysis.
 
 | About | What you show |
 | --- | --- |
-| 30 s | The question, and who would use the answer |
-| 1 min | Each dataset: what it is, raster or vector, where it came from |
-| 2½ min | The model, tool by tool: open each tool, then show the dataset it made |
-| 1 min | The final map, the answer, and one limitation |
+| 30 s | The question, and who would use it |
+| 1 min | Each dataset and where it came from |
+| 2½ min | Each tool, then the dataset it made |
+| 1 min | The map, the answer, one limitation |
 
-- **Show results; do not wait for them** — run the model before you record
-- **Record in pieces** with Snipping Tool, and retake any piece you stumble on
-- Post it on **YouTube as an unlisted video**, and submit the link
+- **Show results**: run the model before you record
+- **Record in pieces** with Snipping Tool
+- Post it **unlisted on YouTube**; submit the link
 
-<!-- TODO(graphic): a capture of Snipping Tool's video mode over ArcGIS Pro, taken on a lab machine (and
-confirm the microphone button is there). -->
+<!-- Tips in full on the Lab 12 page, Step 5. TODO(capture): a real Snipping Tool video-mode capture
+over ArcGIS Pro on a lab machine (and confirm the microphone button is there); the illustration at
+right stands in until then. -->
 
 ---
 
 # The report and the package
 
-**The report** — a page or two of text, then two full pages:
+![bg right:38% w:94%](images/cyoa-package-contents.svg)
 
-- Your question, the video link, the data table, the tools in order with their settings, the answer and its main limitation
-- The **model**, exported from ModelBuilder, on a full page
-- The **map**, on a full page
+**The report**: a page or two of text (question, video link, data table, tools and settings, the answer), then the **model** and the **map**, each on a full page.
 
-**The package** — **Share** tab ▸ **Package** group ▸ **Project**, saved as a `.ppkx`:
+**The package**: **Share** ▸ **Package** ▸ **Project**, a `.ppkx`.
 
-- Keep **every input as a layer in a map**: a package does not copy a model's inputs on its own
-- **Run the model once from its tool dialog** before you package
+- Keep **every input as a layer in a map**
+- Run the model once from its tool dialog, then package
 
 <!-- From Esri's "Share a project package" help, read 2026-11-14: for toolboxes, input data is not
 copied; map layers and geoprocessing history are. -->
@@ -257,6 +270,8 @@ interface"). -->
 
 # The timeline
 
+![bg right:30%](images/cyoa-timeline.jpg)
+
 | Week | Where you should be |
 | --- | --- |
 | 13 | Question chosen; every layer downloaded and checked |
@@ -281,7 +296,9 @@ December 6-10 and answers email in the evening. -->
 | Report and package | 10 | Both |
 | **Total** | **100** | |
 
-About **30** points come from the video, **40** from the report and **30** from the package. The full rubric is on the Lab 12 page.
+![w:640](images/cyoa-points-by-source.svg)
+
+The full rubric is on the Lab 12 page.
 
 <!-- 100 points, twice a regular lab. The bullets on the page say which deliverable each item is
 graded from. -->
@@ -290,7 +307,7 @@ graded from. -->
 
 # Extra credit — a reel
 
-![bg right:40% w:80%](images/fp-example-powerline-map.png)
+![bg right:34% h:92%](images/cyoa-reel-frame.png)
 
 **Up to 10 points:** a **30 to 90 second vertical video** cut from your own footage.
 
@@ -300,7 +317,8 @@ graded from. -->
 
 With your permission I may post it on [@dr.danames](https://www.instagram.com/dr.danames/), so you do not have to post it yourself. Posting is never required.
 
-<!-- TODO(graphic): a phone-shaped (9:16) frame of a map from a past project. -->
+<!-- Figure: Lab 10's example baseline map in a 9:16 phone frame (tools/week13_figures.py). The white
+bars stand for captions; there are no words in the image. -->
 
 ---
 
@@ -317,11 +335,16 @@ With your permission I may post it on [@dr.danames](https://www.instagram.com/dr
 
 That is the difference between a result and a recommendation.
 
-<!-- TODO(graphic): reuse a strong past project map once one is chosen. -->
+![bg right:38% w:94%](images/cyoa-example-map.png)
+
+<!-- Figure: Lab 11's example baseline map, as a model of a map that answers its question at a glance. -->
+
 
 ---
 
 # Common ways projects go wrong
+
+![bg right:30%](images/cyoa-late-night.jpg)
 
 - **The data was not there.** Chose a dataset that turned out to be a PDF, a paywall, or a 2009 snapshot
 - **Geographic coordinates.** Buffers in degrees; areas in "square degrees"
@@ -336,6 +359,8 @@ That is the difference between a result and a recommendation.
 <!-- _class: activity -->
 
 # Final Thoughts
+
+![bg right:32%](images/cyoa-pair-share.jpg)
 
 **Before next class** — Thursday is Thanksgiving, so this is before Tuesday of Week 14:
 

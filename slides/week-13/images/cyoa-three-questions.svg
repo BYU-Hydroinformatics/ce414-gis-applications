@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 690" width="600" height="690" font-family="Avenir Next, Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="600" height="690" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker></defs>
+<rect x="20" y="20" width="560" height="140" rx="16" fill="#e8eef5" stroke="#002e5d" stroke-width="3"/>
+<text x="50" y="72" font-size="34" fill="#0062b8" font-weight="bold" text-anchor="start" >1.</text>
+<text x="95" y="70" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >Can I say the question</text>
+<text x="95" y="108" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >in one sentence?</text>
+<text x="95" y="144" font-size="23" fill="#b3261e" font-weight="normal" text-anchor="start" >If not: one place, one decision</text>
+<line x1="300" y1="160" x2="300" y2="205" stroke="#4a5568" stroke-width="3" marker-end="url(#a)"/>
+<text x="320" y="192" font-size="24" fill="#2e7d32" font-weight="bold" text-anchor="start" >yes</text>
+<rect x="20" y="210" width="560" height="140" rx="16" fill="#e8eef5" stroke="#002e5d" stroke-width="3"/>
+<text x="50" y="262" font-size="34" fill="#0062b8" font-weight="bold" text-anchor="start" >2.</text>
+<text x="95" y="260" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >Can I get the data</text>
+<text x="95" y="298" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >this week?</text>
+<text x="95" y="334" font-size="23" fill="#b3261e" font-weight="normal" text-anchor="start" >If not: change the question or the data</text>
+<line x1="300" y1="350" x2="300" y2="395" stroke="#4a5568" stroke-width="3" marker-end="url(#a)"/>
+<text x="320" y="382" font-size="24" fill="#2e7d32" font-weight="bold" text-anchor="start" >yes</text>
+<rect x="20" y="400" width="560" height="140" rx="16" fill="#e8eef5" stroke="#002e5d" stroke-width="3"/>
+<text x="50" y="452" font-size="34" fill="#0062b8" font-weight="bold" text-anchor="start" >3.</text>
+<text x="95" y="450" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >Would I know</text>
+<text x="95" y="488" font-size="30" fill="#002e5d" font-weight="bold" text-anchor="start" >a wrong answer?</text>
+<text x="95" y="524" font-size="23" fill="#b3261e" font-weight="normal" text-anchor="start" >If not: add a check you can run</text>
+<line x1="300" y1="540" x2="300" y2="585" stroke="#4a5568" stroke-width="3" marker-end="url(#a)"/>
+<text x="320" y="572" font-size="24" fill="#2e7d32" font-weight="bold" text-anchor="start" >yes</text>
+<rect x="140" y="590" width="320" height="76" rx="38" fill="#002e5d"/>
+<text x="300" y="640" font-size="32" fill="white" font-weight="bold" text-anchor="middle" >Ready to build</text>
+</svg>

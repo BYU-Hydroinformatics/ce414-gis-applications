@@ -1,0 +1,56 @@
+[
+ {
+  "id": "cyoa-divider-start",
+  "deck": "week-13/final-project-introduction.md",
+  "divider": "Part 1 — What Lab 12 Is",
+  "prompt": "A woman university student alone at a large wooden table at dusk, spreading out a printed map of a mountain valley beside an open laptop, one hand resting on the map as she decides where to begin, warm lamp light and a window showing distant mountains"
+ },
+ {
+  "id": "cyoa-divider-submit",
+  "deck": "week-13/final-project-introduction.md",
+  "divider": "Part 3 — What You Submit",
+  "prompt": "A man university student at a desk late in the evening wearing a headset, a finished colorful map glowing on his monitor, leaning back with quiet satisfaction as he closes a plain unmarked cardboard box holding a laptop charger and printed pages, a sense of a project wrapping up"
+ },
+ {
+  "id": "cyoa-requirements",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "The requirements (bg right); not a divider",
+  "prompt": "A woman student at a computer-lab desk watching a glowing elevation grid of small colored squares and crisp vector lines of roads and rivers float up out of her monitor and stack together into one layered map hovering in the air"
+ },
+ {
+  "id": "cyoa-right-size",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "Is this project the right size? (quiz slide); not a divider",
+  "prompt": "A thoughtful student at a long counter comparing three rolled maps: a tiny scrap no bigger than a playing card, a neat medium roll that fits perfectly in his hands, and an enormous scroll unrolling off the counter, across the floor and out the open door"
+ },
+ {
+  "id": "cyoa-data-check",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "The data check (table slide); not a divider",
+  "prompt": "A man student at a laptop ticking boxes on a clipboard with a pencil, while glowing map layers drift down from a soft stylized cloud above the desk and settle into a neat row of plain folders"
+ },
+ {
+  "id": "cyoa-recording",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "The training video (table slide); not a divider",
+  "prompt": "A woman student in a computer lab wearing a headset with a boom microphone, narrating with enthusiasm as she points at a colorful map on her large monitor, a small red recording light glowing on the desk beside the keyboard"
+ },
+ {
+  "id": "cyoa-timeline",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "The timeline (table slide); not a divider",
+  "prompt": "A student at a cozy kitchen table in late November working on a laptop that shows a map, a slice of pumpkin pie on a plate beside it, autumn leaves falling outside the window, and a plain wall calendar behind with a few days circled in red"
+ },
+ {
+  "id": "cyoa-late-night",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "Common ways projects go wrong; not a divider",
+  "prompt": "An exhausted student slumped at a desk at two in the morning in a dim room lit only by the monitor, which shows a red warning symbol in a dialog box, a cold half-empty coffee mug and crumpled papers scattered around"
+ },
+ {
+  "id": "cyoa-pair-share",
+  "deck": "week-13/final-project-introduction.md",
+  "slide_note": "Final Thoughts (activity slide); not a divider",
+  "prompt": "Two university students side by side at computer-lab desks, a woman explaining her project idea with expressive hand gestures while the man beside her listens and nods, a map of a river valley on her screen"
+ }
+]

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 240" width="920" height="240" font-family="Avenir Next, Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="920" height="240" fill="white"/>
+<rect x="30.0" y="60" width="258.0" height="110" fill="#0062b8" stroke="white" stroke-width="3"/>
+<text x="159.0" y="128" font-size="40" fill="white" font-weight="bold" text-anchor="middle" >30</text>
+<text x="159.0" y="210" font-size="26" fill="#002e5d" font-weight="bold" text-anchor="middle" >Video</text>
+<rect x="288.0" y="60" width="34.4" height="110" fill="#7aa7d9" stroke="white" stroke-width="3"/>
+<text x="305.2" y="128" font-size="22" fill="white" font-weight="bold" text-anchor="middle" >4</text>
+<text x="319.2" y="48" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="start" >Video and report (4)</text>
+<line x1="305.2" y1="60" x2="315.2" y2="44" stroke="#4a5568" stroke-width="2"/>
+<rect x="322.4" y="60" width="326.8" height="110" fill="#002e5d" stroke="white" stroke-width="3"/>
+<text x="485.79999999999995" y="128" font-size="40" fill="white" font-weight="bold" text-anchor="middle" >38</text>
+<text x="485.79999999999995" y="210" font-size="26" fill="#002e5d" font-weight="bold" text-anchor="middle" >Report</text>
+<rect x="649.2" y="60" width="240.8" height="110" fill="#5b8c5a" stroke="white" stroke-width="3"/>
+<text x="769.6" y="128" font-size="40" fill="white" font-weight="bold" text-anchor="middle" >28</text>
+<text x="769.6" y="210" font-size="26" fill="#002e5d" font-weight="bold" text-anchor="middle" >Package</text>
+</svg>
