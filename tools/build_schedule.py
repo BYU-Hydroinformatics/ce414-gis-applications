@@ -148,7 +148,8 @@ DUE = {
              other=[("**No class on Tuesday, November 3, or Thursday, November 5**, and the instructor is away",
                      "study the two slide decks below on your own and work on Lab 9, which was cut down to be done from its page alone; Quiz 8 is built from those two decks, not from the textbook. Questions: email [dan.ames@byu.edu](mailto:dan.ames@byu.edu); I will check email every evening and do my best to respond in a timely manner. A classmate who has finished Step 8 can often answer faster")]),
     11: dict(reading=None, quiz=(9, "Least Cost Paths"), lab=10, other=[]),
-    12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11, other=[]),
+    12: dict(reading=None, quiz=(10, "Network Analysis"), lab=11,   # activity added Nov 14 as a placeholder; content TBD
+             other=[("In-class activity: Network Analysis", "done in class Thursday; upload a screen capture or photo of your work by 9:30 am, fifteen minutes after class")]),
     # From Lab 7 on, each lab is introduced and due in the same week (Saturday); Week 13 has no lab.
     # Quizzes 8-10 follow the lectures (Oct 21): Week 10 volumes, Week 11 least cost paths, Week 12
     # network analysis. Quiz 11 (Data Standards, Chapter 14) was dropped Oct 26 because no lecture

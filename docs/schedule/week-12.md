@@ -15,6 +15,8 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 ## :material-account-group: In-Class Practice
 
+- **Network Analysis** (graded, 5 points) — done in class Thursday; upload a screen capture or photo of your work by 9:30 am, fifteen minutes after class.
+
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 
 - [Along the Roads](../quizzes/networks/index.html) — Five questions on what a network dataset is made of: junctions and connectivity, one-way streets as a cost, two impedances that give two routes, what UGRC's 1.5 factor stands for, and which distance belongs to a fire engine.
