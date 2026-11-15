@@ -25,7 +25,7 @@ One page per week: that week's Tuesday and Thursday lecture slides, the lab due,
 ## Exams
 
 - **Midterms 1 and 2** are closed-book, concept-based exams in the Testing Center, 100 points each. Each opens **Tuesday at 8:00 am** and closes **Thursday at 9:00 pm** (Weeks 8 and 14); the Testing Center charges its late fee from 2:00 pm Thursday, so go earlier. Study the readings and the quizzes. Any exception to the schedule must be approved at least one week in advance.
-- **The final exam** (100 points) is in class during finals week: one question, done in ArcGIS Pro at a lab computer, open book and open computer, with a three-hour block and a single PDF to upload. It should take about 45 minutes; the block is long to allow for software trouble and accommodations.
+- **The final exam** (100 points) is in class during finals week: one question, done in ArcGIS Pro at a lab computer, open book and open computer, with a three-hour block and a single PDF to upload. Plan on about two hours of work; the extra hour is there for software trouble and for exporting and uploading your report.
 
 ## Lab 12 and the end of the semester
 

@@ -346,8 +346,8 @@ def index_page(weeks):
               "quizzes. Any exception to the schedule must be approved at least one week in advance.",
               "- **The final exam** (100 points) is in class during finals week: one question, done in ArcGIS Pro "
               "at a lab computer, open book and open computer, with a three-hour block and a single PDF to "
-              "upload. It should take about 45 minutes; the block is long to allow for software trouble and "
-              "accommodations.", "",
+              "upload. Plan on about two hours of work; the extra hour is there for software trouble and for "
+              "exporting and uploading your report.", "",
               "## Lab 12 and the end of the semester", "",
               "[Lab 12 — Choose Your Own Adventure](../assignments/lab-12/README.md) replaces the final project. "
               "It is introduced Tuesday of Week 13 and due **Thursday of Week 15 at 11:59 pm**, the last day of "
