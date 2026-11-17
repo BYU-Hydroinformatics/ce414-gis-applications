@@ -84,6 +84,7 @@ DECKS = [
     (12, "network-analysis-a",             "Network Analysis, Part A",                   "Lab 11's goal, then distance along the roads: what a network dataset is made of (edges, junctions, connectivity), impedance in minutes, one-way streets and turns, why the shortest route is not the fastest, and the first solver, the service area, with its three tools in ArcGIS Pro.", "Tue"),
     (12, "network-analysis-b",             "Network Analysis, Part B",                   "Closest facility and location-allocation, then Lab 11's model from service area to a count of people (Select Data, Select Layer By Location, Summary Statistics), a buffer against a service area for the same four minutes, and what the cutoff and the network leave out.", "Thu"),
     (13, "final-project-introduction",     "Lab 12: Choose Your Own Adventure",          "Your own question, data and model: what makes a good project, ideas from past students, the requirements, the five-minute training video, the report and the package, and how it is scored.", "Tue"),
+    (14, "lab-12-studio",                  "Lab 12 Studio",                              "Two studio days, not lectures: Tuesday, is your project real, and how to record your screen and voice and post the video unlisted on YouTube; Thursday, packaging the project, swapping packages with a classmate, the deadlines and the in-person final exam.", None),
 ]
 LABS = {1:"Walmart Site Selection",2:"NDVI",3:"Georectifying and Digitizing Images",4:"Cell Phone Tower Placement",
         5:"Watershed Delineation",6:"Lake Depth Explorer",7:"Flood Mapping with HAND",8:"Interpolation Explorer",
@@ -115,7 +116,7 @@ LAB_CARD = {
 # Weeks with no new slide deck: what happens in class, shown in the In-Class Practice card.
 NO_DECK = {
     13: "Thursday is Thanksgiving, no class.",
-    14: "No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12.",
+    14: "No new lecture: Midterm 2 is open in the Testing Center, and both class days are a Lab 12 studio. Tuesday: a project check, then how to record your screen and voice and post the video unlisted on YouTube, with a 20-second test. Thursday: package your project and swap packages with a classmate to test it; the deadlines, and the in-person final exam.",
     15: "No class this week, and the instructor is away: finish Lab 12 and submit it by Thursday, the last day of classes. Questions by email.",
 }
 

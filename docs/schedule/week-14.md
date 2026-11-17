@@ -7,7 +7,9 @@
 
 ## :material-presentation-play: Presentation Slides
 
-*No slides this week.*
+- [Lab 12 Studio](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-14/lab-12-studio.html) — Two studio days, not lectures: Tuesday, is your project real, and how to record your screen and voice and post the video unlisted on YouTube; Thursday, packaging the project, swapping packages with a classmate, the deadlines and the in-person final exam.
+
+Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 
 </div>
 
@@ -15,7 +17,7 @@
 
 ## :material-account-group: In-Class Practice
 
-No new lecture: Midterm 2 is open in the Testing Center, and class time Tuesday and Thursday is open lab for Lab 12.
+No new lecture: Midterm 2 is open in the Testing Center, and both class days are a Lab 12 studio. Tuesday: a project check, then how to record your screen and voice and post the video unlisted on YouTube, with a 20-second test. Thursday: package your project and swap packages with a classmate to test it; the deadlines, and the in-person final exam.
 
 </div>
 

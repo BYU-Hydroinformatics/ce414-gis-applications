@@ -289,7 +289,8 @@ copy a model's input data on its own, so first:
 
 Then, on the **Share** tab, in the **Package** group, click **Project**. In the **Package Project**
 pane, under **Start Packaging**, choose **Save package to file** (the default uploads it to your
-ArcGIS Online account) and save it in your Lab12 folder. Under **Options**, check **Share outside
+ArcGIS Online account). Under **Item Details**, the **Name** box holds the file's path, and it
+defaults to your Documents folder: browse to your Lab12 folder instead. Under **Options**, check **Share outside
 of organization**, and leave **Include Toolboxes** and **Include History Items** checked. Click
 **Package**. Open the `.ppkx` once yourself (double-click it) to check that the maps draw and the
 model is there.
