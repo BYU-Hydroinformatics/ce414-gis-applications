@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 12, the last new topic of the course, two weeks before Midterm 2. The course has measured distance twice: as a buffer in Lab 1 and as accumulated cost across a raster in Lab 10. Today is the third way, along a road network: what a network is made of, how its costs work, and the first solver, the service area, with its three tools. Thursday adds closest facility and location-allocation and then builds Lab 11's model. Every map and number here comes from Lab 11's own data (UGRC's prebuilt Utah Street Network clipped to Utah County, the 42 fire stations, the 2020 Census blocks) and reference run, drawn by tools/week12_network_figures.py; the numbers are in tools/week12_network_numbers.json. Redivided November 16, 2026: service areas and their tools moved here from Thursday, and "What This Network Does Not Know" moved to Thursday. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part A<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---

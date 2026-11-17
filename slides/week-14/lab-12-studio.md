@@ -23,6 +23,10 @@ Dr. Dan Ames
 
 <!-- Week 14 has no new lecture. Midterm 2 is open in the Testing Center Tuesday 8:00 am to Thursday 9:00 pm (late fee from Thursday 2:00 pm), and both class meetings are a Lab 12 studio: about fifteen minutes of teaching at the start, then open lab with the instructor circulating. Tuesday: is the project real, then how to record the screen and voice and post the video unlisted on YouTube, with a 20-second test. Thursday: package the project and swap packages with a classmate. Thursday is the last in-person meeting before Lab 12 is due (Thursday of Week 15); the instructor is away that week. -->
 
+<!-- stamp:begin -->
+<!-- _footer: '<span>CE 414 · Week 14 — Lab 12 Studio<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- stamp:end -->
+
 ---
 
 # This Week

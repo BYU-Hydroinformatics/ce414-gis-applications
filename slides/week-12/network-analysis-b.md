@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 12. Tuesday built the network (edges, junctions, connectivity, impedance) and ran the first solver, the service area, with its three tools. Today the other two solvers, then the rest of Lab 11's model from its own data (from polygons to people, the buffer comparison), and last what the answer depends on: the cutoff and what the network does not know. Every map and number is from Lab 11's package and reference run (tools/lab11/, tools/week12_network_figures.py, tools/week12_network_numbers.json). Redivided November 16, 2026. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -109,7 +109,7 @@ By the end of class you should be able to:
 
 <!-- _class: quiz -->
 
-# Which Solver?
+# Talk to Your Neighbor
 
 ![bg right:40% w:94%](images/nab-service-areas.png)
 
@@ -188,7 +188,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 # A Buffer and a Network Disagree
 
-![bg right:50% w:98%](images/nab-lab11-map2.png)
+![bg right:50% h:96%](images/nab-lab11-map2.png)
 
 - The same four minutes as a **buffer**: 35 mph × 4 min = **3.75 km** around each station
 - The buffer leaves **23,203** people outside, **3.5 %**; the network, **57.5 %**
@@ -201,7 +201,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 # The Model
 
-![bg right:46% w:96%](images/nab-lab11-map1.png)
+![bg right:46% h:96%](images/nab-lab11-map1.png)
 
 1. **Make Service Area Analysis Layer**: cutoff **4**, away from facilities, dissolve, rings
 2. **Add Locations** (the stations) ▸ **Solve** ▸ **Select Data** ▸ **Copy Features**: `Served_Area`
@@ -306,7 +306,7 @@ UGRC's minutes are for **typical traffic**. An engine running **lights and siren
 
 # Next: Build It
 
-![bg right:42% w:96%](images/nab-lab11-map1.png)
+![bg right:42% h:96%](images/nab-lab11-map1.png)
 
 - Download the package, read `READ-ME-FIRST.txt`, fetch the county boundary from UGRC yourself
 - Step 1 first: open the network's **properties** and read the two one-way minutes off I-15
@@ -333,6 +333,7 @@ UGRC's minutes are for **typical traffic**. An engine running **lights and siren
 
 **Before next class**
 
+- **Today's worksheet**: upload a photo to Learning Suite by **9:30 am**
 - **Lab 11 — Fire Response Coverage** — due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 - Take **Quiz 10** (Network Analysis, open book) on **Learning Suite** — due **Saturday 11:59 pm**
 - Next week: **Lab 12, Choose Your Own Adventure** (Tuesday), and Thanksgiving

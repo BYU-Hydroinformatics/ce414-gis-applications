@@ -20,7 +20,7 @@ ArcGIS Pro training video on YouTube, a report, and a project package, due Thurs
 lab page is the authority: https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/ -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-14</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
