@@ -148,14 +148,14 @@ Lab 12 runs two and a half weeks. Which **one** of these ideas is about the **ri
 
 <ol type="A">
 <li>Map every Walmart in Utah</li>
-<li class="correct">Find the best three EV charging hub sites in Utah County from traffic and land use</li>
 <li>Model wildfire risk for the entire western United States at 10 m resolution</li>
 <li>Build a web app that updates the snow depth on every ski run in the West every hour</li>
+<li class="correct">Find the best three EV charging hub sites in Utah County from traffic and land use</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press circles B. A is too small: a display, no analysis. C is too big: the data volume and any check on the result are out of reach in two and a half weeks. D is not a Lab 12 at all: a live web app is software engineering, and there is no ModelBuilder model or finished map at its heart. B has one place, explicit criteria, raster and vector data, and a model of a handful of tools. -->
+<!-- Two minutes in pairs, then the key press circles D. A is too small: a display, no analysis. B is too big: the data volume and any check on the result are out of reach in two and a half weeks. C is not a Lab 12 at all: a live web app is software engineering, and there is no ModelBuilder model or finished map at its heart. D has one place, explicit criteria, raster and vector data, and a model of a handful of tools. -->
 
 ---
 
@@ -387,15 +387,15 @@ bars stand for captions; there are no words in the image. -->
 Your model takes **four minutes** to run. How should your five-minute training video show it?
 
 <ol type="A">
-<li>Start the run on camera and talk while the progress bar slowly fills</li>
 <li class="correct">Run it first; on camera, open each tool, then show the layer it made</li>
+<li>Start the run on camera and talk while the progress bar slowly fills</li>
 <li>Skip the model and spend the time on the finished map</li>
 <li>Speed the recording up four times so the run fits</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press circles B: the Lab 12 page, Step 5, "Show results; do not wait for them." A wastes most of the video on a progress bar; C skips the 10-point heart of the video rubric (the model walked tool by tool); D makes the narration unreadable and still shows nothing a newcomer can learn from. -->
+<!-- Two minutes in pairs, then the key press circles A: the Lab 12 page, Step 5, "Show results; do not wait for them." B wastes most of the video on a progress bar; C skips the 10-point heart of the video rubric (the model walked tool by tool); D makes the narration unreadable and still shows nothing a newcomer can learn from. -->
 
 ---
 

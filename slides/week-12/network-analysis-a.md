@@ -202,14 +202,14 @@ Every segment has two costs, **TravelMinutes** and **Length**. You route an engi
 
 <ol type="A">
 <li>The same route both times, since the roads are the roads</li>
-<li class="correct">Two routes: the shorter in meters takes more minutes</li>
 <li>Two routes: the faster in minutes is also shorter</li>
 <li>One route only: a network holds only one cost</li>
+<li class="correct">Two routes: the shorter in meters takes more minutes</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Ninety seconds in pairs, a show of hands, then the key press circles the answer. The chart is the hint: a kilometer of interstate costs 0.69 minutes, a kilometer of local street 2.24, so a longer route on fast roads can take fewer minutes. A is the common answer: people picture one road to a place. B is right, and the next slide is the measurement. D is the misconception that a network dataset carries one cost; this one carries two, and the analysis picks which one the solver minimizes. -->
+<!-- Ninety seconds in pairs, a show of hands, then the key press circles the answer. The chart is the hint: a kilometer of interstate costs 0.69 minutes, a kilometer of local street 2.24, so a longer route on fast roads can take fewer minutes. A is the common answer: people picture one road to a place. D is right, and the next slide is the measurement. C is the misconception that a network dataset carries one cost; this one carries two, and the analysis picks which one the solver minimizes. -->
 
 ---
 
@@ -249,15 +249,15 @@ Every segment has two costs, **TravelMinutes** and **Length**. You route an engi
 The engine is at **A**; the fire is at **B**, one block away on a street that is **one-way toward A**. Against the arrow costs 100 × 0.33 = **33 min**; around the block, about **1.5 min**. Which route does the solver choose?
 
 <ol type="A">
-<li>Against the arrow: it is the shortest distance</li>
 <li class="correct">Around the block, about 1.5 minutes</li>
+<li>Against the arrow: it is the shortest distance</li>
 <li>No route: a one-way street is a wall</li>
 <li>Against the arrow: fire engines are exempt</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press. B. The solver minimizes minutes, and 1.5 beats 33, so it goes around. UGRC encodes one-way as a price, not a wall: the wrong direction costs 100 times the right one, so the solver drives against the arrow only when every legal way takes even longer, which in a city almost never happens. A is the distance trap from the shortest-versus-fastest slide. C is what a restriction attribute would do, the other choice UGRC could have made. D is a fair real-world point, but the network knows nothing about who is driving. The block and its minutes are illustrative (a 0.33-minute block is a typical Provo block in the attribute table), drawn by tools/week12_tuesday_figures.py. -->
+<!-- Two minutes in pairs, then the key press. A. The solver minimizes minutes, and 1.5 beats 33, so it goes around. UGRC encodes one-way as a price, not a wall: the wrong direction costs 100 times the right one, so the solver drives against the arrow only when every legal way takes even longer, which in a city almost never happens. B is the distance trap from the shortest-versus-fastest slide. C is what a restriction attribute would do, the other choice UGRC could have made. D is a fair real-world point, but the network knows nothing about who is driving. The block and its minutes are illustrative (a 0.33-minute block is a typical Provo block in the attribute table), drawn by tools/week12_tuesday_figures.py. -->
 
 ---
 

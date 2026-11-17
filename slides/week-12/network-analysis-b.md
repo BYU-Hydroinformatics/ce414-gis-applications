@@ -117,14 +117,14 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 <ol type="A">
 <li>For this address, which station's engine arrives first, and how long does it take?</li>
-<li class="correct">How many residents live more than four minutes' drive from any station?</li>
 <li>Where should the next station go to bring the most people inside four minutes?</li>
+<li class="correct">How many residents live more than four minutes' drive from any station?</li>
 <li>What is the fastest route from Station 21 to the hospital?</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press circles B. B is the service area (spread from the facilities, count what is inside); A is closest facility; C is location-allocation; D is a route. Have the room name all four. -->
+<!-- Two minutes in pairs, then the key press circles C. C is the service area (spread from the facilities, count what is inside); A is closest facility; B is location-allocation; D is a route. Have the room name all four. -->
 
 ---
 
@@ -234,15 +234,15 @@ A city council asks four questions. Which one is a **Service Area** question?
 Your model runs, but `Unserved_Population` says about **280,000** people, not the lab's **379,054**. Which setting did you most likely miss?
 
 <ol type="A">
-<li>Geometry at Overlaps: Dissolve</li>
 <li class="correct">Invert Spatial Relationship</li>
+<li>Geometry at Overlaps: Dissolve</li>
 <li>Search Tolerance of 5000 meters</li>
 <li>The Count statistic on GEOID20</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press. B: without the invert box the selection keeps the blocks whose center is inside the four minutes, so the sum is the people covered, about 659,399 - 379,054 = 280,345, the number the lab page itself names as the sign of this mistake. A would not change a "center in" selection; C would only matter if a station failed to locate; D changes a column, not the sum. -->
+<!-- Two minutes in pairs, then the key press. A: without the invert box the selection keeps the blocks whose center is inside the four minutes, so the sum is the people covered, about 659,399 - 379,054 = 280,345, the number the lab page itself names as the sign of this mistake. B would not change a "center in" selection; C would only matter if a station failed to locate; D changes a column, not the sum. -->
 
 ---
 
@@ -291,14 +291,14 @@ UGRC's minutes are for **typical traffic**. An engine running **lights and siren
 
 <ol type="A">
 <li>Go up</li>
-<li class="correct">Go down</li>
 <li>Stay the same, because the cutoff is still four minutes</li>
 <li>Be impossible to say without running it</li>
+<li class="correct">Go down</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press. B: faster edges mean every edge costs fewer minutes, so four minutes reaches farther and covers more blocks, and fewer people are outside. C is the trap: the cutoff is the same, but what four minutes reaches is not. Direction only; do not give a number, since Step 9 asks students to argue which way each missing factor moves their share and how much. -->
+<!-- Two minutes in pairs, then the key press. D: faster edges mean every edge costs fewer minutes, so four minutes reaches farther and covers more blocks, and fewer people are outside. B is the trap: the cutoff is the same, but what four minutes reaches is not. Direction only; do not give a number, since Step 9 asks students to argue which way each missing factor moves their share and how much. -->
 
 ---
 
