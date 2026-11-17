@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 12, the last new topic of the course, two weeks before Midterm 2. The course has measured distance twice: as a buffer in Lab 1 and as accumulated cost across a raster in Lab 10. Today is the third way, along a road network: what a network is made of, how its costs work, and the first solver, the service area, with its three tools. Thursday adds closest facility and location-allocation and then builds Lab 11's model. Every map and number here comes from Lab 11's own data (UGRC's prebuilt Utah Street Network clipped to Utah County, the 42 fire stations, the 2020 Census blocks) and reference run, drawn by tools/week12_network_figures.py; the numbers are in tools/week12_network_numbers.json. Redivided November 16, 2026: service areas and their tools moved here from Thursday, and "What This Network Does Not Know" moved to Thursday. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part A<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -47,7 +47,7 @@ Dr. Dan Ames
 
 # This Week's Lab Goal
 
-![bg right:42% w:96%](images/nab-lab11-map1.png)
+![bg right:42% h:96%](images/nab-lab11-map1.png)
 
 **Lab 11, Fire Response Coverage:** *who in Utah County lives more than **four minutes' drive** from a fire station?*
 
@@ -130,10 +130,10 @@ By the end of class you should be able to:
 
 ![bg right:52% w:98%](images/na-impedance.png)
 
-- An **impedance** is whatever you choose to **minimize**: meters, minutes, dollars, calories
+- An **impedance** is what you **minimize**: meters, minutes, dollars
 - UGRC's **TravelMinutes**: the segment length divided by the posted speed and converted to minutes, with surface streets **× 1.5** for signals and congestion
-- A local street at a posted 25 mph comes out at **17 mph**; an interstate posted 65 at **54**
-- The network carries a second cost, **Length**, in meters
+- Local streets posted 25 come out at **17 mph**; interstates posted 65 at **54**
+- A second cost, **Length**, is in meters
 
 <!-- Medians of TravelMinutes per kilometer by CARTOCODE class over Utah County's 41,460 edges (tools/week12_network_numbers.json, "impedance"). Local and neighborhood streets: 2.24 min/km, which is 27 km/h or 17 mph, against a posted 25: the 1.5 factor. Interstates: 0.69 min/km, 54 mph against 65. UGRC's page calls the method "relatively crude, though effective." That is the right spirit: an impedance is a model, and it is only as good as the decision behind it. The 1.5 factor is the thing to argue about on Thursday, when a fire engine's own speed comes up. -->
 
@@ -148,9 +148,9 @@ By the end of class you should be able to:
 A street segment on 300 North stops **2 m short** of the 500 West segment it should meet. Nothing else touches it there. What does the network do at that corner?
 
 <ol type="A">
-<li>Snaps the two together, since 2 m is close enough</li>
-<li class="correct">Treats it as a dead end: no route can turn from one street onto the other there</li>
-<li>Lets routes cross, but charges a turn delay</li>
+<li>Snaps the two together, since 2 m is well within any tolerance</li>
+<li class="correct">Treats it as a dead end: no route turns there</li>
+<li>Lets routes cross there, but charges them a turn delay</li>
 <li>Connects them, because they look connected on the map</li>
 </ol>
 
@@ -196,15 +196,15 @@ A street segment on 300 North stops **2 m short** of the 500 West segment it sho
 
 # Discuss with Your Neighbor
 
-![bg right:46% w:97%](images/na-impedance.png)
+![bg right:40% w:97%](images/na-impedance.png)
 
-Every segment has two costs: **TravelMinutes** and **Length** (meters). You route an engine to a house **8 km** away twice: once for the **fewest minutes**, once for the **fewest meters**. What do you get?
+Every segment has two costs, **TravelMinutes** and **Length**. You route an engine to a house **8 km** away, once for the **fewest minutes** and once for the **fewest meters**. What do you get?
 
 <ol type="A">
-<li>The same route both times</li>
-<li class="correct">Two routes: the fewest-meters one is shorter in distance but takes more minutes</li>
-<li>Two routes: the fewest-minutes one is also shorter in distance</li>
-<li>One route: a network has only one cost</li>
+<li>The same route both times, since the roads are the roads</li>
+<li class="correct">Two routes: the shorter in meters takes more minutes</li>
+<li>Two routes: the faster in minutes is also shorter</li>
+<li>One route only: a network holds only one cost</li>
 </ol>
 
 * <span class="reveal"></span>
