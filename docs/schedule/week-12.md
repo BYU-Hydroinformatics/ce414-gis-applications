@@ -15,7 +15,7 @@ Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speak
 
 ## :material-account-group: In-Class Practice
 
-- **Network Analysis** (graded, 5 points) — done in class Thursday; upload a screen capture or photo of your work by 9:30 am, fifteen minutes after class.
+- **Solve It by Hand (Network Analysis)** (graded, 5 points) — done in class Thursday, each student on their own copy of the [printable worksheet](../handouts/network-worksheet.pdf) (PDF, 1 page); upload a photo of the completed worksheet by 9:30 am, fifteen minutes after class.
 
 Self-check quizzes — not graded; open them on a phone or laptop as often as you like:
 

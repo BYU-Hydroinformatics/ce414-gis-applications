@@ -92,6 +92,21 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: activity -->
+
+# In-Class Activity: Solve It by Hand
+
+![bg right:46% w:96%](images/nab-worksheet.png)
+
+- One [worksheet](https://byu-hydroinformatics.github.io/ce414-gis-applications/handouts/network-worksheet.pdf) each; work **alone**, about **15 minutes**
+- A twelve-junction neighborhood with minutes on every street, a **one-way** street and a **2 m gap**
+- Five questions, the three solvers by hand: **fewest minutes**, **service area**, a **circle** for comparison, **closest facility**, **location-allocation**
+- **Upload a photo** of your sheet to Learning Suite by **9:30 am**
+
+<!-- Hand out the printed worksheet (docs/handouts/network-worksheet.pdf, one page, drawn by tools/week12_network_worksheet.py), one per student. Graded 5 points, Attendance and Participation: a completed, legible sheet with an honest attempt at all five. Give them fifteen minutes, then walk through the answers; the key is in the private repository (ce414-private/activities/week12-network-worksheet-key.md). The two questions worth the time: Question 4, where Station 2 looks two blocks from the fire but the one-way street sends it the long way, so Station 1 wins; and Question 5, where the best new site is on the arterial, not in the uncovered corner. Question 1 is Dijkstra's algorithm by hand, which is all Solve does. -->
+
+---
+
 <!-- _class: quiz -->
 
 # Which Solver?
