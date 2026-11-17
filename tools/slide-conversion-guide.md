@@ -80,6 +80,16 @@ Specifically:
   be a bare image so the presenter knows what to say.
 - Mark question slides with `<!-- _class: quiz -->` and in-class activities with
   `<!-- _class: activity -->`. Multiple-choice options use `<ol type="A">`.
+- **End every main section with a talk-to-your-neighbor question** (instructor's request,
+  2026-11-16): the last slide before the next `lead` divider is a `quiz` slide titled "Talk to Your
+  Neighbor" with four or five choices. Pairs discuss, the room discusses, then one key press
+  circles the right answer in a red rounded rectangle. Mark the answer `<li class="correct">` and
+  put `* <span class="reveal"></span>` on its own line after `</ol>`; the theme does the rest, and
+  the static PNG/PDF shows the circle. The speaker note says why each wrong answer is tempting.
+  Week 12 is the worked example.
+- **Tool dialogs get red callouts** when a deck teaches a tool: the untouched ArcGIS Pro capture
+  beside a column of short notes with arrows to the fields that matter, drawn by a script
+  (`tools/week11_dialog_callouts.py`, `tools/week12_dialog_callouts.py`).
 - **Scannable self-check quizzes are encouraged** (instructor's request, 2026-09-17, after the
   Week 3 one worked well). Where a deck turns on a distinction students need to practice, a
   two-minute quiz they open on their phones beats another bullet list. The pattern, from

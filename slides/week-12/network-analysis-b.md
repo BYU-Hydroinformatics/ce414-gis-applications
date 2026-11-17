@@ -16,14 +16,14 @@ style: |
 
 # Network Analysis
 
-## Part B — Service Areas, Closest Facility, and Lab 11
+## Part B — Closest Facility, Location-Allocation, and Lab 11
 
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Thursday of Week 12. Tuesday built the network: edges, junctions, connectivity, impedance. Today the three solvers that use one, in ArcGIS Pro's Network Analyst, and then Lab 11's model from its own data. Every map and number is from Lab 11's package and reference run (tools/lab11/, tools/week12_network_figures.py, tools/week12_network_numbers.json). The tool dialog captures are the lab's own Figures 2 to 4, owed to the Lab 11 GUI build; until then the icons stand in. -->
+<!-- Thursday of Week 12. Tuesday built the network (edges, junctions, connectivity, impedance) and ran the first solver, the service area, with its three tools. Today the other two solvers, then the rest of Lab 11's model from its own data (from polygons to people, the buffer comparison), and last what the answer depends on: the cutoff and what the network does not know. Every map and number is from Lab 11's package and reference run (tools/lab11/, tools/week12_network_figures.py, tools/week12_network_numbers.json). Redivided November 16, 2026. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
@@ -37,24 +37,25 @@ Dr. Dan Ames
 
 By the end of class you should be able to:
 
-- Run a **service area** in ArcGIS Pro: the analysis layer, **Add Locations**, **Solve**
 - Say which solver answers which question: **Service Area**, **Closest Facility**, **Location-Allocation**
+- Turn a service area into a **count of people** with **Select Data**, **Select Layer By Location** and **Summary Statistics**
 - Explain why a **buffer** and a **service area** disagree about the same four minutes
-- Build Lab 11's model and know what its **cutoff** decides
+- Say what Lab 11's **cutoff** decides, and what the network **leaves out**
 
-<!-- The right-hand figure is the closest-facility solve: eight incidents, each routed from the station that reaches it first. By the end of the hour the three solvers should feel like three questions, not three tools. -->
+<!-- The right-hand figure is the closest-facility solve: eight incidents, each routed from the station that reaches it first. By the end of the hour the three solvers should feel like three questions, not three tools, and Lab 11's model should be one chain from the network to a number of people. -->
 
 ---
 
 # Tuesday in One Picture
 
-![bg right:50% w:98%](images/na-shortest-vs-fastest.png)
+![bg right:50% w:98%](images/nab-service-areas.png)
 
 - A network is **edges** with a **cost**, meeting at **junctions**
 - The **impedance** is the cost you minimize; minutes and meters pick **different roads**
-- Today's solvers all do one thing: **spread cost outward** through the network from a point, and stop at a **cutoff** or a **destination**
+- A **service area** spreads minutes outward from a station and stops at the **cutoff**
+- Three tools: **Make Service Area Analysis Layer**, **Add Locations**, **Solve**
 
-<!-- The same figure as Tuesday's slide 11: fewest meters 9.9 km in 23.4 minutes, fewest minutes 15.3 km in 15.1 minutes. Every solver today is Dijkstra's spreading from a point along the edges; what differs is where it stops and what it reports. -->
+<!-- Tuesday's service areas from all 42 stations, dissolved: 195 km2 inside four minutes. Every solver today is the same spreading from a point along the edges (Dijkstra's); what differs is where it starts, where it stops, and what it reports. -->
 
 ---
 
@@ -62,82 +63,7 @@ By the end of class you should be able to:
 
 ![bg right:55%](images/nab-divider-solvers.jpg)
 
-# Part 1 — Three Solvers
-
----
-
-# Service Area: What One Station Can Reach
-
-![bg right:50% w:98%](images/nab-one-station-rings.png)
-
-- Spread minutes outward from a **facility** along the edges; stop at the **cutoff**
-- Draw a polygon around the reached edges, one per cutoff: **rings**
-- From Provo Station 21: **1.5 km²** inside two minutes, **4.9 km²** inside four, **15 km²** inside six
-- It is not a circle, because the roads are not
-
-<!-- Solved with Make Service Area Analysis Layer on Lab 11's network from one station, cutoffs 2, 4, 6, 8, rings (tools/week12_network_numbers.json, "one_station"). Within six minutes is the sum of the first three rings, 1.5 + 4.9 + 8.7. Point at the shape: it reaches far along the arterials and barely at all into the neighborhoods with one way in. -->
-
----
-
-# Service Areas from All 42 Stations
-
-![bg right:50% w:98%](images/nab-service-areas.png)
-
-- Load all **42 stations** as facilities and solve once
-- **Dissolve** the overlaps so a block near two stations is counted once
-- Within two minutes: **52 km²**; four: **195 km²**; six: **380 km²**; eight: **557 km²**
-- The four-minute area is a **string of small shapes** around the stations, which are in the cities
-
-<!-- Lab 11's reference run, cutoffs 2, 4, 6 and 8 solved separately, each dissolved (tools/lab11/check_values.json, "sensitivity"). The areas are what students get in Step 4 for four minutes, and in Step 9 for the others; the deck gives the areas but not the populations outside each, which is what Step 9 asks them to find. Utah Lake in the middle is the gap. -->
-
----
-
-# The Tools in ArcGIS Pro
-
-<div class="columns">
-<div>
-
-<div class="imggrid" style="grid-template-columns: repeat(3, 1fr);">
-
-![h:120](images/nab-icon-make-service-area-analysis-layer.svg)
-
-![h:120](images/nab-icon-add-locations.svg)
-
-![h:120](images/nab-icon-solve.svg)
-
-</div>
-
-1. **Make Service Area Analysis Layer**: the network, the **cutoffs**, the travel direction, how the polygons are drawn. It computes **nothing**
-2. **Add Locations**: the stations into the **Facilities** sublayer, each snapped to the nearest edge within the search tolerance
-3. **Solve**: fills in the **Polygons** sublayer
-
-</div>
-<div>
-
-- The result is an **analysis layer** in the map, not a feature class
-- In a model, **Select Data** pulls the Polygons out and **Copy Features** keeps them
-- The same three steps run every solver: a Closest Facility or Location-Allocation layer has its own sublayers
-
-</div>
-</div>
-
-<!-- The icons are Lab 11's own. The one mistake everyone makes once: run the first two and look for polygons. Nothing exists until Solve. In ArcGIS Pro 3.7.1 the first tool's parameters are Network Data Source and Layer Name; the network ships without named travel modes, so Travel Mode shows Custom and the layer uses TravelMinutes, the default cost. -->
-
----
-
-# The Same Three, as Dialogs
-
-<div class="imggrid" style="grid-template-columns: 330px 330px 330px; justify-content: center;">
-
-![](images/nab-dlg-make-service-area.png)
-
-![](images/nab-dlg-add-locations.png)
-
-![](images/nab-dlg-select-data.png)
-
-</div>
-
-<!-- Lab 11's Figures 2, 3 and 4 from the GUI build (ArcGIS Pro 3.7.1), left to right: Make Service Area Analysis Layer with one cutoff row of 4, away from facilities, dissolve, rings; Add Locations with the stations into Facilities and a 5000 m search tolerance under Advanced; Select Data, the ModelBuilder-only tool that pulls the Polygons sublayer out of the solved layer. Point out the empty Travel Mode box: the network ships without travel modes, so the default cost, TravelMinutes, is what runs. -->
+# Part 1 — Two More Solvers
 
 ---
 
@@ -176,12 +102,14 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 <ol type="A">
 <li>For this address, which station's engine arrives first, and how long does it take?</li>
-<li>How many residents live more than four minutes' drive from any station?</li>
+<li class="correct">How many residents live more than four minutes' drive from any station?</li>
 <li>Where should the next station go to bring the most people inside four minutes?</li>
 <li>What is the fastest route from Station 21 to the hospital?</li>
 </ol>
 
-<!-- Ninety seconds. B is the service area (spread from the facilities, count what is inside); A is closest facility; C is location-allocation; D is a route. Have the room name all four. -->
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press circles B. B is the service area (spread from the facilities, count what is inside); A is closest facility; C is location-allocation; D is a route. Have the room name all four. -->
 
 ---
 
@@ -189,7 +117,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ![bg right:55%](images/nab-divider-fire.jpg)
 
-# Part 2 — Lab 11, Fire Response Coverage
+# Part 2 — Lab 11's Model
 
 ---
 
@@ -204,6 +132,42 @@ A city council asks four questions. Which one is a **Service Area** question?
 - At four minutes: **379,054** people outside, **57.5 %** of the county
 
 <!-- Lab 11's baseline (tools/lab11/check_values.json): the dissolved four-minute service area, 194.85 km², and the populated blocks whose center falls outside it. The number is big because UGRC's minutes are for typical driving, not an engine running code, and because four minutes along local streets is not far; both are things Step 9 asks about. NFPA 1710's 240-second travel time is from the standard as quoted by fire departments; the lab page carries a verify note for the current edition. -->
+
+---
+
+# From Solve to a Feature Class
+
+![bg right:60% w:96%](images/nab-dlg-select-data-callouts.png)
+
+- The solved layer lives **only in the map**
+- **Select Data** takes out its **Polygons** sublayer; **Copy Features** keeps them as `Served_Area`
+- Select Data is a **ModelBuilder-only** tool: **Insert** ▸ **Utilities** ▸ **Select Data**
+
+<!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 4. Select Data does not come up in a Geoprocessing search, which is why the lab gives the ribbon path. The check value after Copy Features: one feature, 194.85 km2. -->
+
+---
+
+# Select Layer By Location
+
+![bg right:60% w:96%](images/nab-dlg-select-by-location-callouts.png)
+
+- **Have their center in** the four-minute area, **inverted**: the blocks **outside**
+- The result is a **selection on a layer**, not a new dataset; **Copy Features** keeps it
+- Each branch gets its own **Make Feature Layer** first, so the two selections cannot collide
+
+<!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 5b; in the capture the input box reads Census_Blocks, and in the students' finished model it is Blocks_Net, the layer from Step 5's Make Feature Layer. "Center in" is the counting rule: a block is covered or not by where its center point falls, which is fair in the cities where blocks are small. -->
+
+---
+
+# Summary Statistics
+
+![bg right:60% w:96%](images/nab-dlg-summary-statistics-callouts.png)
+
+- One row out: the **sum of the people** and the **count of the blocks** outside
+- `PP_TOTAL` appears by its alias, **Total Population**
+- The same tool ends the **buffer** branch, so the two answers sit side by side
+
+<!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 5c. The lab's check: SUM_PP_TOTAL 379,054 and COUNT_GEOID20 6,341 at four minutes. -->
 
 ---
 
@@ -246,6 +210,35 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ---
 
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:40% w:94%](images/nab-lab11-map2.png)
+
+Your model runs, but `Unserved_Population` says about **280,000** people, not the lab's **379,054**. Which setting did you most likely miss?
+
+<ol type="A">
+<li>Geometry at Overlaps: Dissolve</li>
+<li class="correct">Invert Spatial Relationship</li>
+<li>Search Tolerance of 5000 meters</li>
+<li>The Count statistic on GEOID20</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press. B: without the invert box the selection keeps the blocks whose center is inside the four minutes, so the sum is the people covered, about 659,399 - 379,054 = 280,345, the number the lab page itself names as the sign of this mistake. A would not change a "center in" selection; C would only matter if a station failed to locate; D changes a column, not the sum. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/nab-divider-limits.jpg)
+
+# Part 3 — What the Answer Depends On
+
+---
+
 # What the Cutoff Decides
 
 ![bg right:44% w:96%](images/nab-one-station-rings.png)
@@ -256,6 +249,40 @@ A city council asks four questions. Which one is a **Service Area** question?
 - Then say what the model leaves out, which way each would move your share, and what data would fix the one that matters most
 
 <!-- Do not give the Step 9 populations; the lab publishes only the four-minute baseline and the two personal examples. The shape to let them discover: a few minutes more takes in whole cities, and after that the share stops falling because almost nobody is left. Each student's cutoff is 4 + 0.04 x the last two digits of their BYU ID, 4.00 to 7.96 minutes, and the grader reproduces their numbers from it. -->
+
+---
+
+# What This Network Does Not Know
+
+![bg right:44% w:96%](images/na-four-minutes-two-ways.png)
+
+- The **time of day**: TravelMinutes is one number, for typical traffic
+- That a fire engine drives with **lights and siren**: UGRC says its times are "not the expedited travel of emergency response vehicles"
+- **Turnout**: the clock in NFPA 1710 starts when the engine moves, not when the call comes in
+- Anything **newer than its sources**: the stations layer says September 2022
+
+<!-- Every one of these is a decision a student can defend or attack in Lab 11's Step 9. The travel-time quote is from UGRC's Fire Station Travel Times service description; NFPA 1710's 240-second first-engine travel time is the standard Lab 11 uses as its baseline cutoff. The deck does not quote the lab's hidden sensitivity numbers; the students find them. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:40% w:94%](images/na-impedance.png)
+
+UGRC's minutes are for **typical traffic**. An engine running **lights and siren** drives faster. If the model used the engine's real speed, the share of the county **outside** four minutes would:
+
+<ol type="A">
+<li>Go up</li>
+<li class="correct">Go down</li>
+<li>Stay the same, because the cutoff is still four minutes</li>
+<li>Be impossible to say without running it</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press. B: faster edges mean every edge costs fewer minutes, so four minutes reaches farther and covers more blocks, and fewer people are outside. C is the trap: the cutoff is the same, but what four minutes reaches is not. Direction only; do not give a number, since Step 9 asks students to argue which way each missing factor moves their share and how much. -->
 
 ---
 
@@ -307,4 +334,4 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 <!-- Four minutes, in pairs. If the room has no signal, put the URL on the board. -->
 
-<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week12_network_figures.py from Lab 11's package and reference run (tools/lab11/); the two example maps are Lab 11's Figures 9 and 10 (tools/lab11/build_figures.py). Owed: Lab 11's dialog captures (Figures 2 to 4) and Figure C from the GUI build, to replace the icons on slide 7 and the map on slide 13. -->
+<!-- Deck written October 10, 2026, new for the course (no source PowerPoint). Figures and numbers: tools/week12_network_figures.py from Lab 11's package and reference run (tools/lab11/); the two example maps are Lab 11's Figures 9 and 10 (tools/lab11/build_figures.py). Redivided November 16, 2026: the service area and its three tools moved to Tuesday, "What This Network Does Not Know" moved here, the dialog slides carry red callouts (tools/week12_dialog_callouts.py), and every section ends with a talk-to-your-neighbor question whose answer is circled on the next key press. -->

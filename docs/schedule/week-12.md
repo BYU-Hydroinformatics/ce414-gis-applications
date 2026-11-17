@@ -4,8 +4,8 @@
 
 ## :material-presentation-play: Presentation Slides
 
-- **Tuesday** — [Network Analysis, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-a.html) — Distance along the roads: what a network dataset is made of, edges, junctions and connectivity, impedance in minutes, one-way streets and turns, and why the shortest route is not the fastest.
-- **Thursday** — [Network Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-b.html) — Three solvers on one network: service areas, closest facility and location-allocation in ArcGIS Pro, a buffer against a service area for the same four minutes, and Lab 11.
+- **Tuesday** — [Network Analysis, Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-a.html) — Lab 11's goal, then distance along the roads: what a network dataset is made of (edges, junctions, connectivity), impedance in minutes, one-way streets and turns, why the shortest route is not the fastest, and the first solver, the service area, with its three tools in ArcGIS Pro.
+- **Thursday** — [Network Analysis, Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-b.html) — Closest facility and location-allocation, then Lab 11's model from service area to a count of people (Select Data, Select Layer By Location, Summary Statistics), a buffer against a service area for the same four minutes, and what the cutoff and the network leave out.
 
 Press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view with speaker notes.
 

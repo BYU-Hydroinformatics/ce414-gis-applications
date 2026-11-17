@@ -68,19 +68,31 @@
  {
   "id": "na-divider-source",
   "deck": "week-12/network-analysis-a.md",
-  "divider": "Part 2 — Where Lab 11's Network Came From",
+  "divider": "Part 2 — Direction, Turns, and Lab 11's Network",
   "prompt": "A team of mapmakers in a cluttered government office works through the night, carefully stitching tangled loose strands of road lines into one clean connected web spread across a giant table, coffee cups and lamps, focused teamwork"
  },
  {
   "id": "nab-divider-solvers",
   "deck": "week-12/network-analysis-b.md",
-  "divider": "Part 1 — Three Solvers",
+  "divider": "Part 1 — Two More Solvers",
   "prompt": "Battle-manga standoff of three rival strategists on a city rooftop: one radiates expanding rings of light along the streets, one points a glowing arrow to the nearest building, one places game pieces onto a city map; wind, dramatic poses"
  },
  {
   "id": "nab-divider-fire",
   "deck": "week-12/network-analysis-b.md",
-  "divider": "Part 2 — Lab 11, Fire Response Coverage",
+  "divider": "Part 2 — Lab 11's Model",
   "prompt": "A fire engine races through city streets at night, emergency lights blazing, firefighters leaning out with fierce determination, strong speed lines and motion"
+ },
+ {
+  "id": "na-divider-service-area",
+  "deck": "week-12/network-analysis-a.md",
+  "divider": "Part 3 — The First Solver: Service Areas",
+  "prompt": "At dusk a woman fire captain stands on the flat roof of her fire station, watching glowing rings of light spread outward from the station along the city streets below, reaching far down the wide avenues and only a short way into the winding neighborhoods"
+ },
+ {
+  "id": "nab-divider-limits",
+  "deck": "week-12/network-analysis-b.md",
+  "divider": "Part 3 — What the Answer Depends On",
+  "prompt": "In a quiet planning room at night, a young man analyst turns a large brass dial on a desk while on the glowing wall map in front of him the lit areas around a city's fire stations swell and shrink, a cup of tea steaming beside him"
  }
 ]

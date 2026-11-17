@@ -16,18 +16,47 @@ style: |
 
 # Network Analysis
 
-## Part A — Distance Along the Roads
+## Part A — Distance Along the Roads, and the Service Area
 
 CE 414 Engineering Applications of GIS
 Civil & Construction Engineering
 Brigham Young University
 Dr. Dan Ames
 
-<!-- Tuesday of Week 12, the last new topic of the course, two weeks before Midterm 2. The course has measured distance twice: as a buffer in Lab 1 and as accumulated cost across a raster in Lab 10. Today is the third way, along a road network, and it sets up Thursday's three solvers and Lab 11. Every map and number here comes from Lab 11's own data (UGRC's prebuilt Utah Street Network clipped to Utah County, the 42 fire stations, the 2020 Census blocks) and reference run, drawn by tools/week12_network_figures.py; the numbers are in tools/week12_network_numbers.json. No tool captures yet: the Network Dataset Properties capture is owed to the Lab 11 GUI build. -->
+<!-- Tuesday of Week 12, the last new topic of the course, two weeks before Midterm 2. The course has measured distance twice: as a buffer in Lab 1 and as accumulated cost across a raster in Lab 10. Today is the third way, along a road network: what a network is made of, how its costs work, and the first solver, the service area, with its three tools. Thursday adds closest facility and location-allocation and then builds Lab 11's model. Every map and number here comes from Lab 11's own data (UGRC's prebuilt Utah Street Network clipped to Utah County, the 42 fire stations, the 2020 Census blocks) and reference run, drawn by tools/week12_network_figures.py; the numbers are in tools/week12_network_numbers.json. Redivided November 16, 2026: service areas and their tools moved here from Thursday, and "What This Network Does Not Know" moved to Thursday. -->
 
 <!-- stamp:begin -->
 <!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
+
+---
+
+# One More Lab After This One
+
+![bg right:42% w:94%](images/na-cyoa-question-data-recipe.svg)
+
+- **Lab 11** this week is the **last lab with a recipe**: the question, the data and the steps are handed to you
+- After it, one more: **Lab 12, Choose Your Own Adventure**
+- **Your** question, **your** data, **your** ModelBuilder model, and a five-minute **training video** that teaches it
+- Due **Thursday of Week 15**, the last day of classes
+- Full details **next Tuesday, November 24**. Until then, notice the questions you would like a map to answer
+
+<!-- Set the stage for the finish line: one lab with a recipe, then one where the students write the recipe. The figure is the Week 13 deck's own: every lab so far handed over the question, the data and the recipe, and Lab 12 takes all three away. Keep it short; the Week 13 deck carries the requirements and the scoring (individual, 100 points, an unlisted YouTube video, a PDF report and an ArcGIS Pro project package). The lab page is live now for anyone who wants to read ahead: assignments/lab-12. Thursday of Week 13 is Thanksgiving. -->
+
+---
+
+# This Week's Lab Goal
+
+![bg right:42% w:96%](images/nab-lab11-map1.png)
+
+**Lab 11, Fire Response Coverage:** *who in Utah County lives more than **four minutes' drive** from a fire station?*
+
+- Build **one ModelBuilder model**: a **service area** around all 42 stations, then a **count of the people** outside it
+- Measure the same four minutes as a **buffer**, and compare the two answers
+- Run it again at **your own cutoff** and at 2, 6 and 8 minutes
+- Due **Saturday**: two maps, a table, the report and `Lab11.atbx` · [the lab page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
+
+<!-- Say the goal before any of the theory, so every slide today has somewhere to land. The map is the lab's own Figure 9. Everything today is a piece of this model: the network (Part 1), its costs (Part 2), and the service area and its three tools (Part 3). Thursday finishes the model: from polygons to people, the buffer comparison, and the cutoff. Each student's cutoff is 4 + 0.04 x the last two digits of their BYU ID. -->
 
 ---
 
@@ -40,9 +69,9 @@ By the end of class you should be able to:
 - Say what a **network dataset** is made of: **edges**, **junctions**, **connectivity**
 - Explain what an **impedance** is, and why minutes and meters give **different routes**
 - Describe how **one-way streets** and **turns** enter a network, as costs or as walls
-- Place network distance beside **straight-line** and **cost distance**, and say which fits a fire engine
+- Run a **service area** in ArcGIS Pro: the analysis layer, **Add Locations**, **Solve**
 
-<!-- The right-hand figure is 840 m of Provo as the network sees it: every edge labeled with its minutes, every junction a circle, the one-way edges in orange. By the end of the hour every element of it should mean something. -->
+<!-- The right-hand figure is 840 m of Provo as the network sees it: every edge labeled with its minutes, every junction a circle, the one-way edges in orange. By the end of the hour every element of it should mean something, and the last part of the hour spreads four minutes outward through it from a station. -->
 
 ---
 
@@ -110,6 +139,35 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:40% w:94%](images/na-overpass.png)
+
+A street segment on 300 North stops **2 m short** of the 500 West segment it should meet. Nothing else touches it there. What does the network do at that corner?
+
+<ol type="A">
+<li>Snaps the two together, since 2 m is close enough</li>
+<li class="correct">Treats it as a dead end: no route can turn from one street onto the other there</li>
+<li>Lets routes cross, but charges a turn delay</li>
+<li>Connects them, because they look connected on the map</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes: talk to your neighbor, then a show of hands, then one key press circles the answer. B. Connectivity lives in the junctions, and a junction exists only where the geometry actually meets (an endpoint, or a shared vertex for UGRC's surface streets). A gap of 2 m is a gap; the map draws the corner, the graph does not have it. A and D are the map-reader's intuition; C confuses turns with connectivity. The streets are made up for the question. -->
+
+---
+
+<!-- _class: lead -->
+
+![bg right:55%](images/na-divider-source.jpg)
+
+# Part 2 — Direction, Turns, and Lab 11's Network
+
+---
+
 # One-Way Streets: a Wall or a Price
 
 ![bg right:46% w:96%](images/na-edges-junctions.png)
@@ -141,12 +199,14 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 <ol type="A">
 <li>The two routes are the same roads, since the roads are the roads</li>
-<li>The fewest-meters route is shorter and slower; the fewest-minutes route is longer and faster</li>
+<li class="correct">The fewest-meters route is shorter and slower; the fewest-minutes route is longer and faster</li>
 <li>The fewest-minutes route is also the shortest, since fast roads are straight</li>
 <li>Neither can be solved: a network has one cost</li>
 </ol>
 
-<!-- Ninety seconds, a show of hands. A is the common answer: people picture one road to a place. The answer is B, and the next slide is the measurement. D is the misconception that a network dataset carries one cost; this one carries two, and a travel mode picks which one the solver minimizes. -->
+* <span class="reveal"></span>
+
+<!-- Ninety seconds in pairs, a show of hands, then the key press circles the answer. A is the common answer: people picture one road to a place. The answer is B, and the next slide is the measurement. D is the misconception that a network dataset carries one cost; this one carries two, and a travel mode picks which one the solver minimizes. -->
 
 ---
 
@@ -161,14 +221,6 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 - A fire engine's standard is written in **minutes**, so Lab 11 minimizes minutes
 
 <!-- Solved with Make Route Analysis Layer on Lab 11's network (tools/week12_network_numbers.json, "route"): from Provo Fire and Rescue Station 21 to a populated block 8.1 km away in a straight line. The green route minimizes Length: 9,878 m, and at TravelMinutes it would take 23.37 minutes. The orange route minimizes TravelMinutes: 15,315 m in 15.14 minutes. Nothing about the roads changed; only the question. This is the whole idea of an impedance in one picture. -->
-
----
-
-<!-- _class: lead -->
-
-![bg right:55%](images/na-divider-source.jpg)
-
-# Part 2 — Where Lab 11's Network Came From
 
 ---
 
@@ -198,33 +250,137 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 ---
 
-# What This Network Does Not Know
+<!-- _class: quiz -->
 
-![bg right:44% w:96%](images/na-four-minutes-two-ways.png)
+# Talk to Your Neighbor
 
-- The **time of day**: TravelMinutes is one number, for typical traffic
-- That a fire engine drives with **lights and siren**: UGRC says its times are "not the expedited travel of emergency response vehicles"
-- **Turnout**: the clock in NFPA 1710 starts when the engine moves, not when the call comes in
-- Anything **newer than its sources**: the stations layer says September 2022
+![bg right:40% w:94%](images/na-edges-junctions.png)
 
-<!-- Every one of these is a decision a student can defend or attack in Lab 11's Step 9. The travel-time quote is from UGRC's Fire Station Travel Times service description; NFPA 1710's 240-second first-engine travel time is the standard Lab 11 uses as its baseline cutoff. The deck does not quote the lab's hidden sensitivity numbers; the students find them. -->
+A one-way block costs **0.2 minutes** the legal way. The fastest way to a fire is down it the **wrong way**. On Lab 11's network, what does the solver do?
+
+<ol type="A">
+<li>Drives the wrong way, because it is the shortest</li>
+<li>Never uses that block in that direction</li>
+<li class="correct">Goes around, unless every way around takes more than 20 minutes</li>
+<li>Adds 100 meters to the route</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press. C. UGRC encodes one-way as a price, not a wall: the wrong direction costs 100 times the right one, here 0.2 x 100 = 20 minutes, so the solver goes around the block whenever any detour is cheaper than 20 minutes, which in a city is nearly always. B is what a restriction would do, the other choice UGRC could have made. D mixes up the two costs: the hundredfold factor is on TravelMinutes, not on Length. -->
 
 ---
 
-<!-- _class: activity -->
+<!-- _class: lead -->
 
-# Next: Lab 11, Fire Response Coverage
+![bg right:55%](images/na-divider-service-area.jpg)
 
-![bg right:42% w:96%](images/nab-lab11-map1.png)
+# Part 3 — The First Solver: Service Areas
 
-- Utah County's **42 fire stations**, UGRC's **network**, the **2020 Census blocks**
-- **Who lives more than four minutes' drive from a station?** Along the roads, at UGRC's minutes
-- One ModelBuilder model: a **service area**, a count of people outside, and the same four minutes as a **buffer** for comparison
-- **Your own cutoff** = 4 + 0.04 × the last two digits of your BYU ID
+---
 
-[Lab 11 — Fire Response Coverage](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
+# Service Area: What One Station Can Reach
 
-<!-- The example map is the lab's own Figure 9. Thursday walks through the three solvers and then the lab's model live. The lab is due Saturday, and everything that takes preparation is hosted. -->
+![bg right:50% w:98%](images/nab-one-station-rings.png)
+
+- Spread minutes outward from a **facility** along the edges; stop at the **cutoff**
+- Draw a polygon around the reached edges, one per cutoff: **rings**
+- From Provo Station 21: **1.5 km²** inside two minutes, **4.9 km²** inside four, **15 km²** inside six
+- It is not a circle, because the roads are not
+
+<!-- Solved with Make Service Area Analysis Layer on Lab 11's network from one station, cutoffs 2, 4, 6, 8, rings (tools/week12_network_numbers.json, "one_station"). Within six minutes is the sum of the first three rings, 1.5 + 4.9 + 8.7. Point at the shape: it reaches far along the arterials and barely at all into the neighborhoods with one way in. -->
+
+---
+
+# Service Areas from All 42 Stations
+
+![bg right:50% w:98%](images/nab-service-areas.png)
+
+- Load all **42 stations** as facilities and solve once
+- **Dissolve** the overlaps so a block near two stations is counted once
+- Within two minutes: **52 km²**; four: **195 km²**; six: **380 km²**; eight: **557 km²**
+- The four-minute area is a **string of small shapes** around the stations, which are in the cities
+
+<!-- Lab 11's reference run, cutoffs 2, 4, 6 and 8 solved separately, each dissolved (tools/lab11/check_values.json, "sensitivity"). The areas are what students get in Step 4 for four minutes, and in Step 9 for the others; the deck gives the areas but not the populations outside each, which is what Step 9 asks them to find. Utah Lake in the middle is the gap. -->
+
+---
+
+# The Tools in ArcGIS Pro
+
+<div class="columns">
+<div>
+
+<div class="imggrid" style="grid-template-columns: repeat(3, 1fr);">
+
+![h:120](images/nab-icon-make-service-area-analysis-layer.svg)
+
+![h:120](images/nab-icon-add-locations.svg)
+
+![h:120](images/nab-icon-solve.svg)
+
+</div>
+
+1. **Make Service Area Analysis Layer**: the network, the **cutoffs**, the travel direction, how the polygons are drawn. It computes **nothing**
+2. **Add Locations**: the stations into the **Facilities** sublayer, each snapped to the nearest edge within the search tolerance
+3. **Solve**: fills in the **Polygons** sublayer
+
+</div>
+<div>
+
+- The result is an **analysis layer** in the map, not a feature class
+- In a model, **Select Data** pulls the Polygons out and **Copy Features** keeps them
+- The same three steps run every solver: a Closest Facility or Location-Allocation layer has its own sublayers
+
+</div>
+</div>
+
+<!-- The icons are Lab 11's own. The one mistake everyone makes once: run the first two and look for polygons. Nothing exists until Solve. In ArcGIS Pro 3.7.1 the first tool's parameters are Network Data Source and Layer Name; the network ships without named travel modes, so Travel Mode shows Custom and the layer uses TravelMinutes, the default cost. -->
+
+---
+
+# Make Service Area Analysis Layer
+
+![bg right:60% w:96%](images/nab-dlg-make-service-area-callouts.png)
+
+- Sets up the question: **which network**, **which way**, **how many minutes**
+- How the answer is **drawn**: polygons, dissolved, in rings
+- It computes **nothing** yet
+
+<!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 2 from the GUI build (ArcGIS Pro 3.7.1), filled in as Step 2 of the lab says. Travel Mode is empty because the network ships without named travel modes, so the layer uses the default cost, TravelMinutes. Cutoffs is a list, one value per row: add a row with 8 and you get two rings. Dissolve matters for counting: without it, overlapping station areas stack and a block near two stations sits inside two polygons. -->
+
+---
+
+# Add Locations
+
+![bg right:58% w:96%](images/nab-dlg-add-locations-callouts.png)
+
+- Loads points into **one sublayer** of the analysis layer
+- For a service area, the stations are the **Facilities**
+- Each station is **snapped** to the nearest street within the search tolerance
+- Then **Solve**, and the Polygons sublayer fills in
+
+<!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 3. The search tolerance (5000 m, the default) is under Advanced. The check in the lab: the Facilities table has 42 rows, every Status OK. Solve has almost no parameters (the analysis layer in, the same layer out, solved), so it has no dialog slide of its own. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:40% w:94%](images/nab-one-station-rings.png)
+
+You run **Make Service Area Analysis Layer** and **Add Locations**. All 42 stations are located. The **Polygons** sublayer is **empty**. Why?
+
+<ol type="A">
+<li>A cutoff of 4 minutes is too small to draw</li>
+<li>Travel Mode was left empty</li>
+<li class="correct">Solve has not run yet</li>
+<li>The stations had to go into Barriers, not Facilities</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press. C: the first two tools set up the question and load the stations; nothing is computed until Solve. Everyone makes this mistake once. B is a fair worry, but an empty Travel Mode on this network just means the default cost, TravelMinutes, runs. D is backwards: barriers are places a route may not go. -->
 
 ---
 
@@ -243,7 +399,7 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 **Before next class**
 
 - **Lab 11 — Fire Response Coverage** — due **Saturday 11:59 pm**: [assignments/lab-11](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
-- Thursday: service areas, closest facility, location-allocation, and Lab 11's model in ArcGIS Pro
+- Thursday: closest facility, location-allocation, and the rest of Lab 11's model in ArcGIS Pro
 - Office hours: [calendly.com/dan-ames/office-hours](https://calendly.com/dan-ames/office-hours)
 
 </div>
