@@ -24,7 +24,7 @@ Dr. Dan Ames
 <!-- Week 3, Thursday. Part A was the concepts: map algebra, NDVI as a local raster function, the Lab 2 model and its threshold table. Part B is the local, focal, zonal and global families, and the one thing Part A stopped short of: turning the threshold into a model parameter, so the sweep is five runs of a tool rather than five edits of an expression. It closes with one hands-on exercise, the Con() threshold sweep, which is the start of Lab 2 Step 6 done live. The image is the center pivots near Elberta in the Lab 2 NDVI. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -191,6 +191,27 @@ Find any of them by name in the **Geoprocessing pane** search box, or browse **T
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/ra-focal-window.svg)
+
+You run **Focal Statistics**, a 5 x 5 **mean**, on the Lab 2 NDVI. What happens at the sharp edge of a center-pivot field?
+
+<ol type="A">
+<li>Nothing: each output cell keeps the value of its own input cell</li>
+<li>The pivot vanishes, since the window averages the field away</li>
+<li class="correct">The step becomes a ramp, blending field and dry ground cells</li>
+<li>The edge cells turn NoData, since the window spans two classes</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. Near the edge the window holds some field cells and some dry-ground cells, so the mean falls in between: "every edge is now a ramp instead of a step" ("What a mean does to an edge"). A is the local rule from Part A, same cell in and same cell out, applied to a focal tool that by definition reads a window of neighbors. B overstates it: a pivot is many 30 m cells across, and the slide shows the pivots still there after the 5 x 5 mean. D borrows a true fact from the wrong place: NoData appears where the window hangs off the edge of the grid, not where it straddles two kinds of land. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/rab-divider-threshold.jpg)
 
@@ -240,6 +261,27 @@ Same model, same data, five runs of the tool dialog:
 </div>
 
 <!-- These are the Part A numbers, repeated on purpose: Tuesday they were a result you were shown, today they are a result you produce. Computed from the course extract with the same Con() expression the lab uses; they match the lab page's check values at 0.4 and 0.6. The forest never drops out before the fields do, which is the honest answer to whether one threshold can map irrigation. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/ra-threshold-parameter.png)
+
+To make the threshold a model **parameter**, the Lab 2 model classifies NDVI with **Con()** in the Raster Calculator rather than Reclassify. Why?
+
+<ol type="A">
+<li class="correct">A value in an expression can be a parameter; a table cell cannot</li>
+<li>Reclassify accepts only integer rasters, so NDVI would fail</li>
+<li>Con() runs many times faster than Reclassify on six million cells</li>
+<li>Reclassify writes a table of classes, not a classified raster</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. A number typed into a Reclassify table cannot be exposed as a model parameter; a number inside a Con() expression can, which is the second bullet of "Make the threshold a parameter" and Lab 2 Step 5. B is wrong: Part A's model runs Reclassify on the floating-point NDVI to make the two-class label, so it takes NDVI fine. C is a guess about speed; nothing in the lab depends on it, and the reason for Con() is the parameter, not the run time. D confuses Reclassify with Zonal Statistics as Table: Reclassify returns a raster. -->
 
 ---
 
@@ -336,6 +378,27 @@ Same model, same data, five runs of the tool dialog:
 </div>
 
 <!-- Close by naming the family of every tool named today. If the quiz asks which family Reclassify belongs to, or what Focal Statistics does at the edge of a raster, they have seen both. The Spatial Analyst toolbox has far more than these; the point of the hour was that it is organized, and that terrain and hydrology are the next two weeks. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:34% h:86%](images/ra-lab2-example-map.png)
+
+Key concept: what NDVI measures. You raise the threshold from 0.4 to 0.6, hoping to drop the **mountain forest** above Provo and keep the **irrigated fields**. What happens?
+
+<ol type="A">
+<li>The forest drops out, leaving only the irrigated fields</li>
+<li class="correct">Both shrink, and the forest is still in class 1 at 0.6</li>
+<li>Nothing changes: forest and fields share one NDVI value</li>
+<li>Class 1 grows, since a higher threshold admits more cells</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. NDVI is a greenness index, not an irrigation detector: the forest above Provo scores higher than an irrigated field, so raising the threshold thins the pivots while the Wasatch canopy stays in class 1. That is the "Write down" question on "Now change the number twice", and the class area falls from 1,111 to 722 square miles across those two runs ("One tool, five answers"). A is what the threshold sweep was hoped to do, and the reason Lab 2 suggests adding elevation or a second date. C forgets that NDVI is a continuous measurement; forest and fields cover a range of values. D reads the expression backwards: Con("NDVI" >= 0.6, 1, 0) keeps fewer cells than 0.4 does. -->
 
 ---
 

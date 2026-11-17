@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Week 6 is two decks that share the eight-step delineation workflow between them. This one is Tuesday: Lab 5 introduced, then what a watershed is and why we manage water by them, then the first three steps (the DEM, Fill, Flow Direction) cell by cell, starting from last week's slope and aspect. Thursday's deck (Part B, watershed-delineation-b.md) picks up at flow accumulation, finishes the eight steps and the Lab 5 model, then delineates a watershed by hand and with StreamStats. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -207,6 +207,27 @@ By the end of class you should be able to:
 ![w:1100 center](images/ws-watershed-functions.svg)
 
 <!-- Three things a watershed does, drawn on the same real basin: it collects, stores and releases water; it carries sediment and dissolved chemistry downstream, so the channel carries more the closer it gets to the outlet (line width is drawn from each link's real contributing area); and its streams and their banks are the habitat network. The water budget, the sediment and chemical budget and the biotic structure all use the watershed as their accounting boundary — the argument for computing the boundary carefully (tools/week06_processes_svg.py). -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/ws-water-balance.svg)
+
+A watershed's **water balance** has precipitation in, and evapotranspiration, streamflow and deep groundwater out. Which term can a **DEM** alone tell you about?
+
+<ol type="A">
+<li>How much precipitation falls on the basin in a year</li>
+<li>How much water plants and soil return to the air</li>
+<li class="correct">Where the water that becomes streamflow will go</li>
+<li>How much water the snowpack and soil are storing</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. A DEM is only elevation, so it can tell you where water goes (the flow paths, the divide, the outlet), not how much of it there is. A is tempting because precipitation is the input every budget starts with, but it takes rain gages and weather stations. B is evapotranspiration, which takes weather and vegetation data. D is the change in storage, which takes snow and soil surveys. From "The Water Balance of a Watershed" in Part 1. -->
 
 ---
 
@@ -418,6 +439,27 @@ $$
 
 <!-- Connect every cell to the neighbor its arrow points at and the whole grid becomes a tree: every cell has exactly one downstream neighbor, and many upstream ones. Every remaining step in the workflow, Thursday's whole deck, is a question you ask about this tree. -->
 <!-- Credit: figure adapted from the watershed delineation course materials of D. Maidment, University of Texas at Austin. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:34% w:88%](images/ws-d8-pour-point.svg)
+
+A cell's steepest drop is to its **west** neighbor, so its **D8 code** is 16. In the flow direction grid, where is the 16 written, and what does it say?
+
+<ol type="A">
+<li>In the west neighbor, marking the cell that receives the water</li>
+<li class="correct">In the center cell, saying its water leaves toward the west</li>
+<li>In both cells, linking the pair the water passes between</li>
+<li>In the center cell, giving the drop in meters to the west</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. The code goes in the cell the water leaves, and it names a direction: 16 is west, counting 1, 2, 4 ... 128 clockwise from east ("Eight Direction Pour Point Model"). A reverses it, the most common slip: students picture the arrow landing on the neighbor. C is tempting because the grid network slide draws a link between the two cells, but every cell holds exactly one code, its own. D confuses the code with hydrologic slope: the drop decides which direction wins, but the code is a label for a direction, not a measurement. Every step on Thursday reads this grid. -->
 
 ---
 

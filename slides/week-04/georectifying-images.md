@@ -24,7 +24,7 @@ Brigham Young University
 <!-- TODO(instructor): the source title slide carried a speaker note that is a ModelBuilder workshop abstract left over from another deck. It was not carried across. Confirm nothing was lost. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 4 — Georectifying Images<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -152,6 +152,27 @@ By the end of class you should be able to:
 <!-- The joke slide, and a real demo. Georeference the piece of chicken over a map of Great Britain in front of the class: pick control points at Land's End, the tip of Scotland, and East Anglia, and let students watch the image warp into place. The lesson underneath the joke is that the software will happily georeference anything you give it, so the judgment about what makes a valid control point is yours. -->
 
 <!-- TODO(instructor): the source image is a Daily Mail photo. Confirm the rights before this deck is published to a public site, or swap in a substitute. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:36% w:92%](images/geo-kfc-britain-shape.jpg)
+
+In the demo, ArcGIS Pro happily **georeferences** a piece of fried chicken onto Great Britain. What does that tell you about **control points**?
+
+<ol type="A">
+<li>ArcGIS Pro rejects points that do not match a real map feature</li>
+<li>Only images with a scale bar can be given control points</li>
+<li class="correct">It places any image; judging valid points is your job</li>
+<li>A good visual match proves the control points are accurate</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. The software will georeference anything you give it, so the judgment about what makes a valid control point is yours ("KFC-UK Demo": whether the result means anything is a separate question). A is what students hope the software does; the demo is the proof that it does not check. B is contradicted by the demo itself: the chicken has no scale bar and it still goes into place. D is the trap the demo sets: the outline looks right, but a piece of chicken carries no information about where anything in Britain is. -->
 
 ---
 
@@ -325,6 +346,27 @@ You are handed an aerial photo of a cemetery taken from an airplane. You want to
 <!-- Same three steps, a completely different source image. The point of pairing these two slides is that the workflow does not care whether the source is a drawn map or a photograph. The orange polylines draw themselves one after another when the slide comes up: that is the digitizing step, traced off a photo that has already been georectified. -->
 
 <!-- TODO(instructor): the source slide read "You want to analyze the fault lines in GIS" — copied from the previous fault-map slide but shown over the cemetery orthophoto. Corrected here to "map the features on it." Name the cemetery features you actually want (roads, plots, tree canopy?) if you want the example to stay concrete. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/geo-slc-oblique-aerial.jpg)
+
+A classmate shoots an **oblique** photo of campus out a plane window, with mountains on the horizon. Why can't it be georeferenced the way the fault map can?
+
+<ol type="A">
+<li class="correct">Its scale changes from near to far; no flat fit can match it</li>
+<li>It has no north arrow or scale bar, so it cannot be oriented</li>
+<li>It was not taken from a satellite, so it has no coordinates</li>
+<li>It is a photograph, and only drawn maps can be georeferenced</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. An oblique view changes scale continuously from the foreground to the horizon and tall buildings lean, so no two-dimensional transformation can make it line up with a map ("Can this photo be georeferenced?"). The fault map works because it is a plan view at one scale. B is tempting because the fault map has a scale bar, but a north arrow and scale bar are not what makes an image georectifiable; viewing geometry is. C and D are both answered by the park orthophoto: an aerial photo from an airplane, and georeferenceable, because it looks straight down. -->
 
 ---
 
@@ -585,6 +627,27 @@ A spline drives the total RMS to zero by construction, and can distort the map b
 </div>
 
 <!-- This is the single most useful idea in the hour and the one students get wrong for years afterwards. It is the same hold-out logic as any model validation: a number computed on the training data is not a measure of performance. The animation makes that concrete — twenty observations appear, five of them are picked as control points, and the spline threaded through those five lands exactly on every one of them, total RMSE 0.0, while it smears the flat baseflow into a ramp, cuts 24 units off the peak and sags below the recession. Same hold-out idea: the fit statistic only ever looked at the green points. Lab 3 makes them do it in ArcGIS Pro: several transformations, the same points, and the check feature moving the opposite way from the RMS. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:36% w:90%](images/geo-transformation-list.png)
+
+Key concept: **total RMS error**. You switch to Spline, and the Control Point Table reports a total RMS error of 0.0. What does that zero tell you?
+
+<ol type="A">
+<li>The sheet now sits within one pixel of the basemap everywhere</li>
+<li>Spline is the right transformation, because its error is lowest</li>
+<li>Your points are well spread, as clustered ones cannot reach zero</li>
+<li class="correct">Little: it fits its own points; check a feature you did not use</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Spline forces every control point to match exactly, so the total RMS is zero by construction; the residuals only say how well the equation reproduces its own inputs. The accuracy check is a feature you did not use as a control point ("The error it reports is measured on the points you fitted"). A reads a fit statistic as an accuracy everywhere, which the hydrograph figure shows is false between the points. B is the room-splitter on the Final Thoughts quiz: lowest error is not best fit, and the honest default for a scanned sheet is affine ("Which transformation?"). C has it backwards: clustered points can fit exactly too, as can any set of exactly three points under a first-order polynomial ("Where the control points go"). -->
 
 ---
 

@@ -27,7 +27,7 @@ Dr. Dan Ames
 <!-- Week 5 concepts lecture. Everything in this deck is a raster surface operation: the input is a DEM and the output is another raster that answers an engineering question. The lab this week applies it. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Terrain Analysis<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -375,6 +375,33 @@ $$
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/ta-curvature-formulas.png)
+
+You compute **curvature** for one hillside from a 1 m lidar DEM and from a 30 m DEM. The two maps look very different. Why?
+
+<ol type="A">
+<li>ArcGIS Pro switches to a different curvature formula at each cell size</li>
+<li>Curvature uses only the four cardinal cells, so the diagonals drop out</li>
+<li class="correct">As a second derivative, it amplifies fine detail and the DEM noise</li>
+<li>The lidar DEM still holds treetops, so its curvature traces the canopy</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. The curvature slide: curvature is a second
+derivative of the surface, so it is especially sensitive to cell size and DEM noise; a 1 m grid
+resolves every small hollow and nose (and every bump of error), while 30 m cells smooth them away
+(the scale slide in Part 1). A is a guess: the tool fits the same 3 x 3 window whatever the cell
+size. B borrows the four-nearest-cells slope method; curvature is fitted from the full 3 x 3
+window. D forgets Tuesday: a bare-earth lidar DEM is built from ground returns, with the vegetation
+points removed. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/ta-divider-viewshed.jpg)
@@ -420,6 +447,33 @@ Siting **cell towers**, **search and rescue**, **scenic protection**, **security
 </div>
 
 <!-- The diagram is not to scale and the sight lines from stop 3 are illustrative, not the output of a real viewshed run; the point is the workflow. Temples shown are the seven dedicated temples in Utah County (Saratoga Springs, Mount Timpanogos, Lindon, Orem, Provo City Center, Provo Rock Canyon, Payson) at approximate positions — VERIFY the list is current before each offering. The two ridge spurs stand in for foothills that block a line of sight along the bench. In ArcGIS Pro, the Viewshed tool takes an observer offset for the spire height; adding the seven outputs with Raster Calculator gives the count. The Visibility tool can also report how many observers see each cell (VERIFY the analysis-type option name). Ask what else would change the answer: trees, buildings, observer eye height, and the DEM's cell size. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/ta-viewshed-searchlight.png)
+
+Slope, aspect and curvature all come from a **3 × 3 window**. How is a **viewshed** computed differently?
+
+<ol type="A">
+<li>It uses a larger moving window, such as 9 × 9 cells instead of 3 × 3</li>
+<li class="correct">It traces lines of sight outward from an observer across the surface</li>
+<li>It averages the hillshade values around the observer's location</li>
+<li>It runs slope in every direction and keeps the cells that face the viewer</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. Today's Goals note and the searchlight slide:
+the terrain surfaces are moving-window operations, but a viewshed is the exception, a line-of-sight
+calculation from an observer; from the viewer a sight line rises at some angle, and any cell below
+the running maximum angle is hidden. A keeps the moving-window idea and just enlarges it, but no
+window size knows about a ridge between the observer and a far cell. C mixes in hillshade, which is
+a rendering from an assumed sun, not a line of sight from a person. D is tempting because slopes
+facing the viewer often are visible, but a facing slope behind a ridge is still hidden. -->
 
 ---
 

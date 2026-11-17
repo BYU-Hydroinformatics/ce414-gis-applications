@@ -22,7 +22,7 @@ Brigham Young University
 <!-- ModelBuilder is one of the most powerful, and most underused, tools in ArcGIS Pro. It is a way to perform analysis and to automate workflows: you build the workflow once, document it, and run it again on new data. This session and Part B together walk through creating and executing models with geoprocessing tools and data, and using the ModelBuilder environment to document and share models so other people can run them. Today is concepts and mechanics; by the end you should be able to start Lab 1 tonight. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -300,6 +300,27 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:32% w:90%](images/mba-way-dialog.png)
+
+The **Buffer** step can run from the tool dialog, the Python window, a model, or a script. What really changes from one **front end** to the next?
+
+<ol type="A">
+<li>The buffer polygons that each one ends up producing</li>
+<li>Which geoprocessing tool actually runs underneath</li>
+<li class="correct">How easily the whole chain can be run again later</li>
+<li>Whether the output gets a coordinate system at all</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. All four front ends call the identical Buffer tool and produce the same result; only the repeatability changes (Four Ways slide). The dialog runs it once, the Python window one line at a time, while the model and the script keep the whole chain so it can be run again. A and B are the intuition that a picture or a line of code must be a different tool. D confuses the front end with the environments, which every front end reads the same way. This is why ModelBuilder is worth learning even though the dialog already works. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/mba-divider-building.jpg)
 
@@ -434,6 +455,27 @@ A GIS-integrated system, built into ArcGIS Pro, for:
 - To connect two elements, **drag from one onto the other**; a menu asks which parameter the connection feeds
 
 <!-- The connection step is the one that changed from ArcMap. There is no connect tool: you hover the edge of an element, drag onto the target, release, and choose the parameter, as in the menu on the right, captured from the Lab 2 model. Typing on the canvas to add a tool is the fastest route and is what the labs use. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/mba-state-notready.png)
+
+On your canvas the inputs are blue, but **Buffer**, its output, and everything after them are **gray**. What does that tell you?
+
+<ol type="A">
+<li class="correct">Buffer has a required parameter that is still empty</li>
+<li>Buffer already ran, and its output now exists on disk</li>
+<li>Those outputs are flagged as intermediate data</li>
+<li>The model must be saved before they can turn colored</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. Gray means not ready to run: a required parameter is empty, and the gray propagates downstream, so fix the leftmost gray element first (Model Elements Have Three States slide). B describes the third state, which is colored with a green check. C mixes up the Intermediate flag, which only means the data is deleted after the run, with readiness. D is a common guess because saving is the other thing students forget, but the colors track parameters, not saving. Validate on the ribbon is the fast way to find the empty parameter. -->
 
 ---
 
@@ -646,6 +688,27 @@ Every one is a **Spatial Analysis** or **Data Management** tool you can find by 
 - To test one step, right-click that tool element and choose **Run**
 
 <!-- These are the ones students email about. The menu on the right is an output element's right-click menu in Pro 3.7.1: Add To Display is exactly that label. Validate is the single biggest time-saver. The Run group on the ribbon also has an Intermediate button that toggles the same flag on a selected element. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:32% w:90%](images/mba-lab1-add-field-dialog.png)
+
+Key concept: **silent errors**. You add Lab 1's density field with Add Field's default type, **Long**, then fill it with Calculate Field. What happens to the decimals?
+
+<ol type="A">
+<li>ArcGIS Pro warns you and switches the field to Double</li>
+<li>The run stops with a field-type error until you fix it</li>
+<li>They are stored but hidden in the attribute table view</li>
+<li class="correct">They are dropped, and nothing warns you it happened</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. A Long field holds whole numbers only, so every decimal is dropped, and nothing on the canvas or in the messages warns you (Two Traps slide); the density test then passes nothing. A and B are what students expect a careful program to do, which is why the trap is expensive. C confuses storage with display: a Long field never had the decimals to hide. The same silence applies to the Buffer unit trap on the same slide, and the fix for both is to read the dialog before you run. -->
 
 ---
 

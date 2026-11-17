@@ -22,7 +22,7 @@ Brigham Young University
 <!-- Week 1 review lecture. Most students have had an introductory GIS course, so this hour is a refresher on data models rather than a first exposure. The hands-on look at ArcGIS Pro comes at the end of the hour, and the full version is Lab 1. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 1 — Data Models Refresher<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -245,6 +245,27 @@ What are the **geometry characteristics** of each of these feature types?
 </div>
 
 <!-- "Polyline" is the data model. A shapefile, a feature class in a file geodatabase, a GeoPackage, or a GeoJSON file are file formats. The same river could be stored in any of them and still be a polyline. We come back to this with the quiz slides at the end. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:36%](images/dm-data-model-brain.jpg)
+
+You save the Lochsa River as a **shapefile**, then copy it into a file geodatabase. The file changed. What happened to the **data model**?
+
+<ol type="A">
+<li>It turned into a raster when it went into the geodatabase</li>
+<li class="correct">It is still a polyline; only the file format changed</li>
+<li>It became a polygon, since a geodatabase closes every ring</li>
+<li>It is gone; a data model belongs to one file format only</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. A polyline is the data model, the conceptual organization: an ordered list of coordinate pairs. A shapefile and a file geodatabase feature class are file formats, two ways of storing that same list on disk (Data Model vs. File Format slide). A is tempting because a geodatabase can also hold rasters, but copying a feature class does not rasterize it. C mixes up the polygon rule (the last pair repeats the first) with the container. D is the misconception the slide exists to fix: people who have used shapefiles for years treat the format as the model. The Part 2 quiz slides about the rivers layer and the shapefile come back to this. -->
 
 ---
 
@@ -516,6 +537,27 @@ Each pixel (raster cell) is stored as a hexadecimal number that tells the screen
 <!-- Select a row in the table and the county lights up on the map; select a county on the map and its row highlights. The geometry and the attributes are the same record. This is what separates GIS from a drawing program. -->
 
 <!-- Stale screenshot: this is an ArcMap attribute-table window, not ArcGIS Pro. Re-shoot in Pro with the same counties layer. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/dm-arcmap-attribute-table.png)
+
+In ArcGIS Pro you click **one row** in the counties attribute table. What happens on the map?
+
+<ol type="A">
+<li>Nothing; the table is a separate copy of the county data</li>
+<li>Every county sharing that row's values is highlighted</li>
+<li>The map zooms out to the full extent of the layer</li>
+<li class="correct">That county is selected: row and shape are one record</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. The geometry and its attributes are the same record, one row per feature, so selecting the row selects the shape and the reverse (One Row per Feature slide). A is how a spreadsheet beside a drawing program behaves, which is exactly what GIS is not. B confuses selecting a record with selecting by attribute value. C mixes up selection with navigation; zooming to a selection is a separate command. Try it in the hands-on that follows: select a row and watch the map. -->
 
 ---
 

@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 12. Tuesday built the network (edges, junctions, connectivity, impedance) and ran the first solver, the service area, with its three tools. Today the other two solvers, then the rest of Lab 11's model from its own data (from polygons to people, the buffer comparison), and last what the answer depends on: the cutoff and what the network does not know. Every map and number is from Lab 11's package and reference run (tools/lab11/, tools/week12_network_figures.py, tools/week12_network_numbers.json). Redivided November 16, 2026. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 12 — Network Analysis, Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -109,7 +109,7 @@ By the end of class you should be able to:
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Discuss with a Neighbor
 
 ![bg right:40% w:94%](images/nab-service-areas.png)
 
@@ -227,7 +227,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# What Do You Think?
 
 ![bg right:40% w:94%](images/nab-lab11-map2.png)
 
@@ -283,7 +283,7 @@ Your model runs, but `Unserved_Population` says about **280,000** people, not th
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Key Concept
 
 ![bg right:40% w:94%](images/na-impedance.png)
 

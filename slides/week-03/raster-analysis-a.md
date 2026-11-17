@@ -24,7 +24,7 @@ Dr. Dan Ames
 <!-- Week 3, Tuesday. Part A is the concepts and the first raster model: what a raster is, map algebra, and NDVI end to end. Part B on Thursday takes the same model, makes its threshold a parameter, and spends most of the hour in ArcGIS Pro. Everything today points at Lab 2, which is NDVI, which is map algebra on two bands of a satellite image. By the end of class every student should be able to say what the NDVI model does cell by cell, and why the Lab 2 model has a Float step. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 3 — Raster Analysis and Map Algebra, Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -155,6 +155,27 @@ By the end of class you should be able to:
 <!-- "Correcter" is how the saying is actually passed around in the GIS community, and it is what the banner in the photo says, so the slide matches it. If someone objects to the word, that is a fine way into the argument. -->
 
 <!-- Let them argue for two or three minutes. Push toward: raster wins on continuous surfaces, per-cell math, and whole-area coverage; vector wins on discrete objects, exact boundaries, network problems, and attribute richness. The honest answer is that the data model should follow the phenomenon. A raster operation is an array operation: no topology to traverse, no geometry to intersect, just walk the array. That is why continental-scale analysis is done on grids. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:90%](images/ra-landuse-and-elevation.jpg)
+
+You must **resample** the land-use raster (top) to a coarser cell size before combining it with elevation. Which method fits, and why?
+
+<ol type="A">
+<li>Bilinear, since averaging four neighbors gives a smoother map</li>
+<li class="correct">Nearest neighbor, since a land-use code is a label to keep</li>
+<li>Cubic, since it is the most accurate method for any raster</li>
+<li>Bilinear, since land use changes gradually across a county</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. A land-use cell holds a code for a category, so every new cell has to take one of the existing codes: nearest neighbor, as the "Measurement or label?" slide says (and the "Four things that must line up" slide repeats in Part 2). A is the tempting one, because smoother looks better, but averaging code 4 and code 8 gives a 6 that is some other class or no class at all. C treats accuracy as a property of the method rather than of what the cell stores. D confuses the landscape with the values: however gradually land use changes on the ground, the cell still holds a label, not a measurement. -->
 
 ---
 
@@ -307,6 +328,27 @@ When a tool has to resample, the choice is yours: **nearest neighbor** for label
 
 ---
 
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/ra-map-algebra-add.svg)
+
+The Lab 2 bands store reflectance as **integers**. You build NDVI with Minus, Plus and the **Divide** tool, skipping Float. What does the NDVI map show?
+
+<ol type="A">
+<li>Correct decimals, since Divide returns floating point anyway</li>
+<li>NoData everywhere, since a tool cannot divide two integers</li>
+<li>NDVI rounded to the nearest tenth, so slightly coarse classes</li>
+<li class="correct">Nearly all 0: only the whole part of each ratio is kept</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Divide two integer rasters with the Divide tool and it keeps only the whole part: every NDVI between minus one and one becomes zero (a small area of water comes out as -1), and the map is one flat color. That is the "Integer or float" slide, and it is why Lab 2 Step 1 is Float. A is the tempting one, and it is half right: the Raster Calculator does return floating point, which is one reason the lab names the Spatial Analyst tools explicitly. B confuses integer division with an error: the tool runs and gives a wrong answer without complaint, which is worse. C imagines rounding to a convenient precision; integer division keeps no decimals at all. The figure is the cell-by-cell rule from earlier in Part 2, not the answer. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/ra-divider-ndvi.jpg)
 
@@ -443,6 +485,27 @@ Utah County, July 2025, cells at or above the threshold:
 </div>
 
 <!-- The numbers were computed from the course extract with the same Con() expression the lab uses; they match the lab page's check values at 0.4 and 0.6. The teaching point is not the numbers, it is that a raster model with a parameter turns "is 0.4 right?" from an opinion into a table. The forest never drops out before the fields do, which is the honest answer to whether one threshold can map irrigation. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:38% w:92%](images/ra-spectral-signature.svg)
+
+Key concept: why NDVI uses **red** and **near-infrared**. What makes those two bands separate healthy vegetation from soil and water?
+
+<ol type="A">
+<li class="correct">Leaves absorb red for photosynthesis and scatter near-infrared</li>
+<li>Leaves are warm, and near-infrared measures their heat</li>
+<li>Leaves reflect red strongly, which is why plants look green</li>
+<li>Soil and water absorb near-infrared, and leaves absorb neither band</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. Chlorophyll absorbs red, and the leaf's cell structure scatters near-infrared, so a healthy leaf is dark in one band and bright in the other; the jump between them is the red edge ("Why red and near-infrared", and the dark vegetation on the MODIS red band). B is the misconception the speaker notes on that slide warn about: near-infrared here is reflected sunlight, and thermal infrared is a different, much longer band. C mixes up red and green: plants look green because they reflect green, while red is absorbed. D gets water half right (it absorbs almost everything past red) but leaves do not absorb near-infrared; they reflect it strongly, which is the whole signal. -->
 
 ---
 

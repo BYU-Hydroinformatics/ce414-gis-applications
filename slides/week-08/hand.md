@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 8. Tuesday taught HAND and Lab 7's two models. Today is the rest of the hydrology (how a gage measures a river, what a 100-year flood is, what a FEMA map claims), how good HAND is against FEMA's map, and the ModelBuilder details students run into between now and Saturday. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -131,6 +131,27 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/fl-rating.png)
+
+Gages on two different rivers both read a **stage** of 4&nbsp;ft today. What can you say about their **flow**?
+
+<ol type="A">
+<li>They carry the same flow, because their stage is the same</li>
+<li>The wider river carries less, because its water spreads thinner</li>
+<li class="correct">Each gage needs its own rating curve to turn 4&nbsp;ft into a flow</li>
+<li>Each flow is 4 ft times the channel width, by the same rule</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. Stage is a water level, not a flow; how much water a 4-ft stage carries depends on the channel's cross-sectional area and velocity, so each gage has its own stage-discharge relationship measured in the field, the rating curve (Same Reading, Two Rivers and The Rating Curve). A is the ruler-is-the-answer misconception the Same Reading slide was built to break. B gets the channel's role backwards: at the same stage a wider channel has more area and carries more. D sounds like a formula but leaves out depth across the section and velocity; no single rule replaces the measured rating. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/fl-divider-how-big.jpg)
@@ -213,6 +234,27 @@ By the end of class you should be able to:
 </div>
 
 <!-- The image is a scanned paper FIRM panel (Library of Congress, Geography and Map Division, call number G3814.C3G475 1992 .U5; public domain), the kind of sheet a lender or city planner read by hand before the maps went digital. The title block on the sheet gives the place and date (Borough of Carteret, Middlesex County, New Jersey; community-panel 340257 0005 B); the initial FIRM for Carteret took effect November 15, 1978, and this revision on April 15, 1992. Congress created the NFIP in 1968 and required countywide FIRMs in 1973; FEMA took the program over in 1979, prototyped a digital FIRM in the 1990s and converted the paper inventory from 2005 on (Map Modernization); the NFHL is the live product and is what the Lab 7 package queried for FEMA_Floodplain_1pct and FEMA_Cross_Sections. The point for a GIS class: a flood map is a polygon layer with a zone attribute, and every zone boundary is a claim about a return period. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/fl-frequency.png)
+
+A **100-year flood** hit a river last spring. What is the chance that a 100-year flood hits it again **this coming year**?
+
+<ol type="A">
+<li class="correct">About 1%, the same as every year, whatever happened last spring</li>
+<li>Close to zero, because the next one is not due for about 99 years</li>
+<li>About 26%, the chance a 30-year homeowner sees at least one</li>
+<li>1 in 99, because one of the 100 years has now been used up</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. A 100-year flood is a 1% annual chance, every year, with no memory of last year: the double sixes on a 100-sided die (A 100-Year Flood Is a Probability and Consider Rolling Double Sixes). Provo's own record has 1952 and 1983 both above FEMA's 100-year flow. B is the once-a-century reading FEMA's 1% annual chance wording exists to prevent. C is a real number from the deck, but it is the chance of at least one over 30 years, not in one year. D treats the years like cards drawn from a deck without replacement; floods are rolls of the die. -->
 
 ---
 
@@ -299,6 +341,27 @@ Four ways to draw a flood, cheapest first:
 
 ---
 
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:40% w:94%](images/fl-hand-vs-hydraulic.svg)
+
+HAND gives every reach **one depth** and sends each cell to one river cell by D8. Where would HAND **miss** ground that FEMA's hydraulic model floods?
+
+<ol type="A">
+<li>On a steep reach, where real floodwater runs shallow and fast</li>
+<li class="correct">Where overflow leaves the river and runs down a separate path</li>
+<li>On low ground right beside the river, where HAND is smallest</li>
+<li>Behind a levee, where the high bank keeps the river's water out</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. D8 sends every cell to one river cell, so water that splits off the main channel is invisible to HAND; in Lab 7 that is FEMA's overflow zone leaving the river southward below the gage (Fast, Simple, Approximate, and its speaker note). A and D are real HAND errors, but in the other direction: on a steep reach the real flood is shallower than h, and HAND ignores levees, so in both places HAND floods ground the hydraulic model leaves dry, a false alarm, not a miss. C is where HAND does best: cells with the smallest HAND are the first to flood, and FEMA floods them too. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/fl-divider-modelbuilder-tips.jpg)
@@ -358,6 +421,27 @@ Four ways to draw a flood, cheapest first:
 - Models: **Export To Graphic**. Maps: **Export Layout** PDFs, not Print. Upload `Lab07.atbx`
 
 <!-- Lab 7 Figure 7, from the October 19 GUI session: the History list with the Flood Loop card open (47 seconds from the dialog). The HAND error is what you see when the model is opened as a tool before HAND is in the map; a student following Step 5 in order will have added it. Print to PDF makes a 600 dpi picture of the page and fails the grader's selectable-text check, as several Lab 6 submissions found. The toolbox upload lets the grader open both models. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/fl-history.png)
+
+Flood Loop runs with no error, but `Floods` has **1 row**, not 5. What is the most likely **cause**?
+
+<ol type="A">
+<li>Create multipart features was off in Raster to Polygon</li>
+<li>No Extent was set, so HAND stopped at the box around the river</li>
+<li>Iterate Field Values was left at its default Data Type, String</li>
+<li class="correct">Merge ran inside the loop instead of after Collect Values</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. A Merge inside the loop runs on every pass and keeps only that pass's polygon, so the last flood is all that is left; Collect Values holds the five and a Merge outside the loop stacks them (Collect, Then Merge, and Lab 7 Step 5's check). A is the other row-count mistake, but it gives dozens of rows, not one. B is a real trap (Set the Extent) that loses edge cells with no error, but the loop still writes five floods. C is the correct setting, not a bug: String is what the page says to leave it at, and changing it is what breaks the loop. -->
 
 ---
 

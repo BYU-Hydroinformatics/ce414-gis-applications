@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 11. This deck sets up Lab 10, the power line routing model, so keep pointing forward to it: everything here is a piece of that model. The middle of the hour is a hand calculation on a 5 by 5 grid; it is the algorithm, done once by people, before ArcGIS Pro does it on a million cells. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-11-11</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -225,6 +225,27 @@ The cheapest path costs **12**, through the 3s and the middle row; the straight 
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/lcp-hand-grid-answer.png)
+
+On the hand grid, the cheapest path to **D** took eight moves; the straight line took four. How can the **longer** path be cheaper?
+
+<ol type="A">
+<li>Diagonal moves are free, so the extra steps on it add nothing</li>
+<li>Accumulated cost counts only the cells where the path turns</li>
+<li class="correct">Its cells cost less to enter: eight cheap cells beat four costly</li>
+<li>A path costs its single most expensive cell, not the sum of them</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. A path's cost is the sum of the costs of the cells it enters, so many cheap cells can beat a few expensive ones: 12 for the eight-move path against 14 for the straight line across the top (Check Your Work). That is the whole idea: shortest is not cheapest (The values do not have to be elevation). A is wrong twice: the hand grid allows no diagonal moves, and in ArcGIS Pro a diagonal costs about 1.414 times the cell it enters. B and D both drop the sum: every cell entered counts, not just the turns, and not just the worst one. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/lcp-divider-path.jpg)
@@ -269,6 +290,27 @@ section { font-size: 24px; }
 - In every one of them, the hard part is **not the algorithm** — it is deciding what a cell should cost
 
 <!-- Three published applications, all using the same two rasters. Use them to make the point that the engineering judgment lives entirely in the cost surface. Ask what a cell should cost near a school, a wetland, or a scenic corridor, and let the disagreement stand. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/lcpb-accumulation.png)
+
+**Optimal Path As Line** draws the route. Where does it **start**, and what does it follow?
+
+<ol type="A">
+<li class="correct">At the destination, following the back direction home to the source</li>
+<li>At the source, stepping to the cheapest neighbor cell until it arrives</li>
+<li>At the source, following the lowest accumulated cost to the destination</li>
+<li>At the destination, along the straight line, bending around costly cells</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. The path is computed backward: it starts at the destination and follows the back direction raster cell by cell until it reaches the source (Why Least-Cost Path?; Accumulated Cost and Back Direction, on Lab 10), exactly the walk from D on the hand grid. B is the greedy shortcut: stepping to the cheapest neighbor from the source can walk into an expensive dead end, which is why every cell's total is needed first (What You Just Built). C starts at the wrong end: from the source, the accumulated cost rises in every direction, and only the back direction, read from the destination, says which way leads home. D treats the straight line as the starting guess; the method never uses it. -->
 
 
 

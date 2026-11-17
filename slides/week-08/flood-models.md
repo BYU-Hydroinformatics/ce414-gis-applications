@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 8, the third of the water weeks: Lab 5 found where the water goes, Lab 6 measured how much a lake holds, and this week asks how high a river rises and what it covers. Today is the hydrology and the simplest flood model; Thursday is HAND and the rest of Lab 7. Lab 7 opens today and is due Saturday: its Step 1, each student's own flow turned into a gage height and h from the rating, needs only today's material, so point them at it before Thursday. Midterm 1 is open in the Testing Center all week. The title image is three of FEMA's own cross-sections of the Provo River in Provo, with the 1% water surface over the lidar ground. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 8 — Flood Mapping, Part A<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -169,6 +169,27 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/fl-lake-bathtub.png)
+
+The **bathtub** is right for Lake Powell. On the Provo River, pick one flat water elevation at the gage's 1% flood level. What does the **map** show?
+
+<ol type="A">
+<li>A narrow, even ribbon of water following the river to the canyon</li>
+<li class="correct">Flooded lowland by Utah Lake, and a dry upper river above the gage</li>
+<li>A deep flood in the canyon, and dry lowland down by Utah Lake</li>
+<li>No flood at all: the gage's level sits below the riverbed everywhere</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. A flat water surface cannot follow a river that drops 110 m across the study area: at 1,372.04 m it drowns 15.1 km² of lowland near Utah Lake and covers only the lowest 4.8 km of river, below the gage (the previous two slides; the figure is last week's Great Salt Lake cross-section, where a flat surface is right). A is tempting because it describes the flood we want, but that ribbon is HAND, Part 2. C reverses the slope: the canyon is the high end of the reach, so a flat surface set at the gage never gets there. D forgets that the gage level is a water surface above the bed at the gage, so the bed below the gage is lower still and floods. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/flm-divider-hand.jpg)
 
@@ -301,6 +322,27 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/fl-hand-flatten-still.png)
+
+Cell P is at **22.0 m** and drains to a river cell at 20.0 m. Cell Q is at **22.8 m** and drains to one at 21.8 m. The river rises 1.5 m. Which floods?
+
+<ol type="A">
+<li>Only P, because it is the lower of the two cells</li>
+<li>Both: 1.5 m above Q's river cell is 23.3 m, over both cells</li>
+<li class="correct">Only Q, because it sits 1.0 m above the river it drains to</li>
+<li>Neither: 1.5 m above P's river cell reaches only 21.5 m</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. HAND is a cell's elevation minus the elevation of the river cell its D8 path ends on: P is 22.0 - 20.0 = 2.0 m, Q is 22.8 - 21.8 = 1.0 m, and a cell floods when HAND <= h, so with h = 1.5 m only Q is wet. These are the two ringed cells of the Height Above Nearest Drainage slide. A is the bathtub answer, lower floods first. B and D are also bathtubs: each sets one flat water level from a single river cell and applies it to both cells, which is the mistake Part 1 named. The figure is the last frame of the Pull the River Down to Zero animation. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/flm-divider-model.jpg)
 
@@ -366,6 +408,27 @@ By the end of class you should be able to:
 - A different h for each **return period**: one **iterator**, as in Lab 6
 
 <!-- The figure is the Flood Loop model's Raster Calculator in ArcGIS Pro (Lab 7, Figure 5b): Iterate Field Values hands each row's H_CM to %Value%, so the expression reads Con("HAND" <= %Value% / 100, 1) and each pass writes flood_%Value%. Centimeters because a name such as flood_1.53 is not allowed in a geodatabase. The stage table in Lab 7 does the flow-to-h step for FEMA's five flows (10%, 4%, 2%, 1% and 0.2%); students do the same lookup by hand for their own flow in Step 1. Raster to Polygon then gives an area and a polygon, and Spatial Join counts the buildings it touches. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:40% w:94%](images/fl-model-floodloop.svg)
+
+An **iterator** reruns every tool in its model. Suppose the HAND chain and the five-flood loop sat in **one model**. What happens when it runs?
+
+<ol type="A">
+<li class="correct">The HAND chain runs five times to rebuild one identical raster</li>
+<li>Only the tools after the iterator repeat, so nothing is wasted</li>
+<li>Each pass builds a different HAND raster, one per return period</li>
+<li>It stops with an error, since one model cannot hold two chains</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. An iterator reruns every tool in its model, not just the ones after it (Why Not One Model?), so the Fill to Flow Distance chain would run once per stage-table row and produce the same HAND each time; two models run the slow chain once and loop only the cheap part. B is the natural reading of a flowchart, and the reason the rule is worth a slide. C mixes up what changes per pass: only the depth h changes, the terrain and HAND do not. D is wrong because ModelBuilder will happily run one model with both chains; it is slow, not broken. The question sits before the Lab 7 slides because they are logistics. -->
 
 ---
 # Lab 7 at a Glance

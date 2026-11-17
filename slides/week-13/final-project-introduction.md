@@ -20,7 +20,7 @@ ArcGIS Pro training video on YouTube, a report, and a project package, due Thurs
 lab page is the authority: https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/ -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -140,7 +140,7 @@ lab. The 6-12 tool range is a guideline, not a rule. -->
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Discuss with a Neighbor
 
 ![bg right:30%](images/cyoa-right-size.jpg)
 
@@ -205,7 +205,7 @@ If any row is blank, you are not ready to build.
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# What Do You Think?
 
 ![bg right:34% w:94%](images/cyoa-three-questions.svg)
 
@@ -380,7 +380,7 @@ bars stand for captions; there are no words in the image. -->
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Key Concept
 
 ![bg right:28%](images/cyoa-recording.jpg)
 

@@ -22,7 +22,7 @@ Dr. Dan Ames
 <!-- Part B of the ModelBuilder sequence. Part A got a working model on the canvas; today we make it readable, make it reusable, and document it, and then we spend the last third of class on Lab 1: what the rubric rewards, what a complete submission looks like, how to know whether your answer is right, and how peer review works. The window on the right is where we end up: the Cities Near Rivers model with four P markers, and the tool dialog those four parameters produce, side by side in ArcGIS Pro 3.7. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 2 — ModelBuilder, Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -214,6 +214,27 @@ Which one would you put in a model you have to hand to someone else? Why are the
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:42% w:96%](images/mbb-cookie-sketch-simple.png)
+
+A classmate draws the cookie as the ingredients, **one tool** called Mix and bake, and a cookie. Is that a **model**?
+
+<ol type="A">
+<li>No: a model needs at least two tools in a row</li>
+<li class="correct">Yes: it shows what goes in and out, nothing more</li>
+<li>No: each ingredient needs its own tool before mixing</li>
+<li>Only once the oven setting is given its own P marker</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. The one-tool sketch follows every rule (data in, a tool, data out, arrows one way) and is a legitimate model: it hides everything that is not the question (Cookie Model Review slide). The right size depends on who has to read it. A and C come from the eleven-tool sketch winning the G = (N + C) R score, which rewards node count on purpose. D borrows the P marker from the ModelBuilder-style cookie, but a parameter makes a model a tool, not a model. Ask who would hand this sketch to a stranger and who would hand it to an auditor. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/mbb-divider-save-hour.jpg)
 
@@ -292,6 +313,27 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 * <span class="tryit"><strong>You try it:</strong> rename your rivers input to <strong>Input Rivers</strong> and the buffer output to <strong>Areas Near Rivers</strong>.</span>
 
 <!-- Compare the two strips. "Project (2)" tells you which tool ran, twice. "Project to Equidistant" tells you why. "us_rivers" is a file name; "Input Rivers" is what the data means, and it is also the label that shows up on the tool dialog when the model is run as a tool. Renaming an element does not rename the data on disk, and it does not rename the model itself; the model's Name lives in Properties, General. Both strips are the same model in ArcGIS Pro 3.7.1, before and after ten renames. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:94%](images/mbb-add-to-display-menu.png)
+
+Your model runs with **no errors**, but no new layer appears in the **Contents** pane. What is the most likely cause?
+
+<ol type="A">
+<li>The model only previews results until it is saved</li>
+<li>Intersect found no cities inside the river buffer</li>
+<li>The output was written to a folder that was deleted</li>
+<li class="correct">Add To Display is unchecked on the output element</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Running a model does not add its results to the map by default; the output went to the geodatabase, and Add To Display on the output element is what puts it in Contents (Get the Output onto the Map slide). It is the most common my-model-did-nothing complaint. A invents a preview mode. B would still add a layer, just an empty one, if Add To Display were checked. C is possible in principle, but after a clean run the display setting is the first thing to check. -->
 
 ---
 
@@ -439,6 +481,27 @@ Right-click an element and choose **Rename** (or select it and press Ctrl+R). Th
 
 ---
 
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:32% w:90%](images/mbb-tool-dialog-three-parameters.png)
+
+Key concept: **parameters**. Someone double-clicks your model in the Catalog pane. Which elements does the **tool dialog** ask them for?
+
+<ol type="A">
+<li class="correct">Only the elements on the canvas marked with a P</li>
+<li>Every blue input element on the canvas</li>
+<li>Every required setting of every tool in the model</li>
+<li>Every element, from the inputs to the final output</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. The P markers show everything the user will be asked for; everything without one stays fixed inside the model (Three Parameters slide). With no P at all the dialog says No Parameters, which is the recording slide. B is tempting because inputs are the usual parameters, but an unmarked input is baked in. C describes what the Validate check reads, not what the user sees. D treats the dialog as a copy of the canvas. The distance shows up only because it was pulled out as a variable and marked. -->
+
+---
+
 <!-- _class: lead -->
 ![bg right:55%](images/mbb-divider-documenting.jpg)
 
@@ -506,6 +569,27 @@ How do you do it?
 </div>
 
 <!-- Compare this against the help page of any built-in ArcGIS Pro tool: same layout, same sections. That is the standard your model is being held to. The Description and Usage came from the editor on the previous slide; every gray "There is no ..." line in this capture is a gap the author left, and the four parameter explanations are the ones that matter most to whoever runs the tool. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:36% w:92%](images/mbb-view-metadata.png)
+
+On your model's **View Metadata** page, the Distance parameter reads "There is no explanation for this parameter." What does that mean?
+
+<ol type="A">
+<li>Distance has no value, so the model will not run</li>
+<li>Distance has not been marked as a parameter yet</li>
+<li class="correct">Its Syntax line was left blank in Edit Metadata</li>
+<li>ArcGIS Pro could not find the Buffer tool's help</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. The help page is built from what you typed in Edit Metadata; each parameter under Syntax gets one line, and a blank one comes back as that sentence (Edit and View Metadata slides). It is the checklist of what you still owe. A confuses documentation with a missing value, which would gray the element instead. B cannot be right, since only parameters appear under Syntax at all. D guesses that the text is borrowed from the built-in tool; it is not, the model has its own help. -->
 
 ---
 
@@ -634,6 +718,27 @@ The example map is not a template: yours will differ, because your stores and yo
 <!-- The lab requires this: a named reviewer and a sentence on what changed. Pair people up now if there is time. Reviewing against the rubric is the point; "looks good" is not a review. A report nobody else has read is a draft. -->
 
 <!-- TODO(instructor): a one-slide look at an anonymized prior-year report page was planned here ("the analysis is the same, the deliverables are different"). No prior-year PDF is on this machine; supply an anonymized page and it can be added as a slide with a one-line caption. Fall 2026: the two named prior-year PDFs attached to the Learning Suite Thursday entry are shown live instead. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:34% w:92%](images/mbb-lab1-example-map-scenario.png)
+
+You run the Lab 1 baseline plus three more scenarios that vary the numbers. Which **recommended site** makes the strongest case?
+
+<ol type="A">
+<li>The largest suitable area in the baseline run alone</li>
+<li>The site that shows up only in the strictest scenario</li>
+<li>Whichever site the lab page's example map marks</li>
+<li class="correct">A site that stays suitable in every scenario you ran</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Varying the numbers is the real test of a recommendation: one that survives every scenario is worth more than one that appears in only one (Is the Answer Right? slide, and the Sensitivity part of the rubric). A trusts a single run. B confuses strict with robust. C treats the example map as a template, which the Complete Submission slide says it is not; your stores and runs differ. The question sits before Going Forward because that slide is the closing look ahead. -->
 
 ---
 

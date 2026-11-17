@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Week 7 is two decks. This one is Tuesday: a terminal lake, how the bottom of a lake is measured and mapped, the two vertical datums, and how a lake's area and volume follow from its level. Thursday's deck (lake-depth-explorer) is ModelBuilder looping and Lab 6. Every chart in this deck is published data: the USGS gage record, the USGS elevation-area-volume table (Root, 2023), and shorelines baked from the USGS lake-bottom DEM. The title map is five of those shorelines, 4,190 to 4,210 ft. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 7 — Lake Bathymetry<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 7 — Lake Bathymetry<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -181,6 +181,27 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% h:96%](images/lb-shorelines-nested-map.jpg)
+
+The lake drops **one foot** near 4,200 ft, and years later one foot near 4,190 ft. Which drop exposes more **lakebed**?
+
+<ol type="A">
+<li>The drop near 4,190 ft, since the lake is lower and shallower there</li>
+<li>Neither; a foot of level exposes about the same area at any level</li>
+<li class="correct">The drop near 4,200 ft, where the bowl's flat shoulders lie</li>
+<li>Neither; a one-foot drop changes the volume but not the area</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. Near 4,200 ft a foot of level covers up to about 100 sq mi; near 4,190 ft, about 30 ("One Foot Is Not One Foot", from the USGS table). The lake is a very flat bowl with very flat shoulders, so the same foot of level spreads over far more lakebed higher up. A is the intuitive answer: a low, shallow lake feels fragile, and it is in volume, but the area per foot is smaller there. B is the trap the slide title names. D forgets that the shoreline moves whenever the level does; on a flat shore it moves a long way. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/lb-divider-iterators.jpg)
@@ -266,6 +287,27 @@ By the end of class you should be able to:
 - **Collect Values** (ModelBuilder ▸ Utilities) appends each pass's output to a list; **Merge** reads the list and stacks the levels into one feature class
 
 <!-- The Lab 6 model as built in ArcGIS Pro 3.7.1, exported with Export To Graphic and laid out in four rows (same file as the lab page's Figure C). Output Values is a list of paths (pool_3370; pool_3380; ...), not data; Output Table is a receipt nobody reads; Count and Output Layer Names dangle off Select Layer By Location and should. Merge's Input Datasets list does not offer Collect Values' output: drag a connector from Output Values to Merge and choose Input Datasets. Tell students the honest version: with an iterator in a model, every tool runs once per value, Merge included, so Merge rewrites the merged output on every pass with one more shoreline; the last pass leaves them all. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/lb-iterator-loop.svg)
+
+In the Lab 6 loop, **Con** writes its output to **wet_%Elevation%**. Why does the output name need the **%Elevation%**?
+
+<ol type="A">
+<li class="correct">So each pass writes its own raster, not over the last one</li>
+<li>So ModelBuilder draws a connector from the For iterator to Con</li>
+<li>So each wet cell's value is set to that pass's water level</li>
+<li>So Merge can sort the shorelines by elevation once it is done</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. The iterator fills %Elevation% in on every pass, so the outputs are wet_3500, wet_3510, and so on; with a fixed name each pass overwrites the last (the %Elevation% slide earlier in Part 2). B is backwards: no connector is ever drawn for a %...% reference, which is why the Elevation oval looks unconnected. C mixes up the output name with the true value: Con writes 1 in every wet cell, and the level goes in the expression, Value <= %Elevation%. D sounds tidy, but nothing reads the level back out of a file name: the shorelines get their Elevation from a Calculate Field inside the loop (Thursday's deck walks it), and Merge just stacks what Collect Values hands it. -->
 
 ---
 

@@ -110,7 +110,7 @@ Two minutes each, with a neighbor:
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Discuss with a Neighbor
 
 ![bg right:38% w:92%](images/studio-youtube-steps.png)
 
@@ -166,7 +166,7 @@ You want the grader to watch your video from a **link**, but you do not want str
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# What Do You Think?
 
 ![bg right:46% w:100%](images/cyoa-package-contents.svg)
 

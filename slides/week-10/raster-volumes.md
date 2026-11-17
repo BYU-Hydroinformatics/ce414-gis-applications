@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 10, written to be studied on your own: there is no class meeting this week. Tuesday's cut and fill was a difference of two surfaces that both exist: the ground and a design. Here the bottom surface is one nobody can see: the plain under Big Southern Butte, which Lab 9 rebuilds by interpolation (Week 9's methods) before it measures the dome. The title image is a profile through the summit from the Lab 9 DEM. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Volumes with Rasters<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -90,6 +90,27 @@ By the end of this deck (study it after Tuesday's) you should be able to:
 Surface Volume only takes a **flat** plane. That is why Lab 9 uses the Raster Calculator route.
 
 <!-- Surface Volume run in ArcGIS Pro 3.7.1's arcpy on the Lab 9 DEM (projected to UTM 12N, 10 m) clipped to the reference outline: plane 1,572.2 m (the mean of the outline's edge cells), ABOVE, 4.988 km³, 2-D area above the plane 26.17 km². The same number came from summing the cells directly. The figure is Lab 9's Figure 8a, Zonal Statistics with Statistics Type Sum. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/vo-lab09-project-raster.png)
+
+You sum **height × cell area** on a DEM still in **latitude and longitude**. What is wrong with the answer?
+
+<ol type="A">
+<li>Nothing: a 10 m cell is 10 m in any coordinate system you choose</li>
+<li class="correct">The cell area is in square degrees, so the total is not in m³</li>
+<li>The heights turn into degrees too, so the sum is in cubic degrees</li>
+<li>Only the label: the volume is right but comes out in km³, not m³</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- For self-study, or one minute in pairs in class, then the key press circles B. In a geographic coordinate system the cell size is in degrees (about 0.0000926 for these cells), so height x cell area is meters times square degrees, not m3 (Units: Project First). A is the trap: the cells are about 10 m on the ground, but the raster stores their size in degrees, and the arithmetic uses what is stored. C is half right: the heights stay in meters; only the cell size is in degrees. D mixes this up with the km3 conversion, which is a separate step (÷ 1,000³). Lab 9 Step 1 projects the DEM to UTM Zone 12N for this reason. -->
 
 ---
 
@@ -160,6 +181,27 @@ Review: [Week 9 Tuesday deck](https://byu-hydroinformatics.github.io/ce414-gis-a
 
 ---
 
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:42% w:96%](images/vo-butte-plain-tilt.png)
+
+Why does Lab 9 build the butte's **base** by **interpolation** instead of using one flat elevation?
+
+<ol type="A">
+<li>Surface Volume needs an interpolated surface as its reference plane</li>
+<li>Interpolation adds back the buried lava that laps against the dome</li>
+<li class="correct">The plain tilts, so no single flat elevation fits both ends of it</li>
+<li>Zonal Statistics cannot sum heights above a flat, single-value base</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- For self-study, or one minute in pairs in class, then the key press circles C. The plain at the outline's edge falls about 5 m per km to the north, 34 m end to end, so a flat base buries the low side and lifts the high side; an interpolated base follows the plain (Why a Flat Base Is Wrong Here). A has it backward: Surface Volume takes only a flat plane, which is why Lab 9 uses the Raster Calculator route (In ArcGIS Pro, Two Ways). B is the opposite of Where Does the Butte End?: the buried part is what no surface from the DEM can see. D is false: the four-bases table sums the same cells over flat bases (Same DEM, Four Bases). -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/rv-divider-butte.jpg)
@@ -204,6 +246,27 @@ Review: [Week 9 Tuesday deck](https://byu-hydroinformatics.github.io/ce414-gis-a
 Area × mean height **must** equal the sum. If it does not, the units are wrong somewhere.
 
 <!-- All three are TIP check values on the Lab 9 page (Steps 7 and 8). The figure is Lab 9's Figure 7b, the per-cell volume expression: height x 10 x 10 / 1000**3. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:38% w:92%](images/vo-lab09-rc-volume.png)
+
+Key concept: the **sanity check**. Your outline's area times its mean height is far from your summed **volume**. What does that tell you?
+
+<ol type="A">
+<li>Your random seed was not 1, so your points differ from the lab page</li>
+<li>The base is curved, so area times mean height is only a rough guess</li>
+<li>The outline is too narrow, so the buried part of the dome is missing</li>
+<li class="correct">The units are wrong somewhere: a cell area or the km³ conversion</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- For self-study, or one minute in pairs in class, then the key press circles D. The sum of the cell heights times the cell area is the area times the mean height, exactly, whatever the base, so if the two disagree the units are off: a cell area in the wrong units, or the 1,000³ conversion applied once and not the other time (How You Will Know You Are Right). A is tempting because the seed is the first Lab 9 pitfall, but a different seed changes the volume and the mean height together, so the check still agrees. B is the misconception the slide corrects: the identity holds for a curved base too. C changes the answer, not the check. -->
 
 ---
 

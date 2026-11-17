@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 11. Tuesday built the idea: a cost surface, the accumulated cost and back direction rasters, a path walked home from the destination. Today: Tuesday's grid again, then the ArcGIS Pro tools that compute it, Lab 10's own route computed from the lab's own model and data, and the question that matters to an engineer, which of its decisions actually moved the line. Every Lab 10 map and number comes from the lab's reference run (tools/lab10/run_model.py, check_values.json), drawn by tools/week11_lcp_figures.py; the Distance Accumulation and Optimal Path As Line captures are the lab's own Figures 7a and 7b, from the October 9, 2026 build of the lab in ArcGIS Pro 3.7.1 (C:\Ames\Lab10GUI\Lab10.aprx, ready for a live demo). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-11-11</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 11 — Least Cost Path Analysis, Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -101,6 +101,27 @@ By the end of class you should be able to:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% h:86%](images/lcpb-distance-accumulation.png)
+
+In **Distance Accumulation**, which input decides **where** the route goes?
+
+<ol type="A">
+<li>The Input Surface Raster, the DEM the route has to climb over</li>
+<li class="correct">The cost raster: the other inputs set its start and what to avoid</li>
+<li>The barrier features alone; the cost raster changes only the total</li>
+<li>The destination point, which pulls the accumulation toward itself</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. The cost raster decides where the route goes; the source says where it starts and the barriers what it must avoid (Distance Accumulation slide). A is the tempting box in the dialog: Input Surface Raster measures distance over the terrain's actual surface, a different question, and Lab 10 leaves it empty (notes on the Distance Accumulation slide). C overrates the barrier: it takes the lakes out of play, but among the cells that are left the cost raster chooses. D puts the destination in the wrong tool: Distance Accumulation runs from the source over every cell, and the destination enters only in Optimal Path As Line. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/lcpb-divider-route.jpg)
@@ -140,6 +161,27 @@ By the end of class you should be able to:
 - Optimal Path As Line just **follows the arrows** from Bluffdale
 
 <!-- The twilight color ramp wraps around, so 0 and 360 (both "north") look alike. The seams are the boundaries between regions whose cheapest way home goes different ways around an obstacle; a destination on a seam has two nearly equal routes, which is the corridor slide's point. Skip if time is short. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/lcpb-backdirection.png)
+
+A cell of Lab 10's **back direction** raster reads **270**. What does that tell you?
+
+<ol type="A">
+<li>The cheapest total cost of reaching it from the source is 270</li>
+<li>It lies 270 cells, about 8.1 km, from the source at Spanish Fork</li>
+<li>The route home turns through 270 degrees there, almost a full circle</li>
+<li class="correct">The cheapest way home from it starts with a step to the west</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. The back direction raster stores a compass angle toward home: 90 east, 180 south, 270 west, 360 north, 0 at the source (From Four Directions to Eight; Reading the Back Direction Raster). A is the accumulated cost raster, the other output of the same tool, and the most common mix-up. B reads the value as a distance (270 cells at 30 m would be 8.1 km); C reads it as a turn. Neither raster stores either one. -->
 
 ---
 
@@ -251,6 +293,27 @@ Change **one** decision in Lab 10's model. Which one moves the route **farthest*
 - Where the band is **wide**, the exact line is **arbitrary**; where it pinches, it is **not**
 
 <!-- The sum was computed with Raster Calculator on the two accumulation rasters; ArcGIS Pro also has a Corridor tool in Spatial Analyst that does the same sum (seen in the Geoprocessing search on October 9, 2026; not run for this deck). On Lab 10's cost surface the band is narrow near both endpoints and wide along the valley floor, where several nearly equally cheap routes exist; the lake barrier bounds it on the west. An engineer presents the corridor to a siting board, then picks a line inside it for reasons the cost surface never saw: land ownership, a tower foundation, a landowner's objection. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:40% w:94%](images/lcpb-corridor.png)
+
+Key concept: the **corridor**. Where the band of routes within 1% of the cheapest is **wide**, what does that say about the line?
+
+<ol type="A">
+<li class="correct">Its exact path is arbitrary there: many routes cost about the same</li>
+<li>The cost surface needs more scores there before it can pick a route</li>
+<li>The route is most certain there, since so many cells agree on it</li>
+<li>The line has to run down the middle of the band, on the cheapest cells</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. Each cell of the corridor carries the cost of the best route forced through it, so a wide band means many routes nearly as cheap as the best: the exact line there is arbitrary, and where the band pinches it is not (A Corridor, Not a Line). B is tempting but backward: the cost surface did its job, it just cannot tell those routes apart; the choice moves to reasons it never saw, like land ownership. C reads width as agreement; it is the opposite. D assumes the cheapest cells run down the middle; the best route can sit anywhere in the band. -->
 
 ---
 

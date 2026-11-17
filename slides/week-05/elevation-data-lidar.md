@@ -25,7 +25,7 @@ Dr. Dan Ames
 <!-- Week 5, Tuesday. This hour is entirely about where elevation data comes from: what a DEM is, how LiDAR measures one, and which portal to open to download one. Thursday is what you compute from it. Lab 4 needs a DEM, so the download half of this hour is the one they will use on Saturday. The image is a hillshade of a bare-earth LiDAR surface, which is both halves of the hour in one picture. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 5 — Elevation Data and LiDAR<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 5 — Elevation Data and LiDAR<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -98,6 +98,32 @@ The figure is the whole hour in one picture: there is a real elevation surface o
 <!-- Walk the anatomy: number of rows, number of columns, cell size, an (X,Y) origin at the lower-left corner, and NoData cells where there is no value. The number in the cell is an elevation; the color is only symbology applied to that number, and a new color scheme is a new picture of the same numbers.
 
 The values are real 150 m cells from the Timpanogos summit ridge (USGS 3DEP, NAD83 / UTM zone 12N), the same numbers as on the goals slide. 3DEP has no gaps here, so the three NoData cells in the corner are real cells masked to stand for cells outside a clip boundary. Built by tools/week05_terrain_figures.py; it replaced a low-resolution scan of the old figure. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/ed-elevation-grid-anatomy.png)
+
+You switch a DEM's **color scheme** from green-to-brown to grayscale in ArcGIS Pro. What happened to the **values** stored in its cells?
+
+<ol type="A">
+<li class="correct">Nothing: each cell still holds the same elevation as before</li>
+<li>They were rescaled to 0-255, the range a gray ramp can display</li>
+<li>They now store a color for each cell instead of an elevation</li>
+<li>They were grouped into classes, one class per color in the ramp</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. The digital-elevation-grid slide: the number
+in each cell is an elevation, and the color is only symbology applied to that number; a new color
+scheme is a new picture of the same numbers. B borrows the 0-255 range from last week's image bands:
+the display may map values onto a ramp, but the raster keeps its elevations in meters. C is the
+"the map is the data" misconception. D describes a classified display, which is still only how the
+values are drawn; the cells are not rewritten. -->
 
 ---
 
@@ -243,6 +269,34 @@ you one slope, one bridge, one quarry face, at far higher density. Civil enginee
 <!-- The same canyon as the raw point cloud two slides back. The ground returns have been turned into a surface and hillshaded; the trees are still drawn as points on top of it, which is a useful way to show the classification: everything smooth is bare earth, everything lumpy is what the processing took out. Channels, terraces, roads, and old cut lines show up that
 you cannot see on the ground or in a photograph. This is why LiDAR changed geomorphology and
 archaeology. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:92%](images/ed-lidar-multiple-returns.png)
+
+A bare-earth model is built from **ground returns** only. Under a large building there are **no ground returns**. Where does the surface there come from?
+
+<ol type="A">
+<li>The roof returns, lowered by an estimate of the building's height</li>
+<li class="correct">It is interpolated across from the ground points around it</li>
+<li>The last return of each pulse, which passes through the roof</li>
+<li>A tripod scan from the street, merged in to fill the footprint</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. The returns-to-bare-earth slide: classify
+every point, drop everything that is not ground, connect what is left; under a building there are
+no ground points at all, so the surface is interpolated across (the callout on the figure). A
+sounds like a sensible fix, but nothing in the processing knows a building's height; the roof
+points are simply dropped. C overextends the multiple-returns idea: a pulse gets through gaps in a
+canopy, not through a solid roof, so the last return there is the roof. D is tempting after the
+"where the scanner sits" slide, but ground-based scans see walls, not the ground under a building,
+and they are not part of building an airborne bare-earth model. -->
 
 ---
 
@@ -476,6 +530,32 @@ Free from USGS Astrogeology: [Mars MOLA, 463 m](https://astrogeology.usgs.gov/se
 <!-- A one-slide aside, but it makes the point that everything in this lecture is arithmetic on a grid of numbers. Nothing in the slope or viewshed math cares which planet the numbers came from. The summit of Olympus Mons is about 21 km above the Mars reference level in this DEM, more than twice the height of Everest above sea level, and the panel is 1,237 km across; Copernicus crater is about 155 km across.
 
 Links checked 2026-09-28, all 200. The files are big (Mars MOLA 2 GB, Moon LOLA 8 GB, the Mars blend 11 GB), so this is not a lab download. The original MOLA and LOLA products are also at the PDS Geosciences Node (pds-geosciences.wustl.edu). The figure reads the USGS global mosaics directly (tools/week05_dem_sources.py, planetary): MOLA every 4th cell with 5x vertical exaggeration, LOLA at 2x. It replaced a scan of a Mars quadrangle map. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:38% w:92%](images/ta-global-dem-3d.jpg)
+
+Key concept: **where fine DEMs exist**. You need elevation finer than **30 m** for a site in rural Peru. What is your best first step?
+
+<ol type="A">
+<li>Download AW3D30 instead of SRTM, since it is the newer product</li>
+<li>Resample the SRTM 1 arc-second DEM to 5 m cells in ArcGIS Pro</li>
+<li class="correct">Find out whether anyone has flown lidar over that part of Peru</li>
+<li>Download the USGS 3DEP 1 m DEM for it from The National Map</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. The DEM data sources slide: global data tops
+out near 30 m, and for anything finer you need lidar, which exists only where someone flew it. A
+picks the newest global product, but AW3D30 is still 1 arc-second, about 30 m, like SRTM and ASTER.
+B is the native-versus-resampled trap (cell-size slide notes): resampling gives smaller cells but no new information, so a
+5 m grid made from 30 m data still carries 30 m detail. D is the right tool in the wrong country:
+3DEP covers the United States and its territories (the coverage column in the table). -->
 
 ---
 

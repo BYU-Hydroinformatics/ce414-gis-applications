@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 6. Tuesday (Part A, watershed-delineation-a.md) covered what a watershed is and why water is managed by them, then the first three of the eight steps, ending on the flow direction grid. Today runs in three movements: how watersheds used to be delineated by hand, the same job done by USGS StreamStats, and then the rest of the eight steps (flow accumulation, the stream threshold, stream links, pour points and watersheds) finished in the Lab 5 ArcGIS Pro model. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 6 — Watershed Delineation Part B<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -154,6 +154,27 @@ By the end of class you should be able to:
 
 <!-- The deliverable is one image showing both polygons over the same basemap. Symbolize one as a hollow outline so both are visible. If time allows, have them compute the area of each and report the percent difference. The example on the right: a quick hand-digitized basin (pink, 35.5 km2) against the StreamStats basin (black outline, 48.0 km2) for Emigration Creek at Hogle Zoo; the hand version missed about a quarter of the basin, mostly the south ridge toward Parleys Canyon. -->
 <!-- Capture: ArcGIS Pro 3.7.1 at 175 %, October 10, 2026, C:\Ames\Week06\Week06_Figures.aprx. The StreamStats basin is the one its web app delineated for the outlet 40.7495 N, 111.8160 W (its delineation response, saved as C:\Ames\Week06\streamstats\emigration_basin.json, converted with JSON To Features); the hand polygon was digitized by eye in the same session. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:95%](images/ws-compare-hand-streamstats.jpg)
+
+Five students hand-digitize the basin above Hogle Zoo and get five boundaries. **StreamStats** gives one. What does the **automated** basin buy you?
+
+<ol type="A">
+<li>A boundary sure to be more accurate than any drawn by hand</li>
+<li>A boundary that no longer depends on where the outlet is</li>
+<li class="correct">The same boundary every time from the same DEM and outlet</li>
+<li>A boundary traced from the contours on the topographic map</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. The automated basin is more consistent: same DEM, same pour point, same answer, every time ("Compare the Two"). A is the tempting one, and it is the point of the activity that it is wrong: consistent is not the same as accurate, and a coarse or outdated DEM is consistently wrong. B is wrong the other way: the outlet matters more than anything else, which is why clicking off the blue line gives a tiny basin and why Part 2 snaps the pour point. D: StreamStats runs the eight steps on a pre-processed DEM, not on the contours a person reads by eye. -->
 
 ---
 
@@ -416,6 +437,27 @@ By the end of class you should be able to:
 - The whole workflow, wired together once in **ModelBuilder**: this is the Lab 5 model, and it runs end to end on any DEM you give it
 
 <!-- Same chain as the eight steps, now readable because they know every box. Trace it row by row. Surface: Fill, then Flow Direction (D8), then Flow Accumulation. Basin: Snap Pour Point moves the outlet up to 50 m onto the highest-accumulation cell, Watershed collects everything that drains to it, and Raster to Polygon turns Basin_Raster into one polygon. Streams: the threshold enters at Raster Calculator, Con(("%Basin_Raster%" >= 0) & ("%Flow_Accumulation%" > %Threshold%), 1), which keeps cells inside the basin whose flow accumulation exceeds the threshold; then Stream Link numbers the segments and Stream to Feature draws them as lines. Subwatersheds: a second Watershed uses the Stream Link raster as its pour points, so every link gets its own subwatershed, and a second Raster to Polygon with Create multipart features checked makes one polygon per link. Two things to point at: the threshold is applied to flow accumulation, never to the Watershed tool, and Flow_Direction feeds four different tools. The P marks are model parameters; students set them in Lab 5 Step 12. This is the Lab 5 model exported from ModelBuilder (Lab 5 Figure C); the gray oval is Flow Direction's optional drop raster, left empty. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:95%](images/ws-lab05-full-model.svg)
+
+In the Lab 5 model you raise the stream **threshold** from 500 to 5,000 cells and run it again. What changes?
+
+<ol type="A">
+<li class="correct">Fewer stream links and subwatersheds; the basin stays the same</li>
+<li>The basin boundary shrinks to fit the shorter stream network</li>
+<li>Flow accumulation is recomputed with larger counts in every cell</li>
+<li>More stream links, since more cells now pass the threshold test</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. The threshold is applied to flow accumulation, never to the Watershed tool ("Example Model"): the basin comes from the snapped pour point and does not move, while the stream network thins (Lab 5's measured values: 290 segments at 500 cells, 29 at 5,000, from "Streams at Two Thresholds"), and with one subwatershed per link, the subwatersheds drop with it. B is the commonest wrong idea: students think the streams define the basin. C confuses the order of the steps: flow accumulation is computed once, before the threshold, and does not change. D gets the comparison backwards: a higher bar lets fewer cells through. Lab 5 Step 14 makes them see this for themselves. -->
 
 ---
 

@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 7. Tuesday gave the lake, its bathymetry, the datum, and the elevation-area-volume table. Today: a ModelBuilder model that runs once per water level instead of once, and Lab 6, which uses it on Lake Powell. The lab is Lake Powell, not the Great Salt Lake: Powell is one connected pool behind a dam, so the main-pool step works cleanly; the Great Salt Lake's railroad causeway splits it in two below about 4,200 ft. The title image is the Lab 6 default run on the 10 m Wahweap close-up: 21 shorelines, 3,500 to 3,700 ft. Slides marked "ArcGIS Pro screenshot to come" are placeholders: they are captured from the real Lab 6 model once the DEM extract is built. Until then, demo live. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 7 — Lake Depth Explorer<span class="updated">Last Updated: 2026-10-27</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 7 — Lake Depth Explorer<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -96,6 +96,26 @@ By the end of class you should be able to:
 
 <!-- The attribute table of powell_shorelines_3500_3700_10 from the GUI-built model (October 2, 2026): 75.65 sq mi at 3,500 ft, 103.93 at 3,550, the same as the arcpy run on the slide after next. A full run took about 4.5 minutes in ModelBuilder on the build machine. -->
 
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:95%](images/lb-full-model.svg)
+
+At each level **Con** floods the lake plus hundreds of closed hollows. What does **Select Layer By Location** with main_pool_seed keep, and what should **Count** read?
+
+<ol type="A">
+<li>Every flooded polygon; Count equals the number of hollows</li>
+<li class="correct">The one polygon touching the seed, the lake; Count reads 1</li>
+<li>The one polygon touching the seed; Count rises by 1 each pass</li>
+<li>The largest polygon by area, wherever it is; Count reads 1</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. Con floods several hundred closed hollows at each level, and Select Layer By Location keeps the one polygon that touches the seed on the lake bed above the dam: that is "which puddle is the lake" ("Reading the Model: Loose Ends and the Loop"). Count is per pass, so it should read 1 every pass; 0 means the seed went dry. A is what the model gives without the step: every pothole below the level. C has the right polygon but treats Count as a running total of passes. D is a reasonable guess at "the lake", but the tool selects by location, not by size. -->
 
 ---
 
@@ -174,6 +194,27 @@ By the end of class you should be able to:
 - Screen-capture the map with the three shorelines for Learning Suite
 
 <!-- Students built the model after Tuesday (Steps 0-6). Three levels of the full model run in well under a minute on either surface. If a model is not finished, pair up. Without the Select Layer By Location step the polygons include every pothole below the level: show Count on the demo copy. Data: the Lab 6 package, docs/data/lab06-powell-data.zip. TODO(instructor): create the matching Learning Suite activity. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:38% w:95%](images/lb-powell-area.png)
+
+You skip **Step 1** and run the loop in feet on the surface still in **meters**, which reads about 955 to 1,441. What does each level's output look like?
+
+<ol type="A">
+<li>A shoreline about 2.91 ft too low, too small to notice</li>
+<li>No polygons at all, because every cell sits above the level</li>
+<li>An area about 3.28 times too small, from the unit mix-up</li>
+<li class="correct">The whole surface flooded every time, and no error shown</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Every cell of the meters surface (955 to 1,441) is below 3,370, the lowest level in feet, so Con marks the whole surface wet at every level and nothing complains (Lab 6, Step 1, "The datum trap"; also the note on "Lab 6 at a Glance"). A is the datum half of Step 1 on its own: 2.91 ft is the NAVD88 to NGVD29 offset at Powell, but the units are the bigger mistake. B has the comparison backwards: the numbers are smaller, so the cells are below the level, not above it. C treats the error as a scale factor on area, but the test is a comparison, and every cell passes it. -->
 
 ---
 

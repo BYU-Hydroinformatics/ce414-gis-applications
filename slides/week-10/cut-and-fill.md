@@ -27,7 +27,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 10, written to be studied on your own: there is no class meeting this week, so everything you need is on the slides themselves. Thursday's deck is volumes with rasters and Lab 9 (Big Southern Butte); today is the same idea in the form every civil engineer meets first: how much soil a design moves. The title image is a hypothetical 150 m x 100 m level pad placed on the real Lab 5 DEM of Provo's east bench, colored by how far the ground must come down (red, cut) or go up (blue, fill). -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 10 — Cut and Fill<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -183,6 +183,27 @@ Ground − 102 m, cell by cell:
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/vo-pad-sweep.png)
+
+A level **pad** sits on a grid of ground cells. At what grade do **cut** and **fill** balance?
+
+<ol type="A">
+<li>Halfway between the lowest and the highest ground cell under the pad</li>
+<li>At the ground height of the cell in the middle of the pad</li>
+<li class="correct">At the mean ground height of all the cells under the pad</li>
+<li>At the lowest ground cell, so that the pad needs no fill at all</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- A self-study week, so this is for working alone or with a classmate; in class, one minute in pairs, then the key press circles C. Cut minus fill is the sum of (ground minus grade) times the cell area, which is zero exactly when the grade is the mean of the cells (Check Your Work: 921 / 9 = 102.3 m on the tiny pad; The Balance Grade). A, the midpoint of the range, is the common guess and gives 102.5 m on the tiny pad: close, but not balanced. B gives 102 m there, the Your Turn grade with 300 m3 of extra cut. D confuses no fill with balance: at the lowest cell everything is cut and it all has to be hauled away. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/cf-divider-leaves-out.jpg)
@@ -203,6 +224,27 @@ Ground − 102 m, cell by cell:
 The grid gives **bank** volume (soil in place), not **loose** or **compacted**.
 
 <!-- No numbers for swell and shrink factors are given here on purpose: they come from geotechnical tests for a site. The pad sits in a developed part of Provo's east bench, so the DEM's ground includes roads and lots; it is a hypothetical design for illustration. -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:42% w:96%](images/vo-pad-profile.png)
+
+The grid method says a pad has **700 m³** of cut. Which **volume** is that number?
+
+<ol type="A">
+<li class="correct">Bank volume: the soil as it sits in place, before any digging</li>
+<li>Loose volume: the soil heaped in the trucks after it is dug out</li>
+<li>Compacted volume: the soil once it is placed and rolled as fill</li>
+<li>Usable volume: what is left once topsoil and rock are set aside</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- For self-study, or one minute in pairs in class, then the key press circles A. The grid subtracts two surfaces of the ground in place, so it measures bank volume (A Grid Volume Is a First Estimate). B is what the trucks carry: dug soil swells and takes more room loose. C is what the fill becomes: compacted soil takes less room. D is a real adjustment too, but the grid knows nothing about which soil is topsoil or rock. All three of B, C and D need factors from the site's geotechnical tests, which is why the deck gives none. The 700 m3 is the tiny pad's cut from Check Your Work. -->
 
 ---
 

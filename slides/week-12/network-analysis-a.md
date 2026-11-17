@@ -141,7 +141,7 @@ By the end of class you should be able to:
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Discuss with a Neighbor
 
 ![bg right:40% h:96%](images/na-gap-dead-end.png)
 
@@ -194,7 +194,7 @@ A street segment on 300 North stops **2 m short** of the 500 West segment it sho
 
 <!-- _class: quiz -->
 
-# Discuss with Your Neighbor
+# What Do You Think?
 
 ![bg right:40% w:97%](images/na-impedance.png)
 
@@ -242,7 +242,7 @@ Every segment has two costs, **TravelMinutes** and **Length**. You route an engi
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Key Concept
 
 ![bg right:44% w:96%](images/na-oneway-quiz.png)
 
@@ -363,7 +363,7 @@ The engine is at **A**; the fire is at **B**, one block away on a street that is
 
 <!-- _class: quiz -->
 
-# Talk to Your Neighbor
+# Discuss with a Neighbor
 
 ![bg right:40% w:94%](images/nab-one-station-rings.png)
 

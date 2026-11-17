@@ -24,7 +24,7 @@ Dr. Dan Ames
 <!-- Tuesday of Week 9: sampling design, then the two interpolators that weight points by a rule you choose, nearest neighbor (Thiessen) and IDW. Thursday is kriging, which lets the data choose the weights, then how to measure a surface's error, and Lab 8. Slides marked optional in these notes can be skipped as time requires. The surface on the right is where Thursday ends up: a kriged surface built from a scatter of measured points. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 9 — Interpolation<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 9 — Interpolation<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -213,6 +213,27 @@ li[data-bespoke-marp-fragment="active"] .ls-pop { animation: tryit-pop 0.45s eas
 </div>
 
 <!-- The map starts empty except for the stations: a thermometer reading at each is the birthday mark on the wall. Click 1 fills every cell, which is the growth line in two dimensions. Clicks 2 and 3 are the two definitions the rest of the session hangs on. The two halves are inseparable: a brilliant interpolator cannot rescue a bad sample, and a beautiful sample is useless until you interpolate it. Click 4 asks the class, and click 5 shows answers once they have had a go. Most examples on the card are one-dimensional, like the growth chart; two are already spatial: an elevation between contours and the ground between borings. The temperatures are made up (16 stations, filled by IDW with power 2, tools/week09_tuesday_figures.py); IDW itself comes later today. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:40% w:94%](images/ip-growth-points.png)
+
+**Interpolation** predicts values at unsampled points within the region that was sampled. Her height was marked on every birthday, ages 1 to 18. Which estimate is **interpolation**?
+
+<ol type="A">
+<li>Her height at age 25, from the marks at ages 17 and 18</li>
+<li class="correct">Her height at age 12½, from the marks at ages 12 and 13</li>
+<li>Her height on her 12th birthday, read straight off the wall</li>
+<li>Her height at six months, from the marks at ages 1 and 2</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. Age 12 and a half is unsampled and lies between two samples, inside the sampled range of ages 1 to 18: that is interpolation, the Growing Up slide's worked example. A and D both reach outside the sampled range, so they are extrapolation, which every method handles badly (the Interpolation slide's definition says within the region sampled); D is the tempting one because six months is so close to the first mark. C is not an estimate at all: the 12th birthday is a sample, so its value is read, not predicted. -->
 
 ---
 
@@ -700,6 +721,27 @@ A method that returns the samples is **exact**.
 </div>
 
 <!-- Four clicks, one method each, all on the same ten prices. In one dimension the shapes are easy to see, and they are the same shapes students saw in 3D: Thiessen's staircase is the stepped Thiessen surface, IDW's flat little bumps at each price are the bull's-eyes, the spline swings smoothly through every price (and overshoots between some), and the trend line is the tilted dome. The prices are made up (tools/week09_tuesday_figures.py); the 2nd-order trend misses them by up to $4.40. The self-check quiz has an item on exactly this, and it splits the room: IDW surfaces look averaged, so people expect IDW to be the non-exact one. At a sample location the distance is zero, the weight 1/d^n is unbounded, and the sample's own value comes back. In the six-methods test Thursday shows, on today's 150 Timpanogos samples: Thiessen, IDW and the thin-plate spline return every sample exactly, and the 2nd-order trend misses by 163 m on average (tools/week09_elevation_numbers.json). An earlier ArcGIS Pro run on another DEM found its regularized spline within 0.01 m. Fixed-radius averaging was removed from this deck October 25, 2026 (not used in practice or in Lab 8). -->
+
+---
+
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/ip-tp-samples.png)
+
+You have **soil type** (sand, silt or clay) at 150 sample points and need it mapped everywhere. Which method fits a **categorical** variable like this?
+
+<ol type="A">
+<li>IDW, since nearby samples should count more than distant ones</li>
+<li>Spline, since it passes exactly through every sampled point</li>
+<li class="correct">Thiessen, since each cell takes its nearest sample's class</li>
+<li>Trend surface, since it captures the region's overall pattern</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. Thiessen gives every cell the value of its nearest sample, so every cell gets a real class, and its flat polygons with jumps at the edges suit a discrete variable (Thiessen Polygons: The Result lists categorical variables as an advantage). A, B and D all blend or fit numbers: IDW averages neighbors, so halfway between sand and clay it would invent a class that is neither; a spline bends smoothly between values and can overshoot; a trend surface is a regression fit to numbers. Each reason given is true of its method, which is what makes them tempting; none of them suits a category. -->
 
 ---
 

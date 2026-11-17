@@ -26,7 +26,7 @@ Dr. Dan Ames
 <!-- Thursday of Week 9. Tuesday built surfaces with weights from a rule you choose: Thiessen and IDW. Today starts with kriging, which takes its weights from the data, then asks how wrong each surface is and which one to trust. Then Lab 8, which does exactly this on Y Mountain with all three methods. The title image is the Lab 8 example baseline sheet: the true DEM and three rebuilds from the same 2,500 points, with their error maps underneath. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 9 — Kriging and Interpolation Error<span class="updated">Last Updated: 2026-10-28</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 9 — Kriging and Interpolation Error<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -381,6 +381,27 @@ section > h1 { position: absolute; top: 52px; left: 70px; right: 70px; margin: 0
 
 ---
 
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:38% w:92%](images/ie-semivariogram-plain.png)
+
+A station sits farther from Provo than the **range** of the fitted **semivariogram**. What does that station tell kriging about Provo?
+
+<ol type="A">
+<li>A weight of 1/d², the same rule IDW would give it at that distance</li>
+<li class="correct">No more than the regional average of all the stations does</li>
+<li>More than a close station, because far-apart pairs differ the most</li>
+<li>Something, as long as it is one of the 12 nearest points to Provo</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles B. Past the range the curve is flat at the sill: a pair that far apart is no more alike than any two places, so the far station adds nothing beyond the regional average (the pop-up question on Fit a Model to the Dots, with Moab). A is IDW's fixed rule, which kriging replaces with weights from the data (Kriged Result). C reads the semivariogram upside down: far pairs differ the most, which is exactly why they say the least. D mixes up the search neighborhood (12 nearest points, Under the Hood) with the range: being one of the 12 gets a point into the system, but past the range it carries no more than the average. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/ip-divider-how-wrong.jpg)
@@ -548,6 +569,27 @@ section:has(.caps li:nth-child(3)[data-bespoke-marp-fragment="active"]) .flow .b
 
 ---
 
+<!-- _class: quiz -->
+
+# What Do You Think?
+
+![bg right:40% w:94%](images/ie-profile.svg)
+
+**RMSE** squares every cell's error before it takes the mean. Why **square** first?
+
+<ol type="A">
+<li>So the answer comes out in square meters, the units of cell area</li>
+<li>Because Zonal Statistics as Table takes a Mean of positive cells only</li>
+<li>So cells where the surface is too high count double against it</li>
+<li class="correct">So too-high and too-low cells both count instead of canceling</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles D. Error is truth minus surface, so it is positive where the surface is too low and negative where it is too high (Error = Truth - Surface); averaged as is, the two would cancel and a bad surface could score near zero. Squaring makes both count, and it also weights big misses heavily (One Number: RMSE). A is half right and tempting: the square is in square meters, but the root at the end brings the answer back to meters. B invents a limit the tool does not have; Zonal Statistics as Table averages any values, and the squaring is a choice in the formula. C picks one sign: squaring treats too high and too low alike. -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/ip-divider-which-trust.jpg)
@@ -681,6 +723,27 @@ li[data-bespoke-marp-fragment="active"] .pop { display: inline-block; animation:
 <div class="ai-note">A general image model (gpt-image-2.5-flare), not a terrain model, working in 256 gray levels (about 7 m each); outputs rescaled to the 150 samples before scoring. Models trained on real DEMs should do better.</div>
 
 <!-- An experiment run October 28, 2026 for this class (tools/week09_genai_interpolation.py; the inputs, prompts and the two images the model returned are kept in tools/week09_genai/, and the numbers in tools/week09_genai/numbers.json). Same 150 Timpanogos samples, same 60 hold-out points as the six-methods slide. Test 1: the samples drawn as gray squares (brightness = elevation, 1,800 m black to 3,600 m white) on a red "missing data" background, with a prompt asking for the most likely, realistic terrain that passes through every square. It returned a gorgeous, entirely generic eroded mountain landscape and ignored the squares: rescaled to the samples, 367 m at the hold-outs, against 372 m for putting the sample mean everywhere. Test 2, closer to how generative models are really used on DEMs (void filling, sharpening): the fitted kriged surface as the input, asked to add realistic fine detail while keeping the large-scale shape. It kept the shape roughly, added crisp ridges and gullies, and drifted in brightness: 127 m, worse than the kriging it started from (73 m) and than IDW (100 m), because the detail is invented and does not sit where Timpanogos's real ridges are. Two clicks of results, the takeaway, then the closing line. The closing line points at where this is likely to go: models built for this job (neural processes, prior-data fitted networks, and conditioned diffusion models in the research literature) take scattered points in and give estimates and uncertainty out in one pass, learned from many real DEMs or weather fields instead of a fitted semivariogram. They are trained with exactly the hold-out test: hide some points, predict them, score the error, millions of times. None is yet an everyday GIS tool. Fairness points to say out loud: this is a general image model, not one trained on DEMs; it works in 8-bit gray (about 7 m per level), which alone would cost only a few meters; both outputs were given the best straight-line rescale to the 150 samples, which uses nothing a real project would not have. Purpose-built generative models for DEMs exist in research and should do better than this, so treat the result as a lower bound. The lasting point is the one from the Kriged Result slide: you cannot fabricate data, and the hold-out test is how you catch a surface that only looks right. Where GIS and AI may meet: filling small gaps and sharpening coarse DEMs, always checked against measurements the model never saw. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Key Concept
+
+![bg right:38% w:92%](images/ip-tp-six-methods.png)
+
+Key concept: **hold-out points**. A real project never has the true DEM. How do you judge which **surface** to trust?
+
+<ol type="A">
+<li class="correct">Score each surface at sample points held back from interpolating</li>
+<li>Pick the surface that looks most like realistic, detailed terrain</li>
+<li>Pick a method that passes exactly through every sample point</li>
+<li>Use kriging's automatic fit, since its weights come from the data</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles A. Without the truth, the honest test is to hold some measured points back, build each surface without them, and score it there (Same Points, Six Methods: 60 hold-out points). B is what the generative-AI experiment warns against: realistic is not accurate. C is tempting because exactness sounds like accuracy, but an exact method can still be far off between the samples; Thiessen and IDW are exact too, and both scored well behind the spline and the fitted kriging. D is the flat panel: the automatic fit came out almost all nugget and did no better than the mean (Why the Automatic Fit Came Out Flat). -->
 ---
 
 <!-- _class: lead -->
@@ -767,6 +830,27 @@ At **2,500** points: Thiessen **28.29 m**, IDW **20.71 m**, kriging **14.46 m**
 - **Peer review** before you submit, and name your reviewer
 
 <!-- The figure is the lab page's example scenario sheet. It is one way to do Map 2, not a template to copy: submissions whose layouts, model labels or symbology match another student's too closely are flagged for follow-up. Say it plainly once, here. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Discuss with a Neighbor
+
+![bg right:36% h:84%](images/ie-zonal-table.png)
+
+Your Lab 8 RMSE table reads **COUNT** below **67,337**. What is the most likely **cause**?
+
+<ol type="A">
+<li>The fitted kriging model was almost all nugget, so cells were dropped</li>
+<li>Squaring turned some errors to zero, and zero cells are not counted</li>
+<li class="correct">A surface does not cover the study area: check the Extent setting</li>
+<li>The IDW power was set too high, so cells far from points stayed empty</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- One minute in pairs, then the key press circles C. COUNT is the number of cells averaged, and 67,337 is every cell of True_DEM; fewer means some surface stops short of the study area, and the usual cause is the Extent environment not set to True_DEM in Step 0 (Lab 8 at a Glance; RMSE in ArcGIS Pro). A is the flat-panel story from Part 3: an all-nugget fit flattens the surface but still covers every cell. B confuses a value of zero with NoData; a cell with zero error is still counted. D is tempting because IDW has a power, but the power changes the weights, not which cells get a value. -->
 
 ---
 
