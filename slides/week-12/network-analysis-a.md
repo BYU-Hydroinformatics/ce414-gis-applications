@@ -52,9 +52,9 @@ Dr. Dan Ames
 **Lab 11, Fire Response Coverage:** *who in Utah County lives more than **four minutes' drive** from a fire station?*
 
 - Build **one ModelBuilder model**: a **service area** around all 42 stations, then a **count of the people** outside it
-- Measure the same four minutes as a **buffer**, and compare the two answers
-- Run it again at **your own cutoff** and at 2, 6 and 8 minutes
-- Due **Saturday**: two maps, a table, the report and `Lab11.atbx` · [the lab page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
+- Measure the same four minutes as a **buffer**, and compare the answers
+- Run it again at **your own cutoff**
+- Due **Saturday**: two maps, one table, the report and `Lab11.atbx` · [the lab page](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 
 <!-- Say the goal before any of the theory, so every slide today has somewhere to land. The map is the lab's own Figure 9. Everything today is a piece of this model: the network (Part 1), its costs (Part 2), and the service area and its three tools (Part 3). Thursday finishes the model: from polygons to people, the buffer comparison, and the cutoff. Each student's cutoff is 4 + 0.04 x the last two digits of their BYU ID. -->
 
@@ -131,7 +131,7 @@ By the end of class you should be able to:
 ![bg right:52% w:98%](images/na-impedance.png)
 
 - An **impedance** is whatever you choose to **minimize**: meters, minutes, dollars, calories
-- UGRC's **TravelMinutes**: the segment's length over its posted speed, with surface streets **× 1.5** for signals and congestion
+- UGRC's **TravelMinutes**: the segment length divided by the posted speed and converted to minutes, with surface streets **× 1.5** for signals and congestion
 - A local street at a posted 25 mph comes out at **17 mph**; an interstate posted 65 at **54**
 - The network carries a second cost, **Length**, in meters
 
@@ -143,7 +143,7 @@ By the end of class you should be able to:
 
 # Talk to Your Neighbor
 
-![bg right:40% w:94%](images/na-overpass.png)
+![bg right:40% h:96%](images/na-gap-dead-end.png)
 
 A street segment on 300 North stops **2 m short** of the 500 West segment it should meet. Nothing else touches it there. What does the network do at that corner?
 
@@ -156,7 +156,7 @@ A street segment on 300 North stops **2 m short** of the 500 West segment it sho
 
 * <span class="reveal"></span>
 
-<!-- Two minutes: talk to your neighbor, then a show of hands, then one key press circles the answer. B. Connectivity lives in the junctions, and a junction exists only where the geometry actually meets (an endpoint, or a shared vertex for UGRC's surface streets). A gap of 2 m is a gap; the map draws the corner, the graph does not have it. A and D are the map-reader's intuition; C confuses turns with connectivity. The streets are made up for the question. -->
+<!-- Two minutes: talk to your neighbor, then a show of hands, then one key press circles the answer. B. Connectivity lives in the junctions, and a junction exists only where the geometry actually meets (an endpoint, or a shared vertex for UGRC's surface streets). A gap of 2 m is a gap; the map draws the corner, the graph does not have it. A and D are the map-reader's intuition; C confuses turns with connectivity. The streets are made up for the question; the figure is drawn by tools/week12_tuesday_figures.py. -->
 
 ---
 
@@ -170,83 +170,73 @@ A street segment on 300 North stops **2 m short** of the 500 West segment it sho
 
 # One-Way Streets: a Wall or a Price
 
-![bg right:46% w:96%](images/na-edges-junctions.png)
+- Each segment stores its minutes **twice**: along (`F_T`) and against (`T_F`) the digitized direction
+- The wrong way on a one-way street costs **100 times** the right way: a **price**, not a wall
 
-- Every edge has a cost **in each direction**: `F_T_IMP_MIN` along the way it was digitized, `T_F_IMP_MIN` against
-- A **restriction** attribute makes the wrong direction **impassable**
-- UGRC chose a **cost** instead: the wrong direction is **100 times** the right one
-- On Lab 11's longest one-way I-15 segment: **3.04** minutes northbound, **304** the other way
+![w:800 center](images/na-roads-table.png)
 
-<!-- The two directional fields are the evaluators of TravelMinutes in UGRC's template. 590 of Utah County's edges are one-way (ONEWAY = 1 or 2). A hundredfold cost means a solver goes the wrong way only when nothing else reaches at all, which is a defensible model of an engine with its lights on. A restriction would make it impossible. Both are modeling decisions, and Lab 11's Step 1 has students read the two numbers off I-15 themselves. -->
+<!-- The table is five real rows of Lab 11's Roads feature class (FireResponse.gdb, Network/Roads), the segments nearest Provo Station 21 plus the longest one-way I-15 segment, drawn by tools/week12_tuesday_figures.py; it is a figure, not a screenshot. Walk it left to right. ONEWAY 0 is two-way, 1 is one-way in the digitized direction (138 segments use 2, one-way against it; 590 of the county's segments are one-way). SPEED_LMT and Shape_Length are what the minutes come from: the bottom line works 100 S through, 147.0 m divided by 25 mph and converted to minutes is 0.219, and the 1.5 surface-street factor makes it 0.329, exactly the stored value. Then the I-15 row: 3.04 minutes northbound, 304 against the arrow. A restriction attribute would have made the wrong way impossible; UGRC chose a price, so a solver goes the wrong way only when nothing else reaches at all. Lab 11's Step 1 has students read the two I-15 numbers off the network themselves. -->
 
 ---
 
 # Turns Cost Time Too
 
-![h:430 center](images/na-turn-delays.png)
+![bg right:46% w:96%](images/na-turn-delays.png)
 
-<!-- UGRC's network has no turn features, but it carries global turn delays, read from the network template: a left turn from a local street onto a local street adds 30 seconds, a right turn nothing, crossing a major road straight ahead 15 seconds. This is why a fastest route avoids left turns across arterials, and it is one more reason the network's four minutes reach less than a circle's. A network built from raw roads without these has every turn free. Skip if time is short. -->
+- The table is part of the **network dataset's definition**, set by UGRC in its [Utah Street Network](https://gis.utah.gov/data/transportation/street-network-analysis/), and Lab 11's copy kept it
+- Does the solver use it? **Yes**: every solve adds a delay for each **turn** to the route's minutes
+- A test route from Station 21 in Lab 11's network: **8.57 min** of road + three turns at **30 s** = **10.07 min**
+- You never open this table in Lab 11; it works **inside** every solve
+
+<!-- Where it lives: Network Dataset Properties > Travel Attributes > TravelMinutes > Evaluators > Default Values > Turns, a global turn delay evaluator, read from UGRC's network template (tools/lab11/ugrc_network_template.xml). There are no turn features in the network; the delays apply at every junction by turn angle. The test (November 16, 2026): Make Route Analysis Layer on Lab 11's network from Station 21 to a point 2.5 km east and 1.8 km north; Copy Traversed Source Features returned 41 edges summing to 8.571 minutes and three turns of 0.5 minutes each, total 10.07 = the route's Total_TravelMinutes. Lab 11's network has no road-class hierarchy (Network Dataset Properties shows a yellow warning that turn categories cannot use road class), so the major and secondary rows do not distinguish anything here; the three turns charged were all 30 seconds, the local left-turn and U-turn value. This is one more reason a fastest route avoids left turns, and the network's four minutes reach less than a circle's. -->
 
 ---
 
 <!-- _class: quiz -->
 
-# Predict First
+# Discuss with Your Neighbor
 
-![bg right:40% w:94%](images/na-impedance.png)
+![bg right:46% w:97%](images/na-impedance.png)
 
-Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route an engine from a Provo station to a Census block **8 km** away, once minimizing each. What happens?
+Every segment has two costs: **TravelMinutes** and **Length** (meters). You route an engine to a house **8 km** away twice: once for the **fewest minutes**, once for the **fewest meters**. What do you get?
 
 <ol type="A">
-<li>The two routes are the same roads, since the roads are the roads</li>
-<li class="correct">The fewest-meters route is shorter and slower; the fewest-minutes route is longer and faster</li>
-<li>The fewest-minutes route is also the shortest, since fast roads are straight</li>
-<li>Neither can be solved: a network has one cost</li>
+<li>The same route both times</li>
+<li class="correct">Two routes: the fewest-meters one is shorter in distance but takes more minutes</li>
+<li>Two routes: the fewest-minutes one is also shorter in distance</li>
+<li>One route: a network has only one cost</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Ninety seconds in pairs, a show of hands, then the key press circles the answer. A is the common answer: people picture one road to a place. The answer is B, and the next slide is the measurement. D is the misconception that a network dataset carries one cost; this one carries two, and a travel mode picks which one the solver minimizes. -->
+<!-- Ninety seconds in pairs, a show of hands, then the key press circles the answer. The chart is the hint: a kilometer of interstate costs 0.69 minutes, a kilometer of local street 2.24, so a longer route on fast roads can take fewer minutes. A is the common answer: people picture one road to a place. B is right, and the next slide is the measurement. D is the misconception that a network dataset carries one cost; this one carries two, and the analysis picks which one the solver minimizes. -->
 
 ---
 
 # Shortest Is Not Fastest
 
-![bg right:50% w:98%](images/na-shortest-vs-fastest.png)
+![bg right:60% w:99%](images/na-shortest-vs-fastest.png)
 
-- Same two points, same network, two impedances
-- **Fewest meters**: **9.9 km** through the city grid, **23.4 minutes** at local speeds and turns
-- **Fewest minutes**: **15.3 km** down I-15, **15.1 minutes**
-- The fast route is **55 % longer** and **8 minutes quicker**
-- A fire engine's standard is written in **minutes**, so Lab 11 minimizes minutes
+- Same two points, same network
+- **Fewest meters**: **9.9 km** through the city grid, **23.4 min**
+- **Fewest minutes**: **15.3 km** down I-15, **15.1 min**
+- 55 % **longer** in distance, 8 minutes **faster**
+- An engine's standard is in **minutes**, so Lab 11 minimizes minutes
 
 <!-- Solved with Make Route Analysis Layer on Lab 11's network (tools/week12_network_numbers.json, "route"): from Provo Fire and Rescue Station 21 to a populated block 8.1 km away in a straight line. The green route minimizes Length: 9,878 m, and at TravelMinutes it would take 23.37 minutes. The orange route minimizes TravelMinutes: 15,315 m in 15.14 minutes. Nothing about the roads changed; only the question. This is the whole idea of an impedance in one picture. -->
 
 ---
 
-# How UGRC Built It
+# How a Road Layer Becomes a Network
 
-![bg right:40% w:94%](images/na-overpass.png)
+- Nobody connects the segments by hand: **Build Network** does it, **by rule**
+- **Create Network Dataset** records the decisions: the lines, the **connectivity rule**, the cost **fields**, the **turn delays**
+- **Build Network** writes a **junction** wherever the rule says lines meet; a 2 m gap stays a gap
+- UGRC built it once for the state; Lab 11 reused UGRC's settings for **Utah County**
 
-1. **Sources**: Roads, one subtype for freeways and ramps, one for the rest
-2. **Connectivity**: end-vertex for freeways and ramps, any-vertex for other streets, one group
-3. **Elevation**: none, so overpasses rely on freeway endpoints not touching
-4. **Attributes**: `TravelMinutes` (default) and `Length`, each with an **evaluator** per direction reading a field
-5. **Turns**: global delays by turn type, road class
-6. **Build**: ArcGIS Pro walks every segment and writes the junctions
+![w:1000 center](images/na-build-flow.png)
 
-<!-- This is the Catalog pane's network dataset wizard, as UGRC filled it in; it is why Lab 11 ships the network already built. Lab 11's package was made by exporting UGRC's definition as a template, clipping the roads to Utah County, creating the network from the template and building it, so the costs are UGRC's, unchanged. Students see the result in Network Dataset Properties in Step 1. If a student asks "could I build one from a shapefile of roads": yes, and the deck's six steps are the six decisions they would have to make. -->
-
----
-
-# What Lab 11 Hands You
-
-![h:400](images/na-network-properties.png)
-
-- **Network Dataset Properties** ▸ **Travel Attributes** ▸ **Costs**: `TravelMinutes` in minutes, `Length` in meters
-- Each cost is read from a field **along** and **against** the digitized direction
-
-<!-- Lab 11's Figure 1b, from the GUI build (ArcGIS Pro 3.7.1): the clipped network's properties, which Step 1 of the lab has students open. Two costs, no travel modes, no hierarchy (hence the yellow note about turn categories). The evaluators are the point: a one-way street costs its normal minutes along and 100 times that against, which is how UGRC encodes one-way without a restriction. Skippable if time is short; it is on the lab page. -->
+<!-- This is the answer to "how did they build it". UGRC starts from its statewide Roads feature class, whose fields already hold each segment's minutes (length divided by the posted speed and converted to minutes, times 1.5 on surface streets, times 100 against a one-way). The network dataset is a second object that points at those lines and records the decisions: one subtype for freeways and ramps, connected only at their ends, one for everything else, connected at any shared vertex, all in one connectivity group; no elevation fields; TravelMinutes (default) and Length as costs, each read from a field per direction; global turn delays. Build Network then makes the junctions and the graph the solvers use. Lab 11's package was made with Create Template From Network Dataset on UGRC's network, the roads clipped to Utah County, then Create Network Dataset From Template and Build Network (tools/lab11/make_package.py), so the costs and rules are UGRC's, unchanged. Students can see the result in Network Dataset Properties in Lab 11's Step 1. Flow figure: tools/week12_tuesday_figures.py. -->
 
 ---
 
@@ -254,20 +244,20 @@ Lab 11's network carries two costs, **TravelMinutes** and **Length**. You route 
 
 # Talk to Your Neighbor
 
-![bg right:40% w:94%](images/na-edges-junctions.png)
+![bg right:44% w:96%](images/na-oneway-quiz.png)
 
-A one-way block costs **0.2 minutes** the legal way. The fastest way to a fire is down it the **wrong way**. On Lab 11's network, what does the solver do?
+The engine is at **A**; the fire is at **B**, one block away on a street that is **one-way toward A**. Against the arrow costs 100 × 0.33 = **33 min**; around the block, about **1.5 min**. Which route does the solver choose?
 
 <ol type="A">
-<li>Drives the wrong way, because it is the shortest</li>
-<li>Never uses that block in that direction</li>
-<li class="correct">Goes around, unless every way around takes more than 20 minutes</li>
-<li>Adds 100 meters to the route</li>
+<li>Against the arrow: it is the shortest distance</li>
+<li class="correct">Around the block, about 1.5 minutes</li>
+<li>No route: a one-way street is a wall</li>
+<li>Against the arrow: fire engines are exempt</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- Two minutes in pairs, then the key press. C. UGRC encodes one-way as a price, not a wall: the wrong direction costs 100 times the right one, here 0.2 x 100 = 20 minutes, so the solver goes around the block whenever any detour is cheaper than 20 minutes, which in a city is nearly always. B is what a restriction would do, the other choice UGRC could have made. D mixes up the two costs: the hundredfold factor is on TravelMinutes, not on Length. -->
+<!-- Two minutes in pairs, then the key press. B. The solver minimizes minutes, and 1.5 beats 33, so it goes around. UGRC encodes one-way as a price, not a wall: the wrong direction costs 100 times the right one, so the solver drives against the arrow only when every legal way takes even longer, which in a city almost never happens. A is the distance trap from the shortest-versus-fastest slide. C is what a restriction attribute would do, the other choice UGRC could have made. D is a fair real-world point, but the network knows nothing about who is driving. The block and its minutes are illustrative (a 0.33-minute block is a typical Provo block in the attribute table), drawn by tools/week12_tuesday_figures.py. -->
 
 ---
 
@@ -301,40 +291,48 @@ A one-way block costs **0.2 minutes** the legal way. The fastest way to a fire i
 - Within two minutes: **52 km²**; four: **195 km²**; six: **380 km²**; eight: **557 km²**
 - The four-minute area is a **string of small shapes** around the stations, which are in the cities
 
-<!-- Lab 11's reference run, cutoffs 2, 4, 6 and 8 solved separately, each dissolved (tools/lab11/check_values.json, "sensitivity"). The areas are what students get in Step 4 for four minutes, and in Step 9 for the others; the deck gives the areas but not the populations outside each, which is what Step 9 asks them to find. Utah Lake in the middle is the gap. -->
+<!-- Lab 11's reference run, cutoffs 2, 4, 6 and 8 solved separately, each dissolved (tools/lab11/check_values.json, "sensitivity"). Students get the four-minute area in Step 4 and their own cutoff's in Step 8; the 2, 6 and 8 minute areas are here for comparison, and the deck does not give the populations outside them. Utah Lake in the middle is the gap. -->
 
 ---
 
-# The Tools in ArcGIS Pro
+# Three Tools, Always Together
 
-<div class="columns">
-<div>
+<style scoped>
+.chain { display: grid; grid-template-columns: 1fr 44px 1fr 44px 1fr; align-items: stretch; margin-top: 0.3em; }
+.step { background: #eef3f9; border: 3px solid #0062b8; border-radius: 14px; padding: 0.35em 0.6em; text-align: center; font-size: 0.72em; line-height: 1.3; }
+.step img { height: 92px; display: block; margin: 0 auto 0.2em; }
+.step b { color: #002e5d; display: block; font-size: 1.08em; margin-bottom: 0.2em; }
+.step.solve { border-color: #2e8b57; background: #e8f5ec; }
+.arrow { align-self: center; text-align: center; font-size: 1.6em; color: #002e5d; font-weight: 700; }
+.must { margin: 0.45em 0 0.3em; background: #002e5d; color: #fff; border-radius: 10px; padding: 0.25em 0.8em; font-size: 0.74em; text-align: center; }
+.must strong { color: #ffd21f; }
+.outs { font-size: 0.68em; line-height: 1.3; }
+.outs table { margin: 0 auto; }
+.outs td, .outs th { padding: 0.12em 0.6em; }
+</style>
 
-<div class="imggrid" style="grid-template-columns: repeat(3, 1fr);">
+<div class="chain">
+<div class="step"><img src="images/nab-icon-make-service-area-analysis-layer.svg" alt=""><b>1 · Make Service Area Analysis Layer</b>Sets up the question: network, cutoff, direction. Makes an <b style="display:inline">empty</b> analysis layer</div>
+<div class="arrow">➜</div>
+<div class="step"><img src="images/nab-icon-add-locations.svg" alt=""><b>2 · Add Locations</b>Loads the stations into the layer's <b style="display:inline">Facilities</b>, snapped to the streets</div>
+<div class="arrow">➜</div>
+<div class="step solve"><img src="images/nab-icon-solve.svg" alt=""><b>3 · Solve</b>Spreads the minutes along the network and fills in the answer</div>
+</div>
 
-![h:120](images/nab-icon-make-service-area-analysis-layer.svg)
+<div class="must">Run all three, in this order, on the <strong>same analysis layer</strong>: steps 1 and 2 only set up the question; <strong>nothing is computed until Solve</strong></div>
 
-![h:120](images/nab-icon-add-locations.svg)
+<div class="outs">
 
-![h:120](images/nab-icon-solve.svg)
+| After Solve, the analysis layer's sublayers hold | |
+| --- | --- |
+| **Polygons** | the service areas: what Lab 11 counts people in |
+| **Facilities** | the stations, each with a status (located or not) |
+| **Lines** | the reached streets, only if Output Type asks for lines |
+| **Point**, **Line**, **Polygon Barriers** | optional inputs: places a route may not go |
 
 </div>
 
-1. **Make Service Area Analysis Layer**: the network, the **cutoffs**, the travel direction, how the polygons are drawn. It computes **nothing**
-2. **Add Locations**: the stations into the **Facilities** sublayer, each snapped to the nearest edge within the search tolerance
-3. **Solve**: fills in the **Polygons** sublayer
-
-</div>
-<div>
-
-- The result is an **analysis layer** in the map, not a feature class
-- In a model, **Select Data** pulls the Polygons out and **Copy Features** keeps them
-- The same three steps run every solver: a Closest Facility or Location-Allocation layer has its own sublayers
-
-</div>
-</div>
-
-<!-- The icons are Lab 11's own. The one mistake everyone makes once: run the first two and look for polygons. Nothing exists until Solve. In ArcGIS Pro 3.7.1 the first tool's parameters are Network Data Source and Layer Name; the network ships without named travel modes, so Travel Mode shows Custom and the layer uses TravelMinutes, the default cost. -->
+<!-- The icons are Lab 11's own. The one mistake everyone makes once: run the first two and look for polygons. Nothing exists until Solve. The sublayer names are what ArcGIS Pro 3.7 lists for a service area layer on Lab 11's network (checked with arcpy, November 16, 2026): Facilities, Point Barriers, Lines, Line Barriers, Polygons, Polygon Barriers. The result is an analysis layer in the map, not a feature class: in a model, Select Data pulls the Polygons out and Copy Features keeps them (Thursday). Closest Facility and Location-Allocation follow the same three steps with their own sublayers. In ArcGIS Pro 3.7.1 the network ships without named travel modes, so Travel Mode is empty and the layer uses TravelMinutes, the default cost. -->
 
 ---
 

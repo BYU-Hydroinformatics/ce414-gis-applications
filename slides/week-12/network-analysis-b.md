@@ -151,9 +151,9 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ![bg right:60% w:96%](images/nab-dlg-select-by-location-callouts.png)
 
-- **Have their center in** the four-minute area, **inverted**: the blocks **outside**
-- The result is a **selection on a layer**, not a new dataset; **Copy Features** keeps it
-- Each branch gets its own **Make Feature Layer** first, so the two selections cannot collide
+- **Center in**, **inverted**: the blocks **outside**
+- A **selection on a layer**, not a dataset; **Copy Features** keeps it
+- The model selects on its **own layer** (Make Feature Layer)
 
 <!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 5b; in the capture the input box reads Census_Blocks, and in the students' finished model it is Blocks_Net, the layer from Step 5's Make Feature Layer. "Center in" is the counting rule: a block is covered or not by where its center point falls, which is fair in the cities where blocks are small. -->
 
@@ -165,7 +165,7 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 - One row out: the **sum of the people** and the **count of the blocks** outside
 - `PP_TOTAL` appears by its alias, **Total Population**
-- The same tool ends the **buffer** branch, so the two answers sit side by side
+- Step 6 uses it again, **outside the model**, for the buffer's count
 
 <!-- The red callouts are drawn beside the untouched capture by tools/week12_dialog_callouts.py. Lab 11's own Figure 5c. The lab's check: SUM_PP_TOTAL 379,054 and COUNT_GEOID20 6,341 at four minutes. -->
 
@@ -191,10 +191,10 @@ A city council asks four questions. Which one is a **Service Area** question?
 1. **Make Service Area Analysis Layer**: cutoff **4**, away from facilities, dissolve, rings
 2. **Add Locations** (the stations) ▸ **Solve** ▸ **Select Data** ▸ **Copy Features**: `Served_Area`
 3. **Make Feature Layer** from the blocks ▸ **Select Layer By Location**: blocks whose **center** is in it, **inverted** ▸ **Summary Statistics**: sum of `PP_TOTAL`
-4. **Buffer** the stations 3.75 km; its own layer of blocks, the same selection and sum
-5. Parameters: **Cutoff_Minutes**, **Buffer_Distance**
+4. Parameters: **Cutoff_Minutes** and the three outputs
+5. **Outside the model** (Step 6): Buffer 3.75 km ▸ the same selection and sum, once
 
-<!-- Lab 11's model, step for step; the example map is its Figure 9. Two things to say before they build it: a run from the tool dialog deletes every dataset that is not a parameter, so the six outputs are parameters too; and each branch's Select Layer By Location gets its own Make Feature Layer from the Census_Blocks dataset, because a selection belongs to the layer: two selections on one layer give both branches the same blocks (the GUI build's first dialog run put the buffer's 1,365 blocks in both counts). Figure C, the model exported from ModelBuilder, is on the lab page. -->
+<!-- Lab 11's model, step for step; the example map is its Figure 9. Two things to say before they build it: a run from the tool dialog deletes every dataset that is not a parameter, so the three outputs are parameters too; and the model's Select Layer By Location works on its own Make Feature Layer from the Census_Blocks dataset, because a selection belongs to the layer, and Step 6 selects on the map's Census_Blocks layer. The buffer comparison runs once, in the Geoprocessing pane, because it never changes with the cutoff. Figure C, the model exported from ModelBuilder, is on the lab page. -->
 
 ---
 
@@ -202,11 +202,10 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ![w:1180](images/nab-lab11-model.svg)
 
-- Top: the network and the cutoff into the service-area chain; **Served_Area** out
-- Bottom: the blocks, once per branch, through **Make Feature Layer** before each selection
-- Eight **P** badges: two numbers in, six datasets out
+- Your model is the **service-area chain** and **one** branch of blocks: Cutoff_Minutes in, three datasets out
+- The **buffer branch** in this export (Buffer_Distance, Crow_ outputs) is **not** in your model: Step 6 does it outside
 
-<!-- Lab 11's Figure C, exported from ModelBuilder after the GUI build. The two Make Feature Layer tools at the lower left are the thing to point at: both read the Census_Blocks dataset, and each gives its branch a layer of its own to select on. The green checks are from a completed run; the dashed-free connectors mean no preconditions are needed once the branches share nothing but the dataset. -->
+<!-- Lab 11's Figure C, exported from ModelBuilder after the GUI build, with the straight-line branch that the November 16, 2026 cut moved out of the model into Step 6; a re-export without it is owed. Point at the chain students build: the network and cutoff through Solve, Select Data and Copy Features to Served_Area, then Blocks_Net, the inverted selection and the two outputs. -->
 
 ---
 
@@ -244,11 +243,12 @@ Your model runs, but `Unserved_Population` says about **280,000** people, not th
 ![bg right:44% w:96%](images/nab-one-station-rings.png)
 
 - Four minutes is **a** standard, not **the** answer
-- Step 9 runs the model at **2, 6 and 8 minutes**, at your **own cutoff**, and with a smaller buffer
-- Watch the share outside: between which two cutoffs does it **fall fastest**, and why does it **stop falling**?
+- Your **own cutoff** (4.00 to 7.96 minutes) is a second standard; Step 9 sets it beside four minutes and the buffer
+- The area grows fast: **195 km²** at four minutes, **380** at six, **557** at eight
+- Where does the extra area go? Along the **arterials**, into whole **cities**, and then into places almost nobody lives
 - Then say what the model leaves out, which way each would move your share, and what data would fix the one that matters most
 
-<!-- Do not give the Step 9 populations; the lab publishes only the four-minute baseline and the two personal examples. The shape to let them discover: a few minutes more takes in whole cities, and after that the share stops falling because almost nobody is left. Each student's cutoff is 4 + 0.04 x the last two digits of their BYU ID, 4.00 to 7.96 minutes, and the grader reproduces their numbers from it. -->
+<!-- Do not give populations beyond the lab's own: the four-minute baseline and the two personal examples. The areas are Tuesday's dissolved service areas from all 42 stations. The shape to let them discover: a few minutes more takes in whole cities, and after that the share stops falling because almost nobody is left. Each student's cutoff is 4 + 0.04 x the last two digits of their BYU ID, 4.00 to 7.96 minutes, and the grader reproduces their numbers from it. -->
 
 ---
 
@@ -294,8 +294,8 @@ UGRC's minutes are for **typical traffic**. An engine running **lights and siren
 
 - Download the package, read `READ-ME-FIRST.txt`, fetch the county boundary from UGRC yourself
 - Step 1 first: open the network's **properties** and read the two one-way minutes off I-15
-- Build the model as the page says, run it at **4** and at **your cutoff**, then the Step 9 runs
-- Two maps, a sensitivity table, and `Lab11.atbx` with the report
+- Build the model as the page says and run it at **4** and at **your cutoff**; do the buffer once, outside the model
+- Two maps, one comparison table, and `Lab11.atbx` with the report
 
 [Lab 11 — Fire Response Coverage](https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-11/)
 

@@ -30,7 +30,7 @@ the dataset path collided on the derived layer name and the dialog run failed. -
 > [!NOTE]
 > **This is a one-week lab**, due Saturday of Week 12. Everything that
 > takes preparation is done for you and hosted, including the road network: you build one model,
-> run it six times, and make two maps.
+> run it twice, and make two maps.
 
 ## Background
 
@@ -65,8 +65,8 @@ four minutes as a straight-line buffer, the way Lab 1 would have, to see how far
 
 The road network you will use was built by the Utah Geospatial Resource Center from its statewide
 roads layer. Every segment carries UGRC's estimate of the minutes it takes to drive, in each
-direction, from the posted speed limit and the road class, with surface-street times multiplied by
-1.5 for signals and congestion. That estimate is a model too: it is "typical network travel, and
+direction: the segment length divided by the posted speed and converted to minutes, with
+surface-street times multiplied by 1.5 for signals and congestion. That estimate is a model too: it is "typical network travel, and
 not the expedited travel of emergency response vehicles" (UGRC, 2022), so the four-minute area it
 draws is an engine driving like everyone else. Step 9 asks what that leaves out.
 
@@ -78,10 +78,9 @@ question is how many live within four minutes.
 
 > [!IMPORTANT]
 > **Your job — see the deliverables below.** Build one ModelBuilder model that draws the area
-> within a chosen number of minutes of the fire stations along the road network, counts the people
-> in the Census blocks outside it, and draws the same reach as a straight-line buffer for comparison;
-> run it at four minutes and at your own personal cutoff; test how much the answer depends on the
-> cutoff; and make two maps.
+> within a chosen number of minutes of the fire stations along the road network and counts the
+> people in the Census blocks outside it; run it at four minutes and at your own personal cutoff;
+> measure the same four minutes as a straight-line buffer for comparison; and make two maps.
 
 ## Problem Statement
 
@@ -95,7 +94,7 @@ the mouth of Provo Canyon. Using UGRC's road network for the county, the station
    share of the county that is.
 3. Measure the same four minutes as a **straight-line distance** instead, and compare the two
    answers.
-4. Re-run the model with the cutoff changed, and say how much the answer depends on the standard.
+4. Run the model again at your own cutoff, and say how much the answer depends on the standard.
 
 ## Analysis Considerations
 
@@ -107,7 +106,7 @@ Every one of these is a decision somebody made, and every one of them can change
   decisions below are.
 - **Four minutes, from the facilities outward.** The cutoff is NFPA 1710's first-engine travel time.
   The service area is drawn **away from** the stations (the direction an engine drives), not toward
-  them. The cutoff is a **model parameter**, and Step 9 changes it.
+  them. The cutoff is a **model parameter**, and Step 8 runs it at a cutoff of your own.
 - **One-way streets are a penalty, not a wall.** In UGRC's network the wrong direction on a one-way
   segment costs 100 times the right direction (**590** segments in the county are one-way). An engine
   with its lights on may legally drive against a one-way street; a 100-times penalty says "almost
@@ -120,12 +119,10 @@ Every one of these is a decision somebody made, and every one of them can change
 - **Residents, where they slept on April 1, 2020.** The Census counts people at home. The daytime
   population of a block, where people work or study, is not in the data.
 - **The straight-line comparison uses the speed limit.** Four minutes at **35 mph** is 2.33 miles,
-  **3.75 km**: the distance a Lab 1 style buffer would use for the same standard. It, too, is a
-  parameter.
-- **Dissolved rings, standard detail.** The service areas from all 42 stations are **dissolved** into
-  one shape per cutoff, so that a block near two stations is not counted twice, and drawn as
-  **rings** when more than one cutoff is given (0–4 minutes, 4–8 minutes). **Standard** polygon
-  detail is the default and is what every check value on this page was measured with.
+  **3.75 km**: the distance a Lab 1 style buffer would use for the same standard.
+- **Dissolved, standard detail.** The service areas from all 42 stations are **dissolved** into
+  one shape, so that a block near two stations is not counted twice. **Standard** polygon detail is
+  the default and is what every check value on this page was measured with.
 - **What the model ignores.** Turnout time and dispatch; the speed an engine actually drives;
   which stations are staffed around the clock; whether a station has an engine or only an
   ambulance (**34** of the 42 are marked `EMS` = Y, **3** N, and five say nothing); traffic by time of
@@ -192,24 +189,27 @@ New in this lab, all from the **Network Analyst** toolbox unless marked:
 | ![Make Service Area Analysis Layer icon: a red station dot on a small street grid, with the streets reachable from it drawn in navy and two blue rings around it](images/icon-make-service-area-analysis-layer.svg){ .tool-icon }<br>**Make Service Area Analysis Layer** | Creates an empty **analysis layer** on a network dataset: a group layer with sublayers for Facilities, Polygons and Lines, and the settings of the analysis (the cutoffs, the travel direction, how the polygons are drawn). It computes nothing yet. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-service-area-analysis-layer.htm){ target="_blank" } |
 | ![Add Locations icon: three red map pins above a street grid, each with a dashed line down to an orange dot on the nearest street](images/icon-add-locations.svg){ .tool-icon }<br>**Add Locations** | Loads features into one sublayer of an analysis layer, here the fire stations into **Facilities**, and snaps each to the nearest street within the search tolerance. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/add-locations.htm){ target="_blank" } |
 | ![Solve icon: the street grid with the reachable streets drawn in green and a green check mark](images/icon-solve.svg){ .tool-icon }<br>**Solve** | Runs the analysis layer: walks the network outward from every facility until the cutoff and fills in the Polygons sublayer. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/solve.htm){ target="_blank" } |
-| ![Make Feature Layer icon: a geodatabase feature class symbol on the left and, through an arrow, a layer card with a small selection outline on it](images/icon-make-feature-layer.svg){ .tool-icon }<br>**Make Feature Layer** (Data Management) | Makes a **layer** from a feature class: a view of the data that can carry a selection, without copying it. A selection belongs to a layer, so each branch of this model gets its own. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/make-feature-layer.htm){ target="_blank" } |
+| ![Make Feature Layer icon: a geodatabase feature class symbol on the left and, through an arrow, a layer card with a small selection outline on it](images/icon-make-feature-layer.svg){ .tool-icon }<br>**Make Feature Layer** (Data Management) | Makes a **layer** from a feature class: a view of the data that can carry a selection, without copying it. A selection belongs to a layer, so the model makes a layer of its own to select on. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/make-feature-layer.htm){ target="_blank" } |
 | ![Select Layer By Location icon: a grid of small block squares with a center dot in each, under a blue ellipse; the squares whose dot falls outside the ellipse are outlined in orange](images/icon-select-layer-by-location.svg){ .tool-icon }<br>**Select Layer By Location** (Data Management) | Selects features of one layer by where they sit relative to another: here, the blocks whose **center** is inside the service area, **inverted** to keep the ones outside. It selects on a layer, so it follows Make Feature Layer. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/select-layer-by-location.htm){ target="_blank" } |
 | ![Summary Statistics icon: a table of rows collapsing, through an arrow, into a single navy box marked with a sigma](images/icon-summary-statistics.svg){ .tool-icon }<br>**Summary Statistics** (Analysis) | Writes one table row with statistics of a field over the features it is given: the **sum** of `PP_TOTAL` over the unserved blocks, and their count. [Tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/summary-statistics.htm){ target="_blank" } |
 
 Also used: **Select Data** (ModelBuilder), which pulls one sublayer, the Polygons, out of the
 analysis layer so the next tool can read it ([tool reference](https://pro.arcgis.com/en/pro-app/latest/tool-reference/modelbuilder-toolbox/select-data.htm){ target="_blank" });
-**Copy Features** (Data Management), which writes a layer or a selection to a feature class; and
-**Buffer** (Lab 1).
+**Copy Features** (Data Management), which writes a layer or a selection to a feature class; and,
+outside the model in Step 6, **Buffer** (Lab 1).
 
 ## Example Model
 
 ![The Fire Response Coverage model exported from ModelBuilder, laid out left to right. Utah_County_Roads_ND and Cutoff_Minutes (marked P) feed Make Service Area Analysis Layer, whose Service Area layer goes with Fire_Stations into Add Locations and then Solve; Select Data takes the Polygons out and Copy Features writes Served_Area (P). Below, the Census_Blocks dataset feeds two Make Feature Layer tools, Blocks_Net and Blocks_Crow. Blocks_Net goes into Select Layer By Location with Served_Area, then Copy Features makes Unserved_Blocks (P) and Summary Statistics makes Unserved_Population (P). Above, Fire_Stations and Buffer_Distance (P) feed Buffer, which makes Crow_Area (P); Blocks_Crow goes into a second Select Layer By Location with Crow_Area, then Copy Features and Summary Statistics make Crow_Unserved (P) and Crow_Population (P). Every tool carries a green check from a completed run.](images/lab11-model.svg)
 
-**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
-The network, the stations and the blocks in; one service area, one buffer, a layer of blocks for
-each; two counts of people out. The elements
-marked `P` are the model parameters — the cutoff in minutes, the buffer distance and the outputs you
-keep — and they become the tool dialog of Step 8.
+**Figure C.** The model, exported from ModelBuilder — **click it to open it full size**. Your model
+is the **lower chain only**: the network, the stations and the blocks in; one service area, one
+layer of blocks (`Blocks_Net`); `Served_Area`, `Unserved_Blocks` and `Unserved_Population` out. The
+upper branch in the figure (`Buffer_Distance`, `Buffer`, `Crow_Area`, `Blocks_Crow` and the `Crow_`
+outputs) is **not** part of this lab's model: Step 6 does the straight-line comparison in the
+Geoprocessing pane instead. The elements marked `P` are the model parameters — the cutoff in
+minutes and the outputs you keep — and they become the tool dialog of Step 8.
+*Figure placeholder: re-export Figure C from a model without the buffer branch.*
 
 ## Complete the Lab
 
@@ -221,8 +221,8 @@ without the step-by-step instructions below, say so in your report.
 
 > [!NOTE]
 > **Build it once, build it to be changed.** The steps walk through the model at four minutes.
-> Step 9 re-runs the same model six times with the cutoff changed, so give every dataset a readable
-> name as you go.
+> Step 8 runs the same model again at your own cutoff, so give every dataset a readable name as you
+> go.
 
 > [!NOTE]
 > **Every check value on this page** was measured on the files you download, with the settings
@@ -308,7 +308,9 @@ Add **Make Service Area Analysis Layer** to the model:
 - **Travel Mode**: the network has no named travel modes, so this box is **empty** and its list has
   nothing in it; leave it, and the layer uses the network's default cost, `TravelMinutes`
 - **Travel Direction**: **Away from facilities**
-- **Cutoffs**: `4`
+- **Cutoffs**: `4`. The list starts with three rows, `5`, `10` and `15`: delete two of them (the
+  red × beside each row) and set the one that is left to `4`. Every extra row adds a ring and
+  changes your counts.
 - **Time of Day**: empty
 - **Output Geometry** ▸ **Polygon Detail**: **Standard**; **Geometry at Overlaps**: **Dissolve**;
   **Geometry at Cutoffs**: **Rings**
@@ -318,7 +320,8 @@ default.
 
 ![The Make Service Area Analysis Layer dialog: Network Data Source Utah_County_Roads_ND; Layer Name Service Area; Travel Mode empty; Travel Direction Away from facilities; Cutoffs with one row, 4, and an Add another button; Time of Day collapsed; Output Geometry expanded with Output Type Polygons, Polygon Detail Standard, Geometry at Overlaps Dissolve, Geometry at Cutoffs Rings.](images/lab11-make-service-area.png)
 
-**Figure 2.** The analysis layer: four minutes, outward, one dissolved shape per cutoff.
+**Figure 2.** The analysis layer: four minutes, outward, one dissolved shape. With one cutoff,
+**Rings** and **Disks** give the same polygon.
 
 > [!TIP]
 > **Check the result:** nothing is computed yet. Run the tool from the model and a group layer
@@ -367,10 +370,8 @@ keeps them.
 > [!TIP]
 > **Check the result:** `Served_Area` is **1** feature (all 42 stations' areas dissolved together,
 > a multipart polygon) with `FromBreak` 0, `ToBreak` 4 and `Shape_Area` **194,852,812.5 m²**, that
-> is **194.85 km²**. For your first map you will want two rings: **Cutoffs** is a list, one value per
-> row, so add a second row with `8`, run again, and `Served_Area` has **2** features, **194.85 km²**
-> (0–4 minutes) and **363.13 km²** (4–8 minutes). Remove the `8` before Step 5, or your counts will
-> be for eight minutes.
+> is **194.85 km²**. If `Served_Area` has more than one feature, the **Cutoffs** list still has more
+> than one row: go back to Step 2.
 
 ### Step 5 — Count the People Outside
 
@@ -396,10 +397,9 @@ Step 9 asks you whether that is fair.
 > [!NOTE]
 > **Why a layer first.** Select Layer By Location does not make a new dataset; it marks a
 > **selection on a layer**, and Copy Features copies the marked features. A selection belongs to
-> the layer, so if Step 6's second selection used the same layer, whichever tool ran last would
-> win, and the model could copy the wrong blocks. Make Feature Layer gives each branch its own
-> layer from the same dataset, and browsing to the dataset (rather than picking the map layer)
-> keeps any selection you have made in the map out of the model.
+> the layer. Making the model's own layer, `Blocks_Net`, from the dataset (rather than picking the
+> `Census_Blocks` layer in the map) keeps any selection you make in the map, including the one in
+> Step 6, out of the model.
 
 ![The Make Feature Layer dialog: Input Features Census_Blocks (2), the dataset browsed to in FireResponse.gdb; Output Layer Blocks_Net; an empty Expression builder with an Add Clause button; Workspace or Feature Dataset empty; a Field Info table listing the fields with Visible checked.](images/lab11-make-feature-layer.png)
 
@@ -422,46 +422,45 @@ Step 9 asks you whether that is fair.
 
 ### Step 6 — Compare the Straight Line
 
-Now measure the same four minutes the way Lab 1 would have.
+Now measure the same four minutes the way Lab 1 would have. This comparison is **not** part of the
+model: run these three tools once, from the **Geoprocessing** pane, on the layers in your map.
 
-1. Add **Buffer** with `Fire_Stations` as input, **Distance** `3.75 Kilometers`, **Dissolve Type**
-   **Dissolve all output features into a single feature**, and output `Crow_Area`. (3.75 km is four
-   minutes at 35 mph, a typical arterial speed limit: 35 × 4 ÷ 60 = 2.33 miles.)
-2. Add a second **Make Feature Layer** from the same `Census_Blocks` dataset, **Output Layer**
-   `Blocks_Crow` (select the first one on the canvas, copy and paste it, and change the output name).
-3. Add a second **Select Layer By Location** on `Blocks_Crow`, **Have their center in** `Crow_Area`,
-   **inverted**; a **Copy Features** of the selected layer to `Crow_Unserved`; and a **Summary
-   Statistics** to `Crow_Population` with the same two statistics.
-
-The two branches now share the dataset and nothing else, so it does not matter which runs first.
+1. **Buffer** (Analysis): **Input Features** `Fire_Stations`, **Output Feature Class** `Crow_Area`
+   in `Lab11.gdb`, **Distance** `3.75 Kilometers`, **Dissolve Type** **Dissolve all output features
+   into a single feature**. (3.75 km is four minutes at 35 mph, a typical arterial speed limit:
+   35 × 4 ÷ 60 = 2.33 miles.)
+2. **Select Layer By Location** (Data Management): **Input Features** the `Census_Blocks` layer in
+   your map, **Relationship** **Have their center in**, **Selecting Features** `Crow_Area`,
+   **Selection Type** **New selection**, **Invert Spatial Relationship** **checked**.
+3. **Summary Statistics** (Analysis): **Input Table** the `Census_Blocks` layer (a tool run on a
+   layer with a selection uses only the selected features), **Output Table** `Crow_Population`, and
+   the same two statistics as Step 5: `PP_TOTAL` **Sum** and `GEOID20` **Count**.
+4. Clear the selection (**Map** tab ▸ **Clear**).
 
 ![The Buffer dialog, with a banner suggesting the Pairwise Buffer tool: Input Features Fire_Stations:1; Output Feature Class Crow_Area; Distance 3.75 Kilometers as a Linear Unit; Method Planar; Dissolve Type Dissolve all output features into a single feature.](images/lab11-buffer.png)
 
-**Figure 6.** The crow's four minutes: 3.75 km, dissolved. `Fire_Stations:1` is the second copy
-of the stations on the canvas.
+**Figure 6.** The crow's four minutes: 3.75 km, dissolved. This capture was taken inside a model, so
+its input reads `Fire_Stations:1`; in the Geoprocessing pane it is simply `Fire_Stations`.
 
 > [!TIP]
 > **Check the result:** `Crow_Area` is **1** feature of **1,070.61 km²**, five and a half times the
-> network's 194.85 km². `Crow_Population`: `SUM_PP_TOTAL` **23,203**, `COUNT_GEOID20` **1,365**: the
-> buffer says **3.5 %** of the county is beyond four minutes; the roads say 57.5 %. Both are "four
-> minutes". Map 2 is about why they differ. If `Unserved_Population` now reads 23,203 too, both
-> selections ran on one layer: check that each Select Layer By Location has its own Make Feature
-> Layer in front of it.
+> network's 194.85 km². The selection holds **1,365** blocks, and `Crow_Population` reads
+> `SUM_PP_TOTAL` **23,203** and `COUNT_GEOID20` **1,365**: the buffer says **3.5 %** of the county
+> is beyond four minutes; the roads say 57.5 %. Both are "four minutes". Map 2 is about why they
+> differ. A sum of 659,399 means the selection was cleared before Summary Statistics ran.
 
 ### Step 7 — Set Model Parameters
 
-Step 9 runs the model six times, so make the two numbers you will change, and everything you will
-keep, parameters.
+Step 8 runs the model twice, so make the number you will change, and everything you will keep,
+parameters.
 
 1. Right-click **Make Service Area Analysis Layer** ▸ **Create Variable** ▸ **From Parameter** ▸
    **Cutoffs**. Rename the new oval `Cutoff_Minutes` and right-click it ▸ **Parameter**. Cutoffs is a
    list, so the tool dialog of Step 8 shows it as a small table with one value per row.
-2. Right-click **Buffer** ▸ **Create Variable** ▸ **From Parameter** ▸ **Distance [value or
-   field]**. Rename it `Buffer_Distance` and make it a parameter.
-3. Make the six outputs parameters too: `Served_Area`, `Unserved_Blocks`, `Unserved_Population`,
-   `Crow_Area`, `Crow_Unserved` and `Crow_Population`. (A run from the tool dialog deletes every
-   dataset that is not a parameter, as in Labs 5, 7 and 10.)
-4. Save the model, then **Export** ▸ **Export To Graphic** as SVG, full page: that is the model
+2. Make the three outputs parameters too: `Served_Area`, `Unserved_Blocks` and
+   `Unserved_Population`. (A run from the tool dialog deletes every dataset that is not a
+   parameter, as in Labs 5, 7 and 10.)
+3. Save the model, then **Export** ▸ **Export To Graphic** as SVG, full page: that is the model
    figure your report needs.
 
 ![The context menu on the Make Service Area Analysis Layer tool, opened to Create Variable, then From Parameter, listing Layer Name, Travel Mode, Travel Direction, Cutoffs, Time of Day, Time Zone, Output Type, Polygon Detail, Geometry at Overlaps, Geometry at Cutoffs, Polygon Trim Distance and more; the model canvas behind it.](images/lab11-create-variable-cutoffs.png)
@@ -469,16 +468,14 @@ keep, parameters.
 **Figure 7.** The cutoff becomes a variable, and then a parameter.
 
 > [!TIP]
-> **Check the result:** a `P` beside eight elements: the two numbers and the six outputs. Figure C
-> above shows where they sit.
+> **Check the result:** a `P` beside four elements: the cutoff and the three outputs.
 
 ### Step 8 — Run the Tool
 
 1. Save, and close the model's tab. In the **Catalog** pane, open `Lab11.atbx` and double-click
    **Fire Response Coverage**: it opens as a tool in the Geoprocessing pane.
-2. Run it once at the defaults, `4` and `3.75 Kilometers`, with new output names — `Served_Area_Base`,
-   `Unserved_Blocks_Base`, `Unserved_Population_Base`, `Crow_Area_Base`, `Crow_Unserved_Base`,
-   `Crow_Population_Base` — and check the two sums.
+2. Run it once at the default cutoff, `4`, with new output names — `Served_Area_Base`,
+   `Unserved_Blocks_Base`, `Unserved_Population_Base` — and check the sum.
 3. **Then run it at your own cutoff.** Every student runs a different cutoff, worked out from your
    **BYU ID number**: the **nine-digit number printed on your BYU ID card**, such as `123456789`. It
    is **not your NetID**, the user name of letters and numbers you chose and use to sign in to BYU
@@ -493,72 +490,57 @@ keep, parameters.
 >   **201.50 km²**, **6,247** blocks and **370,716** people outside (**56.2 %**).
 >
 > Write your BYU ID's last two digits and your cutoff in your report: the grader checks your
-> numbers against them. Name the outputs `_Mine`. If your cutoff happens to equal one of Step 9's
-> runs (digits `00` give 4.00, `50` give 6.00, `75` give 7.00), run it anyway, say so, and add one
-> more run of your own choice so the table still has five that differ.
+> numbers against them. Name the outputs `_Mine`. If your digits are `00`, your cutoff is 4.00, the
+> same as the baseline: run it anyway, say so, and compare your baseline with the two examples
+> above in Step 9.
 
 <!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab11_personal_lookup.csv (tools/lab11/run_model.py personal; private repo). -->
 
 ![The Fire Response Coverage tool in the Geoprocessing pane: Buffer_Distance 3.75 Kilometers as a Linear Unit; Served_Area Served_Area_Base; Unserved_Blocks Unserved_Blocks_Base; Unserved_Population Unserved_Population_Base; Crow_Area Crow_Area_Base; Crow_Unserved Crow_Unserved_Base; Crow_Population Crow_Population_Base; Cutoff_Minutes as a one-row list holding 4, with an Add another button; a Run button.](images/lab11-tool-dialog.png)
 
-**Figure 8a.** The model as a tool. The parameters appear in the order they were made, so
-`Cutoff_Minutes` is last, as a list with one row. Give every output a new name for each run.
+**Figure 8a.** The model as a tool. The parameters appear in the order they were made, and
+`Cutoff_Minutes` is a list with one row. Give every output a new name for each run. This capture
+comes from the model in Figure C, so it also shows `Buffer_Distance` and three `Crow_` outputs;
+yours has only `Cutoff_Minutes` and three outputs.
+*Figure placeholder: recapture the tool dialog from a model without the buffer branch.*
 
 ![The completed-run pop-up for Fire Response Coverage (lab11): Started, Completed and an Elapsed Time of 37 seconds; the Tool Path in Lab11.atbx; a Parameters tab listing Buffer_Distance 3.75 Kilometers, the six _Base outputs with their Lab11.gdb paths, and Cutoff_Minutes 4.](images/lab11-run-complete.png)
 
-**Figure 8b.** The pop-up when the run finishes; a dialog run of the whole model took **37 s** here, and under a minute in earlier runs.
+**Figure 8b.** The pop-up when the run finishes; a dialog run of the model in Figure C took
+**37 s** here, and yours, with one branch fewer, should take less.
 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter**, including the
 > `Service Area` analysis layer's contents from the run inside ModelBuilder. For your maps use the
-> `_Base` and `_Mine` outputs, which are parameters and survive, together with the downloaded
-> `Fire_Stations` and `Census_Blocks` layers.
+> `_Base` and `_Mine` outputs, which are parameters and survive, together with `Crow_Area` from
+> Step 6 and the downloaded `Fire_Stations` and `Census_Blocks` layers.
 
 > [!TIP]
-> **Check the result:** at the defaults, the dialog run reproduces Steps 4 to 6 exactly: **194.85 km²**,
-> **379,054** people outside, **23,203** outside the buffer. If it does not, a parameter was left at
-> a value from testing, or a `_Base` output name points at an old dataset.
+> **Check the result:** at the default cutoff, the dialog run reproduces Steps 4 and 5 exactly:
+> **194.85 km²** and **379,054** people outside. If it does not, a parameter was left at a value from
+> testing, or a `_Base` output name points at an old dataset.
 
 ### Step 9 — Test the Standard
 
 Four minutes is *a* standard, not *the* answer. The share of the county outside it is whatever four
 minutes of UGRC's typical-traffic minutes says, and nobody decided that the right number for Utah
-County is four. Before you report a share, find out how much it depends on the cutoff.
+County is four. Your own cutoff is a second standard; compare the two, and the straight line.
 
-**Run the model from its tool dialog at least five more times**, each with new output names that say
-what changed (`Served_Area_C2`, `Unserved_Blocks_C2`, `Unserved_Population_C2`, and so on):
-
-| Run | Cutoff_Minutes | Buffer_Distance |
-| --- | --- | --- |
-| Baseline (Step 8) | 4 | 3.75 km |
-| `C2` | **2** | 3.75 km |
-| `C6` | **6** | 3.75 km |
-| `C8` | **8** | 3.75 km |
-| Mine (Step 8) | **your cutoff** | 3.75 km |
-| `B2_5` | 4 | **2.5 km** |
-| Your choice | ? | ? |
-
-For the last run, choose something deliberately and say why: a cutoff of 10 or 12 to see when the
-share stops falling, a buffer that gives the same share as the network's four minutes, or a cutoff
-between 4 and yours.
-
-Record **all of it in one table**: for the baseline and every run, the cutoff, the buffer distance,
-the served area and the buffer area in km², the number of blocks outside the network area, the people
-outside it, and the share of the county's 659,399 residents that is; for the buffer runs, the people
-outside the buffer. (A buffer run leaves the served area at 194.85 km²; what changes is the buffer's
-area and its count.)
+Record **one table** with three rows — the baseline (`_Base`, 4 minutes), your cutoff (`_Mine`),
+and the buffer (Step 6, 3.75 km) — giving for each the cutoff or distance, the area in km², the
+number of blocks outside, the people outside, and the share of the county's 659,399 residents that
+is.
 
 Then answer, in your report:
 
-1. **How does the share outside respond to the standard?** Plot people outside against the cutoff
-   from your table, or read it off. Between which two cutoffs does it fall fastest, and what does
-   that say about where Utah County's stations are?
-2. **Why do the buffer and the network disagree?** Put `Crow_Area_Base` over `Served_Area_Base`
-   and select the blocks of `Unserved_Blocks_Base` whose center is in `Crow_Area_Base`: the people the
-   buffer claims and the roads do not reach in four minutes (at the defaults, **4,976** blocks and
-   **355,851** people). Using the two places you describe in the write-up, say what the roads do
-   there that a circle cannot see: a lake, a freeway with no interchange, a canyon, a subdivision with
-   one way in, a 25 mph grid of local streets.
+1. **How does the share outside respond to the standard?** How much did it fall between 4 minutes
+   and your cutoff, per added minute? On Map 1, where did the extra area go: along which roads, into
+   which cities? (If your cutoff is 4.00, use the two examples in Step 8 instead.)
+2. **Why do the buffer and the network disagree?** Put `Crow_Area` over `Served_Area_Base` and
+   select the blocks of `Unserved_Blocks_Base` whose center is in `Crow_Area`: the people the buffer
+   claims and the roads do not reach in four minutes (at the defaults, **4,976** blocks and
+   **355,851** people). Say in general what the roads do that a circle cannot see: a lake, a freeway
+   with no interchange, a canyon, a subdivision with one way in, a 25 mph grid of local streets.
 3. **What does the model leave out?** UGRC's minutes are for typical traffic, not an engine running
    with lights and siren; the stations layer is dated 2022; people are counted where they sleep; a
    block is covered or not by its center point. Say what each would do to your share, which way, and
@@ -570,7 +552,7 @@ buffer's and the network's.
 
 > [!TIP]
 > Look at where the four-minute area is. It is a string of small shapes around the stations, and
-> the stations are in the cities. One cutoff of a few minutes more takes in whole cities; a few more
+> the stations are in the cities. A cutoff a few minutes longer takes in whole cities; a few more
 > after that takes in almost nobody, because almost nobody is left. The buffer, meanwhile, covers
 > the lake.
 
@@ -578,15 +560,16 @@ buffer's and the network's.
 
 Make **two** professional map layouts (letter size):
 
-1. **Fire response coverage** — the 0–4 and 4–8 minute service areas (the two-row run of Step 4, or
-   a dialog run with `4` and `8` as the cutoffs, named `_Rings`; its counts are for eight minutes, so
-   the headline numbers come from `_Base`), the blocks outside four minutes, and the 42 stations, over
-   the county boundary and an imagery basemap, with the cities labeled and a legend; the headline
-   numbers (people outside four minutes, share of the county) on the map; a title, neat line, north arrow and scale bar; and a text box
-   with your name, the date, the map projection, and the sources and dates of the data.
-2. **Straight line versus network** — `Crow_Area_Base` and `Served_Area_Base` together, each
+1. **Fire response coverage** — the four-minute service area (`Served_Area_Base`) drawn over the
+   area for your own cutoff (`Served_Area_Mine`) so both show, the blocks outside four minutes
+   (`Unserved_Blocks_Base`), and the 42 stations, over the county boundary and an imagery basemap
+   with place labels (the **Imagery Hybrid** basemap carries them) and a legend; the headline
+   numbers (people outside, and the share of the county, at four minutes and at your cutoff) on the
+   map; a title, neat line, north arrow and scale bar; and a text box with your name, the date, the
+   map projection, and the sources and dates of the data.
+2. **Straight line versus network** — `Crow_Area` and `Served_Area_Base` together, each
    distinguishable in the legend, with the blocks the buffer counts as covered that the network does
-   not (select them: `Unserved_Blocks_Base` whose center is in `Crow_Area_Base`), the stations, the
+   not (select them: `Unserved_Blocks_Base` whose center is in `Crow_Area`), the stations, the
    county and an imagery basemap; a title, neat line, north arrow and scale bar; and a text box
    with your name, the date, the projection and the sources. The title and text box say what
    changed from Map 1 and give both counts of people outside, the buffer's and the network's.
@@ -598,11 +581,10 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 - the requirements of the project and your approach to solving it
 - **a description of your model** a reader could repeat from: each tool and its settings (the
   cutoff, the travel direction, the polygon options, the search tolerance, the selection
-  relationship and its inversion, the buffer distance and dissolve), and every input, intermediate
-  and output dataset with its type
+  relationship and its inversion), every input, intermediate and output dataset with its type, and
+  the three tools of the straight-line comparison in Step 6 with their settings
 - **one** full-page figure of your model, exported from ModelBuilder (**Export ▸ Export To
-  Graphic**), and **one** screen capture of its tool dialog with the cutoff and the buffer distance
-  exposed as parameters; and **upload your project's toolbox** (`Lab11.atbx`, in your project
+  Graphic**), and **one** screen capture of its tool dialog with the cutoff exposed as a parameter; and **upload your project's toolbox** (`Lab11.atbx`, in your project
   folder) with the report — the grader opens it to read your model
 - **the three metadata values** — the stations' "Last Update" date, what UGRC's minutes were
   estimated from, and what the blocks layer's description says — and what each means for your count
@@ -610,8 +592,8 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
   area, the people and blocks outside at four minutes, and the buffer's area and people outside
 - **where the straight line is wrong**: two places on **your** map, each with coordinates, a cropped
   figure and the reason
-- your **sensitivity table** from Step 9, with your BYU ID's last two digits and your cutoff, and
-  your answers to its three questions
+- your **comparison table** from Step 9 (baseline, your cutoff, buffer), with your BYU ID's last two
+  digits and your cutoff, and your answers to its three questions
 - figures numbered and referred to in the text, and every source credited
 - one line at the end saying what you used AI for, if anything (see the note under the rubric)
 - **a copy of the rubric below with your self-assessment filled in** — a score in every row,
@@ -620,7 +602,7 @@ Write a brief report (2–3 pages of text, plus your figures and maps) covering:
 > [!NOTE]
 > **Make it yours.** Everyone works from the same data, so the numbers will match a classmate's at
 > the defaults; the choices should not. Your map layouts, your colors and symbology, the labels you
-> give your model's elements, your own-choice run, the places you pick where the buffer is wrong and
+> give your model's elements, your own cutoff, the places you pick where the buffer is wrong and
 > the wording of your report are your own work. Submissions whose layouts, labels or symbology match
 > another student's too closely are flagged for follow-up.
 
@@ -669,8 +651,9 @@ U.S. Census Bureau. *2020 Census.*
 
 ![Example baseline layout titled "Fire Response Coverage in Utah County": imagery with the county outline, the 0 to 4 minute service area in dark blue and the 4 to 8 minute ring in light blue strung along the cities from Lehi to Santaquin, the populated blocks whose center is more than four minutes from a station in orange, and the 42 stations as red dots; a legend, scale bar, north arrow and a text box with the result and the sources.](images/lab11-example-map-baseline.png)
 
-**Figure 9.** The baseline map. Do better than this example: label the cities, and say on the map
-which ones the four-minute area leaves out.
+**Figure 9.** A baseline map. This example shows a 4–8 minute ring; yours shows the area for your own
+cutoff instead. Do better than this example: show the place names, and say on the map which cities
+the four-minute area leaves out.
 
 ![Example comparison layout titled "Straight-Line Distance versus Network Distance": the same base with the 3.75 km buffer as a yellow dashed outline, the four-minute network area in blue inside it, and the populated blocks the buffer counts as covered but the roads do not in orange; a text box gives both populations and what changed.](images/lab11-example-map-crow.png)
 
@@ -685,10 +668,10 @@ what to submit.
 | Item | Points |
 | --- | --- |
 | **Write-up** (2–3 pages)<br>• Assignment title, your name, date and course; your peer reviewer named, with a sentence on what you changed because of them (1)<br>• The requirements of the project and your approach to solving it, in your own words (2)<br>• The three metadata values — the stations' "Last Update" date, what UGRC's minutes were estimated from, what the blocks layer's description says — and what each means for your count (2)<br>• Your check values from Steps 0 to 6: the layer counts, the one-way count, the served area, the people and blocks outside at four minutes, the buffer's area and people (1)<br>• Where the straight line is wrong: two places on your map, each with coordinates, a cropped figure and the reason (3)<br>• Organized writing, figures numbered and referred to, sources credited, rubric pasted with your self-assessment (1) | /10 |
-| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the defaults, matches the check values: 194.85 km² served, 379,054 people outside, 23,203 outside the buffer (3)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the cutoff and the buffer distance exposed as parameters (1)<br>• A description of the model a reader could repeat from, with every tool's settings and every dataset (2)<br>• `Lab11.atbx` uploaded with the report as its own file, so the grader can open and run your model (2) | /10 |
-| **Map 1 — fire response coverage**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the data (1)<br>• The 0–4 and 4–8 minute areas and the blocks outside four minutes symbolized, with a legend (2)<br>• The stations, the county and the cities readable against the basemap (2)<br>• The headline numbers on the map: people outside four minutes and the share of the county (2)<br>• Imagery basemap, scale and legibility appropriate to the county (2) | /10 |
+| **ModelBuilder model** — correct and working<br>• The model runs from its tool dialog and, at the default cutoff, matches the check values: 194.85 km² served, 379,054 people outside (3)<br>• A full-page model figure exported from ModelBuilder, all tools and datasets readable (2)<br>• A screen capture of the tool dialog with the cutoff exposed as a parameter (1)<br>• A description of the model a reader could repeat from, with every tool's settings and every dataset, and the Step 6 comparison's tools and settings (2)<br>• `Lab11.atbx` uploaded with the report as its own file, so the grader can open and run your model (2) | /10 |
+| **Map 1 — fire response coverage**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates of the data (1)<br>• The four-minute area, the area for your own cutoff, and the blocks outside four minutes symbolized, with a legend (2)<br>• The stations, the county and the place names readable against the basemap (2)<br>• The headline numbers on the map: people outside, and the share of the county, at four minutes and at your cutoff (2)<br>• Imagery basemap, scale and legibility appropriate to the county (2) | /10 |
 | **Map 2 — straight line versus network**<br>• Title, neat line, north arrow and scale bar (1)<br>• Text box with author, date, map projection, and the sources and dates (1)<br>• The buffer and the network area both shown and distinguishable in the legend (2)<br>• The blocks the buffer counts as covered that the network does not, highlighted (2)<br>• Title and text box say what changed from Map 1 and give both counts of people outside (2)<br>• Imagery basemap, scale and legibility (2) | /10 |
-| **Sensitivity** (Step 9)<br>• One table with the baseline and at least five runs — including your BYU ID's last two digits and cutoff — giving the cutoff, the buffer distance, the served area, the blocks and people outside and the share (4)<br>• How the share responds to the standard, and between which cutoffs it falls fastest (2)<br>• Why the buffer and the network disagree: the people the buffer claims and the roads do not reach, and what the roads do at your two places (2)<br>• What the model leaves out, which way each would move your share, and what data would fix the one that matters most (2) | /10 |
+| **Your cutoff and the comparison** (Step 9)<br>• One table — the baseline, your cutoff (with your BYU ID's last two digits) and the buffer — giving the cutoff or distance, the area, the blocks and people outside and the share; your cutoff's numbers match the grader's (4)<br>• How the share responds between four minutes and your cutoff, and where on Map 1 the extra area went (2)<br>• Why the buffer and the network disagree: the people the buffer claims and the roads do not reach, and what roads do that a circle cannot see (2)<br>• What the model leaves out, which way each would move your share, and what data would fix the one that matters most (2) | /10 |
 | **Total** | **/50** |
 
 > [!NOTE]
@@ -704,6 +687,7 @@ ARCGIS PRO: 3.7.1, arcpy only so far (tools/lab11/run_model.py on the hosted zip
 DATA PACKAGE: docs/data/lab11-fire-response.zip, 20,622,692 bytes (20.6 MB), built by tools/lab11/make_package.py on 2026-10-10: UGRC Utah Street Network (UtahRoadsNetworkAnalysis.gdb, 414,082 edges statewide, roads updated through 2026-09-23) exported where COUNTY_L or COUNTY_R = '49049' (41,460 edges, NETSUBTYPE kept for the template's connectivity) and rebuilt with CreateNetworkDatasetFromTemplate + BuildNetwork from UGRC's own template (tools/lab11/ugrc_network_template.xml, renamed Utah_County_Roads_ND; 33,872 junctions); FireStations COUNTY = 'UTAH' (42); CensusBlocks2020 COUNTYFP20 = '049' (10,092; PP_TOTAL sum 659,399; UR20 is blank for every block and was dropped). The network has no travel modes (arcpy.nax.ReplaceNetworkTravelModes fails without a message on the clipped copy; the GP tool runs on the default cost); add "Driving Time" in the GUI build if the dialog is confusing without it. No turns, no elevation model.
 VERIFIED NUMBERS (check_values.json): one-way 590; I-15 NB FWY longest one-way segment 4,418.5 m, SPEED_LMT 65, F_T 3.0419 / T_F 304.1884 (x100.0); 7,465.4 km of road; stations EMS Y 34, N 3, blank 5; blocks with PP_TOTAL = 0: 2,125; baseline cutoff 4: 42 located, 194.85 km2 (1 feature), Unserved 6,341 blocks, 379,054 people, 57.5 %; rings 4 8: 194.85 + 363.13 km2; crow 3.75 km: 1,070.61 km2, 1,365 blocks, 23,203 people, 3.5 %; examples 89 -> 7.56 min: 519.07 km2, 2,537 blocks, 90,929 people, 13.8 %; 02 -> 4.08 min: 201.50 km2, 6,247 blocks, 370,716, 56.2 %. Block centers by HAVE_THEIR_CENTER_IN (the feasibility run used Feature To Point INSIDE and got 374,769; the page uses the tool the students use).
 RECAPTURED 2026-10-21 after the second renumbering (C:\Ames\Lab11GUI, 175 %): Figures 0, 1a and 8b. The toolbox alias was still lab12 (the renumber script is case-sensitive) and was set to lab11 in Toolbox Properties; the fresh dialog run took 37 s and matched every check value (tools/lab11/check_gui.py).
+CUT 2026-11-16 (instructor, mid-week, after a scale review against Labs 6-10: about 7.5 h against Lab 6's 6 h): Step 9's sensitivity runs (C2, C6, C8, B2_5, own choice) dropped to Base + Mine; the buffer branch moved out of the model to three Geoprocessing-pane tools in Step 6 (verified with arcpy 2026-11-16: 1,070.61 km2, 1,365 blocks, 23,203 people on a map layer with Statistics); the 4-8 ring and _Rings run replaced by Base over Mine on Map 1; "cities labeled" became place names from Imagery Hybrid; the Cutoffs 5/10/15 default spelled out in Step 2; the two-places double score removed from Step 9 Q2. Figures C and 8a still show the buffer branch (captions say so; recapture owed). Students who already did the longer version have done a superset.
 SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 11).
 FIGURES: Figure A (lab11-metadata.svg) and the five icons by tools/lab11/make_svgs.py from READ-ME-FIRST.txt and the UGRC descriptions read 2026-10-10; Figure B (lab11-study-area.png) by figure_b.py from the package and the live county boundary; Figures 9-10 by build_figures.py (arcpy.mp, from the reference run). Figures 0-8 and C: owed to the GUI build.
 REFERENCES: NFPA 1710 240 s / 480 s travel time at 90 % from secondary sources (Fire Engineering, DC FEMS, a North Davis fire agenda quoting 5.2.4.1.1); VERIFY the current edition. UGRC Fire_Station_Travel_Times service description quoted verbatim.
