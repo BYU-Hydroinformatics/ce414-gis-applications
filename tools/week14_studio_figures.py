@@ -29,8 +29,9 @@ NOTES = [  # (row in the capture, x the arrow points at, note, nudge)
     (327, 18, "Name: browse to your Lab12 folder\n(the default is Documents)", 0),
     (422, 44, "Check: copies web layers in", 0),
     (486, 44, "Keep both: your toolbox and the\nmodel's run, with its input data", 0),
-    (742, 250, "Then click Package", -95),
 ]
+# The last note sits inside the pane's empty space, so its arrow does not cross "Finish Packaging".
+INSIDE = (738, 252, "Then click Package", 330, 640)
 
 im = mpimg.imread(IMG / "studio-package-project.png")
 h, w = im.shape[:2]
@@ -44,6 +45,11 @@ for y, x, text, nudge in NOTES:
                 fontsize=FONT, color=RED, weight="bold", linespacing=1.1,
                 arrowprops=dict(arrowstyle="-|>,head_width=0.35,head_length=0.6", color=RED, lw=2.4,
                                 shrinkA=4, shrinkB=0))
+y, x, text, tx, ty = INSIDE
+ax.annotate(text, xy=(NOTE_W + x, y), xytext=(NOTE_W + tx, ty), ha="center", va="center",
+            fontsize=FONT, color=RED, weight="bold",
+            arrowprops=dict(arrowstyle="-|>,head_width=0.35,head_length=0.6", color=RED, lw=2.4,
+                            shrinkA=4, shrinkB=0))
 fig.savefig(IMG / "studio-package-project-callouts.png", facecolor="white"); plt.close(fig)
 print("wrote studio-package-project-callouts.png")
 

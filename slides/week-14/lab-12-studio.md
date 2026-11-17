@@ -24,7 +24,7 @@ Dr. Dan Ames
 <!-- Week 14 has no new lecture. Midterm 2 is open in the Testing Center Tuesday 8:00 am to Thursday 9:00 pm (late fee from Thursday 2:00 pm), and both class meetings are a Lab 12 studio: about fifteen minutes of teaching at the start, then open lab with the instructor circulating. Tuesday: is the project real, then how to record the screen and voice and post the video unlisted on YouTube, with a 20-second test. Thursday: package the project and swap packages with a classmate. Thursday is the last in-person meeting before Lab 12 is due (Thursday of Week 15); the instructor is away that week. -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 14 — Lab 12 Studio<span class="updated">Last Updated: 2026-11-16</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 14 — Lab 12 Studio<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -139,9 +139,9 @@ You want the grader to watch your video from a **link**, but you do not want str
 
 # Package the Project
 
-![bg right:60% w:97%](images/studio-package-project-callouts.png)
+![bg right:57% w:97%](images/studio-package-project-callouts.png)
 
-- **Share** tab ▸ **Package** ▸ **Project**
+- **Share** ▸ **Package** ▸ **Project**
 - Before you package: every input is a **layer in a map**, and the model has run once from its **tool dialog**
 - Afterward, **double-click** the `.ppkx`: the maps draw and the model is there
 
@@ -160,7 +160,7 @@ You want the grader to watch your video from a **link**, but you do not want str
 - Open their model from the **toolbox** and **run it from its tool dialog**. Does it finish?
 - If anything is missing, write down **which input**, and tell them
 
-<!-- This is the grader's test, done by a classmate while there is still time to fix it. A package that opens on its author's machine can still fail on another, because the author's machine has the data in its original folders. Fifteen minutes; then back to work. -->
+<!-- This is the grader's test, done by a classmate while there is still time to fix it. A package that opens on its author's machine can still fail on another, because the author's machine has the data in its original folders. Fifteen minutes; then back to work. CHECK BEFORE CLASS on a lab machine: double-clicking a .ppkx unpacks it under Documents\ArcGIS\Packages on C:, which is locked there. If it will not open, change the unpack folder to D: in ArcGIS Pro's options (Options, Share and Download; verify the exact setting name) and walk the class through it before the swap. -->
 
 ---
 
@@ -168,20 +168,20 @@ You want the grader to watch your video from a **link**, but you do not want str
 
 # Talk to Your Neighbor
 
-![bg right:44% w:94%](images/cyoa-package-contents.svg)
+![bg right:46% w:100%](images/cyoa-package-contents.svg)
 
 Your classmate's package opens and its maps draw, but the model stops: one **input raster** is missing. What most likely happened?
 
 <ol type="A">
-<li>The raster was too large for a package to carry</li>
+<li>The raster was too large for a package to carry, so it was dropped</li>
 <li>Include Toolboxes was left checked in Package Project</li>
 <li>The package was opened on a computer in a different time zone</li>
-<li class="correct">It was not a layer in any map, so the package left it out</li>
+<li class="correct">It was in no map, and no tool-dialog run put it in the history</li>
 </ol>
 
 * <span class="reveal"></span>
 
-<!-- One minute in pairs, then the key press circles D. A package copies map layers and the geoprocessing history's data, but not a model's inputs on their own (Lab 12 Step 7). The fix: add the raster to a map, run the model once from its tool dialog, and package again. B is backwards: Include Toolboxes is what brings the model along. -->
+<!-- One minute in pairs, then the key press circles D. A package copies map layers and the geoprocessing history's data, but not a model's inputs on their own (Lab 12 Step 7), so a raster goes missing only when both rules were broken: it was in no map, and the model never ran from its tool dialog. A is wrong: a package has no size cap of its own, though a large one may need a Drive or Box link. The fix: add the raster to a map, run the model once from its tool dialog, and package again. B is backwards: Include Toolboxes is what brings the model along. -->
 
 ---
 
@@ -208,10 +208,10 @@ Your classmate's package opens and its maps draw, but the model stops: one **inp
 
 ![bg right:40%](images/studio-final-exam.jpg)
 
-- **Thursday, December 17, 7:00 to 10:00 am**, here in our **lab**, at a lab computer
+- **Thursday, December 17, 7:00 to 10:00 am**, at a **lab computer** in the room on BYU's final exam schedule; I will post it on Learning Suite
 - You must **come in person** at that time: there is no take-home or online version
 - **One question**, done in **ArcGIS Pro**: open book and open computer, AI permitted and disclosed
-- Plan on about **two hours**; the third is for software trouble and for exporting and uploading **one PDF**
+- Plan on about **two hours**; the third hour is for software trouble and for exporting and uploading **one PDF**
 - A **conflict**? Tell me **now**, by email, not the week of the exam
 
-<!-- The time is the Learning Suite exam entry (Final Exam, 12/17/2026, 7:00-10:00 am); confirm the room against BYU's final exam schedule before class. The format follows the course schedule page (one question in ArcGIS Pro at a lab computer, open book and open computer, a three-hour block, one PDF) and the AI policy's final-exam section (AI permitted, and disclosed). The image was generated in the deck-wide anime style (tools/divider-images/week14-anime.json). -->
+<!-- The time is the Learning Suite exam entry (Final Exam, 12/17/2026, 7:00-10:00 am); confirm the room against BYU's final exam schedule and post it on Learning Suite before class. The format follows the course schedule page (one question in ArcGIS Pro at a lab computer, open book and open computer, a three-hour block, one PDF) and the AI policy's final-exam section (AI permitted, and disclosed). The image was generated in the deck-wide anime style (tools/divider-images/week14-anime.json). -->
