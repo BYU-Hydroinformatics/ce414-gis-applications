@@ -50,7 +50,8 @@ a question and answer it out loud without notes. If you cannot, open that week's
 
 *Slides:* [Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/flood-models.html), [Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-08/hand.html). *Self-check:* [Height Above What?](../quizzes/hand/index.html), [How Big, How High?](../quizzes/floods/index.html). *Lab:* [Lab 7](../assignments/lab-07/README.md).
 
-- Say what a **100-year flood** is, as a probability, and what that means over a run of years
+- Say what a **100-year flood** is, as a probability, and what that means over a run of years, including why a gage's record of **annual peaks** can top the 100-year flow
+- Read FEMA's flood map as GIS: what the **AE** zone and **shaded X** mark
 - Say what a stream gage measures, what a **rating curve** does, and why a flood flow above the top of the rating is the least certain number in the model
 - Turn a flow into a gage height and a gage height into a flood **depth h**, as Lab 7 Step 1 does
 - Keep **gage height**, **gage datum** and **zero-flow level** apart, and say which one depth h is measured from
@@ -68,7 +69,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Build a **Thiessen** surface and say what its shape looks like; compute an **IDW** estimate by hand and say what the **exponent** does
 - Recognize the profile each method draws through the same points, and say which methods can go above the highest sample
 - Say which methods give the **measured values back** (exact) and which do not
-- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, what a large nugget does, and why a fit with a range near zero gives a flat surface
+- Read a **semivariogram**: **nugget**, **sill**, **range**; say how **kriging** sets its weights, what a large nugget does, and why a fit with a range near zero gives a flat surface; say what a semivariogram that **never levels off** means and what to do about it
 - Say what one **dot** on a semivariogram is, and how the **spherical**, **exponential** and **Gaussian** models differ at short distances
 - Compute an **error raster**, say what its **sign** means, and compute an **RMSE** by hand and in ArcGIS Pro (error, square, mean, square root)
 - Say which surface to **trust**, and why holding points back is the honest test without the truth
@@ -98,7 +99,7 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Compute an accumulated cost by hand, and trace the cheapest path from a destination back to its source
 - Name ArcGIS Pro's tools, **Distance Accumulation** and **Optimal Path As Line**; say how a step into a cell is charged, why a **diagonal** step costs 1.414 times as much, and what back-direction angles **between** the eight neighbor directions do to a route
 - Tell a **barrier** from a **cost**
-- Say which parts of a cost surface **move a route** and which only change its total, and why
+- Say which parts of a cost surface **move a route** and which only change its total, and why; say how a weight can matter in one direction only (the **city weight**), and how the model's **form** (slope added, or elevation multiplied) can choose a different route
 - Map a **corridor** of nearly-as-good routes, and say what a wide or narrow corridor means
 - For Lab 10: why the terrain enters as slope, what each score table says, what Distance Accumulation gives with no cost raster, how the weights enter in the cost expression, and which weight moved the route
 
@@ -106,12 +107,12 @@ a question and answer it out loud without notes. If you cannot, open that week's
 
 *Slides:* [Part A](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-a.html), [Part B](https://byu-hydroinformatics.github.io/ce414-gis-applications/slides/week-12/network-analysis-b.html). *Self-check:* [Along the Roads](../quizzes/networks/index.html), [Four Minutes Away](../quizzes/service-areas/index.html). *Lab:* [Lab 11](../assignments/lab-11/README.md).
 
-- Say what a **network dataset** is made of: **edges**, **junctions**, **connectivity**; say what a missing junction does
+- Say what a **network dataset** is made of: **edges**, **junctions**, **connectivity**; say what a missing junction does and what **Build Network** does
 - Explain what an **impedance** is, and why minutes and meters give **different routes**
 - Describe how **one-way streets** and **turns** enter a network, as costs or as walls
 - Place network distance beside **straight-line** and **cost distance**, and say which fits a fire engine
 - Say what the network does **not** know, and which way each gap moves an answer
-- Run a **service area** in ArcGIS Pro: the analysis layer, **Add Locations**, **Solve**
+- Run a **service area** in ArcGIS Pro: the analysis layer, **Add Locations**, **Solve**; say what Solve does (spreads minutes outward along the edges, cheapest first) and why a service area (away from the stations) and Closest Facility (toward them) can differ on one-way streets
 - Say which solver answers which question: **Service Area**, **Closest Facility**, **Location-Allocation**, Route
 - Explain why a **buffer** and a **service area** disagree about the same minutes, and turn minutes at a speed into a buffer distance
 - For Lab 11: what the network's two costs and their evaluators show, why the service areas are **dissolved**, what **Select Data** does, why the model selects on its own layer made with **Make Feature Layer**, what **Have their center in** and **invert** select, and what comparing four minutes with **your own cutoff** shows
