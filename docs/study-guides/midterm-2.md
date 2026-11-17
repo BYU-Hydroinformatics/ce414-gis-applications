@@ -114,4 +114,4 @@ a question and answer it out loud without notes. If you cannot, open that week's
 - Run a **service area** in ArcGIS Pro: the analysis layer, **Add Locations**, **Solve**
 - Say which solver answers which question: **Service Area**, **Closest Facility**, **Location-Allocation**, Route
 - Explain why a **buffer** and a **service area** disagree about the same minutes, and turn minutes at a speed into a buffer distance
-- For Lab 11: what the network's two costs and their evaluators show, what **Dissolve** and **Rings** do, what **Select Data** does, why each branch gets its own **Make Feature Layer**, what **Have their center in** and **invert** select, and what the cutoff runs show
+- For Lab 11: what the network's two costs and their evaluators show, why the service areas are **dissolved**, what **Select Data** does, why the model selects on its own layer made with **Make Feature Layer**, what **Have their center in** and **invert** select, and what comparing four minutes with **your own cutoff** shows
