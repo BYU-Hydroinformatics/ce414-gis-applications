@@ -37,6 +37,7 @@ file geodatabases; for toolboxes, "Input, output, and intermediate data is not c
 is copied, but input data is not"; maps' layer data and geoprocessing history (with the data needed to
 rerun) are copied. Hence Step 7's two rules: every input stays a layer in a map, and run the model once
 from its tool dialog before packaging.
+PACKAGE PROJECT PANE checked in ArcGIS Pro 3.7.1, 2026-11-16: Share > Package > Project; Start Packaging defaults to Upload package to Online account (Save package to file is the other choice); Options: Share outside of organization (unchecked), Include Toolboxes and Include History Items (checked, Valid items only); Finish Packaging: Analyze, Package.
 LINK CHECK (curl -L, 2026-11-14): 200 gis.utah.gov/products/sgid/, apps.nationalmap.gov/downloader/,
 livingatlas.arcgis.com, pro.arcgis.com project-package help, support.microsoft.com Snipping Tool,
 instagram.com/dr.danames. opendata.utah.gov returned 400 to curl and is not linked. -->
@@ -287,10 +288,11 @@ copy a model's input data on its own, so first:
 2. **Run your model once from its tool dialog**, so the run is in the geoprocessing history.
 
 Then, on the **Share** tab, in the **Package** group, click **Project**. In the **Package Project**
-pane, save it as a file in your Lab12 folder, check **Share outside of organization**, leave
-**Include Toolboxes** and **Include History Items** checked, and run it. Open the `.ppkx` once
-yourself (double-click it) to check that the maps draw and the model is there.
-**[To do: confirm the Package Project pane's labels and options in ArcGIS Pro 3.7.]**
+pane, under **Start Packaging**, choose **Save package to file** (the default uploads it to your
+ArcGIS Online account) and save it in your Lab12 folder. Under **Options**, check **Share outside
+of organization**, and leave **Include Toolboxes** and **Include History Items** checked. Click
+**Package**. Open the `.ppkx` once yourself (double-click it) to check that the maps draw and the
+model is there.
 
 If the package is too large for Learning Suite, put it in Google Drive or BYU Box with link
 sharing on and submit the link. **[To do: confirm Learning Suite's upload limit.]**

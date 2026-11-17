@@ -29,12 +29,13 @@ lab page is the authority: https://byu-hydroinformatics.github.io/ce414-gis-appl
 
 ![bg right:35% w:85%](images/fp-cookie-recipe-model.png)
 
-- By the end of class you should be able to:
-  - Say what Lab 12 asks of you, and how it differs from Labs 1 to 11
-  - Judge whether an idea is the right **size** for two and a half weeks
-  - List the four requirements every project must meet
-  - Plan a five-minute **training video** of your own model
-  - Say what is graded from the video, the report and the package
+By the end of class you should be able to:
+
+- Say what **Lab 12** asks of you, and how it differs from Labs 1 to 11
+- Judge whether an idea is the right **size** for two and a half weeks
+- List the four **requirements** every project must meet
+- Plan a five-minute **training video** of your own model
+- Say what is **graded** from the video, the report and the package
 
 <!-- Frame it as the last lab: every lab so far handed students a question and a recipe. Now they
 write the recipe, and then teach it. The cookie model from Week 2 is a deliberate callback. -->
@@ -51,7 +52,7 @@ write the recipe, and then teach it. The cookie model from Week 2 is a deliberat
 
 ---
 
-# Why choose your own?
+# Why Choose Your Own?
 
 Every lab this semester gave you a **question**, the **data**, and a **recipe**.
 
@@ -71,7 +72,7 @@ where, and show me why I should believe you.*
 
 ---
 
-# What past students built
+# What Past Students Built
 
 <div class="columns" style="grid-template-columns: 1.1fr 1fr; align-items: start;">
 
@@ -102,7 +103,7 @@ row links its year's deck. Tell them to page through two or three decks tonight.
 
 ---
 
-# The requirements
+# The Requirements
 
 ![bg right:34%](images/cyoa-requirements.jpg)
 
@@ -139,22 +140,22 @@ lab. The 6-12 tool range is a guideline, not a rule. -->
 
 <!-- _class: quiz -->
 
-# Is this project the right size?
+# Talk to Your Neighbor
 
 ![bg right:30%](images/cyoa-right-size.jpg)
 
-For each idea, decide: **too small**, **about right**, or **too big**.
+Lab 12 runs two and a half weeks. Which **one** of these ideas is about the **right size**?
 
 <ol type="A">
 <li>Map every Walmart in Utah</li>
-<li>Find the best three sites for an EV charging hub in Utah County, given traffic, grid access, and land use</li>
+<li class="correct">Find the best three EV charging hub sites in Utah County from traffic and land use</li>
 <li>Model wildfire risk for the entire western United States at 10 m resolution</li>
-<li>Estimate how many people live within a 10-minute walk of a TRAX station, and which stations are underserved</li>
+<li>Build a web app that updates the snow depth on every ski run in the West every hour</li>
 </ol>
 
-<!-- A: too small — no analysis, just a display. B: about right. C: too big — data volume and
-validation are out of reach in two and a half weeks. D: about right, and a good example of a
-network question that is still doable with buffers and raster density. -->
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press circles B. A is too small: a display, no analysis. C is too big: the data volume and any check on the result are out of reach in two and a half weeks. D is not a Lab 12 at all: a live web app is software engineering, and there is no ModelBuilder model or finished map at its heart. B has one place, explicit criteria, raster and vector data, and a model of a handful of tools. -->
 
 ---
 
@@ -168,10 +169,10 @@ network question that is still doable with buffers and raster density. -->
 
 ---
 
-# Choosing a problem — three questions
+# Choosing a Problem: Three Questions
 
 **1. Can I say the question in one sentence?**
-"Where in Utah County should a new fire station go so that the most homes are within 5 minutes?"
+"Where in Utah County could a 2 MW solar farm go within 1 km of a substation, on land under 5° of slope and outside the floodplain?"
 
 **2. Does the data exist, and can I get it this week?**
 Check UGRC, the USGS National Map, and Living Atlas *before* you commit. If a layer would need to be digitized by hand, that is your whole project.
@@ -186,7 +187,7 @@ If you cannot describe a way to check the result, the model is a picture, not an
 
 ---
 
-# The data check
+# The Data Check
 
 ![bg right:26%](images/cyoa-data-check.jpg)
 
@@ -202,6 +203,27 @@ If any row is blank, you are not ready to build.
 
 ---
 
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:34% w:94%](images/cyoa-three-questions.svg)
+
+Which of these is a **question**, ready for the data check, rather than a topic or a thesis?
+
+<ol type="A">
+<li>Solar energy in Utah</li>
+<li>How do Utah County residents feel about living near a solar farm?</li>
+<li class="correct">Which Utah County land under 5° slope lies near a substation, outside the floodplain?</li>
+<li>Where should every state put its solar farms, and how will power prices change by 2050?</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press circles C. A is a topic: no place, no decision. B is a real question, but its answer is in people's heads, not in a layer you can download. D is two questions and a thesis: every state, plus an economic forecast. C names one place, explicit criteria and layers that exist (slope from a DEM, substations, FEMA's floodplain). -->
+
+---
+
 <!-- _class: lead -->
 
 ![bg right:55%](images/cyoa-divider-submit.jpg)
@@ -212,7 +234,7 @@ If any row is blank, you are not ready to build.
 
 ---
 
-# The training video — five minutes
+# The Training Video: Five Minutes
 
 ![bg right:26%](images/cyoa-recording.jpg)
 
@@ -235,7 +257,7 @@ right stands in until then. -->
 
 ---
 
-# The report and the package
+# The Report and the Package
 
 ![bg right:38% w:94%](images/cyoa-package-contents.svg)
 
@@ -251,7 +273,7 @@ copied; map layers and geoprocessing history are. -->
 
 ---
 
-# The tool interface
+# The Tool Interface
 
 ![bg right:45% w:95%](images/fp-tool-interface-pane.png)
 
@@ -268,7 +290,7 @@ interface"). -->
 
 ---
 
-# The timeline
+# The Timeline
 
 ![bg right:30%](images/cyoa-timeline.jpg)
 
@@ -285,27 +307,29 @@ December 6-10 and answers email in the evening. -->
 
 ---
 
-# How Lab 12 is scored
+# How Lab 12 Is Scored
+
+<style scoped>table { font-size: 0.82em; }</style>
+
+![bg right:40% w:94%](images/cyoa-points-by-source.svg)
 
 | Part | Points | Graded from |
 | --- | ---: | --- |
-| Question and data | 20 | Report and package |
+| Question and data | 20 | Video, report and package |
 | ModelBuilder model | 20 | Package and report |
 | Map | 20 | Report |
 | Training video | 30 | Video |
 | Report and package | 10 | Both |
 | **Total** | **100** | |
 
-![w:640](images/cyoa-points-by-source.svg)
-
-The full rubric is on the Lab 12 page.
+The full **rubric** is on the Lab 12 page.
 
 <!-- 100 points, twice a regular lab. The bullets on the page say which deliverable each item is
 graded from. -->
 
 ---
 
-# Extra credit — a reel
+# Extra Credit: A Reel
 
 ![bg right:34% h:92%](images/cyoa-reel-frame.png)
 
@@ -322,7 +346,7 @@ bars stand for captions; there are no words in the image. -->
 
 ---
 
-# What separates a good project from a great one
+# What Separates a Good Project from a Great One
 
 **Good**: the model runs, the map is clean, the video walks through every tool.
 
@@ -333,16 +357,14 @@ bars stand for captions; there are no words in the image. -->
 - It says what the analysis **cannot** tell you
 - The map answers the question in **five seconds**
 
-That is the difference between a result and a recommendation.
-
 ![bg right:38% w:94%](images/cyoa-example-map.png)
 
-<!-- Figure: Lab 11's example baseline map, as a model of a map that answers its question at a glance. -->
+<!-- Figure: Lab 11's example baseline map, as a model of a map that answers its question at a glance. Close with: that is the difference between a result and a recommendation. -->
 
 
 ---
 
-# Common ways projects go wrong
+# Common Ways Projects Go Wrong
 
 ![bg right:30%](images/cyoa-late-night.jpg)
 
@@ -353,6 +375,27 @@ That is the difference between a result and a recommendation.
 - **The video was recorded last.** Five minutes of narration at midnight sounds like it
 
 <!-- Every one of these has happened. Say so. -->
+
+---
+
+<!-- _class: quiz -->
+
+# Talk to Your Neighbor
+
+![bg right:28%](images/cyoa-recording.jpg)
+
+Your model takes **four minutes** to run. How should your five-minute training video show it?
+
+<ol type="A">
+<li>Start the run on camera and talk while the progress bar slowly fills</li>
+<li class="correct">Run it first; on camera, open each tool, then show the layer it made</li>
+<li>Skip the model and spend the time on the finished map</li>
+<li>Speed the recording up four times so the run fits</li>
+</ol>
+
+* <span class="reveal"></span>
+
+<!-- Two minutes in pairs, then the key press circles B: the Lab 12 page, Step 5, "Show results; do not wait for them." A wastes most of the video on a progress bar; C skips the 10-point heart of the video rubric (the model walked tool by tool); D makes the narration unreadable and still shows nothing a newcomer can learn from. -->
 
 ---
 
