@@ -202,10 +202,11 @@ A city council asks four questions. Which one is a **Service Area** question?
 
 ![w:1180](images/nab-lab11-model.svg)
 
-- Your model is the **service-area chain** and **one** branch of blocks: Cutoff_Minutes in, three datasets out
-- The **buffer branch** in this export (Buffer_Distance, Crow_ outputs) is **not** in your model: Step 6 does it outside
+- Top: the network and the cutoff into the **service-area chain**; **Served_Area** out
+- Bottom: the blocks through **Make Feature Layer**, the inverted selection, the **count**
+- Four **P** badges: the cutoff in, three datasets out; the buffer (Step 6) runs **outside** the model
 
-<!-- Lab 11's Figure C, exported from ModelBuilder after the GUI build, with the straight-line branch that the November 16, 2026 cut moved out of the model into Step 6; a re-export without it is owed. Point at the chain students build: the network and cutoff through Solve, Select Data and Copy Features to Served_Area, then Blocks_Net, the inverted selection and the two outputs. -->
+<!-- Lab 11's Figure C, re-exported from ModelBuilder on November 16, 2026 after the straight-line branch moved out of the model into Step 6. Point at the chain students build: the network and cutoff through Solve, Select Data and Copy Features to Served_Area, then Blocks_Net, the inverted selection and the two outputs. -->
 
 ---
 

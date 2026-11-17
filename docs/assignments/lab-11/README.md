@@ -200,16 +200,13 @@ outside the model in Step 6, **Buffer** (Lab 1).
 
 ## Example Model
 
-![The Fire Response Coverage model exported from ModelBuilder, laid out left to right. Utah_County_Roads_ND and Cutoff_Minutes (marked P) feed Make Service Area Analysis Layer, whose Service Area layer goes with Fire_Stations into Add Locations and then Solve; Select Data takes the Polygons out and Copy Features writes Served_Area (P). Below, the Census_Blocks dataset feeds two Make Feature Layer tools, Blocks_Net and Blocks_Crow. Blocks_Net goes into Select Layer By Location with Served_Area, then Copy Features makes Unserved_Blocks (P) and Summary Statistics makes Unserved_Population (P). Above, Fire_Stations and Buffer_Distance (P) feed Buffer, which makes Crow_Area (P); Blocks_Crow goes into a second Select Layer By Location with Crow_Area, then Copy Features and Summary Statistics make Crow_Unserved (P) and Crow_Population (P). Every tool carries a green check from a completed run.](images/lab11-model.svg)
+![The Fire Response Coverage model exported from ModelBuilder. Top row, left to right: Utah_County_Roads_ND and Cutoff_Minutes (marked P) feed Make Service Area Analysis Layer; its Service Area layer goes with Fire_Stations into Add Locations and then Solve, which also outputs Solve Succeeded; Select Data takes the Polygons out and Copy Features writes Served_Area (P). Below, Census_Blocks (2) feeds Make Feature Layer, whose Blocks_Net goes with Served_Area into Select Layer By Location; its selected Blocks_Net (2) goes through Copy Features (2) to Unserved_Blocks (P) and Summary Statistics to Unserved_Population (P), and it also outputs Count and Output Layer Names. Every tool carries a green check from a completed run.](images/lab11-model.svg)
 
-**Figure C.** The model, exported from ModelBuilder — **click it to open it full size**. Your model
-is the **lower chain only**: the network, the stations and the blocks in; one service area, one
-layer of blocks (`Blocks_Net`); `Served_Area`, `Unserved_Blocks` and `Unserved_Population` out. The
-upper branch in the figure (`Buffer_Distance`, `Buffer`, `Crow_Area`, `Blocks_Crow` and the `Crow_`
-outputs) is **not** part of this lab's model: Step 6 does the straight-line comparison in the
-Geoprocessing pane instead. The elements marked `P` are the model parameters — the cutoff in
-minutes and the outputs you keep — and they become the tool dialog of Step 8.
-*Figure placeholder: re-export Figure C from a model without the buffer branch.*
+**Figure C.** The finished model, exported from ModelBuilder — **click it to open it full size**.
+The network, the stations and the blocks in; one service area and one layer of blocks
+(`Blocks_Net`); `Served_Area`, `Unserved_Blocks` and `Unserved_Population` out. The elements marked
+`P` are the model parameters — the cutoff in minutes and the outputs you keep — and they become the
+tool dialog of Step 8. The straight-line comparison of Step 6 is not in the model.
 
 ## Complete the Lab
 
@@ -496,18 +493,15 @@ parameters.
 
 <!-- Personal lookup for every ending 00-99: ce414-private/grading-oracles/lab11_personal_lookup.csv (tools/lab11/run_model.py personal; private repo). -->
 
-![The Fire Response Coverage tool in the Geoprocessing pane: Buffer_Distance 3.75 Kilometers as a Linear Unit; Served_Area Served_Area_Base; Unserved_Blocks Unserved_Blocks_Base; Unserved_Population Unserved_Population_Base; Crow_Area Crow_Area_Base; Crow_Unserved Crow_Unserved_Base; Crow_Population Crow_Population_Base; Cutoff_Minutes as a one-row list holding 4, with an Add another button; a Run button.](images/lab11-tool-dialog.png)
+![The Fire Response Coverage tool in the Geoprocessing pane: Served_Area Served_Area_Base; Unserved_Blocks Unserved_Blocks_Base; Unserved_Population Unserved_Population_Base, each with a yellow warning triangle because a dataset of that name already exists; Cutoff_Minutes as a one-row list holding 4, with an Add another button; a Run button.](images/lab11-tool-dialog.png)
 
-**Figure 8a.** The model as a tool. The parameters appear in the order they were made, and
-`Cutoff_Minutes` is a list with one row. Give every output a new name for each run. This capture
-comes from the model in Figure C, so it also shows `Buffer_Distance` and three `Crow_` outputs;
-yours has only `Cutoff_Minutes` and three outputs.
-*Figure placeholder: recapture the tool dialog from a model without the buffer branch.*
+**Figure 8a.** The model as a tool: three outputs and `Cutoff_Minutes`, a list with one row. Give
+every output a new name for each run. A yellow triangle only means a dataset of that name already
+exists and will be overwritten.
 
-![The completed-run pop-up for Fire Response Coverage (lab11): Started, Completed and an Elapsed Time of 37 seconds; the Tool Path in Lab11.atbx; a Parameters tab listing Buffer_Distance 3.75 Kilometers, the six _Base outputs with their Lab11.gdb paths, and Cutoff_Minutes 4.](images/lab11-run-complete.png)
+![The completed-run pop-up for Fire Response Coverage (lab11): Started 10:46:23 PM, Completed 10:46:43 PM, an Elapsed Time of 20 seconds; the Tool Path C:\Ames\Lab11GUI\Lab11.atbx\FireResponseCoverage; a Parameters tab listing Served_Area, Unserved_Blocks and Unserved_Population with their _Base paths in Lab11.gdb, and Cutoff_Minutes 4.](images/lab11-run-complete.png)
 
-**Figure 8b.** The pop-up when the run finishes; a dialog run of the model in Figure C took
-**37 s** here, and yours, with one branch fewer, should take less.
+**Figure 8b.** The pop-up when the run finishes; a dialog run of the model took **20 s** here.
 
 > [!WARNING]
 > **A run from the tool dialog deletes everything that is not a parameter**, including the
@@ -687,7 +681,7 @@ ARCGIS PRO: 3.7.1, arcpy only so far (tools/lab11/run_model.py on the hosted zip
 DATA PACKAGE: docs/data/lab11-fire-response.zip, 20,622,692 bytes (20.6 MB), built by tools/lab11/make_package.py on 2026-10-10: UGRC Utah Street Network (UtahRoadsNetworkAnalysis.gdb, 414,082 edges statewide, roads updated through 2026-09-23) exported where COUNTY_L or COUNTY_R = '49049' (41,460 edges, NETSUBTYPE kept for the template's connectivity) and rebuilt with CreateNetworkDatasetFromTemplate + BuildNetwork from UGRC's own template (tools/lab11/ugrc_network_template.xml, renamed Utah_County_Roads_ND; 33,872 junctions); FireStations COUNTY = 'UTAH' (42); CensusBlocks2020 COUNTYFP20 = '049' (10,092; PP_TOTAL sum 659,399; UR20 is blank for every block and was dropped). The network has no travel modes (arcpy.nax.ReplaceNetworkTravelModes fails without a message on the clipped copy; the GP tool runs on the default cost); add "Driving Time" in the GUI build if the dialog is confusing without it. No turns, no elevation model.
 VERIFIED NUMBERS (check_values.json): one-way 590; I-15 NB FWY longest one-way segment 4,418.5 m, SPEED_LMT 65, F_T 3.0419 / T_F 304.1884 (x100.0); 7,465.4 km of road; stations EMS Y 34, N 3, blank 5; blocks with PP_TOTAL = 0: 2,125; baseline cutoff 4: 42 located, 194.85 km2 (1 feature), Unserved 6,341 blocks, 379,054 people, 57.5 %; rings 4 8: 194.85 + 363.13 km2; crow 3.75 km: 1,070.61 km2, 1,365 blocks, 23,203 people, 3.5 %; examples 89 -> 7.56 min: 519.07 km2, 2,537 blocks, 90,929 people, 13.8 %; 02 -> 4.08 min: 201.50 km2, 6,247 blocks, 370,716, 56.2 %. Block centers by HAVE_THEIR_CENTER_IN (the feasibility run used Feature To Point INSIDE and got 374,769; the page uses the tool the students use).
 RECAPTURED 2026-10-21 after the second renumbering (C:\Ames\Lab11GUI, 175 %): Figures 0, 1a and 8b. The toolbox alias was still lab12 (the renumber script is case-sensitive) and was set to lab11 in Toolbox Properties; the fresh dialog run took 37 s and matched every check value (tools/lab11/check_gui.py).
-CUT 2026-11-16 (instructor, mid-week, after a scale review against Labs 6-10: about 7.5 h against Lab 6's 6 h): Step 9's sensitivity runs (C2, C6, C8, B2_5, own choice) dropped to Base + Mine; the buffer branch moved out of the model to three Geoprocessing-pane tools in Step 6 (verified with arcpy 2026-11-16: 1,070.61 km2, 1,365 blocks, 23,203 people on a map layer with Statistics); the 4-8 ring and _Rings run replaced by Base over Mine on Map 1; "cities labeled" became place names from Imagery Hybrid; the Cutoffs 5/10/15 default spelled out in Step 2; the two-places double score removed from Step 9 Q2. Figures C and 8a still show the buffer branch (captions say so; recapture owed). Students who already did the longer version have done a superset.
+CUT 2026-11-16 (instructor, mid-week, after a scale review against Labs 6-10: about 7.5 h against Lab 6's 6 h): Step 9's sensitivity runs (C2, C6, C8, B2_5, own choice) dropped to Base + Mine; the buffer branch moved out of the model to three Geoprocessing-pane tools in Step 6 (verified with arcpy 2026-11-16: 1,070.61 km2, 1,365 blocks, 23,203 people on a map layer with Statistics); the 4-8 ring and _Rings run replaced by Base over Mine on Map 1; "cities labeled" became place names from Imagery Hybrid; the Cutoffs 5/10/15 default spelled out in Step 2; the two-places double score removed from Step 9 Q2. Figures C, 8a and 8b recaptured the same night (C:\Ames\Lab11GUI, ArcGIS Pro 3.7.1 at 175 %; buffer branch deleted in ModelBuilder, project backed up to C:\Ames\_old\Lab11GUI_before_cut_2026-11-16); the dialog run at 4 reproduced 194.85 km2 (1 feature), 6,341 blocks and 379,054 people. Students who already did the longer version have done a superset.
 SENSITIVITY: moved to the private companion repository (ce414-private, plans/lab-sensitivity-2026.md, Lab 11).
 FIGURES: Figure A (lab11-metadata.svg) and the five icons by tools/lab11/make_svgs.py from READ-ME-FIRST.txt and the UGRC descriptions read 2026-10-10; Figure B (lab11-study-area.png) by figure_b.py from the package and the live county boundary; Figures 9-10 by build_figures.py (arcpy.mp, from the reference run). Figures 0-8 and C: owed to the GUI build.
 REFERENCES: NFPA 1710 240 s / 480 s travel time at 90 % from secondary sources (Fire Engineering, DC FEMS, a North Davis fire agenda quoting 5.2.4.1.1); VERIFY the current edition. UGRC Fire_Station_Travel_Times service description quoted verbatim.
