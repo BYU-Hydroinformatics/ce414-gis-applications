@@ -38,6 +38,12 @@ is copied, but input data is not"; maps' layer data and geoprocessing history (w
 rerun) are copied. Hence Step 7's two rules: every input stays a layer in a map, and run the model once
 from its tool dialog before packaging.
 PACKAGE PROJECT PANE checked in ArcGIS Pro 3.7.1, 2026-11-16: Share > Package > Project; Start Packaging defaults to Upload package to Online account (Save package to file is the other choice); Options: Share outside of organization (unchecked), Include Toolboxes and Include History Items (checked, Valid items only); Finish Packaging: Analyze, Package.
+NOVEMBER 19, 2026 (instructor's request): up to 5 more extra-credit points for one new tool, used and
+taught (the example tools in that section are rows of the ideas table that no Lab 1-11 tools table and
+no lecture deck names: Weighted Sum, Point Density, Zonal Histogram, Add Surface Information, checked by
+grep that day); a note under the past decks that those were team projects presented live, and that this
+year's video links will be collected in one Google Slides deck; "no in-class presentation" stated in the
+opening note.
 LINK CHECK (curl -L, 2026-11-14): 200 gis.utah.gov/products/sgid/, apps.nationalmap.gov/downloader/,
 livingatlas.arcgis.com, pro.arcgis.com project-package help, support.microsoft.com Snipping Tool,
 instagram.com/dr.danames. opendata.utah.gov returned 400 to curl and is not linked. -->
@@ -45,8 +51,9 @@ instagram.com/dr.danames. opendata.utah.gov returned 400 to curl and is not link
 > [!NOTE]
 > **This is a two-and-a-half-week lab**, introduced Tuesday of Week 13 and due **Thursday of
 > Week 15 at 11:59 pm**, the last day of classes. It is worth **100 points**, twice a regular lab,
-> and you do it **on your own**. Week 14 has Midterm 2 and no new lecture; its class time is open
-> lab for this project. There is no class in Week 15, and I am away that week: send questions by
+> and you do it **on your own**. There is **no in-class presentation**: your training video is the
+> presentation, and everything else is uploaded to Learning Suite. Week 14 has Midterm 2 and no new
+> lecture; its class time is open lab for this project. There is no class in Week 15, and I am away that week: send questions by
 > email, and expect an answer in the evening.
 
 ## Background
@@ -85,6 +92,15 @@ through a few before you choose:
 The decks are large and can take a minute to open. Take an idea and make it yours — a different
 place, a different question, a better model — rather than repeat one. Pick something other than
 Labs 1 to 11: this lab is a stretch past them, not a rerun.
+
+> [!NOTE]
+> **The same idea, a slightly different format this year.** The past decks are good examples of
+> the questions, data, models and maps that make a strong project, so use them freely. Two things
+> are different for you. Past classes worked in **teams**, with less time, and gave **oral
+> presentations** in class. This year you have about two and a half weeks, you work **on your
+> own**, and you present in a **video**, not in class. I will collect this year's video links in
+> one Google Slides deck, like the ones above, so you can watch each other's projects and learn
+> from them.
 
 **Ideas from past CE 414 projects.** Each row is a question a student or team answered in an
 earlier year, with what they built it from; the year links to that year's deck. Most of these
@@ -196,6 +212,9 @@ Your project must have all four:
 4. **Your own work**, done individually. Classmates can help you find data or fix an error, as in
    any lab; the question, the model, the map and the video are yours.
 
+For extra credit, you can also bring in a tool we have not used in class; see
+[Extra Credit — A New Tool](#extra-credit-a-new-tool).
+
 ## Complete the Lab
 
 ### Step 1 — Choose the Question
@@ -272,6 +291,8 @@ the map, each on its own full page. Four or five pages in all is typical.
 - **The tools in the order your model runs them**, each with its key settings, as a numbered list
 - **The answer** in two or three sentences, with the numbers that support it, and its main
   limitation
+- if you are going for the new-tool extra credit, a short paragraph that introduces the tool (see
+  [Extra Credit — A New Tool](#extra-credit-a-new-tool))
 - one line saying what you used AI for, if anything
 - **Your model, full page:** exported from ModelBuilder (**Export ▸ Export To Graphic**), every tool and dataset readable
 - **Your map, full page:** the layout from Step 4, exported as a PDF page
@@ -297,6 +318,29 @@ model is there.
 
 If the package is too large for Learning Suite, put it in Google Drive or BYU Box with link
 sharing on and submit the link. **[To do: confirm Learning Suite's upload limit.]**
+
+### Extra Credit — A New Tool
+
+For **up to 5 extra-credit points**, use and teach **one geoprocessing tool we have not used in
+class this semester**. Every lab so far handed you its tools; this is a chance to find one
+yourself, the way a working analyst does when a question needs something new.
+
+A tool counts as new if it is not in the tools table of any of Labs 1 to 11 and we did not use it
+in a lecture. Several rows of the ideas table above name one: **Weighted Sum**, **Point
+Density**, **Zonal Histogram** (Spatial Analyst) and **Add Surface Information** (3D Analyst), for
+example. Choose the tool because your question needs it, not the other way around. If you are not
+sure a tool counts, email me before you build your model around it.
+
+To earn the points, the tool has to do real work in your model, and you have to teach it:
+
+- **In the model:** its output feeds your result, not just the look of the map.
+- **In the report:** a short paragraph introducing it the way a lab's tools table does: what it
+  does, which toolbox it is in, the settings that matter and the values you chose, why it fits your
+  question better than a tool we used in class, and a link to its ArcGIS Pro tool reference.
+- **In the video:** open it, show its settings, and say in a sentence or two what it does, then show
+  the dataset it made.
+
+One well-taught tool earns all five points; a second new tool does not earn more.
 
 ### Extra Credit — Make a Reel
 
@@ -324,6 +368,7 @@ Submit on Learning Suite by **Thursday of Week 15, 11:59 pm**:
 | Training video, about five minutes | The **unlisted YouTube link** |
 | Project report: a page or two of text, the model on a full page, the map on a full page | PDF |
 | Project package | `.ppkx` file, or a link if it is too large |
+| Extra credit: a new tool | Nothing extra to upload: it is in your model, report and video |
 | Extra credit: vertical reel, 30 to 90 seconds | Video file, with your posting permission |
 
 > [!NOTE]
@@ -346,6 +391,7 @@ from the report and 30 from the package.
 | **Training video** — graded from the video<br>• About five minutes, no more than five and a half, unlisted on YouTube and playing from the link (4)<br>• Each dataset shown, with what it is and where it came from (5)<br>• The model walked tool by tool: each tool's settings shown and explained, and the dataset it made shown (10)<br>• The final map, the answer, and one thing the analysis cannot tell you (5)<br>• Clear audio, readable screen, and a pace a newcomer could follow (6) | /30 |
 | **Report and package**<br>• *Report:* complete, with the title block and video link, the tools in order with their settings, the answer with its numbers and its limitation, and the AI line (6)<br>• *Package:* the `.ppkx` submitted, and it opens with its maps and data (4) | /10 |
 | **Total** | **/100** |
+| **Extra credit: a new tool** we have not used in class<br>• *Package:* the tool does real work in the model; its output feeds the result (1)<br>• *Report:* a paragraph introducing it: what it does, its toolbox, the settings that matter and the values chosen, and a link to its tool reference (2)<br>• *Report:* why it fits the question better than a tool from class, and a number or figure showing it did what you expected (1)<br>• *Video:* the tool opened, its settings shown and explained, and the dataset it made shown (1) | **up to +5** |
 | **Extra credit:** a 30 to 90 second vertical reel cut from your footage, with captions, the question, the result and the map; a really good one, which hooks a viewer in the first seconds, reads without sound and gets the answer across, earns the most | **up to +10** |
 
 > [!NOTE]

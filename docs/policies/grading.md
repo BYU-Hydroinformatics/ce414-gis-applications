@@ -48,6 +48,8 @@ review together are the **Attendance and Participation** category, about 7 %.
 - Ten points for the Week 6 in-class activity, *Where is Emigration Creek Watershed?*
 - Up to ten points for a 30 to 90 second vertical reel cut from your Lab 12 video; see
   [Lab 12](../assignments/lab-12/README.md).
+- Up to five points for using and teaching, in Lab 12, a tool we have not used in class; see
+  [Extra Credit — A New Tool](../assignments/lab-12/README.md#extra-credit-a-new-tool).
 - School spirit and belonging: attend a cultural or sporting event with other BYU students, take a
   picture, and post it to the Learning Suite assignment.
 

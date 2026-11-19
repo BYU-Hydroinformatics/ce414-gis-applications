@@ -20,7 +20,7 @@ ArcGIS Pro training video on YouTube, a report, and a project package, due Thurs
 lab page is the authority: https://byu-hydroinformatics.github.io/ce414-gis-applications/assignments/lab-12/ -->
 
 <!-- stamp:begin -->
-<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-17</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
+<!-- _footer: '<span>CE 414 · Week 13 — Lab 12: Choose Your Own Adventure<span class="updated">Last Updated: 2026-11-19</span></span><span>© 2026 Daniel P. Ames · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>' -->
 <!-- stamp:end -->
 
 ---
@@ -84,9 +84,8 @@ Questions from earlier years:
 - Which trails have broad **views** that include water?
 - Where should **rain gardens** go in a county?
 - Where are the gaps between **EV fast chargers** on a road trip?
-- How many **craters** does a Martian volcano have?
 
-Seventy more, with the decks from 2018 to 2025, are on the **Lab 12 page**.
+Seventy more, with the 2018–2025 decks, are on the **Lab 12 page**. Those were **team** projects, presented live; yours is **individual**, on **video**.
 
 </div>
 
@@ -99,7 +98,10 @@ Seventy more, with the decks from 2018 to 2025, are on the **Lab 12 page**.
 </div>
 
 <!-- The ideas table on the lab page has 70 rows drawn from 126 projects in the 2018-2025 decks; each
-row links its year's deck. Tell them to page through two or three decks tonight. -->
+row links its year's deck. Tell them to page through two or three decks tonight, and say it plainly:
+the old decks show the kind of work, not the format. Past classes had less time, worked in teams and
+presented in class; this year is individual and on video, and this year's video links will be collected
+in one Google Slides deck so they can learn from each other. -->
 
 ---
 
@@ -114,7 +116,7 @@ Your project must have all four:
 3. **A finished map** that answers your question
 4. **Your own work, done individually** — help finding data or fixing an error is fine, as in any lab
 
-Pick something other than Labs 1 to 11. Lab 12 is a stretch past them, not a rerun.
+Pick something other than Labs 1 to 11. **No in-class presentation**: the video is your presentation.
 
 <!-- There is no proposal meeting and no team this year. The project is individual so the grade
 measures each student's own work. -->
@@ -343,6 +345,25 @@ With your permission I may post it on [@dr.danames](https://www.instagram.com/dr
 
 <!-- Figure: Lab 10's example baseline map in a 9:16 phone frame (tools/week13_figures.py). The white
 bars stand for captions; there are no words in the image. -->
+
+---
+
+# Extra Credit: A New Tool
+
+![bg right:40% w:92%](images/cyoa-new-tool.svg)
+
+**Up to 5 more points:** use and teach **one tool** we have not used in class.
+
+- Not in any lab's tools table, and not used in a lecture
+- It does **real work** in the model, not just the map
+- **Teach it** in the report and the video: what it does, its settings, why it fits
+
+Ideas: **Weighted Sum**, **Point Density**, **Zonal Histogram**. Not sure it counts? Email me.
+
+<!-- November 19, 2026. The breakdown (1 in the model, 2 the introduction, 1 why and a check, 1 the
+video) is in the Lab 12 rubric. The three example tools appear in the ideas table on the lab page and
+in no Lab 1-11 tools table or lecture deck. Figure: tools/week13_figures.py; the gray boxes are a
+sample of the labs' tools. -->
 
 ---
 

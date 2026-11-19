@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 638" width="880" height="638" font-family="Avenir Next, Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="880" height="638" fill="white"/>
+<text x="440" y="44" font-size="32" fill="#002e5d" font-weight="bold" text-anchor="middle" >Tools from Labs 1 to 11</text>
+<rect x="20" y="70" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="120.0" y="107.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Buffer</text>
+<rect x="236" y="70" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="336.0" y="107.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Intersect</text>
+<rect x="452" y="70" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="552.0" y="107.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Erase</text>
+<rect x="668" y="70" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="768.0" y="107.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Reclassify</text>
+<rect x="20" y="146" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="120.0" y="183.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Raster Calculator</text>
+<rect x="236" y="146" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="336.0" y="183.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Slope</text>
+<rect x="452" y="146" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="552.0" y="183.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Kernel Density</text>
+<rect x="668" y="146" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="768.0" y="183.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Extract by Mask</text>
+<rect x="20" y="222" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="120.0" y="259.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Fill</text>
+<rect x="236" y="222" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="336.0" y="259.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Flow Accumulation</text>
+<rect x="452" y="222" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="552.0" y="259.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Watershed</text>
+<rect x="668" y="222" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="768.0" y="259.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Con</text>
+<rect x="20" y="298" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="120.0" y="335.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Flow Distance</text>
+<rect x="236" y="298" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="336.0" y="335.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Spatial Join</text>
+<rect x="452" y="298" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="552.0" y="335.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >IDW</text>
+<rect x="668" y="298" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="768.0" y="335.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Kriging</text>
+<rect x="20" y="374" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="120.0" y="411.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Zonal Statistics</text>
+<rect x="236" y="374" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="336.0" y="411.0" font-size="17" fill="#4a5568" font-weight="normal" text-anchor="middle" >Distance Accumulation</text>
+<rect x="452" y="374" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="552.0" y="411.0" font-size="17" fill="#4a5568" font-weight="normal" text-anchor="middle" >Optimal Path As Line</text>
+<rect x="668" y="374" width="200" height="60" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>
+<text x="768.0" y="411.0" font-size="20" fill="#4a5568" font-weight="normal" text-anchor="middle" >Solve</text>
+<text x="440" y="464" font-size="21" fill="#8a94a3" font-weight="normal" text-anchor="middle" >… and the rest of each lab's tools table</text>
+<rect x="200" y="498" width="480" height="120" rx="16" fill="#fff4ec" stroke="#e8792b" stroke-width="4" stroke-dasharray="14 8"/>
+<text x="234" y="552" font-size="32" fill="#c25a12" font-weight="bold" text-anchor="start" >Your new tool</text>
+<text x="234" y="590" font-size="22" fill="#6b4a33" font-weight="normal" text-anchor="start" >used for real, and taught</text>
+<circle cx="614" cy="558.0" r="44" fill="#e8792b"/>
+<text x="614" y="571.0" font-size="38" fill="white" font-weight="bold" text-anchor="middle" >+5</text>
+</svg>

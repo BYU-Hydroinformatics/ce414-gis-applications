@@ -6,10 +6,13 @@ Writes into slides/week-13/images/:
   cyoa-package-contents.svg       slide "The report and the package"
   cyoa-points-by-source.svg       slide "How Lab 12 is scored"
   cyoa-reel-frame.png             slide "Extra credit — a reel" (Lab 10 example map in a 9:16 phone frame)
+  cyoa-new-tool.svg               slide "Extra credit — a new tool"
   cyoa-example-map.png            slide "What separates a good project from a great one" (Lab 11 example map)
 
 Point split in cyoa-points-by-source.svg is counted from the tags on the Lab 12 rubric bullets
 (docs/assignments/lab-12/README.md): video 30, report 38, package 28, video and report together 4.
+The gray boxes in cyoa-new-tool.svg are tools from the tools tables of Labs 1 to 11 (checked
+November 19, 2026); they are a sample, not the full list.
 Run: python tools/week13_figures.py
 """
 import pathlib
@@ -110,6 +113,30 @@ def points_by_source():
     return svg(920, 240, "\n".join(b))
 
 
+def new_tool():
+    tools = ["Buffer", "Intersect", "Erase", "Reclassify",
+             "Raster Calculator", "Slope", "Kernel Density", "Extract by Mask",
+             "Fill", "Flow Accumulation", "Watershed", "Con",
+             "Flow Distance", "Spatial Join", "IDW", "Kriging",
+             "Zonal Statistics", "Distance Accumulation", "Optimal Path As Line", "Solve"]
+    cw, ch, gx, gy, x0, y0 = 200, 60, 16, 16, 20, 70
+    b = [text(440, 44, "Tools from Labs 1 to 11", 32, NAVY, "bold")]
+    for i, t in enumerate(tools):
+        r, c = divmod(i, 4)
+        x, y = x0 + c * (cw + gx), y0 + r * (ch + gy)
+        b.append(f'<rect x="{x}" y="{y}" width="{cw}" height="{ch}" rx="10" fill="#eef1f5" stroke="#c3cad4" stroke-width="2"/>')
+        b.append(text(x + cw / 2, y + ch / 2 + 7, t, 20 if len(t) < 18 else 17, GRAY))
+    yb = y0 + 5 * (ch + gy) + 14
+    b.append(text(440, yb, "… and the rest of each lab's tools table", 21, "#8a94a3"))
+    bx, by, bw, bh = 200, yb + 34, 480, 120
+    b.append(f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="16" fill="#fff4ec" stroke="#e8792b" stroke-width="4" stroke-dasharray="14 8"/>')
+    b.append(text(bx + 34, by + 54, "Your new tool", 32, "#c25a12", "bold", "start"))
+    b.append(text(bx + 34, by + 92, "used for real, and taught", 22, "#6b4a33", "normal", "start"))
+    b.append(f'<circle cx="{bx + bw - 66}" cy="{by + bh / 2}" r="44" fill="#e8792b"/>')
+    b.append(text(bx + bw - 66, by + bh / 2 + 13, "+5", 38, "white", "bold"))
+    return svg(880, by + bh + 20, "\n".join(b))
+
+
 def reel_frame():
     src = Image.open(ROOT / "docs/assignments/lab-10/images/lab10-example-map-baseline.png").convert("RGB")
     W, H = 540, 960  # 9:16
@@ -136,7 +163,8 @@ def main():
     for name, fn in [("cyoa-question-data-recipe.svg", question_data_recipe),
                      ("cyoa-three-questions.svg", three_questions),
                      ("cyoa-package-contents.svg", package_contents),
-                     ("cyoa-points-by-source.svg", points_by_source)]:
+                     ("cyoa-points-by-source.svg", points_by_source),
+                     ("cyoa-new-tool.svg", new_tool)]:
         (OUT / name).write_text(fn(), encoding="utf-8")
     reel_frame()
     shutil.copyfile(ROOT / "docs/assignments/lab-11/images/lab11-example-map-baseline.png", OUT / "cyoa-example-map.png")
